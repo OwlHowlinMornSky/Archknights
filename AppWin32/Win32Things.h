@@ -2,7 +2,11 @@
 
 #include "framework.h"
 
+#include <functional>
+
 namespace SystemThings {
+
+extern std::function<void()> fOnSizing;
 
 void WinCheckError(LPCWSTR lpszFunction);
 

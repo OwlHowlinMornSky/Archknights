@@ -93,7 +93,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_SIZING:
-		//ohms::appWin32::callbacks::onSizing();
+		SystemThings::fOnSizing();
 		break;
 
 	case WM_ENTERSIZEMOVE:
@@ -120,6 +120,8 @@ const WCHAR szTitle[] = L"Archknights";
 } // namespace
 
 namespace SystemThings {
+
+std::function<void()> fOnSizing = []() -> void {};
 
 void WinCheckError(LPCWSTR lpszFunction) {
 	LPVOID lpMsgBuf;
