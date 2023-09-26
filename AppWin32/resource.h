@@ -3,8 +3,6 @@
 // 供 AppWin32.rc 使用
 //
 #define IDC_APPWIN32                    101
-#define IDS_APP_TITLE                   102
-#define IDS_STRING104                   103
 
 // Next default values for new objects
 // 
