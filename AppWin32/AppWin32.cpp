@@ -1,5 +1,27 @@
-﻿/* AppWin32.cpp : 定义应用程序的入口点。
+﻿/*
+*                    GNU AFFERO GENERAL PUBLIC LICENSE
+*                       Version 3, 19 November 2007
 *
+*    Copyright (c) 2023  Tyler Parret True
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License as published
+*    by the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* @Authors
+*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
+* @Description
+*     AppWin32.cpp : 定义应用程序的入口点。
 */
 #include <SFML/Graphics.hpp>
 #include "Win32Things.h"
@@ -58,10 +80,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		};
 
 	try {
+		sf::RectangleShape shape;
+		shape.setFillColor(sf::Color::Red);
+		shape.setSize({ 100.0f, 100.0f });
+		shape.setPosition({ 400.0f, 300.0f });
+
 		window.setFramerateLimit(60);
 		bool run = true;
 		MSG msg{ 0 };
 		sf::Event evt;
+
+		sf::Clock clk;
+		float dt;
+
+		SystemThings::fOnIdle = [&window, &dt, &clk, &shape]() -> void {
+			dt = clk.restart().asSeconds();
+			shape.rotate(dt * 90.0f);
+
+			window.clear();
+			window.draw(shape);
+			window.display();
+			};
 
 		while (run) {
 			while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
@@ -78,7 +117,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				}
 			}
 
+			dt = clk.restart().asSeconds();
+			shape.rotate(dt * 90.0f);
+
 			window.clear();
+			window.draw(shape);
 			window.display();
 		}
 

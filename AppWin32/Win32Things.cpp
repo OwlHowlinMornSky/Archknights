@@ -1,3 +1,28 @@
+/*
+*                    GNU AFFERO GENERAL PUBLIC LICENSE
+*                       Version 3, 19 November 2007
+*
+*    Copyright (c) 2023  Tyler Parret True
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License as published
+*    by the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* @Authors
+*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
+* @Description
+*     Win32Things.cpp : 定义有关Win32的基本行为。
+*/
 #include "Win32Things.h"
 
 #include <strsafe.h>
@@ -5,7 +30,7 @@
 namespace {
 
 void CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR nTimerid, DWORD systemTick) {
-	//return ohms::appWin32::callbacks::onIdle();
+	return SystemThings::fOnIdle();
 }
 
 LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -16,8 +41,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		break;
 
 	// Keep buffer when resizing so the window doesn't blink.
-	case WM_ERASEBKGND:
-		break;
+	//case WM_ERASEBKGND:
+	//	break;
 
 	case WM_GETMINMAXINFO:
 	{
@@ -122,6 +147,7 @@ const WCHAR szTitle[] = L"Archknights";
 namespace SystemThings {
 
 std::function<void()> fOnSizing = []() -> void {};
+std::function<void()> fOnIdle = []() -> void {};
 
 void WinCheckError(LPCWSTR lpszFunction) {
 	LPVOID lpMsgBuf;
@@ -180,7 +206,8 @@ bool MyRegisterClass(HINSTANCE hInstance) {
 bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) {
 	HWND res = CreateWindowExW(WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
 							   WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-							   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
+							   //CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
+							   CW_USEDEFAULT, 0, 800, 600,
 							   nullptr, nullptr, hInstance, nullptr);
 	if (res == NULL) {
 		WinCheckError(L"CreateWindow");
