@@ -5,6 +5,11 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWin32", "AppWin32\AppWin32.vcxproj", "{0A2AB57D-278D-480A-8CFB-C845F52A1B68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{0FE60026-B77E-4494-9995-C04D42D20C6D}"
+	ProjectSection(SolutionItems) = preProject
+		Global\GlobalAttribute.h = Global\GlobalAttribute.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

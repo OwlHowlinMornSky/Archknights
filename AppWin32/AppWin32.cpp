@@ -23,6 +23,7 @@
 * @Description
 *     AppWin32.cpp : 定义应用程序的入口点。
 */
+#include "..\Global\GlobalAttribute.h"
 #include <SFML/Graphics.hpp>
 #include "Win32Things.h"
 #include "AppWin32.h"
