@@ -21,20 +21,17 @@
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
 * @Description
-*     Win32Things.h : 声明有关Win32的基本行为。
+*     Callbacks.h : 声明一些基本的回调函数。
 */
 #pragma once
 
-#include "framework.h"
+#include <functional>
 
-namespace SystemThings {
+namespace Callbacks {
 
-void WinCheckError(LPCWSTR lpszFunction);
+extern std::function<void()> OnSizing;
+extern std::function<void()> OnIdle;
+extern std::function<void()> OnEnterSysloop;
+extern std::function<void()> OnExitSysloop;
 
-bool MyRegisterClass(HINSTANCE hInstance);
-
-bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd);
-
-void MyUnregisterClass(HINSTANCE hInstance);
-
-} // namespace SystemThings
+} // namespace Callbacks

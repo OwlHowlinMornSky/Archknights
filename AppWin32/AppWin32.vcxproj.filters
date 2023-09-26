@@ -30,12 +30,18 @@
     <ClInclude Include="Win32Things.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Callbacks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppWin32.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Win32Things.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Callbacks.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

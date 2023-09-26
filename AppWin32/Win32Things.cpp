@@ -27,10 +27,12 @@
 
 #include <strsafe.h>
 
+#include "Callbacks.h"
+
 namespace {
 
 void CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR nTimerid, DWORD systemTick) {
-	return SystemThings::fOnIdle();
+	return Callbacks::OnIdle();
 }
 
 LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -39,10 +41,6 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	// Don't forward this to DefWindowProc because it will destroy the window.
 	case WM_CLOSE:
 		break;
-
-	// Keep buffer when resizing so the window doesn't blink.
-	//case WM_ERASEBKGND:
-	//	break;
 
 	case WM_GETMINMAXINFO:
 	{
@@ -108,29 +106,29 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	case WM_ENTERMENULOOP:
 		if (l_timerID) KillTimer(0, l_timerID);
 		l_timerID = SetTimer(0, 0, 10, (TIMERPROC)MyTimerProc);
-		//ohms::appWin32::callbacks::onSysloopI();
+		Callbacks::OnEnterSysloop();
 		break;
 
 	case WM_EXITMENULOOP:
 		if (l_timerID) KillTimer(0, l_timerID);
 		l_timerID = 0;
-		//ohms::appWin32::callbacks::onSysloopO();
+		Callbacks::OnExitSysloop();
 		break;
 
 	case WM_SIZING:
-		SystemThings::fOnSizing();
+		Callbacks::OnSizing();
 		break;
 
 	case WM_ENTERSIZEMOVE:
 		if (l_timerID) KillTimer(0, l_timerID);
 		l_timerID = SetTimer(0, 0, 10, (TIMERPROC)MyTimerProc);
-		//ohms::appWin32::callbacks::onSysloopI();
+		Callbacks::OnEnterSysloop();
 		break;
 
 	case WM_EXITSIZEMOVE:
 		if (l_timerID) KillTimer(0, l_timerID);
 		l_timerID = 0;
-		//ohms::appWin32::callbacks::onSysloopO();
+		Callbacks::OnExitSysloop();
 		break;
 
 	default:
@@ -145,9 +143,6 @@ const WCHAR szTitle[] = L"Archknights";
 } // namespace
 
 namespace SystemThings {
-
-std::function<void()> fOnSizing = []() -> void {};
-std::function<void()> fOnIdle = []() -> void {};
 
 void WinCheckError(LPCWSTR lpszFunction) {
 	LPVOID lpMsgBuf;

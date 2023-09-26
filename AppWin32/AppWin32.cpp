@@ -26,6 +26,7 @@
 #include <SFML/Graphics.hpp>
 #include "Win32Things.h"
 #include "AppWin32.h"
+#include "Callbacks.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_opt_ HINSTANCE hPrevInstance,
@@ -70,7 +71,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GetClientRect(hWnd, &clientrect);
 	oldsize = { clientrect.right, clientrect.bottom };
 
-	SystemThings::fOnSizing = [&clientrect, &oldsize, &hWnd, &window]() -> void {
+	Callbacks::OnSizing = [&clientrect, &oldsize, &hWnd, &window]() -> void {
 		GetClientRect(hWnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
@@ -93,7 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		sf::Clock clk;
 		float dt;
 
-		SystemThings::fOnIdle = [&window, &dt, &clk, &shape]() -> void {
+		Callbacks::OnIdle = [&window, &dt, &clk, &shape]() -> void {
 			dt = clk.restart().asSeconds();
 			shape.rotate(dt * 90.0f);
 
