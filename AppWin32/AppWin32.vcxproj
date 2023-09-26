@@ -149,7 +149,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AppWin32.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -157,7 +156,7 @@
     <ClInclude Include="Win32Things.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppWin32.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Win32Things.cpp" />
   </ItemGroup>

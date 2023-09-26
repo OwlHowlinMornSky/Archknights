@@ -24,9 +24,6 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AppWin32.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Win32Things.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -35,7 +32,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppWin32.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Win32Things.cpp">

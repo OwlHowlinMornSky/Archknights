@@ -21,13 +21,13 @@
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
 * @Description
-*     AppWin32.cpp : 定义应用程序的入口点。
+*     main.cpp : 定义应用程序的入口点。
 */
 #include "..\Global\GlobalAttribute.h"
 #include <SFML/Graphics.hpp>
 #include "Win32Things.h"
-#include "AppWin32.h"
 #include "Callbacks.h"
+#include "resource.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_opt_ HINSTANCE hPrevInstance,
