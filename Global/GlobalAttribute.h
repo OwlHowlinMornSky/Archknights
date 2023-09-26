@@ -28,11 +28,11 @@
 #define SIMILARITY_LEVEL (2)
 
 #if SIMILARITY_LEVEL == 0
-#define USE_CLEAR (true)
+#define USE_MINE (true)
 #elif SIMILARITY_LEVEL == 1
-#define USE_FRAMES (true)
+#define USE_LIKE (true)
 #elif SIMILARITY_LEVEL == 2
-#define USE_SPINE (true)
+#define USE_SAME (true)
 #else
 #error "Invalid Risk Level".
 #endif
