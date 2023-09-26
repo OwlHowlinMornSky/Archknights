@@ -25,14 +25,14 @@
 */
 #pragma once
 
-#define SIMILARITY_LEVEL 2
+#define SIMILARITY_LEVEL (2)
 
 #if SIMILARITY_LEVEL == 0
-#define USE_CLEAR
+#define USE_CLEAR (true)
 #elif SIMILARITY_LEVEL == 1
-#define USE_FRAMES
+#define USE_FRAMES (true)
 #elif SIMILARITY_LEVEL == 2
-#define USE_SPINE
+#define USE_SPINE (true)
 #else
 #error "Invalid Risk Level".
 #endif
