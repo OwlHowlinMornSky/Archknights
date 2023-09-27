@@ -29,7 +29,13 @@ void CarnivalWin32::run() {
 		}
 	}
 
-	m_runningActivity->stop();
+	while (!m_activityStack.empty()) {
+		m_activityStack.pop();
+	}
+	for (const auto& i : m_pausedActivities) {
+		i.second->stop();
+	}
+	m_pausedActivities.clear();
 	return;
 }
 
@@ -81,6 +87,10 @@ void CarnivalWin32::runTheActivity() {
 
 	Callbacks::OnIdle = oldIdle;
 	return;
+}
+
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const {
+	return createTestActivity(id);
 }
 
 }

@@ -1,21 +1,22 @@
 #pragma once
 
+
 #include "IActivity.h"
 
-namespace GUI {
+#include <SFML/Graphics.hpp>
 
-class DefaultEntry : public IActivity {
+class TestActivity : public GUI::IActivity {
 public:
-	DefaultEntry();
+	TestActivity(size_t n);
 
-	virtual ~DefaultEntry() override;
+	virtual ~TestActivity() override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
 
 	virtual void update(float dt) override;
 
-	virtual void start(ICarnival& carnival) override;
+	virtual void start(GUI::ICarnival& carnival) override;
 	virtual void stop() override;
 	virtual void pause() override;
 	virtual void resume() override;
@@ -23,7 +24,7 @@ public:
 	virtual size_t getID() override;
 
 protected:
-	ICarnival* ref_carnival;
+	GUI::ICarnival* ref_carnival;
+	sf::RectangleShape m_shape;
+	size_t m_id;
 };
-
-}

@@ -36,6 +36,9 @@
     <ClInclude Include="ToDefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TestActivity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ICarnival.cpp">
@@ -54,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ToDefaultEntry.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActivity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

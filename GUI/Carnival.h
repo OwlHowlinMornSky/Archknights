@@ -21,7 +21,8 @@ public:
 
 protected:
 	bool handleTransition();
-	std::unique_ptr<IActivity> getActivity(size_t id) const;
+	std::unique_ptr<IActivity> getActivity(size_t id);
+	void stopPausedActivity(size_t id);
 
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const = 0;
 

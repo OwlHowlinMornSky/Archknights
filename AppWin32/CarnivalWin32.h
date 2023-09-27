@@ -21,6 +21,8 @@ public:
 protected:
 	void runTheActivity();
 
+	virtual std::unique_ptr<IActivity> createActivity(size_t id) const override;
+
 protected:
 	HWND m_hwnd;
 };

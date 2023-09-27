@@ -160,6 +160,7 @@
     <ClInclude Include="DefaultEntry.h" />
     <ClInclude Include="IActivity.h" />
     <ClInclude Include="ICarnival.h" />
+    <ClInclude Include="TestActivity.h" />
     <ClInclude Include="ToDefaultEntry.h" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,7 @@
     <ClCompile Include="DefaultEntry.cpp" />
     <ClCompile Include="IActivity.cpp" />
     <ClCompile Include="ICarnival.cpp" />
+    <ClCompile Include="TestActivity.cpp" />
     <ClCompile Include="ToDefaultEntry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
