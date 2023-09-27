@@ -155,11 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="Callbacks.h" />
+    <ClInclude Include="DefaultEntry.h" />
     <ClInclude Include="IActivity.h" />
     <ClInclude Include="ICarnival.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Callbacks.cpp" />
+    <ClCompile Include="DefaultEntry.cpp" />
     <ClCompile Include="IActivity.cpp" />
     <ClCompile Include="ICarnival.cpp" />
   </ItemGroup>

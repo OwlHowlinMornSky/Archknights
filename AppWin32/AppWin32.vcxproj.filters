@@ -24,7 +24,10 @@
     <ClInclude Include="Win32Things.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Callbacks.h">
+    <ClInclude Include="CarnivalWin32.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ToCarnival.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +38,10 @@
     <ClCompile Include="Win32Things.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Callbacks.cpp">
+    <ClCompile Include="CarnivalWin32.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ToCarnival.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

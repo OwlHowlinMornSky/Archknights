@@ -14,9 +14,20 @@ public:
 	 * @brief 消息框的额外信息。
 	*/
 	enum class MBInfo {
-		None,
+		None = 0,
 		Info,
 		Error
+	};
+
+	enum class Transition {
+		None = 0,
+		PauseMe_and_Open,
+		StopMe_and_Open,
+		Return,
+		ReturnTo,
+		ReturnTo_and_Open,
+		Exit,
+		ForceExit
 	};
 
 public:
@@ -25,6 +36,22 @@ public:
 	virtual ~ICarnival();
 
 public:
+	/**
+	 * @brief 开始执行。
+	*/
+	virtual void run() = 0;
+
+	/**
+	 * @brief 给非独立 Activity 用的退出运行的方法。
+	*/
+	void cancelKeepRunning();
+
+	/**
+	 * @brief 给 Activity 用的设置变迁的方法。
+	 * @param t 变迁类型。
+	*/
+	void setTransition(Transition t);
+
 	/**
 	 * @brief 取得该 Carnival 管理的 RenderWindow。
 	*/
@@ -44,7 +71,13 @@ public:
 	virtual void setCloseButton(bool enabled) const;
 
 protected:
+	void handleTransition();
+
+protected:
+	bool m_keepRunning;
 	sf::RenderWindow* ref_window;
+	std::unique_ptr<IActivity> m_running;
+	Transition m_transition;
 }; // class ICarnival
 
 } // namespace GUI

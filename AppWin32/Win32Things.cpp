@@ -27,7 +27,7 @@
 
 #include <strsafe.h>
 
-#include "Callbacks.h"
+#include "../GUI/Callbacks.h"
 
 namespace {
 

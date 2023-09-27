@@ -23,12 +23,13 @@
 * @Description
 *     main.cpp : 定义应用程序的入口点。
 */
-#include "..\Global\GlobalAttribute.h"
+#include "../Global/GlobalAttribute.h"
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Win32Things.h"
-#include "Callbacks.h"
+#include "../GUI/Callbacks.h"
+#include "ToCarnival.h"
 
 #include <memory>
 
@@ -85,54 +86,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	};
 
 	try {
-		sf::RectangleShape shape;
-		shape.setFillColor(sf::Color::Red);
-		shape.setSize({ 100.0f, 100.0f });
-		shape.setPosition({ 400.0f, 300.0f });
-
-		window->setFramerateLimit(60);
-		bool run = true;
-		MSG msg{ 0 };
-		sf::Event evt;
-
-		sf::Clock clk;
-		float dt;
-
-		Callbacks::OnIdle = [&window, &dt, &clk, &shape]() -> void {
-			dt = clk.restart().asSeconds();
-			shape.rotate(dt * 90.0f);
-
-			window->clear();
-			window->draw(shape);
-			window->display();
-		};
-
-		while (run) {
-			while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
-				TranslateMessage(&msg);
-				DispatchMessageW(&msg);
-			}
-			while (window->pollEvent(evt)) {
-				switch (evt.type) {
-				case sf::Event::Closed:
-					run = false;
-					break;
-				default:
-					break;
-				}
-			}
-
-			dt = clk.restart().asSeconds();
-			shape.rotate(dt * 90.0f);
-
-			window->clear();
-			window->draw(shape);
-			window->display();
-		}
-
-		//ohms::ui::Desktop::init();
-		//ohms::ui::Desktop::instance().browse(window, std::move(ohms::appWin32::GetInitUI()));
-		//ohms::ui::Desktop::drop();
+		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd, window.get());
+		carnival->run();
 	}
 	catch (std::exception& exp) {
 		MessageBoxA(hWnd, exp.what(), "Archknights: Fatal Error", MB_ICONERROR);
