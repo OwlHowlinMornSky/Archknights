@@ -1,10 +1,9 @@
 #include "TestActivity.h"
 
-
 TestActivity::TestActivity(size_t n) :
 	m_id(n),
 	ref_carnival(nullptr) {
-	printf_s("Construct %zu\n", n);
+	printf_s("Construct %zu\n", m_id);
 }
 
 TestActivity::~TestActivity() {

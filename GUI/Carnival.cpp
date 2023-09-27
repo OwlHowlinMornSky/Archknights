@@ -177,13 +177,13 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 	std::unique_ptr<IActivity> res;
 	auto i = m_pausedActivities.find(id);
 	if (i != m_pausedActivities.end()) {
-		printf_s("find %zu\n", id);
+		//("find %zu\n", id);
 		res = std::move(i->second);
 		m_pausedActivities.erase(i);
 		res->resume();
 	}
 	else {
-		printf_s("create %zu\n", id);
+		//printf_s("create %zu\n", id);
 		res = createActivity(id);
 		res->start(*this);
 	}

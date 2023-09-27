@@ -1,8 +1,11 @@
 
 #include "DefaultEntry.h"
 
+#include "ActivityIDs.h"
+
 namespace GUI {
 
+#ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
 	ref_carnival(nullptr) {
 	printf_s("Construct 1\n");
@@ -21,7 +24,7 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Space:
-			ref_carnival->setTransition(ICarnival::Push, 2);
+			ref_carnival->setTransition(ICarnival::Push, ID_RESERVED_MAX + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
@@ -57,7 +60,49 @@ void DefaultEntryDebug::pause() {}
 void DefaultEntryDebug::resume() {}
 
 size_t DefaultEntryDebug::getID() {
-	return 1ull;
+	return GUI::ID_DefaultEntry;
 }
+#else
+DefaultEntry::DefaultEntry() :
+	m_haveRunned(false),
+	ref_carnival(nullptr)
+{}
+
+DefaultEntry::~DefaultEntry() {}
+
+bool DefaultEntry::isIndependent() const {
+	return true;
+}
+
+void DefaultEntry::runIndependently() {
+	if (m_haveRunned) {
+		ref_carnival->setTransition(ICarnival::Exit);
+		ref_carnival->cancelKeepRunning();
+		return;
+	}
+	m_haveRunned = true;
+}
+
+void DefaultEntry::start(ICarnival& carnival) {
+	ref_carnival = &carnival;
+	return;
+}
+
+void DefaultEntry::stop() {
+	ref_carnival = nullptr;
+	return;
+}
+
+void DefaultEntry::pause() {}
+
+void DefaultEntry::resume() {}
+
+size_t DefaultEntry::getID() {
+	return GUI::ID_DefaultEntry;
+}
+
+
+#endif
+
 
 } // namespace GUI
