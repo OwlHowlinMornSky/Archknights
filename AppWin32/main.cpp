@@ -50,22 +50,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					L"Initialization failed:\ncannot create window.",
 					L"Archknights: Fatal Error",
 					MB_ICONERROR);
+		SystemThings::MyUnregisterClass(hInstance);
 		return 1;
 	}
 
-	sf::Context context;
-	context.setActive(true);
-	sf::RenderWindow window;
-	window.create(hWnd);
-	if (!window.isOpen()) {
+	sf::Context* context = new sf::Context;
+	context->setActive(true);
+	sf::RenderWindow* window = new sf::RenderWindow;
+	window->create(hWnd);
+	if (!window->isOpen()) {
 		MessageBoxW(NULL,
 					L"Initialization failed:\ncannot initialize the window.",
 					L"Archknights: Fatal Error",
 					MB_ICONERROR);
+		context->setActive(false);
+		delete context;
+		DestroyWindow(hWnd);
+		SystemThings::MyUnregisterClass(hInstance);
 		return 1;
 	}
-	window.clear();
-	window.display();
+	window->clear();
+	window->display();
 
 	RECT clientrect{ 0 };
 	POINT oldsize;
@@ -76,10 +81,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		GetClientRect(hWnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
-			window.setSize({ (unsigned int)clientrect.right, (unsigned int)clientrect.bottom });
+			window->setSize({ (unsigned int)clientrect.right, (unsigned int)clientrect.bottom });
 		}
-		return;
-		};
+	};
 
 	try {
 		sf::RectangleShape shape;
@@ -87,7 +91,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		shape.setSize({ 100.0f, 100.0f });
 		shape.setPosition({ 400.0f, 300.0f });
 
-		window.setFramerateLimit(60);
+		window->setFramerateLimit(60);
 		bool run = true;
 		MSG msg{ 0 };
 		sf::Event evt;
@@ -99,17 +103,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			dt = clk.restart().asSeconds();
 			shape.rotate(dt * 90.0f);
 
-			window.clear();
-			window.draw(shape);
-			window.display();
-			};
+			window->clear();
+			window->draw(shape);
+			window->display();
+		};
 
 		while (run) {
 			while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 				TranslateMessage(&msg);
 				DispatchMessageW(&msg);
 			}
-			while (window.pollEvent(evt)) {
+			while (window->pollEvent(evt)) {
 				switch (evt.type) {
 				case sf::Event::Closed:
 					run = false;
@@ -122,9 +126,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			dt = clk.restart().asSeconds();
 			shape.rotate(dt * 90.0f);
 
-			window.clear();
-			window.draw(shape);
-			window.display();
+			window->clear();
+			window->draw(shape);
+			window->display();
 		}
 
 		//ohms::ui::Desktop::init();
@@ -138,8 +142,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MessageBoxW(hWnd, L"Unknown error.", L"Archknights: Fatal Error", MB_ICONERROR);
 	}
 
-	window.close();
-	context.setActive(false);
+	window->close();
+	delete window;
+	context->setActive(false);
+	delete context;
 	DestroyWindow(hWnd);
 	SystemThings::MyUnregisterClass(hInstance);
 	return 0;
