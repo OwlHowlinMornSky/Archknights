@@ -156,15 +156,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Callbacks.h" />
+    <ClInclude Include="Carnival.h" />
     <ClInclude Include="DefaultEntry.h" />
     <ClInclude Include="IActivity.h" />
     <ClInclude Include="ICarnival.h" />
+    <ClInclude Include="ToDefaultEntry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callbacks.cpp" />
+    <ClCompile Include="Carnival.cpp" />
     <ClCompile Include="DefaultEntry.cpp" />
     <ClCompile Include="IActivity.cpp" />
     <ClCompile Include="ICarnival.cpp" />
+    <ClCompile Include="ToDefaultEntry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

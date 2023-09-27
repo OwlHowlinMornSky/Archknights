@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../GUI/IActivity.h"
+#include "../GUI/Carnival.h"
 
 namespace GUI {
 
-class CarnivalWin32 : public ICarnival {
+class CarnivalWin32 : public Carnival {
 
 public:
 	CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window);

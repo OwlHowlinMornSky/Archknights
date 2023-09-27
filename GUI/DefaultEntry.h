@@ -17,7 +17,10 @@ public:
 
 	virtual void update(float dt);
 
-	virtual bool start(ICarnival& carnival);
+	virtual void start(ICarnival& carnival);
+	virtual void stop();
+	virtual void pause();
+	virtual void resume();
 
 protected:
 	ICarnival* ref_carnival;

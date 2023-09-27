@@ -6,32 +6,30 @@
 #include "CarnivalWin32.h"
 
 #include "../GUI/Callbacks.h"
-
-#include "../GUI/DefaultEntry.h"
+#include "../GUI/ToDefaultEntry.h"
 
 namespace GUI {
 
 CarnivalWin32::CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window) :
-	ICarnival(r_window),
+	Carnival(r_window),
 	m_hwnd(hwnd) {}
 
 CarnivalWin32::~CarnivalWin32() {}
 
 void CarnivalWin32::run() {
-	m_running = std::make_unique<DefaultEntry>();
-	m_running->start(*this);
+	m_runningActivity = createDefaultEntry();
+	m_runningActivity->start(*this);
 
-	//while (true) {
-		if (m_running->isIndependent()) {
-			m_running->runIndependently();
+	while (handleTransition()) {
+		if (m_runningActivity->isIndependent()) {
+			m_runningActivity->runIndependently();
 		}
 		else {
 			runTheActivity();
 		}
-		//handleTransition();
-	//}
+	}
 
-	m_running->stop();
+	m_runningActivity->stop();
 	return;
 }
 
@@ -62,7 +60,7 @@ void CarnivalWin32::runTheActivity() {
 
 	Callbacks::OnIdle = [this, &dt, &clk]() -> void {
 		dt = clk.restart().asSeconds();
-		m_running->update(dt);
+		m_runningActivity->update(dt);
 	};
 
 	MSG msg{ 0 };
@@ -74,17 +72,15 @@ void CarnivalWin32::runTheActivity() {
 			DispatchMessageW(&msg);
 		}
 		while (ref_window->pollEvent(evt)) {
-			m_running->handleEvent(evt);
+			m_runningActivity->handleEvent(evt);
 		}
 
 		dt = clk.restart().asSeconds();
-		m_running->update(dt);
+		m_runningActivity->update(dt);
 	}
 
 	Callbacks::OnIdle = oldIdle;
 	return;
 }
-
-void CarnivalWin32::handleTransition() {}
 
 }

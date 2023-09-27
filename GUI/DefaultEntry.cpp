@@ -1,3 +1,4 @@
+
 #include "DefaultEntry.h"
 
 namespace GUI {
@@ -28,13 +29,19 @@ void DefaultEntry::update(float dt) {
 	return;
 }
 
-bool DefaultEntry::start(ICarnival& carnival) {
+void DefaultEntry::start(ICarnival& carnival) {
 	carnival.getRenderWindow().setFramerateLimit(60);
 	ref_carnival = &carnival;
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
 	m_shape.setPosition({ 400.0f, 300.0f });
-	return true;
+	return;
 }
+
+void DefaultEntry::stop() {}
+
+void DefaultEntry::pause() {}
+
+void DefaultEntry::resume() {}
 
 } // namespace GUI

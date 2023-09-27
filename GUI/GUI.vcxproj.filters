@@ -30,6 +30,12 @@
     <ClInclude Include="DefaultEntry.h">
       <Filter>Activities</Filter>
     </ClInclude>
+    <ClInclude Include="Carnival.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ToDefaultEntry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ICarnival.cpp">
@@ -43,6 +49,12 @@
     </ClCompile>
     <ClCompile Include="DefaultEntry.cpp">
       <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Carnival.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ToDefaultEntry.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
