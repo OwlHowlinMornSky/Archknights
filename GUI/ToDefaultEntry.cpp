@@ -8,7 +8,7 @@
 namespace GUI {
 
 std::unique_ptr<IActivity> createDefaultEntry() {
-	return std::make_unique<DefaultEntry>();
+	return std::make_unique<DefaultEntryDebug>();
 }
 
 std::unique_ptr<IActivity> createTestActivity(size_t n) {

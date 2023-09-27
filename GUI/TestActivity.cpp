@@ -20,7 +20,7 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Space:
-			ref_carnival->setTransition(-GUI::ICarnival::Push, m_id + 1);
+			ref_carnival->setTransition(GUI::ICarnival::Push, m_id + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:

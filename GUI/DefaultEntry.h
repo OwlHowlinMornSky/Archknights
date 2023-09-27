@@ -4,11 +4,11 @@
 
 namespace GUI {
 
-class DefaultEntry : public IActivity {
+class DefaultEntryDebug : public IActivity {
 public:
-	DefaultEntry();
+	DefaultEntryDebug();
 
-	virtual ~DefaultEntry() override;
+	virtual ~DefaultEntryDebug() override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
