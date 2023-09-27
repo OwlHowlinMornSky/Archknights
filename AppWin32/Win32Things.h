@@ -29,12 +29,12 @@
 
 namespace SystemThings {
 
-void WinCheckError(LPCWSTR lpszFunction);
+void WinCheckError(LPCWSTR lpszFunction) noexcept;
 
-bool MyRegisterClass(HINSTANCE hInstance);
+bool MyRegisterClass(HINSTANCE hInstance) noexcept;
 
-bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd);
+bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept;
 
-void MyUnregisterClass(HINSTANCE hInstance);
+void MyUnregisterClass(HINSTANCE hInstance) noexcept;
 
 } // namespace SystemThings

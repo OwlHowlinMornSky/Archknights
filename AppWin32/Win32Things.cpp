@@ -144,7 +144,7 @@ const WCHAR szTitle[] = L"Archknights";
 
 namespace SystemThings {
 
-void WinCheckError(LPCWSTR lpszFunction) {
+void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	LPVOID lpMsgBuf;
 	LPVOID lpDisplayBuf;
 	DWORD dw = GetLastError();
@@ -178,7 +178,7 @@ void WinCheckError(LPCWSTR lpszFunction) {
 	return;
 }
 
-bool MyRegisterClass(HINSTANCE hInstance) {
+bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 	WNDCLASSEX wcex{ 0 };
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -198,7 +198,7 @@ bool MyRegisterClass(HINSTANCE hInstance) {
 	return true;
 }
 
-bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) {
+bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept {
 	HWND res = CreateWindowExW(WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
 							   WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 							   //CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
@@ -214,7 +214,7 @@ bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) {
 	return true;
 }
 
-void MyUnregisterClass(HINSTANCE hInstance) {
+void MyUnregisterClass(HINSTANCE hInstance) noexcept {
 	UnregisterClassW(::szWindowClass, hInstance);
 	return;
 }

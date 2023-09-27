@@ -24,10 +24,13 @@
 *     main.cpp : 定义应用程序的入口点。
 */
 #include "..\Global\GlobalAttribute.h"
+
 #include <SFML/Graphics.hpp>
+
 #include "Win32Things.h"
 #include "Callbacks.h"
-#include "resource.h"
+
+#include <memory>
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_opt_ HINSTANCE hPrevInstance,
@@ -54,17 +57,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return 1;
 	}
 
-	sf::Context* context = new sf::Context;
-	context->setActive(true);
-	sf::RenderWindow* window = new sf::RenderWindow;
+	std::unique_ptr<sf::RenderWindow> window = std::make_unique<sf::RenderWindow>();
 	window->create(hWnd);
 	if (!window->isOpen()) {
 		MessageBoxW(NULL,
 					L"Initialization failed:\ncannot initialize the window.",
 					L"Archknights: Fatal Error",
 					MB_ICONERROR);
-		context->setActive(false);
-		delete context;
 		DestroyWindow(hWnd);
 		SystemThings::MyUnregisterClass(hInstance);
 		return 1;
@@ -143,9 +142,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	window->close();
-	delete window;
-	context->setActive(false);
-	delete context;
 	DestroyWindow(hWnd);
 	SystemThings::MyUnregisterClass(hInstance);
 	return 0;
