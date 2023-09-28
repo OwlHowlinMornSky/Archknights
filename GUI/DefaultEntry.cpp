@@ -46,11 +46,11 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(evt.key.control ? -ICarnival::Push : ICarnival::Push, ID_RESERVED_MAX + 1);
+			ref_carnival->setTransition(evt.key.control ? -ICarnival::Push : ICarnival::Push, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::E:
-			ref_carnival->setTransition(evt.key.control ? -ICarnival::Switch : ICarnival::Switch, ID_RESERVED_MAX + 1);
+			ref_carnival->setTransition(evt.key.control ? -ICarnival::Switch : ICarnival::Switch, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
