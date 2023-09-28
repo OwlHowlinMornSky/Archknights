@@ -36,11 +36,11 @@
     <ClInclude Include="ToDefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ActivityIDs.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="TestActivity.h">
       <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityIDs.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
