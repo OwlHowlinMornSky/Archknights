@@ -78,7 +78,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 						 (GetWindowLongPtrW(hWnd, GWL_STYLE) & WS_MAXIMIZE) ? SC_RESTORE : SC_MAXIMIZE, lParam);
 			break;
 		case HTCLOSE:
-			PostMessageW(hWnd, WM_SYSCOMMAND, SC_CLOSE, lParam);
+			if(Callbacks::ButtonEnabled_Close)
+				PostMessageW(hWnd, WM_SYSCOMMAND, SC_CLOSE, lParam);
 			break;
 		default:
 			return DefWindowProcW(hWnd, message, wParam, lParam);

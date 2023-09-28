@@ -38,4 +38,6 @@ std::function<void()> OnIdle(::fEmpty);
 std::function<void()> OnEnterSysloop(::fEmpty);
 std::function<void()> OnExitSysloop(::fEmpty);
 
+bool ButtonEnabled_Close(true);
+
 } // namespace Callbacks

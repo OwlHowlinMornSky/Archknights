@@ -78,7 +78,8 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 
 void CarnivalWin32::setCloseButton(bool enabled) const {
 	HMENU hmenu = GetSystemMenu(m_hwnd, FALSE);
-	EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED);
+	if (EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED) != -1)
+		Callbacks::ButtonEnabled_Close = enabled;
 	return;
 }
 

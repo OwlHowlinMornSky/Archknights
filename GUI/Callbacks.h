@@ -34,4 +34,6 @@ extern std::function<void()> OnIdle;
 extern std::function<void()> OnEnterSysloop;
 extern std::function<void()> OnExitSysloop;
 
+extern bool ButtonEnabled_Close;
+
 } // namespace Callbacks
