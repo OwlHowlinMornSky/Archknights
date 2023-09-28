@@ -76,7 +76,11 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 	return;
 }
 
-void CarnivalWin32::setCloseButton(bool enabled) const {}
+void CarnivalWin32::setCloseButton(bool enabled) const {
+	HMENU hmenu = GetSystemMenu(m_hwnd, FALSE);
+	EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED);
+	return;
+}
 
 void CarnivalWin32::runTheActivity() {
 	std::function<void()> oldIdle = Callbacks::OnIdle;

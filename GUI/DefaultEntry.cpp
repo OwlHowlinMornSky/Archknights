@@ -29,8 +29,7 @@ namespace GUI {
 
 DefaultEntry::DefaultEntry() :
 	m_haveRunned(false),
-	ref_carnival(nullptr)
-{}
+	ref_carnival(nullptr) {}
 
 DefaultEntry::~DefaultEntry() {}
 
@@ -68,7 +67,8 @@ size_t DefaultEntry::getID() {
 
 #ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
-	ref_carnival(nullptr) {
+	ref_carnival(nullptr),
+	m_disableClose(false) {
 	printf_s("DefaultEntryDebug: Construct.\n");
 }
 
@@ -95,6 +95,9 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 		case sf::Keyboard::Q:
 			ref_carnival->setTransition(ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
+			break;
+		case sf::Keyboard::Space:
+			ref_carnival->setCloseButton(!(m_disableClose = !m_disableClose));
 			break;
 		default:
 			break;

@@ -70,6 +70,7 @@ public:
 
 protected:
 	ICarnival* ref_carnival;
+	bool m_disableClose;
 };
 #endif
 
