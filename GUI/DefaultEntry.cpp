@@ -27,6 +27,45 @@
 
 namespace GUI {
 
+DefaultEntry::DefaultEntry() :
+	m_haveRunned(false),
+	ref_carnival(nullptr)
+{}
+
+DefaultEntry::~DefaultEntry() {}
+
+bool DefaultEntry::isIndependent() const {
+	return true;
+}
+
+void DefaultEntry::runIndependently() {
+	if (m_haveRunned) {
+		ref_carnival->setTransition(ICarnival::Exit);
+		ref_carnival->cancelKeepRunning();
+		return;
+	}
+	m_haveRunned = true;
+}
+
+void DefaultEntry::start(ICarnival& carnival) {
+	ref_carnival = &carnival;
+	return;
+}
+
+void DefaultEntry::stop() {
+	ref_carnival = nullptr;
+	return;
+}
+
+void DefaultEntry::pause() {}
+
+void DefaultEntry::resume() {}
+
+size_t DefaultEntry::getID() {
+	return GUI::ID_DefaultEntry;
+}
+
+
 #ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
 	ref_carnival(nullptr) {
@@ -46,15 +85,15 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(evt.key.control ? -ICarnival::Push : ICarnival::Push, 2);
+			ref_carnival->setTransition(-ICarnival::Push, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::E:
-			ref_carnival->setTransition(evt.key.control ? -ICarnival::Switch : ICarnival::Switch, 2);
+			ref_carnival->setTransition(-ICarnival::Switch, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(evt.key.control ? -ICarnival::Pop : ICarnival::Pop);
+			ref_carnival->setTransition(ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		default:
@@ -95,47 +134,6 @@ void DefaultEntryDebug::resume() {
 size_t DefaultEntryDebug::getID() {
 	return GUI::ID_DefaultEntry;
 }
-#else
-DefaultEntry::DefaultEntry() :
-	m_haveRunned(false),
-	ref_carnival(nullptr)
-{}
-
-DefaultEntry::~DefaultEntry() {}
-
-bool DefaultEntry::isIndependent() const {
-	return true;
-}
-
-void DefaultEntry::runIndependently() {
-	if (m_haveRunned) {
-		ref_carnival->setTransition(ICarnival::Exit);
-		ref_carnival->cancelKeepRunning();
-		return;
-	}
-	m_haveRunned = true;
-}
-
-void DefaultEntry::start(ICarnival& carnival) {
-	ref_carnival = &carnival;
-	return;
-}
-
-void DefaultEntry::stop() {
-	ref_carnival = nullptr;
-	return;
-}
-
-void DefaultEntry::pause() {}
-
-void DefaultEntry::resume() {}
-
-size_t DefaultEntry::getID() {
-	return GUI::ID_DefaultEntry;
-}
-
-
 #endif
-
 
 } // namespace GUI
