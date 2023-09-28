@@ -1,3 +1,26 @@
+/*
+*                    GNU AFFERO GENERAL PUBLIC LICENSE
+*                       Version 3, 19 November 2007
+*
+*    Copyright (c) 2023  Tyler Parret True
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License as published
+*    by the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* @Authors
+*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
+*/
 #pragma once
 
 #include <string>
@@ -20,7 +43,7 @@ public:
 	};
 
 	/**
-	 * @brief 定义了栈变类型，正数为 Pause，负数为 Stop，0 无效。
+	 * @brief 定义了栈变类型，正数为 Stop，负数为 Pause，0 无效。
 	*/
 	enum Transition : int {
 		Switch = 1, // 1 个目标。当前 Activity 会被弹出，目标将被压入栈并运行。

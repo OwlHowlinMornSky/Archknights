@@ -1,3 +1,26 @@
+/*
+*                    GNU AFFERO GENERAL PUBLIC LICENSE
+*                       Version 3, 19 November 2007
+*
+*    Copyright (c) 2023  Tyler Parret True
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License as published
+*    by the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* @Authors
+*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
+*/
 #include "Carnival.h"
 
 #include "ToDefaultEntry.h"
@@ -33,11 +56,11 @@ sf::RenderWindow& Carnival::getRenderWindow() {
 bool Carnival::handleTransition() {
 	if (m_transition == 0)
 		return true;
-	bool isStop = false;
+	bool isStop = true;
 	int t = m_transition;
 	m_transition = 0;
 	if (t < 0) {
-		isStop = true;
+		isStop = false;
 		t = -t;
 	}
 	size_t oldID = m_runningActivity->getID();
@@ -139,6 +162,9 @@ bool Carnival::handleTransition() {
 		break;
 	}
 	m_runningActivity = std::move(newActivity);
+#ifdef _DEBUG
+	showStack();
+#endif
 	return true;
 }
 
@@ -173,11 +199,21 @@ bool Carnival::stackContains(size_t id) {
 	return false;
 }
 
+void Carnival::showStack() {
+	const std::deque<size_t>& l = m_activityStack._Get_container();
+	printf_s("Stack:");
+	for (const size_t& i : l) {
+		printf_s(" %zu", i);
+	}
+	printf_s(". Running: %zu.\n", m_runningActivity->getID());
+	return;
+}
+
 std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 	std::unique_ptr<IActivity> res;
 	auto i = m_pausedActivities.find(id);
 	if (i != m_pausedActivities.end()) {
-		//("find %zu\n", id);
+		//printf_s("find %zu\n", id);
 		res = std::move(i->second);
 		m_pausedActivities.erase(i);
 		res->resume();

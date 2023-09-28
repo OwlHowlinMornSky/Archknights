@@ -36,11 +36,11 @@
     <ClInclude Include="ToDefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="TestActivity.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ActivityIDs.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActivity.h">
+      <Filter>Activities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +63,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TestActivity.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Activities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
