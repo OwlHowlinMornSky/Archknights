@@ -72,7 +72,7 @@ public:
 
 	/**
 	 * @brief 给 Activity 用的设置变迁的方法。
-	 * @param t 变迁类型。
+	 * @param t: 变迁类型。
 	*/
 	virtual void setTransition(int t, size_t a0 = 0, size_t a1 = 0) = 0;
 
@@ -83,16 +83,27 @@ public:
 
 	/**
 	 * @brief 显示一个消息框。
-	 * @param title 消息框的标题。
-	 * @param text 消息框的内容。
-	 * @param info 消息框的额外信息。
+	 * @param title: 消息框的标题。
+	 * @param text: 消息框的内容。
+	 * @param info: 消息框的额外信息。
 	*/
 	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const;
 
 	/**
-	 * @brief 设置所管理窗口的关闭按钮是否启用。
+	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void setCloseButton(bool enabled) const;
+	virtual void enableClose(bool enabled) const;
+	/**
+	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
+	*/
+	virtual void enableResize(bool enabled) const;
+	/**
+	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
+	*/
+	virtual void enableMinimize(bool enabled) const;
 }; // class ICarnival
 
 } // namespace GUI

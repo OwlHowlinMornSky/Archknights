@@ -68,6 +68,8 @@ size_t DefaultEntry::getID() {
 #ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
 	ref_carnival(nullptr),
+	m_disableResize(false),
+	m_disableMinimize(false),
 	m_disableClose(false) {
 	printf_s("DefaultEntryDebug: Construct.\n");
 }
@@ -97,7 +99,13 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Space:
-			ref_carnival->setCloseButton(!(m_disableClose = !m_disableClose));
+			ref_carnival->enableClose(!(m_disableClose = !m_disableClose));
+			break;
+		case sf::Keyboard::Enter:
+			ref_carnival->enableResize(!(m_disableResize = !m_disableResize));
+			break;
+		case sf::Keyboard::Numpad0:
+			ref_carnival->enableMinimize(!(m_disableMinimize = !m_disableMinimize));
 			break;
 		default:
 			break;

@@ -51,7 +51,7 @@ public:
 
 	/**
 	 * @brief 处理事件。
-	 * @param evt SFML 的事件。
+	 * @param evt: SFML 的事件。
 	*/
 	virtual void handleEvent(const sf::Event& evt);
 	/**
@@ -62,7 +62,7 @@ public:
 
 	/**
 	 * @brief Activity 被创建后、运行前的处理。
-	 * @param carnival 对所属 Carnival 的引用。
+	 * @param carnival: 对所属 Carnival 的引用。
 	*/
 	virtual void start(ICarnival& carnival) = 0;
 	/**

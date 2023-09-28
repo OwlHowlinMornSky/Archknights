@@ -71,6 +71,8 @@ public:
 protected:
 	ICarnival* ref_carnival;
 	bool m_disableClose;
+	bool m_disableResize;
+	bool m_disableMinimize;
 };
 #endif
 

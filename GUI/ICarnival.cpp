@@ -31,6 +31,10 @@ ICarnival::~ICarnival() {}
 
 void ICarnival::showMessageBox(std::string_view title, std::string_view text, MBInfo info) const {}
 
-void ICarnival::setCloseButton(bool enabled) const {}
+void ICarnival::enableClose(bool enabled) const {}
+
+void ICarnival::enableResize(bool enabled) const {}
+
+void ICarnival::enableMinimize(bool enabled) const {}
 
 } // namespace GUI

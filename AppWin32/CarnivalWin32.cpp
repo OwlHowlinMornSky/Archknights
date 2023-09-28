@@ -76,10 +76,34 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 	return;
 }
 
-void CarnivalWin32::setCloseButton(bool enabled) const {
+void CarnivalWin32::enableClose(bool enabled) const {
 	HMENU hmenu = GetSystemMenu(m_hwnd, FALSE);
 	if (EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED) != -1)
 		Callbacks::ButtonEnabled_Close = enabled;
+	return;
+}
+
+void CarnivalWin32::enableResize(bool enabled) const {
+	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	if (enabled) {
+		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | (WS_SIZEBOX | WS_MAXIMIZEBOX));
+	}
+	else {
+		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~(WS_SIZEBOX | WS_MAXIMIZEBOX)));
+		ShowWindow(m_hwnd, SW_RESTORE);
+	}
+	return;
+}
+
+void CarnivalWin32::enableMinimize(bool enabled) const {
+	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	if (enabled) {
+		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | WS_MINIMIZEBOX);
+	}
+	else {
+		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~WS_MINIMIZEBOX));
+		ShowWindow(m_hwnd, SW_RESTORE);
+	}
 	return;
 }
 

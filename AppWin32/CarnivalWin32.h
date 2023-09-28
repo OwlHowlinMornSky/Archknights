@@ -39,7 +39,11 @@ public:
 
 	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const override;
 
-	virtual void setCloseButton(bool enabled) const override;
+	virtual void enableClose(bool enabled) const override;
+
+	virtual void enableResize(bool enabled) const override;
+
+	virtual void enableMinimize(bool enabled) const override;
 
 protected:
 	void runTheActivity();

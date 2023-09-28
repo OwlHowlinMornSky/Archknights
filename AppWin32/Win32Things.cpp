@@ -70,15 +70,33 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	case WM_NCLBUTTONUP:
 		switch (wParam) {
 		case HTMINBUTTON:
-			PostMessageW(hWnd, WM_SYSCOMMAND,
-						 (GetWindowLongPtrW(hWnd, GWL_STYLE) & WS_MINIMIZE) ? SC_RESTORE : SC_MINIMIZE, lParam);
+		{
+			LONG_PTR style = GetWindowLongPtrW(hWnd, GWL_STYLE);
+			if (style & WS_MINIMIZEBOX) {
+				if (style & WS_MINIMIZE)
+					PostMessageW(hWnd, WM_SYSCOMMAND, SC_RESTORE, lParam);
+					//ShowWindow(hWnd, SW_RESTORE);
+				else
+					PostMessageW(hWnd, WM_SYSCOMMAND, SC_MINIMIZE, lParam);
+					//ShowWindow(hWnd, SW_MINIMIZE);
+			}
 			break;
+		}
 		case HTMAXBUTTON:
-			PostMessageW(hWnd, WM_SYSCOMMAND,
-						 (GetWindowLongPtrW(hWnd, GWL_STYLE) & WS_MAXIMIZE) ? SC_RESTORE : SC_MAXIMIZE, lParam);
+		{
+			LONG_PTR style = GetWindowLongPtrW(hWnd, GWL_STYLE);
+			if (style & WS_MAXIMIZEBOX) {
+				if (style & WS_MAXIMIZE)
+					PostMessageW(hWnd, WM_SYSCOMMAND, SC_RESTORE, lParam);
+					//ShowWindow(hWnd, SW_RESTORE);
+				else
+					PostMessageW(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, lParam);
+					//ShowWindow(hWnd, SW_MAXIMIZE);
+			}
 			break;
+		}
 		case HTCLOSE:
-			if(Callbacks::ButtonEnabled_Close)
+			if (Callbacks::ButtonEnabled_Close)
 				PostMessageW(hWnd, WM_SYSCOMMAND, SC_CLOSE, lParam);
 			break;
 		default:
