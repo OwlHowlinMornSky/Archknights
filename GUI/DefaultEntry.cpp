@@ -8,11 +8,11 @@ namespace GUI {
 #ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
 	ref_carnival(nullptr) {
-	printf_s("Construct 1\n");
+	printf_s("DefaultEntryDebug: Construct.\n");
 }
 
 DefaultEntryDebug::~DefaultEntryDebug() {
-	printf_s("Destruct 1\n");
+	printf_s("DefaultEntryDebug: Destruct.\n");
 }
 
 void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
@@ -23,12 +23,16 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
-		case sf::Keyboard::Space:
-			ref_carnival->setTransition(ICarnival::Push, ID_RESERVED_MAX + 1);
+		case sf::Keyboard::F:
+			ref_carnival->setTransition(evt.key.control ? -ICarnival::Push : ICarnival::Push, ID_RESERVED_MAX + 1);
+			ref_carnival->cancelKeepRunning();
+			break;
+		case sf::Keyboard::E:
+			ref_carnival->setTransition(evt.key.control ? -ICarnival::Switch : ICarnival::Switch, ID_RESERVED_MAX + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(ICarnival::Pop);
+			ref_carnival->setTransition(evt.key.control ? -ICarnival::Pop : ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		default:
@@ -50,14 +54,21 @@ void DefaultEntryDebug::update(float dt) {
 void DefaultEntryDebug::start(ICarnival& carnival) {
 	carnival.getRenderWindow().setFramerateLimit(60);
 	ref_carnival = &carnival;
+	printf_s("DefaultEntryDebug: start, %p.\n", ref_carnival);
 	return;
 }
 
-void DefaultEntryDebug::stop() {}
+void DefaultEntryDebug::stop() {
+	printf_s("DefaultEntryDebug: stop.\n");
+}
 
-void DefaultEntryDebug::pause() {}
+void DefaultEntryDebug::pause() {
+	printf_s("DefaultEntryDebug: pause.\n");
+}
 
-void DefaultEntryDebug::resume() {}
+void DefaultEntryDebug::resume() {
+	printf_s("DefaultEntryDebug: resume.\n");
+}
 
 size_t DefaultEntryDebug::getID() {
 	return GUI::ID_DefaultEntry;

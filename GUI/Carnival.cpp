@@ -31,146 +31,146 @@ sf::RenderWindow& Carnival::getRenderWindow() {
 }
 
 bool Carnival::handleTransition() {
-	if (m_transition == 0) {
+	if (m_transition == 0)
 		return true;
-	}
 	bool isStop = false;
 	int t = m_transition;
-	size_t tt[2]{ m_transitionTarget[0], m_transitionTarget[1] };
-	if (m_transition < 0) {
+	m_transition = 0;
+	if (t < 0) {
 		isStop = true;
 		t = -t;
 	}
-	m_transition = 0;
-	m_transitionTarget[0] = m_transitionTarget[1] = 0;
+	size_t oldID = m_runningActivity->getID();
+	size_t newID = 0;
+	size_t lca = 0;
 	switch (t) {
 	case Transition::Switch:
-		if (tt[0] != 0 && m_runningActivity->getID() != tt[0]) {
-			if (isStop) {
-				m_runningActivity->stop();
-			}
-			else {
-				m_runningActivity->pause();
-				m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
-			}
-			m_runningActivity = getActivity(tt[0]);
-		}
+		newID = m_transitionTarget[0];
 		break;
 	case Transition::Push:
-		if (tt[0] != 0 && m_runningActivity->getID() != tt[0]) {
-			size_t id = m_runningActivity->getID();
-			if (isStop) {
-				m_runningActivity->stop();
-			}
-			else {
-				m_runningActivity->pause();
-				m_pausedActivities.emplace(id, std::move(m_runningActivity));
-			}
-			m_activityStack.push(id);
-			m_runningActivity = getActivity(tt[0]);
-		}
+		newID = m_transitionTarget[0];
 		break;
 	case Transition::Pop:
-		if (isStop) {
-			m_runningActivity->stop();
-		}
-		else {
-			m_runningActivity->pause();
-			m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
-		}
-		if (m_activityStack.empty()) {
-			return false;
-		}
-		m_runningActivity = getActivity(m_activityStack.top());
-		m_activityStack.pop();
+		if (m_activityStack.empty())
+			lca = 1;
+		else
+			newID = m_activityStack.top();
 		break;
 	case Transition::PopTo:
-	{
-		if (tt[0] == 0 || m_runningActivity->getID() == tt[0]) {
-			break;
-		}
-		const std::deque<size_t>& l = m_activityStack._Get_container();
-		bool found = false;
-		for (const size_t& i : l) {
-			if (i == tt[0]) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			break;
-		}
-		if (isStop) {
-			m_runningActivity->stop();
-		}
-		else {
-			m_runningActivity->pause();
-			m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
-		}
-		while (m_activityStack.top() != tt[0]) {
-			if (isStop) {
-				stopPausedActivity(m_activityStack.top());
-			}
-			m_activityStack.pop();
-		}
-		m_runningActivity = getActivity(m_activityStack.top());
-		m_activityStack.pop();
+		newID = m_transitionTarget[0];
+		lca = m_transitionTarget[0];
 		break;
-	}
 	case Transition::PopPush:
-	{
-		if (tt[0] == 0 || tt[1] == 0 || m_runningActivity->getID() == tt[0] || m_runningActivity->getID() == tt[1]) {
-			break;
-		}
-		const std::deque<size_t>& l = m_activityStack._Get_container();
-		bool found = false;
-		for (const size_t& i : l) {
-			if (i == tt[0]) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			size_t id = m_runningActivity->getID();
-			if (isStop) {
-				m_runningActivity->stop();
-			}
-			else {
-				m_runningActivity->pause();
-				m_pausedActivities.emplace(id, std::move(m_runningActivity));
-			}
-			m_activityStack.push(id);
-			m_runningActivity = getActivity(tt[1]);
-			break;
-		}
-		if (isStop) {
-			m_runningActivity->stop();
-		}
-		else {
-			m_runningActivity->pause();
-			m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
-		}
-		while (m_activityStack.top() != tt[0]) {
-			if (isStop) {
-				stopPausedActivity(m_activityStack.top());
-			}
-			m_activityStack.pop();
-		}
-		m_runningActivity = getActivity(tt[1]);
+		newID = m_transitionTarget[1];
+		if (newID != 0)
+			lca = m_transitionTarget[0];
 		break;
-	}
 	case Transition::Exit:
-		m_runningActivity->stop();
-		while (!m_activityStack.empty()) {
-			stopPausedActivity(m_activityStack.top());
-			m_activityStack.pop();
-		}
-		return false;
+		lca = 1;
 		break;
 	default:
 		break;
 	}
+	m_transitionTarget[0] = m_transitionTarget[1] = 0;
+	if (newID == 0) {
+		if (lca == 0)
+			return true;
+		else {
+			stopRunningActicity();
+			return false;
+		}
+	}
+	if (oldID == newID)
+		return true;
+	std::unique_ptr<IActivity> newActivity = getActivity(newID);
+	if (newActivity == nullptr)
+		return true;
+
+	switch (t) {
+	case Transition::Switch:
+		if (isStop)
+			stopRunningActicity();
+		else
+			pauseRunningActivity();
+		break;
+	case Transition::Push:
+		if (isStop)
+			stopRunningActicity();
+		else
+			pauseRunningActivity();
+		m_activityStack.push(oldID);
+		break;
+	case Transition::Pop:
+		if (isStop)
+			stopRunningActicity();
+		else
+			pauseRunningActivity();
+		m_activityStack.pop();
+		break;
+	case Transition::PopTo:
+		if (lca == oldID || !stackContains(lca))
+			break;
+		if (isStop)
+			stopRunningActicity();
+		else
+			pauseRunningActivity();
+		while (m_activityStack.top() != lca) {
+			if (isStop)
+				stopPausedActivity(m_activityStack.top());
+			m_activityStack.pop();
+		}
+		m_activityStack.pop();
+		break;
+	case Transition::PopPush:
+		if (isStop)
+			stopRunningActicity();
+		else
+			pauseRunningActivity();
+		if (lca != oldID && stackContains(lca)) {
+			while (m_activityStack.top() != lca) {
+				if (isStop)
+					stopPausedActivity(m_activityStack.top());
+				m_activityStack.pop();
+			}
+		}
+		else {
+			m_activityStack.push(oldID);
+		}
+		break;
+	}
+	m_runningActivity = std::move(newActivity);
 	return true;
+}
+
+void Carnival::pauseRunningActivity() {
+	m_runningActivity->pause();
+	m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
+	return;
+}
+
+void Carnival::stopRunningActicity() {
+	m_runningActivity->stop();
+	m_runningActivity.reset();
+	return;
+}
+
+void Carnival::stopPausedActivity(size_t id) {
+	auto i = m_pausedActivities.find(id);
+	if (i != m_pausedActivities.end()) {
+		i->second->stop();
+		m_pausedActivities.erase(i);
+	}
+	return;
+}
+
+bool Carnival::stackContains(size_t id) {
+	const std::deque<size_t>& l = m_activityStack._Get_container();
+	for (const size_t& i : l) {
+		if (i == id) {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
@@ -188,15 +188,6 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 		res->start(*this);
 	}
 	return res;
-}
-
-void Carnival::stopPausedActivity(size_t id) {
-	auto i = m_pausedActivities.find(id);
-	if (i != m_pausedActivities.end()) {
-		i->second->stop();
-		m_pausedActivities.erase(i);
-	}
-	return;
 }
 
 } // namespace GUI

@@ -3,11 +3,11 @@
 TestActivity::TestActivity(size_t n) :
 	m_id(n),
 	ref_carnival(nullptr) {
-	printf_s("Construct %zu\n", m_id);
+	printf_s("TestActivity %zu: Construct.\n", m_id);
 }
 
 TestActivity::~TestActivity() {
-	printf_s("Destruct %zu\n", m_id);
+	printf_s("TestActivity %zu: Destruct.\n", m_id);
 }
 
 void TestActivity::handleEvent(const sf::Event& evt) {
@@ -18,12 +18,16 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
-		case sf::Keyboard::Space:
-			ref_carnival->setTransition(GUI::ICarnival::Push, m_id + 1);
+		case sf::Keyboard::F:
+			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Push : GUI::ICarnival::Push, m_id + 1);
+			ref_carnival->cancelKeepRunning();
+			break;
+		case sf::Keyboard::E:
+			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Switch : GUI::ICarnival::Switch, m_id + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(GUI::ICarnival::Pop);
+			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Pop : GUI::ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		default:
@@ -51,14 +55,21 @@ void TestActivity::start(GUI::ICarnival& carnival) {
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
 	m_shape.setPosition({ 400.0f, 300.0f });
+	printf_s("TestActivity %zu: start, %p.\n", m_id, ref_carnival);
 	return;
 }
 
-void TestActivity::stop() {}
+void TestActivity::stop() {
+	printf_s("TestActivity %zu: stop.\n", m_id);
+}
 
-void TestActivity::pause() {}
+void TestActivity::pause() {
+	printf_s("TestActivity %zu: pause.\n", m_id);
+}
 
-void TestActivity::resume() {}
+void TestActivity::resume() {
+	printf_s("TestActivity %zu: resume.\n", m_id);
+}
 
 size_t TestActivity::getID() {
 	return m_id;
