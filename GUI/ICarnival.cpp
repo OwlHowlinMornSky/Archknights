@@ -31,6 +31,18 @@ ICarnival::~ICarnival() {}
 
 void ICarnival::showMessageBox(std::string_view title, std::string_view text, MBInfo info) const {}
 
+bool ICarnival::isEnabledClose() const {
+    return true;
+}
+
+bool ICarnival::isEnabledResize() const {
+	return true;
+}
+
+bool ICarnival::isEnabledMinimize() const {
+	return true;
+}
+
 void ICarnival::enableClose(bool enabled) const {}
 
 void ICarnival::enableResize(bool enabled) const {}

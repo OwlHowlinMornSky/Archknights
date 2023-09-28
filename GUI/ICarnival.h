@@ -90,6 +90,22 @@ public:
 	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const;
 
 	/**
+	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
+	 * @return True 则已启用，否则已禁用。
+	*/
+	virtual bool isEnabledClose() const;
+	/**
+	 * @brief 检测 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
+	 * @return True 则已启用，否则已禁用。
+	*/
+	virtual bool isEnabledResize() const;
+	/**
+	 * @brief 检测 所管理窗口的 最小化按钮 是否启用。
+	 * @return True 则已启用，否则已禁用。
+	*/
+	virtual bool isEnabledMinimize() const;
+
+	/**
 	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
