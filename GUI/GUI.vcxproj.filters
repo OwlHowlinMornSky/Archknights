@@ -40,16 +40,16 @@
       <Filter>Activities</Filter>
     </ClInclude>
     <ClInclude Include="ActivityIDs.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityIndependent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityDependent.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ICarnival.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IActivity.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Callbacks.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -64,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="TestActivity.cpp">
       <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivityIndependent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivityDependent.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

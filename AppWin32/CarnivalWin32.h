@@ -27,7 +27,7 @@
 
 namespace GUI {
 
-class CarnivalWin32 : public Carnival {
+class CarnivalWin32 final : public Carnival {
 
 public:
 	CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window);
@@ -50,6 +50,7 @@ public:
 protected:
 	void runTheActivity();
 
+protected:
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const override;
 
 protected:

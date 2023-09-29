@@ -55,15 +55,10 @@ public:
 	};
 
 public:
-	ICarnival();
-
-	virtual ~ICarnival();
+	ICarnival() = default;
+	virtual ~ICarnival() = default;
 
 public:
-	/**
-	 * @brief 开始执行。
-	*/
-	virtual void run() = 0;
 
 	/**
 	 * @brief 给非独立 Activity 用的退出运行的方法。
@@ -81,45 +76,52 @@ public:
 	*/
 	virtual sf::RenderWindow& getRenderWindow() = 0;
 
+public:
+	/**
+	 * @brief 开始执行。
+	*/
+	virtual void run() = 0;
+
+public:
 	/**
 	 * @brief 显示一个消息框。
 	 * @param title: 消息框的标题。
 	 * @param text: 消息框的内容。
 	 * @param info: 消息框的额外信息。
 	*/
-	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const;
+	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const = 0;
 
 	/**
 	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledClose() const;
+	virtual bool isEnabledClose() const = 0;
 	/**
 	 * @brief 检测 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledResize() const;
+	virtual bool isEnabledResize() const = 0;
 	/**
 	 * @brief 检测 所管理窗口的 最小化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledMinimize() const;
+	virtual bool isEnabledMinimize() const = 0;
 
 	/**
 	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableClose(bool enabled) const;
+	virtual void enableClose(bool enabled) const = 0;
 	/**
 	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableResize(bool enabled) const;
+	virtual void enableResize(bool enabled) const = 0;
 	/**
 	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableMinimize(bool enabled) const;
+	virtual void enableMinimize(bool enabled) const = 0;
 }; // class ICarnival
 
 } // namespace GUI

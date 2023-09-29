@@ -33,6 +33,32 @@ TestActivity::~TestActivity() {
 	printf_s("TestActivity %zu: Destruct.\n", m_id);
 }
 
+void TestActivity::start(GUI::ICarnival& carnival) {
+	carnival.getRenderWindow().setFramerateLimit(60);
+	ref_carnival = &carnival;
+	m_shape.setFillColor(sf::Color::Red);
+	m_shape.setSize({ 100.0f, 100.0f });
+	m_shape.setPosition({ 400.0f, 300.0f });
+	printf_s("TestActivity %zu: start, %p.\n", m_id, ref_carnival);
+	return;
+}
+
+void TestActivity::stop() {
+	printf_s("TestActivity %zu: stop.\n", m_id);
+}
+
+void TestActivity::pause() {
+	printf_s("TestActivity %zu: pause.\n", m_id);
+}
+
+void TestActivity::resume() {
+	printf_s("TestActivity %zu: resume.\n", m_id);
+}
+
+size_t TestActivity::getID() {
+	return m_id;
+}
+
 void TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
@@ -70,30 +96,4 @@ void TestActivity::update(float dt) {
 	ref_carnival->getRenderWindow().draw(m_shape);
 	ref_carnival->getRenderWindow().display();
 	return;
-}
-
-void TestActivity::start(GUI::ICarnival& carnival) {
-	carnival.getRenderWindow().setFramerateLimit(60);
-	ref_carnival = &carnival;
-	m_shape.setFillColor(sf::Color::Red);
-	m_shape.setSize({ 100.0f, 100.0f });
-	m_shape.setPosition({ 400.0f, 300.0f });
-	printf_s("TestActivity %zu: start, %p.\n", m_id, ref_carnival);
-	return;
-}
-
-void TestActivity::stop() {
-	printf_s("TestActivity %zu: stop.\n", m_id);
-}
-
-void TestActivity::pause() {
-	printf_s("TestActivity %zu: pause.\n", m_id);
-}
-
-void TestActivity::resume() {
-	printf_s("TestActivity %zu: resume.\n", m_id);
-}
-
-size_t TestActivity::getID() {
-	return m_id;
 }

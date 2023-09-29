@@ -24,6 +24,7 @@
 #include "DefaultEntry.h"
 
 #include "ActivityIDs.h"
+#include "../Audio/Bgm.h"
 
 namespace GUI {
 
@@ -32,19 +33,6 @@ DefaultEntry::DefaultEntry() :
 	ref_carnival(nullptr) {}
 
 DefaultEntry::~DefaultEntry() {}
-
-bool DefaultEntry::isIndependent() const {
-	return true;
-}
-
-void DefaultEntry::runIndependently() {
-	if (m_haveRunned) {
-		ref_carnival->setTransition(ICarnival::Exit);
-		ref_carnival->cancelKeepRunning();
-		return;
-	}
-	m_haveRunned = true;
-}
 
 void DefaultEntry::start(ICarnival& carnival) {
 	ref_carnival = &carnival;
@@ -64,6 +52,18 @@ size_t DefaultEntry::getID() {
 	return GUI::ID_DefaultEntry;
 }
 
+bool DefaultEntry::isIndependent() const {
+	return true;
+}
+
+void DefaultEntry::runIndependently() {
+	if (m_haveRunned) {
+		ref_carnival->setTransition(ICarnival::Exit);
+		ref_carnival->cancelKeepRunning();
+		return;
+	}
+	m_haveRunned = true;
+}
 
 #ifdef _DEBUG
 DefaultEntryDebug::DefaultEntryDebug() :
@@ -76,6 +76,35 @@ DefaultEntryDebug::DefaultEntryDebug() :
 
 DefaultEntryDebug::~DefaultEntryDebug() {
 	printf_s("DefaultEntryDebug: Destruct.\n");
+}
+
+void DefaultEntryDebug::start(ICarnival& carnival) {
+	carnival.getRenderWindow().setFramerateLimit(60);
+	ref_carnival = &carnival;
+	m_bgm = std::make_unique<Audio::BgmSFML>();
+	m_bgm->openFromFile("test.ogg");
+	m_bgm->play();
+	printf_s("DefaultEntryDebug: start, %p.\n", ref_carnival);
+	return;
+}
+
+void DefaultEntryDebug::stop() {
+	m_bgm->stop();
+	printf_s("DefaultEntryDebug: stop.\n");
+}
+
+void DefaultEntryDebug::pause() {
+	m_bgm->pause();
+	printf_s("DefaultEntryDebug: pause.\n");
+}
+
+void DefaultEntryDebug::resume() {
+	m_bgm->play();
+	printf_s("DefaultEntryDebug: resume.\n");
+}
+
+size_t DefaultEntryDebug::getID() {
+	return GUI::ID_DefaultEntry;
 }
 
 void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
@@ -121,29 +150,6 @@ void DefaultEntryDebug::update(float dt) {
 	ref_carnival->getRenderWindow().clear(sf::Color::Red);
 	ref_carnival->getRenderWindow().display();
 	return;
-}
-
-void DefaultEntryDebug::start(ICarnival& carnival) {
-	carnival.getRenderWindow().setFramerateLimit(60);
-	ref_carnival = &carnival;
-	printf_s("DefaultEntryDebug: start, %p.\n", ref_carnival);
-	return;
-}
-
-void DefaultEntryDebug::stop() {
-	printf_s("DefaultEntryDebug: stop.\n");
-}
-
-void DefaultEntryDebug::pause() {
-	printf_s("DefaultEntryDebug: pause.\n");
-}
-
-void DefaultEntryDebug::resume() {
-	printf_s("DefaultEntryDebug: resume.\n");
-}
-
-size_t DefaultEntryDebug::getID() {
-	return GUI::ID_DefaultEntry;
 }
 #endif
 

@@ -23,27 +23,25 @@
 */
 #pragma once
 
-#include "IActivity.h"
+#include "ActivityDependent.h"
 
 #include <SFML/Graphics.hpp>
 
-class TestActivity : public GUI::IActivity {
+class TestActivity final : public GUI::ActivityDependent {
 public:
 	TestActivity(size_t n);
-
 	virtual ~TestActivity() override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
-
-	virtual void update(float dt) override;
-
 	virtual void start(GUI::ICarnival& carnival) override;
 	virtual void stop() override;
 	virtual void pause() override;
 	virtual void resume() override;
-
 	virtual size_t getID() override;
+
+public:
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(float dt) override;
 
 protected:
 	GUI::ICarnival* ref_carnival;

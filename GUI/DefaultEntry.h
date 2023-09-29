@@ -23,26 +23,26 @@
 */
 #pragma once
 
-#include "IActivity.h"
+#include "ActivityDependent.h"
+#include "../Audio/IBgm.h"
 
 namespace GUI {
 
-class DefaultEntry : public IActivity {
+class DefaultEntry final : public IActivity {
 public:
 	DefaultEntry();
-
 	virtual ~DefaultEntry() override;
 
 public:
-	virtual bool isIndependent() const override;
-	virtual void runIndependently() override;
-
 	virtual void start(ICarnival& carnival) override;
 	virtual void stop() override;
 	virtual void pause() override;
 	virtual void resume() override;
-
 	virtual size_t getID() override;
+
+public:
+	virtual bool isIndependent() const override;
+	virtual void runIndependently() override;
 
 protected:
 	ICarnival* ref_carnival;
@@ -50,29 +50,28 @@ protected:
 };
 
 #ifdef _DEBUG
-class DefaultEntryDebug : public IActivity {
+class DefaultEntryDebug final : public ActivityDependent {
 public:
 	DefaultEntryDebug();
-
 	virtual ~DefaultEntryDebug() override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
-
-	virtual void update(float dt) override;
-
 	virtual void start(ICarnival& carnival) override;
 	virtual void stop() override;
 	virtual void pause() override;
 	virtual void resume() override;
-
 	virtual size_t getID() override;
+
+public:
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(float dt) override;
 
 protected:
 	ICarnival* ref_carnival;
 	bool m_disableClose;
 	bool m_disableResize;
 	bool m_disableMinimize;
+	std::unique_ptr<Audio::IBgm> m_bgm;
 };
 #endif
 

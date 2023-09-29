@@ -36,11 +36,11 @@ public:
 	virtual ~Carnival() override;
 
 public:
-	virtual void cancelKeepRunning() override;
+	virtual void cancelKeepRunning() override final;
 
-	virtual void setTransition(int t, size_t a0 = 0, size_t a1 = 0) override;
+	virtual void setTransition(int t, size_t a0 = 0, size_t a1 = 0) override final;
 
-	virtual sf::RenderWindow& getRenderWindow() override;
+	virtual sf::RenderWindow& getRenderWindow() override final;
 
 protected:
 	bool handleTransition();
@@ -51,6 +51,8 @@ protected:
 	void showStack();
 
 	std::unique_ptr<IActivity> getActivity(size_t id);
+
+protected:
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const = 0;
 
 protected:

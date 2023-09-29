@@ -24,8 +24,6 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "ICarnival.h"
 
 namespace GUI {
@@ -35,31 +33,10 @@ namespace GUI {
 */
 class IActivity {
 public:
-	IActivity();
-	virtual ~IActivity();
+	IActivity() = default;
+	virtual ~IActivity() = default;
 
 public:
-	/**
-	 * @brief 该 Acitivity 是否要独立运行。
-	 * @return True 则独立, 否则非独立。
-	*/
-	virtual bool isIndependent() const;
-	/**
-	 * @brief 独立地运行。
-	*/
-	virtual void runIndependently();
-
-	/**
-	 * @brief 处理事件。
-	 * @param evt: SFML 的事件。
-	*/
-	virtual void handleEvent(const sf::Event& evt);
-	/**
-	 * @brief 更新。
-	 * @param dt 经过的时间。
-	*/
-	virtual void update(float dt);
-
 	/**
 	 * @brief Activity 被创建后、运行前的处理。
 	 * @param carnival: 对所属 Carnival 的引用。
@@ -77,12 +54,33 @@ public:
 	 * @brief Activity 取消暂停时的处理。
 	*/
 	virtual void resume() = 0;
-
 	/**
 	 * @brief 获取该 Activity 的唯一标识符。
 	 * @return 唯一标识符。
 	*/
 	virtual size_t getID() = 0;
+
+public:
+	/**
+	 * @brief 该 Acitivity 是否要独立运行。
+	 * @return True 则独立, 否则非独立。
+	*/
+	virtual bool isIndependent() const = 0;
+	/**
+	 * @brief 独立地运行。
+	*/
+	virtual void runIndependently() = 0;
+
+	/**
+	 * @brief 处理事件。
+	 * @param evt: SFML 的事件。
+	*/
+	virtual void handleEvent(const sf::Event& evt) = 0;
+	/**
+	 * @brief 更新。
+	 * @param dt 经过的时间。
+	*/
+	virtual void update(float dt) = 0;
 }; // class IActivity
 
 } // namespace GUI

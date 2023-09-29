@@ -155,7 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActivityDependent.h" />
     <ClInclude Include="ActivityIDs.h" />
+    <ClInclude Include="ActivityIndependent.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Carnival.h" />
     <ClInclude Include="DefaultEntry.h" />
@@ -165,11 +167,11 @@
     <ClInclude Include="ToDefaultEntry.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActivityDependent.cpp" />
+    <ClCompile Include="ActivityIndependent.cpp" />
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Carnival.cpp" />
     <ClCompile Include="DefaultEntry.cpp" />
-    <ClCompile Include="IActivity.cpp" />
-    <ClCompile Include="ICarnival.cpp" />
     <ClCompile Include="TestActivity.cpp" />
     <ClCompile Include="ToDefaultEntry.cpp" />
   </ItemGroup>
