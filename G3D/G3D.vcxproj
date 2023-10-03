@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GL\base.h" />
     <ClInclude Include="GL\glCheck.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GL\base.cpp" />
     <ClCompile Include="GL\glCheck.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

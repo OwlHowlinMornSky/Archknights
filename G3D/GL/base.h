@@ -20,14 +20,14 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#include "ActivityDependent.h"
+#pragma once
 
-namespace GUI {
+namespace g3d::gl::base {
 
-bool ActivityDependent::isIndependent() const {
-	return false;
-}
+void setup();
 
-void ActivityDependent::runIndependently() {}
+bool setActive(bool active);
 
-} // namespace GUI
+void drop();
+
+} // namespace g3d::gl::base

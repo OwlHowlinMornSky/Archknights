@@ -30,9 +30,15 @@
     <ClInclude Include="GL\glCheck.h">
       <Filter>OpenGL\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GL\base.h">
+      <Filter>OpenGL\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GL\glCheck.cpp">
+      <Filter>OpenGL\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GL\base.cpp">
       <Filter>OpenGL\源文件</Filter>
     </ClCompile>
   </ItemGroup>

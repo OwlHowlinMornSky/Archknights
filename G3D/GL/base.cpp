@@ -20,14 +20,31 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#include "ActivityDependent.h"
+#include "base.h"
 
-namespace GUI {
+#include <memory>
+#include <SFML/Window/Context.hpp>
 
-bool ActivityDependent::isIndependent() const {
-	return false;
+namespace {
+
+std::unique_ptr<sf::Context> g_context;
+
+} // namespace
+
+namespace g3d::gl::base {
+
+void setup() {
+	g_context = std::make_unique<sf::Context>();
+	return;
 }
 
-void ActivityDependent::runIndependently() {}
+bool setActive(bool active) {
+	return g_context->setActive(active);
+}
 
-} // namespace GUI
+void drop() {
+	g_context.reset();
+	return;
+}
+
+} // namespace
