@@ -20,14 +20,26 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#pragma once
+#include "Camera.h"
 
-namespace g3d::gl::base {
+#include <glm/gtx/transform.hpp>
 
-void setup();
+namespace g3d {
 
-bool setActive(bool active);
+void Camera::ensureMatVUpdated() const {
+	if (m_positionChanged || m_rotationChanged) {
+		if (m_rotation.x < 0.0f)
+			m_rotation.x = 0.0f;
+		else if (m_rotation.x > 90.0f)
+			m_rotation.x = 90.0f;
+		m_matV = glm::rotate(glm::radians(-m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matV *= glm::rotate(glm::radians(-m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_matV *= glm::rotate(glm::radians(-m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matV *= glm::translate(-m_position);
+		m_positionChanged = false;
+		m_rotationChanged = false;
+	}
+	return;
+}
 
-void drop();
-
-} // namespace g3d::gl::base
+}

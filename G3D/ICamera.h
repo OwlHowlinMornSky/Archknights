@@ -20,31 +20,31 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#include "base.h"
+#pragma once
 
-#include <memory>
-#include <SFML/Window/Context.hpp>
+#include "ITransformT.h"
+#include "ITransformR.h"
 
-namespace {
+namespace g3d {
 
-std::unique_ptr<sf::Context> g_context;
+class ICamera :
+	public ITransformT,
+	public ITransformR {
+public:
+	ICamera() = default;
+	virtual ~ICamera() = default;
 
-} // namespace
+	float getFF() {
+		return m_ff;
+	}
 
-namespace g3d::gl::base {
+	float getFN() {
+		return m_fn;
+	}
 
-void setup() {
-	g_context = std::make_unique<sf::Context>();
-	return;
-}
+protected:
+	float m_fn;
+	float m_ff;
+};
 
-bool setActive(bool active) {
-	return g_context->setActive(active);
-}
-
-void drop() {
-	g_context.reset();
-	return;
-}
-
-} // namespace
+} // namespace g3d

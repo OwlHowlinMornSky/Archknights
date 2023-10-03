@@ -19,12 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GL\base.h" />
-    <ClInclude Include="GL\glCheck.h" />
+    <ClCompile Include="base.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraPerspective.cpp" />
+    <ClCompile Include="glCheck.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GL\base.cpp" />
-    <ClCompile Include="GL\glCheck.cpp" />
+    <ClInclude Include="base.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraPerspective.h" />
+    <ClInclude Include="glCheck.h" />
+    <ClInclude Include="ICamera.h" />
+    <ClInclude Include="ITransformO.h" />
+    <ClInclude Include="ITransformR.h" />
+    <ClInclude Include="ITransformS.h" />
+    <ClInclude Include="ITransformT.h" />
+    <ClInclude Include="NonCopyable.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -89,7 +99,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -110,7 +120,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -131,7 +141,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -152,7 +162,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.0\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
