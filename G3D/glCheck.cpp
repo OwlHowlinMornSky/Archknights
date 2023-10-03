@@ -127,18 +127,18 @@ void CheckGLError(const char* file, unsigned int line, const char* expression) {
 		// Log the error
 		//GLog("An internal OpenGL call failed in %s (%d).\nExpression:\t%s\nError Description:\t%s\n%s\n", fileString.substr(fileString.find_last_of("\\/") + 1).c_str(), line, expression, error.c_str(), description.c_str());
 #ifdef _MSC_VER
-		printf_s("An internal OpenGL call failed in \'%s\' (line: %d).\n",
+		printf_s("G3D: An internal OpenGL call failed in %s(%d).\n",
 				 fileString.substr(fileString.find_last_of("\\/") + 1).c_str(),
 				 line);
-		printf_s("Expression: \'%s\'.\nError: \'%s\'.\nDescription: \'%s\'.\n",
+		printf_s("Expression:\n   %s\nError description:\n   %s\n   %s\n\n",
 				 expression,
 				 error.c_str(),
 				 description.c_str());
 #else
-		printf("An internal OpenGL call failed in \'%s\' (line: %d).\n",
+		printf("G3D: An internal OpenGL call failed in %s(%d).\n",
 				 fileString.substr(fileString.find_last_of("\\/") + 1).c_str(),
 				 line);
-		printf("Expression: \'%s\'.\nError: \'%s\'.\nDescription: \'%s\'.\n",
+		printf("Expression:\n   %s\nError description:\n   %s\n   %s\n\n",
 				 expression,
 				 error.c_str(),
 				 description.c_str());

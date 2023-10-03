@@ -23,6 +23,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraPerspective.cpp" />
     <ClCompile Include="glCheck.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderDefault.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base.h" />
@@ -30,11 +32,15 @@
     <ClInclude Include="CameraPerspective.h" />
     <ClInclude Include="glCheck.h" />
     <ClInclude Include="ICamera.h" />
+    <ClInclude Include="IShader.h" />
     <ClInclude Include="ITransformO.h" />
     <ClInclude Include="ITransformR.h" />
     <ClInclude Include="ITransformS.h" />
     <ClInclude Include="ITransformT.h" />
+    <ClInclude Include="IVertex.h" />
     <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderDefault.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

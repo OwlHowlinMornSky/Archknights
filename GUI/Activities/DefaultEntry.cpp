@@ -26,6 +26,10 @@
 #include "ActivityIDs.h"
 #include "../../Audio/BgmSFML.h"
 
+#include "../../G3D/base.h"
+
+#include "../../G3D/ShaderDefault.h"
+
 namespace GUI {
 
 DefaultEntry::DefaultEntry() :
@@ -36,10 +40,13 @@ DefaultEntry::~DefaultEntry() {}
 
 void DefaultEntry::start(ICarnival& carnival) {
 	ref_carnival = &carnival;
+	g3d::base::setup();
+	g3d::base::setActive(false);
 	return;
 }
 
 void DefaultEntry::stop() {
+	g3d::base::drop();
 	ref_carnival = nullptr;
 	return;
 }
@@ -84,11 +91,18 @@ void DefaultEntryDebug::start(ICarnival& carnival) {
 	m_bgm = std::make_unique<Audio::BgmSFML>();
 	m_bgm->openFromFile("test.ogg");
 	m_bgm->play();
+	g3d::base::setup();
+	g3d::base::setActive(true);
+
+	g3d::Shader* shader = new g3d::ShaderDefault();
+	shader->setup();
+
 	printf_s("DefaultEntryDebug: start, %p.\n", ref_carnival);
 	return;
 }
 
 void DefaultEntryDebug::stop() {
+	g3d::base::drop();
 	m_bgm->stop();
 	printf_s("DefaultEntryDebug: stop.\n");
 }

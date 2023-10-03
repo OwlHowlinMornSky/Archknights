@@ -20,38 +20,34 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#include "base.h"
+#pragma once
 
-#include <memory>
+#include "NonCopyable.h"
+
 #include <string>
+#include <SFML/OpenGL.hpp>
 
-#include <GL/glew.h>
-#include <SFML/Window/Context.hpp>
+namespace g3d {
 
-namespace {
+enum class ShaderType : size_t {
+	Vertex = 0,
+	Fragment,
+	COUNT
+};
 
-std::unique_ptr<sf::Context> g_context;
+class IShader :
+	public NonCopyable {
+public:
+	IShader() :
+		m_program(0) {}
+	virtual ~IShader() = default;
 
-} // namespace
+public:
+	static void BindShader(IShader* shader);
 
-namespace g3d::base {
+protected:
+	GLuint m_program;
+};
 
-void setup() {
-	g_context = std::make_unique<sf::Context>();
-	GLenum glew_err = glewInit();
-	if (glew_err != GLEW_OK) {
-		throw std::exception((std::string("Error initializing GLEW, error: ") + (const char*)glewGetErrorString(glew_err)).c_str());
-	}
-	return;
+
 }
-
-bool setActive(bool active) {
-	return g_context->setActive(active);
-}
-
-void drop() {
-	g_context.reset();
-	return;
-}
-
-} // namespace

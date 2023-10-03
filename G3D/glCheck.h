@@ -29,8 +29,8 @@ namespace g3d::impl {
 //void GLog(const char* format, ...);
 
 void CheckGLError(const char* file,
-							   unsigned int line,
-							   const char* expression);
+				  unsigned int line,
+				  const char* expression);
 
 } // namespace g3d::impl
 
