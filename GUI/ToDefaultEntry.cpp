@@ -21,11 +21,11 @@
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
 */
-#include "DefaultEntry.h"
+#include "Activities/DefaultEntry.h"
 
 #include "ToDefaultEntry.h"
 
-#include "TestActivity.h"
+#include "Activities/TestActivity.h"
 
 namespace GUI {
 

@@ -54,11 +54,13 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 	case WM_NCLBUTTONDOWN:
 		switch (wParam) {
-		case HTCAPTION:
-			PostMessageW(hWnd, WM_ACTIVATE, WA_CLICKACTIVE, 0);
-			PostMessageW(hWnd, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, lParam);
-			PostMessageW(hWnd, WM_MOUSEMOVE, MK_LBUTTON, 0);
-			return 0;
+		//case HTCAPTION:
+		//	if ((GetWindowLongPtrW(hWnd, GWL_STYLE) & WS_MAXIMIZE) == 0) {
+		//		PostMessageW(hWnd, WM_ACTIVATE, WA_CLICKACTIVE, 0);
+		//		PostMessageW(hWnd, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, lParam);
+		//		PostMessageW(hWnd, WM_MOUSEMOVE, MK_LBUTTON, 0);
+		//	}
+		//	return 0;
 		case HTMINBUTTON:
 		case HTMAXBUTTON:
 		case HTCLOSE:

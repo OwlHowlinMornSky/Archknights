@@ -22,12 +22,12 @@
 *
 */
 #include <SFML/Graphics.hpp>
-#include "framework.h"
+#include "../framework.h"
 
 #include "CarnivalWin32.h"
 
-#include "../GUI/Callbacks.h"
-#include "../GUI/ToDefaultEntry.h"
+#include "../../GUI/Callbacks.h"
+#include "../../GUI/ToDefaultEntry.h"
 
 namespace GUI {
 
@@ -129,6 +129,10 @@ void CarnivalWin32::runTheActivity() {
 	float dt = 0.0f;
 
 	Callbacks::OnIdle = [this, &dt, &clk]() -> void {
+		sf::Event evt;
+		while (ref_window->pollEvent(evt)) {
+			m_runningActivity->handleEvent(evt);
+		}
 		dt = clk.restart().asSeconds();
 		m_runningActivity->update(dt);
 	};

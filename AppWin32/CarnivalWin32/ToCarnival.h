@@ -23,39 +23,11 @@
 */
 #pragma once
 
-#include "../GUI/Carnival.h"
+#include "../../GUI/ICarnival.h"
+#include "../framework.h"
 
-namespace GUI {
+namespace AppWin32 {
 
-class CarnivalWin32 final : public Carnival {
-
-public:
-	CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window);
-
-	virtual ~CarnivalWin32() override;
-
-public:
-	virtual void run() override;
-
-	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const override;
-
-	virtual bool isEnabledClose() const override;
-	virtual bool isEnabledResize() const override;
-	virtual bool isEnabledMinimize() const override;
-
-	virtual void enableClose(bool enabled) const override;
-	virtual void enableResize(bool enabled) const override;
-	virtual void enableMinimize(bool enabled) const override;
-
-protected:
-	void runTheActivity();
-
-protected:
-	virtual std::unique_ptr<IActivity> createActivity(size_t id) const override;
-
-protected:
-	HWND m_hwnd;
-};
+std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hwnd, sf::RenderWindow* r_window);
 
 }
-

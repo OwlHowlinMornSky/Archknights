@@ -13,21 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{3e5333cc-1af4-44cf-bf5e-2c63ce4ab96b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\头文件">
+      <UniqueIdentifier>{5a5c9455-31e0-4c22-b2c8-050fd2048ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\源文件">
+      <UniqueIdentifier>{388d5f4d-1c06-458e-ba83-da34f35994e1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="接口">
-      <UniqueIdentifier>{a6d126c9-4a0b-423d-9271-dc8f587487f3}</UniqueIdentifier>
+      <UniqueIdentifier>{1386a27c-4c2b-43dd-8144-7537d5085216}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BgmSFML.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IBgm.h">
-      <Filter>接口</Filter>
+    <ClInclude Include="GL\glCheck.h">
+      <Filter>OpenGL\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BgmSFML.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="GL\glCheck.cpp">
+      <Filter>OpenGL\源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

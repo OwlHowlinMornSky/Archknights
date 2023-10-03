@@ -23,8 +23,8 @@
 */
 #pragma once
 
-#include "ActivityDependent.h"
-#include "../Audio/IBgm.h"
+#include "../ActivityDependent.h"
+#include "../../Audio/IBgm.h"
 
 namespace GUI {
 

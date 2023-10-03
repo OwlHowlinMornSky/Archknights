@@ -16,31 +16,22 @@
     <Filter Include="Activities">
       <UniqueIdentifier>{6d5371a9-65c3-4f52-ba98-2916a4ebda80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Activities\头文件">
+      <UniqueIdentifier>{bb3774aa-3c12-499e-a514-c68c5360a38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Activities\源文件">
+      <UniqueIdentifier>{13c0cd26-8a3c-483e-8b78-f7c189380155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="接口">
+      <UniqueIdentifier>{c195cebe-fb17-4041-9415-137ba1ceaf26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ICarnival.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IActivity.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Callbacks.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultEntry.h">
-      <Filter>Activities</Filter>
-    </ClInclude>
     <ClInclude Include="Carnival.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ToDefaultEntry.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TestActivity.h">
-      <Filter>Activities</Filter>
-    </ClInclude>
-    <ClInclude Include="ActivityIDs.h">
-      <Filter>Activities</Filter>
     </ClInclude>
     <ClInclude Include="ActivityIndependent.h">
       <Filter>头文件</Filter>
@@ -48,27 +39,45 @@
     <ClInclude Include="ActivityDependent.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Activities\DefaultEntry.h">
+      <Filter>Activities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\TestActivity.h">
+      <Filter>Activities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IActivity.h">
+      <Filter>接口</Filter>
+    </ClInclude>
+    <ClInclude Include="ICarnival.h">
+      <Filter>接口</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\ActivityIDs.h">
+      <Filter>Activities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ToDefaultEntry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callbacks.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultEntry.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
     <ClCompile Include="Carnival.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ToDefaultEntry.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TestActivity.cpp">
-      <Filter>Activities</Filter>
     </ClCompile>
     <ClCompile Include="ActivityIndependent.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ActivityDependent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\DefaultEntry.cpp">
+      <Filter>Activities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\TestActivity.cpp">
+      <Filter>Activities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ToDefaultEntry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

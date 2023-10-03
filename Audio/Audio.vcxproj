@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bgm.h" />
+    <ClInclude Include="BgmSFML.h" />
     <ClInclude Include="IBgm.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bgm.cpp" />
+    <ClCompile Include="BgmSFML.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -23,7 +23,7 @@
 */
 #pragma once
 
-#include "ActivityDependent.h"
+#include "../ActivityDependent.h"
 
 #include <SFML/Graphics.hpp>
 

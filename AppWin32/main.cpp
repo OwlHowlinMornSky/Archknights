@@ -29,7 +29,7 @@
 
 #include "Win32Things.h"
 #include "../GUI/Callbacks.h"
-#include "ToCarnival.h"
+#include "CarnivalWin32/ToCarnival.h"
 
 #include <memory>
 

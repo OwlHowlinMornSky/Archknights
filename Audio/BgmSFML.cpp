@@ -20,7 +20,7 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 */
-#include "BGM.h"
+#include "BgmSFML.h"
 
 #include <SFML/System/Err.hpp>
 

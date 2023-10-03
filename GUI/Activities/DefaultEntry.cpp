@@ -24,7 +24,7 @@
 #include "DefaultEntry.h"
 
 #include "ActivityIDs.h"
-#include "../Audio/Bgm.h"
+#include "../../Audio/BgmSFML.h"
 
 namespace GUI {
 
