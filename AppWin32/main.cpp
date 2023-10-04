@@ -33,12 +33,22 @@
 
 #include <memory>
 
+#include "UniqueInstance.h"
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_opt_ HINSTANCE hPrevInstance,
 					  _In_ LPWSTR    lpCmdLine,
 					  _In_ int       nCmdShow) {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	if (!AppWin32::uniqueInstance()) {
+		MessageBoxW(NULL,
+					L"Initialization failed:\nanother instance exists.",
+					L"Archknights: Fatal Error",
+					MB_ICONERROR);
+		return 1;
+	}
 
 	if (!SystemThings::MyRegisterClass(hInstance)) {
 		MessageBoxW(NULL,
@@ -99,5 +109,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	window->close();
 	DestroyWindow(hWnd);
 	SystemThings::MyUnregisterClass(hInstance);
+
+	AppWin32::instanceExit();
 	return 0;
 }

@@ -33,6 +33,9 @@
     <ClInclude Include="CarnivalWin32\ToCarnival.h">
       <Filter>CarnivalWin32</Filter>
     </ClInclude>
+    <ClInclude Include="UniqueInstance.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="CarnivalWin32\ToCarnival.cpp">
       <Filter>CarnivalWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="UniqueInstance.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
