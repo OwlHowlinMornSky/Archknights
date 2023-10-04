@@ -29,7 +29,9 @@ namespace GUI {
 std::unique_ptr<IActivity> createActivity(size_t id) {
 	switch (id) {
 	default:
+//#ifdef _DEBUG
 		return std::make_unique<TestActivity>(id);
+//#endif
 		break;
 	}
 	return nullptr;

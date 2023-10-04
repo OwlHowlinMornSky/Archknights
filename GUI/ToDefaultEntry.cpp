@@ -27,7 +27,6 @@
 #else
 #include "Activities/DefaultEntry.h"
 #endif
-#include "Activities/TestActivity.h"
 
 namespace GUI {
 
@@ -37,10 +36,6 @@ std::unique_ptr<IActivity> createDefaultEntry() {
 #else
 	return std::make_unique<DefaultEntry>();
 #endif
-}
-
-std::unique_ptr<IActivity> createTestActivity(size_t n) {
-    return std::make_unique<TestActivity>(n);
 }
 
 }

@@ -59,12 +59,10 @@ size_t DefaultEntry::getID() {
 void DefaultEntry::runIndependently() {
 	if (m_haveRunned) {
 		ref_carnival->setTransition(ICarnival::Exit);
-		ref_carnival->cancelKeepRunning();
 		return;
 	}
 	m_haveRunned = true;
 	ref_carnival->setTransition(-ICarnival::Push, GUI::ID_Load);
-	ref_carnival->cancelKeepRunning();
 	return;
 }
 

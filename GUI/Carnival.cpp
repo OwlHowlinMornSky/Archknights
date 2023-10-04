@@ -232,15 +232,11 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 		res->resume();
 	}
 	else {
-		res = createActivity(id);
+		res = GUI::createActivity(id);
 		if (res != nullptr)
 			res->start(*this);
 	}
 	return res;
-}
-
-std::unique_ptr<IActivity> Carnival::createActivity(size_t id) const {
-	return GUI::createActivity(id);
 }
 
 } // namespace GUI
