@@ -20,7 +20,7 @@ A Fan-made game of Arknights.
 <!--
  - Optional 可选的
 	 - [Spine Runtimes v3.8](https://github.com/EsotericSoftware/spine-runtimes).
--->
+
 
 ## 注意 Notice
 
@@ -33,6 +33,8 @@ This project contains several types of build. Some of them have **optional** dep
 You must have **a valid Spine License** to use Spine Runtimes when build this project.
 
 [Spine Runtimes Licensing](https://github.com/EsotericSoftware/spine-runtimes#Licensing).
+
+-->
 
 ***
 
