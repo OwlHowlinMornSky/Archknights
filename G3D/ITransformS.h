@@ -26,6 +26,9 @@
 
 namespace g3d {
 
+/**
+ * @brief 接口 Transform 缩放：用于可缩放的可变换物体。
+*/
 class ITransformS {
 protected:
 	ITransformS() :

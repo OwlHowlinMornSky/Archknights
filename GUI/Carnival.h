@@ -30,6 +30,9 @@
 
 namespace GUI {
 
+/**
+ * @brief 对 Carnival 的基础实现。但仍有平台特异的方法未实现。
+*/
 class Carnival : public ICarnival {
 public:
 	Carnival(sf::RenderWindow* r_window);
@@ -53,7 +56,7 @@ protected:
 	std::unique_ptr<IActivity> getActivity(size_t id);
 
 protected:
-	virtual std::unique_ptr<IActivity> createActivity(size_t id) const = 0;
+	virtual std::unique_ptr<IActivity> createActivity(size_t id) const;
 
 protected:
 	bool m_keepRunning;

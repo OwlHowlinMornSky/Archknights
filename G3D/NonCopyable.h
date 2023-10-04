@@ -24,6 +24,9 @@
 
 namespace g3d {
 
+/**
+ * @brief 不可复制类。
+*/
 class NonCopyable {
 protected:
 	NonCopyable() = default;

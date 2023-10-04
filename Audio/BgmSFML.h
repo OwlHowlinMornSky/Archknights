@@ -29,6 +29,9 @@
 
 namespace Audio {
 
+/**
+ * @brief IBgm 在 SFML 的实现。
+*/
 class BgmSFML final : public IBgm {
 public:
 	BgmSFML();

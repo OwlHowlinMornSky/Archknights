@@ -64,7 +64,9 @@ protected:
 	void runTheActivity();
 
 protected:
+#ifdef _DEBUG
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const override;
+#endif
 
 protected:
 	HWND m_hwnd; // 要管理的窗口 的句柄。

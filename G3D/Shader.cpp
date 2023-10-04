@@ -37,7 +37,7 @@ void checkError(GLuint l_shader, GLuint l_flag, bool l_program, std::string_view
 
 namespace g3d {
 
-void IShader::BindShader(IShader* shader) {
+void IShader::Bind(IShader* shader) {
 	if (shader) {
 		if (!shader->m_program) {
 #ifdef _DEBUG

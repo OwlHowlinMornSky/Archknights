@@ -24,6 +24,7 @@
 #include "Carnival.h"
 
 #include "ToDefaultEntry.h"
+#include "Activities/ToActivities.h"
 
 namespace GUI {
 
@@ -58,14 +59,14 @@ bool Carnival::handleTransition() {
 		return true;
 	bool isStop = true;
 	int t = m_transition;
-	m_transition = 0;
 	if (t < 0) {
 		isStop = false;
 		t = -t;
 	}
-	size_t oldID = m_runningActivity->getID();
-	size_t newID = 0;
-	size_t lca = 0;
+	size_t oldID = m_runningActivity->getID(); // 目前运行的Activity的ID。
+	size_t newID = 0; // 将要运行的Activity的ID。
+	size_t lca = 0; // 最近公共祖先（PopTo和PopPush用的）。
+	// 计算将要运行的ID。
 	switch (t) {
 	case Transition::Switch:
 		newID = m_transitionTarget[0];
@@ -75,11 +76,12 @@ bool Carnival::handleTransition() {
 		break;
 	case Transition::Pop:
 		if (m_activityStack.empty())
-			lca = 1;
+			lca = 1; // 栈空等同于 Exit。详见下面。
 		else
 			newID = m_activityStack.top();
 		break;
 	case Transition::PopTo:
+		// 弹栈目标和新ID相同。
 		newID = m_transitionTarget[0];
 		lca = m_transitionTarget[0];
 		break;
@@ -89,26 +91,37 @@ bool Carnival::handleTransition() {
 			lca = m_transitionTarget[0];
 		break;
 	case Transition::Exit:
-		lca = 1;
+		lca = 1; // 规定的 Exit。详见下面。
 		break;
 	default:
 		break;
 	}
+	// 重置迁移量。
+	m_transition = 0;
 	m_transitionTarget[0] = m_transitionTarget[1] = 0;
+	// 初步判断。
 	if (newID == 0) {
 		if (lca == 0)
-			return true;
+			return true; // 规定的 都为0 就算 无动作。
 		else {
+			// 规定的 newID 为0 且 lca 不为0 就算 Exit。
 			stopRunningActicity();
 			return false;
 		}
 	}
 	if (oldID == newID)
-		return true;
+		return true; // 新旧相同 也算 无动作。
+
+	// 下面的代码一定有以下条件:
+	// newID 不为 0。
+
 	std::unique_ptr<IActivity> newActivity = getActivity(newID);
 	if (newActivity == nullptr)
-		return true;
+		return true; // 创建失败。
+	if (newID != newActivity->getID())
+		return true; // 也是新旧相同。
 
+	// 栈变迁。
 	switch (t) {
 	case Transition::Switch:
 		if (isStop)
@@ -161,6 +174,7 @@ bool Carnival::handleTransition() {
 		}
 		break;
 	}
+	// 应用新Activity。
 	m_runningActivity = std::move(newActivity);
 #ifdef _DEBUG
 	showStack();
@@ -213,17 +227,20 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 	std::unique_ptr<IActivity> res;
 	auto i = m_pausedActivities.find(id);
 	if (i != m_pausedActivities.end()) {
-		//printf_s("find %zu\n", id);
 		res = std::move(i->second);
 		m_pausedActivities.erase(i);
 		res->resume();
 	}
 	else {
-		//printf_s("create %zu\n", id);
 		res = createActivity(id);
-		res->start(*this);
+		if (res != nullptr)
+			res->start(*this);
 	}
 	return res;
+}
+
+std::unique_ptr<IActivity> Carnival::createActivity(size_t id) const {
+	return GUI::createActivity(id);
 }
 
 } // namespace GUI

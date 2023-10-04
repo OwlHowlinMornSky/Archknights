@@ -19,12 +19,14 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
-*
 */
-#include "Activities/DefaultEntry.h"
-
 #include "ToDefaultEntry.h"
 
+#ifdef _DEBUG
+#include "Activities/DefaultEntryDebug.h"
+#else
+#include "Activities/DefaultEntry.h"
+#endif
 #include "Activities/TestActivity.h"
 
 namespace GUI {
@@ -37,10 +39,9 @@ std::unique_ptr<IActivity> createDefaultEntry() {
 #endif
 }
 
-#ifdef _DEBUG
 std::unique_ptr<IActivity> createTestActivity(size_t n) {
     return std::make_unique<TestActivity>(n);
 }
-#endif
 
 }
+

@@ -19,31 +19,15 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
 */
 #pragma once
 
-#include "IActivity.h"
+#include <memory>
+#include "../IActivity.h"
 
 namespace GUI {
 
-/**
- * @brief 独立 Activity。
-*/
-class ActivityIndependent : public IActivity {
-public:
-	ActivityIndependent() = default;
-	virtual ~ActivityIndependent() override = default;
+std::unique_ptr<IActivity> createActivity(size_t id);
 
-public:
-	// 禁止修改。
-	virtual bool isIndependent() const override final;
-	// 独立必须实现。
-	virtual void runIndependently() override = 0;
-
-	// 独立禁止使用。
-	virtual void handleEvent(const sf::Event& evt) override final;
-	// 独立禁止使用。
-	virtual void update(float dt) override final;
-};
-
-} // namespace GUI
+}

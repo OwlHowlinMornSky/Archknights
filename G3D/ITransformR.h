@@ -26,6 +26,9 @@
 
 namespace g3d {
 
+/**
+ * @brief 接口 Transform 旋转：用于可旋转的可变换物体。
+*/
 class ITransformR {
 protected:
 	ITransformR() = default;

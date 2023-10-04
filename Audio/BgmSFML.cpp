@@ -38,6 +38,13 @@ struct OHMSAUDIOCOMMENTSTRUCTURE {
 };
 
 #ifdef FILE_STRICT
+/**
+ * @brief 读取 OGG 文件里 key 为 “OHMSSPC” 的注释。
+ * @param stream: OGG 文件。
+ * @param buffer: 缓冲区。
+ * @param bufferLength: 缓冲区长度。
+ * @return 读取是否成功。
+*/
 bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsigned int& bufferLength) {
 	long long pos = 0;
 	unsigned char tmp[16];
@@ -191,6 +198,12 @@ bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsi
 }
 #endif
 
+/**
+ * @brief 读取 OHMS 特定的 循环点。
+ * @param stream: 文件流。
+ * @param data: [Out] 读到的循环点数据。
+ * @return 读取是否成功。
+*/
 bool readMusicLoopPoint(sf::InputStream& stream, OHMSAUDIOCOMMENTSTRUCTURE& data) {
 	unsigned char tmp[48];
 	unsigned int length = 48;
@@ -335,10 +348,12 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 		return false;
 	}
 
+	// 读到的话就设置循环点。
 	if (!failed) {
 		this->m_music->setLoopPoints(sf::Music::TimeSpan(sf::microseconds(data.offset),
 														 sf::microseconds(data.length)));
 	}
+	// 默认开启循环。
 	this->m_music->setLoop(true);
 
 	this->m_stream = std::move(stream);

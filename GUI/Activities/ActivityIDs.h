@@ -19,26 +19,28 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
-*
 */
 #pragma once
 
 namespace GUI {
 
+/**
+ * @brief Activity 标识。
+*/
 enum IDs : size_t {
-	ID_None = 0ull,
-	ID_DefaultEntry,
-	ID_Load,
-	ID_Title,
-	ID_Main,
-	ID_Panel,
-	ID_Construction,
+	ID_None = 0ull, //------------// 空。
+	ID_DefaultEntry, //-----------// 默认入口。
+	ID_Load, //-------------------// 加载界面。
+	ID_Title, //------------------// 标题界面。
+	ID_Main, //-------------------// 主界面。
+	ID_Panel, //------------------// 终端。
+	ID_Construction, //-----------// 基建。
 
-	ID_CTRL_BASE_COUNT,
+	ID_CTRL_BASE_COUNT, //--------// [标记] 基本界面 数量。
 
-	ID_DynamicBlock = 0x0080,
+	ID_DynamicBlock = 0x0080, //--// [标记] 动态界面区块 起始标记。
 
-	ID_RESERVED_COUNT = 0x0400
+	ID_RESERVED_COUNT = 0x0400 //-// [标记] 保留区 数量。在这之上的 ID 任意使用。
 };
 
 }

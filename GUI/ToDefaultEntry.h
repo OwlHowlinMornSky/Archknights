@@ -24,12 +24,12 @@
 #pragma once
 
 #include <memory>
+#include "IActivity.h"
 
 namespace GUI {
 
 std::unique_ptr<IActivity> createDefaultEntry();
-#ifdef _DEBUG
+
 std::unique_ptr<IActivity> createTestActivity(size_t n);
-#endif
 
 }

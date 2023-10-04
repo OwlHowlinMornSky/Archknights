@@ -41,10 +41,10 @@ void ShaderDefault::setup() {
 	//glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::TexCoord), "texCoord"));
 	//glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Color), "color"));
 	linkShader();
-	BindShader(this);
+	Bind(this);
 	m_uniform = getUniformLocation("matPVM");
 	updateUniform1iName("texture", 0);
-	BindShader(nullptr);
+	Bind(nullptr);
 	return;
 }
 

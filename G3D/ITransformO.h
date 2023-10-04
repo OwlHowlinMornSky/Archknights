@@ -26,6 +26,9 @@
 
 namespace g3d {
 
+/**
+ * @brief 接口 Transform 原点：用于可修改原点的可变换物体。
+*/
 class ITransformO {
 protected:
 	ITransformO() = default;

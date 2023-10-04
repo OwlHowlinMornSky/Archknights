@@ -6,18 +6,24 @@
 
 namespace g3d {
 
+/**
+ * @brief 公共的顶点属性。
+*/
 namespace VertexAttribute {
 
 enum : unsigned int {
-	Position = 0,
-	TexCoord,
-	Color,
-	Normal,
-	COUNT
+	Position = 0, // 顶点坐标。
+	TexCoord,     // 纹理坐标。
+	Color,        // 颜色。
+	Normal,       // 法向。
+	COUNT         // [计数]
 };
 
 }
 
+/**
+ * @brief 公共的基本顶点类型。
+*/
 struct Vertex {
 	Vertex() :
 		position({ 0 }),
@@ -73,10 +79,10 @@ struct Vertex {
 		color(tint),
 		texCoord(tex) {}
 
-	glm::vec3 position;
-	glm::vec3 normal;
-	glm::vec4 color;
-	glm::vec2 texCoord;
+	glm::vec3 position; // 顶点坐标。
+	glm::vec2 texCoord; // 纹理坐标。
+	glm::vec4 color;    // 颜色。
+	glm::vec3 normal;   // 法向。
 };
 
 }

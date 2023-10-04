@@ -27,6 +27,9 @@
 
 namespace g3d {
 
+/**
+ * @brief 接口 Camera。
+*/
 class ICamera :
 	public ITransformT,
 	public ITransformR {
@@ -34,17 +37,25 @@ public:
 	ICamera() = default;
 	virtual ~ICamera() = default;
 
+	/**
+	 * @brief 获取近场临界距离。
+	 * @return 近场临界距离。
+	*/
 	float getFF() {
 		return m_ff;
 	}
 
+	/**
+	 * @brief 获取远场临界距离。
+	 * @return 远场临界距离。
+	*/
 	float getFN() {
 		return m_fn;
 	}
 
 protected:
-	float m_fn;
-	float m_ff;
+	float m_fn; // 近场临界距离。
+	float m_ff; // 远场临界距离。
 };
 
 } // namespace g3d

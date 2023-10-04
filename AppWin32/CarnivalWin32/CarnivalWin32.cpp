@@ -172,9 +172,10 @@ void CarnivalWin32::runTheActivity() {
 	return;
 }
 
+#ifdef _DEBUG
 std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const {
-	// £¡£¡£¡Î´Íê³É£¡£¡£¡
 	return createTestActivity(id);
 }
+#endif
 
 } // namespace GUI

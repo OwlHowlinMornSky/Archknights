@@ -19,31 +19,41 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*
 */
 #pragma once
 
-#include "IActivity.h"
+#ifdef _DEBUG
+
+#include "../ActivityDependent.h"
+#include "../../Audio/IBgm.h"
 
 namespace GUI {
 
-/**
- * @brief 独立 Activity。
-*/
-class ActivityIndependent : public IActivity {
+class DefaultEntryDebug final : public ActivityDependent {
 public:
-	ActivityIndependent() = default;
-	virtual ~ActivityIndependent() override = default;
+	DefaultEntryDebug();
+	virtual ~DefaultEntryDebug() override;
 
 public:
-	// 禁止修改。
-	virtual bool isIndependent() const override final;
-	// 独立必须实现。
-	virtual void runIndependently() override = 0;
+	virtual void start(ICarnival& carnival) override;
+	virtual void stop() override;
+	virtual void pause() override;
+	virtual void resume() override;
+	virtual size_t getID() override;
 
-	// 独立禁止使用。
-	virtual void handleEvent(const sf::Event& evt) override final;
-	// 独立禁止使用。
-	virtual void update(float dt) override final;
+public:
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(float dt) override;
+
+protected:
+	ICarnival* ref_carnival;
+	bool m_disableClose;
+	bool m_disableResize;
+	bool m_disableMinimize;
+	std::unique_ptr<Audio::IBgm> m_bgm;
 };
 
-} // namespace GUI
+}
+
+#endif

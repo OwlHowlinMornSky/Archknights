@@ -57,6 +57,12 @@
     <ClInclude Include="ToDefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Activities\DefaultEntryDebug.h">
+      <Filter>Activities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\ToActivities.h">
+      <Filter>Activities\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callbacks.cpp">
@@ -79,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="ToDefaultEntry.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\DefaultEntryDebug.cpp">
+      <Filter>Activities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\ToActivities.cpp">
+      <Filter>Activities\源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

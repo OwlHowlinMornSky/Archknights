@@ -31,10 +31,13 @@ namespace Audio {
 */
 class IBgm {
 public:
+	/**
+	 * @brief 播放状态。
+	*/
 	enum class Status {
-		Stopped,
-		Paused,
-		Playing
+		Stopped, // 已停止。
+		Paused,  // 已暂停。
+		Playing  // 播放中。
 	};
 
 public:

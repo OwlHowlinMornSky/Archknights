@@ -29,12 +29,18 @@
 
 namespace g3d {
 
+/**
+ * @brief 着色器类型。
+*/
 enum class ShaderType : size_t {
-	Vertex = 0,
-	Fragment,
-	COUNT
+	Vertex = 0, // 顶点。
+	Fragment,   // 片元。
+	COUNT       // [计数]
 };
 
+/**
+ * @brief 接口 Shader。
+*/
 class IShader :
 	public NonCopyable {
 public:
@@ -43,10 +49,11 @@ public:
 	virtual ~IShader() = default;
 
 public:
-	static void BindShader(IShader* shader);
+	// 绑定着色器。
+	static void Bind(IShader* shader);
 
 protected:
-	GLuint m_program;
+	GLuint m_program; // 着色器程序（OpenGL）。
 };
 
 
