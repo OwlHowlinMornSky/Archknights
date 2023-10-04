@@ -1,8 +1,7 @@
 /*
-*                    GNU AFFERO GENERAL PUBLIC LICENSE
-*                       Version 3, 19 November 2007
+*    Archknights
 *
-*    Copyright (c) 2023  Tyler Parret True
+*    Copyright (C) 2023  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -18,18 +17,11 @@
 *    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 *
 * @Authors
-*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "glCheck.h"
 
 #ifdef _DEBUG
-
-//#include <cstdarg>
-//#include <cstring>
-//#include <cctype>
-//#include <cstdio>
-//#define WIN32_LEAN_AND_MEAN
-//#include <Windows.h>
 
 #include <GL/glew.h>
 #include <SFML/OpenGL.hpp>
@@ -45,42 +37,6 @@ wchar_t output[4096];
 } // namespace
 
 namespace g3d::impl {
-
-/*
-void GLog(const char* format, ...) {
-	char buf[4096];
-	char* p = buf;
-	va_list args;
-	int n;
-
-	va_start(args, format);
-	n = vsnprintf(p, sizeof buf - 3, format, args); // buf-3 is room for CR/LF/NUL
-
-	int len = (int)strlen(buf);
-	buf[len] = '\n';
-	buf[len + 1] = '\0';
-
-	vprintf(buf, args);
-	va_end(args);
-
-	p += (n < 0) ? sizeof buf - 3 : n;
-
-	while (p > buf && p[-1] >= 0 && p[-1] <= 255 && isspace(p[-1]))
-		*--p = '\0';
-
-	*p++ = '\r';
-	*p++ = '\n';
-	*p = '\0';
-
-	for (unsigned int i = 0; i < strlen(buf); i++)
-		output[i] = (wchar_t)buf[i];
-	output[strlen(buf)] = L'\0';
-
-#ifdef _MSC_VER
-	OutputDebugStringW(output);
-#endif
-	return;
-}*/
 
 void CheckGLError(const char* file, unsigned int line, const char* expression) {
 	// Get the last error

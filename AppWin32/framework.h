@@ -1,8 +1,7 @@
 ﻿/*
-*                    GNU AFFERO GENERAL PUBLIC LICENSE
-*                       Version 3, 19 November 2007
+*    Archknights
 *
-*    Copyright (c) 2023  Tyler Parret True
+*    Copyright (C) 2023  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -18,14 +17,15 @@
 *    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 *
 * @Authors
-*     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+* 
+* @Description
+*    header.h: 标准系统包含文件的包含文件，或特定于项目的包含文件
 */
-// header.h: 标准系统包含文件的包含文件，
-// 或特定于项目的包含文件
 #pragma once
 
 #include "targetver.h"
-#define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
+#define WIN32_LEAN_AND_MEAN // 从 Windows 头文件中排除极少使用的内容
 // Windows 头文件
 #include <Windows.h>
 // C 运行时头文件

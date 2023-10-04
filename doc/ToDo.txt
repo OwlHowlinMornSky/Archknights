@@ -1,0 +1,4 @@
+﻿﻿IModel 可绘制的对象
+﻿IGroup model指针的列表
+﻿IScene group指针的列表（unique_ptr
+﻿对象池（模板
