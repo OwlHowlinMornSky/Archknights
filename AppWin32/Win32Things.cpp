@@ -31,19 +31,29 @@
 
 namespace {
 
+/**
+ * @brief 计时器回调。
+*/
 void CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR nTimerid, DWORD systemTick) {
 	return Callbacks::OnIdle();
 }
 
+/**
+ * @brief 窗口回调。
+*/
 LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	static UINT_PTR l_timerID = 0;
 	switch (message) {
+	// 必须拦截该消息，因为 DefWindowProc 接受后会销毁窗口。
+	// 窗口是需要在 main 里最后销毁的。
 	// Don't forward this to DefWindowProc because it will destroy the window.
 	case WM_CLOSE:
 		break;
 
 	case WM_GETMINMAXINFO:
 	{
+		// 计算窗口最小尺寸。
+		// 保证的是 客户区 最小为 120 * 90。
 		// Compute the minimum size of the window.
 		const CREATESTRUCT& info = *(CREATESTRUCT*)lParam;
 		RECT rect = { 0, 0, 120, 90 };
@@ -52,6 +62,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		break;
 	}
 
+	// 拦截三大金刚键的消息。因为按下不松手会直接卡死。
 	case WM_NCLBUTTONDOWN:
 		switch (wParam) {
 		//case HTCAPTION:
@@ -66,9 +77,12 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		case HTCLOSE:
 			PostMessageW(hWnd, WM_ACTIVATE, WA_CLICKACTIVE, 0);
 			return 0;
+		default:
+			return DefWindowProcW(hWnd, message, wParam, lParam);
 		}
-		return DefWindowProcW(hWnd, message, wParam, lParam);
+		break;
 
+	// 触发三大金刚键的功能。
 	case WM_NCLBUTTONUP:
 		switch (wParam) {
 		case HTMINBUTTON:
@@ -106,9 +120,11 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		}
 		break;
 
+	// 右键也要拦截，因为按下不松手也会卡死。
 	case WM_NCRBUTTONDOWN:
 		break;
 
+	// 松开右键即打开系统菜单。
 	case WM_NCRBUTTONUP:
 		PostMessageW(hWnd, WM_CONTEXTMENU, NULL, lParam);
 		break;
@@ -158,8 +174,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	return 0;
 }
 
-const WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights";
-const WCHAR szTitle[] = L"Archknights";
+const WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // 窗口类的名称。
+const WCHAR szTitle[] = L"Archknights"; // 窗口的 初始 名称。
 
 } // namespace
 
@@ -203,9 +219,11 @@ bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 	WNDCLASSEX wcex{ 0 };
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
+	// 没必要重绘。
 	wcex.style = NULL;// CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = ::MyWndProc;
 	wcex.hInstance = hInstance;
+	// ！！！未完成！！！图标激情制作中（雾
 	//wcex.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON0));
 	wcex.hIconSm = wcex.hIcon;
 	wcex.hbrBackground = (HBRUSH)COLOR_WINDOWFRAME;
@@ -222,8 +240,7 @@ bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept {
 	HWND res = CreateWindowExW(WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
 							   WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-							   //CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
-							   CW_USEDEFAULT, 0, 800, 600,
+							   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
 							   nullptr, nullptr, hInstance, nullptr);
 	if (res == NULL) {
 		WinCheckError(L"CreateWindow");

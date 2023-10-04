@@ -21,17 +21,22 @@
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
 * @Description
-*     Callbacks.cpp : 定义一些基本的回调函数。
+*     定义一些基本的回调函数和相关变量。
 */
 #include "Callbacks.h"
 
 namespace {
 
+/**
+ * @brief 空函数。专门用来初始化下面那些玩意的。
+*/
 void fEmpty() {}
 
 } // namespace
 
 namespace Callbacks {
+
+// 这些全都是初始化。
 
 std::function<void()> OnSizing(::fEmpty);
 std::function<void()> OnIdle(::fEmpty);

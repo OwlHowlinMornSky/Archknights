@@ -19,7 +19,6 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
-*
 */
 #pragma once
 
@@ -59,7 +58,6 @@ public:
 	virtual ~ICarnival() = default;
 
 public:
-
 	/**
 	 * @brief 给非独立 Activity 用的退出运行的方法。
 	*/

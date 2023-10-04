@@ -34,7 +34,6 @@ TestActivity::~TestActivity() {
 }
 
 void TestActivity::start(GUI::ICarnival& carnival) {
-	carnival.getRenderWindow().setFramerateLimit(60);
 	ref_carnival = &carnival;
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });

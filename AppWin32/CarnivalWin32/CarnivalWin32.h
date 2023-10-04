@@ -20,6 +20,8 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
+* @Description
+*     定义了 ICarnival 实例之一 CarnivalWin32。
 */
 #pragma once
 
@@ -27,9 +29,17 @@
 
 namespace GUI {
 
-class CarnivalWin32 final : public Carnival {
-
+/**
+ * @brief Carnival 在 Win32 的实现。
+*/
+class CarnivalWin32 final :
+	public Carnival {
 public:
+	/**
+	 * @brief 构造函数。必须以 要管理的窗口 初始化。
+	 * @param hwnd: 要管理的窗口 的句柄。
+	 * @param r_window: 要管理的窗口 的 RenderWindow 指针。
+	*/
 	CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window);
 
 	virtual ~CarnivalWin32() override;
@@ -48,13 +58,16 @@ public:
 	virtual void enableMinimize(bool enabled) const override;
 
 protected:
+	/**
+	 * @brief 运行当前的 Activity。
+	*/
 	void runTheActivity();
 
 protected:
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const override;
 
 protected:
-	HWND m_hwnd;
+	HWND m_hwnd; // 要管理的窗口 的句柄。
 };
 
 }

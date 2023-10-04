@@ -20,6 +20,8 @@
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
 *
+* @Description
+*     实现了创建 Carnival 实例的方法。
 */
 #include <memory>
 
@@ -30,6 +32,7 @@
 namespace AppWin32 {
 
 std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hwnd, sf::RenderWindow* r_window) {
+	// 直接创建，没什么好说的。
 	return std::make_unique<GUI::CarnivalWin32>(hwnd, r_window);
 }
 

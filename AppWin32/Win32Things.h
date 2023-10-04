@@ -29,12 +29,33 @@
 
 namespace SystemThings {
 
+/**
+ * @brief 检查系统错误（GetLastError）。
+ * @param lpszFunction: 提示词。调试的时候就知道什么东西出了什么错。
+*/
 void WinCheckError(LPCWSTR lpszFunction) noexcept;
 
+/**
+ * @brief 注册窗口类。创建窗口前先调用这个。
+ * @param hInstance: 进程句柄。
+ * @return 创建是否成功。
+*/
 bool MyRegisterClass(HINSTANCE hInstance) noexcept;
 
+/**
+ * @brief 创建窗口。调用前请先注册窗口类。
+ * @brief 注意：只能创建一个窗口，多个窗口的表现未知。
+ * @param hInstance: 进程句柄。
+ * @param nCmdShow: ShowWindow 用的那个。WinMain 的形参肯定有。
+ * @param hWnd: [Out] 窗口句柄。
+ * @return 创建是否成功。
+*/
 bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept;
 
+/**
+ * @brief 注销窗口类。
+ * @param hInstance: 进程句柄。
+*/
 void MyUnregisterClass(HINSTANCE hInstance) noexcept;
 
 } // namespace SystemThings

@@ -19,7 +19,6 @@
 *
 * @Authors
 *     Tyler Parret True (OwlHowlinMornSky) <mysteryworldgod@outlook.com>
-*
 */
 #pragma once
 
@@ -28,4 +27,4 @@
 // 将 _WIN32_WINNT 宏设置为想要支持的平台。
 #include <SDKDDKVer.h>
 
-//#define _WIN32_WINNT _WIN32_WINNT_WIN10
+//#define _WIN32_WINNT _WIN32_WINNT_WIN10  // 本来是想设置成 win10 的，但是默认就是这个。也许以后会用到吧。
