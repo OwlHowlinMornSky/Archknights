@@ -24,7 +24,6 @@
 #ifdef _DEBUG
 
 #include <GL/glew.h>
-#include <SFML/OpenGL.hpp>
 
 #include <string>
 
