@@ -44,6 +44,15 @@ void CarnivalWin32::run() {
 	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
 	m_runningActivity->start(*this);
 
+	std::function<void()> oldEnter = Callbacks::OnEnterSysloop;
+	Callbacks::OnEnterSysloop = [this]()-> void {
+		m_runningActivity->onEnterSysloop();
+	};
+	std::function<void()> oldExit = Callbacks::OnExitSysloop;
+	Callbacks::OnExitSysloop = [this]()-> void {
+		m_runningActivity->onExitSysloop();
+	};
+
 	// 核心循环。
 	while (handleTransition()) {
 		if (m_runningActivity->isIndependent()) {
@@ -53,6 +62,9 @@ void CarnivalWin32::run() {
 			runTheActivity();
 		}
 	}
+
+	Callbacks::OnExitSysloop = oldExit;
+	Callbacks::OnEnterSysloop = oldEnter;
 
 	// 退出后 清空 Activity 栈。
 	while (!m_activityStack.empty()) {

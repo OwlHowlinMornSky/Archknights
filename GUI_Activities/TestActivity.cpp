@@ -25,6 +25,7 @@ namespace Activity {
 
 TestActivity::TestActivity(size_t n) :
 	m_id(n),
+	m_paused(false),
 	ref_carnival(nullptr) {
 	printf_s("TestActivity %zu: Construct.\n", m_id);
 }
@@ -78,12 +79,18 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Pop : GUI::ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
+		case sf::Keyboard::Backspace:
+			ref_carnival->setFullResizeMessage(true);
+			break;
+		case sf::Keyboard::Backslash:
+			ref_carnival->setFullResizeMessage(false);
+			break;
 		default:
 			break;
 		}
 		break;
 	case sf::Event::Resized:
-		//ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+		ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
 		break;
 	default:
 		break;
@@ -92,12 +99,23 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 }
 
 void TestActivity::update(float dt) {
-	m_shape.rotate(dt * 90.0f);
+	if (dt > 1.0f / 30.0f)
+		dt = 1.0f / 30.0f;
+	if (!m_paused)
+		m_shape.rotate(dt * 90.0f);
 
 	ref_carnival->getRenderWindow().clear(sf::Color::Green);
 	ref_carnival->getRenderWindow().draw(m_shape);
 	ref_carnival->getRenderWindow().display();
 	return;
+}
+
+void TestActivity::onEnterSysloop() {
+	m_paused = true;
+}
+
+void TestActivity::onExitSysloop() {
+	m_paused = false;
 }
 
 }

@@ -43,10 +43,14 @@ public:
 	virtual void handleEvent(const sf::Event& evt) override;
 	virtual void update(float dt) override;
 
+	virtual void onEnterSysloop();
+	virtual void onExitSysloop();
+
 protected:
 	GUI::ICarnival* ref_carnival;
 	sf::RectangleShape m_shape;
 	size_t m_id;
+	bool m_paused;
 };
 
 }

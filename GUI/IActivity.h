@@ -79,6 +79,9 @@ public:
 	 * @param dt 经过的时间。
 	*/
 	virtual void update(float dt) = 0;
+
+	virtual void onEnterSysloop() {}
+	virtual void onExitSysloop() {}
 }; // class IActivity
 
 } // namespace GUI
