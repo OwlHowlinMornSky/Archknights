@@ -27,11 +27,22 @@
 #define SIMILARITY_LEVEL (2)
 
 #if SIMILARITY_LEVEL == 0
-#define USE_MINE (true)
+
+#define USE_MINE
+#define USE_ONE_PICTURE
+
 #elif SIMILARITY_LEVEL == 1
-#define USE_LIKE (true)
+
+#define USE_LIKE
+#define USE_FRAME_ANIMATION
+
 #elif SIMILARITY_LEVEL == 2
-#define USE_SAME (true)
+
+#define USE_SAME
+#define USE_SPINE_RUNTIMES
+
 #else
+
 #error "Invalid Similarity Level".
+
 #endif
