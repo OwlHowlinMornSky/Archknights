@@ -18,7 +18,6 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-*
 */
 #pragma once
 

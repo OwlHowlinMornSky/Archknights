@@ -18,18 +18,14 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-*
 */
 #include "DefaultEntryDebug.h"
 
 #ifdef _DEBUG
-
-#include "ActivityIDs.h"
 #include "../Audio/BgmSFML.h"
-
 #include "../G3D/base.h"
-
 #include "../G3D/ShaderDefault.h"
+#include "ActivityIDs.h"
 
 namespace Activity {
 

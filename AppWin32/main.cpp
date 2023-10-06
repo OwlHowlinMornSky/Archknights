@@ -28,7 +28,7 @@
 
 #include "Win32Things.h"
 #include "../GUI/Callbacks.h"
-#include "CarnivalWin32/ToCarnival.h"
+#include "ToCarnival.h"
 
 #include <memory>
 
@@ -80,19 +80,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 	window->clear();
 	window->display();
-
-	RECT clientrect{ 0 };
-	POINT oldsize;
-	GetClientRect(hWnd, &clientrect);
-	oldsize = { clientrect.right, clientrect.bottom };
-
-	/*Callbacks::OnSizing = [&clientrect, &oldsize, &hWnd, &window]() -> void {
-		GetClientRect(hWnd, &clientrect);
-		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
-			oldsize = { clientrect.right, clientrect.bottom };
-			window->setSize({ (unsigned int)clientrect.right, (unsigned int)clientrect.bottom });
-		}
-	};*/
 
 	try {
 		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd, window.get());
