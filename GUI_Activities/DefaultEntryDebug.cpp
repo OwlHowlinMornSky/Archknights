@@ -42,7 +42,8 @@ DefaultEntryDebug::~DefaultEntryDebug() {
 }
 
 void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
-	carnival.getRenderWindow().setFramerateLimit(60);
+	//carnival.getRenderWindow().setFramerateLimit(60);
+	carnival.getRenderWindow().setVerticalSyncEnabled(true);
 	ref_carnival = &carnival;
 	m_bgm = std::make_unique<Audio::BgmSFML>();
 	m_bgm->openFromFile("test.ogg");

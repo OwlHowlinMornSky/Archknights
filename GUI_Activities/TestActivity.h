@@ -47,6 +47,9 @@ public:
 	virtual void onExitSysloop();
 
 protected:
+	void updateSize();
+
+protected:
 	GUI::ICarnival* ref_carnival;
 	sf::RectangleShape m_shape;
 	size_t m_id;

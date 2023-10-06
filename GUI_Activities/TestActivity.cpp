@@ -37,10 +37,9 @@ TestActivity::~TestActivity() {
 void TestActivity::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 
-	auto size = ref_carnival->getRenderWindow().getSize();
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
-	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
+	updateSize();
 
 	printf_s("TestActivity %zu: start, %p.\n", m_id, ref_carnival);
 	return;
@@ -55,10 +54,7 @@ void TestActivity::pause() {
 }
 
 void TestActivity::resume() {
-
-	auto size = ref_carnival->getRenderWindow().getSize();
-	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
-
+	updateSize();
 	printf_s("TestActivity %zu: resume.\n", m_id);
 }
 
@@ -108,10 +104,10 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 
 void TestActivity::update(sf::Time deltaTime) {
 	float dt = deltaTime.asSeconds();
-	if (dt > 1.0f / 30.0f)
-		dt = 1.0f / 30.0f;
+	if (dt > 0.1f)
+		dt = 0.1f;
 	if (!m_paused)
-		m_shape.rotate(dt * 90.0f);
+		m_shape.rotate(dt * 180.0f);
 
 	ref_carnival->getRenderWindow().clear(sf::Color::Green);
 	ref_carnival->getRenderWindow().draw(m_shape);
@@ -120,11 +116,17 @@ void TestActivity::update(sf::Time deltaTime) {
 }
 
 void TestActivity::onEnterSysloop() {
-	m_paused = true;
+	//m_paused = true;
 }
 
 void TestActivity::onExitSysloop() {
 	m_paused = false;
+}
+
+void TestActivity::updateSize() {
+	auto size = ref_carnival->getRenderWindow().getSize();
+	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
+	ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));
 }
 
 }
