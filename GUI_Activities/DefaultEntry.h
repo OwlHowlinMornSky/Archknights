@@ -22,17 +22,17 @@
 */
 #pragma once
 
-#include "../ActivityIndependent.h"
+#include "../GUI/ActivityIndependent.h"
 
-namespace GUI {
+namespace Activity {
 
-class DefaultEntry final : public ActivityIndependent {
+class DefaultEntry final : public GUI::ActivityIndependent {
 public:
 	DefaultEntry();
 	virtual ~DefaultEntry() override;
 
 public:
-	virtual void start(ICarnival& carnival) override;
+	virtual void start(GUI::ICarnival& carnival) override;
 	virtual void stop() override;
 	virtual void pause() override;
 	virtual void resume() override;
@@ -42,7 +42,7 @@ public:
 	virtual void runIndependently() override;
 
 protected:
-	ICarnival* ref_carnival;
+	GUI::ICarnival* ref_carnival;
 	bool m_haveRunned;
 };
 

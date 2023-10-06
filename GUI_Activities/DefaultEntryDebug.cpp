@@ -25,13 +25,13 @@
 #ifdef _DEBUG
 
 #include "ActivityIDs.h"
-#include "../../Audio/BgmSFML.h"
+#include "../Audio/BgmSFML.h"
 
-#include "../../G3D/base.h"
+#include "../G3D/base.h"
 
-#include "../../G3D/ShaderDefault.h"
+#include "../G3D/ShaderDefault.h"
 
-namespace GUI {
+namespace Activity {
 
 DefaultEntryDebug::DefaultEntryDebug() :
 	ref_carnival(nullptr),
@@ -45,7 +45,7 @@ DefaultEntryDebug::~DefaultEntryDebug() {
 	printf_s("DefaultEntryDebug: Destruct.\n");
 }
 
-void DefaultEntryDebug::start(ICarnival& carnival) {
+void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 	carnival.getRenderWindow().setFramerateLimit(60);
 	ref_carnival = &carnival;
 	m_bgm = std::make_unique<Audio::BgmSFML>();
@@ -78,27 +78,27 @@ void DefaultEntryDebug::resume() {
 }
 
 size_t DefaultEntryDebug::getID() {
-	return GUI::ID_DefaultEntry;
+	return ID_DefaultEntry;
 }
 
 void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		ref_carnival->setTransition(ICarnival::Exit);
+		ref_carnival->setTransition(GUI::ICarnival::Exit);
 		ref_carnival->cancelKeepRunning();
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(-ICarnival::Push, 2);
+			ref_carnival->setTransition(-GUI::ICarnival::Push, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::E:
-			ref_carnival->setTransition(-ICarnival::Switch, 2);
+			ref_carnival->setTransition(-GUI::ICarnival::Switch, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(ICarnival::Pop);
+			ref_carnival->setTransition(GUI::ICarnival::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Space:

@@ -151,9 +151,9 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		Callbacks::OnExitSysloop();
 		break;
 
-	case WM_SIZING:
-		Callbacks::OnSizing();
-		break;
+	//case WM_SIZING:
+	//	Callbacks::OnSizing();
+	//	break;
 
 	case WM_ENTERSIZEMOVE:
 		if (l_timerID) KillTimer(0, l_timerID);

@@ -33,7 +33,7 @@ namespace Callbacks {
  * @brief 只需要在 main 函数里设置好，之后就不用再动了。
  * @brief 会在 MyWndProc 里使用。
 */
-extern std::function<void()> OnSizing;
+//extern std::function<void()> OnSizing;
 /**
  * @brief 闲置状态的回调。
  * @brief 这玩意存在的目的主要就是防止 移动窗口 和 改变窗口大小 时 把主逻辑卡住。

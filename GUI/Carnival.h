@@ -53,6 +53,8 @@ protected:
 
 	std::unique_ptr<IActivity> getActivity(size_t id);
 
+	virtual std::unique_ptr<IActivity> createActivity(size_t id) const = 0;
+
 protected:
 	bool m_keepRunning;
 	int m_transition;

@@ -155,29 +155,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Activities\ActivityIDs.h" />
-    <ClInclude Include="Activities\DefaultEntry.h" />
-    <ClInclude Include="Activities\DefaultEntryDebug.h" />
-    <ClInclude Include="Activities\TestActivity.h" />
-    <ClInclude Include="Activities\ToActivities.h" />
     <ClInclude Include="ActivityDependent.h" />
     <ClInclude Include="ActivityIndependent.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Carnival.h" />
     <ClInclude Include="IActivity.h" />
     <ClInclude Include="ICarnival.h" />
-    <ClInclude Include="ToDefaultEntry.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Activities\DefaultEntry.cpp" />
-    <ClCompile Include="Activities\DefaultEntryDebug.cpp" />
-    <ClCompile Include="Activities\TestActivity.cpp" />
-    <ClCompile Include="Activities\ToActivities.cpp" />
     <ClCompile Include="ActivityDependent.cpp" />
     <ClCompile Include="ActivityIndependent.cpp" />
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Carnival.cpp" />
-    <ClCompile Include="ToDefaultEntry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

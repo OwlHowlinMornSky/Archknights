@@ -19,23 +19,27 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "ToDefaultEntry.h"
+#pragma once
 
-#ifdef _DEBUG
-#include "Activities/DefaultEntryDebug.h"
-#else
-#include "Activities/DefaultEntry.h"
-#endif
+namespace Activity {
 
-namespace GUI {
+/**
+ * @brief Activity 标识。
+*/
+enum IDs : size_t {
+	ID_None = 0ull, //------------// 空。
+	ID_DefaultEntry, //-----------// 默认入口。
+	ID_Load, //-------------------// 加载界面。
+	ID_Title, //------------------// 标题界面。
+	ID_Main, //-------------------// 主界面。
+	ID_Panel, //------------------// 终端。
+	ID_Construction, //-----------// 基建。
 
-std::unique_ptr<IActivity> createDefaultEntry() {
-#ifdef _DEBUG
-	return std::make_unique<DefaultEntryDebug>();
-#else
-	return std::make_unique<DefaultEntry>();
-#endif
+	ID_CTRL_BASE_COUNT, //--------// [标记] 基本界面 数量。
+
+	ID_DynamicBlock = 0x0080, //--// [标记] 动态界面区块 起始标记。
+
+	ID_RESERVED_COUNT = 0x0400 //-// [标记] 保留区 数量。在这之上的 ID 任意使用。
+};
+
 }
-
-}
-

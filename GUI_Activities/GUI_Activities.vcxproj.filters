@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
     <Filter Include="头文件">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -9,45 +13,29 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="接口">
-      <UniqueIdentifier>{c195cebe-fb17-4041-9415-137ba1ceaf26}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Callbacks.h">
+    <ClInclude Include="ActivityIDs.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Carnival.h">
+    <ClInclude Include="DefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ActivityIndependent.h">
+    <ClInclude Include="DefaultEntryDebug.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ActivityDependent.h">
+    <ClInclude Include="TestActivity.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IActivity.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ICarnival.h">
-      <Filter>接口</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Callbacks.cpp">
+    <ClCompile Include="DefaultEntry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Carnival.cpp">
+    <ClCompile Include="DefaultEntryDebug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ActivityIndependent.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ActivityDependent.cpp">
+    <ClCompile Include="TestActivity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

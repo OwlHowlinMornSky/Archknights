@@ -18,28 +18,23 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+* 
+* @Description
+*    定义了创建 Carnival 实例的方法。
 */
 #pragma once
 
-namespace GUI {
+#include "../GUI/ICarnival.h"
+#include "framework.h"
+
+namespace AppWin32 {
 
 /**
- * @brief Activity 标识。
+ * @brief 创建 Carnival 实例的方法。其创建的是 CarnivalWin32，这样包装是为了避免扩散头文件。
+ * @param hwnd: 要管理的窗口 的句柄，是 CarnivalWin32 构造需要的数据。
+ * @param r_window: 要管理的窗口 的 RenderWindow 指针，是 CarnivalWin32 构造需要的数据。
+ * @return 创建好的 Carnival 实例。
 */
-enum IDs : size_t {
-	ID_None = 0ull, //------------// 空。
-	ID_DefaultEntry, //-----------// 默认入口。
-	ID_Load, //-------------------// 加载界面。
-	ID_Title, //------------------// 标题界面。
-	ID_Main, //-------------------// 主界面。
-	ID_Panel, //------------------// 终端。
-	ID_Construction, //-----------// 基建。
-
-	ID_CTRL_BASE_COUNT, //--------// [标记] 基本界面 数量。
-
-	ID_DynamicBlock = 0x0080, //--// [标记] 动态界面区块 起始标记。
-
-	ID_RESERVED_COUNT = 0x0400 //-// [标记] 保留区 数量。在这之上的 ID 任意使用。
-};
+std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hwnd, sf::RenderWindow* r_window);
 
 }

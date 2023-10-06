@@ -19,17 +19,35 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "ToActivities.h"
+#include <SFML/Graphics.hpp>
+#include "framework.h"
 
-#include "TestActivity.h"
+#include "CarnivalWin32.h"
+
+#ifdef _DEBUG
+#include "../GUI_Activities/DefaultEntryDebug.h"
+#else
+#include "../GUI_Activities/DefaultEntry.h"
+#endif
+
+#include "../GUI_Activities/TestActivity.h"
+
+#include "../GUI_Activities/ActivityIDs.h"
 
 namespace GUI {
 
-std::unique_ptr<IActivity> createActivity(size_t id) {
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const {
 	switch (id) {
+	case Activity::ID_DefaultEntry:
+#ifdef _DEBUG
+		return std::make_unique<Activity::DefaultEntryDebug>();
+#else
+		return std::make_unique<Activity::DefaultEntry>();
+#endif
+		break;
 	default:
 //#ifdef _DEBUG
-		return std::make_unique<TestActivity>(id);
+		return std::make_unique<Activity::TestActivity>(id);
 //#endif
 		break;
 	}

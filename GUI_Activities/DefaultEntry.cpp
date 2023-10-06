@@ -18,14 +18,51 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*
 */
-#pragma once
+#include "DefaultEntry.h"
 
-#include <memory>
-#include "IActivity.h"
+#include "ActivityIDs.h"
 
-namespace GUI {
+#include "../G3D/base.h"
 
-std::unique_ptr<IActivity> createDefaultEntry();
+namespace Activity {
 
+DefaultEntry::DefaultEntry() :
+	m_haveRunned(false),
+	ref_carnival(nullptr) {}
+
+DefaultEntry::~DefaultEntry() {}
+
+void DefaultEntry::start(GUI::ICarnival& carnival) {
+	ref_carnival = &carnival;
+	g3d::base::setup();
+	g3d::base::setActive(false);
+	return;
 }
+
+void DefaultEntry::stop() {
+	g3d::base::drop();
+	ref_carnival = nullptr;
+	return;
+}
+
+void DefaultEntry::pause() {}
+
+void DefaultEntry::resume() {}
+
+size_t DefaultEntry::getID() {
+	return ID_DefaultEntry;
+}
+
+void DefaultEntry::runIndependently() {
+	if (m_haveRunned) {
+		ref_carnival->setTransition(GUI::ICarnival::Exit);
+		return;
+	}
+	m_haveRunned = true;
+	ref_carnival->setTransition(-GUI::ICarnival::Push, ID_Load);
+	return;
+}
+
+} // namespace GUI

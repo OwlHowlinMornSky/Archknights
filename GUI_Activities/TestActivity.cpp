@@ -22,6 +22,8 @@
 */
 #include "TestActivity.h"
 
+namespace Activity {
+
 TestActivity::TestActivity(size_t n) :
 	m_id(n),
 	ref_carnival(nullptr) {
@@ -81,6 +83,9 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 			break;
 		}
 		break;
+	case sf::Event::Resized:
+		//ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+		break;
 	default:
 		break;
 	}
@@ -94,4 +99,6 @@ void TestActivity::update(float dt) {
 	ref_carnival->getRenderWindow().draw(m_shape);
 	ref_carnival->getRenderWindow().display();
 	return;
+}
+
 }

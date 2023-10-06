@@ -21,9 +21,6 @@
 */
 #include "Carnival.h"
 
-#include "ToDefaultEntry.h"
-#include "Activities/ToActivities.h"
-
 namespace GUI {
 
 Carnival::Carnival(sf::RenderWindow* r_window) :
@@ -230,7 +227,7 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
 		res->resume();
 	}
 	else {
-		res = GUI::createActivity(id);
+		res = this->createActivity(id);
 		if (res != nullptr)
 			res->start(*this);
 	}

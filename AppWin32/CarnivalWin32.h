@@ -24,7 +24,7 @@
 */
 #pragma once
 
-#include "../../GUI/Carnival.h"
+#include "../GUI/Carnival.h"
 
 namespace GUI {
 
@@ -61,6 +61,8 @@ protected:
 	 * @brief 运行当前的 Activity。
 	*/
 	void runTheActivity();
+
+	virtual std::unique_ptr<IActivity> createActivity(size_t id) const;
 
 protected:
 	HWND m_hwnd; // 要管理的窗口 的句柄。

@@ -22,14 +22,17 @@
 */
 #pragma once
 
-#include "../ActivityDependent.h"
+#ifdef _DEBUG
 
-#include <SFML/Graphics.hpp>
+#include "../GUI/ActivityDependent.h"
+#include "../Audio/IBgm.h"
 
-class TestActivity final : public GUI::ActivityDependent {
+namespace Activity {
+
+class DefaultEntryDebug final : public GUI::ActivityDependent {
 public:
-	TestActivity(size_t n);
-	virtual ~TestActivity() override;
+	DefaultEntryDebug();
+	virtual ~DefaultEntryDebug() override;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;
@@ -44,6 +47,12 @@ public:
 
 protected:
 	GUI::ICarnival* ref_carnival;
-	sf::RectangleShape m_shape;
-	size_t m_id;
+	bool m_disableClose;
+	bool m_disableResize;
+	bool m_disableMinimize;
+	std::unique_ptr<Audio::IBgm> m_bgm;
 };
+
+}
+
+#endif

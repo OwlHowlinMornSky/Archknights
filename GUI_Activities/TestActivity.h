@@ -18,23 +18,37 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-* 
-* @Description
-*    定义了创建 Carnival 实例的方法。
+*
 */
 #pragma once
 
-#include "../../GUI/ICarnival.h"
-#include "../framework.h"
+#include "../GUI/ActivityDependent.h"
 
-namespace AppWin32 {
+#include <SFML/Graphics.hpp>
 
-/**
- * @brief 创建 Carnival 实例的方法。其创建的是 CarnivalWin32，这样包装是为了避免扩散头文件。
- * @param hwnd: 要管理的窗口 的句柄，是 CarnivalWin32 构造需要的数据。
- * @param r_window: 要管理的窗口 的 RenderWindow 指针，是 CarnivalWin32 构造需要的数据。
- * @return 创建好的 Carnival 实例。
-*/
-std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hwnd, sf::RenderWindow* r_window);
+namespace Activity {
+
+class TestActivity final : public GUI::ActivityDependent {
+public:
+	TestActivity(size_t n);
+	virtual ~TestActivity() override;
+
+public:
+	virtual void start(GUI::ICarnival& carnival) override;
+	virtual void stop() override;
+	virtual void pause() override;
+	virtual void resume() override;
+	virtual size_t getID() override;
+
+public:
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(float dt) override;
+
+protected:
+	GUI::ICarnival* ref_carnival;
+	sf::RectangleShape m_shape;
+	size_t m_id;
+};
 
 }
+

@@ -16,12 +16,6 @@
     <Filter Include="CarnivalWin32">
       <UniqueIdentifier>{37f30863-6012-4cb4-8e00-358b9dc3d25a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CarnivalWin32\头文件">
-      <UniqueIdentifier>{12580b88-51a0-4637-aee0-8ab5671322ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CarnivalWin32\源文件">
-      <UniqueIdentifier>{d128a7df-faf8-4a4c-bf61-c384a94c4b4d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -36,11 +30,11 @@
     <ClInclude Include="UniqueInstance.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CarnivalWin32\CarnivalWin32.h">
-      <Filter>CarnivalWin32\头文件</Filter>
+    <ClInclude Include="CarnivalWin32.h">
+      <Filter>CarnivalWin32</Filter>
     </ClInclude>
-    <ClInclude Include="CarnivalWin32\ToCarnival.h">
-      <Filter>CarnivalWin32\头文件</Filter>
+    <ClInclude Include="ToCarnival.h">
+      <Filter>CarnivalWin32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +47,14 @@
     <ClCompile Include="UniqueInstance.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CarnivalWin32\CarnivalWin32.cpp">
-      <Filter>CarnivalWin32\源文件</Filter>
+    <ClCompile Include="CarnivalWin32.cpp">
+      <Filter>CarnivalWin32</Filter>
     </ClCompile>
-    <ClCompile Include="CarnivalWin32\ToCarnival.cpp">
-      <Filter>CarnivalWin32\源文件</Filter>
+    <ClCompile Include="ToCarnival.cpp">
+      <Filter>CarnivalWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="ToActivities.cpp">
+      <Filter>CarnivalWin32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

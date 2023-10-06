@@ -24,12 +24,12 @@
 */
 // SFML 的东西必须 在 Windows的 之前。
 #include <SFML/Graphics.hpp>
-#include "../framework.h"
+#include "framework.h"
 
 #include "CarnivalWin32.h"
 
-#include "../../GUI/Callbacks.h"
-#include "../../GUI/ToDefaultEntry.h"
+#include "../GUI/Callbacks.h"
+#include "../GUI_Activities/ActivityIDs.h"
 
 namespace GUI {
 
@@ -41,7 +41,7 @@ CarnivalWin32::~CarnivalWin32() {}
 
 void CarnivalWin32::run() {
 	// 创建并唤起 默认入口 Activity。
-	m_runningActivity = createDefaultEntry();
+	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
 	m_runningActivity->start(*this);
 
 	// 核心循环。
@@ -85,7 +85,7 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 }
 
 bool CarnivalWin32::isEnabledClose() const {
-    return Callbacks::ButtonEnabled_Close;
+	return Callbacks::ButtonEnabled_Close;
 }
 
 bool CarnivalWin32::isEnabledResize() const {
@@ -138,10 +138,29 @@ void CarnivalWin32::runTheActivity() {
 	sf::Clock clk;
 	float dt = 0.0f;
 
+
+	POINT oldsize{ 0 };
+	{
+		RECT clientrect{ 0 };
+		GetClientRect(m_hwnd, &clientrect);
+		oldsize = { clientrect.right, clientrect.bottom };
+	}
 	// 修改 Idle 回调，要把旧的回调保存下来。
 	std::function<void()> oldIdle = Callbacks::OnIdle;
-	Callbacks::OnIdle = [this, &dt, &clk]() -> void {
+	Callbacks::OnIdle = [this, &dt, &clk, &oldsize]() -> void {
 		sf::Event evt;
+
+		RECT clientrect{ 0 };
+		GetClientRect(m_hwnd, &clientrect);
+		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
+			oldsize = { clientrect.right, clientrect.bottom };
+			ref_window->setSize({ (unsigned int)clientrect.right, (unsigned int)clientrect.bottom });
+			evt.type = sf::Event::Resized;
+			evt.size.width = oldsize.x;
+			evt.size.height = oldsize.y;
+			m_runningActivity->handleEvent(evt);
+		}
+
 		while (ref_window->pollEvent(evt)) {
 			m_runningActivity->handleEvent(evt);
 		}
