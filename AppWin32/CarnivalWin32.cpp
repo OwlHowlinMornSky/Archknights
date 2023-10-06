@@ -152,18 +152,18 @@ void CarnivalWin32::runTheActivity() {
 	std::function<void()> oldIdle = Callbacks::OnIdle;
 	Callbacks::OnIdle = [this, &dt, &clk, &oldsize]() -> void {
 		sf::Event evt;
-
-		RECT clientrect{ 0 };
-		GetClientRect(m_hwnd, &clientrect);
-		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
-			oldsize = { clientrect.right, clientrect.bottom };
-			ref_window->setSize({ (unsigned int)clientrect.right, (unsigned int)clientrect.bottom });
-			evt.type = sf::Event::Resized;
-			evt.size.width = oldsize.x;
-			evt.size.height = oldsize.y;
-			m_runningActivity->handleEvent(evt);
+		if (m_enableFullResizeMessage) {
+			RECT clientrect{ 0 };
+			GetClientRect(m_hwnd, &clientrect);
+			if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
+				oldsize = { clientrect.right, clientrect.bottom };
+				ref_window->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
+				evt.type = sf::Event::Resized;
+				evt.size.width = oldsize.x;
+				evt.size.height = oldsize.y;
+				m_runningActivity->handleEvent(evt);
+			}
 		}
-
 		while (ref_window->pollEvent(evt)) {
 			m_runningActivity->handleEvent(evt);
 		}

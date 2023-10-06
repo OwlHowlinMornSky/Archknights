@@ -45,15 +45,16 @@ public:
 	*/
 	enum Transition : int {
 		Switch = 1, // 1 个目标。当前 Activity 会被弹出，目标将被压入栈并运行。
-		Push      , // 1 个目标。其将被压入栈中并运行。
-		Pop       , // 0 个目标。当前 Activity 会被弹出，新的栈顶将运行，若栈空则退出。
-		PopTo     , // 1 个目标。如果目标在栈中，则栈会被弹至目标，目标在栈顶且将运行，否则无效果。
-		PopPush   , // 2 个目标。如果目标0在栈中，则栈会被弹至之，目标1被压入且将运行，否则与 Push 相同。
+		Push, // 1 个目标。其将被压入栈中并运行。
+		Pop, // 0 个目标。当前 Activity 会被弹出，新的栈顶将运行，若栈空则退出。
+		PopTo, // 1 个目标。如果目标在栈中，则栈会被弹至目标，目标在栈顶且将运行，否则无效果。
+		PopPush, // 2 个目标。如果目标0在栈中，则栈会被弹至之，目标1被压入且将运行，否则与 Push 相同。
 		Exit        // 0 个目标。强制退出。
 	};
 
 public:
-	ICarnival() = default;
+	ICarnival() :
+		m_enableFullResizeMessage(true) {}
 	virtual ~ICarnival() = default;
 
 public:
@@ -80,6 +81,14 @@ public:
 	virtual void run() = 0;
 
 public:
+	/**
+	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
+	 * @param enabled: 是否开启。
+	*/
+	void setFullResizeMessage(bool enabled) {
+		m_enableFullResizeMessage = enabled;
+	}
+
 	/**
 	 * @brief 显示一个消息框。
 	 * @param title: 消息框的标题。
@@ -131,6 +140,9 @@ public:
 	 * @param full: 是否启用全屏。
 	*/
 	virtual void setFullscreen(bool full) = 0;
+
+protected:
+	bool m_enableFullResizeMessage;
 }; // class ICarnival
 
 } // namespace GUI
