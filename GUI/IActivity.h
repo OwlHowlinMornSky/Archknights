@@ -22,6 +22,7 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Time.hpp>
 #include "ICarnival.h"
 
 namespace GUI {
@@ -76,9 +77,9 @@ public:
 	virtual void handleEvent(const sf::Event& evt) = 0;
 	/**
 	 * @brief 更新。
-	 * @param dt 经过的时间。
+	 * @param deltaTime 经过的时间。
 	*/
-	virtual void update(float dt) = 0;
+	virtual void update(sf::Time deltaTime) = 0;
 
 	virtual void onEnterSysloop() {}
 	virtual void onExitSysloop() {}

@@ -41,7 +41,7 @@ public:
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
-	virtual void update(float dt) override;
+	virtual void update(sf::Time deltaTime) override;
 
 	virtual void onEnterSysloop();
 	virtual void onExitSysloop();

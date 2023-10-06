@@ -29,6 +29,6 @@ bool ActivityIndependent::isIndependent() const {
 
 void ActivityIndependent::handleEvent(const sf::Event& evt) {}
 
-void ActivityIndependent::update(float dt) {}
+void ActivityIndependent::update(sf::Time deltaTime) {}
 
 } // namespace GUI

@@ -116,7 +116,7 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void DefaultEntryDebug::update(float dt) {
+void DefaultEntryDebug::update(sf::Time deltaTime) {
 	ref_carnival->getRenderWindow().clear(sf::Color::Red);
 	ref_carnival->getRenderWindow().display();
 	return;

@@ -40,8 +40,8 @@ public:
 	virtual void runIndependently() override final;
 
 	// 非独立必须实现。
-	virtual void handleEvent(const sf::Event& evt) = 0;
-	virtual void update(float dt) = 0;
+	virtual void handleEvent(const sf::Event& evt) override = 0;
+	virtual void update(sf::Time deltaTime) override = 0;
 };
 
 } // namespace GUI

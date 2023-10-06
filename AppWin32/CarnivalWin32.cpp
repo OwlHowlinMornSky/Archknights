@@ -152,7 +152,6 @@ void CarnivalWin32::runTheActivity() {
 
 	// 用于每帧的更新时间。
 	sf::Clock clk;
-	float dt = 0.0f;
 
 	POINT oldsize{ 0 };
 	{
@@ -162,14 +161,14 @@ void CarnivalWin32::runTheActivity() {
 	}
 	// 修改 Idle 回调，要把旧的回调保存下来。
 	std::function<void()> oldIdle = Callbacks::OnIdle;
-	Callbacks::OnIdle = [this, &dt, &clk, &oldsize]() -> void {
+	Callbacks::OnIdle = [this, &clk, &oldsize]() -> void {
 		sf::Event evt;
-		if (m_enableFullResizeMessage) {
-			RECT clientrect{ 0 };
-			GetClientRect(m_hwnd, &clientrect);
-			if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
-				oldsize = { clientrect.right, clientrect.bottom };
-				ref_window->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
+		RECT clientrect{ 0 };
+		GetClientRect(m_hwnd, &clientrect);
+		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
+			oldsize = { clientrect.right, clientrect.bottom };
+			ref_window->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
+			if (m_enableFullResizeMessage) {
 				evt.type = sf::Event::Resized;
 				evt.size.width = oldsize.x;
 				evt.size.height = oldsize.y;
@@ -179,8 +178,7 @@ void CarnivalWin32::runTheActivity() {
 		while (ref_window->pollEvent(evt)) {
 			m_runningActivity->handleEvent(evt);
 		}
-		dt = clk.restart().asSeconds();
-		m_runningActivity->update(dt);
+		m_runningActivity->update(clk.restart());
 	};
 
 	// 主循环。
@@ -196,8 +194,7 @@ void CarnivalWin32::runTheActivity() {
 			m_runningActivity->handleEvent(evt);
 		}
 
-		dt = clk.restart().asSeconds();
-		m_runningActivity->update(dt);
+		m_runningActivity->update(clk.restart());
 	}
 
 	// 恢复旧的 Idle 回调。
