@@ -65,6 +65,9 @@ protected:
 	*/
 	void runTheActivity();
 
+	/**
+	 * @brief [注意] 这个方法是在 "ToActivities.cpp" 里实现的。 
+	*/
 	virtual std::unique_ptr<IActivity> createActivity(size_t id) const;
 
 protected:

@@ -48,7 +48,12 @@ public:
 	virtual ~IShader() = default;
 
 public:
-	// 绑定着色器。
+	/**
+	 * @brief 绑定 或 取消绑定 着色器。
+	 * @brief "绑定"就是指 在 OpenGL 里 启用(使用) 某个着色器。
+	 * @brief [注意] 这个方法是在 "Shader.cpp" 里实现的。
+	 * @param shader: 要绑定的 着色器。为 nullptr 则是 取消先前的绑定。
+	*/
 	static void Bind(IShader* shader);
 
 protected:
