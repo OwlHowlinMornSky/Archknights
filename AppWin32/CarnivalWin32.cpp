@@ -130,6 +130,10 @@ void CarnivalWin32::enableMinimize(bool enabled) const {
 	return;
 }
 
+void CarnivalWin32::setFullwindow(bool full) {}
+
+void CarnivalWin32::setFullscreen(bool full) {}
+
 void CarnivalWin32::runTheActivity() {
 	// 初始化。
 	m_keepRunning = true;
@@ -137,7 +141,6 @@ void CarnivalWin32::runTheActivity() {
 	// 用于每帧的更新时间。
 	sf::Clock clk;
 	float dt = 0.0f;
-
 
 	POINT oldsize{ 0 };
 	{

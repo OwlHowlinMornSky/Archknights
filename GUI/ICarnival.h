@@ -119,6 +119,18 @@ public:
 	 * @param enabled: True 则启用，否则禁用。
 	*/
 	virtual void enableMinimize(bool enabled) const = 0;
+
+	/**
+	 * @brief 设置无边框窗口。
+	 * @param full: 是否启用无边框窗口。
+	*/
+	virtual void setFullwindow(bool full) = 0;
+
+	/**
+	 * @brief 设置全屏。
+	 * @param full: 是否启用全屏。
+	*/
+	virtual void setFullscreen(bool full) = 0;
 }; // class ICarnival
 
 } // namespace GUI

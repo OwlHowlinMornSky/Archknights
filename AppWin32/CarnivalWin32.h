@@ -56,6 +56,9 @@ public:
 	virtual void enableResize(bool enabled) const override;
 	virtual void enableMinimize(bool enabled) const override;
 
+	virtual void setFullwindow(bool full) override;
+	virtual void setFullscreen(bool full) override;
+
 protected:
 	/**
 	 * @brief 运行当前的 Activity。
