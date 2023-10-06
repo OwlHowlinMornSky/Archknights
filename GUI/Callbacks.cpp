@@ -37,7 +37,6 @@ namespace Callbacks {
 
 // 这些全都是初始化。
 
-//std::function<void()> OnSizing(::fEmpty);
 std::function<void()> OnIdle(::fEmpty);
 std::function<void()> OnEnterSysloop(::fEmpty);
 std::function<void()> OnExitSysloop(::fEmpty);

@@ -64,13 +64,6 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	// 拦截三大金刚键的消息。因为按下不松手会直接卡死。
 	case WM_NCLBUTTONDOWN:
 		switch (wParam) {
-		//case HTCAPTION:
-		//	if ((GetWindowLongPtrW(hWnd, GWL_STYLE) & WS_MAXIMIZE) == 0) {
-		//		PostMessageW(hWnd, WM_ACTIVATE, WA_CLICKACTIVE, 0);
-		//		PostMessageW(hWnd, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, lParam);
-		//		PostMessageW(hWnd, WM_MOUSEMOVE, MK_LBUTTON, 0);
-		//	}
-		//	return 0;
 		case HTMINBUTTON:
 		case HTMAXBUTTON:
 		case HTCLOSE:
@@ -90,10 +83,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			if (style & WS_MINIMIZEBOX) {
 				if (style & WS_MINIMIZE)
 					PostMessageW(hWnd, WM_SYSCOMMAND, SC_RESTORE, lParam);
-					//ShowWindow(hWnd, SW_RESTORE);
 				else
 					PostMessageW(hWnd, WM_SYSCOMMAND, SC_MINIMIZE, lParam);
-					//ShowWindow(hWnd, SW_MINIMIZE);
 			}
 			break;
 		}
@@ -103,10 +94,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			if (style & WS_MAXIMIZEBOX) {
 				if (style & WS_MAXIMIZE)
 					PostMessageW(hWnd, WM_SYSCOMMAND, SC_RESTORE, lParam);
-					//ShowWindow(hWnd, SW_RESTORE);
 				else
 					PostMessageW(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, lParam);
-					//ShowWindow(hWnd, SW_MAXIMIZE);
 			}
 			break;
 		}
@@ -150,10 +139,6 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		l_timerID = 0;
 		Callbacks::OnExitSysloop();
 		break;
-
-	//case WM_SIZING:
-	//	Callbacks::OnSizing();
-	//	break;
 
 	case WM_ENTERSIZEMOVE:
 		if (l_timerID) KillTimer(0, l_timerID);
