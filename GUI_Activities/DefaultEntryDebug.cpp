@@ -65,12 +65,12 @@ void DefaultEntryDebug::stop() noexcept {
 }
 
 void DefaultEntryDebug::pause() noexcept {
-	m_bgm->pause();
+	//m_bgm->pause();
 	printf_s("DefaultEntryDebug: pause.\n");
 }
 
 void DefaultEntryDebug::resume() noexcept {
-	m_bgm->play();
+	//m_bgm->play();
 	printf_s("DefaultEntryDebug: resume.\n");
 }
 
