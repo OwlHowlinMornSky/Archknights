@@ -25,8 +25,6 @@
 #include <iostream>
 #endif // _DEBUG
 
-#include "Callbacks.h"
-
 namespace GUI {
 
 Carnival::Carnival() noexcept :

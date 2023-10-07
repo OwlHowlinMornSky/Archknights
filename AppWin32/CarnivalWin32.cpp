@@ -51,7 +51,7 @@ CarnivalWin32::~CarnivalWin32() {
 
 void CarnivalWin32::run() noexcept {
 	// 创建并唤起 默认入口 Activity。
-	m_runningActivity = this->createActivity(1ull);
+	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
 	if (m_runningActivity == nullptr) {
 		return;
 	}
