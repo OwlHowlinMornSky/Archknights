@@ -23,64 +23,60 @@
 *     main.cpp : 定义应用程序的入口点。
 */
 #include "../Global/GlobalAttribute.h"
-
-#include <SFML/Graphics/RenderWindow.hpp>
-
+#include "UniqueInstance.h"
 #include "Win32Things.h"
-#include "../GUI/Callbacks.h"
 #include "ToCarnival.h"
 
-#include <memory>
-
-#include "UniqueInstance.h"
-
+/**
+ * @brief 主函数。
+*/
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_opt_ HINSTANCE hPrevInstance,
 					  _In_ LPWSTR    lpCmdLine,
 					  _In_ int       nCmdShow) {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-
+	// 检验唯一程序实例。
 	if (!AppWin32::uniqueInstance()) {
-		MessageBoxW(NULL,
-					L"Initialization failed:\nanother instance exists.",
-					L"Archknights: Fatal Error",
-					MB_ICONERROR);
-		return 1;
+		MessageBoxA(NULL,
+					"Another instance exists.",
+					"Archknights: Information",
+					MB_ICONINFORMATION);
+		return 0;
 	}
-
+	// 注册窗口类。
 	if (!SystemThings::MyRegisterClass(hInstance)) {
-		MessageBoxW(NULL,
-					L"Initialization failed:\ncannot register class.",
-					L"Archknights: Fatal Error",
+		MessageBoxA(NULL,
+					"Initialization failed:\ncannot register class.",
+					"Archknights: Fatal Error",
 					MB_ICONERROR);
 		return 1;
 	}
-
+	// 创建窗口。
 	HWND hWnd(NULL);
 	if (!SystemThings::MyCreateWindow(hInstance, nCmdShow, hWnd)) {
-		MessageBoxW(NULL,
-					L"Initialization failed:\ncannot create window.",
-					L"Archknights: Fatal Error",
+		MessageBoxA(NULL,
+					"Initialization failed:\ncannot create window.",
+					"Archknights: Fatal Error",
 					MB_ICONERROR);
 		SystemThings::MyUnregisterClass(hInstance);
-		return 1;
+		return 2;
 	}
-
+	// 运行 Carnival
 	try {
 		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd);
 		carnival->run();
+		carnival.reset();
 	}
 	catch (std::exception& exp) {
 		MessageBoxA(hWnd, exp.what(), "Archknights: Fatal Error", MB_ICONERROR);
 	}
 	catch (...) {
-		MessageBoxW(hWnd, L"Unknown error.", L"Archknights: Fatal Error", MB_ICONERROR);
+		MessageBoxA(hWnd, "Unknown error.", "Archknights: Fatal Error", MB_ICONERROR);
 	}
-
+	// 清理。
 	DestroyWindow(hWnd);
 	SystemThings::MyUnregisterClass(hInstance);
-
 	AppWin32::instanceExit();
 	return 0;
 }
