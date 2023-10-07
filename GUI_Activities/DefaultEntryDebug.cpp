@@ -74,7 +74,7 @@ void DefaultEntryDebug::resume() noexcept {
 	printf_s("DefaultEntryDebug: resume.\n");
 }
 
-size_t DefaultEntryDebug::getID() noexcept {
+uint32_t DefaultEntryDebug::getID() noexcept {
 	return ID_DefaultEntry;
 }
 

@@ -67,22 +67,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return 1;
 	}
 
-	std::unique_ptr<sf::RenderWindow> window = std::make_unique<sf::RenderWindow>();
-	window->create(hWnd);
-	if (!window->isOpen()) {
-		MessageBoxW(NULL,
-					L"Initialization failed:\ncannot initialize the window.",
-					L"Archknights: Fatal Error",
-					MB_ICONERROR);
-		DestroyWindow(hWnd);
-		SystemThings::MyUnregisterClass(hInstance);
-		return 1;
-	}
-	window->clear();
-	window->display();
-
 	try {
-		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(window.get());
+		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd);
 		carnival->run();
 	}
 	catch (std::exception& exp) {
@@ -92,7 +78,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MessageBoxW(hWnd, L"Unknown error.", L"Archknights: Fatal Error", MB_ICONERROR);
 	}
 
-	window->close();
 	DestroyWindow(hWnd);
 	SystemThings::MyUnregisterClass(hInstance);
 

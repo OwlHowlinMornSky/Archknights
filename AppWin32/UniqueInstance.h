@@ -27,11 +27,11 @@ namespace AppWin32 {
  * @brief 启动唯一实例。
  * @return 启动是否成功。
 */
-bool uniqueInstance();
+bool uniqueInstance() noexcept;
 
 /**
  * @brief 退出唯一实例。不过好像也没啥意义。
 */
-void instanceExit();
+void instanceExit() noexcept;
 
 }

@@ -25,7 +25,33 @@
 #include <iostream>
 #endif // _DEBUG
 
+#include "Callbacks.h"
+
 namespace GUI {
+
+Carnival::Carnival() noexcept :
+	m_keepRunning(false),
+	m_transition(0),
+	m_transitionTarget(),
+	m_enableFullResizeMessage(true) {}
+
+sf::RenderWindow& Carnival::getRenderWindow() noexcept {
+	return *m_renderWindow;
+}
+
+void Carnival::cancelKeepRunning() noexcept {
+	m_keepRunning = false;
+}
+
+void Carnival::setTransition(int t, uint32_t a0, uint32_t a1) noexcept {
+	m_transition = t;
+	m_transitionTarget[0] = a0;
+	m_transitionTarget[1] = a1;
+}
+
+void Carnival::setFullResizeMessage(bool enabled) noexcept {
+	m_enableFullResizeMessage = enabled;
+}
 
 bool Carnival::handleTransition() noexcept {
 	if (m_transition == 0)
@@ -36,9 +62,9 @@ bool Carnival::handleTransition() noexcept {
 		isStop = false;
 		t = -t;
 	}
-	size_t oldID = m_runningActivity->getID(); // 目前运行的Activity的ID。
-	size_t newID = 0; // 将要运行的Activity的ID。
-	size_t lca = 0; // 最近公共祖先（PopTo和PopPush用的）。
+	uint32_t oldID = m_runningActivity->getID(); // 目前运行的Activity的ID。
+	uint32_t newID = 0; // 将要运行的Activity的ID。
+	uint32_t lca = 0; // 最近公共祖先（PopTo和PopPush用的）。
 	// 计算将要运行的ID。
 	switch (t) {
 	case Transition::Switch:
@@ -184,9 +210,9 @@ void Carnival::stopRunningActicity() noexcept {
 	return;
 }
 
-void Carnival::stopPausedActivity(size_t id) noexcept {
+void Carnival::stopPausedActivity(uint32_t id) noexcept {
 	try {
-		std::map<size_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
+		std::map<uint32_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
 		if (i != m_pausedActivities.end()) {
 			i->second->stop();
 			m_pausedActivities.erase(i);
@@ -198,9 +224,9 @@ void Carnival::stopPausedActivity(size_t id) noexcept {
 	return;
 }
 
-bool Carnival::stackContains(size_t id) noexcept {
-	const std::deque<size_t>& l = m_activityStack._Get_container();
-	for (const size_t& i : l) {
+bool Carnival::stackContains(uint32_t id) noexcept {
+	const std::deque<uint32_t>& l = m_activityStack._Get_container();
+	for (const uint32_t& i : l) {
 		if (i == id) {
 			return true;
 		}
@@ -210,9 +236,9 @@ bool Carnival::stackContains(size_t id) noexcept {
 
 void Carnival::showStack() noexcept {
 #ifdef _DEBUG
-	const std::deque<size_t>& l = m_activityStack._Get_container();
+	const std::deque<uint32_t>& l = m_activityStack._Get_container();
 	std::cerr << "Stack:";
-	for (const size_t& i : l) {
+	for (const uint32_t& i : l) {
 		std::cerr << " " << i;
 	}
 	std::cerr << ". Running: " << m_runningActivity->getID() << "." << std::endl;
@@ -220,10 +246,10 @@ void Carnival::showStack() noexcept {
 	return;
 }
 
-std::unique_ptr<IActivity> Carnival::getActivity(size_t id) noexcept {
+std::unique_ptr<IActivity> Carnival::getActivity(uint32_t id) noexcept {
 	try {
 		std::unique_ptr<IActivity> res;
-		std::map<size_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
+		std::map<uint32_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
 		if (i != m_pausedActivities.end()) {
 			res = std::move(i->second);
 			m_pausedActivities.erase(i);

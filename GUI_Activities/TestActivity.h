@@ -29,7 +29,7 @@ namespace Activity {
 
 class TestActivity final : public GUI::ActivityDependent {
 public:
-	TestActivity(size_t n) noexcept;
+	TestActivity(uint32_t n) noexcept;
 	virtual ~TestActivity() noexcept override;
 
 public:
@@ -37,7 +37,7 @@ public:
 	virtual void stop() noexcept override;
 	virtual void pause() noexcept override;
 	virtual void resume() noexcept override;
-	virtual size_t getID() noexcept override;
+	virtual uint32_t getID() noexcept override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
@@ -52,7 +52,7 @@ protected:
 protected:
 	GUI::ICarnival* ref_carnival;
 	sf::RectangleShape m_shape;
-	size_t m_id;
+	uint32_t m_id;
 	bool m_paused;
 };
 

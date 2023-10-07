@@ -23,15 +23,15 @@
 
 namespace Activity {
 
-TestActivity::TestActivity(size_t n) noexcept :
+TestActivity::TestActivity(uint32_t n) noexcept :
 	m_id(n),
 	m_paused(false),
 	ref_carnival(nullptr) {
-	printf_s("TestActivity %zu: Construct.\n", m_id);
+	printf_s("TestActivity %u: Construct.\n", m_id);
 }
 
 TestActivity::~TestActivity() noexcept {
-	printf_s("TestActivity %zu: Destruct.\n", m_id);
+	printf_s("TestActivity %u: Destruct.\n", m_id);
 }
 
 void TestActivity::start(GUI::ICarnival& carnival) {
@@ -41,24 +41,24 @@ void TestActivity::start(GUI::ICarnival& carnival) {
 	m_shape.setSize({ 100.0f, 100.0f });
 	updateSize();
 
-	printf_s("TestActivity %zu: start, %p.\n", m_id, ref_carnival);
+	printf_s("TestActivity %u: start, %p.\n", m_id, ref_carnival);
 	return;
 }
 
 void TestActivity::stop() noexcept {
-	printf_s("TestActivity %zu: stop.\n", m_id);
+	printf_s("TestActivity %u: stop.\n", m_id);
 }
 
 void TestActivity::pause() noexcept {
-	printf_s("TestActivity %zu: pause.\n", m_id);
+	printf_s("TestActivity %u: pause.\n", m_id);
 }
 
 void TestActivity::resume() noexcept {
 	updateSize();
-	printf_s("TestActivity %zu: resume.\n", m_id);
+	printf_s("TestActivity %u: resume.\n", m_id);
 }
 
-size_t TestActivity::getID() noexcept {
+uint32_t TestActivity::getID() noexcept {
 	return m_id;
 }
 

@@ -38,7 +38,7 @@
 
 namespace GUI {
 
-std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const noexcept {
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
 	try {
 		switch (id) {
 		case Activity::ID_DefaultEntry:

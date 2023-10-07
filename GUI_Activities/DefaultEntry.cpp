@@ -43,7 +43,7 @@ void DefaultEntry::pause() noexcept {}
 
 void DefaultEntry::resume() noexcept {}
 
-size_t DefaultEntry::getID() noexcept {
+uint32_t DefaultEntry::getID() noexcept {
 	return ID_DefaultEntry;
 }
 

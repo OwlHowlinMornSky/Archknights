@@ -38,7 +38,7 @@ public:
 	virtual void stop() noexcept override;
 	virtual void pause() noexcept override;
 	virtual void resume() noexcept override;
-	virtual size_t getID() noexcept override;
+	virtual uint32_t getID() noexcept override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;

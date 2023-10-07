@@ -53,54 +53,35 @@ public:
 	};
 
 public:
-	ICarnival(sf::RenderWindow* r_window) noexcept :
-		ref_window(r_window),
-		m_keepRunning(false),
-		m_transition(0),
-		m_transitionTarget(),
-		m_enableFullResizeMessage(true) {}
-	virtual ~ICarnival() noexcept {
-		ref_window = nullptr;
-	}
-
-public:
-	/**
-	 * @brief 给非独立 Activity 用的退出运行的方法。
-	*/
-	void cancelKeepRunning() noexcept {
-		m_keepRunning = false;
-	}
-
-	/**
-	 * @brief 给 Activity 用的设置变迁的方法。
-	 * @param t: 变迁类型。
-	*/
-	void setTransition(int t, size_t a0 = 0, size_t a1 = 0) noexcept {
-		m_transition = t;
-		m_transitionTarget[0] = a0;
-		m_transitionTarget[1] = a1;
-	}
-
-	/**
-	 * @brief 取得该 Carnival 管理的 RenderWindow。
-	*/
-	sf::RenderWindow& getRenderWindow() noexcept {
-		return *ref_window;
-	}
-
-	/**
-	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
-	 * @param enabled: 是否开启。
-	*/
-	void setFullResizeMessage(bool enabled) noexcept {
-		m_enableFullResizeMessage = enabled;
-	}
+	ICarnival() noexcept = default;
+	virtual ~ICarnival() = default;
 
 public:
 	/**
 	 * @brief 开始执行。
 	*/
 	virtual void run() noexcept = 0;
+
+	/**
+	 * @brief 取得该 Carnival 管理的 RenderWindow。
+	*/
+	virtual sf::RenderWindow& getRenderWindow() noexcept = 0;
+
+	/**
+	 * @brief 给非独立 Activity 用的退出运行的方法。
+	*/
+	virtual void cancelKeepRunning() noexcept = 0;
+	/**
+	 * @brief 给 Activity 用的设置变迁的方法。
+	 * @param t: 变迁类型。
+	*/
+	virtual void setTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept = 0;
+
+	/**
+	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
+	 * @param enabled: 是否开启。
+	*/
+	virtual void setFullResizeMessage(bool enabled) noexcept = 0;
 
 	/**
 	 * @brief 显示一个消息框。
@@ -160,13 +141,6 @@ public:
 	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
 	*/
 	virtual void systemMessagePump() const noexcept = 0;
-
-protected:
-	bool m_keepRunning;
-	bool m_enableFullResizeMessage;
-	int m_transition;
-	size_t m_transitionTarget[2];
-	sf::RenderWindow* ref_window;
 }; // class ICarnival
 
 } // namespace GUI

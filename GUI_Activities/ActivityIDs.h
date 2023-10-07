@@ -26,9 +26,9 @@ namespace Activity {
 /**
  * @brief Activity 标识。
 */
-enum IDs : size_t {
+enum IDs : uint32_t {
 	ID_None = 0ull, //------------// 空。
-	ID_DefaultEntry, //-----------// 默认入口。
+	ID_DefaultEntry, //-----------// 默认入口。不可改动！
 	ID_Load, //-------------------// 加载界面。
 	ID_Title, //------------------// 标题界面。
 	ID_Main, //-------------------// 主界面。

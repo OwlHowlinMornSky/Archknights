@@ -39,14 +39,13 @@ public:
 	 * @param hwnd: 要管理的窗口 的句柄。
 	 * @param r_window: 要管理的窗口 的 RenderWindow 指针。
 	*/
-	CarnivalWin32(sf::RenderWindow* r_window) noexcept :
-		Carnival(r_window),
-		m_hwnd(r_window->getSystemHandle()) {}
-	virtual ~CarnivalWin32() noexcept override {}
+	CarnivalWin32(HWND hWnd);
+	virtual ~CarnivalWin32() override;
 
 public:
 	virtual void run() noexcept override;
 
+public:
 	virtual void showMessageBox(std::string_view title,
 								std::string_view text,
 								MBInfo info = MBInfo::None) const noexcept override;
@@ -73,7 +72,7 @@ protected:
 	/**
 	 * @brief [注意] 这个方法是在 "ToActivities.cpp" 里实现的。
 	*/
-	virtual std::unique_ptr<IActivity> createActivity(size_t id) const noexcept override;
+	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;
 
 protected:
 	HWND m_hwnd; // 要管理的窗口 的句柄。

@@ -57,7 +57,7 @@ public:
 	 * @brief 获取该 Activity 的唯一标识符。
 	 * @return 唯一标识符。
 	*/
-	virtual size_t getID() noexcept = 0;
+	virtual uint32_t getID() noexcept = 0;
 
 public:
 	/**

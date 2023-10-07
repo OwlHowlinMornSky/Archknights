@@ -33,9 +33,25 @@
 
 namespace GUI {
 
+CarnivalWin32::CarnivalWin32(HWND hWnd) :
+	m_hwnd(hWnd) {
+	m_renderWindow = std::make_unique<sf::RenderWindow>();
+	m_renderWindow->create(hWnd);
+	if (!m_renderWindow->isOpen()) {
+		throw std::exception("Window Initialization Failed!");
+	}
+	return;
+}
+
+CarnivalWin32::~CarnivalWin32() {
+	m_renderWindow->close();
+	m_renderWindow.reset();
+	return;
+}
+
 void CarnivalWin32::run() noexcept {
 	// 创建并唤起 默认入口 Activity。
-	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
+	m_runningActivity = this->createActivity(1ull);
 	if (m_runningActivity == nullptr) {
 		return;
 	}
@@ -175,7 +191,7 @@ void CarnivalWin32::systemMessagePump() const noexcept {
 	}
 	try {
 		sf::Event evt;
-		while (ref_window->pollEvent(evt)) {
+		while (m_renderWindow->pollEvent(evt)) {
 			;
 		}
 	}
@@ -206,7 +222,7 @@ void CarnivalWin32::runTheActivity() {
 		GetClientRect(m_hwnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
-			ref_window->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
+			m_renderWindow->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
 			if (m_enableFullResizeMessage) {
 				evt.type = sf::Event::Resized;
 				evt.size.width = oldsize.x;
@@ -214,7 +230,7 @@ void CarnivalWin32::runTheActivity() {
 				m_runningActivity->handleEvent(evt);
 			}
 		}
-		while (ref_window->pollEvent(evt)) {
+		while (m_renderWindow->pollEvent(evt)) {
 			m_runningActivity->handleEvent(evt);
 		}
 		m_runningActivity->update(clk.restart());
@@ -229,7 +245,7 @@ void CarnivalWin32::runTheActivity() {
 			TranslateMessage(&msg);
 			DispatchMessageW(&msg);
 		}
-		while (ref_window->pollEvent(evt)) {
+		while (m_renderWindow->pollEvent(evt)) {
 			m_runningActivity->handleEvent(evt);
 		}
 

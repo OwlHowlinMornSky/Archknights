@@ -33,26 +33,39 @@ namespace GUI {
 */
 class Carnival : public ICarnival {
 public:
-	Carnival(sf::RenderWindow* r_window) noexcept :
-		ICarnival(r_window) {}
-	virtual ~Carnival() noexcept override = default;
+	Carnival() noexcept;
+	virtual ~Carnival() override = default;
+
+public:
+	virtual sf::RenderWindow& getRenderWindow() noexcept override final;
+
+	virtual void cancelKeepRunning() noexcept override final;
+	virtual void setTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept override final;
+
+	virtual void setFullResizeMessage(bool enabled) noexcept override final;
 
 protected:
 	bool handleTransition() noexcept;
 	void pauseRunningActivity() noexcept;
 	void stopRunningActicity() noexcept;
-	void stopPausedActivity(size_t id) noexcept;
-	bool stackContains(size_t id) noexcept;
+	void stopPausedActivity(uint32_t id) noexcept;
+	bool stackContains(uint32_t id) noexcept;
 	void showStack() noexcept;
 
-	std::unique_ptr<IActivity> getActivity(size_t id) noexcept;
-
-	virtual std::unique_ptr<IActivity> createActivity(size_t id) const noexcept = 0;
+	std::unique_ptr<IActivity> getActivity(uint32_t id) noexcept;
 
 protected:
+	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept = 0;
+
+protected:
+	bool m_enableFullResizeMessage;
+	bool m_keepRunning;
+	int m_transition;
+	uint32_t m_transitionTarget[2];
+	std::unique_ptr<sf::RenderWindow> m_renderWindow;
 	std::unique_ptr<IActivity> m_runningActivity;
-	std::stack<size_t> m_activityStack;
-	std::map<size_t, std::unique_ptr<IActivity>> m_pausedActivities;
+	std::stack<uint32_t> m_activityStack;
+	std::map<uint32_t, std::unique_ptr<IActivity>> m_pausedActivities;
 };
 
 } // namespace GUI

@@ -30,9 +30,9 @@
 
 namespace AppWin32 {
 
-std::unique_ptr<GUI::ICarnival> crateCarnival(sf::RenderWindow* r_window) {
+std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd) {
 	// 直接创建，没什么好说的。
-	return std::make_unique<GUI::CarnivalWin32>(r_window);
+	return std::make_unique<GUI::CarnivalWin32>(hWnd);
 }
 
 }
