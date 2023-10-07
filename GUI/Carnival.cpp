@@ -236,12 +236,12 @@ std::unique_ptr<IActivity> Carnival::getActivity(size_t id) noexcept {
 		}
 		return res;
 	}
-	catch (std::exception& e) {
 #ifdef _DEBUG
+	catch (std::exception& e) {
 		std::cerr << "Exception: GUI::Carnival: getActivity failed!" << std::endl;
 		std::cerr << "    " << e.what() << std::endl;
-#endif // _DEBUG
 	}
+#endif // _DEBUG
 	catch (...) {
 #ifdef _DEBUG
 		std::cerr << "Exception: GUI::Carnival: getActivity failed!" << std::endl;

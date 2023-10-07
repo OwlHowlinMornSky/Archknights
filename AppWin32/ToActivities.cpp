@@ -55,12 +55,12 @@ std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const noexce
 			break;
 		}
 	}
-	catch (std::exception& e) {
 #ifdef _DEBUG
+	catch (std::exception& e) {
 		std::cerr << "Exception: GUI::CarnivalWin32: createActivity failed!" << std::endl;
 		std::cerr << "    " << e.what() << std::endl;
-#endif // _DEBUG
 	}
+#endif // _DEBUG
 	catch (...) {
 #ifdef _DEBUG
 		std::cerr << "Exception: GUI::CarnivalWin32: createActivity failed!" << std::endl;
