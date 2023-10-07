@@ -80,5 +80,8 @@
     <ClInclude Include="ShaderDefault.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="﻿IModel.h">
+      <Filter>接口</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

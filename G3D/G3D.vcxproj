@@ -41,6 +41,7 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderDefault.h" />
+    <ClInclude Include="﻿IModel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
