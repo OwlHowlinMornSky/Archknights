@@ -52,4 +52,4 @@ void drop() noexcept {
 	return g_context.reset();
 }
 
-} // namespace
+} // namespace g3d::base

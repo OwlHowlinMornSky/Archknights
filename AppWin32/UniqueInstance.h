@@ -34,4 +34,4 @@ bool uniqueInstance() noexcept;
 */
 void instanceExit() noexcept;
 
-}
+} // namespace AppWin32

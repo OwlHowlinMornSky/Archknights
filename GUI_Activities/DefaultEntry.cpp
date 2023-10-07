@@ -57,4 +57,4 @@ void DefaultEntry::runIndependently() {
 	return;
 }
 
-} // namespace GUI
+} // namespace Activity

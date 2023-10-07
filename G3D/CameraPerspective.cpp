@@ -29,4 +29,4 @@ void g3d::CameraPerspective::ensureMatPUpdated() const {
 	m_matP = glm::perspective(glm::radians(m_fov), m_aspect, m_fn, m_ff);
 }
 
-}
+} // namespace g3d

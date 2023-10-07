@@ -123,6 +123,6 @@ void DefaultEntryDebug::update(sf::Time deltaTime) {
 	return;
 }
 
-} // namespace GUI
+} // namespace Activity
 
 #endif

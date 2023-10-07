@@ -106,4 +106,4 @@ struct Vertex {
 	glm::vec3 normal;   // ·¨Ïò¡£
 };
 
-}
+} // namespace g3d

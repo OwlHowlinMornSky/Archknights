@@ -36,4 +36,4 @@ namespace AppWin32 {
 */
 std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd);
 
-}
+} // namespace AppWin32

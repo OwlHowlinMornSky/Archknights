@@ -29,4 +29,4 @@ bool setActive(bool active);
 
 void drop() noexcept;
 
-} // namespace g3d::gl::base
+} // namespace g3d::base

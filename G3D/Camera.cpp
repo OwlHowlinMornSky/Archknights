@@ -41,4 +41,4 @@ void Camera::ensureMatVUpdated() const {
 	return;
 }
 
-}
+} // namespace g3d

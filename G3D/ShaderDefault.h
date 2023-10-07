@@ -38,4 +38,4 @@ protected:
 	GLint m_uniform;
 };
 
-}
+} // namespace g3d

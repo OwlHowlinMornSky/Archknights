@@ -129,4 +129,4 @@ void TestActivity::updateSize() noexcept {
 	ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));
 }
 
-}
+} // namespace Activity

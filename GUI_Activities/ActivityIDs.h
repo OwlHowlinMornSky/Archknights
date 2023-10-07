@@ -28,7 +28,7 @@ namespace Activity {
 */
 enum IDs : uint32_t {
 	ID_None = 0ull, //------------// 空。
-	ID_DefaultEntry, //-----------// 默认入口。不可改动！
+	ID_DefaultEntry, //-----------// 默认入口。
 	ID_Load, //-------------------// 加载界面。
 	ID_Title, //------------------// 标题界面。
 	ID_Main, //-------------------// 主界面。
@@ -42,4 +42,4 @@ enum IDs : uint32_t {
 	ID_RESERVED_COUNT = 0x0400 //-// [标记] 保留区 数量。在这之上的 ID 任意使用。
 };
 
-}
+} // namespace Activity

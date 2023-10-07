@@ -49,6 +49,7 @@ const char g_defaultFragShader[] =
 }
 
 namespace g3d {
+
 void ShaderDefault::setup() {
 	clear();
 	loadFromMemory(g_defaultVertexShader, ShaderType::Vertex);
@@ -68,4 +69,4 @@ void ShaderDefault::updatePVM(GLfloat* pvm) const {
 	updateUniformMat4fv(m_uniform, pvm);
 }
 
-}
+} // namespace g3d

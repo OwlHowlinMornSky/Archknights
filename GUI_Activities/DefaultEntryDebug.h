@@ -52,6 +52,6 @@ protected:
 	std::unique_ptr<Audio::IBgm> m_bgm;
 };
 
-}
+} // namespace Activity
 
 #endif

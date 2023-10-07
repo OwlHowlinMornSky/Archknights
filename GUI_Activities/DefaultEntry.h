@@ -47,4 +47,4 @@ protected:
 	bool m_haveRunned;
 };
 
-}
+} // namespace Activity

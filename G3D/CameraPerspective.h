@@ -62,4 +62,4 @@ protected:
 	float m_aspect;
 };
 
-}
+} // namespace g3d

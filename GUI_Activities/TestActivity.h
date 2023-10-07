@@ -56,5 +56,4 @@ protected:
 	bool m_paused;
 };
 
-}
-
+} // namespace Activity

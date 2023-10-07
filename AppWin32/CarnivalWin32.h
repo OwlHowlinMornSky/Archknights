@@ -78,5 +78,5 @@ protected:
 	HWND m_hwnd; // 要管理的窗口 的句柄。
 };
 
-}
+} // namespace GUI
 

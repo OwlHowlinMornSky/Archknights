@@ -171,5 +171,4 @@ GLuint Shader::buildShader(std::string_view l_src, unsigned int l_type) {
 	return shaderID;
 }
 
-}
-
+} // namespace g3d

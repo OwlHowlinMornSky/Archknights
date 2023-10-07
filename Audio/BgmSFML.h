@@ -87,4 +87,4 @@ protected:
 	std::unique_ptr<sf::FileInputStream> m_stream;
 }; // class BGM
 
-} // namespace audio
+} // namespace Audio

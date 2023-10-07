@@ -35,4 +35,4 @@ std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd) {
 	return std::make_unique<GUI::CarnivalWin32>(hWnd);
 }
 
-}
+} // namespace AppWin32

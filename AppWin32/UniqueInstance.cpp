@@ -52,4 +52,4 @@ void AppWin32::instanceExit() noexcept {
 	return;
 }
 
-}
+} // namespace AppWin32
