@@ -21,35 +21,13 @@
 */
 #include "Carnival.h"
 
+#ifdef _DEBUG
+#include <iostream>
+#endif // _DEBUG
+
 namespace GUI {
 
-Carnival::Carnival(sf::RenderWindow* r_window) :
-	ref_window(r_window),
-	m_keepRunning(false),
-	m_transition(0),
-	m_transitionTarget() {}
-
-Carnival::~Carnival() {
-	ref_window = nullptr;
-}
-
-void Carnival::cancelKeepRunning() {
-	m_keepRunning = false;
-	return;
-}
-
-void Carnival::setTransition(int t, size_t a0, size_t a1) {
-	m_transition = t;
-	m_transitionTarget[0] = a0;
-	m_transitionTarget[1] = a1;
-	return;
-}
-
-sf::RenderWindow& Carnival::getRenderWindow() {
-	return *ref_window;
-}
-
-bool Carnival::handleTransition() {
+bool Carnival::handleTransition() noexcept {
 	if (m_transition == 0)
 		return true;
 	bool isStop = true;
@@ -129,7 +107,12 @@ bool Carnival::handleTransition() {
 			stopRunningActicity();
 		else
 			pauseRunningActivity();
-		m_activityStack.push(oldID);
+		try {
+			m_activityStack.push(oldID);
+		}
+		catch (...) {
+			;
+		}
 		break;
 	case Transition::Pop:
 		if (isStop)
@@ -165,7 +148,12 @@ bool Carnival::handleTransition() {
 			}
 		}
 		else {
-			m_activityStack.push(oldID);
+			try {
+				m_activityStack.push(oldID);
+			}
+			catch (...) {
+				;
+			}
 		}
 		break;
 	}
@@ -177,28 +165,40 @@ bool Carnival::handleTransition() {
 	return true;
 }
 
-void Carnival::pauseRunningActivity() {
+void Carnival::pauseRunningActivity() noexcept {
 	m_runningActivity->pause();
-	m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
+	try {
+		m_pausedActivities.emplace(m_runningActivity->getID(), std::move(m_runningActivity));
+	}
+	catch (...) {
+		if (m_runningActivity)
+			m_runningActivity->stop();
+		m_runningActivity.reset();
+	}
 	return;
 }
 
-void Carnival::stopRunningActicity() {
+void Carnival::stopRunningActicity() noexcept {
 	m_runningActivity->stop();
 	m_runningActivity.reset();
 	return;
 }
 
-void Carnival::stopPausedActivity(size_t id) {
-	auto i = m_pausedActivities.find(id);
-	if (i != m_pausedActivities.end()) {
-		i->second->stop();
-		m_pausedActivities.erase(i);
+void Carnival::stopPausedActivity(size_t id) noexcept {
+	try {
+		std::map<size_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
+		if (i != m_pausedActivities.end()) {
+			i->second->stop();
+			m_pausedActivities.erase(i);
+		}
+	}
+	catch (...) {
+		;
 	}
 	return;
 }
 
-bool Carnival::stackContains(size_t id) {
+bool Carnival::stackContains(size_t id) noexcept {
 	const std::deque<size_t>& l = m_activityStack._Get_container();
 	for (const size_t& i : l) {
 		if (i == id) {
@@ -208,30 +208,47 @@ bool Carnival::stackContains(size_t id) {
 	return false;
 }
 
-void Carnival::showStack() {
+void Carnival::showStack() noexcept {
+#ifdef _DEBUG
 	const std::deque<size_t>& l = m_activityStack._Get_container();
-	printf_s("Stack:");
+	std::cerr << "Stack:";
 	for (const size_t& i : l) {
-		printf_s(" %zu", i);
+		std::cerr << " " << i;
 	}
-	printf_s(". Running: %zu.\n", m_runningActivity->getID());
+	std::cerr << ". Running: " << m_runningActivity->getID() << "." << std::endl;
+#endif // _DEBUG
 	return;
 }
 
-std::unique_ptr<IActivity> Carnival::getActivity(size_t id) {
-	std::unique_ptr<IActivity> res;
-	auto i = m_pausedActivities.find(id);
-	if (i != m_pausedActivities.end()) {
-		res = std::move(i->second);
-		m_pausedActivities.erase(i);
-		res->resume();
+std::unique_ptr<IActivity> Carnival::getActivity(size_t id) noexcept {
+	try {
+		std::unique_ptr<IActivity> res;
+		std::map<size_t, std::unique_ptr<GUI::IActivity>>::iterator i = m_pausedActivities.find(id);
+		if (i != m_pausedActivities.end()) {
+			res = std::move(i->second);
+			m_pausedActivities.erase(i);
+			res->resume();
+		}
+		else {
+			res = this->createActivity(id);
+			if (res != nullptr)
+				res->start(*this);
+		}
+		return res;
 	}
-	else {
-		res = this->createActivity(id);
-		if (res != nullptr)
-			res->start(*this);
+	catch (std::exception& e) {
+#ifdef _DEBUG
+		std::cerr << "Exception: GUI::Carnival: getActivity failed!" << std::endl;
+		std::cerr << "    " << e.what() << std::endl;
+#endif // _DEBUG
 	}
-	return res;
+	catch (...) {
+#ifdef _DEBUG
+		std::cerr << "Exception: GUI::Carnival: getActivity failed!" << std::endl;
+		std::cerr << "    Unknown Exception." << std::endl;
+#endif // _DEBUG
+	}
+	return std::unique_ptr<IActivity>();
 }
 
 } // namespace GUI

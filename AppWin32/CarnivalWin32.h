@@ -39,25 +39,30 @@ public:
 	 * @param hwnd: 要管理的窗口 的句柄。
 	 * @param r_window: 要管理的窗口 的 RenderWindow 指针。
 	*/
-	CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window);
-
-	virtual ~CarnivalWin32() override;
+	CarnivalWin32(sf::RenderWindow* r_window) noexcept :
+		Carnival(r_window),
+		m_hwnd(r_window->getSystemHandle()) {}
+	virtual ~CarnivalWin32() noexcept override {}
 
 public:
-	virtual void run() override;
+	virtual void run() noexcept override;
 
-	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const override;
+	virtual void showMessageBox(std::string_view title,
+								std::string_view text,
+								MBInfo info = MBInfo::None) const noexcept override;
 
-	virtual bool isEnabledClose() const override;
-	virtual bool isEnabledResize() const override;
-	virtual bool isEnabledMinimize() const override;
+	virtual bool isEnabledClose() const noexcept override;
+	virtual bool isEnabledResize() const noexcept override;
+	virtual bool isEnabledMinimize() const noexcept override;
 
-	virtual void enableClose(bool enabled) const override;
-	virtual void enableResize(bool enabled) const override;
-	virtual void enableMinimize(bool enabled) const override;
+	virtual void enableClose(bool enabled) const noexcept override;
+	virtual void enableResize(bool enabled) const noexcept override;
+	virtual void enableMinimize(bool enabled) const noexcept override;
 
-	virtual void setFullwindow(bool full) override;
-	virtual void setFullscreen(bool full) override;
+	virtual void setFullwindow(bool full) noexcept override;
+	virtual void setFullscreen(bool full) noexcept override;
+
+	virtual void systemMessagePump() const noexcept override;
 
 protected:
 	/**
@@ -66,9 +71,9 @@ protected:
 	void runTheActivity();
 
 	/**
-	 * @brief [注意] 这个方法是在 "ToActivities.cpp" 里实现的。 
+	 * @brief [注意] 这个方法是在 "ToActivities.cpp" 里实现的。
 	*/
-	virtual std::unique_ptr<IActivity> createActivity(size_t id) const;
+	virtual std::unique_ptr<IActivity> createActivity(size_t id) const noexcept override;
 
 protected:
 	HWND m_hwnd; // 要管理的窗口 的句柄。

@@ -30,15 +30,15 @@ namespace Activity {
 
 class DefaultEntryDebug final : public GUI::ActivityDependent {
 public:
-	DefaultEntryDebug();
-	virtual ~DefaultEntryDebug() override;
+	DefaultEntryDebug() noexcept;
+	virtual ~DefaultEntryDebug() noexcept override;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;
-	virtual void stop() override;
-	virtual void pause() override;
-	virtual void resume() override;
-	virtual size_t getID() override;
+	virtual void stop() noexcept override;
+	virtual void pause() noexcept override;
+	virtual void resume() noexcept override;
+	virtual size_t getID() noexcept override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;

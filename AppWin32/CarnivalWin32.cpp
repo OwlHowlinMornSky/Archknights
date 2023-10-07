@@ -33,16 +33,18 @@
 
 namespace GUI {
 
-CarnivalWin32::CarnivalWin32(HWND hwnd, sf::RenderWindow* r_window) :
-	Carnival(r_window),
-	m_hwnd(hwnd) {}
-
-CarnivalWin32::~CarnivalWin32() {}
-
-void CarnivalWin32::run() {
+void CarnivalWin32::run() noexcept {
 	// 创建并唤起 默认入口 Activity。
 	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
-	m_runningActivity->start(*this);
+	if (m_runningActivity == nullptr) {
+		return;
+	}
+	try {
+		m_runningActivity->start(*this);
+	}
+	catch (...) {
+		return;
+	}
 
 	std::function<void()> oldEnter = Callbacks::OnEnterSysloop;
 	Callbacks::OnEnterSysloop = [this]()-> void {
@@ -55,11 +57,25 @@ void CarnivalWin32::run() {
 
 	// 核心循环。
 	while (handleTransition()) {
-		if (m_runningActivity->isIndependent()) {
-			m_runningActivity->runIndependently();
+		try {
+			if (m_runningActivity->isIndependent()) {
+				m_runningActivity->runIndependently();
+			}
+			else {
+				runTheActivity();
+			}
 		}
-		else {
-			runTheActivity();
+		catch (std::exception& e) {
+			std::string err("Activity Exception:\n");
+			err.append(e.what());
+			this->showMessageBox("Archnights: Error", err, ICarnival::MBInfo::Error);
+			this->setTransition(ICarnival::Transition::Pop);
+		}
+		catch (...) {
+			std::string err("Activity Exception:\n");
+			err.append("Unknown Exception.");
+			this->showMessageBox("Archnights: Error", err, ICarnival::MBInfo::Error);
+			this->setTransition(ICarnival::Transition::Pop);
 		}
 	}
 
@@ -79,7 +95,7 @@ void CarnivalWin32::run() {
 	return;
 }
 
-void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text, MBInfo info) const {
+void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text, MBInfo info) const noexcept {
 	UINT type{ 0 };
 	// 根据自定的 info 类型 决定系统层的数值。
 	switch (info) {
@@ -92,25 +108,30 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 	default:
 		break;
 	}
-	MessageBoxA(m_hwnd, text.data(), title.data(), type);
+	try {
+		MessageBoxA(m_hwnd, text.data(), title.data(), type);
+	}
+	catch (...) {
+		;
+	}
 	return;
 }
 
-bool CarnivalWin32::isEnabledClose() const {
+bool CarnivalWin32::isEnabledClose() const noexcept {
 	return Callbacks::ButtonEnabled_Close;
 }
 
-bool CarnivalWin32::isEnabledResize() const {
+bool CarnivalWin32::isEnabledResize() const noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
 	return style & WS_SIZEBOX;
 }
 
-bool CarnivalWin32::isEnabledMinimize() const {
+bool CarnivalWin32::isEnabledMinimize() const noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
 	return style & WS_MINIMIZEBOX;
 }
 
-void CarnivalWin32::enableClose(bool enabled) const {
+void CarnivalWin32::enableClose(bool enabled) const noexcept {
 	HMENU hmenu = GetSystemMenu(m_hwnd, FALSE);
 	// 修改成功即保存。
 	if (EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED) != -1)
@@ -118,7 +139,7 @@ void CarnivalWin32::enableClose(bool enabled) const {
 	return;
 }
 
-void CarnivalWin32::enableResize(bool enabled) const {
+void CarnivalWin32::enableResize(bool enabled) const noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
 	if (enabled) {
 		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | (WS_SIZEBOX | WS_MAXIMIZEBOX));
@@ -130,7 +151,7 @@ void CarnivalWin32::enableResize(bool enabled) const {
 	return;
 }
 
-void CarnivalWin32::enableMinimize(bool enabled) const {
+void CarnivalWin32::enableMinimize(bool enabled) const noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
 	if (enabled) {
 		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | WS_MINIMIZEBOX);
@@ -142,9 +163,27 @@ void CarnivalWin32::enableMinimize(bool enabled) const {
 	return;
 }
 
-void CarnivalWin32::setFullwindow(bool full) {}
+void CarnivalWin32::setFullwindow(bool full) noexcept {}
 
-void CarnivalWin32::setFullscreen(bool full) {}
+void CarnivalWin32::setFullscreen(bool full) noexcept {}
+
+void CarnivalWin32::systemMessagePump() const noexcept {
+	MSG msg{ 0 };
+	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+	}
+	try {
+		sf::Event evt;
+		while (ref_window->pollEvent(evt)) {
+			;
+		}
+	}
+	catch (...) {
+		;
+	}
+	return;
+}
 
 void CarnivalWin32::runTheActivity() {
 	// 初始化。

@@ -31,10 +31,9 @@ namespace AppWin32 {
 
 /**
  * @brief 创建 Carnival 实例的方法。其创建的是 CarnivalWin32，这样包装是为了避免扩散头文件。
- * @param hwnd: 要管理的窗口 的句柄，是 CarnivalWin32 构造需要的数据。
  * @param r_window: 要管理的窗口 的 RenderWindow 指针，是 CarnivalWin32 构造需要的数据。
  * @return 创建好的 Carnival 实例。
 */
-std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hwnd, sf::RenderWindow* r_window);
+std::unique_ptr<GUI::ICarnival> crateCarnival(sf::RenderWindow* r_window);
 
 }

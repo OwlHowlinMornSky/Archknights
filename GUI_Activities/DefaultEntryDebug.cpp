@@ -29,7 +29,7 @@
 
 namespace Activity {
 
-DefaultEntryDebug::DefaultEntryDebug() :
+DefaultEntryDebug::DefaultEntryDebug() noexcept :
 	ref_carnival(nullptr),
 	m_disableResize(false),
 	m_disableMinimize(false),
@@ -37,7 +37,7 @@ DefaultEntryDebug::DefaultEntryDebug() :
 	printf_s("DefaultEntryDebug: Construct.\n");
 }
 
-DefaultEntryDebug::~DefaultEntryDebug() {
+DefaultEntryDebug::~DefaultEntryDebug() noexcept {
 	printf_s("DefaultEntryDebug: Destruct.\n");
 }
 
@@ -58,23 +58,23 @@ void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void DefaultEntryDebug::stop() {
+void DefaultEntryDebug::stop() noexcept {
 	g3d::base::drop();
 	m_bgm->stop();
 	printf_s("DefaultEntryDebug: stop.\n");
 }
 
-void DefaultEntryDebug::pause() {
+void DefaultEntryDebug::pause() noexcept {
 	m_bgm->pause();
 	printf_s("DefaultEntryDebug: pause.\n");
 }
 
-void DefaultEntryDebug::resume() {
+void DefaultEntryDebug::resume() noexcept {
 	m_bgm->play();
 	printf_s("DefaultEntryDebug: resume.\n");
 }
 
-size_t DefaultEntryDebug::getID() {
+size_t DefaultEntryDebug::getID() noexcept {
 	return ID_DefaultEntry;
 }
 

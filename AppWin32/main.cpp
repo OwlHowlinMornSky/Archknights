@@ -82,7 +82,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	window->display();
 
 	try {
-		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd, window.get());
+		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(window.get());
 		carnival->run();
 	}
 	catch (std::exception& exp) {

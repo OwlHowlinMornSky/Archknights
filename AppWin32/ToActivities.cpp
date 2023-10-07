@@ -24,11 +24,13 @@
 
 #include "CarnivalWin32.h"
 
+
 #ifdef _DEBUG
+#include <iostream>
 #include "../GUI_Activities/DefaultEntryDebug.h"
 #else
 #include "../GUI_Activities/DefaultEntry.h"
-#endif
+#endif // _DEBUG
 
 #include "../GUI_Activities/TestActivity.h"
 
@@ -36,22 +38,36 @@
 
 namespace GUI {
 
-std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const {
-	switch (id) {
-	case Activity::ID_DefaultEntry:
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(size_t id) const noexcept {
+	try {
+		switch (id) {
+		case Activity::ID_DefaultEntry:
 #ifdef _DEBUG
-		return std::make_unique<Activity::DefaultEntryDebug>();
+			return std::make_unique<Activity::DefaultEntryDebug>();
 #else
-		return std::make_unique<Activity::DefaultEntry>();
+			return std::make_unique<Activity::DefaultEntry>();
 #endif
-		break;
-	default:
-//#ifdef _DEBUG
-		return std::make_unique<Activity::TestActivity>(id);
-//#endif
-		break;
+			break;
+		default:
+	//#ifdef _DEBUG
+			return std::make_unique<Activity::TestActivity>(id);
+	//#endif
+			break;
+		}
 	}
-	return nullptr;
+	catch (std::exception& e) {
+#ifdef _DEBUG
+		std::cerr << "Exception: GUI::CarnivalWin32: createActivity failed!" << std::endl;
+		std::cerr << "    " << e.what() << std::endl;
+#endif // _DEBUG
+	}
+	catch (...) {
+#ifdef _DEBUG
+		std::cerr << "Exception: GUI::CarnivalWin32: createActivity failed!" << std::endl;
+		std::cerr << "    Unknown Exception." << std::endl;
+#endif // _DEBUG
+	}
+	return std::unique_ptr<IActivity>();
 }
 
 }

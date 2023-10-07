@@ -48,9 +48,8 @@ bool setActive(bool active) {
 	return g_context->setActive(active);
 }
 
-void drop() {
-	g_context.reset();
-	return;
+void drop() noexcept {
+	return g_context.reset();
 }
 
 } // namespace

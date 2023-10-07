@@ -29,7 +29,7 @@ namespace {
 /**
  * @brief 空函数。专门用来初始化下面那些玩意的。
 */
-void fEmpty() {}
+void fEmpty() noexcept {}
 
 } // namespace
 

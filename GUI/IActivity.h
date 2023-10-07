@@ -32,8 +32,8 @@ namespace GUI {
 */
 class IActivity {
 public:
-	IActivity() = default;
-	virtual ~IActivity() = default;
+	IActivity() noexcept = default;
+	virtual ~IActivity() noexcept = default;
 
 public:
 	/**
@@ -44,27 +44,27 @@ public:
 	/**
 	 * @brief Activity 结束后、移除前的处理。
 	*/
-	virtual void stop() = 0;
+	virtual void stop() noexcept = 0;
 	/**
 	 * @brief Activity 暂停时的处理。
 	*/
-	virtual void pause() = 0;
+	virtual void pause() noexcept = 0;
 	/**
 	 * @brief Activity 取消暂停时的处理。
 	*/
-	virtual void resume() = 0;
+	virtual void resume() noexcept = 0;
 	/**
 	 * @brief 获取该 Activity 的唯一标识符。
 	 * @return 唯一标识符。
 	*/
-	virtual size_t getID() = 0;
+	virtual size_t getID() noexcept = 0;
 
 public:
 	/**
 	 * @brief 该 Acitivity 是否要独立运行。
 	 * @return True 则独立, 否则非独立。
 	*/
-	virtual bool isIndependent() const = 0;
+	virtual bool isIndependent() const noexcept = 0;
 	/**
 	 * @brief 独立地运行。
 	*/
@@ -81,8 +81,8 @@ public:
 	*/
 	virtual void update(sf::Time deltaTime) = 0;
 
-	virtual void onEnterSysloop() {}
-	virtual void onExitSysloop() {}
+	virtual void onEnterSysloop() noexcept {}
+	virtual void onExitSysloop() noexcept {}
 }; // class IActivity
 
 } // namespace GUI

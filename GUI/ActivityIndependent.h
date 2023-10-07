@@ -35,7 +35,7 @@ public:
 
 public:
 	// 禁止修改。
-	virtual bool isIndependent() const override final;
+	virtual bool isIndependent() const noexcept override final;
 	// 独立必须实现。
 	virtual void runIndependently() override = 0;
 

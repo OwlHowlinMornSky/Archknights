@@ -27,6 +27,6 @@ void setup();
 
 bool setActive(bool active);
 
-void drop();
+void drop() noexcept;
 
 } // namespace g3d::gl::base

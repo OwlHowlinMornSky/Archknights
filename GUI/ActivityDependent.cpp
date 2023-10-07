@@ -23,7 +23,7 @@
 
 namespace GUI {
 
-bool ActivityDependent::isIndependent() const {
+bool ActivityDependent::isIndependent() const noexcept {
 	return false;
 }
 

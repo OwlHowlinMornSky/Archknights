@@ -23,14 +23,14 @@
 
 namespace Activity {
 
-TestActivity::TestActivity(size_t n) :
+TestActivity::TestActivity(size_t n) noexcept :
 	m_id(n),
 	m_paused(false),
 	ref_carnival(nullptr) {
 	printf_s("TestActivity %zu: Construct.\n", m_id);
 }
 
-TestActivity::~TestActivity() {
+TestActivity::~TestActivity() noexcept {
 	printf_s("TestActivity %zu: Destruct.\n", m_id);
 }
 
@@ -45,20 +45,20 @@ void TestActivity::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void TestActivity::stop() {
+void TestActivity::stop() noexcept {
 	printf_s("TestActivity %zu: stop.\n", m_id);
 }
 
-void TestActivity::pause() {
+void TestActivity::pause() noexcept {
 	printf_s("TestActivity %zu: pause.\n", m_id);
 }
 
-void TestActivity::resume() {
+void TestActivity::resume() noexcept {
 	updateSize();
 	printf_s("TestActivity %zu: resume.\n", m_id);
 }
 
-size_t TestActivity::getID() {
+size_t TestActivity::getID() noexcept {
 	return m_id;
 }
 
@@ -115,15 +115,15 @@ void TestActivity::update(sf::Time deltaTime) {
 	return;
 }
 
-void TestActivity::onEnterSysloop() {
+void TestActivity::onEnterSysloop() noexcept {
 	//m_paused = true;
 }
 
-void TestActivity::onExitSysloop() {
+void TestActivity::onExitSysloop() noexcept {
 	m_paused = false;
 }
 
-void TestActivity::updateSize() {
+void TestActivity::updateSize() noexcept {
 	auto size = ref_carnival->getRenderWindow().getSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
 	ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));

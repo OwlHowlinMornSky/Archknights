@@ -26,12 +26,6 @@
 
 namespace Activity {
 
-DefaultEntry::DefaultEntry() :
-	m_haveRunned(false),
-	ref_carnival(nullptr) {}
-
-DefaultEntry::~DefaultEntry() {}
-
 void DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	g3d::base::setup();
@@ -39,17 +33,17 @@ void DefaultEntry::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void DefaultEntry::stop() {
+void DefaultEntry::stop() noexcept {
 	g3d::base::drop();
 	ref_carnival = nullptr;
 	return;
 }
 
-void DefaultEntry::pause() {}
+void DefaultEntry::pause() noexcept {}
 
-void DefaultEntry::resume() {}
+void DefaultEntry::resume() noexcept {}
 
-size_t DefaultEntry::getID() {
+size_t DefaultEntry::getID() noexcept {
 	return ID_DefaultEntry;
 }
 

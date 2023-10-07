@@ -53,41 +53,54 @@ public:
 	};
 
 public:
-	ICarnival() :
+	ICarnival(sf::RenderWindow* r_window) noexcept :
+		ref_window(r_window),
+		m_keepRunning(false),
+		m_transition(0),
+		m_transitionTarget(),
 		m_enableFullResizeMessage(true) {}
-	virtual ~ICarnival() = default;
+	virtual ~ICarnival() noexcept {
+		ref_window = nullptr;
+	}
 
 public:
 	/**
 	 * @brief 给非独立 Activity 用的退出运行的方法。
 	*/
-	virtual void cancelKeepRunning() = 0;
+	void cancelKeepRunning() noexcept {
+		m_keepRunning = false;
+	}
 
 	/**
 	 * @brief 给 Activity 用的设置变迁的方法。
 	 * @param t: 变迁类型。
 	*/
-	virtual void setTransition(int t, size_t a0 = 0, size_t a1 = 0) = 0;
+	void setTransition(int t, size_t a0 = 0, size_t a1 = 0) noexcept {
+		m_transition = t;
+		m_transitionTarget[0] = a0;
+		m_transitionTarget[1] = a1;
+	}
 
 	/**
 	 * @brief 取得该 Carnival 管理的 RenderWindow。
 	*/
-	virtual sf::RenderWindow& getRenderWindow() = 0;
+	sf::RenderWindow& getRenderWindow() noexcept {
+		return *ref_window;
+	}
+
+	/**
+	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
+	 * @param enabled: 是否开启。
+	*/
+	void setFullResizeMessage(bool enabled) noexcept {
+		m_enableFullResizeMessage = enabled;
+	}
 
 public:
 	/**
 	 * @brief 开始执行。
 	*/
-	virtual void run() = 0;
-
-public:
-	/**
-	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
-	 * @param enabled: 是否开启。
-	*/
-	void setFullResizeMessage(bool enabled) {
-		m_enableFullResizeMessage = enabled;
-	}
+	virtual void run() noexcept = 0;
 
 	/**
 	 * @brief 显示一个消息框。
@@ -95,54 +108,65 @@ public:
 	 * @param text: 消息框的内容。
 	 * @param info: 消息框的额外信息。
 	*/
-	virtual void showMessageBox(std::string_view title, std::string_view text, MBInfo info = MBInfo::None) const = 0;
+	virtual void showMessageBox(std::string_view title,
+								std::string_view text,
+								MBInfo info = MBInfo::None) const noexcept = 0;
 
 	/**
 	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledClose() const = 0;
+	virtual bool isEnabledClose() const noexcept = 0;
 	/**
 	 * @brief 检测 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledResize() const = 0;
+	virtual bool isEnabledResize() const noexcept = 0;
 	/**
 	 * @brief 检测 所管理窗口的 最小化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledMinimize() const = 0;
+	virtual bool isEnabledMinimize() const noexcept = 0;
 
 	/**
 	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableClose(bool enabled) const = 0;
+	virtual void enableClose(bool enabled) const noexcept = 0;
 	/**
 	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableResize(bool enabled) const = 0;
+	virtual void enableResize(bool enabled) const noexcept = 0;
 	/**
 	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableMinimize(bool enabled) const = 0;
+	virtual void enableMinimize(bool enabled) const noexcept = 0;
 
 	/**
 	 * @brief 设置无边框窗口。
 	 * @param full: 是否启用无边框窗口。
 	*/
-	virtual void setFullwindow(bool full) = 0;
+	virtual void setFullwindow(bool full) noexcept = 0;
 
 	/**
 	 * @brief 设置全屏。
 	 * @param full: 是否启用全屏。
 	*/
-	virtual void setFullscreen(bool full) = 0;
+	virtual void setFullscreen(bool full) noexcept = 0;
+
+	/**
+	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
+	*/
+	virtual void systemMessagePump() const noexcept = 0;
 
 protected:
+	bool m_keepRunning;
 	bool m_enableFullResizeMessage;
+	int m_transition;
+	size_t m_transitionTarget[2];
+	sf::RenderWindow* ref_window;
 }; // class ICarnival
 
 } // namespace GUI
