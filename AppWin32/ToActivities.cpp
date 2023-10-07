@@ -35,29 +35,38 @@
 #include "../GUI_Activities/Act01_DefaultEntryDebug.h"
 #include "../GUI_Activities/Act01_DefaultEntry.h"
 
-#include "../GUI_Activities/Act02_Load.h"
+#include "../GUI_Activities/Act02_Opening.h"
+
+#include "../GUI_Activities/Act03_Load.h"
 
 namespace GUI {
 
 std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
 	try {
 		switch (id) {
+		case Activity::ID_None:
+#ifdef _DEBUG
+			return std::make_unique<Activity::TestActivity>(id);
+#endif
+			break;
 		case Activity::ID_DefaultEntry:// 默认入口。
 #ifdef _DEBUG
 			return std::make_unique<Activity::DefaultEntryDebug>();
 #else
 			return std::make_unique<Activity::DefaultEntry>();
 #endif
+		case Activity::ID_Opening: // 开启界面。
+			return std::make_unique<Activity::Act02_Opening>();
 		case Activity::ID_Load: // 加载界面。
-			return std::make_unique<Activity::Act02_Load>();
+			return std::make_unique<Activity::Act03_Load>();
 		case Activity::ID_Title: // 标题界面。
 		case Activity::ID_Main: // 主界面。
 		case Activity::ID_Panel: // 终端。
 		case Activity::ID_Construction: // 基建。
 		default:
-	//#ifdef _DEBUG
-			return std::make_unique<Activity::TestActivity>(id);
-	//#endif
+#ifdef _DEBUG
+			throw std::exception("Invalid Activity ID!");
+#endif
 			break;
 		}
 	}

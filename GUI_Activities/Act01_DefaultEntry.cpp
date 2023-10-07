@@ -59,7 +59,7 @@ void DefaultEntry::runIndependently() {
 		return;
 	}
 	m_haveRunned = true;
-	ref_carnival->setTransition(-GUI::Transition::Push, ID_Load);
+	ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
 	return;
 }
 

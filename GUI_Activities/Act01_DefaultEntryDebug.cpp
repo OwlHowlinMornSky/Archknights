@@ -22,7 +22,6 @@
 #include "Act01_DefaultEntryDebug.h"
 
 #ifdef _DEBUG
-#include "../Audio/BgmSFML.h"
 #include "../G3D/base.h"
 #include "../G3D/ShaderDefault.h"
 #include "ActivityIDs.h"
@@ -49,9 +48,6 @@ void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	ref_carnival->enableClose(false);
 
-	m_bgm = std::make_unique<Audio::BgmSFML>();
-	m_bgm->openFromFile("test.ogg");
-	m_bgm->play();
 	g3d::base::setup();
 	g3d::base::setActive(true);
 
@@ -64,18 +60,15 @@ void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 
 void DefaultEntryDebug::stop() noexcept {
 	g3d::base::drop();
-	m_bgm->stop();
 	std::cout << "DefaultEntryDebug: stop." << std::endl;
 }
 
 void DefaultEntryDebug::pause() noexcept {
-	//m_bgm->pause();
 	ref_carnival->enableClose(true);
 	std::cout << "DefaultEntryDebug: pause." << std::endl;
 }
 
 void DefaultEntryDebug::resume() noexcept {
-	//m_bgm->play();
 	ref_carnival->enableClose(false);
 	std::cout << "DefaultEntryDebug: resume." << std::endl;
 }
@@ -93,7 +86,7 @@ void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(-GUI::Transition::Push, 2);
+			ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:

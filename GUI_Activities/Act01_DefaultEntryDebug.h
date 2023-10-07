@@ -24,11 +24,11 @@
 #ifdef _DEBUG
 
 #include "../GUI/ActivityDependent.h"
-#include "../Audio/IBgm.h"
 
 namespace Activity {
 
-class DefaultEntryDebug final : public GUI::ActivityDependent {
+class DefaultEntryDebug final :
+	public GUI::ActivityDependent {
 public:
 	DefaultEntryDebug() noexcept;
 	virtual ~DefaultEntryDebug() noexcept override;
@@ -49,7 +49,6 @@ protected:
 	bool m_disableClose;
 	bool m_disableResize;
 	bool m_disableMinimize;
-	std::unique_ptr<Audio::IBgm> m_bgm;
 };
 
 } // namespace Activity

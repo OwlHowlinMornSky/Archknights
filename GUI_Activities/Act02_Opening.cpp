@@ -1,4 +1,4 @@
-#include "Act02_Load.h"
+#include "Act02_Opening.h"
 
 #include <SFML/Graphics.hpp>
 #include "../GUI/Callbacks.h"
@@ -7,25 +7,28 @@
 
 namespace Activity {
 
-void Act02_Load::start(GUI::ICarnival& carnival) {
+Act02_Opening::Act02_Opening() noexcept :
+	ref_carnival(nullptr) {}
+
+void Act02_Opening::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	return;
 }
 
-void Act02_Load::stop() noexcept {
+void Act02_Opening::stop() noexcept {
 	ref_carnival = nullptr;
 	return;
 }
 
-void Act02_Load::pause() noexcept {}
+void Act02_Opening::pause() noexcept {}
 
-void Act02_Load::resume() noexcept {}
+void Act02_Opening::resume() noexcept {}
 
-uint32_t Act02_Load::getID() noexcept {
-	return IDs::ID_Load;
+uint32_t Act02_Opening::getID() noexcept {
+	return IDs::ID_Opening;
 }
 
-void Act02_Load::runIndependently() {
+void Act02_Opening::runIndependently() {
 	sf::RenderWindow& window = ref_carnival->getRenderWindow();
 
 	sf::CircleShape circle[3];
@@ -119,7 +122,7 @@ void Act02_Load::runIndependently() {
 	if (closed)
 		ref_carnival->setTransition(GUI::Transition::Exit);
 	else
-		ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Title);
+		ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
 	return;
 }
 

@@ -24,6 +24,7 @@
 #ifdef _DEBUG
 #include <iostream>
 #endif // _DEBUG
+#include <assert.h>
 
 namespace GUI {
 
@@ -115,8 +116,9 @@ bool Carnival::handleTransition() noexcept {
 	std::unique_ptr<IActivity> newActivity = getActivity(newID);
 	if (newActivity == nullptr)
 		return true; // 创建失败。
-	if (newID != newActivity->getID())
-		return true; // 也是新旧相同。
+	//if (newID == newActivity->getID())
+	//	return true; // 也是新旧相同。
+	assert(newID == newActivity->getID());
 
 	// 栈变迁。
 	switch (t) {

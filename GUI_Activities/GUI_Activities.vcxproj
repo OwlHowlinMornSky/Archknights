@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Act02_Load.h" />
+    <ClInclude Include="Act02_Opening.h" />
+    <ClInclude Include="Act03_Load.h" />
     <ClInclude Include="ActivityIDs.h" />
     <ClInclude Include="Act01_DefaultEntry.h" />
     <ClInclude Include="Act01_DefaultEntryDebug.h" />
@@ -29,7 +30,8 @@
     <ClCompile Include="Act01_DefaultEntry.cpp" />
     <ClCompile Include="Act01_DefaultEntryDebug.cpp" />
     <ClCompile Include="Act00_TestActivity.cpp" />
-    <ClCompile Include="Act02_Load.cpp" />
+    <ClCompile Include="Act02_Opening.cpp" />
+    <ClCompile Include="Act03_Load.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
