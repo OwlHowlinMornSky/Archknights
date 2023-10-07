@@ -61,7 +61,7 @@ public:
 	virtual void setFullwindow(bool full) noexcept override;
 	virtual void setFullscreen(bool full) noexcept override;
 
-	virtual void systemMessagePump() const noexcept override;
+	virtual void systemMessagePump(bool callerDoWantHandleThem) const noexcept override;
 
 protected:
 	/**

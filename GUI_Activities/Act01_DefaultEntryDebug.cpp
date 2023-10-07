@@ -47,6 +47,8 @@ void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 	//carnival.getRenderWindow().setFramerateLimit(60);
 	carnival.getRenderWindow().setVerticalSyncEnabled(true);
 	ref_carnival = &carnival;
+	ref_carnival->enableClose(false);
+
 	m_bgm = std::make_unique<Audio::BgmSFML>();
 	m_bgm->openFromFile("test.ogg");
 	m_bgm->play();
@@ -68,11 +70,13 @@ void DefaultEntryDebug::stop() noexcept {
 
 void DefaultEntryDebug::pause() noexcept {
 	//m_bgm->pause();
+	ref_carnival->enableClose(true);
 	std::cout << "DefaultEntryDebug: pause." << std::endl;
 }
 
 void DefaultEntryDebug::resume() noexcept {
 	//m_bgm->play();
+	ref_carnival->enableClose(false);
 	std::cout << "DefaultEntryDebug: resume." << std::endl;
 }
 
@@ -83,21 +87,17 @@ uint32_t DefaultEntryDebug::getID() noexcept {
 void DefaultEntryDebug::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		ref_carnival->setTransition(GUI::ICarnival::Exit);
+		ref_carnival->setTransition(GUI::Transition::Exit);
 		ref_carnival->cancelKeepRunning();
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(-GUI::ICarnival::Push, 2);
-			ref_carnival->cancelKeepRunning();
-			break;
-		case sf::Keyboard::E:
-			ref_carnival->setTransition(-GUI::ICarnival::Switch, 2);
+			ref_carnival->setTransition(-GUI::Transition::Push, 2);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(GUI::ICarnival::Pop);
+			ref_carnival->setTransition(GUI::Transition::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Space:

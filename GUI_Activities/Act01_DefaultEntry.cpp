@@ -28,6 +28,8 @@ namespace Activity {
 
 void DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
+	ref_carnival->enableClose(false);
+
 	g3d::base::setup();
 	g3d::base::setActive(false);
 	return;
@@ -39,9 +41,13 @@ void DefaultEntry::stop() noexcept {
 	return;
 }
 
-void DefaultEntry::pause() noexcept {}
+void DefaultEntry::pause() noexcept {
+	ref_carnival->enableClose(true);
+}
 
-void DefaultEntry::resume() noexcept {}
+void DefaultEntry::resume() noexcept {
+	ref_carnival->enableClose(false);
+}
 
 uint32_t DefaultEntry::getID() noexcept {
 	return ID_DefaultEntry;
@@ -49,11 +55,11 @@ uint32_t DefaultEntry::getID() noexcept {
 
 void DefaultEntry::runIndependently() {
 	if (m_haveRunned) {
-		ref_carnival->setTransition(GUI::ICarnival::Exit);
+		ref_carnival->setTransition(GUI::Transition::Exit);
 		return;
 	}
 	m_haveRunned = true;
-	ref_carnival->setTransition(-GUI::ICarnival::Push, ID_Load);
+	ref_carnival->setTransition(-GUI::Transition::Push, ID_Load);
 	return;
 }
 

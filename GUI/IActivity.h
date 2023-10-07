@@ -40,7 +40,7 @@ public:
 	 * @brief Activity 被创建后、运行前的处理。
 	 * @param carnival: 对所属 Carnival 的引用。
 	*/
-	virtual void start(ICarnival& carnival) = 0;
+	virtual void start(GUI::ICarnival& carnival) = 0;
 	/**
 	 * @brief Activity 结束后、移除前的处理。
 	*/

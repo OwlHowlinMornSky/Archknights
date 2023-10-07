@@ -35,6 +35,8 @@
 #include "../GUI_Activities/Act01_DefaultEntryDebug.h"
 #include "../GUI_Activities/Act01_DefaultEntry.h"
 
+#include "../GUI_Activities/Act02_Load.h"
+
 namespace GUI {
 
 std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
@@ -47,6 +49,7 @@ std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noex
 			return std::make_unique<Activity::DefaultEntry>();
 #endif
 		case Activity::ID_Load: // 加载界面。
+			return std::make_unique<Activity::Act02_Load>();
 		case Activity::ID_Title: // 标题界面。
 		case Activity::ID_Main: // 主界面。
 		case Activity::ID_Panel: // 终端。

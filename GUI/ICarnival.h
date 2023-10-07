@@ -27,31 +27,32 @@
 namespace GUI {
 
 /**
+* @brief 定义了栈变类型，正数为 Stop，负数为 Pause，0 无效。
+*/
+namespace Transition {
+enum : int {
+	Switch = 1, // 1 个目标。当前 Activity 会被弹出，目标将被压入栈并运行。
+	Push,       // 1 个目标。其将被压入栈中并运行。
+	Pop,        // 0 个目标。当前 Activity 会被弹出，新的栈顶将运行，若栈空则退出。
+	PopTo,      // 1 个目标。如果目标在栈中，则栈会被弹至目标，目标在栈顶且将运行，否则无效果。
+	PopPush,    // 2 个目标。如果目标0在栈中，则栈会被弹至之，目标1被压入且将运行，否则与 Push 相同。
+	Exit        // 0 个目标。强制退出。
+};
+} // namespace Transition
+
+/**
+* @brief 消息框的额外信息。
+*/
+enum class MBInfo {
+	None = 0,
+	Info,
+	Error
+};
+
+/**
  * @brief 接口Carnival: 在 RenderWindow 中运行 Activity 的管理类。
 */
 class ICarnival {
-public:
-	/**
-	 * @brief 消息框的额外信息。
-	*/
-	enum class MBInfo {
-		None = 0,
-		Info,
-		Error
-	};
-
-	/**
-	 * @brief 定义了栈变类型，正数为 Stop，负数为 Pause，0 无效。
-	*/
-	enum Transition : int {
-		Switch = 1, // 1 个目标。当前 Activity 会被弹出，目标将被压入栈并运行。
-		Push, // 1 个目标。其将被压入栈中并运行。
-		Pop, // 0 个目标。当前 Activity 会被弹出，新的栈顶将运行，若栈空则退出。
-		PopTo, // 1 个目标。如果目标在栈中，则栈会被弹至目标，目标在栈顶且将运行，否则无效果。
-		PopPush, // 2 个目标。如果目标0在栈中，则栈会被弹至之，目标1被压入且将运行，否则与 Push 相同。
-		Exit        // 0 个目标。强制退出。
-	};
-
 public:
 	ICarnival() noexcept = default;
 	virtual ~ICarnival() = default;
@@ -139,8 +140,10 @@ public:
 
 	/**
 	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
+	 * @param callerDoWantToHandleThem: 如果为 true，则调用者还应该使用 SFML 的消息循环处理消息。
+	 * 否则该函数同时把 SFML 的消息队列清空。
 	*/
-	virtual void systemMessagePump() const noexcept = 0;
+	virtual void systemMessagePump(bool callerDoWantToHandleThem) const noexcept = 0;
 }; // class ICarnival
 
 } // namespace GUI

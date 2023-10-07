@@ -67,21 +67,21 @@ uint32_t TestActivity::getID() noexcept {
 void TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		ref_carnival->setTransition(GUI::ICarnival::Exit);
+		ref_carnival->setTransition(GUI::Transition::Exit);
 		ref_carnival->cancelKeepRunning();
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::F:
-			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Push : GUI::ICarnival::Push, m_id + 1);
+			ref_carnival->setTransition(evt.key.control ? -GUI::Transition::Push : GUI::Transition::Push, m_id + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::E:
-			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Switch : GUI::ICarnival::Switch, m_id + 1);
+			ref_carnival->setTransition(evt.key.control ? -GUI::Transition::Switch : GUI::Transition::Switch, m_id + 1);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Q:
-			ref_carnival->setTransition(evt.key.control ? -GUI::ICarnival::Pop : GUI::ICarnival::Pop);
+			ref_carnival->setTransition(evt.key.control ? -GUI::Transition::Pop : GUI::Transition::Pop);
 			ref_carnival->cancelKeepRunning();
 			break;
 		case sf::Keyboard::Backspace:
@@ -96,7 +96,6 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 		break;
 	case sf::Event::Resized:
 		m_shape.setPosition(evt.size.width / 2.0f, evt.size.height / 2.0f);
-		ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
 		break;
 	default:
 		break;

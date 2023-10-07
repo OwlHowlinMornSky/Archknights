@@ -84,14 +84,14 @@ void CarnivalWin32::run() noexcept {
 		catch (std::exception& e) {
 			std::string err("Activity Exception:\n");
 			err.append(e.what());
-			this->showMessageBox("Archnights: Error", err, ICarnival::MBInfo::Error);
-			this->setTransition(ICarnival::Transition::Pop);
+			this->showMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->setTransition(Transition::Pop);
 		}
 		catch (...) {
 			std::string err("Activity Exception:\n");
 			err.append("Unknown Exception.");
-			this->showMessageBox("Archnights: Error", err, ICarnival::MBInfo::Error);
-			this->setTransition(ICarnival::Transition::Pop);
+			this->showMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->setTransition(Transition::Pop);
 		}
 	}
 
@@ -183,20 +183,20 @@ void CarnivalWin32::setFullwindow(bool full) noexcept {}
 
 void CarnivalWin32::setFullscreen(bool full) noexcept {}
 
-void CarnivalWin32::systemMessagePump() const noexcept {
+void CarnivalWin32::systemMessagePump(bool callerDoWantToHandleThem) const noexcept {
 	MSG msg{ 0 };
 	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 		TranslateMessage(&msg);
 		DispatchMessageW(&msg);
 	}
-	try {
-		sf::Event evt;
-		while (m_renderWindow->pollEvent(evt)) {
+	if (!callerDoWantToHandleThem) {
+		try {
+			sf::Event evt;
+			while (m_renderWindow->pollEvent(evt));
+		}
+		catch (...) {
 			;
 		}
-	}
-	catch (...) {
-		;
 	}
 	return;
 }
@@ -227,10 +227,14 @@ void CarnivalWin32::runTheActivity() {
 				evt.type = sf::Event::Resized;
 				evt.size.width = oldsize.x;
 				evt.size.height = oldsize.y;
+				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
 				m_runningActivity->handleEvent(evt);
 			}
 		}
 		while (m_renderWindow->pollEvent(evt)) {
+			if (evt.type == sf::Event::Resized) {
+				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+			}
 			m_runningActivity->handleEvent(evt);
 		}
 		m_runningActivity->update(clk.restart());
@@ -246,6 +250,9 @@ void CarnivalWin32::runTheActivity() {
 			DispatchMessageW(&msg);
 		}
 		while (m_renderWindow->pollEvent(evt)) {
+			if (evt.type == sf::Event::Resized) {
+				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+			}
 			m_runningActivity->handleEvent(evt);
 		}
 

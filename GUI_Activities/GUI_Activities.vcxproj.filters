@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ID">
+      <UniqueIdentifier>{c80a38b5-5a0f-47e3-88fd-889b4e7076a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActivityIDs.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Act01_DefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -25,6 +25,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Act00_TestActivity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityIDs.h">
+      <Filter>ID</Filter>
+    </ClInclude>
+    <ClInclude Include="Act02_Load.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,6 +42,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Act00_TestActivity.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Act02_Load.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
