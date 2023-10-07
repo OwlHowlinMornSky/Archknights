@@ -19,7 +19,9 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "TestActivity.h"
+#include "Act00_TestActivity.h"
+
+#include <iostream>
 
 namespace Activity {
 
@@ -27,11 +29,11 @@ TestActivity::TestActivity(uint32_t n) noexcept :
 	m_id(n),
 	m_paused(false),
 	ref_carnival(nullptr) {
-	printf_s("TestActivity %u: Construct.\n", m_id);
+	std::cout << "TestActivity " << m_id << ": Construct." << std::endl;
 }
 
 TestActivity::~TestActivity() noexcept {
-	printf_s("TestActivity %u: Destruct.\n", m_id);
+	std::cout << "TestActivity " << m_id << ": Destruct." << std::endl;
 }
 
 void TestActivity::start(GUI::ICarnival& carnival) {
@@ -41,21 +43,21 @@ void TestActivity::start(GUI::ICarnival& carnival) {
 	m_shape.setSize({ 100.0f, 100.0f });
 	updateSize();
 
-	printf_s("TestActivity %u: start, %p.\n", m_id, ref_carnival);
+	std::cout << "TestActivity " << m_id << ": start, " << ref_carnival << "." << std::endl;
 	return;
 }
 
 void TestActivity::stop() noexcept {
-	printf_s("TestActivity %u: stop.\n", m_id);
+	std::cout << "TestActivity " << m_id << ": stop." << std::endl;
 }
 
 void TestActivity::pause() noexcept {
-	printf_s("TestActivity %u: pause.\n", m_id);
+	std::cout << "TestActivity " << m_id << ": pause." << std::endl;
 }
 
 void TestActivity::resume() noexcept {
 	updateSize();
-	printf_s("TestActivity %u: resume.\n", m_id);
+	std::cout << "TestActivity " << m_id << ": resume." << std::endl;
 }
 
 uint32_t TestActivity::getID() noexcept {
@@ -116,7 +118,7 @@ void TestActivity::update(sf::Time deltaTime) {
 }
 
 void TestActivity::onEnterSysloop() noexcept {
-	//m_paused = true;
+	m_paused = true;
 }
 
 void TestActivity::onExitSysloop() noexcept {

@@ -19,13 +19,15 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "DefaultEntryDebug.h"
+#include "Act01_DefaultEntryDebug.h"
 
 #ifdef _DEBUG
 #include "../Audio/BgmSFML.h"
 #include "../G3D/base.h"
 #include "../G3D/ShaderDefault.h"
 #include "ActivityIDs.h"
+
+#include <iostream>
 
 namespace Activity {
 
@@ -34,11 +36,11 @@ DefaultEntryDebug::DefaultEntryDebug() noexcept :
 	m_disableResize(false),
 	m_disableMinimize(false),
 	m_disableClose(false) {
-	printf_s("DefaultEntryDebug: Construct.\n");
+	std::cout << "DefaultEntryDebug: Construct." << std::endl;
 }
 
 DefaultEntryDebug::~DefaultEntryDebug() noexcept {
-	printf_s("DefaultEntryDebug: Destruct.\n");
+	std::cout << "DefaultEntryDebug: Destruct." << std::endl;
 }
 
 void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
@@ -54,24 +56,24 @@ void DefaultEntryDebug::start(GUI::ICarnival& carnival) {
 	g3d::Shader* shader = new g3d::ShaderDefault();
 	shader->setup();
 
-	printf_s("DefaultEntryDebug: start, %p.\n", ref_carnival);
+	std::cout << "DefaultEntryDebug: start, " << ref_carnival << "." << std::endl;
 	return;
 }
 
 void DefaultEntryDebug::stop() noexcept {
 	g3d::base::drop();
 	m_bgm->stop();
-	printf_s("DefaultEntryDebug: stop.\n");
+	std::cout << "DefaultEntryDebug: stop." << std::endl;
 }
 
 void DefaultEntryDebug::pause() noexcept {
 	//m_bgm->pause();
-	printf_s("DefaultEntryDebug: pause.\n");
+	std::cout << "DefaultEntryDebug: pause." << std::endl;
 }
 
 void DefaultEntryDebug::resume() noexcept {
 	//m_bgm->play();
-	printf_s("DefaultEntryDebug: resume.\n");
+	std::cout << "DefaultEntryDebug: resume." << std::endl;
 }
 
 uint32_t DefaultEntryDebug::getID() noexcept {

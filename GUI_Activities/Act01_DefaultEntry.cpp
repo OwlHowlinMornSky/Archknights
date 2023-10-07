@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "DefaultEntry.h"
+#include "Act01_DefaultEntry.h"
 
 #include "../G3D/base.h"
 #include "ActivityIDs.h"

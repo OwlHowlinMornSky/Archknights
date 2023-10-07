@@ -30,23 +30,27 @@
 
 #include "../GUI_Activities/ActivityIDs.h"
 
-#include "../GUI_Activities/DefaultEntryDebug.h"
-#include "../GUI_Activities/DefaultEntry.h"
+#include "../GUI_Activities/Act00_TestActivity.h"
 
-#include "../GUI_Activities/TestActivity.h"
+#include "../GUI_Activities/Act01_DefaultEntryDebug.h"
+#include "../GUI_Activities/Act01_DefaultEntry.h"
 
 namespace GUI {
 
 std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
 	try {
 		switch (id) {
-		case Activity::ID_DefaultEntry:
+		case Activity::ID_DefaultEntry:// 默认入口。
 #ifdef _DEBUG
 			return std::make_unique<Activity::DefaultEntryDebug>();
 #else
 			return std::make_unique<Activity::DefaultEntry>();
 #endif
-			break;
+		case Activity::ID_Load: // 加载界面。
+		case Activity::ID_Title: // 标题界面。
+		case Activity::ID_Main: // 主界面。
+		case Activity::ID_Panel: // 终端。
+		case Activity::ID_Construction: // 基建。
 		default:
 	//#ifdef _DEBUG
 			return std::make_unique<Activity::TestActivity>(id);

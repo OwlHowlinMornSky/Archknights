@@ -26,7 +26,6 @@
 #include <GL/glew.h>
 #include <string>
 #include <iostream>
-#include <format>
 
 #define GLEXT_GL_INVALID_FRAMEBUFFER_OPERATION 0x0506
 
