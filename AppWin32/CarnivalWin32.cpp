@@ -241,7 +241,7 @@ bool CarnivalWin32::windowSetFullscreen(sf::VideoMode mode) noexcept {
 
 	// Apply fullscreen mode
 	if (ChangeDisplaySettingsW(&devMode, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) {
-		//err() << "Failed to change display mode for fullscreen" << std::endl;
+		systemShowMessageBox("", "Failed to change display mode for fullscreen", GUI::MBInfo::Error);
 		return false;
 	}
 
