@@ -39,10 +39,11 @@ public:
 public:
 	virtual sf::RenderWindow& getRenderWindow() noexcept override final;
 
-	virtual void cancelKeepRunning() noexcept override final;
-	virtual void setTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept override final;
+	virtual void meDependentActivityStopRunning() noexcept override final;
+	virtual void meActivitySetTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept override final;
 
-	virtual void setFullResizeMessage(bool enabled) noexcept override final;
+	virtual void setSizingAsResized(bool enabled) noexcept override final;
+	virtual bool isSizingAsResized() const noexcept final;
 
 protected:
 	bool handleTransition() noexcept;

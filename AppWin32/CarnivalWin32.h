@@ -46,20 +46,24 @@ public:
 	virtual void run() noexcept override;
 
 public:
-	virtual void showMessageBox(std::string_view title,
+	virtual void systemShowMessageBox(std::string_view title,
 								std::string_view text,
 								MBInfo info = MBInfo::None) const noexcept override;
 
-	virtual bool isEnabledClose() const noexcept override;
-	virtual bool isEnabledResize() const noexcept override;
-	virtual bool isEnabledMinimize() const noexcept override;
+	virtual void windowSetClientSize(uint32_t w, uint32_t h) noexcept override;
 
-	virtual void enableClose(bool enabled) const noexcept override;
-	virtual void enableResize(bool enabled) const noexcept override;
-	virtual void enableMinimize(bool enabled) const noexcept override;
+	virtual bool windowIsCloseEnabled() const noexcept override;
+	virtual bool windowIsResizeEnabled() const noexcept override;
+	virtual bool windowIsMinimizeEnabled() const noexcept override;
 
-	virtual void setFullwindow(bool full) noexcept override;
-	virtual void setFullscreen(bool full) noexcept override;
+	virtual void windowSetCloseEnabled(bool enabled) noexcept override;
+	virtual void windowSetResizeEnabled(bool enabled) noexcept override;
+	virtual void windowSetMinimizeEnabled(bool enabled) noexcept override;
+
+	virtual bool windowSetBorderless() noexcept override;
+	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept override;
+	virtual void windowSetWindowed() noexcept override;
+	virtual WindowType windowGetWindowType() const noexcept override;
 
 	virtual void systemMessagePump(bool callerDoWantHandleThem) const noexcept override;
 
@@ -72,7 +76,12 @@ protected:
 	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;
 
 protected:
+	bool m_enabledResize;
+	bool m_enabledMinimize;
+	WindowType m_windowType;
 	HWND m_hwnd; // 要管理的窗口 的句柄。
+	sf::Vector2u m_sizeBefore;
+	sf::Vector2i m_positionBefore;
 };
 
 } // namespace GUI

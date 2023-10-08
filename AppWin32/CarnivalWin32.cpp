@@ -35,7 +35,10 @@
 namespace GUI {
 
 CarnivalWin32::CarnivalWin32(HWND hWnd) :
-	m_hwnd(hWnd) {
+	m_hwnd(hWnd),
+	m_windowType(WindowType::Windowed),
+	m_enabledResize(true),
+	m_enabledMinimize(true) {
 	m_renderWindow = std::make_unique<sf::RenderWindow>();
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
@@ -85,14 +88,14 @@ void CarnivalWin32::run() noexcept {
 		catch (std::exception& e) {
 			std::string err("Activity Exception:\n");
 			err.append(e.what());
-			this->showMessageBox("Archnights: Error", err, MBInfo::Error);
-			this->setTransition(Transition::Pop);
+			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->meActivitySetTransition(Transition::Pop);
 		}
 		catch (...) {
 			std::string err("Activity Exception:\n");
 			err.append("Unknown Exception.");
-			this->showMessageBox("Archnights: Error", err, MBInfo::Error);
-			this->setTransition(Transition::Pop);
+			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->meActivitySetTransition(Transition::Pop);
 		}
 	}
 
@@ -112,7 +115,7 @@ void CarnivalWin32::run() noexcept {
 	return;
 }
 
-void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text, MBInfo info) const noexcept {
+void CarnivalWin32::systemShowMessageBox(std::string_view title, std::string_view text, MBInfo info) const noexcept {
 	UINT type{ 0 };
 	// 根据自定的 info 类型 决定系统层的数值。
 	switch (info) {
@@ -134,21 +137,33 @@ void CarnivalWin32::showMessageBox(std::string_view title, std::string_view text
 	return;
 }
 
-bool CarnivalWin32::isEnabledClose() const noexcept {
+void CarnivalWin32::windowSetClientSize(uint32_t w, uint32_t h) noexcept {
+	if (m_windowType == WindowType::Windowed) {
+		m_renderWindow->setSize(sf::Vector2u(w, h));
+		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f,
+													   static_cast<float>(w),
+													   static_cast<float>(h))));
+	}
+	return;
+}
+
+bool CarnivalWin32::windowIsCloseEnabled() const noexcept {
 	return Callbacks::ButtonEnabled_Close;
 }
 
-bool CarnivalWin32::isEnabledResize() const noexcept {
-	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
-	return style & WS_SIZEBOX;
+bool CarnivalWin32::windowIsResizeEnabled() const noexcept {
+	return m_enabledResize;
+	//LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	//return style & WS_SIZEBOX;
 }
 
-bool CarnivalWin32::isEnabledMinimize() const noexcept {
-	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
-	return style & WS_MINIMIZEBOX;
+bool CarnivalWin32::windowIsMinimizeEnabled() const noexcept {
+	return m_enabledMinimize;
+	//LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	//return style & WS_MINIMIZEBOX;
 }
 
-void CarnivalWin32::enableClose(bool enabled) const noexcept {
+void CarnivalWin32::windowSetCloseEnabled(bool enabled) noexcept {
 	HMENU hmenu = GetSystemMenu(m_hwnd, FALSE);
 	// 修改成功即保存。
 	if (EnableMenuItem(hmenu, SC_CLOSE, enabled ? MF_ENABLED : MF_GRAYED) != -1)
@@ -156,33 +171,115 @@ void CarnivalWin32::enableClose(bool enabled) const noexcept {
 	return;
 }
 
-void CarnivalWin32::enableResize(bool enabled) const noexcept {
+void CarnivalWin32::windowSetResizeEnabled(bool enabled) noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	SetLastError(0);
+	LONG_PTR res = 0;
 	if (enabled) {
-		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | (WS_SIZEBOX | WS_MAXIMIZEBOX));
+		res = SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | (WS_SIZEBOX | WS_MAXIMIZEBOX));
 	}
 	else {
-		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~(WS_SIZEBOX | WS_MAXIMIZEBOX)));
+		res = SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~(WS_SIZEBOX | WS_MAXIMIZEBOX)));
 		ShowWindow(m_hwnd, SW_RESTORE); // 必须在 禁用最大化 的同时 取消掉 现有的最大化。
 	}
+	if (res != 0 || GetLastError() == 0)
+		m_enabledResize = enabled;
 	return;
 }
 
-void CarnivalWin32::enableMinimize(bool enabled) const noexcept {
+void CarnivalWin32::windowSetMinimizeEnabled(bool enabled) noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
+	SetLastError(0);
+	LONG_PTR res = 0;
 	if (enabled) {
-		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | WS_MINIMIZEBOX);
+		res = SetWindowLongPtrW(m_hwnd, GWL_STYLE, style | WS_MINIMIZEBOX);
 	}
 	else {
-		SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~WS_MINIMIZEBOX));
+		res = SetWindowLongPtrW(m_hwnd, GWL_STYLE, style & (~WS_MINIMIZEBOX));
 		ShowWindow(m_hwnd, SW_RESTORE); // 必须在 禁用最小化 的同时 取消掉 现有的最小化。
 	}
+	if (res != 0 || GetLastError() == 0)
+		m_enabledMinimize = enabled;
 	return;
 }
 
-void CarnivalWin32::setFullwindow(bool full) noexcept {}
+bool CarnivalWin32::windowSetBorderless() noexcept {
+	if (m_windowType == WindowType::Borderless)
+		return true;
+	if (m_windowType == WindowType::Windowed) {
+		m_sizeBefore = m_renderWindow->getSize();
+		m_positionBefore = m_renderWindow->getPosition();
+	}
+	if (m_windowType == WindowType::Fullscreen) {
+		ChangeDisplaySettingsW(NULL, 0);
+	}
+	SetWindowLongPtrW(m_hwnd, GWL_STYLE,
+					  WS_OVERLAPPED | WS_SYSMENU | WS_BORDER | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	SetWindowPos(m_hwnd, HWND_TOP, 0, 0,
+				 GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+	ShowWindow(m_hwnd, SW_SHOW);
+	UpdateWindow(m_hwnd);
 
-void CarnivalWin32::setFullscreen(bool full) noexcept {}
+	m_windowType = WindowType::Borderless;
+	return true;
+}
+
+bool CarnivalWin32::windowSetFullscreen(sf::VideoMode mode) noexcept {
+	if (m_windowType == WindowType::Fullscreen)
+		return true;
+	if (m_windowType == WindowType::Windowed) {
+		m_sizeBefore = m_renderWindow->getSize();
+		m_positionBefore = m_renderWindow->getPosition();
+	}
+
+	DEVMODE devMode{ 0 };
+	devMode.dmSize = sizeof(devMode);
+	devMode.dmPelsWidth = mode.width;
+	devMode.dmPelsHeight = mode.height;
+	devMode.dmBitsPerPel = mode.bitsPerPixel;
+	devMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
+
+	// Apply fullscreen mode
+	if (ChangeDisplaySettingsW(&devMode, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) {
+		//err() << "Failed to change display mode for fullscreen" << std::endl;
+		return false;
+	}
+
+	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	SetWindowPos(m_hwnd, HWND_TOP,
+				 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
+				 SWP_FRAMECHANGED);
+
+	// Resize the window so that it fits the entire screen
+	SetWindowPos(m_hwnd, HWND_TOP, 0, 0, static_cast<int>(mode.width), static_cast<int>(mode.height), SWP_FRAMECHANGED);
+	ShowWindow(m_hwnd, SW_SHOW);
+
+	m_windowType = WindowType::Fullscreen;
+	return true;
+}
+
+void CarnivalWin32::windowSetWindowed() noexcept {
+	if (m_windowType == WindowType::Windowed)
+		return;
+	if (m_windowType == WindowType::Fullscreen) {
+		ChangeDisplaySettingsW(NULL, 0);
+	}
+	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	ShowWindow(m_hwnd, SW_SHOW);
+	UpdateWindow(m_hwnd);
+
+	windowSetMinimizeEnabled(m_enabledMinimize);
+	windowSetResizeEnabled(m_enabledResize);
+	m_renderWindow->setSize(m_sizeBefore);
+	m_renderWindow->setPosition(m_positionBefore);
+
+	m_windowType = WindowType::Windowed;
+	return;
+}
+
+WindowType CarnivalWin32::windowGetWindowType() const noexcept {
+	return m_windowType;
+}
 
 void CarnivalWin32::systemMessagePump(bool callerDoWantToHandleThem) const noexcept {
 	MSG msg{ 0 };

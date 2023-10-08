@@ -83,14 +83,14 @@ uint32_t Act02_Opening::getID() noexcept {
 void Act02_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		ref_carnival->setTransition(GUI::Transition::Exit);
-		ref_carnival->cancelKeepRunning();
+		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
+		ref_carnival->meDependentActivityStopRunning();
 		break;
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
-		ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
-		ref_carnival->cancelKeepRunning();
+		ref_carnival->meActivitySetTransition(GUI::Transition::Switch, IDs::ID_Load);
+		ref_carnival->meDependentActivityStopRunning();
 		break;
 #endif // _DEBUG
 	default:
@@ -173,8 +173,8 @@ void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_OVER;
-			ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
-			ref_carnival->cancelKeepRunning();
+			ref_carnival->meActivitySetTransition(GUI::Transition::Switch, IDs::ID_Load);
+			ref_carnival->meDependentActivityStopRunning();
 			circle[2].setFillColor(sf::Color::Transparent);
 		}
 		else {

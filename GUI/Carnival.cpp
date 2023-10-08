@@ -38,18 +38,22 @@ sf::RenderWindow& Carnival::getRenderWindow() noexcept {
 	return *m_renderWindow;
 }
 
-void Carnival::cancelKeepRunning() noexcept {
+void Carnival::meDependentActivityStopRunning() noexcept {
 	m_keepRunning = false;
 }
 
-void Carnival::setTransition(int t, uint32_t a0, uint32_t a1) noexcept {
+void Carnival::meActivitySetTransition(int t, uint32_t a0, uint32_t a1) noexcept {
 	m_transition = t;
 	m_transitionTarget[0] = a0;
 	m_transitionTarget[1] = a1;
 }
 
-void Carnival::setFullResizeMessage(bool enabled) noexcept {
+void Carnival::setSizingAsResized(bool enabled) noexcept {
 	m_enableFullResizeMessage = enabled;
+}
+
+bool Carnival::isSizingAsResized() const noexcept {
+	return m_enableFullResizeMessage;
 }
 
 bool Carnival::handleTransition() noexcept {

@@ -23,6 +23,7 @@
 
 #include <string>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/VideoMode.hpp>
 
 namespace GUI {
 
@@ -49,6 +50,12 @@ enum class MBInfo {
 	Error
 };
 
+enum class WindowType {
+	Windowed = 0, // 窗口化。
+	Borderless,   // 无边框。
+	Fullscreen    // 全屏。
+};
+
 /**
  * @brief 接口Carnival: 在 RenderWindow 中运行 Activity 的管理类。
 */
@@ -71,18 +78,23 @@ public:
 	/**
 	 * @brief 给非独立 Activity 用的退出运行的方法。
 	*/
-	virtual void cancelKeepRunning() noexcept = 0;
+	virtual void meDependentActivityStopRunning() noexcept = 0;
 	/**
 	 * @brief 给 Activity 用的设置变迁的方法。
 	 * @param t: 变迁类型。
 	*/
-	virtual void setTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept = 0;
+	virtual void meActivitySetTransition(int t, uint32_t a0 = 0, uint32_t a1 = 0) noexcept = 0;
 
 	/**
-	 * @brief 设置是否把 sizing 消息当作 resize 消息让 Activity 处理。
+	 * @brief 设置是否把 sizing 消息当作 resized 消息让 Activity 处理。
 	 * @param enabled: 是否开启。
 	*/
-	virtual void setFullResizeMessage(bool enabled) noexcept = 0;
+	virtual void setSizingAsResized(bool enabled) noexcept = 0;
+	/**
+	 * @brief 是否已把 sizing 消息当作 resized 消息让 Activity 处理。
+	 * @return 是否开启。
+	*/
+	virtual bool isSizingAsResized() const noexcept = 0;
 
 	/**
 	 * @brief 显示一个消息框。
@@ -90,53 +102,71 @@ public:
 	 * @param text: 消息框的内容。
 	 * @param info: 消息框的额外信息。
 	*/
-	virtual void showMessageBox(std::string_view title,
+	virtual void systemShowMessageBox(std::string_view title,
 								std::string_view text,
 								MBInfo info = MBInfo::None) const noexcept = 0;
+
+	/**
+	 * @brief 设置窗口大小（顺便更新View）。
+	 * @param w: 宽。
+	 * @param h: 高。
+	*/
+	virtual void windowSetClientSize(uint32_t w, uint32_t h) noexcept = 0;
 
 	/**
 	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledClose() const noexcept = 0;
+	virtual bool windowIsCloseEnabled() const noexcept = 0;
 	/**
 	 * @brief 检测 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledResize() const noexcept = 0;
+	virtual bool windowIsResizeEnabled() const noexcept = 0;
 	/**
 	 * @brief 检测 所管理窗口的 最小化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
-	virtual bool isEnabledMinimize() const noexcept = 0;
+	virtual bool windowIsMinimizeEnabled() const noexcept = 0;
 
 	/**
 	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableClose(bool enabled) const noexcept = 0;
+	virtual void windowSetCloseEnabled(bool enabled) noexcept = 0;
 	/**
 	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableResize(bool enabled) const noexcept = 0;
+	virtual void windowSetResizeEnabled(bool enabled) noexcept = 0;
 	/**
 	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
-	virtual void enableMinimize(bool enabled) const noexcept = 0;
+	virtual void windowSetMinimizeEnabled(bool enabled) noexcept = 0;
 
 	/**
-	 * @brief 设置无边框窗口。
-	 * @param full: 是否启用无边框窗口。
+	 * @brief 设为无边框窗口。
 	*/
-	virtual void setFullwindow(bool full) noexcept = 0;
+	virtual bool windowSetBorderless() noexcept = 0;
 
 	/**
-	 * @brief 设置全屏。
-	 * @param full: 是否启用全屏。
+	 * @brief 设为全屏。
+	 * @param w: 宽。
+	 * @param h: 高。
 	*/
-	virtual void setFullscreen(bool full) noexcept = 0;
+	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept = 0;
+
+	/**
+	 * @brief 设为一般窗口。
+	*/
+	virtual void windowSetWindowed() noexcept = 0;
+
+	/**
+	 * @brief 获取当前窗口状态。
+	 * @return 窗口状态。
+	*/
+	virtual WindowType windowGetWindowType() const noexcept = 0;
 
 	/**
 	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。

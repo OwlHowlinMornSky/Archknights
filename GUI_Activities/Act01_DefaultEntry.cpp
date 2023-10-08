@@ -47,11 +47,11 @@ DefaultEntry::~DefaultEntry() noexcept {
 
 void DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
-	ref_carnival->enableClose(false);
+	ref_carnival->windowSetCloseEnabled(false);
+
+	ref_carnival->windowSetClientSize(1280, 720);
 
 	sf::RenderWindow& window = ref_carnival->getRenderWindow();
-	window.setSize(sf::Vector2u(1280, 720));
-	window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, 1280.0f, 720.0f)));
 	//window.setFramerateLimit(60);
 	window.setVerticalSyncEnabled(true);
 
@@ -77,7 +77,7 @@ void DefaultEntry::stop() noexcept {
 }
 
 void DefaultEntry::pause() noexcept {
-	ref_carnival->enableClose(true);
+	ref_carnival->windowSetCloseEnabled(true);
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: pause." << std::endl;
 #endif // _DEBUG
@@ -85,7 +85,7 @@ void DefaultEntry::pause() noexcept {
 }
 
 void DefaultEntry::resume() noexcept {
-	ref_carnival->enableClose(false);
+	ref_carnival->windowSetCloseEnabled(false);
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: resume." << std::endl;
 #endif // _DEBUG
@@ -113,21 +113,21 @@ void DefaultEntry::runIndependently() {
 		while (window.pollEvent(evt)) {
 			switch (evt.type) {
 			case sf::Event::Closed:
-				ref_carnival->setTransition(GUI::Transition::Exit);
+				ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
 				run = false;
 				break;
 			case sf::Event::KeyPressed:
 				switch (evt.key.code) {
 				case sf::Keyboard::F:
-					ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
+					ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Opening);
 					run = false;
 					break;
 				case sf::Keyboard::Q:
-					ref_carnival->setTransition(GUI::Transition::Pop);
+					ref_carnival->meActivitySetTransition(GUI::Transition::Pop);
 					run = false;
 					break;
 				case sf::Keyboard::F1:
-					ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Test);
+					ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Test);
 					run = false;
 					break;
 				default:
