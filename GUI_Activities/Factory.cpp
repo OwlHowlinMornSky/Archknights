@@ -1,28 +1,4 @@
-/*
-*    Archknights
-*
-*    Copyright (C) 2023  Tyler Parret True
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU Affero General Public License as published
-*    by the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU Affero General Public License for more details.
-*
-*    You should have received a copy of the GNU Affero General Public License
-*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*
-* @Authors
-*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-*/
-#include <SFML/Graphics.hpp>
-#include "framework.h"
-
-#include "CarnivalWin32.h"
+#include "Factory.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -34,9 +10,9 @@
 #include "../GUI_Activities/Act02_Opening.h"
 #include "../GUI_Activities/Act03_Load.h"
 
-namespace GUI {
+namespace Activity::Factory {
 
-std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
+std::unique_ptr<GUI::IActivity> CreateActivity(uint32_t id) noexcept {
 	try {
 		switch (id) {
 		case Activity::ID_None:
@@ -73,7 +49,7 @@ std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noex
 			<< "    Unknown Exception." << std::endl;
 #endif // _DEBUG
 	}
-	return std::unique_ptr<IActivity>();
+	return std::unique_ptr<GUI::IActivity>();
 }
 
-} // namespace GUI
+}

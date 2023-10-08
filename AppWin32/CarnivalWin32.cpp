@@ -30,6 +30,7 @@
 
 #include "../GUI/Callbacks.h"
 #include "../GUI_Activities/ActivityIDs.h"
+#include "../GUI_Activities/Factory.h"
 
 namespace GUI {
 
@@ -262,6 +263,10 @@ void CarnivalWin32::runTheActivity() {
 	// »Ö¸´¾ÉµÄ Idle »Øµ÷¡£
 	Callbacks::OnIdle = oldIdle;
 	return;
+}
+
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
+	return Activity::Factory::CreateActivity(id);
 }
 
 } // namespace GUI

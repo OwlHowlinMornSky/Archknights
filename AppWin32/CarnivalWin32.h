@@ -69,9 +69,6 @@ protected:
 	*/
 	void runTheActivity();
 
-	/**
-	 * @brief [注意] 这个方法是在 "CreateActivity.cpp" 里实现的。
-	*/
 	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;
 
 protected:

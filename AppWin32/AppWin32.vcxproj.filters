@@ -53,8 +53,5 @@
     <ClCompile Include="FactoryCarnival.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
-    <ClCompile Include="CreateActivity.cpp">
-      <Filter>CarnivalWin32</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

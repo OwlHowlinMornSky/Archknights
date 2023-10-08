@@ -125,10 +125,10 @@ void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_PIC2_KEEP;
-			circle[2].setFillColor(sf::Color(0, 255, 0));
+			circle[2].setFillColor(sf::Color(0, 0, 255));
 		}
 		else {
-			circle[2].setFillColor(sf::Color(0, 255 * m_timer.asMilliseconds() / 250, 0));
+			circle[2].setFillColor(sf::Color(0, 0, 255 * m_timer.asMilliseconds() / 250));
 		}
 		window.draw(circle[2]);
 		break;
@@ -145,10 +145,10 @@ void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 			m_status = 0;
 			ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
 			ref_carnival->cancelKeepRunning();
-			circle[1].setFillColor(sf::Color::Transparent);
+			circle[2].setFillColor(sf::Color::Transparent);
 		}
 		else {
-			circle[1].setFillColor(sf::Color(0, 255 - 255 * m_timer.asMilliseconds() / 250, 0));
+			circle[2].setFillColor(sf::Color(0, 0, 255 - 255 * m_timer.asMilliseconds() / 250));
 		}
 		window.draw(circle[2]);
 		break;

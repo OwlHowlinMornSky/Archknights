@@ -11,8 +11,8 @@ Act03_Load::Act03_Load() noexcept :
 void Act03_Load::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	m_bgm = std::make_unique<Audio::BgmSFML>();
-	//m_bgm->openFromFile("res\\music\\m_sys_title.ogg");
-	m_bgm->openFromFile("res\\music\\m_sys_title_h.ogg");
+	m_bgm->openFromFile("res\\music\\m_sys_title.ogg");
+	//m_bgm->openFromFile("res\\music\\m_sys_title_h.ogg");
 	m_bgm->play();
 }
 

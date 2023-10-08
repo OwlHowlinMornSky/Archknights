@@ -171,7 +171,6 @@
   <ItemGroup>
     <ClCompile Include="CarnivalWin32.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="CreateActivity.cpp" />
     <ClCompile Include="FactoryCarnival.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
     <ClCompile Include="Win32Things.cpp" />
