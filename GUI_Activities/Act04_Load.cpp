@@ -33,7 +33,10 @@ void Act03_Load::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 
 	m_tex.loadFromFile("res\\textures\\titleback.png");
+	m_tex.setSmooth(true);
+	m_tex.generateMipmap();
 	m_sp.setTexture(m_tex, true);
+	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
 
 	updateSize(ref_carnival->getRenderWindow().getSize());
 
@@ -81,12 +84,22 @@ void Act03_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
 }
 
 void Act03_Load::updateSize(sf::Vector2u newWindowSize) {
-	auto tsize = m_tex.getSize();
-	float sx = static_cast<float>(newWindowSize.x);
-	float sy = static_cast<float>(newWindowSize.y);
-	sx /= tsize.x;
-	sy /= tsize.y;
-	m_sp.setScale(sx, sy);
+	sf::Vector2u texSize = m_tex.getSize();
+	float tx = static_cast<float>(texSize.x);
+	float ty = static_cast<float>(texSize.y);
+	float texRate = tx / ty;
+	float wx = static_cast<float>(newWindowSize.x);
+	float wy = static_cast<float>(newWindowSize.y);
+	float winRate = wx / wy;
+	float rate = 1.0f;
+	if (winRate > texRate) {
+		rate = wx / tx;
+	}
+	else {
+		rate = wy / ty;
+	}
+	m_sp.setScale(rate, rate);
+	m_sp.setPosition(wx / 2.0f, wy / 2.0f);
 	return;
 }
 

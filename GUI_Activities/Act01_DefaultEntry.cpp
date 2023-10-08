@@ -50,6 +50,8 @@ void DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival->enableClose(false);
 
 	sf::RenderWindow& window = ref_carnival->getRenderWindow();
+	window.setSize(sf::Vector2u(1280, 720));
+	window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, 1280.0f, 720.0f)));
 	//window.setFramerateLimit(60);
 	window.setVerticalSyncEnabled(true);
 
