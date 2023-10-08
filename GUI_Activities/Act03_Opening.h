@@ -21,27 +21,34 @@
 */
 #pragma once
 
+#include "..\GUI\ActivityDependent.h"
+
+#include <SFML/Graphics.hpp>
+
 namespace Activity {
 
-/**
- * @brief Activity 标识。
-*/
-enum IDs : uint32_t {
-	ID_None = 0ul, //-------------// 空。
-	ID_DefaultEntry, //-----------// 默认入口。
-	ID_Test, //-------------------// 测试。
-	ID_Opening, //----------------// 开启界面。
-	ID_Load, //-------------------// 加载界面。
-	ID_Title, //------------------// 标题界面。
-	ID_Main, //-------------------// 主界面。
-	ID_Panel, //------------------// 终端。
-	ID_Construction, //-----------// 基建。
+class Act02_Opening final :
+	public GUI::ActivityDependent {
+public:
+	Act02_Opening() noexcept;
+	virtual ~Act02_Opening() noexcept = default;
 
-	ID_CTRL_BASE_COUNT, //--------// [标记] 基本界面 数量。
+public:
+	virtual void start(GUI::ICarnival& carnival) override;
+	virtual void stop() noexcept override;
+	virtual void pause() noexcept override;
+	virtual void resume() noexcept override;
+	virtual uint32_t getID() noexcept override;
 
-	ID_DynamicBlock = 0x0080, //--// [标记] 动态界面区块 起始标记。
+public:
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override;
 
-	ID_RESERVED_COUNT = 0x0400 //-// [标记] 保留区 数量。在这之上的 ID 任意使用。
+protected:
+	int m_status;
+	GUI::ICarnival* ref_carnival;
+	sf::Time m_timer;
+	sf::CircleShape circle[3];
 };
 
-} // namespace Activity
+}

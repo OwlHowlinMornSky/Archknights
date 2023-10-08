@@ -124,6 +124,10 @@ void DefaultEntry::runIndependently() {
 					ref_carnival->setTransition(GUI::Transition::Pop);
 					run = false;
 					break;
+				case sf::Keyboard::F1:
+					ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Test);
+					run = false;
+					break;
 				default:
 					break;
 				}

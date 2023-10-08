@@ -1,4 +1,25 @@
-#include "Act02_Opening.h"
+/*
+*    Archknights
+*
+*    Copyright (C) 2023  Tyler Parret True
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License as published
+*    by the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* @Authors
+*    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
+*/
+#include "Act03_Opening.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -14,6 +35,7 @@
 #define ST_PIC2_IN   (6)
 #define ST_PIC2_KEEP (7)
 #define ST_PIC2_OUT  (8)
+#define ST_OVER      (9)
 
 namespace Activity {
 
@@ -63,6 +85,13 @@ void Act02_Opening::handleEvent(const sf::Event& evt) {
 		ref_carnival->setTransition(GUI::Transition::Exit);
 		ref_carnival->cancelKeepRunning();
 		break;
+#ifdef _DEBUG
+	case sf::Event::KeyPressed:
+		m_status = ST_OVER;
+		ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
+		ref_carnival->cancelKeepRunning();
+		break;
+#endif // _DEBUG
 	default:
 		break;
 	}
@@ -142,7 +171,7 @@ void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	case ST_PIC2_OUT:
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
-			m_status = 0;
+			m_status = ST_OVER;
 			ref_carnival->setTransition(GUI::Transition::Switch, IDs::ID_Load);
 			ref_carnival->cancelKeepRunning();
 			circle[2].setFillColor(sf::Color::Transparent);
@@ -151,6 +180,8 @@ void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 			circle[2].setFillColor(sf::Color(0, 0, 255 - 255 * m_timer.asMilliseconds() / 250));
 		}
 		window.draw(circle[2]);
+		break;
+	case ST_OVER:
 		break;
 	default:
 		m_status = ST_PIC0_IN;

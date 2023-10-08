@@ -119,8 +119,10 @@ bool Carnival::handleTransition() noexcept {
 
 	// 确保 Activity 正确。
 	assert(newID == newActivity->getID());
-	if (newID != newActivity->getID())
+	if (newID != newActivity->getID()) {
+		newActivity->stop();
 		return true;
+	}
 
 	// 栈变迁。
 	switch (t) {

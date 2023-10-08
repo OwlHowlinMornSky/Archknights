@@ -208,18 +208,17 @@ void CarnivalWin32::runTheActivity() {
 
 	// 用于每帧的更新时间。
 	sf::Clock clk;
+	// 用于事件循环。
+	sf::Event evt;
 
 	POINT oldsize{ 0 };
-	{
-		RECT clientrect{ 0 };
-		GetClientRect(m_hwnd, &clientrect);
-		oldsize = { clientrect.right, clientrect.bottom };
-	}
+	RECT clientrect{ 0 };
+	GetClientRect(m_hwnd, &clientrect);
+	oldsize = { clientrect.right, clientrect.bottom };
+
 	// 修改 Idle 回调，要把旧的回调保存下来。
 	std::function<void()> oldIdle = Callbacks::OnIdle;
-	Callbacks::OnIdle = [this, &clk, &oldsize]() -> void {
-		sf::Event evt;
-		RECT clientrect{ 0 };
+	Callbacks::OnIdle = [&]() -> void {
 		GetClientRect(m_hwnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
@@ -233,9 +232,6 @@ void CarnivalWin32::runTheActivity() {
 			}
 		}
 		while (m_renderWindow->pollEvent(evt)) {
-			if (evt.type == sf::Event::Resized) {
-				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
-			}
 			m_runningActivity->handleEvent(evt);
 		}
 		m_runningActivity->update(*m_renderWindow, clk.restart());
@@ -243,7 +239,6 @@ void CarnivalWin32::runTheActivity() {
 
 	// 主循环。
 	MSG msg{ 0 };
-	sf::Event evt;
 	clk.restart();
 	while (m_keepRunning) {
 		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
@@ -253,6 +248,9 @@ void CarnivalWin32::runTheActivity() {
 		while (m_renderWindow->pollEvent(evt)) {
 			if (evt.type == sf::Event::Resized) {
 				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+				GetClientRect(m_hwnd, &clientrect);
+				if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom)
+					oldsize = { clientrect.right, clientrect.bottom };
 			}
 			m_runningActivity->handleEvent(evt);
 		}

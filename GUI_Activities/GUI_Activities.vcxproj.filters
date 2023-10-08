@@ -24,16 +24,16 @@
     <ClInclude Include="Act01_DefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Act00_TestActivity.h">
+    <ClInclude Include="Act02_TestActivity.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ActivityIDs.h">
       <Filter>ID</Filter>
     </ClInclude>
-    <ClInclude Include="Act02_Opening.h">
+    <ClInclude Include="Act03_Opening.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Act03_Load.h">
+    <ClInclude Include="Act04_Load.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Factory.h">
@@ -44,13 +44,13 @@
     <ClCompile Include="Act01_DefaultEntry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Act00_TestActivity.cpp">
+    <ClCompile Include="Act02_TestActivity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Act02_Opening.cpp">
+    <ClCompile Include="Act03_Opening.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Act03_Load.cpp">
+    <ClCompile Include="Act04_Load.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Factory.cpp">
