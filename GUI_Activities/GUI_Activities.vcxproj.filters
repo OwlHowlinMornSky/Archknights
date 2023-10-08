@@ -21,9 +21,6 @@
     <ClInclude Include="Act01_DefaultEntry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Act01_DefaultEntryDebug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Act00_TestActivity.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -39,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Act01_DefaultEntry.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Act01_DefaultEntryDebug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Act00_TestActivity.cpp">

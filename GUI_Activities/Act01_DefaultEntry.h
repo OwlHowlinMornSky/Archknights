@@ -27,10 +27,8 @@ namespace Activity {
 
 class DefaultEntry final : public GUI::ActivityIndependent {
 public:
-	DefaultEntry() noexcept :
-		m_haveRunned(false),
-		ref_carnival(nullptr) {}
-	virtual ~DefaultEntry() noexcept override {}
+	DefaultEntry() noexcept;
+	virtual ~DefaultEntry() noexcept override;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;

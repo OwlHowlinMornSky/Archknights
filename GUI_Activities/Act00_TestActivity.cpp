@@ -28,7 +28,10 @@ namespace Activity {
 TestActivity::TestActivity(uint32_t n) noexcept :
 	m_id(n),
 	m_paused(false),
-	ref_carnival(nullptr) {
+	ref_carnival(nullptr),
+	m_disableResize(false),
+	m_disableMinimize(false),
+	m_disableClose(false) {
 	std::cout << "TestActivity " << m_id << ": Construct." << std::endl;
 }
 
@@ -89,6 +92,15 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 			break;
 		case sf::Keyboard::Backslash:
 			ref_carnival->setFullResizeMessage(false);
+			break;
+		case sf::Keyboard::Space:
+			ref_carnival->enableClose(!(m_disableClose = !m_disableClose));
+			break;
+		case sf::Keyboard::Enter:
+			ref_carnival->enableResize(!(m_disableResize = !m_disableResize));
+			break;
+		case sf::Keyboard::Numpad0:
+			ref_carnival->enableMinimize(!(m_disableMinimize = !m_disableMinimize));
 			break;
 		default:
 			break;

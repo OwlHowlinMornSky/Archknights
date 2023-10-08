@@ -54,6 +54,9 @@ protected:
 	sf::RectangleShape m_shape;
 	uint32_t m_id;
 	bool m_paused;
+	bool m_disableClose;
+	bool m_disableResize;
+	bool m_disableMinimize;
 };
 
 } // namespace Activity

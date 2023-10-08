@@ -24,13 +24,43 @@
 #include "../G3D/base.h"
 #include "ActivityIDs.h"
 
+#ifdef _DEBUG
+#include "../G3D/ShaderDefault.h"
+#include <iostream>
+#endif // _DEBUG
+
 namespace Activity {
+
+DefaultEntry::DefaultEntry() noexcept :
+	m_haveRunned(false),
+	ref_carnival(nullptr) {
+#ifdef _DEBUG
+	std::cout << "DefaultEntryDebug: Construct." << std::endl;
+#endif // _DEBUG
+}
+
+DefaultEntry::~DefaultEntry() noexcept {
+#ifdef _DEBUG
+	std::cout << "DefaultEntryDebug: Destruct." << std::endl;
+#endif // _DEBUG
+}
 
 void DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	ref_carnival->enableClose(false);
 
+	sf::RenderWindow& window = ref_carnival->getRenderWindow();
+	//window.setFramerateLimit(60);
+	window.setVerticalSyncEnabled(true);
+
 	g3d::base::setup();
+#ifdef _DEBUG
+	g3d::base::setActive(true);
+	g3d::Shader* shader = new g3d::ShaderDefault();
+	shader->setup();
+	std::cout << "DefaultEntryDebug: start, " << ref_carnival << "." << std::endl;
+	delete shader;
+#endif // _DEBUG
 	g3d::base::setActive(false);
 	return;
 }
@@ -38,15 +68,26 @@ void DefaultEntry::start(GUI::ICarnival& carnival) {
 void DefaultEntry::stop() noexcept {
 	g3d::base::drop();
 	ref_carnival = nullptr;
+#ifdef _DEBUG
+	std::cout << "DefaultEntryDebug: stop." << std::endl;
+#endif // _DEBUG
 	return;
 }
 
 void DefaultEntry::pause() noexcept {
 	ref_carnival->enableClose(true);
+#ifdef _DEBUG
+	std::cout << "DefaultEntryDebug: pause." << std::endl;
+#endif // _DEBUG
+	return;
 }
 
 void DefaultEntry::resume() noexcept {
 	ref_carnival->enableClose(false);
+#ifdef _DEBUG
+	std::cout << "DefaultEntryDebug: resume." << std::endl;
+#endif // _DEBUG
+	return;
 }
 
 uint32_t DefaultEntry::getID() noexcept {
@@ -54,12 +95,47 @@ uint32_t DefaultEntry::getID() noexcept {
 }
 
 void DefaultEntry::runIndependently() {
+#ifndef _DEBUG
 	if (m_haveRunned) {
 		ref_carnival->setTransition(GUI::Transition::Exit);
 		return;
 	}
 	m_haveRunned = true;
 	ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
+#else
+	bool run = true;
+	sf::RenderWindow& window = ref_carnival->getRenderWindow();
+	sf::Event evt;
+	while (run) {
+		ref_carnival->systemMessagePump(true);
+		while (window.pollEvent(evt)) {
+			switch (evt.type) {
+			case sf::Event::Closed:
+				ref_carnival->setTransition(GUI::Transition::Exit);
+				run = false;
+				break;
+			case sf::Event::KeyPressed:
+				switch (evt.key.code) {
+				case sf::Keyboard::F:
+					ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
+					run = false;
+					break;
+				case sf::Keyboard::Q:
+					ref_carnival->setTransition(GUI::Transition::Pop);
+					run = false;
+					break;
+				default:
+					break;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		window.clear(sf::Color::Red);
+		window.display();
+	}
+#endif // !_DEBUG
 	return;
 }
 
