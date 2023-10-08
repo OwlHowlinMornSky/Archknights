@@ -80,8 +80,8 @@ protected:
 	bool m_enabledMinimize;
 	WindowType m_windowType;
 	HWND m_hwnd; // 要管理的窗口 的句柄。
-	sf::Vector2u m_sizeBefore;
-	sf::Vector2i m_positionBefore;
+	sf::Vector2u m_sizeBefore; // 全屏或无边框之前的窗口大小。
+	sf::Vector2i m_positionBefore; // 全屏或无边框之前的窗口位置。
 };
 
 } // namespace GUI
