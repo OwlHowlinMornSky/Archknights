@@ -140,9 +140,7 @@ void CarnivalWin32::systemShowMessageBox(std::string_view title, std::string_vie
 void CarnivalWin32::windowSetClientSize(uint32_t w, uint32_t h) noexcept {
 	if (m_windowType == WindowType::Windowed) {
 		m_renderWindow->setSize(sf::Vector2u(w, h));
-		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f,
-													   static_cast<float>(w),
-													   static_cast<float>(h))));
+		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h))));
 	}
 	return;
 }
@@ -218,14 +216,13 @@ bool CarnivalWin32::windowSetBorderless() noexcept {
 	SetWindowPos(m_hwnd, HWND_TOP, 0, 0,
 				 GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 	ShowWindow(m_hwnd, SW_SHOW);
-	UpdateWindow(m_hwnd);
 
 	m_windowType = WindowType::Borderless;
 	return true;
 }
 
 bool CarnivalWin32::windowSetFullscreen(sf::VideoMode mode) noexcept {
-	if (m_windowType == WindowType::Fullscreen)
+	if (m_windowType == WindowType::Fullscreen && m_lastMode == mode)
 		return true;
 	if (m_windowType == WindowType::Windowed) {
 		m_sizeBefore = m_renderWindow->getSize();
@@ -254,6 +251,7 @@ bool CarnivalWin32::windowSetFullscreen(sf::VideoMode mode) noexcept {
 	SetWindowPos(m_hwnd, HWND_TOP, 0, 0, static_cast<int>(mode.width), static_cast<int>(mode.height), SWP_FRAMECHANGED);
 	ShowWindow(m_hwnd, SW_SHOW);
 
+	m_lastMode = mode;
 	m_windowType = WindowType::Fullscreen;
 	return true;
 }
@@ -266,7 +264,6 @@ void CarnivalWin32::windowSetWindowed() noexcept {
 	}
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 	ShowWindow(m_hwnd, SW_SHOW);
-	UpdateWindow(m_hwnd);
 
 	windowSetMinimizeEnabled(m_enabledMinimize);
 	windowSetResizeEnabled(m_enabledResize);

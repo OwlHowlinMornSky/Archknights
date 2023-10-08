@@ -33,6 +33,14 @@ TestActivity::TestActivity(uint32_t n) noexcept :
 	m_disableMinimize(false),
 	m_disableClose(false) {
 	std::cout << "TestActivity " << m_id << ": Construct." << std::endl;
+
+	auto& modes = sf::VideoMode::getFullscreenModes();
+	for (const auto& mode : modes) {
+		std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
+	}
+	m_modes = modes;
+	m_modeI = 0;
+	return;
 }
 
 TestActivity::~TestActivity() noexcept {
@@ -96,26 +104,34 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 		case sf::Keyboard::Num3:
 			ref_carnival->windowSetCloseEnabled(!ref_carnival->windowIsCloseEnabled());
 			break;
-		case sf::Keyboard::Enter:
+		case sf::Keyboard::Grave:
 			ref_carnival->setSizingAsResized(!ref_carnival->isSizingAsResized());
 			break;
 		case sf::Keyboard::F1:
-		{
-			auto modes = sf::VideoMode::getFullscreenModes();
-			for (const auto& mode : modes) {
+			ref_carnival->windowSetWindowed();
+			break;
+		case sf::Keyboard::F2:
+			ref_carnival->windowSetBorderless();
+			break;
+		case sf::Keyboard::F3:
+			ref_carnival->windowSetFullscreen(sf::VideoMode::getDesktopMode());
+			break;
+		case sf::Keyboard::F4:
+			ref_carnival->windowSetFullscreen(m_modes.at(m_modeI));
+			break;
+		case sf::Keyboard::Left:
+			if (m_modeI > 0) {
+				m_modeI--;
+				auto& mode = m_modes.at(m_modeI);
 				std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
 			}
 			break;
-		}
-		case sf::Keyboard::F2:
-			ref_carnival->windowSetWindowed();
-			break;
-		case sf::Keyboard::F3:
-			ref_carnival->windowSetBorderless();
-			break;
-		case sf::Keyboard::F4:
-			//ref_carnival->windowSetFullscreen(sf::VideoMode::getDesktopMode());
-			ref_carnival->windowSetFullscreen(sf::VideoMode(640, 480));
+		case sf::Keyboard::Right:
+			if (m_modeI < m_modes.size() - 1) {
+				m_modeI++;
+				auto& mode = m_modes.at(m_modeI);
+				std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
+			}
 			break;
 		default:
 			break;

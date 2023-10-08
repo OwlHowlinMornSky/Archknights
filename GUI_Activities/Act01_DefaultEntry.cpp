@@ -99,11 +99,11 @@ uint32_t DefaultEntry::getID() noexcept {
 void DefaultEntry::runIndependently() {
 #ifndef _DEBUG
 	if (m_haveRunned) {
-		ref_carnival->setTransition(GUI::Transition::Exit);
+		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
 		return;
 	}
 	m_haveRunned = true;
-	ref_carnival->setTransition(-GUI::Transition::Push, IDs::ID_Opening);
+	ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Opening);
 #else
 	bool run = true;
 	sf::RenderWindow& window = ref_carnival->getRenderWindow();

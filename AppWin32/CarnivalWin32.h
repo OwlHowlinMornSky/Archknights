@@ -79,6 +79,7 @@ protected:
 	bool m_enabledResize;
 	bool m_enabledMinimize;
 	WindowType m_windowType;
+	sf::VideoMode m_lastMode;
 	HWND m_hwnd; // 要管理的窗口 的句柄。
 	sf::Vector2u m_sizeBefore; // 全屏或无边框之前的窗口大小。
 	sf::Vector2i m_positionBefore; // 全屏或无边框之前的窗口位置。

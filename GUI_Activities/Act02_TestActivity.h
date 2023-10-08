@@ -53,6 +53,8 @@ protected:
 protected:
 	GUI::ICarnival* ref_carnival;
 	sf::RectangleShape m_shape;
+	std::vector<sf::VideoMode> m_modes;
+	size_t m_modeI;
 	uint32_t m_id;
 	bool m_paused;
 	bool m_disableClose;
