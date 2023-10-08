@@ -42,7 +42,7 @@ public:
 	// 独立禁止使用。
 	virtual void handleEvent(const sf::Event& evt) override final;
 	// 独立禁止使用。
-	virtual void update(sf::Time deltaTime) override final;
+	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override final;
 };
 
 } // namespace GUI

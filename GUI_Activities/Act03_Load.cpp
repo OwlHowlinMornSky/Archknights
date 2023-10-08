@@ -39,9 +39,9 @@ void Act03_Load::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act03_Load::update(sf::Time deltaTime) {
-	ref_carnival->getRenderWindow().clear(sf::Color::Blue);
-	ref_carnival->getRenderWindow().display();
+void Act03_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
+	window.clear(sf::Color::Blue);
+	window.display();
 }
 
 }

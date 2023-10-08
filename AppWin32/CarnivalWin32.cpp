@@ -237,7 +237,7 @@ void CarnivalWin32::runTheActivity() {
 			}
 			m_runningActivity->handleEvent(evt);
 		}
-		m_runningActivity->update(clk.restart());
+		m_runningActivity->update(*m_renderWindow, clk.restart());
 	};
 
 	// 主循环。
@@ -256,7 +256,7 @@ void CarnivalWin32::runTheActivity() {
 			m_runningActivity->handleEvent(evt);
 		}
 
-		m_runningActivity->update(clk.restart());
+		m_runningActivity->update(*m_renderWindow, clk.restart());
 	}
 
 	// 恢复旧的 Idle 回调。

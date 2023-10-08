@@ -115,16 +115,16 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void TestActivity::update(sf::Time deltaTime) {
+void TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	float dt = deltaTime.asSeconds();
 	if (dt > 0.1f)
 		dt = 0.1f;
 	if (!m_paused)
 		m_shape.rotate(dt * 180.0f);
 
-	ref_carnival->getRenderWindow().clear(sf::Color::Green);
-	ref_carnival->getRenderWindow().draw(m_shape);
-	ref_carnival->getRenderWindow().display();
+	window.clear(sf::Color::Green);
+	window.draw(m_shape);
+	window.display();
 	return;
 }
 

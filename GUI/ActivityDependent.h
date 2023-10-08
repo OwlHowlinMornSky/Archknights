@@ -41,7 +41,7 @@ public:
 
 	// 非独立必须实现。
 	virtual void handleEvent(const sf::Event& evt) override = 0;
-	virtual void update(sf::Time deltaTime) override = 0;
+	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override = 0;
 };
 
 } // namespace GUI

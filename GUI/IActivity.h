@@ -76,10 +76,11 @@ public:
 	*/
 	virtual void handleEvent(const sf::Event& evt) = 0;
 	/**
-	 * @brief 更新。
-	 * @param deltaTime 经过的时间。
+	 * @brief 更新（包括绘制）。
+	 * @param window: 目标窗口。
+	 * @param deltaTime: 经过的时间。
 	*/
-	virtual void update(sf::Time deltaTime) = 0;
+	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) = 0;
 
 	virtual void onEnterSysloop() noexcept {}
 	virtual void onExitSysloop() noexcept {}
