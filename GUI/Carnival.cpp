@@ -116,9 +116,11 @@ bool Carnival::handleTransition() noexcept {
 	std::unique_ptr<IActivity> newActivity = getActivity(newID);
 	if (newActivity == nullptr)
 		return true; // 创建失败。
-	//if (newID == newActivity->getID())
-	//	return true; // 也是新旧相同。
+
+	// 确保 Activity 正确。
 	assert(newID == newActivity->getID());
+	if (newID != newActivity->getID())
+		return true;
 
 	// 栈变迁。
 	switch (t) {
