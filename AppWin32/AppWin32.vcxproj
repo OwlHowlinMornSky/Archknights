@@ -164,7 +164,7 @@
     <ClInclude Include="CarnivalWin32.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ToCarnival.h" />
+    <ClInclude Include="FactoryCarnival.h" />
     <ClInclude Include="UniqueInstance.h" />
     <ClInclude Include="Win32Things.h" />
   </ItemGroup>
@@ -172,7 +172,7 @@
     <ClCompile Include="CarnivalWin32.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CreateActivity.cpp" />
-    <ClCompile Include="ToCarnival.cpp" />
+    <ClCompile Include="FactoryCarnival.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
     <ClCompile Include="Win32Things.cpp" />
   </ItemGroup>

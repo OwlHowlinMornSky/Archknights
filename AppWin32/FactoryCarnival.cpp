@@ -18,22 +18,21 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-* 
+*
 * @Description
-*    定义了创建 Carnival 实例的方法。
+*    实现了创建 Carnival 实例的方法。
 */
-#pragma once
+#include <memory>
 
-#include "../GUI/ICarnival.h"
-#include "framework.h"
+#include "FactoryCarnival.h"
 
-namespace AppWin32 {
+#include "CarnivalWin32.h"
 
-/**
- * @brief 创建 Carnival 实例的方法。其创建的是 CarnivalWin32，这样包装是为了避免扩散头文件。
- * @param hWnd: 要管理的窗口 的 句柄，是 CarnivalWin32 构造需要的数据。
- * @return 创建好的 Carnival 实例。
-*/
-std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd);
+namespace AppWin32::Factory {
+
+std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd) {
+	// 直接创建，没什么好说的。
+	return std::make_unique<GUI::CarnivalWin32>(hWnd);
+}
 
 } // namespace AppWin32

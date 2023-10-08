@@ -24,7 +24,7 @@
 */
 #include "../Global/GlobalAttribute.h"
 #include "UniqueInstance.h"
-#include "ToCarnival.h"
+#include "FactoryCarnival.h"
 #include "Win32Things.h"
 
 /**
@@ -64,7 +64,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 	// 运行 Carnival
 	try {
-		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::crateCarnival(hWnd);
+		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::Factory::crateCarnival(hWnd);
 		carnival->run();
 		carnival.reset();
 	}

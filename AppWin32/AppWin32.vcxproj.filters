@@ -33,7 +33,7 @@
     <ClInclude Include="CarnivalWin32.h">
       <Filter>CarnivalWin32</Filter>
     </ClInclude>
-    <ClInclude Include="ToCarnival.h">
+    <ClInclude Include="FactoryCarnival.h">
       <Filter>CarnivalWin32</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClCompile Include="CarnivalWin32.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
-    <ClCompile Include="ToCarnival.cpp">
+    <ClCompile Include="FactoryCarnival.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
     <ClCompile Include="CreateActivity.cpp">
