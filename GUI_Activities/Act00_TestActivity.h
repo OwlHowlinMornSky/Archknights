@@ -27,7 +27,8 @@
 
 namespace Activity {
 
-class TestActivity final : public GUI::ActivityDependent {
+class TestActivity final :
+	public GUI::ActivityDependent {
 public:
 	TestActivity(uint32_t n) noexcept;
 	virtual ~TestActivity() noexcept override;

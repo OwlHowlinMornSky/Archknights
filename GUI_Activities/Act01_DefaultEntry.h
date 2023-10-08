@@ -25,7 +25,8 @@
 
 namespace Activity {
 
-class DefaultEntry final : public GUI::ActivityIndependent {
+class DefaultEntry final :
+	public GUI::ActivityIndependent {
 public:
 	DefaultEntry() noexcept;
 	virtual ~DefaultEntry() noexcept override;

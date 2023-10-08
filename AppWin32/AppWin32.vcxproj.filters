@@ -53,7 +53,7 @@
     <ClCompile Include="ToCarnival.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
-    <ClCompile Include="ToActivities.cpp">
+    <ClCompile Include="CreateActivity.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
   </ItemGroup>

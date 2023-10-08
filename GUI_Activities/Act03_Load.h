@@ -5,7 +5,7 @@
 
 namespace Activity {
 
-class Act03_Load :
+class Act03_Load final :
 	public GUI::ActivityDependent {
 public:
 	Act03_Load() noexcept;
