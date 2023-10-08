@@ -34,9 +34,11 @@ namespace GUI {
 class Carnival : public ICarnival {
 public:
 	Carnival() noexcept;
-	virtual ~Carnival() override = default;
+	virtual ~Carnival() noexcept override;
 
 public:
+	virtual void run() noexcept override final;
+
 	virtual sf::RenderWindow& getRenderWindow() noexcept override final;
 
 	virtual void meDependentActivityStopRunning() noexcept override final;
@@ -44,6 +46,13 @@ public:
 
 	virtual void setSizingAsResized(bool enabled) noexcept override final;
 	virtual bool isSizingAsResized() const noexcept final;
+
+	virtual void windowSetClientSize(uint32_t w, uint32_t h) noexcept override final;
+	virtual bool windowIsCloseEnabled() const noexcept override final;
+	virtual bool windowIsResizeEnabled() const noexcept override final;
+	virtual bool windowIsMinimizeEnabled() const noexcept override final;
+
+	virtual WindowType windowGetWindowType() const noexcept override final;
 
 protected:
 	bool handleTransition() noexcept;
@@ -56,12 +65,16 @@ protected:
 	std::unique_ptr<IActivity> getActivity(uint32_t id) noexcept;
 
 protected:
+	virtual void runTheActivity() = 0;
 	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept = 0;
 
 protected:
+	bool m_enabledResize;
+	bool m_enabledMinimize;
 	bool m_enableFullResizeMessage;
 	bool m_keepRunning;
 	int m_transition;
+	WindowType m_windowType;
 	uint32_t m_transitionTarget[2];
 	std::unique_ptr<sf::RenderWindow> m_renderWindow;
 	std::unique_ptr<IActivity> m_runningActivity;

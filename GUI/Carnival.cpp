@@ -25,14 +25,89 @@
 #include <iostream>
 #endif // _DEBUG
 #include <assert.h>
+#include "Callbacks.h"
+#include "../GUI_Activities/ActivityIDs.h"
 
 namespace GUI {
 
 Carnival::Carnival() noexcept :
 	m_keepRunning(false),
 	m_transition(0),
+	m_windowType(WindowType::Windowed),
 	m_transitionTarget(),
-	m_enableFullResizeMessage(true) {}
+	m_enableFullResizeMessage(true),
+	m_enabledResize(true),
+	m_enabledMinimize(true) {
+	m_renderWindow = std::make_unique<sf::RenderWindow>();
+	return;
+}
+
+Carnival::~Carnival() noexcept {
+	m_renderWindow.reset();
+	return;
+}
+
+void Carnival::run() noexcept {
+	// 创建并唤起 默认入口 Activity。
+	m_runningActivity = this->createActivity(Activity::IDs::ID_DefaultEntry);
+	if (m_runningActivity == nullptr) {
+		return;
+	}
+	try {
+		m_runningActivity->start(*this);
+	}
+	catch (...) {
+		return;
+	}
+
+	std::function<void()> oldEnter = Callbacks::OnEnterSysloop;
+	Callbacks::OnEnterSysloop = [this]()-> void {
+		m_runningActivity->onEnterSysloop();
+	};
+	std::function<void()> oldExit = Callbacks::OnExitSysloop;
+	Callbacks::OnExitSysloop = [this]()-> void {
+		m_runningActivity->onExitSysloop();
+	};
+
+	// 核心循环。
+	while (handleTransition()) {
+		try {
+			if (m_runningActivity->isIndependent()) {
+				m_runningActivity->runIndependently();
+			}
+			else {
+				runTheActivity();
+			}
+		}
+		catch (std::exception& e) {
+			std::string err("Activity Exception:\n");
+			err.append(e.what());
+			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->meActivitySetTransition(Transition::Pop);
+		}
+		catch (...) {
+			std::string err("Activity Exception:\n");
+			err.append("Unknown Exception.");
+			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
+			this->meActivitySetTransition(Transition::Pop);
+		}
+	}
+
+	Callbacks::OnExitSysloop = oldExit;
+	Callbacks::OnEnterSysloop = oldEnter;
+
+	// 退出后 清空 Activity 栈。
+	while (!m_activityStack.empty()) {
+		m_activityStack.pop();
+	}
+	// 终止所有 Activity。
+	for (const auto& i : m_pausedActivities) {
+		i.second->stop();
+	}
+	// 释放所有 Activity。
+	m_pausedActivities.clear();
+	return;
+}
 
 sf::RenderWindow& Carnival::getRenderWindow() noexcept {
 	return *m_renderWindow;
@@ -54,6 +129,30 @@ void Carnival::setSizingAsResized(bool enabled) noexcept {
 
 bool Carnival::isSizingAsResized() const noexcept {
 	return m_enableFullResizeMessage;
+}
+
+void Carnival::windowSetClientSize(uint32_t w, uint32_t h) noexcept {
+	if (m_windowType == WindowType::Windowed) {
+		m_renderWindow->setSize(sf::Vector2u(w, h));
+		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h))));
+	}
+	return;
+}
+
+bool Carnival::windowIsCloseEnabled() const noexcept {
+	return Callbacks::ButtonEnabled_Close;
+}
+
+bool Carnival::windowIsResizeEnabled() const noexcept {
+	return m_enabledResize;
+}
+
+bool Carnival::windowIsMinimizeEnabled() const noexcept {
+	return m_enabledMinimize;
+}
+
+WindowType Carnival::windowGetWindowType() const noexcept {
+	return m_windowType;
 }
 
 bool Carnival::handleTransition() noexcept {

@@ -29,17 +29,13 @@
 #include "CarnivalWin32.h"
 
 #include "../GUI/Callbacks.h"
-#include "../GUI_Activities/ActivityIDs.h"
+//#include "../GUI_Activities/ActivityIDs.h"
 #include "../GUI_Activities/Factory.h"
 
 namespace GUI {
 
 CarnivalWin32::CarnivalWin32(HWND hWnd) :
-	m_hwnd(hWnd),
-	m_windowType(WindowType::Windowed),
-	m_enabledResize(true),
-	m_enabledMinimize(true) {
-	m_renderWindow = std::make_unique<sf::RenderWindow>();
+	m_hwnd(hWnd) {
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
 		throw std::exception("Window Initialization Failed!");
@@ -49,69 +45,24 @@ CarnivalWin32::CarnivalWin32(HWND hWnd) :
 
 CarnivalWin32::~CarnivalWin32() {
 	m_renderWindow->close();
-	m_renderWindow.reset();
 	return;
 }
 
-void CarnivalWin32::run() noexcept {
-	// 创建并唤起 默认入口 Activity。
-	m_runningActivity = this->createActivity(Activity::ID_DefaultEntry);
-	if (m_runningActivity == nullptr) {
-		return;
+void CarnivalWin32::systemMessagePump(bool callerDoWantToHandleThem) const noexcept {
+	MSG msg{ 0 };
+	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
 	}
-	try {
-		m_runningActivity->start(*this);
-	}
-	catch (...) {
-		return;
-	}
-
-	std::function<void()> oldEnter = Callbacks::OnEnterSysloop;
-	Callbacks::OnEnterSysloop = [this]()-> void {
-		m_runningActivity->onEnterSysloop();
-	};
-	std::function<void()> oldExit = Callbacks::OnExitSysloop;
-	Callbacks::OnExitSysloop = [this]()-> void {
-		m_runningActivity->onExitSysloop();
-	};
-
-	// 核心循环。
-	while (handleTransition()) {
+	if (!callerDoWantToHandleThem) {
 		try {
-			if (m_runningActivity->isIndependent()) {
-				m_runningActivity->runIndependently();
-			}
-			else {
-				runTheActivity();
-			}
-		}
-		catch (std::exception& e) {
-			std::string err("Activity Exception:\n");
-			err.append(e.what());
-			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
-			this->meActivitySetTransition(Transition::Pop);
+			sf::Event evt;
+			while (m_renderWindow->pollEvent(evt));
 		}
 		catch (...) {
-			std::string err("Activity Exception:\n");
-			err.append("Unknown Exception.");
-			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
-			this->meActivitySetTransition(Transition::Pop);
+			;
 		}
 	}
-
-	Callbacks::OnExitSysloop = oldExit;
-	Callbacks::OnEnterSysloop = oldEnter;
-
-	// 退出后 清空 Activity 栈。
-	while (!m_activityStack.empty()) {
-		m_activityStack.pop();
-	}
-	// 终止所有 Activity。
-	for (const auto& i : m_pausedActivities) {
-		i.second->stop();
-	}
-	// 释放所有 Activity。
-	m_pausedActivities.clear();
 	return;
 }
 
@@ -135,30 +86,6 @@ void CarnivalWin32::systemShowMessageBox(std::string_view title, std::string_vie
 		;
 	}
 	return;
-}
-
-void CarnivalWin32::windowSetClientSize(uint32_t w, uint32_t h) noexcept {
-	if (m_windowType == WindowType::Windowed) {
-		m_renderWindow->setSize(sf::Vector2u(w, h));
-		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h))));
-	}
-	return;
-}
-
-bool CarnivalWin32::windowIsCloseEnabled() const noexcept {
-	return Callbacks::ButtonEnabled_Close;
-}
-
-bool CarnivalWin32::windowIsResizeEnabled() const noexcept {
-	return m_enabledResize;
-	//LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
-	//return style & WS_SIZEBOX;
-}
-
-bool CarnivalWin32::windowIsMinimizeEnabled() const noexcept {
-	return m_enabledMinimize;
-	//LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
-	//return style & WS_MINIMIZEBOX;
 }
 
 void CarnivalWin32::windowSetCloseEnabled(bool enabled) noexcept {
@@ -271,28 +198,6 @@ void CarnivalWin32::windowSetWindowed() noexcept {
 	m_renderWindow->setPosition(m_positionBefore);
 
 	m_windowType = WindowType::Windowed;
-	return;
-}
-
-WindowType CarnivalWin32::windowGetWindowType() const noexcept {
-	return m_windowType;
-}
-
-void CarnivalWin32::systemMessagePump(bool callerDoWantToHandleThem) const noexcept {
-	MSG msg{ 0 };
-	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
-		TranslateMessage(&msg);
-		DispatchMessageW(&msg);
-	}
-	if (!callerDoWantToHandleThem) {
-		try {
-			sf::Event evt;
-			while (m_renderWindow->pollEvent(evt));
-		}
-		catch (...) {
-			;
-		}
-	}
 	return;
 }
 

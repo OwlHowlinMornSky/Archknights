@@ -66,6 +66,56 @@ public:
 
 public:
 	/**
+	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
+	 * @param callerDoWantToHandleThem: 如果为 true，则调用者还应该使用 SFML 的消息循环处理消息。
+	 * 否则该函数同时把 SFML 的消息队列清空。
+	*/
+	virtual void systemMessagePump(bool callerDoWantToHandleThem) const noexcept = 0;
+
+	/**
+	 * @brief 显示一个消息框。
+	 * @param title: 消息框的标题。
+	 * @param text: 消息框的内容。
+	 * @param info: 消息框的额外信息。
+	*/
+	virtual void systemShowMessageBox(std::string_view title,
+								std::string_view text,
+								MBInfo info = MBInfo::None) const noexcept = 0;
+
+	/**
+	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
+	*/
+	virtual void windowSetCloseEnabled(bool enabled) noexcept = 0;
+	/**
+	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
+	*/
+	virtual void windowSetResizeEnabled(bool enabled) noexcept = 0;
+	/**
+	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
+	 * @param enabled: True 则启用，否则禁用。
+	*/
+	virtual void windowSetMinimizeEnabled(bool enabled) noexcept = 0;
+
+	/**
+	 * @brief 设为一般窗口。
+	*/
+	virtual void windowSetWindowed() noexcept = 0;
+	/**
+	 * @brief 设为无边框窗口。
+	*/
+	virtual bool windowSetBorderless() noexcept = 0;
+	/**
+	 * @brief 设为全屏。
+	 * @brief （如果分辨率与屏幕不一致，则会丢失焦点，至少我的机器上是这样）OHMS。
+	 * @param w: 宽。
+	 * @param h: 高。
+	*/
+	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept = 0;
+
+public:
+	/**
 	 * @brief 开始执行。
 	*/
 	virtual void run() noexcept = 0;
@@ -97,22 +147,11 @@ public:
 	virtual bool isSizingAsResized() const noexcept = 0;
 
 	/**
-	 * @brief 显示一个消息框。
-	 * @param title: 消息框的标题。
-	 * @param text: 消息框的内容。
-	 * @param info: 消息框的额外信息。
-	*/
-	virtual void systemShowMessageBox(std::string_view title,
-								std::string_view text,
-								MBInfo info = MBInfo::None) const noexcept = 0;
-
-	/**
 	 * @brief 设置窗口大小（顺便更新View）。
 	 * @param w: 宽。
 	 * @param h: 高。
 	*/
 	virtual void windowSetClientSize(uint32_t w, uint32_t h) noexcept = 0;
-
 	/**
 	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
@@ -130,50 +169,10 @@ public:
 	virtual bool windowIsMinimizeEnabled() const noexcept = 0;
 
 	/**
-	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
-	 * @param enabled: True 则启用，否则禁用。
-	*/
-	virtual void windowSetCloseEnabled(bool enabled) noexcept = 0;
-	/**
-	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
-	 * @param enabled: True 则启用，否则禁用。
-	*/
-	virtual void windowSetResizeEnabled(bool enabled) noexcept = 0;
-	/**
-	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
-	 * @param enabled: True 则启用，否则禁用。
-	*/
-	virtual void windowSetMinimizeEnabled(bool enabled) noexcept = 0;
-
-	/**
-	 * @brief 设为无边框窗口。
-	*/
-	virtual bool windowSetBorderless() noexcept = 0;
-
-	/**
-	 * @brief 设为全屏。
-	 * @param w: 宽。
-	 * @param h: 高。
-	*/
-	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept = 0;
-
-	/**
-	 * @brief 设为一般窗口。
-	*/
-	virtual void windowSetWindowed() noexcept = 0;
-
-	/**
 	 * @brief 获取当前窗口状态。
 	 * @return 窗口状态。
 	*/
 	virtual WindowType windowGetWindowType() const noexcept = 0;
-
-	/**
-	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
-	 * @param callerDoWantToHandleThem: 如果为 true，则调用者还应该使用 SFML 的消息循环处理消息。
-	 * 否则该函数同时把 SFML 的消息队列清空。
-	*/
-	virtual void systemMessagePump(bool callerDoWantToHandleThem) const noexcept = 0;
 }; // class ICarnival
 
 } // namespace GUI
