@@ -54,7 +54,7 @@ void Act02_TestActivity::start(GUI::ICarnival& carnival) {
 	m_shape.setSize({ 100.0f, 100.0f });
 	updateSize();
 
-	m_tex.loadFromFile("TestActivity.png");
+	m_tex.loadFromFile("assets/TestActivity.png");
 	m_sp.setTexture(m_tex, true);
 
 	std::cout << "TestActivity " << m_id << ": start, " << ref_carnival << "." << std::endl;

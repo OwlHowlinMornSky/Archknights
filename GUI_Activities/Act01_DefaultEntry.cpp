@@ -42,7 +42,7 @@ Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 #ifdef _DEBUG
 	g_tex = std::make_unique<sf::Texture>();
 	g_sp = std::make_unique<sf::Sprite>();
-	g_tex->loadFromFile("DefaultEntry.png");
+	g_tex->loadFromFile("assets/DefaultEntry.png");
 	g_sp->setTexture(*g_tex, true);
 	std::cout << "DefaultEntryDebug: Construct." << std::endl;
 #endif // _DEBUG

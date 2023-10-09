@@ -1,0 +1,17 @@
+project:
+	Archknights.exe
+sfml:
+	sfml-audio-2.dll
+	sfml-graphics-2.dll
+	sfml-system-2.dll
+	sfml-window-2.dll
+	openal.dll
+opengl:
+	glew32.dll
+license:
+	LICENSE
+	COPYING
+
+
+[Notice]
+assets\ and res\ should be released separately and independently.
