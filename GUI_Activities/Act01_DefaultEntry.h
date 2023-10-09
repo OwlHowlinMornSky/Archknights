@@ -25,11 +25,11 @@
 
 namespace Activity {
 
-class DefaultEntry final :
+class Act01_DefaultEntry final :
 	public GUI::ActivityIndependent {
 public:
-	DefaultEntry() noexcept;
-	virtual ~DefaultEntry() noexcept override;
+	Act01_DefaultEntry() noexcept;
+	virtual ~Act01_DefaultEntry() noexcept override;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;

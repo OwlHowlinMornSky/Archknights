@@ -39,11 +39,11 @@
 
 namespace Activity {
 
-Act02_Opening::Act02_Opening() noexcept :
+Act03_Opening::Act03_Opening() noexcept :
 	m_status(0),
 	ref_carnival(nullptr) {}
 
-void Act02_Opening::start(GUI::ICarnival& carnival) {
+void Act03_Opening::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	m_status = 0;
 	m_timer = sf::Time::Zero;
@@ -61,26 +61,26 @@ void Act02_Opening::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void Act02_Opening::stop() noexcept {
+void Act03_Opening::stop() noexcept {
 	m_timer = sf::Time::Zero;
 	m_status = 0;
 	ref_carnival = nullptr;
 	return;
 }
 
-void Act02_Opening::pause() noexcept {
+void Act03_Opening::pause() noexcept {
 	assert(false);
 }
 
-void Act02_Opening::resume() noexcept {
+void Act03_Opening::resume() noexcept {
 	assert(false);
 }
 
-uint32_t Act02_Opening::getID() noexcept {
+uint32_t Act03_Opening::getID() noexcept {
 	return IDs::ID_Opening;
 }
 
-void Act02_Opening::handleEvent(const sf::Event& evt) {
+void Act03_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
@@ -99,7 +99,7 @@ void Act02_Opening::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act02_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	m_timer += deltaTime;
 	window.clear();
 	switch (m_status) {

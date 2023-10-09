@@ -31,7 +31,7 @@
 
 namespace Activity {
 
-DefaultEntry::DefaultEntry() noexcept :
+Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 	m_haveRunned(false),
 	ref_carnival(nullptr) {
 #ifdef _DEBUG
@@ -39,13 +39,13 @@ DefaultEntry::DefaultEntry() noexcept :
 #endif // _DEBUG
 }
 
-DefaultEntry::~DefaultEntry() noexcept {
+Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: Destruct." << std::endl;
 #endif // _DEBUG
 }
 
-void DefaultEntry::start(GUI::ICarnival& carnival) {
+void Act01_DefaultEntry::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 	ref_carnival->windowSetCloseEnabled(false);
 
@@ -67,7 +67,7 @@ void DefaultEntry::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void DefaultEntry::stop() noexcept {
+void Act01_DefaultEntry::stop() noexcept {
 	g3d::base::drop();
 	ref_carnival = nullptr;
 #ifdef _DEBUG
@@ -76,7 +76,7 @@ void DefaultEntry::stop() noexcept {
 	return;
 }
 
-void DefaultEntry::pause() noexcept {
+void Act01_DefaultEntry::pause() noexcept {
 	ref_carnival->windowSetCloseEnabled(true);
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: pause." << std::endl;
@@ -84,7 +84,7 @@ void DefaultEntry::pause() noexcept {
 	return;
 }
 
-void DefaultEntry::resume() noexcept {
+void Act01_DefaultEntry::resume() noexcept {
 	ref_carnival->windowSetCloseEnabled(false);
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: resume." << std::endl;
@@ -92,11 +92,11 @@ void DefaultEntry::resume() noexcept {
 	return;
 }
 
-uint32_t DefaultEntry::getID() noexcept {
+uint32_t Act01_DefaultEntry::getID() noexcept {
 	return ID_DefaultEntry;
 }
 
-void DefaultEntry::runIndependently() {
+void Act01_DefaultEntry::runIndependently() {
 #ifndef _DEBUG
 	if (m_haveRunned) {
 		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
@@ -118,15 +118,16 @@ void DefaultEntry::runIndependently() {
 				break;
 			case sf::Event::KeyPressed:
 				switch (evt.key.code) {
-				case sf::Keyboard::F:
-					ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Opening);
-					run = false;
-					break;
+				case sf::Keyboard::Escape:
 				case sf::Keyboard::Q:
 					ref_carnival->meActivitySetTransition(GUI::Transition::Pop);
 					run = false;
 					break;
-				case sf::Keyboard::F1:
+				case sf::Keyboard::F:
+					ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Opening);
+					run = false;
+					break;
+				case sf::Keyboard::E:
 					ref_carnival->meActivitySetTransition(-GUI::Transition::Push, IDs::ID_Test);
 					run = false;
 					break;

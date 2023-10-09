@@ -27,11 +27,11 @@
 
 namespace Activity {
 
-class TestActivity final :
+class Act02_TestActivity final :
 	public GUI::ActivityDependent {
 public:
-	TestActivity(uint32_t n) noexcept;
-	virtual ~TestActivity() noexcept override;
+	Act02_TestActivity(uint32_t n) noexcept;
+	virtual ~Act02_TestActivity() noexcept override;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;

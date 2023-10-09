@@ -26,10 +26,10 @@
 
 namespace Activity {
 
-Act03_Load::Act03_Load() noexcept :
+Act04_Load::Act04_Load() noexcept :
 	ref_carnival(nullptr) {}
 
-void Act03_Load::start(GUI::ICarnival& carnival) {
+void Act04_Load::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 
 	m_tex.loadFromFile("res\\textures\\titleback.png");
@@ -46,19 +46,19 @@ void Act03_Load::start(GUI::ICarnival& carnival) {
 	m_bgm->play();
 }
 
-void Act03_Load::stop() noexcept {
+void Act04_Load::stop() noexcept {
 	m_bgm->stop();
 }
 
-void Act03_Load::pause() noexcept {}
+void Act04_Load::pause() noexcept {}
 
-void Act03_Load::resume() noexcept {}
+void Act04_Load::resume() noexcept {}
 
-uint32_t Act03_Load::getID() noexcept {
+uint32_t Act04_Load::getID() noexcept {
 	return IDs::ID_Load;
 }
 
-void Act03_Load::handleEvent(const sf::Event& evt) {
+void Act04_Load::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
@@ -76,14 +76,14 @@ void Act03_Load::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act03_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act04_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	window.clear();
 	window.draw(m_sp);
 	window.display();
 	return;
 }
 
-void Act03_Load::updateSize(sf::Vector2u newWindowSize) {
+void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	sf::Vector2u texSize = m_tex.getSize();
 	float tx = static_cast<float>(texSize.x);
 	float ty = static_cast<float>(texSize.y);

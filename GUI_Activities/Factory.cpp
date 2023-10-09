@@ -16,16 +16,16 @@ std::unique_ptr<GUI::IActivity> CreateActivity(uint32_t id) noexcept {
 	try {
 		switch (id) {
 		case Activity::ID_DefaultEntry: // 默认入口。
-			return std::make_unique<Activity::DefaultEntry>();
+			return std::make_unique<Activity::Act01_DefaultEntry>();
 #ifdef _DEBUG
 		case Activity::ID_Test: // 测试。
-			return std::make_unique<Activity::TestActivity>(id);
+			return std::make_unique<Activity::Act02_TestActivity>(id);
 			break;
 #endif
 		case Activity::ID_Opening: // 开启界面。
-			return std::make_unique<Activity::Act02_Opening>();
+			return std::make_unique<Activity::Act03_Opening>();
 		case Activity::ID_Load: // 加载界面。
-			return std::make_unique<Activity::Act03_Load>();
+			return std::make_unique<Activity::Act04_Load>();
 		case Activity::ID_Title: // 标题界面。
 		case Activity::ID_Main: // 主界面。
 		case Activity::ID_Panel: // 终端。

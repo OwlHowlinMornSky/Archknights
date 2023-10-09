@@ -27,11 +27,11 @@
 
 namespace Activity {
 
-class Act02_Opening final :
+class Act03_Opening final :
 	public GUI::ActivityDependent {
 public:
-	Act02_Opening() noexcept;
-	virtual ~Act02_Opening() noexcept = default;
+	Act03_Opening() noexcept;
+	virtual ~Act03_Opening() noexcept = default;
 
 public:
 	virtual void start(GUI::ICarnival& carnival) override;

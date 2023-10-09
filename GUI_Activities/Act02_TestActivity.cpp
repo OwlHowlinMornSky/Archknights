@@ -25,7 +25,7 @@
 
 namespace Activity {
 
-TestActivity::TestActivity(uint32_t n) noexcept :
+Act02_TestActivity::Act02_TestActivity(uint32_t n) noexcept :
 	m_id(n),
 	m_paused(false),
 	ref_carnival(nullptr),
@@ -43,11 +43,11 @@ TestActivity::TestActivity(uint32_t n) noexcept :
 	return;
 }
 
-TestActivity::~TestActivity() noexcept {
+Act02_TestActivity::~Act02_TestActivity() noexcept {
 	std::cout << "TestActivity " << m_id << ": Destruct." << std::endl;
 }
 
-void TestActivity::start(GUI::ICarnival& carnival) {
+void Act02_TestActivity::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 
 	m_shape.setFillColor(sf::Color::Red);
@@ -58,24 +58,24 @@ void TestActivity::start(GUI::ICarnival& carnival) {
 	return;
 }
 
-void TestActivity::stop() noexcept {
+void Act02_TestActivity::stop() noexcept {
 	std::cout << "TestActivity " << m_id << ": stop." << std::endl;
 }
 
-void TestActivity::pause() noexcept {
+void Act02_TestActivity::pause() noexcept {
 	std::cout << "TestActivity " << m_id << ": pause." << std::endl;
 }
 
-void TestActivity::resume() noexcept {
+void Act02_TestActivity::resume() noexcept {
 	updateSize();
 	std::cout << "TestActivity " << m_id << ": resume." << std::endl;
 }
 
-uint32_t TestActivity::getID() noexcept {
+uint32_t Act02_TestActivity::getID() noexcept {
 	return m_id;
 }
 
-void TestActivity::handleEvent(const sf::Event& evt) {
+void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
@@ -83,16 +83,8 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
-		//case sf::Keyboard::F:
-		//	ref_carnival->meActivitySetTransition(evt.key.control ? -GUI::Transition::Push : GUI::Transition::Push, m_id + 1);
-		//	ref_carnival->meDependentActivityStopRunning();
-		//	break;
-		//case sf::Keyboard::E:
-		//	ref_carnival->meActivitySetTransition(evt.key.control ? -GUI::Transition::Switch : GUI::Transition::Switch, m_id + 1);
-		//	ref_carnival->meDependentActivityStopRunning();
-		//	break;
 		case sf::Keyboard::Escape:
-			ref_carnival->meActivitySetTransition(evt.key.control ? -GUI::Transition::Pop : GUI::Transition::Pop);
+			ref_carnival->meActivitySetTransition(GUI::Transition::Pop);
 			ref_carnival->meDependentActivityStopRunning();
 			break;
 		case sf::Keyboard::Num1:
@@ -146,7 +138,7 @@ void TestActivity::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act02_TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	float dt = deltaTime.asSeconds();
 	if (dt > 0.1f)
 		dt = 0.1f;
@@ -159,15 +151,15 @@ void TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	return;
 }
 
-void TestActivity::onEnterSysloop() noexcept {
+void Act02_TestActivity::onEnterSysloop() noexcept {
 	m_paused = true;
 }
 
-void TestActivity::onExitSysloop() noexcept {
+void Act02_TestActivity::onExitSysloop() noexcept {
 	m_paused = false;
 }
 
-void TestActivity::updateSize() noexcept {
+void Act02_TestActivity::updateSize() noexcept {
 	auto size = ref_carnival->getRenderWindow().getSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
 	//ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));
