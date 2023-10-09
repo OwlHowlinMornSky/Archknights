@@ -54,6 +54,9 @@ void Act02_TestActivity::start(GUI::ICarnival& carnival) {
 	m_shape.setSize({ 100.0f, 100.0f });
 	updateSize();
 
+	m_tex.loadFromFile("TestActivity.png");
+	m_sp.setTexture(m_tex, true);
+
 	std::cout << "TestActivity " << m_id << ": start, " << ref_carnival << "." << std::endl;
 	return;
 }
@@ -84,6 +87,7 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
+		case sf::Keyboard::Q:
 			ref_carnival->meActivitySetTransition(GUI::Transition::Pop);
 			ref_carnival->meDependentActivityStopRunning();
 			break;
@@ -147,6 +151,7 @@ void Act02_TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
 
 	window.clear(sf::Color::Green);
 	window.draw(m_shape);
+	window.draw(m_sp);
 	window.display();
 	return;
 }

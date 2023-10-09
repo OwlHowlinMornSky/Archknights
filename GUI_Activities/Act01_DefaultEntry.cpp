@@ -25,8 +25,13 @@
 #include "ActivityIDs.h"
 
 #ifdef _DEBUG
+#include <SFML/Graphics.hpp>
 #include "../G3D/ShaderDefault.h"
 #include <iostream>
+namespace {
+std::unique_ptr<sf::Texture> g_tex;
+std::unique_ptr<sf::Sprite> g_sp;
+}
 #endif // _DEBUG
 
 namespace Activity {
@@ -35,6 +40,10 @@ Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 	m_haveRunned(false),
 	ref_carnival(nullptr) {
 #ifdef _DEBUG
+	g_tex = std::make_unique<sf::Texture>();
+	g_sp = std::make_unique<sf::Sprite>();
+	g_tex->loadFromFile("DefaultEntry.png");
+	g_sp->setTexture(*g_tex, true);
 	std::cout << "DefaultEntryDebug: Construct." << std::endl;
 #endif // _DEBUG
 }
@@ -42,6 +51,8 @@ Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
 #ifdef _DEBUG
 	std::cout << "DefaultEntryDebug: Destruct." << std::endl;
+	g_sp.reset();
+	g_tex.reset();
 #endif // _DEBUG
 }
 
@@ -135,11 +146,15 @@ void Act01_DefaultEntry::runIndependently() {
 					break;
 				}
 				break;
+			case sf::Event::Resized:
+				window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+				break;
 			default:
 				break;
 			}
 		}
 		window.clear(sf::Color::Red);
+		window.draw(*g_sp);
 		window.display();
 	}
 #endif // !_DEBUG

@@ -60,6 +60,8 @@ protected:
 	bool m_disableClose;
 	bool m_disableResize;
 	bool m_disableMinimize;
+	sf::Texture m_tex;
+	sf::Sprite m_sp;
 };
 
 } // namespace Activity
