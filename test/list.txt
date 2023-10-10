@@ -1,5 +1,5 @@
 project:
-	Archknights.exe
+	Archknights.exe  [DEBUG: Archknights-d.exe]
 sfml:
 	sfml-audio-2.dll
 	sfml-graphics-2.dll
@@ -11,7 +11,7 @@ opengl:
 license:
 	LICENSE
 	COPYING
-
+	README.txt
 
 [Notice]
 assets\ and res\ should be released separately and independently.
