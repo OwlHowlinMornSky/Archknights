@@ -23,6 +23,10 @@
 
 #include "Shader.h"
 
+#ifdef _DEBUG
+#include <iostream>
+#endif // _DEBUG
+
 #include "glCheck.h"
 
 namespace {
@@ -48,7 +52,9 @@ void checkError(GLuint l_shader, GLuint l_flag, bool l_program, std::string_view
 		glCheck(glGetShaderInfoLog(l_shader, sizeof(error), nullptr, error));
 	}
 
-	fprintf_s(stderr, "%s\n", l_errorMsg.data());
+#ifdef _DEBUG
+	std::cerr << l_errorMsg.data() << std::endl;
+#endif // _DEBUG
 	return;
 }
 
@@ -60,7 +66,10 @@ void IShader::Bind(IShader* shader) {
 	if (shader) {
 		if (!shader->m_program) {
 #ifdef _DEBUG
-			printf_s("Error Using Empty Shader!\n\tFile: %S\n\tLine: %d\n\n", __FILEW__, __LINE__);
+			std::wcerr << L"Error Using Empty Shader!" << std::endl
+				<< L"\tFile: " << __FILEW__ << std::endl
+				<< L"\tLine: " << __LINE__ << std::endl
+				<< std::endl;
 #endif // _DEBUG
 		}
 		glCheck(glUseProgram(shader->m_program));
@@ -109,7 +118,10 @@ void Shader::loadFromMemory(std::string_view shader, ShaderType type) {
 		break;
 	default:
 #ifdef _DEBUG
-		printf_s("Invalid Shader Type.\n\tFile: %S\n\tLine: %d\n\n", __FILEW__, __LINE__);
+		std::wcerr << L"Invalid Shader Type." << std::endl
+			<< L"\tFile: " << __FILEW__ << std::endl
+			<< L"\tLine: " << __LINE__ << std::endl
+			<< std::endl;
 #endif
 		return;
 	}
@@ -158,7 +170,9 @@ void Shader::updateUniformMat4fv(GLint pos, GLfloat* pvm) const {
 GLuint Shader::buildShader(std::string_view l_src, unsigned int l_type) {
 	GLuint shaderID = glCreateShader(l_type);
 	if (!shaderID) {
-		printf_s("Bad shader type!\n");
+#ifdef _DEBUG
+		std::cerr << "Bad shader type!" << std::endl;
+#endif // _DEBUG
 		return 0;
 	}
 	const GLchar* sources[1];

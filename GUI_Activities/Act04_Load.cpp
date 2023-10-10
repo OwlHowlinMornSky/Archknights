@@ -32,7 +32,7 @@ Act04_Load::Act04_Load() noexcept :
 void Act04_Load::start(GUI::ICarnival& carnival) {
 	ref_carnival = &carnival;
 
-	m_tex.loadFromFile("res\\textures\\titleback.png");
+	m_tex.loadFromFile("res/textures/titleback.png");
 	m_tex.setSmooth(true);
 	m_tex.generateMipmap();
 	m_sp.setTexture(m_tex, true);
@@ -41,8 +41,8 @@ void Act04_Load::start(GUI::ICarnival& carnival) {
 	updateSize(ref_carnival->getRenderWindow().getSize());
 
 	m_bgm = std::make_unique<Audio::BgmSFML>();
-	m_bgm->openFromFile("res\\music\\m_sys_title.ogg");
-	//m_bgm->openFromFile("res\\music\\m_sys_title_h.ogg");
+	m_bgm->openFromFile("res/music/m_sys_title.ogg");
+	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
 	m_bgm->play();
 }
 

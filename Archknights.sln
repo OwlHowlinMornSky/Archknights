@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{0FE60026-B77E-4494-9995-C04D42D20C6D}"
 	ProjectSection(SolutionItems) = preProject
 		Global\GlobalAttribute.h = Global\GlobalAttribute.h
+		Global\TempGuard.h = Global\TempGuard.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{D9D24175-DAB1-4D34-BB90-B2FCDA274707}"

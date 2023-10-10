@@ -1,5 +1,6 @@
 #include "Factory.h"
 
+#include <assert.h>
 #ifdef _DEBUG
 #include <iostream>
 #endif // _DEBUG
@@ -31,9 +32,7 @@ std::unique_ptr<GUI::IActivity> CreateActivity(uint32_t id) noexcept {
 		case Activity::ID_Panel: // ÖÕ¶Ë¡£
 		case Activity::ID_Construction: // »ù½¨¡£
 		default:
-#ifdef _DEBUG
-			throw std::exception("Invalid Activity ID!");
-#endif
+			assert(false && "Invalid Activity ID!");
 			break;
 		}
 	}

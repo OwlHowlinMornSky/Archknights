@@ -136,40 +136,6 @@ bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsi
 bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsigned int& bufferLength) {
 	unsigned char tmp[64];
 	unsigned int length = 0;
-	/*
-	if (stream.seek(0xA8) != 0xA8) {
-		sf::err() << "getMusicCommentData: seek failed, 0xA8." << std::endl;
-		return false;
-	}
-	if (stream.read(tmp, 8) != 8) {
-		sf::err() << "getMusicCommentData: read file failed, 8." << std::endl;
-		return false;
-	}
-	if (!(tmp[0] == 'O' && tmp[1] == 'H' && tmp[2] == 'M' && tmp[3] == 'S' &&
-		tmp[4] == 'S' && tmp[5] == 'P' && tmp[6] == 'C' && tmp[7] == '=')) {
-		sf::err() << "getMusicCommentData: wrong file type." << std::endl;
-		return false;
-	}
-	if (stream.seek(0xA4) != 0xA4) {
-		sf::err() << "getMusicCommentData: seek failed, 0xA4." << std::endl;
-		return false;
-	}
-	stream.read(tmp, 4);
-	length = static_cast<unsigned int>(tmp[3]);
-	length = (((((length << 8) + tmp[2]) << 8) + tmp[1]) << 8) + tmp[0];
-	length -= 8;
-	if (length > bufferLength) {
-		sf::err() << "getMusicCommentData: buffer too short." << std::endl;
-		return false;
-	}
-	if (stream.seek(0xB0) != 0xB0) {
-		sf::err() << "getMusicCommentData: seek failed, 0xB0." << std::endl;
-		return false;
-	}
-	if (stream.read(buffer, length) != length) {
-		sf::err() << "getMusicCommentData: read file failed, \'length\'." << std::endl;
-		return false;
-	}*/
 	if (stream.seek(0xA4) != 0xA4) {
 		sf::err() << "getMusicCommentData: seek failed, 0xA4." << std::endl;
 		return false;
