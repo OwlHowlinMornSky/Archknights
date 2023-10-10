@@ -29,7 +29,7 @@
 
 #include "resource.h"
 
-#define MAX_LOADSTRING 100
+#define MAX_LOADSTRING 64
 
 namespace {
 
