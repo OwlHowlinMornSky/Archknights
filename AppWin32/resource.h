@@ -7,8 +7,11 @@
 #define IDS_INIT_ANOTHER_INSTANCE       103
 #define IDS_INIT_REGISTER_FAILED        104
 #define IDS_INIT_CREATE_WINDOW_FAILED   105
-#define IDS_STRING106                   106
 #define IDS_UNKNOWN_EXCEPTION           106
+#define IDS_WINDOW_INIT_FAILED          107
+#define IDS_CLASS_NAME                  108
+#define IDS_STRING109                   109
+#define IDS_INIT_WINDOW_NAME            109
 
 // Next default values for new objects
 // 

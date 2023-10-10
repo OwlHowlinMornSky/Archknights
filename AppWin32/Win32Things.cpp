@@ -25,8 +25,8 @@
 #include "Win32Things.h"
 
 #include <strsafe.h>
-
 #include "../GUI/Callbacks.h"
+#include "resource.h"
 
 namespace {
 
@@ -158,8 +158,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	return 0;
 }
 
-const WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // 窗口类的名称。
-const WCHAR szTitle[] = L"Archknights"; // 窗口的 初始 名称。
+WCHAR szWindowClass[64]; // 窗口类的名称。
+WCHAR szTitle[64]; // 窗口的 初始 名称。
 
 } // namespace
 
@@ -199,6 +199,12 @@ void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	return;
 }
 
+void InitString(HINSTANCE hInstance) noexcept {
+	LoadStringW(hInstance, IDS_CLASS_NAME, szWindowClass, 64);
+	LoadStringW(hInstance, IDS_INIT_WINDOW_NAME, szTitle, 64);
+	return;
+}
+
 bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 	WNDCLASSEX wcex{ 0 };
 
@@ -224,7 +230,7 @@ bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept {
 	HWND res = CreateWindowExW(WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
 							   WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-							   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
+							   CW_USEDEFAULT, 0, 420, 420,
 							   nullptr, nullptr, hInstance, nullptr);
 	if (res == NULL) {
 		WinCheckError(L"CreateWindow");

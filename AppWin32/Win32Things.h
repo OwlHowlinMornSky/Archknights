@@ -35,6 +35,12 @@ namespace SystemThings {
 void WinCheckError(LPCWSTR lpszFunction) noexcept;
 
 /**
+ * @brief 从资源获取必要的字符串。
+ * @param hInstance: 进程句柄。
+*/
+void InitString(HINSTANCE hInstance) noexcept;
+
+/**
  * @brief 注册窗口类。创建窗口前先调用这个。
  * @param hInstance: 进程句柄。
  * @return 创建是否成功。

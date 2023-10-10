@@ -33,6 +33,7 @@
 
 namespace {
 
+CHAR g_fatal_errorA[MAX_LOADSTRING];
 WCHAR g_fatal_error[MAX_LOADSTRING];
 WCHAR g_information[MAX_LOADSTRING];
 WCHAR g_another_instance[MAX_LOADSTRING];
@@ -52,6 +53,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
+	LoadStringA(hInstance, IDS_FATAL_ERROR, g_fatal_errorA, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDS_FATAL_ERROR, g_fatal_error, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDS_INFORMATION, g_information, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDS_INIT_ANOTHER_INSTANCE, g_another_instance, MAX_LOADSTRING);
@@ -64,6 +66,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MessageBoxW(NULL, g_another_instance, g_information, MB_ICONINFORMATION);
 		return 0;
 	}
+	// 加载字符串。
+	SystemThings::InitString(hInstance);
 	// 注册窗口类。
 	if (!SystemThings::MyRegisterClass(hInstance)) {
 		MessageBoxW(NULL, g_register_failed, g_fatal_error, MB_ICONERROR);
@@ -83,7 +87,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		carnival.reset();
 	}
 	catch (std::exception& exp) {
-		MessageBoxA(hWnd, exp.what(), "Archknights: Fatal Error", MB_ICONERROR);
+		MessageBoxA(hWnd, exp.what(), g_fatal_errorA, MB_ICONERROR);
 	}
 	catch (...) {
 		MessageBoxW(hWnd, g_unknown_exception, g_fatal_error, MB_ICONERROR);

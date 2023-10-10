@@ -28,9 +28,11 @@
 
 #include "CarnivalWin32.h"
 
+#include "../Global/TempGuard.h"
 #include "../GUI/Callbacks.h"
-//#include "../GUI_Activities/ActivityIDs.h"
 #include "../GUI_Activities/Factory.h"
+
+#include "resource.h"
 
 namespace GUI {
 
@@ -38,7 +40,9 @@ CarnivalWin32::CarnivalWin32(HWND hWnd) :
 	m_hwnd(hWnd) {
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
-		throw std::exception("Window Initialization Failed!");
+		CHAR m_ex[64];
+		LoadStringA(GetModuleHandleW(NULL), IDS_WINDOW_INIT_FAILED, m_ex, 64);
+		throw std::exception(m_ex);
 	}
 	return;
 }
@@ -215,9 +219,9 @@ void CarnivalWin32::runTheActivity() {
 	GetClientRect(m_hwnd, &clientrect);
 	oldsize = { clientrect.right, clientrect.bottom };
 
-	// 修改 Idle 回调，要把旧的回调保存下来。
-	std::function<void()> oldIdle = Callbacks::OnIdle;
-	Callbacks::OnIdle = [&]() -> void {
+	// 修改 Idle 回调。
+	ohms::TempGuard<std::function<void()>> idleGuard(Callbacks::OnIdle);
+	std::function<void()> newIdle = [&]() -> void {
 		GetClientRect(m_hwnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
@@ -235,6 +239,7 @@ void CarnivalWin32::runTheActivity() {
 		}
 		m_runningActivity->update(*m_renderWindow, clk.restart());
 	};
+	idleGuard.set(newIdle);
 
 	// 主循环。
 	MSG msg{ 0 };
@@ -256,9 +261,6 @@ void CarnivalWin32::runTheActivity() {
 
 		m_runningActivity->update(*m_renderWindow, clk.restart());
 	}
-
-	// 恢复旧的 Idle 回调。
-	Callbacks::OnIdle = oldIdle;
 	return;
 }
 
