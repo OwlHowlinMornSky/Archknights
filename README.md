@@ -36,9 +36,3 @@ You must have **a valid Spine License** to use Spine Runtimes when build this pr
 
 -->
 
-***
-
-**该项目仅供个人研究和学习。**
-
-**This project is for personal study and learning only.**
- 
