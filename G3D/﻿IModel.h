@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,7 +26,7 @@
 namespace g3d {
 
 /**
- * @brief ¿É»æÖÆµÄ¶ÔÏó¡£
+ * @brief å¯ç»˜åˆ¶çš„å¯¹è±¡ã€‚
 */
 class IModel :
 	public NonCopyable {

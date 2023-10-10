@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -29,7 +29,7 @@
 namespace Audio {
 
 /**
- * @brief IBgm ÔÚ SFML µÄÊµÏÖ¡£
+ * @brief IBgm åœ¨ SFML çš„å®žçŽ°ã€‚
 */
 class BgmSFML final : public IBgm {
 public:
