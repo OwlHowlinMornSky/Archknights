@@ -36,6 +36,9 @@
     <ClInclude Include="FactoryCarnival.h">
       <Filter>CarnivalWin32</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,5 +56,10 @@
     <ClCompile Include="FactoryCarnival.cpp">
       <Filter>CarnivalWin32</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AppWin32.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

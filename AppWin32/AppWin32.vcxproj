@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="CarnivalWin32.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="FactoryCarnival.h" />
     <ClInclude Include="UniqueInstance.h" />
@@ -174,6 +175,9 @@
     <ClCompile Include="FactoryCarnival.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
     <ClCompile Include="Win32Things.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AppWin32.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

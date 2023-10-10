@@ -27,6 +27,21 @@
 #include "FactoryCarnival.h"
 #include "Win32Things.h"
 
+#include "resource.h"
+
+#define MAX_LOADSTRING 100
+
+namespace {
+
+WCHAR g_fatal_error[MAX_LOADSTRING];
+WCHAR g_information[MAX_LOADSTRING];
+WCHAR g_another_instance[MAX_LOADSTRING];
+WCHAR g_register_failed[MAX_LOADSTRING];
+WCHAR g_create_failed[MAX_LOADSTRING];
+WCHAR g_unknown_exception[MAX_LOADSTRING];
+
+}
+
 /**
  * @brief 主函数。
 */
@@ -36,29 +51,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					  _In_ int       nCmdShow) {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	LoadStringW(hInstance, IDS_FATAL_ERROR, g_fatal_error, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_INFORMATION, g_information, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_INIT_ANOTHER_INSTANCE, g_another_instance, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_INIT_REGISTER_FAILED, g_register_failed, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_INIT_CREATE_WINDOW_FAILED, g_create_failed, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_UNKNOWN_EXCEPTION, g_unknown_exception, MAX_LOADSTRING);
+
 	// 检验唯一程序实例。
 	if (!AppWin32::uniqueInstance()) {
-		MessageBoxA(NULL,
-					"Another instance exists.",
-					"Archknights: Information",
-					MB_ICONINFORMATION);
+		MessageBoxW(NULL, g_another_instance, g_information, MB_ICONINFORMATION);
 		return 0;
 	}
 	// 注册窗口类。
 	if (!SystemThings::MyRegisterClass(hInstance)) {
-		MessageBoxA(NULL,
-					"Initialization failed:\ncannot register class.",
-					"Archknights: Fatal Error",
-					MB_ICONERROR);
+		MessageBoxW(NULL, g_register_failed, g_fatal_error, MB_ICONERROR);
 		return 1;
 	}
 	// 创建窗口。
 	HWND hWnd(NULL);
 	if (!SystemThings::MyCreateWindow(hInstance, nCmdShow, hWnd)) {
-		MessageBoxA(NULL,
-					"Initialization failed:\ncannot create window.",
-					"Archknights: Fatal Error",
-					MB_ICONERROR);
+		MessageBoxW(NULL, g_create_failed, g_fatal_error, MB_ICONERROR);
 		SystemThings::MyUnregisterClass(hInstance);
 		return 2;
 	}
@@ -72,7 +86,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MessageBoxA(hWnd, exp.what(), "Archknights: Fatal Error", MB_ICONERROR);
 	}
 	catch (...) {
-		MessageBoxA(hWnd, "Unknown error.", "Archknights: Fatal Error", MB_ICONERROR);
+		MessageBoxW(hWnd, g_unknown_exception, g_fatal_error, MB_ICONERROR);
 	}
 	// 清理。
 	DestroyWindow(hWnd);
