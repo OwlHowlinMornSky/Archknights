@@ -23,16 +23,29 @@
 *    实现了 ICarnival 实例之一 CarnivalWin32。
 */
 // SFML 的东西必须 在 Windows的 之前。
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "framework.h"
 
 #include "CarnivalWin32.h"
+
+#include <iostream>
 
 #include "../Global/TempGuard.h"
 #include "../GUI/Callbacks.h"
 #include "../GUI_Activities/Factory.h"
 
-#include "resource.h"
+
+namespace {
+
+class exception_sfml_window_init final :
+	public std::exception {
+public:
+	_NODISCARD virtual char const* what() const {
+		return "Window Initialization Failed!";
+	}
+};
+
+}
 
 namespace GUI {
 
@@ -40,9 +53,7 @@ CarnivalWin32::CarnivalWin32(HWND hWnd) :
 	m_hwnd(hWnd) {
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
-		CHAR m_ex[64];
-		LoadStringA(GetModuleHandleW(NULL), IDS_WINDOW_INIT_FAILED, m_ex, 64);
-		throw std::exception(m_ex);
+		throw ::exception_sfml_window_init();
 	}
 	return;
 }
