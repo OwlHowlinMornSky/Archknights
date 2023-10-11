@@ -58,6 +58,9 @@ public:
 	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept override;
 	virtual void windowSetWindowed() noexcept override;
 
+	virtual void systemResetSleepCounter() noexcept override;
+	virtual void systemTrySetSleepEnabled(bool allowSleep) noexcept override;
+
 protected:
 	virtual void runTheActivity() override;
 	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;

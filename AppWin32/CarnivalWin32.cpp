@@ -216,6 +216,21 @@ void CarnivalWin32::windowSetWindowed() noexcept {
 	return;
 }
 
+void CarnivalWin32::systemResetSleepCounter() noexcept {
+	SetThreadExecutionState(ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+	return;
+}
+
+void CarnivalWin32::systemTrySetSleepEnabled(bool allowSleep) noexcept {
+	if (allowSleep) {
+		SetThreadExecutionState(ES_CONTINUOUS);
+	}
+	else {
+		SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+	}
+	return;
+}
+
 void CarnivalWin32::runTheActivity() {
 	// ≥ı ºªØ°£
 	m_keepRunning = true;

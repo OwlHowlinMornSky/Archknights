@@ -64,6 +64,9 @@ public:
 	ICarnival() noexcept = default;
 	virtual ~ICarnival() = default;
 
+/**
+ * @brief 以下内容与操作系统有关。
+*/
 public:
 	/**
 	 * @brief 一个系统级消息循环，可以用来在加载时避免窗口被判断为未响应。
@@ -114,6 +117,20 @@ public:
 	*/
 	virtual bool windowSetFullscreen(sf::VideoMode mode) noexcept = 0;
 
+	/**
+	 * @brief 重置睡眠计数器（此处所说睡眠包括“单纯关闭屏幕”）。
+	*/
+	virtual void systemResetSleepCounter() noexcept = 0;
+
+	/**
+	 * @brief 设置阻止系统睡眠（此处所说睡眠包括“单纯关闭屏幕”）。
+	 * @param allowSleep: 是否允许睡眠，设为 false 即 阻止睡眠 且 保持屏幕点亮。
+	*/
+	virtual void systemTrySetSleepEnabled(bool allowSleep) noexcept = 0;
+
+/**
+ * @brief 以下内容与系统无关，在Carnival类中已经实现。
+*/
 public:
 	/**
 	 * @brief 开始执行。
