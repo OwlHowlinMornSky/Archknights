@@ -31,6 +31,22 @@ namespace {
 
 std::unique_ptr<sf::Context> g_context;
 
+class exception_glew_failed final :
+	public std::exception {
+public:
+	exception_glew_failed(GLenum err) :
+		m_err_code(err) {}
+
+	_NODISCARD virtual char const* what() const {
+		m_str = "Error initializing GLEW, error:\n";
+		m_str.append((const char*)glewGetErrorString(m_err_code));
+		return m_str.c_str();
+	}
+protected:
+	GLenum m_err_code;
+	mutable std::string m_str;
+};
+
 } // namespace
 
 namespace g3d::base {
@@ -39,7 +55,7 @@ void setup() {
 	g_context = std::make_unique<sf::Context>();
 	GLenum glew_err = glewInit();
 	if (glew_err != GLEW_OK) {
-		throw std::exception((std::string("Error initializing GLEW, error: ") + (const char*)glewGetErrorString(glew_err)).c_str());
+		throw ::exception_glew_failed(glew_err);
 	}
 	return;
 }
