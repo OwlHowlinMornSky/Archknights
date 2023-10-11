@@ -221,7 +221,7 @@ void CarnivalWin32::runTheActivity() {
 
 	// 修改 Idle 回调。
 	ohms::TempGuard<std::function<void()>> idleGuard(Callbacks::OnIdle);
-	std::function<void()> newIdle = [&]() -> void {
+	idleGuard = [&]() -> void {
 		GetClientRect(m_hwnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
@@ -238,8 +238,13 @@ void CarnivalWin32::runTheActivity() {
 			m_runningActivity->handleEvent(evt);
 		}
 		m_runningActivity->update(*m_renderWindow, clk.restart());
+		// 如果Activity不再运行则强行打破sysloop。
+		if (!m_keepRunning) {
+			POINT p;
+			GetCursorPos(&p);
+			PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
+		}
 	};
-	idleGuard.set(newIdle);
 
 	// 主循环。
 	MSG msg{ 0 };

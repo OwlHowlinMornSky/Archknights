@@ -29,10 +29,16 @@ public:
 		m_target(t) {
 		m_old = t;
 	}
+	TempGuard(const TempGuard&) = delete;
+	TempGuard(TempGuard&&) = delete;
 	~TempGuard() noexcept {
 		m_target = m_old;
 	}
-	void set(const _T& n) noexcept {
+	TempGuard& operator=(const TempGuard&) = delete;
+	void operator=(const _T& n) noexcept {
+		m_target = n;
+	}
+	void operator=(_T&& n) noexcept {
 		m_target = n;
 	}
 protected:
