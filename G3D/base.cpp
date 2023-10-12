@@ -34,17 +34,16 @@ std::unique_ptr<sf::Context> g_context;
 class exception_glew_failed final :
 	public std::exception {
 public:
-	exception_glew_failed(GLenum err) :
-		m_err_code(err) {}
+	exception_glew_failed(GLenum err){
+		m_str = "Error initializing GLEW, error:\n";
+		m_str.append((const char*)glewGetErrorString(err));
+	}
 
 	_NODISCARD virtual char const* what() const {
-		m_str = "Error initializing GLEW, error:\n";
-		m_str.append((const char*)glewGetErrorString(m_err_code));
 		return m_str.c_str();
 	}
 protected:
-	GLenum m_err_code;
-	mutable std::string m_str;
+	std::string m_str;
 };
 
 } // namespace
