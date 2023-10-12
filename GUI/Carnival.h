@@ -54,6 +54,8 @@ public:
 
 	virtual WindowType windowGetWindowType() const noexcept override final;
 
+	virtual const IFontMgr& getFontMgr() const noexcept final;
+
 protected:
 	bool handleTransition() noexcept;
 	void pauseRunningActivity() noexcept;
@@ -78,6 +80,7 @@ protected:
 	uint32_t m_transitionTarget[2];
 	std::unique_ptr<sf::RenderWindow> m_renderWindow;
 	std::unique_ptr<IActivity> m_runningActivity;
+	std::unique_ptr<IFontMgr> m_fontMgr;
 	std::stack<uint32_t> m_activityStack;
 	std::map<uint32_t, std::unique_ptr<IActivity>> m_pausedActivities;
 };

@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -24,9 +24,15 @@
 #include "../Audio/BgmSFML.h"
 #include "ActivityIDs.h"
 
+#define ST_IN     (1)
+#define ST_NORMAL (2)
+#define ST_OUT    (3)
+#define ST_OVER   (4)
+
 namespace Activity {
 
 Act04_Load::Act04_Load() noexcept :
+	m_status(0),
 	ref_carnival(nullptr) {}
 
 void Act04_Load::start(GUI::ICarnival& carnival) {
@@ -47,10 +53,19 @@ void Act04_Load::start(GUI::ICarnival& carnival) {
 	m_bgm->openFromFile("res/music/m_sys_title.ogg");
 	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
 	m_bgm->play();
+
+	m_text.setString(L"test测试あいうえお😅");
+	m_text.setFont(ref_carnival->getFontMgr().getFont(GUI::FontType::CommonContext));
+	m_text.setFillColor(sf::Color::White);
+	m_text.setCharacterSize(36);
+	return;
 }
 
 void Act04_Load::stop() noexcept {
 	m_bgm->stop();
+
+	m_status = 0;
+	return;
 }
 
 void Act04_Load::pause() noexcept {}
@@ -70,6 +85,22 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		//m_bgm.reset();
 		break;
+	case sf::Event::MouseButtonPressed:
+		switch (evt.mouseButton.button) {
+		case sf::Mouse::Button::Left:
+			if (m_status == ST_NORMAL) {
+				m_status = ST_OUT;
+			}
+			break;
+		case sf::Mouse::Button::Right:
+			if (m_status == ST_OVER) {
+				m_status = ST_IN;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
 	case sf::Event::Resized:
 		updateSize({ evt.size.width, evt.size.height });
 		break;
@@ -80,10 +111,49 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 }
 
 void Act04_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
+	switch (m_status) {
+	case ST_IN:
+	{
+		sf::Int32 dt = deltaTime.asMilliseconds() * 2;
+		sf::Uint8 a = m_sp.getColor().r;
+		if (dt + a >= 255) {
+			m_status = ST_NORMAL;
+			m_sp.setColor(sf::Color::White);
+		}
+		else {
+			sf::Uint8 c = static_cast<sf::Uint8>(a + dt);
+			m_sp.setColor(sf::Color(c, c, c));
+		}
+		break;
+	}
+	case ST_NORMAL:
+		break;
+	case ST_OUT:
+	{
+		sf::Int32 dt = deltaTime.asMilliseconds() * 3;
+		sf::Uint8 a = m_sp.getColor().r;
+		if (-dt + a <= 0) {
+			m_status = ST_OVER;
+			m_sp.setColor(sf::Color::Black);
+		}
+		else {
+			sf::Uint8 c = static_cast<sf::Uint8>(-dt + a);
+			m_sp.setColor(sf::Color(c, c, c));
+		}
+		break;
+	}
+	case ST_OVER:
+		break;
+	default:
+		m_status = ST_IN;
+		m_sp.setColor(sf::Color::Black);
+		break;
+	}
 	window.clear();
 	window.draw(m_sp);
 	window.draw(m_blackBar[0]);
 	window.draw(m_blackBar[1]);
+	window.draw(m_text);
 	window.display();
 	return;
 }
@@ -110,6 +180,16 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	m_blackBar[0].setOrigin(wx * 0.05f, wy * (-0.9f));
 	m_blackBar[1].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
 	m_blackBar[1].setOrigin(wx * 0.05f, wy * 0.05f);
+
+	/*
+	float fontSizef = wy * 0.08f;
+	unsigned int fontSize = static_cast<unsigned int>(fontSizef);
+	float fontRate = fontSizef / fontSize;
+	m_text.setCharacterSize(fontSize);
+	m_text.setScale(fontRate, fontRate);*/
+	float fontSizef = wy * 0.08f;
+	float fontRate = fontSizef / 36;
+	m_text.setScale(fontRate, fontRate);
 	return;
 }
 

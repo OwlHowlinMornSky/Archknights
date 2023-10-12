@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "IFontMgr.h"
 #include <string>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -190,6 +191,12 @@ public:
 	 * @return 窗口状态。
 	*/
 	virtual WindowType windowGetWindowType() const noexcept = 0;
+
+	/**
+	 * @brief 获取字体管理器。
+	 * @return 字体管理器接口。
+	*/
+	virtual const IFontMgr& getFontMgr() const noexcept = 0;
 }; // class ICarnival
 
 } // namespace GUI

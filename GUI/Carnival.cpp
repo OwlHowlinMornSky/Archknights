@@ -26,6 +26,7 @@
 #endif // _DEBUG
 #include <assert.h>
 #include "Callbacks.h"
+#include "FontMgr.h"
 #include "../GUI_Activities/ActivityIDs.h"
 
 namespace GUI {
@@ -39,6 +40,7 @@ Carnival::Carnival() noexcept :
 	m_enabledResize(true),
 	m_enabledMinimize(true) {
 	m_renderWindow = std::make_unique<sf::RenderWindow>();
+	m_fontMgr = std::make_unique<FontMgr>();
 	return;
 }
 
@@ -48,6 +50,9 @@ Carnival::~Carnival() noexcept {
 }
 
 void Carnival::run() noexcept {
+	// 加载字体。
+	m_fontMgr->load();
+
 	// 创建并唤起 默认入口 Activity。
 	m_runningActivity = this->createActivity(Activity::IDs::ID_DefaultEntry);
 	if (m_runningActivity == nullptr) {
@@ -153,6 +158,10 @@ bool Carnival::windowIsMinimizeEnabled() const noexcept {
 
 WindowType Carnival::windowGetWindowType() const noexcept {
 	return m_windowType;
+}
+
+const IFontMgr& Carnival::getFontMgr() const noexcept {
+	return *m_fontMgr;
 }
 
 bool Carnival::handleTransition() noexcept {

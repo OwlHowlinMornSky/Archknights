@@ -159,14 +159,17 @@
     <ClInclude Include="ActivityIndependent.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Carnival.h" />
+    <ClInclude Include="FontMgr.h" />
     <ClInclude Include="IActivity.h" />
     <ClInclude Include="ICarnival.h" />
+    <ClInclude Include="IFontMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActivityDependent.cpp" />
     <ClCompile Include="ActivityIndependent.cpp" />
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Carnival.cpp" />
+    <ClCompile Include="FontMgr.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

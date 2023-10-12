@@ -49,11 +49,13 @@ protected:
 	void updateSize(sf::Vector2u newWindowSize);
 
 protected:
+	int m_status;
 	GUI::ICarnival* ref_carnival;
 	std::unique_ptr<Audio::IBgm> m_bgm;
 	sf::Texture m_tex;
 	sf::Sprite m_sp;
 	sf::RectangleShape m_blackBar[2];
+	sf::Text m_text;
 };
 
 }

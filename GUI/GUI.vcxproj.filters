@@ -36,6 +36,12 @@
     <ClInclude Include="ICarnival.h">
       <Filter>接口</Filter>
     </ClInclude>
+    <ClInclude Include="IFontMgr.h">
+      <Filter>接口</Filter>
+    </ClInclude>
+    <ClInclude Include="FontMgr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callbacks.cpp">
@@ -48,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ActivityDependent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FontMgr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
