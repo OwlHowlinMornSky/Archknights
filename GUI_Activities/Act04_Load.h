@@ -53,6 +53,7 @@ protected:
 	std::unique_ptr<Audio::IBgm> m_bgm;
 	sf::Texture m_tex;
 	sf::Sprite m_sp;
+	sf::RectangleShape m_blackBar[2];
 };
 
 }

@@ -40,6 +40,9 @@ void Act04_Load::start(GUI::ICarnival& carnival) {
 
 	updateSize(ref_carnival->getRenderWindow().getSize());
 
+	m_blackBar[0].setFillColor(sf::Color::Black);
+	m_blackBar[1].setFillColor(sf::Color::Black);
+
 	m_bgm = std::make_unique<Audio::BgmSFML>();
 	m_bgm->openFromFile("res/music/m_sys_title.ogg");
 	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
@@ -79,6 +82,8 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 void Act04_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
 	window.clear();
 	window.draw(m_sp);
+	window.draw(m_blackBar[0]);
+	window.draw(m_blackBar[1]);
 	window.display();
 	return;
 }
@@ -90,16 +95,21 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	float texRate = tx / ty;
 	float wx = static_cast<float>(newWindowSize.x);
 	float wy = static_cast<float>(newWindowSize.y);
-	float winRate = wx / wy;
+	float winRate = wx / (wy * 0.8f);
 	float rate = 1.0f;
 	if (winRate > texRate) {
 		rate = wx / tx;
 	}
 	else {
-		rate = wy / ty;
+		rate = (wy * 0.8f) / ty;
 	}
 	m_sp.setScale(rate, rate);
 	m_sp.setPosition(wx / 2.0f, wy / 2.0f);
+
+	m_blackBar[0].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
+	m_blackBar[0].setOrigin(wx * 0.05f, wy * (-0.9f));
+	m_blackBar[1].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
+	m_blackBar[1].setOrigin(wx * 0.05f, wy * 0.05f);
 	return;
 }
 
