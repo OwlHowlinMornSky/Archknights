@@ -270,28 +270,16 @@ void CarnivalWin32::runTheActivity() {
 			GetCursorPos(&p);
 			PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
 		}
-		// 下面这些代码是为了让一些转移不打破sysloop。
-		// 但考虑到sysloop中的上下文不可控，还是选择打破之。
-		/*
-		if (m_keepRunning) return;
-		// 如果 Activity 不再运行则尝试处理转移。
-		m_keepRunning = true;
-		// 无变化则保持。
-		if (!handleTransition()) return;
-		// 有变化，但 仍运行 且 新的Activity不为独立 则保持。
-		if (m_mainLoopKeep && !m_runningActivity->isIndependent()) return;
-		// 不再运行 或者 新的Activity为独立 则强行打破sysloop。
-		POINT p;
-		GetCursorPos(&p);
-		PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
-		m_keepRunning = false;
-		return;*/
 	};
 
 	// 主循环。
 	MSG msg{ 0 };
 	clk.restart();
 	while (m_keepRunning) {
+		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessageW(&msg);
+		}
 		while (m_renderWindow->pollEvent(evt)) {
 			if (evt.type == sf::Event::Resized) {
 				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
@@ -301,14 +289,7 @@ void CarnivalWin32::runTheActivity() {
 			}
 			m_runningActivity->handleEvent(evt);
 		}
-
 		m_runningActivity->update(*m_renderWindow, clk.restart());
-
-		// 因为sysloop结束时可能已经需要退出，于是系统循环要放在后面。
-		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
 	}
 	return;
 }
