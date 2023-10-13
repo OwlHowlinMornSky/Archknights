@@ -33,6 +33,7 @@ namespace GUI {
 
 Carnival::Carnival() noexcept :
 	m_keepRunning(false),
+	m_mainLoopKeep(false),
 	m_transition(0),
 	m_windowType(WindowType::Windowed),
 	m_transitionTarget(),
@@ -54,10 +55,12 @@ void Carnival::run() noexcept {
 	m_fontMgr->load();
 
 	// 创建并唤起 默认入口 Activity。
+	assert(Activity::IDs::ID_DefaultEntry);
 	m_runningActivity = this->createActivity(Activity::IDs::ID_DefaultEntry);
 	if (m_runningActivity == nullptr) {
 		return;
 	}
+	assert(m_runningActivity->getID() == Activity::IDs::ID_DefaultEntry);
 	try {
 		m_runningActivity->start(*this);
 	}
@@ -75,14 +78,13 @@ void Carnival::run() noexcept {
 	};
 
 	// 核心循环。
-	while (handleTransition()) {
+	m_mainLoopKeep = true;
+	while (m_mainLoopKeep) {
 		try {
-			if (m_runningActivity->isIndependent()) {
+			if (m_runningActivity->isIndependent())
 				m_runningActivity->runIndependently();
-			}
-			else {
+			else
 				runTheActivity();
-			}
 		}
 		catch (std::exception& e) {
 			std::string err("Activity Exception:\n");
@@ -96,6 +98,7 @@ void Carnival::run() noexcept {
 			this->systemShowMessageBox("Archnights: Error", err, MBInfo::Error);
 			this->meActivitySetTransition(Transition::Pop);
 		}
+		handleTransition();
 	}
 
 	Callbacks::OnExitSysloop = oldExit;
@@ -166,7 +169,7 @@ const IFontMgr& Carnival::getFontMgr() const noexcept {
 
 bool Carnival::handleTransition() noexcept {
 	if (m_transition == 0)
-		return true;
+		return false;
 	bool isStop = true;
 	int t = m_transition;
 	if (t < 0) {
@@ -186,7 +189,7 @@ bool Carnival::handleTransition() noexcept {
 		break;
 	case Transition::Pop:
 		if (m_activityStack.empty())
-			lca = 1; // 栈空等同于 Exit。详见下面。
+			m_mainLoopKeep = false; // 栈空等同于 Exit。
 		else
 			newID = m_activityStack.top();
 		break;
@@ -201,7 +204,7 @@ bool Carnival::handleTransition() noexcept {
 			lca = m_transitionTarget[0];
 		break;
 	case Transition::Exit:
-		lca = 1; // 规定的 Exit。详见下面。
+		m_mainLoopKeep = false;
 		break;
 	default:
 		break;
@@ -210,92 +213,65 @@ bool Carnival::handleTransition() noexcept {
 	m_transition = 0;
 	m_transitionTarget[0] = m_transitionTarget[1] = 0;
 	// 初步判断。
-	if (newID == 0) {
-		if (lca == 0)
-			return true; // 规定的 都为0 就算 无动作。
-		else {
-			// 规定的 newID 为0 且 lca 不为0 就算 Exit。
-			stopRunningActicity();
-			return false;
-		}
+	if (!m_mainLoopKeep) {
+		stopRunningActicity();
+		return true;
 	}
-	if (oldID == newID)
-		return true; // 新旧相同 也算 无动作。
+	if (newID == 0 || oldID == newID)
+		return false;
 
 	// 下面的代码一定有以下条件:
 	// newID 不为 0。
 
 	std::unique_ptr<IActivity> newActivity = getActivity(newID);
 	if (newActivity == nullptr)
-		return true; // 创建失败。
+		return false; // 创建失败。
 
 	// 确保 Activity 正确。
 	assert(newID == newActivity->getID());
 	if (newID != newActivity->getID()) {
 		newActivity->stop();
-		return true;
+		return false;
 	}
 
 	// 栈变迁。
 	switch (t) {
 	case Transition::Switch:
-		if (isStop)
-			stopRunningActicity();
-		else
-			pauseRunningActivity();
+		if (isStop) stopRunningActicity();
+		else pauseRunningActivity();
 		break;
 	case Transition::Push:
-		if (isStop)
-			stopRunningActicity();
-		else
-			pauseRunningActivity();
-		try {
-			m_activityStack.push(oldID);
-		}
-		catch (...) {
-			;
-		}
+		if (isStop) stopRunningActicity();
+		else pauseRunningActivity();
+		m_activityStack.push(oldID);
 		break;
 	case Transition::Pop:
-		if (isStop)
-			stopRunningActicity();
-		else
-			pauseRunningActivity();
+		if (isStop) stopRunningActicity();
+		else pauseRunningActivity();
 		m_activityStack.pop();
 		break;
 	case Transition::PopTo:
 		if (lca == oldID || !stackContains(lca))
 			break;
-		if (isStop)
-			stopRunningActicity();
-		else
-			pauseRunningActivity();
+		if (isStop) stopRunningActicity();
+		else pauseRunningActivity();
 		while (m_activityStack.top() != lca) {
-			if (isStop)
-				stopPausedActivity(m_activityStack.top());
+			if (isStop) stopPausedActivity(m_activityStack.top());
 			m_activityStack.pop();
 		}
 		m_activityStack.pop();
 		break;
 	case Transition::PopPush:
-		if (isStop)
-			stopRunningActicity();
-		else
-			pauseRunningActivity();
+		if (isStop) stopRunningActicity();
+		else pauseRunningActivity();
 		if (lca != oldID && stackContains(lca)) {
 			while (m_activityStack.top() != lca) {
-				if (isStop)
-					stopPausedActivity(m_activityStack.top());
+				if (isStop) stopPausedActivity(m_activityStack.top());
 				m_activityStack.pop();
 			}
 		}
 		else {
-			try {
-				m_activityStack.push(oldID);
-			}
-			catch (...) {
-				;
-			}
+			m_activityStack.push(oldID);
 		}
 		break;
 	}

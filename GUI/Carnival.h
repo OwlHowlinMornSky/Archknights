@@ -57,6 +57,10 @@ public:
 	virtual const IFontMgr& getFontMgr() const noexcept final;
 
 protected:
+	/**
+	 * @brief 
+	 * @return True if any change happened.
+	*/
 	bool handleTransition() noexcept;
 	void pauseRunningActivity() noexcept;
 	void stopRunningActicity() noexcept;
@@ -75,6 +79,7 @@ protected:
 	bool m_enabledMinimize;
 	bool m_enableFullResizeMessage;
 	bool m_keepRunning;
+	bool m_mainLoopKeep;
 	int m_transition;
 	WindowType m_windowType;
 	uint32_t m_transitionTarget[2];
