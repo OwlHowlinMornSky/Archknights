@@ -80,10 +80,6 @@ uint32_t Act02_TestActivity::getID() noexcept {
 
 void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
-	case sf::Event::Closed:
-		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
-		ref_carnival->meDependentActivityStopRunning();
-		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:

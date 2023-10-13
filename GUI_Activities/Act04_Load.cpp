@@ -78,10 +78,6 @@ uint32_t Act04_Load::getID() noexcept {
 
 void Act04_Load::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
-	case sf::Event::Closed:
-		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
-		ref_carnival->meDependentActivityStopRunning();
-		break;
 	case sf::Event::KeyPressed:
 		//m_bgm.reset();
 		break;

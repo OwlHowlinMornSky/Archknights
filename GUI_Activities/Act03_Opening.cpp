@@ -82,10 +82,6 @@ uint32_t Act03_Opening::getID() noexcept {
 
 void Act03_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
-	case sf::Event::Closed:
-		ref_carnival->meActivitySetTransition(GUI::Transition::Exit);
-		ref_carnival->meDependentActivityStopRunning();
-		break;
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
