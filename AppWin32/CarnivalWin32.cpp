@@ -261,7 +261,15 @@ void CarnivalWin32::runTheActivity() {
 			}
 		}
 		while (m_renderWindow->pollEvent(evt)) {
-			m_runningActivity->handleEvent(evt);
+			switch (evt.type) {
+			case sf::Event::Closed:
+				meActivitySetTransition(Transition::Exit);
+				meDependentActivityStopRunning();
+				break;
+			default:
+				m_runningActivity->handleEvent(evt);
+				break;
+			}
 		}
 		m_runningActivity->update(*m_renderWindow, clk.restart());
 		// 如果Activity不再运行则强行打破sysloop。
@@ -281,13 +289,21 @@ void CarnivalWin32::runTheActivity() {
 			DispatchMessageW(&msg);
 		}
 		while (m_renderWindow->pollEvent(evt)) {
-			if (evt.type == sf::Event::Resized) {
+			switch (evt.type) {
+			case sf::Event::Closed:
+				meActivitySetTransition(Transition::Exit);
+				meDependentActivityStopRunning();
+				break;
+			case sf::Event::Resized:
 				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
 				GetClientRect(m_hwnd, &clientrect);
 				if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom)
 					oldsize = { clientrect.right, clientrect.bottom };
+				[[fallthrough]];
+			default:
+				m_runningActivity->handleEvent(evt);
+				break;
 			}
-			m_runningActivity->handleEvent(evt);
 		}
 		m_runningActivity->update(*m_renderWindow, clk.restart());
 	}

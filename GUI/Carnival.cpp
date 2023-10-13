@@ -126,6 +126,8 @@ void Carnival::meDependentActivityStopRunning() noexcept {
 }
 
 void Carnival::meActivitySetTransition(int t, uint32_t a0, uint32_t a1) noexcept {
+	if (m_transition)
+		return;
 	m_transition = t;
 	m_transitionTarget[0] = a0;
 	m_transitionTarget[1] = a1;
