@@ -50,6 +50,7 @@ public:
 namespace GUI {
 
 CarnivalWin32::CarnivalWin32(HWND hWnd) :
+	m_oldsize({ 0 }),
 	m_hwnd(hWnd) {
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
@@ -233,56 +234,13 @@ void CarnivalWin32::systemTrySetSleepEnabled(bool allowSleep) noexcept {
 
 void CarnivalWin32::runTheActivity() {
 	// 初始化。
-	m_keepRunning = true;
-
-	// 用于每帧的更新时间。
-	sf::Clock clk;
-	// 用于事件循环。
-	sf::Event evt;
-
-	POINT oldsize{ 0 };
-	RECT clientrect{ 0 };
-	GetClientRect(m_hwnd, &clientrect);
-	oldsize = { clientrect.right, clientrect.bottom };
-
-	// 修改 Idle 回调。
 	ohms::TempGuard<std::function<void()>> idleGuard(Callbacks::OnIdle);
-	idleGuard = [this, &clientrect, &oldsize, &evt, &clk]() -> void {
-		GetClientRect(m_hwnd, &clientrect);
-		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
-			oldsize = { clientrect.right, clientrect.bottom };
-			m_renderWindow->setSize({ (unsigned int)oldsize.x, (unsigned int)oldsize.y });
-			if (m_enableFullResizeMessage) {
-				evt.type = sf::Event::Resized;
-				evt.size.width = oldsize.x;
-				evt.size.height = oldsize.y;
-				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
-				m_runningActivity->handleEvent(evt);
-			}
-		}
-		while (m_renderWindow->pollEvent(evt)) {
-			switch (evt.type) {
-			case sf::Event::Closed:
-				meActivitySetTransition(Transition::Exit);
-				meDependentActivityStopRunning();
-				break;
-			default:
-				m_runningActivity->handleEvent(evt);
-				break;
-			}
-		}
-		m_runningActivity->update(*m_renderWindow, clk.restart());
-		// 如果Activity不再运行则强行打破sysloop。
-		if (!m_keepRunning) {
-			POINT p;
-			GetCursorPos(&p);
-			PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
-		}
-	};
-
-	// 主循环。
+	idleGuard = std::bind(&CarnivalWin32::OnIdle, this);
 	MSG msg{ 0 };
-	clk.restart();
+	sf::Event evt;
+	m_keepRunning = true;
+	m_clk.restart();
+	// 主循环。
 	while (m_keepRunning) {
 		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
@@ -295,23 +253,61 @@ void CarnivalWin32::runTheActivity() {
 				meDependentActivityStopRunning();
 				break;
 			case sf::Event::Resized:
+			{
+				RECT clientrect{ 0 };
 				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
 				GetClientRect(m_hwnd, &clientrect);
-				if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom)
-					oldsize = { clientrect.right, clientrect.bottom };
-				[[fallthrough]];
+				if (m_oldsize.x != clientrect.right || m_oldsize.y != clientrect.bottom)
+					m_oldsize = { clientrect.right, clientrect.bottom };
+			}
+			[[fallthrough]];
 			default:
 				m_runningActivity->handleEvent(evt);
 				break;
 			}
 		}
-		m_runningActivity->update(*m_renderWindow, clk.restart());
+		m_runningActivity->update(*m_renderWindow, m_clk.restart());
 	}
 	return;
 }
 
 std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
 	return Activity::Factory::CreateActivity(id);
+}
+
+void CarnivalWin32::OnIdle() {
+	RECT clientrect{ 0 };
+	GetClientRect(m_hwnd, &clientrect);
+	sf::Event evt;
+	if (m_oldsize.x != clientrect.right || m_oldsize.y != clientrect.bottom) {
+		m_oldsize = { clientrect.right, clientrect.bottom };
+		m_renderWindow->setSize({ (unsigned int)m_oldsize.x, (unsigned int)m_oldsize.y });
+		if (m_enableFullResizeMessage) {
+			evt.type = sf::Event::Resized;
+			evt.size.width = m_oldsize.x;
+			evt.size.height = m_oldsize.y;
+			m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
+			m_runningActivity->handleEvent(evt);
+		}
+	}
+	while (m_renderWindow->pollEvent(evt)) {
+		switch (evt.type) {
+		case sf::Event::Closed:
+			meActivitySetTransition(Transition::Exit);
+			meDependentActivityStopRunning();
+			break;
+		default:
+			m_runningActivity->handleEvent(evt);
+			break;
+		}
+	}
+	m_runningActivity->update(*m_renderWindow, m_clk.restart());
+	// 如果Activity不再运行则强行打破sysloop。
+	if (!m_keepRunning) {
+		POINT p;
+		GetCursorPos(&p);
+		PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
+	}
 }
 
 } // namespace GUI
