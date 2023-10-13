@@ -247,7 +247,7 @@ void CarnivalWin32::runTheActivity() {
 
 	// ÐÞ¸Ä Idle »Øµ÷¡£
 	ohms::TempGuard<std::function<void()>> idleGuard(Callbacks::OnIdle);
-	idleGuard = [&]() -> void {
+	idleGuard = [this, &clientrect, &oldsize, &evt, &clk]() -> void {
 		GetClientRect(m_hwnd, &clientrect);
 		if (oldsize.x != clientrect.right || oldsize.y != clientrect.bottom) {
 			oldsize = { clientrect.right, clientrect.bottom };
