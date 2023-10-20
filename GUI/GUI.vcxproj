@@ -155,8 +155,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ActivityDependent.h" />
-    <ClInclude Include="ActivityIndependent.h" />
+    <ClInclude Include="DependentActivity.h" />
+    <ClInclude Include="IndependentActivity.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Carnival.h" />
     <ClInclude Include="FontMgr.h" />
@@ -165,8 +165,8 @@
     <ClInclude Include="IFontMgr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActivityDependent.cpp" />
-    <ClCompile Include="ActivityIndependent.cpp" />
+    <ClCompile Include="DependentActivity.cpp" />
+    <ClCompile Include="IndependentActivity.cpp" />
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Carnival.cpp" />
     <ClCompile Include="FontMgr.cpp" />

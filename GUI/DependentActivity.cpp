@@ -19,29 +19,14 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
-
-#include "IActivity.h"
+#include "DependentActivity.h"
 
 namespace GUI {
 
-/**
- * @brief 非独立 Activity。
-*/
-class ActivityDependent : public IActivity {
-public:
-	ActivityDependent() = default;
-	virtual ~ActivityDependent() override = default;
+bool DepActivity::isIndependent() const noexcept {
+	return false;
+}
 
-public:
-	// 禁止修改。
-	virtual bool isIndependent() const noexcept override final;
-	// 非独立禁止使用。
-	virtual void runIndependently() override final;
-
-	// 非独立必须实现。
-	virtual void handleEvent(const sf::Event& evt) override = 0;
-	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override = 0;
-};
+void DepActivity::runIndependently() {}
 
 } // namespace GUI

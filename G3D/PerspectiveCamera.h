@@ -21,29 +21,43 @@
 */
 #pragma once
 
-#include "../GUI/IndependentActivity.h"
+#include "Camera.h"
 
-namespace Activity {
+namespace g3d {
 
-class Act01_DefaultEntry final :
-	public GUI::IndepActivity {
+class PerspectiveCamera final :
+	public Camera {
 public:
-	Act01_DefaultEntry() noexcept;
-	virtual ~Act01_DefaultEntry() noexcept override;
-
-public:
-	virtual void start(GUI::ICarnival& carnival) override;
-	virtual void stop() noexcept override;
-	virtual void pause() noexcept override;
-	virtual void resume() noexcept override;
-	virtual uint32_t getID() noexcept override;
+	PerspectiveCamera() = default;
+	virtual ~PerspectiveCamera() override = default;
 
 public:
-	virtual void runIndependently() override;
+	void setFOV(float degree) {
+		if (degree < 1.0f) degree = 1.0f;
+		else if (degree > 179.0f) degree = 179.0f;
+		m_fov = degree;
+		m_matP_needUpdate = true;
+		return;
+	}
+	void setAspectRatio(float ratio) {
+		m_aspectRatio = ratio;
+		m_matP_needUpdate = true;
+		return;
+	}
+
+	float getFOV() const {
+		return m_fov;
+	}
+	float getAspectRatio() const {
+		return m_aspectRatio;
+	}
 
 protected:
-	GUI::ICarnival* ref_carnival;
-	bool m_haveRunned;
+	virtual void ensureMatPUpdated() override;
+
+protected:
+	float m_fov;
+	float m_aspectRatio;
 };
 
-} // namespace Activity
+} // namespace g3d

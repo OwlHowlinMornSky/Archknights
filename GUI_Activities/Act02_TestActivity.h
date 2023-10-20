@@ -21,14 +21,14 @@
 */
 #pragma once
 
-#include "../GUI/ActivityDependent.h"
+#include "../GUI/DependentActivity.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace Activity {
 
 class Act02_TestActivity final :
-	public GUI::ActivityDependent {
+	public GUI::DepActivity {
 public:
 	Act02_TestActivity(uint32_t n) noexcept;
 	virtual ~Act02_TestActivity() noexcept override;

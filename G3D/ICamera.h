@@ -23,6 +23,7 @@
 
 #include "ITransformT.h"
 #include "ITransformR.h"
+#include <glm/mat4x4.hpp>
 
 namespace g3d {
 
@@ -33,28 +34,58 @@ class ICamera :
 	public ITransformT,
 	public ITransformR {
 public:
-	ICamera() = default;
+	ICamera() :
+		m_matPVChanged(false),
+		m_zNear(0.5f),
+		m_zFar(128.0f),
+		m_matP(),
+		m_matV() {}
 	virtual ~ICamera() = default;
 
-	/**
-	 * @brief 获取近场临界距离。
-	 * @return 近场临界距离。
-	*/
-	float getFF() {
-		return m_ff;
+public:
+	float getZFar() const {
+		return m_zFar;
 	}
 
-	/**
-	 * @brief 获取远场临界距离。
-	 * @return 远场临界距离。
-	*/
-	float getFN() {
-		return m_fn;
+	float getZNear() const {
+		return m_zNear;
+	}
+
+	const glm::mat4& getMatP() {
+		ensureMatPUpdated();
+		return m_matP;
+	}
+
+	const glm::mat4& getMatV() {
+		ensureMatVUpdated();
+		return m_matV;
+	}
+
+	const glm::mat4& getMatPV() {
+		ensureMatPVUpdated();
+		return m_matPV;
 	}
 
 protected:
-	float m_fn; // 近场临界距离。
-	float m_ff; // 远场临界距离。
+	void ensureMatPVUpdated() {
+		ensureMatPUpdated();
+		ensureMatVUpdated();
+		if (m_matPVChanged) {
+			m_matPV = m_matP * m_matV;
+			m_matPVChanged = false;
+		}
+		return;
+	}
+	virtual void ensureMatVUpdated() = 0;
+	virtual void ensureMatPUpdated() = 0;
+
+protected:
+	bool m_matPVChanged;
+	float m_zNear;
+	float m_zFar;
+	glm::mat4 m_matP;
+	glm::mat4 m_matV;
+	glm::mat4 m_matPV;
 };
 
 } // namespace g3d

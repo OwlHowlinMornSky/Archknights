@@ -19,30 +19,20 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "OrthographicCamera.h"
 
-#include "IActivity.h"
+#include <glm/gtx/transform.hpp>
 
-namespace GUI {
+namespace g3d {
 
-/**
- * @brief 独立 Activity。
-*/
-class ActivityIndependent : public IActivity {
-public:
-	ActivityIndependent() = default;
-	virtual ~ActivityIndependent() override = default;
+void g3d::OrthographicCamera::ensureMatPUpdated() {
+	if (m_matP_needUpdate) {
+		float x = m_dimX / 2.0f;
+		float y = m_dimY / 2.0f;
+		m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar);
+		m_matP_needUpdate = false;
+		m_matPVChanged = true;
+	}
+}
 
-public:
-	// 禁止修改。
-	virtual bool isIndependent() const noexcept override final;
-	// 独立必须实现。
-	virtual void runIndependently() override = 0;
-
-	// 独立禁止使用。
-	virtual void handleEvent(const sf::Event& evt) override final;
-	// 独立禁止使用。
-	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override final;
-};
-
-} // namespace GUI
+} // namespace g3d

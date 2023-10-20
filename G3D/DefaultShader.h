@@ -19,14 +19,23 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "ActivityDependent.h"
+#pragma once
 
-namespace GUI {
+#include "Shader.h"
 
-bool ActivityDependent::isIndependent() const noexcept {
-	return false;
-}
+namespace g3d {
 
-void ActivityDependent::runIndependently() {}
+class DefaultShader final:
+	public Shader
+{
+public:
+	virtual void setup() override;
 
-} // namespace GUI
+public:
+	void updatePVM(GLfloat* pvm) const;
+
+protected:
+	GLint m_uniform;
+};
+
+} // namespace g3d

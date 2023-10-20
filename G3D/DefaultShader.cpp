@@ -19,38 +19,38 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "ShaderDefault.h"
+#include "DefaultShader.h"
 
 namespace {
 
 const char g_defaultVertexShader[] =
 "#version 330\n"\
-"layout(location = 0) attribute vec3 position;"\
-"layout(location = 1) attribute vec4 color;" \
-"layout(location = 2) attribute vec2 texCoord;" \
-"uniform mat4 matPVM;" \
-"varying vec4 tint;" \
-"varying vec2 uv;" \
+"layout(location = 0) attribute vec3 aVertexPos;"\
+"layout(location = 1) attribute vec4 aVertexColor;" \
+"layout(location = 2) attribute vec2 aVertexTexCoord;" \
+"uniform mat4 uMatPVM;" \
+"varying vec4 vTint;" \
+"varying vec2 vUv;" \
 "void main() {"\
-"	gl_Position = matPVM * vec4(position, 1.0);"\
-"	tint = color;"\
-"	uv = texCoord;"\
+"    vTint = aVertexColor;"\
+"    vUv = aVertexTexCoord;"\
+"    gl_Position = uMatPVM * vec4(aVertexPos, 1.0);"\
 "}";
 
 const char g_defaultFragShader[] =
 "#version 330\n" \
-"uniform sampler2D texture;"\
-"varying vec4 tint;"\
-"varying vec2 uv;"\
+"uniform sampler2D uTex;"\
+"varying vec4 vTint;"\
+"varying vec2 vUv;"\
 "void main() {"\
-"	gl_FragColor = texture2D(texture, uv) * tint;"\
+"    gl_FragColor = texture2D(uTex, vUv) * vTint;"\
 "}";
 
 }
 
 namespace g3d {
 
-void ShaderDefault::setup() {
+void DefaultShader::setup() {
 	clear();
 	loadFromMemory(g_defaultVertexShader, ShaderType::Vertex);
 	loadFromMemory(g_defaultFragShader, ShaderType::Fragment);
@@ -60,12 +60,12 @@ void ShaderDefault::setup() {
 	linkShader();
 	Bind(this);
 	m_uniform = getUniformLocation("matPVM");
-	updateUniform1iName("texture", 0);
+	updateUniform1iName("uTex", 0);
 	Bind(nullptr);
 	return;
 }
 
-void ShaderDefault::updatePVM(GLfloat* pvm) const {
+void DefaultShader::updatePVM(GLfloat* pvm) const {
 	updateUniformMat4fv(m_uniform, pvm);
 }
 

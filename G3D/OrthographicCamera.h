@@ -25,41 +25,33 @@
 
 namespace g3d {
 
-class CameraPerspective final :
+class OrthographicCamera final :
 	public Camera {
 public:
-	CameraPerspective() = default;
-	virtual ~CameraPerspective() override = default;
+	OrthographicCamera() = default;
+	virtual ~OrthographicCamera() override = default;
 
 public:
-	void setFOV(float degree) {
-		if (degree < 1.0f)
-			degree = 1.0f;
-		else if (degree > 179.0f)
-			degree = 179.0f;
-		m_fov = degree;
+	void setDim(float x, float y) {
+		m_dimX = x;
+		m_dimY = y;
 		m_matP_needUpdate = true;
-		return;
-	}
-	void setAspectRatio(float ratio) {
-		m_aspect = ratio;
-		m_matP_needUpdate = true;
-		return;
 	}
 
-	float getFOV() const {
-		return m_fov;
+	float getDimX() const {
+		return m_dimX;
 	}
-	float getAspectRatio() const {
-		return m_aspect;
+
+	float getDimY() const {
+		return m_dimY;
 	}
 
 protected:
-	virtual void ensureMatPUpdated() const override;
+	virtual void ensureMatPUpdated() override;
 
-protected:
-	float m_fov;
-	float m_aspect;
+public:
+	float m_dimX;
+	float m_dimY;
 };
 
-} // namespace g3d
+}

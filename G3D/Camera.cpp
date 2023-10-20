@@ -25,7 +25,7 @@
 
 namespace g3d {
 
-void Camera::ensureMatVUpdated() const {
+void Camera::ensureMatVUpdated() {
 	if (m_positionChanged || m_rotationChanged) {
 		if (m_rotation.x < 0.0f)
 			m_rotation.x = 0.0f;
@@ -37,6 +37,7 @@ void Camera::ensureMatVUpdated() const {
 		m_matV *= glm::translate(-m_position);
 		m_positionChanged = false;
 		m_rotationChanged = false;
+		m_matPVChanged = true;
 	}
 	return;
 }

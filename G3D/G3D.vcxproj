@@ -21,16 +21,18 @@
   <ItemGroup>
     <ClCompile Include="base.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraPerspective.cpp" />
-    <ClCompile Include="glCheck.cpp" />
+    <ClCompile Include="OrthographicCamera.cpp" />
+    <ClCompile Include="PerspectiveCamera.cpp" />
+    <ClCompile Include="GlCheck.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderDefault.cpp" />
+    <ClCompile Include="DefaultShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraPerspective.h" />
-    <ClInclude Include="glCheck.h" />
+    <ClInclude Include="OrthographicCamera.h" />
+    <ClInclude Include="PerspectiveCamera.h" />
+    <ClInclude Include="GlCheck.h" />
     <ClInclude Include="ICamera.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="ITransformO.h" />
@@ -40,7 +42,7 @@
     <ClInclude Include="IVertex.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderDefault.h" />
+    <ClInclude Include="DefaultShader.h" />
     <ClInclude Include="﻿IModel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

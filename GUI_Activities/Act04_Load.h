@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../GUI/ActivityDependent.h"
+#include "../GUI/DependentActivity.h"
 #include "../Audio/IBgm.h"
 
 #include <SFML/Graphics.hpp>
@@ -29,7 +29,7 @@
 namespace Activity {
 
 class Act04_Load final :
-	public GUI::ActivityDependent {
+	public GUI::DepActivity {
 public:
 	Act04_Load() noexcept;
 	virtual ~Act04_Load() noexcept override = default;

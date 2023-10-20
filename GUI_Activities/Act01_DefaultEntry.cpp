@@ -26,7 +26,7 @@
 
 #ifdef _DEBUG
 #include <SFML/Graphics.hpp>
-#include "../G3D/ShaderDefault.h"
+#include "../G3D/DefaultShader.h"
 #include <iostream>
 namespace {
 std::unique_ptr<sf::Texture> g_tex;
@@ -69,7 +69,7 @@ void Act01_DefaultEntry::start(GUI::ICarnival& carnival) {
 	g3d::base::setup();
 #ifdef _DEBUG
 	g3d::base::setActive(true);
-	g3d::Shader* shader = new g3d::ShaderDefault();
+	g3d::Shader* shader = new g3d::DefaultShader();
 	shader->setup();
 	std::cout << "DefaultEntryDebug: start, " << ref_carnival << "." << std::endl;
 	delete shader;

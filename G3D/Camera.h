@@ -23,7 +23,6 @@
 
 #include "ICamera.h"
 
-#include <glm/mat4x4.hpp>
 
 namespace g3d {
 
@@ -34,36 +33,25 @@ public:
 	virtual ~Camera() override = default;
 
 public:
-	void setFF(float distance) {
-		m_ff = distance;
+	void setZFar(float z) {
+		if (z > m_zNear && z <= 65536.0f) {
+			m_zFar = z;
+			m_matP_needUpdate = true;
+		}
+		return;
+	}
+
+	void setZNear(float z) {
+		m_zNear = z;
 		m_matP_needUpdate = true;
 		return;
 	}
 
-	void setFN(float distance) {
-		m_fn = distance;
-		m_matP_needUpdate = true;
-		return;
-	}
-
-	const glm::mat4& getMatP() {
-		ensureMatPUpdated();
-		return m_matP;
-	}
-
-	const glm::mat4& getMatV() {
-		ensureMatVUpdated();
-		return m_matV;
-	}
+protected:
+	virtual void ensureMatVUpdated() override;
 
 protected:
-	void ensureMatVUpdated() const;
-	virtual void ensureMatPUpdated() const = 0;
-
-protected:
-	mutable bool m_matP_needUpdate;
-	mutable glm::mat4 m_matP;
-	mutable glm::mat4 m_matV;
+	bool m_matP_needUpdate;
 };
 
 } // namespace g3d

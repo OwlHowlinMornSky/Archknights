@@ -19,14 +19,29 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "CameraPerspective.h"
+#pragma once
 
-#include <glm/gtx/transform.hpp>
+#include "IActivity.h"
 
-namespace g3d {
+namespace GUI {
 
-void g3d::CameraPerspective::ensureMatPUpdated() const {
-	m_matP = glm::perspective(glm::radians(m_fov), m_aspect, m_fn, m_ff);
-}
+/**
+ * @brief 非独立 Activity。
+*/
+class DepActivity : public IActivity {
+public:
+	DepActivity() = default;
+	virtual ~DepActivity() override = default;
 
-} // namespace g3d
+public:
+	// 禁止修改。
+	virtual bool isIndependent() const noexcept override final;
+	// 非独立禁止使用。
+	virtual void runIndependently() override final;
+
+	// 非独立必须实现。
+	virtual void handleEvent(const sf::Event& evt) override = 0;
+	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override = 0;
+};
+
+} // namespace GUI

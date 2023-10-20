@@ -21,14 +21,14 @@
 */
 #pragma once
 
-#include "..\GUI\ActivityDependent.h"
+#include "../GUI/DependentActivity.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace Activity {
 
 class Act03_Opening final :
-	public GUI::ActivityDependent {
+	public GUI::DepActivity {
 public:
 	Act03_Opening() noexcept;
 	virtual ~Act03_Opening() noexcept = default;

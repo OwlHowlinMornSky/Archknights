@@ -21,10 +21,10 @@
     <ClCompile Include="base.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="glCheck.cpp">
+    <ClCompile Include="GlCheck.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CameraPerspective.cpp">
+    <ClCompile Include="PerspectiveCamera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -33,7 +33,10 @@
     <ClCompile Include="Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderDefault.cpp">
+    <ClCompile Include="DefaultShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthographicCamera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +44,7 @@
     <ClInclude Include="base.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="glCheck.h">
+    <ClInclude Include="GlCheck.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="NonCopyable.h">
@@ -62,7 +65,7 @@
     <ClInclude Include="ITransformS.h">
       <Filter>接口</Filter>
     </ClInclude>
-    <ClInclude Include="CameraPerspective.h">
+    <ClInclude Include="PerspectiveCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -77,11 +80,14 @@
     <ClInclude Include="IVertex.h">
       <Filter>接口</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderDefault.h">
+    <ClInclude Include="DefaultShader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="﻿IModel.h">
       <Filter>接口</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthographicCamera.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

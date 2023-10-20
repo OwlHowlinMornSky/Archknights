@@ -153,7 +153,7 @@ void Act02_TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
 }
 
 void Act02_TestActivity::onEnterSysloop() noexcept {
-	m_paused = true;
+	//m_paused = true;
 }
 
 void Act02_TestActivity::onExitSysloop() noexcept {
@@ -163,7 +163,6 @@ void Act02_TestActivity::onExitSysloop() noexcept {
 void Act02_TestActivity::updateSize() noexcept {
 	auto size = ref_carnival->getRenderWindow().getSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
-	//ref_carnival->getRenderWindow().setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));
 }
 
 } // namespace Activity

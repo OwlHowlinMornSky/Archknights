@@ -24,10 +24,10 @@
     <ClInclude Include="Carnival.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ActivityIndependent.h">
+    <ClInclude Include="IndependentActivity.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ActivityDependent.h">
+    <ClInclude Include="DependentActivity.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IActivity.h">
@@ -50,10 +50,10 @@
     <ClCompile Include="Carnival.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ActivityIndependent.cpp">
+    <ClCompile Include="IndependentActivity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ActivityDependent.cpp">
+    <ClCompile Include="DependentActivity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FontMgr.cpp">

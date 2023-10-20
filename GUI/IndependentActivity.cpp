@@ -19,31 +19,16 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "IndependentActivity.h"
 
-#include "../GUI/IndependentActivity.h"
+namespace GUI {
 
-namespace Activity {
+bool IndepActivity::isIndependent() const noexcept {
+	return true;
+}
 
-class Act01_DefaultEntry final :
-	public GUI::IndepActivity {
-public:
-	Act01_DefaultEntry() noexcept;
-	virtual ~Act01_DefaultEntry() noexcept override;
+void IndepActivity::handleEvent(const sf::Event& evt) {}
 
-public:
-	virtual void start(GUI::ICarnival& carnival) override;
-	virtual void stop() noexcept override;
-	virtual void pause() noexcept override;
-	virtual void resume() noexcept override;
-	virtual uint32_t getID() noexcept override;
+void IndepActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {}
 
-public:
-	virtual void runIndependently() override;
-
-protected:
-	GUI::ICarnival* ref_carnival;
-	bool m_haveRunned;
-};
-
-} // namespace Activity
+} // namespace GUI

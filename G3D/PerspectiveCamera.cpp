@@ -19,23 +19,18 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "PerspectiveCamera.h"
 
-#include "Shader.h"
+#include <glm/gtx/transform.hpp>
 
 namespace g3d {
 
-class ShaderDefault final:
-	public Shader
-{
-public:
-	virtual void setup() override;
-
-public:
-	void updatePVM(GLfloat* pvm) const;
-
-protected:
-	GLint m_uniform;
-};
+void g3d::PerspectiveCamera::ensureMatPUpdated() {
+	if (m_matP_needUpdate) {
+		m_matP = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_zNear, m_zFar);
+		m_matP_needUpdate = false;
+		m_matPVChanged = true;
+	}
+}
 
 } // namespace g3d
