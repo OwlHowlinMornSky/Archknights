@@ -30,7 +30,7 @@
 
 #include <iostream>
 
-#include "../Global/TempGuard.h"
+#include "../GUI/TempGuard.h"
 #include "../GUI/Callbacks.h"
 #include "../GUI_Activities/Factory.h"
 

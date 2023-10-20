@@ -22,7 +22,6 @@
 * @Description
 *     main.cpp : 定义应用程序的入口点。
 */
-#include "../Global/GlobalAttribute.h"
 #include "UniqueInstance.h"
 #include "FactoryCarnival.h"
 #include "Win32Things.h"
