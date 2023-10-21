@@ -52,6 +52,7 @@ namespace g3d::base {
 
 void setup() {
 	g_context = std::make_unique<sf::Context>();
+	glewExperimental = GL_TRUE;
 	GLenum glew_err = glewInit();
 	if (glew_err != GLEW_OK) {
 		throw ::exception_glew_failed(glew_err);
