@@ -40,7 +40,7 @@ enum : unsigned int {
 	COUNT         // [计数]
 };
 
-}
+} // namespace VertexAttribute
 
 /**
  * @brief 公共的基本顶点类型。

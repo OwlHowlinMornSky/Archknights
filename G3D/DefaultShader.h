@@ -21,13 +21,13 @@
 */
 #pragma once
 
+
 #include "Shader.h"
 
 namespace g3d {
 
-class DefaultShader final:
-	public Shader
-{
+class DefaultShader final :
+	public Shader {
 public:
 	virtual void setup() override;
 

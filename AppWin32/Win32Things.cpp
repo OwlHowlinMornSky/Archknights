@@ -178,16 +178,21 @@ void WinCheckError(LPCWSTR lpszFunction) noexcept {
 		dw,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPWSTR)&lpMsgBuf,
-		0, NULL);
+		0, NULL
+	);
 
-	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,
-									  (static_cast<SIZE_T>(lstrlenW((LPCWSTR)lpMsgBuf)) +
-									   lstrlenW((LPCWSTR)lpszFunction) + 50) * sizeof(WCHAR));
+	lpDisplayBuf = (LPVOID)LocalAlloc(
+		LMEM_ZEROINIT,
+		(static_cast<SIZE_T>(lstrlenW((LPCWSTR)lpMsgBuf)) +
+		 lstrlenW((LPCWSTR)lpszFunction) + 50) * sizeof(WCHAR)
+	);
 	if (lpDisplayBuf) {
-		StringCchPrintfW((LPWSTR)lpDisplayBuf,
-						 LocalSize(lpDisplayBuf) / sizeof(WCHAR),
-						 L"\'%s\' failed with error code \'%d\': %s",
-						 lpszFunction, dw, (LPCWSTR)lpMsgBuf);
+		StringCchPrintfW(
+			(LPWSTR)lpDisplayBuf,
+			LocalSize(lpDisplayBuf) / sizeof(WCHAR),
+			L"\'%s\' failed with error code \'%d\': %s",
+			lpszFunction, dw, (LPCWSTR)lpMsgBuf
+		);
 		MessageBoxW(NULL, (LPCWSTR)lpDisplayBuf, L"Error", MB_ICONERROR);
 	}
 	else {
@@ -228,10 +233,12 @@ bool MyRegisterClass(HINSTANCE hInstance) noexcept {
 }
 
 bool MyCreateWindow(HINSTANCE hInstance, int nCmdShow, HWND& hWnd) noexcept {
-	HWND res = CreateWindowExW(WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
-							   WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-							   CW_USEDEFAULT, 0, 420, 420,
-							   nullptr, nullptr, hInstance, nullptr);
+	HWND res = CreateWindowExW(
+		WS_EX_APPWINDOW, ::szWindowClass, ::szTitle,
+		WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		CW_USEDEFAULT, 0, 420, 420,
+		nullptr, nullptr, hInstance, nullptr
+	);
 	if (res == NULL) {
 		WinCheckError(L"CreateWindow");
 		return false;

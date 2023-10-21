@@ -144,7 +144,15 @@ bool Carnival::isSizingAsResized() const noexcept {
 void Carnival::windowSetClientSize(uint32_t w, uint32_t h) noexcept {
 	if (m_windowType == WindowType::Windowed) {
 		m_renderWindow->setSize(sf::Vector2u(w, h));
-		m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h))));
+		m_renderWindow->setView(
+			sf::View(
+				sf::FloatRect(
+					0.0f, 0.0f,
+					static_cast<float>(w),
+					static_cast<float>(h)
+				)
+			)
+		);
 	}
 	return;
 }

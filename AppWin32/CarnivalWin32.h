@@ -63,18 +63,18 @@ public:
 
 protected:
 	virtual void runTheActivity() override;
-	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;
-
 	void OnIdle();
+
+	virtual std::unique_ptr<IActivity> createActivity(uint32_t id) const noexcept override;
 
 protected:
 	sf::VideoMode m_lastMode;
 	HWND m_hwnd; // 要管理的窗口 的句柄。
+	sf::Vector2u m_oldsize; // 客户区旧大小，用于改变大小时的判断。
 	sf::Vector2u m_sizeBefore; // 全屏或无边框之前的窗口大小。
 	sf::Vector2i m_positionBefore; // 全屏或无边框之前的窗口位置。
 	sf::Clock m_clk; // 用于每帧的更新时间。
-	POINT m_oldsize;
-};
+}; // class CarnivalWin32
 
 } // namespace GUI
 

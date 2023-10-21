@@ -44,7 +44,11 @@ struct OHMSAUDIOCOMMENTSTRUCTURE {
  * @param bufferLength: 缓冲区长度。
  * @return 读取是否成功。
 */
-bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsigned int& bufferLength) {
+bool getMusicOggCommentData(
+	sf::InputStream& stream,
+	unsigned char* buffer,
+	unsigned int& bufferLength
+) {
 	long long pos = 0;
 	unsigned char tmp[16];
 	unsigned int tmplength = 0;
@@ -133,7 +137,11 @@ bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsi
 	return fin;
 }
 #else
-bool getMusicOggCommentData(sf::InputStream& stream, unsigned char* buffer, unsigned int& bufferLength) {
+bool getMusicOggCommentData(
+	sf::InputStream& stream,
+	unsigned char* buffer,
+	unsigned int& bufferLength
+) {
 	unsigned char tmp[64];
 	unsigned int length = 0;
 	if (stream.seek(0xA4) != 0xA4) {
@@ -315,8 +323,12 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 
 	// 读到的话就设置循环点。
 	if (!failed) {
-		this->m_music->setLoopPoints(sf::Music::TimeSpan(sf::microseconds(data.offset),
-														 sf::microseconds(data.length)));
+		this->m_music->setLoopPoints(
+			sf::Music::TimeSpan(
+				sf::microseconds(data.offset),
+				sf::microseconds(data.length)
+			)
+		);
 	}
 	// 默认开启循环。
 	this->m_music->setLoop(true);

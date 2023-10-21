@@ -34,7 +34,6 @@
 #include "../GUI/Callbacks.h"
 #include "../GUI_Activities/Factory.h"
 
-
 namespace {
 
 class exception_sfml_window_init final :
@@ -43,14 +42,13 @@ public:
 	_NODISCARD virtual char const* what() const {
 		return "Window Initialization Failed!";
 	}
-};
+}; // class exception_sfml_window_init
 
-}
+} // namespace
 
 namespace GUI {
 
 CarnivalWin32::CarnivalWin32(HWND hWnd) :
-	m_oldsize({ 0 }),
 	m_hwnd(hWnd) {
 	m_renderWindow->create(hWnd);
 	if (!m_renderWindow->isOpen()) {
@@ -82,7 +80,11 @@ void CarnivalWin32::systemMessagePump(bool callerDoWantToHandleThem) const noexc
 	return;
 }
 
-void CarnivalWin32::systemShowMessageBox(std::string_view title, std::string_view text, MBInfo info) const noexcept {
+void CarnivalWin32::systemShowMessageBox(
+	std::string_view title,
+	std::string_view text,
+	MBInfo info
+) const noexcept {
 	UINT type{ 0 };
 	// 根据自定的 info 类型 决定系统层的数值。
 	switch (info) {
@@ -186,12 +188,20 @@ bool CarnivalWin32::windowSetFullscreen(sf::VideoMode mode) noexcept {
 	}
 
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-	SetWindowPos(m_hwnd, HWND_TOP,
-				 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
-				 SWP_FRAMECHANGED);
+	SetWindowPos(
+		m_hwnd, HWND_TOP,
+		0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
+		SWP_FRAMECHANGED
+	);
 
 	// Resize the window so that it fits the entire screen
-	SetWindowPos(m_hwnd, HWND_TOP, 0, 0, static_cast<int>(mode.width), static_cast<int>(mode.height), SWP_FRAMECHANGED);
+	SetWindowPos(
+		m_hwnd, HWND_TOP,
+		0, 0,
+		static_cast<int>(mode.width),
+		static_cast<int>(mode.height),
+		SWP_FRAMECHANGED
+	);
 	ShowWindow(m_hwnd, SW_SHOW);
 
 	m_lastMode = mode;
@@ -253,14 +263,19 @@ void CarnivalWin32::runTheActivity() {
 				meDependentActivityStopRunning();
 				break;
 			case sf::Event::Resized:
-			{
-				RECT clientrect{ 0 };
-				m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
-				GetClientRect(m_hwnd, &clientrect);
-				if (m_oldsize.x != clientrect.right || m_oldsize.y != clientrect.bottom)
-					m_oldsize = { clientrect.right, clientrect.bottom };
-			}
-			[[fallthrough]];
+				m_renderWindow->setView(
+					sf::View(
+						sf::FloatRect(
+							0.0f, 0.0f,
+							static_cast<float>(evt.size.width),
+							static_cast<float>(evt.size.height)
+						)
+					)
+				);
+				if (m_oldsize.x != evt.size.width || m_oldsize.y != evt.size.height)
+					m_oldsize = { evt.size.width, evt.size.height };
+				m_runningActivity->handleEvent(evt);
+				break;
 			default:
 				m_runningActivity->handleEvent(evt);
 				break;
@@ -271,43 +286,56 @@ void CarnivalWin32::runTheActivity() {
 	return;
 }
 
-std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
-	return Activity::Factory::CreateActivity(id);
-}
-
 void CarnivalWin32::OnIdle() {
-	RECT clientrect{ 0 };
-	GetClientRect(m_hwnd, &clientrect);
-	sf::Event evt;
-	if (m_oldsize.x != clientrect.right || m_oldsize.y != clientrect.bottom) {
-		m_oldsize = { clientrect.right, clientrect.bottom };
-		m_renderWindow->setSize({ (unsigned int)m_oldsize.x, (unsigned int)m_oldsize.y });
-		if (m_enableFullResizeMessage) {
-			evt.type = sf::Event::Resized;
-			evt.size.width = m_oldsize.x;
-			evt.size.height = m_oldsize.y;
-			m_renderWindow->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)evt.size.width, (float)evt.size.height)));
-			m_runningActivity->handleEvent(evt);
+	if (m_keepRunning) {
+		RECT clientrect{ 0 };
+		GetClientRect(m_hwnd, &clientrect);
+		sf::Event evt;
+		if (m_oldsize.x != clientrect.right || m_oldsize.y != clientrect.bottom) {
+			m_oldsize = {
+				static_cast<unsigned int>(clientrect.right),
+				static_cast<unsigned int>(clientrect.bottom)
+			};
+			m_renderWindow->setSize(m_oldsize);
+			if (m_enableFullResizeMessage) {
+				evt.type = sf::Event::Resized;
+				evt.size.width = m_oldsize.x;
+				evt.size.height = m_oldsize.y;
+				m_renderWindow->setView(
+					sf::View(
+						sf::FloatRect(
+							0.0f, 0.0f,
+							static_cast<float>(evt.size.width),
+							static_cast<float>(evt.size.height)
+						)
+					)
+				);
+				m_runningActivity->handleEvent(evt);
+			}
 		}
-	}
-	while (m_renderWindow->pollEvent(evt)) {
-		switch (evt.type) {
-		case sf::Event::Closed:
-			meActivitySetTransition(Transition::Exit);
-			meDependentActivityStopRunning();
-			break;
-		default:
-			m_runningActivity->handleEvent(evt);
-			break;
+		while (m_renderWindow->pollEvent(evt)) {
+			switch (evt.type) {
+			case sf::Event::Closed:
+				meActivitySetTransition(Transition::Exit);
+				meDependentActivityStopRunning();
+				break;
+			default:
+				m_runningActivity->handleEvent(evt);
+				break;
+			}
 		}
+		m_runningActivity->update(*m_renderWindow, m_clk.restart());
 	}
-	m_runningActivity->update(*m_renderWindow, m_clk.restart());
-	// 如果Activity不再运行则强行打破sysloop。
-	if (!m_keepRunning) {
+	else { // 如果Activity不再运行则强行打破sysloop。
 		POINT p;
 		GetCursorPos(&p);
 		PostMessageW(m_hwnd, WM_LBUTTONUP, NULL, MAKELPARAM(p.x, p.y));
 	}
+	return;
+}
+
+std::unique_ptr<IActivity> CarnivalWin32::createActivity(uint32_t id) const noexcept {
+	return Activity::Factory::CreateActivity(id);
 }
 
 } // namespace GUI

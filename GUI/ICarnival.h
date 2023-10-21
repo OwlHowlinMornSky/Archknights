@@ -51,6 +51,9 @@ enum class MBInfo {
 	Error
 };
 
+/**
+ * @brief 窗口类型。
+*/
 enum class WindowType {
 	Windowed = 0, // 窗口化。
 	Borderless,   // 无边框。
@@ -82,9 +85,11 @@ public:
 	 * @param text: 消息框的内容。
 	 * @param info: 消息框的额外信息。
 	*/
-	virtual void systemShowMessageBox(std::string_view title,
-								std::string_view text,
-								MBInfo info = MBInfo::None) const noexcept = 0;
+	virtual void systemShowMessageBox(
+		std::string_view title,
+		std::string_view text,
+		MBInfo info = MBInfo::None
+	) const noexcept = 0;
 
 	/**
 	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。

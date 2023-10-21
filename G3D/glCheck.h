@@ -25,9 +25,11 @@
 
 namespace g3d::impl {
 
-void CheckGLError(const char* file,
-				  unsigned int line,
-				  const char* expression);
+void CheckGLError(
+	const char* file,
+	unsigned int line,
+	const char* expression
+);
 
 } // namespace g3d::impl
 
