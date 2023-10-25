@@ -161,20 +161,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CarnivalWin32.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="FactoryCarnival.h" />
     <ClInclude Include="UniqueInstance.h" />
-    <ClInclude Include="Win32Things.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarnivalWin32.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="FactoryCarnival.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
-    <ClCompile Include="Win32Things.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AppWin32.rc" />

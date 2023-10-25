@@ -20,19 +20,19 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act02_TestActivity.h"
+#include "Act01_DefaultEntry.h"
 
 #include <iostream>
 
 namespace Activity {
 
-Act02_TestActivity::Act02_TestActivity(uint32_t n) noexcept :
-	m_id(n),
+Act02_TestActivity::Act02_TestActivity() noexcept :
 	m_paused(false),
-	ref_carnival(nullptr),
+	r_wnd(nullptr),
 	m_disableResize(false),
 	m_disableMinimize(false),
 	m_disableClose(false) {
-	std::cout << "TestActivity " << m_id << ": Construct." << std::endl;
+	std::cout << "TestActivity: Construct." << std::endl;
 
 	auto& modes = sf::VideoMode::getFullscreenModes();
 	for (const auto& mode : modes) {
@@ -44,11 +44,11 @@ Act02_TestActivity::Act02_TestActivity(uint32_t n) noexcept :
 }
 
 Act02_TestActivity::~Act02_TestActivity() noexcept {
-	std::cout << "TestActivity " << m_id << ": Destruct." << std::endl;
+	std::cout << "TestActivity: Destruct." << std::endl;
 }
 
-void Act02_TestActivity::start(GUI::ICarnival& carnival) {
-	ref_carnival = &carnival;
+bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
+	r_wnd = &wnd;
 
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
@@ -56,60 +56,47 @@ void Act02_TestActivity::start(GUI::ICarnival& carnival) {
 
 	m_tex.loadFromFile("assets/TestActivity.png");
 	m_sp.setTexture(m_tex, true);
-
-	std::cout << "TestActivity " << m_id << ": start, " << ref_carnival << "." << std::endl;
-	return;
+	return true;
 }
 
 void Act02_TestActivity::stop() noexcept {
-	std::cout << "TestActivity " << m_id << ": stop." << std::endl;
-}
-
-void Act02_TestActivity::pause() noexcept {
-	std::cout << "TestActivity " << m_id << ": pause." << std::endl;
-}
-
-void Act02_TestActivity::resume() noexcept {
-	updateSize();
-	std::cout << "TestActivity " << m_id << ": resume." << std::endl;
-}
-
-uint32_t Act02_TestActivity::getID() noexcept {
-	return m_id;
+	std::cout << "TestActivity: stop." << std::endl;
 }
 
 void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
+	case sf::Event::Closed:
+		r_wnd->stop();
+		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
-			ref_carnival->meActivitySetTransition(GUI::Transition::Pop);
-			ref_carnival->meDependentActivityStopRunning();
+			r_wnd->setActivity(std::make_unique<Act01_DefaultEntry>());
 			break;
 		case sf::Keyboard::Num1:
-			ref_carnival->windowSetMinimizeEnabled(!ref_carnival->windowIsMinimizeEnabled());
+			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
 			break;
 		case sf::Keyboard::Num2:
-			ref_carnival->windowSetResizeEnabled(!ref_carnival->windowIsResizeEnabled());
+			r_wnd->setResizeEnabled(!r_wnd->isResizeEnabled());
 			break;
 		case sf::Keyboard::Num3:
-			ref_carnival->windowSetCloseEnabled(!ref_carnival->windowIsCloseEnabled());
+			r_wnd->setCloseEnabled(!r_wnd->isCloseEnabled());
 			break;
 		case sf::Keyboard::Grave:
-			ref_carnival->setSizingAsResized(!ref_carnival->isSizingAsResized());
+			r_wnd->setSizingAsResized(!r_wnd->isSizingAsResized());
 			break;
 		case sf::Keyboard::F1:
-			ref_carnival->windowSetWindowed();
+			r_wnd->setWindowed();
 			break;
 		case sf::Keyboard::F2:
-			ref_carnival->windowSetBorderless();
+			r_wnd->setBorderless();
 			break;
 		case sf::Keyboard::F3:
-			ref_carnival->windowSetFullscreen(sf::VideoMode::getDesktopMode());
+			r_wnd->setFullscreen(sf::VideoMode::getDesktopMode());
 			break;
 		case sf::Keyboard::F4:
-			ref_carnival->windowSetFullscreen(m_modes.at(m_modeI));
+			r_wnd->setFullscreen(m_modes.at(m_modeI));
 			break;
 		case sf::Keyboard::Left:
 			if (m_modeI > 0) {
@@ -138,30 +125,30 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act02_TestActivity::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act02_TestActivity::update(sf::Time deltaTime) {
 	float dt = deltaTime.asSeconds();
 	if (dt > 0.1f)
 		dt = 0.1f;
 	if (!m_paused)
 		m_shape.rotate(dt * 180.0f);
 
-	window.clear(sf::Color::Green);
-	window.draw(m_shape);
-	window.draw(m_sp);
-	window.display();
+	r_wnd->clear(sf::Color::Green);
+	r_wnd->draw(m_shape);
+	r_wnd->draw(m_sp);
+	r_wnd->display();
 	return;
 }
 
-void Act02_TestActivity::onEnterSysloop() noexcept {
+void Act02_TestActivity::OnEnterSysloop() noexcept {
 	//m_paused = true;
 }
 
-void Act02_TestActivity::onExitSysloop() noexcept {
-	m_paused = false;
+void Act02_TestActivity::OnExitSysloop() noexcept {
+	//m_paused = false;
 }
 
 void Act02_TestActivity::updateSize() noexcept {
-	auto size = ref_carnival->getRenderWindow().getSize();
+	auto size = r_wnd->getClientSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
 }
 

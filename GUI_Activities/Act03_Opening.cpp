@@ -20,10 +20,9 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act03_Opening.h"
+#include "Act04_Load.h"
 
 #include <SFML/Graphics.hpp>
-
-#include "ActivityIDs.h"
 
 #include <assert.h>
 
@@ -41,10 +40,10 @@ namespace Activity {
 
 Act03_Opening::Act03_Opening() noexcept :
 	m_status(0),
-	ref_carnival(nullptr) {}
+	r_wnd(nullptr) {}
 
-void Act03_Opening::start(GUI::ICarnival& carnival) {
-	ref_carnival = &carnival;
+bool Act03_Opening::start(GUI::Window& wnd) noexcept {
+	r_wnd = &wnd;
 	m_status = 0;
 	m_timer = sf::Time::Zero;
 
@@ -58,35 +57,25 @@ void Act03_Opening::start(GUI::ICarnival& carnival) {
 	circle[0].setPosition(560.0f, 360.0f);
 	circle[1].setPosition(720.0f, 360.0f);
 	circle[2].setPosition(640.0f, 360.0f);
-	return;
+	return true;
 }
 
 void Act03_Opening::stop() noexcept {
 	m_timer = sf::Time::Zero;
 	m_status = 0;
-	ref_carnival = nullptr;
+	r_wnd = nullptr;
 	return;
-}
-
-void Act03_Opening::pause() noexcept {
-	assert(false);
-}
-
-void Act03_Opening::resume() noexcept {
-	assert(false);
-}
-
-uint32_t Act03_Opening::getID() noexcept {
-	return IDs::ID_Opening;
 }
 
 void Act03_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
+	case sf::Event::Closed:
+		r_wnd->stop();
+		break;
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
-		ref_carnival->meActivitySetTransition(GUI::Transition::Switch, IDs::ID_Load);
-		ref_carnival->meDependentActivityStopRunning();
+		r_wnd->setActivity(std::make_unique<Act04_Load>());
 		break;
 #endif // _DEBUG
 	default:
@@ -95,9 +84,9 @@ void Act03_Opening::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act03_Opening::update(sf::Time deltaTime) {
 	m_timer += deltaTime;
-	window.clear();
+	r_wnd->clear();
 	switch (m_status) {
 	case ST_PIC0_IN:
 		if (m_timer >= sf::milliseconds(250)) {
@@ -108,7 +97,7 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		else {
 			circle[0].setFillColor(sf::Color(255 * m_timer.asMilliseconds() / 250, 0, 0));
 		}
-		window.draw(circle[0]);
+		r_wnd->draw(circle[0]);
 		break;
 	case ST_PIC0_KEEP:
 		if (m_timer >= sf::milliseconds(1000)) {
@@ -116,7 +105,7 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 			m_status = ST_PIC1_IN;
 			circle[0].setFillColor(sf::Color::Transparent);
 		}
-		window.draw(circle[0]);
+		r_wnd->draw(circle[0]);
 		break;
 	case ST_PIC1_IN:
 		if (m_timer >= sf::milliseconds(250)) {
@@ -127,14 +116,14 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		else {
 			circle[1].setFillColor(sf::Color(0, 255 * m_timer.asMilliseconds() / 250, 0));
 		}
-		window.draw(circle[1]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC1_KEEP:
 		if (m_timer >= sf::milliseconds(1000)) {
 			m_timer -= sf::milliseconds(1000);
 			m_status = ST_PIC1_OUT;
 		}
-		window.draw(circle[1]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC1_OUT:
 		if (m_timer >= sf::milliseconds(250)) {
@@ -145,7 +134,7 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		else {
 			circle[1].setFillColor(sf::Color(0, 255 - 255 * m_timer.asMilliseconds() / 250, 0));
 		}
-		window.draw(circle[1]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC2_IN:
 		if (m_timer >= sf::milliseconds(250)) {
@@ -156,29 +145,29 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		else {
 			circle[2].setFillColor(sf::Color(0, 0, 255 * m_timer.asMilliseconds() / 250));
 		}
-		window.draw(circle[2]);
+		r_wnd->draw(circle[2]);
 		break;
 	case ST_PIC2_KEEP:
 		if (m_timer >= sf::milliseconds(1750)) {
 			m_timer -= sf::milliseconds(1750);
 			m_status = ST_PIC2_OUT;
 		}
-		window.draw(circle[2]);
+		r_wnd->draw(circle[2]);
 		break;
 	case ST_PIC2_OUT:
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_OVER;
-			ref_carnival->meActivitySetTransition(GUI::Transition::Switch, IDs::ID_Load);
-			ref_carnival->meDependentActivityStopRunning();
 			circle[2].setFillColor(sf::Color::Transparent);
 		}
 		else {
 			circle[2].setFillColor(sf::Color(0, 0, 255 - 255 * m_timer.asMilliseconds() / 250));
 		}
-		window.draw(circle[2]);
+		r_wnd->draw(circle[2]);
 		break;
 	case ST_OVER:
+		r_wnd->setActivity(std::make_unique<Act04_Load>());
+		return;
 		break;
 	default:
 		m_status = ST_PIC0_IN;
@@ -187,7 +176,11 @@ void Act03_Opening::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		circle[2].setFillColor(sf::Color::Transparent);
 		break;
 	}
-	return window.display();
+	return r_wnd->display();
 }
+
+void Act03_Opening::OnEnterSysloop() noexcept {}
+
+void Act03_Opening::OnExitSysloop() noexcept {}
 
 }

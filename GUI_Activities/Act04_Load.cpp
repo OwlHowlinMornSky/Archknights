@@ -22,7 +22,6 @@
 #include "Act04_Load.h"
 
 #include "../Audio/BgmSFML.h"
-#include "ActivityIDs.h"
 
 #define ST_IN     (1)
 #define ST_NORMAL (2)
@@ -33,10 +32,10 @@ namespace Activity {
 
 Act04_Load::Act04_Load() noexcept :
 	m_status(0),
-	ref_carnival(nullptr) {}
+	r_wnd(nullptr) {}
 
-void Act04_Load::start(GUI::ICarnival& carnival) {
-	ref_carnival = &carnival;
+bool Act04_Load::start(GUI::Window& wnd) noexcept {
+	r_wnd = &wnd;
 
 	m_tex.loadFromFile("res/textures/titleback.png");
 	m_tex.setSmooth(true);
@@ -44,7 +43,7 @@ void Act04_Load::start(GUI::ICarnival& carnival) {
 	m_sp.setTexture(m_tex, true);
 	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
 
-	updateSize(ref_carnival->getRenderWindow().getSize());
+	updateSize(r_wnd->getClientSize());
 
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
@@ -54,11 +53,11 @@ void Act04_Load::start(GUI::ICarnival& carnival) {
 	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
 	m_bgm->play();
 
-	m_text.setString(L"test测试あいうえお😅");
-	m_text.setFont(ref_carnival->getFontMgr().getFont(GUI::FontType::CommonContext));
-	m_text.setFillColor(sf::Color::White);
-	m_text.setCharacterSize(36);
-	return;
+	//m_text.setString(L"test测试あいうえお😅");
+	//m_text.setFont(r_wnd->getFontMgr().getFont(GUI::FontType::CommonContext));
+	//m_text.setFillColor(sf::Color::White);
+	//m_text.setCharacterSize(36);
+	return true;
 }
 
 void Act04_Load::stop() noexcept {
@@ -68,16 +67,11 @@ void Act04_Load::stop() noexcept {
 	return;
 }
 
-void Act04_Load::pause() noexcept {}
-
-void Act04_Load::resume() noexcept {}
-
-uint32_t Act04_Load::getID() noexcept {
-	return IDs::ID_Load;
-}
-
 void Act04_Load::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
+	case sf::Event::Closed:
+		r_wnd->stop();
+		break;
 	case sf::Event::KeyPressed:
 		//m_bgm.reset();
 		break;
@@ -106,7 +100,7 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act04_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
+void Act04_Load::update(sf::Time deltaTime) {
 	switch (m_status) {
 	case ST_IN:
 	{
@@ -145,14 +139,18 @@ void Act04_Load::update(sf::RenderWindow& window, sf::Time deltaTime) {
 		m_sp.setColor(sf::Color::Black);
 		break;
 	}
-	window.clear();
-	window.draw(m_sp);
-	window.draw(m_blackBar[0]);
-	window.draw(m_blackBar[1]);
-	window.draw(m_text);
-	window.display();
+	r_wnd->clear();
+	r_wnd->draw(m_sp);
+	r_wnd->draw(m_blackBar[0]);
+	r_wnd->draw(m_blackBar[1]);
+	//r_wnd->draw(m_text);
+	r_wnd->display();
 	return;
 }
+
+void Act04_Load::OnEnterSysloop() noexcept {}
+
+void Act04_Load::OnExitSysloop() noexcept {}
 
 void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	sf::Vector2u texSize = m_tex.getSize();
@@ -183,9 +181,9 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	float fontRate = fontSizef / fontSize;
 	m_text.setCharacterSize(fontSize);
 	m_text.setScale(fontRate, fontRate);*/
-	float fontSizef = wy * 0.08f;
-	float fontRate = fontSizef / 36;
-	m_text.setScale(fontRate, fontRate);
+	//float fontSizef = wy * 0.08f;
+	//float fontRate = fontSizef / 36;
+	//m_text.setScale(fontRate, fontRate);
 	return;
 }
 

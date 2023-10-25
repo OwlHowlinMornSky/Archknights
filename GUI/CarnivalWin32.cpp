@@ -19,29 +19,39 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "CarnivalWin32.h"
 
-#include "IActivity.h"
+#include <SDKDDKVer.h>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 namespace GUI {
 
-/**
- * @brief 非独立 Activity。
-*/
-class DepActivity : public IActivity {
-public:
-	DepActivity() = default;
-	virtual ~DepActivity() override = default;
+void CarnivalWin32::showErrorMessageBox(std::string_view title, std::string_view text) const noexcept {
+	MessageBoxA(NULL, text.data(), title.data(), MB_ICONERROR);
+	return;
+}
 
-public:
-	// 禁止修改。
-	virtual bool isIndependent() const noexcept override final;
-	// 非独立禁止使用。
-	virtual void runIndependently() override final;
+void GUI::CarnivalWin32::resetSleepCounter() noexcept {
+	SetThreadExecutionState(ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+	return;
+}
 
-	// 非独立必须实现。
-	virtual void handleEvent(const sf::Event& evt) override = 0;
-	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override = 0;
-};
+void CarnivalWin32::setSleepEnabled(bool allowSleep) noexcept {
+	if (allowSleep)
+		SetThreadExecutionState(ES_CONTINUOUS);
+	else
+		SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+	return;
+}
+
+void CarnivalWin32::systemMessagePump() const noexcept {
+	MSG msg{ 0 };
+	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+	}
+	return;
+}
 
 } // namespace GUI

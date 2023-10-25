@@ -155,21 +155,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DependentActivity.h" />
-    <ClInclude Include="IndependentActivity.h" />
-    <ClInclude Include="Callbacks.h" />
-    <ClInclude Include="Carnival.h" />
+    <ClInclude Include="CarnivalWin32.h" />
     <ClInclude Include="FontMgr.h" />
-    <ClInclude Include="IActivity.h" />
-    <ClInclude Include="ICarnival.h" />
+    <ClInclude Include="Activity.h" />
+    <ClInclude Include="Carnival.h" />
     <ClInclude Include="IFontMgr.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="TempGuard.h" />
+    <ClInclude Include="WindowWin32.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DependentActivity.cpp" />
-    <ClCompile Include="IndependentActivity.cpp" />
-    <ClCompile Include="Callbacks.cpp" />
+    <ClCompile Include="CarnivalWin32.cpp" />
     <ClCompile Include="Carnival.cpp" />
     <ClCompile Include="FontMgr.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowWin32.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

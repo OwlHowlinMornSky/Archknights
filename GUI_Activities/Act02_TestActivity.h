@@ -21,41 +21,37 @@
 */
 #pragma once
 
-#include "../GUI/DependentActivity.h"
+#include "../GUI/Activity.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace Activity {
 
 class Act02_TestActivity final :
-	public GUI::DepActivity {
+	public GUI::Activity {
 public:
-	Act02_TestActivity(uint32_t n) noexcept;
+	Act02_TestActivity() noexcept;
 	virtual ~Act02_TestActivity() noexcept override;
 
 public:
-	virtual void start(GUI::ICarnival& carnival) override;
-	virtual void stop() noexcept override;
-	virtual void pause() noexcept override;
-	virtual void resume() noexcept override;
-	virtual uint32_t getID() noexcept override;
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override;
-
-	virtual void onEnterSysloop() noexcept override;
-	virtual void onExitSysloop() noexcept override;
+	virtual bool start(GUI::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
 
 protected:
 	void updateSize() noexcept;
 
 protected:
-	GUI::ICarnival* ref_carnival;
+	GUI::Window* r_wnd;
 	sf::RectangleShape m_shape;
 	std::vector<sf::VideoMode> m_modes;
 	size_t m_modeI;
-	uint32_t m_id;
 	bool m_paused;
 	bool m_disableClose;
 	bool m_disableResize;

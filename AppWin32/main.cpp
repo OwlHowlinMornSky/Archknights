@@ -18,14 +18,12 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-*
-* @Description
-*     main.cpp : 定义应用程序的入口点。
 */
 #include "UniqueInstance.h"
-#include "FactoryCarnival.h"
-#include "Win32Things.h"
-
+#include "../GUI/CarnivalWin32.h"
+#include "../GUI/WindowWin32.h"
+#include "../GUI_Activities/Act01_DefaultEntry.h"
+#include "framework.h"
 #include "resource.h"
 
 #define MAX_LOADSTRING 64
@@ -42,9 +40,6 @@ WCHAR g_unknown_exception[MAX_LOADSTRING];
 
 } // namespace
 
-/**
- * @brief 主函数。
-*/
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -62,40 +57,35 @@ int APIENTRY wWinMain(
 	LoadStringW(hInstance, IDS_INIT_CREATE_WINDOW_FAILED, g_create_failed, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDS_UNKNOWN_EXCEPTION, g_unknown_exception, MAX_LOADSTRING);
 
-	// 检验唯一程序实例。
 	if (!AppWin32::uniqueInstance()) {
 		MessageBoxW(NULL, g_another_instance, g_information, MB_ICONINFORMATION);
 		return 0;
 	}
-	// 加载字符串。
-	SystemThings::InitString(hInstance);
-	// 注册窗口类。
-	if (!SystemThings::MyRegisterClass(hInstance)) {
-		MessageBoxW(NULL, g_register_failed, g_fatal_error, MB_ICONERROR);
-		return 1;
-	}
-	// 创建窗口。
-	HWND hWnd(NULL);
-	if (!SystemThings::MyCreateWindow(hInstance, nCmdShow, hWnd)) {
-		MessageBoxW(NULL, g_create_failed, g_fatal_error, MB_ICONERROR);
-		SystemThings::MyUnregisterClass(hInstance);
-		return 2;
-	}
-	// 运行 Carnival
 	try {
-		std::unique_ptr<GUI::ICarnival> carnival = AppWin32::Factory::crateCarnival(hWnd);
-		carnival->run();
+		std::unique_ptr<GUI::Carnival> carnival =
+			std::make_unique<GUI::CarnivalWin32>();
+		std::unique_ptr<GUI::Window> window =
+			std::make_unique<GUI::WindowWin32>();
+		std::unique_ptr<GUI::Window> window2 =
+			std::make_unique<GUI::WindowWin32>();
+		if (window->Open() && window2->Open()) {
+
+			window->setActivity(std::make_unique<Activity::Act01_DefaultEntry>());
+			window2->setActivity(std::make_unique<Activity::Act01_DefaultEntry>());
+
+			carnival->addWindow(std::move(window));
+			carnival->addWindow(std::move(window2));
+
+			carnival->run();
+		}
 		carnival.reset();
 	}
 	catch (std::exception& exp) {
-		MessageBoxA(hWnd, exp.what(), g_fatal_errorA, MB_ICONERROR);
+		MessageBoxA(NULL, exp.what(), g_fatal_errorA, MB_ICONERROR);
 	}
 	catch (...) {
-		MessageBoxW(hWnd, g_unknown_exception, g_fatal_error, MB_ICONERROR);
+		MessageBoxW(NULL, g_unknown_exception, g_fatal_error, MB_ICONERROR);
 	}
-	// 清理。
-	DestroyWindow(hWnd);
-	SystemThings::MyUnregisterClass(hInstance);
 	AppWin32::instanceExit();
 	return 0;
 }

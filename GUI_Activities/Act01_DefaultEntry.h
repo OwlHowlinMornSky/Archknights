@@ -21,29 +21,34 @@
 */
 #pragma once
 
-#include "../GUI/IndependentActivity.h"
+#include "../GUI/Activity.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace Activity {
 
 class Act01_DefaultEntry final :
-	public GUI::IndepActivity {
+	public GUI::Activity {
 public:
 	Act01_DefaultEntry() noexcept;
-	virtual ~Act01_DefaultEntry() noexcept override;
+	virtual ~Act01_DefaultEntry() noexcept;
 
 public:
-	virtual void start(GUI::ICarnival& carnival) override;
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
+
+public:
+	virtual bool start(GUI::Window& wnd) noexcept override;
 	virtual void stop() noexcept override;
-	virtual void pause() noexcept override;
-	virtual void resume() noexcept override;
-	virtual uint32_t getID() noexcept override;
-
-public:
-	virtual void runIndependently() override;
 
 protected:
-	GUI::ICarnival* ref_carnival;
+	GUI::Window* r_wnd;
 	bool m_haveRunned;
+	std::unique_ptr<sf::Texture> g_tex;
+	std::unique_ptr<sf::Sprite> g_sp;
 };
 
 } // namespace Activity

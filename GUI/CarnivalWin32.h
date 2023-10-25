@@ -18,29 +18,25 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-*
-* @Description
-*     定义一些基本的回调函数和相关变量。
 */
-#include "Callbacks.h"
+#pragma once
+#include "Carnival.h"
 
-namespace {
+namespace GUI {
 
-/**
- * @brief 空函数。专门用来初始化下面那些玩意的。
-*/
-void fEmpty() noexcept {}
+class CarnivalWin32 final :
+    public Carnival {
+public:
+	CarnivalWin32() = default;
+	virtual ~CarnivalWin32() = default;
 
-} // namespace
+public:
+	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept override;
+	virtual void resetSleepCounter() noexcept override;
+	virtual void setSleepEnabled(bool allowSleep) noexcept override;
 
-namespace Callbacks {
+protected:
+	virtual void systemMessagePump() const noexcept override;
+};
 
-// 这些全都是初始化。
-
-std::function<void()> OnIdle(&::fEmpty);
-std::function<void()> OnEnterSysloop(&::fEmpty);
-std::function<void()> OnExitSysloop(&::fEmpty);
-
-bool ButtonEnabled_Close(true);
-
-} // namespace Callbacks
+} // namespace GUI

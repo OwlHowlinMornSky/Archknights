@@ -21,32 +21,32 @@
 */
 #pragma once
 
-#include "../GUI/DependentActivity.h"
+#include "../GUI/Activity.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace Activity {
 
 class Act03_Opening final :
-	public GUI::DepActivity {
+	public GUI::Activity {
 public:
 	Act03_Opening() noexcept;
 	virtual ~Act03_Opening() noexcept = default;
 
 public:
-	virtual void start(GUI::ICarnival& carnival) override;
-	virtual void stop() noexcept override;
-	virtual void pause() noexcept override;
-	virtual void resume() noexcept override;
-	virtual uint32_t getID() noexcept override;
+	virtual void handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::RenderWindow& window, sf::Time deltaTime) override;
+	virtual bool start(GUI::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
 
 protected:
 	int m_status;
-	GUI::ICarnival* ref_carnival;
+	GUI::Window* r_wnd;
 	sf::Time m_timer;
 	sf::CircleShape circle[3];
 };

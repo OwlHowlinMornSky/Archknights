@@ -18,22 +18,46 @@
 *
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
-* 
-* @Description
-*    定义了创建 Carnival 实例的方法。
 */
 #pragma once
 
-#include "../GUI/ICarnival.h"
-#include "framework.h"
+#include "Window.h"
 
-namespace AppWin32::Factory {
+namespace GUI {
 
 /**
- * @brief 创建 Carnival 实例的方法。其创建的是 CarnivalWin32，这样包装是为了避免扩散头文件。
- * @param hWnd: 要管理的窗口 的 句柄，是 CarnivalWin32 构造需要的数据。
- * @return 创建好的 Carnival 实例。
+ * @brief Activity: 于 Window 中执行的单个界面。
 */
-std::unique_ptr<GUI::ICarnival> crateCarnival(HWND hWnd);
+class Activity {
+public:
+	Activity() = default;
+	virtual ~Activity() = default;
 
-} // namespace AppWin32
+public:
+	/**
+	 * @brief 处理事件。
+	 * @param evt: SFML 的事件。
+	*/
+	virtual void handleEvent(const sf::Event& evt) = 0;
+	/**
+	 * @brief 更新（包括绘制）。
+	 * @param deltaTime: 经过的时间。
+	*/
+	virtual void update(sf::Time dtime) = 0;
+
+	virtual void OnEnterSysloop() noexcept {}
+	virtual void OnExitSysloop() noexcept {}
+
+public:
+	/**
+	 * @brief Activity 被创建后、运行前的处理。
+	 * @param wnd: 对所属 Window 的引用。
+	*/
+	virtual bool start(GUI::Window& wnd) noexcept = 0;
+	/**
+	 * @brief Activity 结束后、移除前的处理。
+	*/
+	virtual void stop() noexcept = 0;
+}; // class IActivity
+
+} // namespace GUI

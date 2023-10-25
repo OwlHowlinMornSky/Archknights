@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="接口">
-      <UniqueIdentifier>{1386a27c-4c2b-43dd-8144-7537d5085216}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -47,46 +44,46 @@
     <ClInclude Include="GlCheck.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="NonCopyable.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ICamera.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ITransformT.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ITransformO.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ITransformR.h">
-      <Filter>接口</Filter>
-    </ClInclude>
-    <ClInclude Include="ITransformS.h">
-      <Filter>接口</Filter>
-    </ClInclude>
     <ClInclude Include="PerspectiveCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IShader.h">
-      <Filter>接口</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IVertex.h">
-      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="DefaultShader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="﻿IModel.h">
-      <Filter>接口</Filter>
-    </ClInclude>
     <ClInclude Include="OrthographicCamera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ICamera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="﻿IModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformO.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformR.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IVertex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NonCopyable.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
