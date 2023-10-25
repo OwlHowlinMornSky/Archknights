@@ -51,6 +51,11 @@ public:
 	virtual ~Carnival() = default;
 
 public:
+	static void initialize() noexcept;
+	static Carnival& instance() noexcept;
+	static void drop() noexcept;
+
+public:
 	/**
 	 * @brief ¿ªÊ¼Ö´ÐÐ¡£
 	*/
@@ -77,6 +82,7 @@ public:
 	virtual void setSleepEnabled(bool allowSleep) noexcept = 0;
 
 protected:
+	void removeStoppedWindows() noexcept;
 	void onIdle();
 	void onSystemLoop(bool enter);
 
@@ -85,6 +91,8 @@ protected:
 protected:
 	std::list<std::unique_ptr<Window>> m_wnds;
 	sf::Clock m_clk;
+
+	static std::unique_ptr<Carnival> s_instance;
 }; // class ICarnival
 
 } // namespace GUI

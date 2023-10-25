@@ -26,8 +26,10 @@ namespace GUI {
 
 class CarnivalWin32 final :
     public Carnival {
-public:
+	friend class Carnival;
+protected:
 	CarnivalWin32() = default;
+public:
 	virtual ~CarnivalWin32() = default;
 
 public:

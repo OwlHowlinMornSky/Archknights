@@ -22,6 +22,7 @@
 #include "Carnival.h"
 
 #include "TempGuard.h"
+#include <assert.h>
 
 namespace {
 
@@ -35,55 +36,62 @@ namespace GUI {
 std::function<void()> OnIdle(&::fEmpty_vv);
 std::function<void(bool)> OnSystemLoop(&::fEmpty_vb);
 
+std::unique_ptr<Carnival> Carnival::s_instance(nullptr);
+
+Carnival& Carnival::instance() noexcept {
+	assert(s_instance != nullptr);
+	return *s_instance;
+}
+
+void Carnival::drop() noexcept {
+	return s_instance.reset();
+}
+
 void Carnival::run() noexcept {
 	ohms::TempGuard<std::function<void()>> idleGuard(GUI::OnIdle);
 	idleGuard = std::bind(&Carnival::onIdle, this);
 	ohms::TempGuard<std::function<void(bool)>> syslpGuard(GUI::OnSystemLoop);
 	syslpGuard = std::bind(&Carnival::onSystemLoop, this, std::placeholders::_1);
 	sf::Time dt;
-	try {
-		m_clk.restart();
-		while (!m_wnds.empty()) {
-			printf_s("!\n");
-			dt = m_clk.restart();
-			for (const std::unique_ptr<Window>& wnd : m_wnds) {
-				wnd->update(dt);
-			}
-			std::list<std::unique_ptr<Window>>::iterator i, n;
-			i = m_wnds.begin();
-			n = m_wnds.end();
-			printf_s("!!\n");
-			while (i != n) {
-				printf_s("? %p\n", (*i).get());
-				if ((*i)->isWaitingForStop()) {
-					printf_s("??");
-					i = m_wnds.erase(i);
+	m_clk.restart();
+	while (!m_wnds.empty()) {
+		try {
+			while (!m_wnds.empty()) {
+				dt = m_clk.restart();
+				for (const std::unique_ptr<Window>& wnd : m_wnds) {
+					wnd->update(dt);
 				}
-				else {
-					printf_s("???");
-					++i;
-				}
-				printf_s("????");
+				removeStoppedWindows();
+				systemMessagePump();
 			}
-			printf_s("!!!\n");
 			systemMessagePump();
 		}
-	}
-	catch (std::exception& e) {
-		std::string err("Activity Exception:\n");
-		err.append(e.what());
-		showErrorMessageBox("Archnights: Error", err);
-	}
-	catch (...) {
-		std::string err("Activity Exception:\n");
-		err.append("Unknown Exception.");
-		showErrorMessageBox("Archnights: Error", err);
+		catch (std::exception& e) {
+			std::string err("Window Exception:\n");
+			err.append(e.what());
+			showErrorMessageBox("Archnights: Error", err);
+		}
+		catch (...) {
+			std::string err("Window Exception:\n");
+			err.append("Unknown Exception.");
+			showErrorMessageBox("Archnights: Error", err);
+		}
 	}
 	return;
 }
 
 void Carnival::addWindow(std::unique_ptr<Window>&& wnd) {
+	assert(wnd->m_created);
 	return m_wnds.push_front(std::move(wnd));
+}
+
+void Carnival::removeStoppedWindows() noexcept {
+	std::list<std::unique_ptr<Window>>::iterator i = m_wnds.begin(), n = m_wnds.end();
+	while (i != n) {
+		if ((*i)->isWaitingForStop()) i = m_wnds.erase(i);
+		else ++i;
+	}
+	return;
 }
 
 void Carnival::onIdle() {
@@ -93,17 +101,7 @@ void Carnival::onIdle() {
 			wnd->checkSizeInSystemLoop();
 			wnd->update(dt);
 		}
-		std::list<std::unique_ptr<Window>>::iterator i, n;
-		i = m_wnds.begin();
-		n = m_wnds.end();
-		while (i != n) {
-			if ((*i)->isWaitingForStop()) {
-				i = m_wnds.erase(i);
-			}
-			else {
-				++i;
-			}
-		}
+		removeStoppedWindows();
 	}
 	return;
 }
@@ -116,3 +114,11 @@ void Carnival::onSystemLoop(bool enter) {
 }
 
 } // namespace GUI
+
+#ifdef _WIN32
+#include "CarnivalWin32.h"
+void GUI::Carnival::initialize() noexcept {
+	s_instance.reset(new CarnivalWin32);
+	return;
+}
+#endif

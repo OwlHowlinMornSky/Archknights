@@ -250,12 +250,16 @@ bool MyCreateWindow(int nCmdShow, HWND& hWnd) noexcept {
 	return true;
 }
 
-
 } // namespace
 
 namespace GUI {
 
 WindowWin32::WindowWin32() :
+	m_nCmdShow(SW_SHOWNORMAL),
+	m_hwnd(0) {}
+
+WindowWin32::WindowWin32(int nCmdShow) :
+	m_nCmdShow(nCmdShow),
 	m_hwnd(0) {}
 
 WindowWin32::~WindowWin32() noexcept {
@@ -263,22 +267,29 @@ WindowWin32::~WindowWin32() noexcept {
 	return;
 }
 
-bool GUI::WindowWin32::Open() noexcept {
+bool GUI::WindowWin32::Create() noexcept {
 	if (!g_wndClsRegistered)
 		if (!::MyRegisterClass())
 			return false;
-	if (!::MyCreateWindow(SW_SHOWNORMAL, m_hwnd))
+	if (!::MyCreateWindow(m_nCmdShow, m_hwnd))
 		return false;
-	create(m_hwnd);
+	RenderWindow::create(m_hwnd);
 	if (!isOpen())
 		return false;
+	m_created = true;
 	return true;
 }
 
 void WindowWin32::Close() noexcept {
-	close();
-	if (m_hwnd)
+	if (m_activity != nullptr) {
+		m_activity->stop();
+		m_activity.reset();
+	}
+	RenderWindow::close();
+	if (m_hwnd) {
 		DestroyWindow(m_hwnd);
+		m_hwnd = 0;
+	}
 	return;
 }
 
@@ -341,6 +352,11 @@ void WindowWin32::showMessageBox(std::string_view title, std::string_view text) 
 	return;
 }
 
+void WindowWin32::showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept {
+	MessageBoxW(m_hwnd, text.data(), title.data(), MB_ICONINFORMATION);
+	return;
+}
+
 void WindowWin32::setWindowed() noexcept {
 	if (m_windowStatus == WindowStatus::Windowed)
 		return;
@@ -350,12 +366,9 @@ void WindowWin32::setWindowed() noexcept {
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 	ShowWindow(m_hwnd, SW_SHOW);
 
-	//windowSetMinimizeEnabled(m_enabledMinimize);
-	//windowSetResizeEnabled(m_enabledResize);
+	m_windowStatus = WindowStatus::Windowed;
 	setSize(m_lastSizeWhenWindowed);
 	setPosition(m_lastPositionWhenWindowed);
-
-	m_windowStatus = WindowStatus::Windowed;
 	return;
 }
 
@@ -396,7 +409,7 @@ bool WindowWin32::setFullscreen(sf::VideoMode mode) noexcept {
 
 	// Apply fullscreen mode
 	if (ChangeDisplaySettingsW(&devMode, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) {
-		showMessageBox("", "Failed to change display mode for fullscreen");
+		showMessageBox(szTitle, L"Failed to change display mode for fullscreen");
 		return false;
 	}
 

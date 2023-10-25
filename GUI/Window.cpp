@@ -25,6 +25,7 @@
 namespace GUI {
 
 Window::Window() noexcept :
+	m_created(false),
 	m_sizingAsSized(false),
 	m_waitToStop(false),
 	m_windowStatus(GUI::WindowStatus::Windowed) {}
@@ -42,7 +43,6 @@ void Window::update(sf::Time dtime) {
 		return;
 	}
 	sf::Event evt;
-	printf_s("Now at: %p\n", this);
 	while (pollEvent(evt)) {
 		if (evt.type == sf::Event::Resized) {
 			setView(

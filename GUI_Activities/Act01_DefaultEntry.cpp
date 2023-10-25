@@ -23,11 +23,8 @@
 #include "Act02_TestActivity.h"
 #include "Act03_Opening.h"
 
-#include "../G3D/base.h"
-
 #ifdef _DEBUG
 #include <SFML/Graphics.hpp>
-#include "../G3D/DefaultShader.h"
 #include <iostream>
 #endif // _DEBUG
 
@@ -41,14 +38,12 @@ Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 	g_sp = std::make_unique<sf::Sprite>();
 	g_tex->loadFromFile("assets/DefaultEntry.png");
 	g_sp->setTexture(*g_tex, true);
-	std::cout << "DefaultEntryDebug: Construct." << std::endl;
 #endif // _DEBUG
 	return;
 }
 
 Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
 #ifdef _DEBUG
-	std::cout << "DefaultEntryDebug: Destruct." << std::endl;
 	g_sp.reset();
 	g_tex.reset();
 #endif // _DEBUG
@@ -80,14 +75,12 @@ void Act01_DefaultEntry::handleEvent(const sf::Event& evt) {
 	default:
 		break;
 	}
-	printf_s("Act01 %p: %p, event\n", this, r_wnd);
 #endif // _DEBUG
 	return;
 }
 
 void Act01_DefaultEntry::update(sf::Time dtime) {
 #ifdef _DEBUG
-	printf_s("Act01 %p: %p, update\n", this, r_wnd);
 	r_wnd->clear(sf::Color::Red);
 	r_wnd->draw(*g_sp);
 	r_wnd->display();
@@ -103,35 +96,12 @@ void Act01_DefaultEntry::OnExitSysloop() noexcept {}
 
 bool Act01_DefaultEntry::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
-#ifdef _DEBUG
-	r_wnd->setCloseEnabled(false);
-#endif
 	r_wnd->setSize({ 1280, 720 });
-
-	//r_wnd->setFramerateLimit(60);
-	r_wnd->setVerticalSyncEnabled(true);
-
-	g3d::base::setup();
-#ifdef _DEBUG
-	g3d::base::setActive(true);
-	g3d::Shader* shader = new g3d::DefaultShader();
-	shader->setup();
-	delete shader;
-#endif // _DEBUG
-	g3d::base::setActive(false);
-	r_wnd->setActive(true);
 	return true;
 }
 
 void Act01_DefaultEntry::stop() noexcept {
-#ifdef _DEBUG
-	r_wnd->setCloseEnabled(true);
-#endif
-	//g3d::base::drop();
-	//r_wnd = nullptr;
-#ifdef _DEBUG
-	std::cout << "DefaultEntryDebug: stop." << std::endl;
-#endif // _DEBUG
+	r_wnd = nullptr;
 	return;
 }
 

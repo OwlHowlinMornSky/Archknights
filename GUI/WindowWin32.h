@@ -28,10 +28,11 @@ class WindowWin32 final :
 	public Window {
 public:
 	WindowWin32();
+	WindowWin32(int nCmdShow);
 	virtual ~WindowWin32() noexcept;
 
 public:
-	virtual bool Open() noexcept override;
+	virtual bool Create() noexcept override;
 	virtual void Close() noexcept override;
 
 public:
@@ -44,6 +45,7 @@ public:
 	virtual bool isMinimizeEnabled() const noexcept override;
 
 	virtual void showMessageBox(std::string_view title, std::string_view text) const noexcept override;
+	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept override;
 
 	virtual void setWindowed() noexcept override;
 	virtual bool setBorderless() noexcept override;
@@ -53,6 +55,7 @@ protected:
 	virtual void checkSizeInSystemLoop() noexcept override;
 
 protected:
+	int m_nCmdShow;
 	HWND__* m_hwnd;
 	sf::Vector2u m_oldSize;
 	sf::Vector2u m_lastSizeWhenWindowed;

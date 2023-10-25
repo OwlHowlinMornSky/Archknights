@@ -23,22 +23,8 @@
 #include "../GUI/CarnivalWin32.h"
 #include "../GUI/WindowWin32.h"
 #include "../GUI_Activities/Act01_DefaultEntry.h"
+#include "../G3D/base.h"
 #include "framework.h"
-#include "resource.h"
-
-#define MAX_LOADSTRING 64
-
-namespace {
-
-CHAR g_fatal_errorA[MAX_LOADSTRING];
-WCHAR g_fatal_error[MAX_LOADSTRING];
-WCHAR g_information[MAX_LOADSTRING];
-WCHAR g_another_instance[MAX_LOADSTRING];
-WCHAR g_register_failed[MAX_LOADSTRING];
-WCHAR g_create_failed[MAX_LOADSTRING];
-WCHAR g_unknown_exception[MAX_LOADSTRING];
-
-} // namespace
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
@@ -49,43 +35,31 @@ int APIENTRY wWinMain(
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	LoadStringA(hInstance, IDS_FATAL_ERROR, g_fatal_errorA, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_FATAL_ERROR, g_fatal_error, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_INFORMATION, g_information, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_INIT_ANOTHER_INSTANCE, g_another_instance, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_INIT_REGISTER_FAILED, g_register_failed, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_INIT_CREATE_WINDOW_FAILED, g_create_failed, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_UNKNOWN_EXCEPTION, g_unknown_exception, MAX_LOADSTRING);
-
 	if (!AppWin32::uniqueInstance()) {
-		MessageBoxW(NULL, g_another_instance, g_information, MB_ICONINFORMATION);
+		MessageBoxA(NULL, "Another instance exists.", "Archknights: Information", MB_ICONINFORMATION);
 		return 0;
 	}
+	GUI::Carnival::initialize();
+	GUI::Carnival& carnival = GUI::Carnival::instance();
+	g3d::base::setup();
+	g3d::base::setActive(false);
 	try {
-		std::unique_ptr<GUI::Carnival> carnival =
-			std::make_unique<GUI::CarnivalWin32>();
-		std::unique_ptr<GUI::Window> window =
-			std::make_unique<GUI::WindowWin32>();
-		std::unique_ptr<GUI::Window> window2 =
-			std::make_unique<GUI::WindowWin32>();
-		if (window->Open() && window2->Open()) {
-
+		std::unique_ptr<GUI::Window> window = std::make_unique<GUI::WindowWin32>(nCmdShow);
+		if (window->Create()) {
+			window->setVerticalSyncEnabled(true);
 			window->setActivity(std::make_unique<Activity::Act01_DefaultEntry>());
-			window2->setActivity(std::make_unique<Activity::Act01_DefaultEntry>());
-
-			carnival->addWindow(std::move(window));
-			carnival->addWindow(std::move(window2));
-
-			carnival->run();
+			carnival.addWindow(std::move(window));
+			carnival.run();
 		}
-		carnival.reset();
 	}
 	catch (std::exception& exp) {
-		MessageBoxA(NULL, exp.what(), g_fatal_errorA, MB_ICONERROR);
+		MessageBoxA(NULL, exp.what(), "Archknights: Fatal Error", MB_ICONERROR);
 	}
 	catch (...) {
-		MessageBoxW(NULL, g_unknown_exception, g_fatal_error, MB_ICONERROR);
+		MessageBoxA(NULL, "Unknown exception.", "Archknights: Fatal Error", MB_ICONERROR);
 	}
+	g3d::base::drop();
+	GUI::Carnival::drop();
 	AppWin32::instanceExit();
 	return 0;
 }

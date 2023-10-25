@@ -47,7 +47,7 @@ public:
 	virtual ~Window() noexcept;
 
 public:
-	virtual bool Open() noexcept = 0;
+	virtual bool Create() noexcept = 0;
 	virtual void Close() noexcept = 0;
 
 public:
@@ -118,6 +118,12 @@ public:
 	 * @param text: 消息框的内容。
 	*/
 	virtual void showMessageBox(std::string_view title, std::string_view text) const noexcept = 0;
+	/**
+	 * @brief 显示一个消息框。
+	 * @param title: 消息框的标题。
+	 * @param text: 消息框的内容。
+	*/
+	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept = 0;
 
 	/**
 	 * @brief 设为一般窗口。
@@ -148,6 +154,7 @@ protected:
 	virtual void checkSizeInSystemLoop() noexcept = 0;
 
 protected:
+	bool m_created;
 	bool m_sizingAsSized;
 	bool m_waitToStop;
 	WindowStatus m_windowStatus;

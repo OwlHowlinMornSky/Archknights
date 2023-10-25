@@ -21,7 +21,6 @@
 */
 #include "Act02_TestActivity.h"
 #include "Act01_DefaultEntry.h"
-
 #include <iostream>
 
 namespace Activity {
@@ -32,19 +31,19 @@ Act02_TestActivity::Act02_TestActivity() noexcept :
 	m_disableResize(false),
 	m_disableMinimize(false),
 	m_disableClose(false) {
-	std::cout << "TestActivity: Construct." << std::endl;
 
 	auto& modes = sf::VideoMode::getFullscreenModes();
-	for (const auto& mode : modes) {
-		std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
-	}
+	std::cout << "W: " << modes[0].width <<
+		", H: " << modes[0].height <<
+		", bPP: " << modes[0].bitsPerPixel
+		<< std::endl;
 	m_modes = modes;
 	m_modeI = 0;
 	return;
 }
 
 Act02_TestActivity::~Act02_TestActivity() noexcept {
-	std::cout << "TestActivity: Destruct." << std::endl;
+	return;
 }
 
 bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
@@ -60,7 +59,6 @@ bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
 }
 
 void Act02_TestActivity::stop() noexcept {
-	std::cout << "TestActivity: stop." << std::endl;
 }
 
 void Act02_TestActivity::handleEvent(const sf::Event& evt) {
@@ -144,7 +142,7 @@ void Act02_TestActivity::OnEnterSysloop() noexcept {
 }
 
 void Act02_TestActivity::OnExitSysloop() noexcept {
-	//m_paused = false;
+	m_paused = false;
 }
 
 void Act02_TestActivity::updateSize() noexcept {
