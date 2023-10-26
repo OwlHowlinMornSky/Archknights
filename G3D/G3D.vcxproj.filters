@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="接口">
+      <UniqueIdentifier>{dc3c3572-add1-42dd-a8c2-0d981a7cf068}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -21,7 +24,7 @@
     <ClCompile Include="GlCheck.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PerspectiveCamera.cpp">
+    <ClCompile Include="Camera.Perspective.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -30,10 +33,10 @@
     <ClCompile Include="Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultShader.cpp">
+    <ClCompile Include="Shader.Default.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="OrthographicCamera.cpp">
+    <ClCompile Include="Camera.Orthographic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +47,7 @@
     <ClInclude Include="GlCheck.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="PerspectiveCamera.h">
+    <ClInclude Include="Camera.Perspective.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -53,38 +56,35 @@
     <ClInclude Include="Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultShader.h">
+    <ClInclude Include="Shader.Default.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="OrthographicCamera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ICamera.h">
+    <ClInclude Include="Camera.Orthographic.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="﻿IModel.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="IShader.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="ITransformO.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="ITransformR.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="ITransformS.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="ITransformT.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="IVertex.h">
-      <Filter>头文件</Filter>
+      <Filter>接口</Filter>
     </ClInclude>
-    <ClInclude Include="NonCopyable.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="INonCopyable.h">
+      <Filter>接口</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

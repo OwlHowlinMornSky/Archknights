@@ -62,7 +62,6 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 
 void Act04_Load::stop() noexcept {
 	m_bgm->stop();
-
 	m_status = 0;
 	return;
 }

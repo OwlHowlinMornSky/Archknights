@@ -46,6 +46,7 @@ public:
 
 protected:
 	void updateSize() noexcept;
+	void noticeSelectedMode() noexcept;
 
 protected:
 	GUI::Window* r_wnd;

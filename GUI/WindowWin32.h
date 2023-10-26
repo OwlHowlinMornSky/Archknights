@@ -28,10 +28,10 @@ class WindowWin32 final :
 	public Window {
 public:
 	WindowWin32();
-	WindowWin32(int nCmdShow);
 	virtual ~WindowWin32() noexcept;
 
 public:
+	bool Create(int nCmdShow) noexcept;
 	virtual bool Create() noexcept override;
 	virtual void Close() noexcept override;
 
@@ -55,7 +55,6 @@ protected:
 	virtual void checkSizeInSystemLoop() noexcept override;
 
 protected:
-	int m_nCmdShow;
 	HWND__* m_hwnd;
 	sf::Vector2u m_oldSize;
 	sf::Vector2u m_lastSizeWhenWindowed;

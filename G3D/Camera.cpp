@@ -25,20 +25,18 @@
 
 namespace g3d {
 
-void Camera::ensureMatVUpdated() {
-	if (m_positionChanged || m_rotationChanged) {
-		if (m_rotation.x < 0.0f)
-			m_rotation.x = 0.0f;
-		else if (m_rotation.x > 90.0f)
-			m_rotation.x = 90.0f;
-		m_matV = glm::rotate(glm::radians(-m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_matV *= glm::rotate(glm::radians(-m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_matV *= glm::rotate(glm::radians(-m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_matV *= glm::translate(-m_position);
-		m_positionChanged = false;
-		m_rotationChanged = false;
-		m_matPVChanged = true;
-	}
+void Camera::updateMatV() {
+	if (m_rotation.x < 0.0f)
+		m_rotation.x = 0.0f;
+	else if (m_rotation.x > 90.0f)
+		m_rotation.x = 90.0f;
+	m_matV = glm::rotate(glm::radians(-m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_matV *= glm::rotate(glm::radians(-m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+	m_matV *= glm::rotate(glm::radians(-m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_matV *= glm::translate(-m_position);
+	m_positionChanged = false;
+	m_rotationChanged = false;
+	m_matPVChanged = true;
 	return;
 }
 

@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "NonCopyable.h"
+#include "INonCopyable.h"
 
 namespace g3d {
 
@@ -29,7 +29,7 @@ namespace g3d {
  * @brief 可绘制的对象。
 */
 class IModel :
-	public NonCopyable {
+	public INonCopyable {
 
 };
 

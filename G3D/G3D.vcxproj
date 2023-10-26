@@ -21,28 +21,27 @@
   <ItemGroup>
     <ClCompile Include="base.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="OrthographicCamera.cpp" />
-    <ClCompile Include="PerspectiveCamera.cpp" />
+    <ClCompile Include="Camera.Orthographic.cpp" />
+    <ClCompile Include="Camera.Perspective.cpp" />
     <ClCompile Include="GlCheck.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="DefaultShader.cpp" />
+    <ClCompile Include="Shader.Default.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="OrthographicCamera.h" />
-    <ClInclude Include="PerspectiveCamera.h" />
+    <ClInclude Include="Camera.Orthographic.h" />
+    <ClInclude Include="Camera.Perspective.h" />
     <ClInclude Include="GlCheck.h" />
-    <ClInclude Include="ICamera.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="ITransformO.h" />
     <ClInclude Include="ITransformR.h" />
     <ClInclude Include="ITransformS.h" />
     <ClInclude Include="ITransformT.h" />
     <ClInclude Include="IVertex.h" />
-    <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="INonCopyable.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="DefaultShader.h" />
+    <ClInclude Include="Shader.Default.h" />
     <ClInclude Include="﻿IModel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

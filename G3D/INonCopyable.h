@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -19,20 +19,21 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "OrthographicCamera.h"
-
-#include <glm/gtx/transform.hpp>
+#pragma once
 
 namespace g3d {
 
-void g3d::OrthographicCamera::ensureMatPUpdated() {
-	if (m_matP_needUpdate) {
-		float x = m_dimX / 2.0f;
-		float y = m_dimY / 2.0f;
-		m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar);
-		m_matP_needUpdate = false;
-		m_matPVChanged = true;
-	}
-}
+/**
+ * @brief 不可复制类。
+*/
+class INonCopyable {
+protected:
+	INonCopyable() = default;
+	INonCopyable(INonCopyable&&) = default;
+	~INonCopyable() = default;
+
+	INonCopyable(const INonCopyable&) = delete;
+	INonCopyable& operator=(const INonCopyable&) = delete;
+}; // class NonCopyable
 
 } // namespace g3d

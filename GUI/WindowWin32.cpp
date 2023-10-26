@@ -255,11 +255,6 @@ bool MyCreateWindow(int nCmdShow, HWND& hWnd) noexcept {
 namespace GUI {
 
 WindowWin32::WindowWin32() :
-	m_nCmdShow(SW_SHOWNORMAL),
-	m_hwnd(0) {}
-
-WindowWin32::WindowWin32(int nCmdShow) :
-	m_nCmdShow(nCmdShow),
 	m_hwnd(0) {}
 
 WindowWin32::~WindowWin32() noexcept {
@@ -267,17 +262,21 @@ WindowWin32::~WindowWin32() noexcept {
 	return;
 }
 
-bool GUI::WindowWin32::Create() noexcept {
+bool WindowWin32::Create(int nCmdShow) noexcept {
 	if (!g_wndClsRegistered)
 		if (!::MyRegisterClass())
 			return false;
-	if (!::MyCreateWindow(m_nCmdShow, m_hwnd))
+	if (!::MyCreateWindow(nCmdShow, m_hwnd))
 		return false;
 	RenderWindow::create(m_hwnd);
 	if (!isOpen())
 		return false;
 	m_created = true;
 	return true;
+}
+
+bool GUI::WindowWin32::Create() noexcept {
+	return Create(SW_SHOWNORMAL);
 }
 
 void WindowWin32::Close() noexcept {

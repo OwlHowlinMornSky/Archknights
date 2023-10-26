@@ -21,71 +21,43 @@
 */
 #pragma once
 
-#include "ITransformT.h"
-#include "ITransformR.h"
-#include <glm/mat4x4.hpp>
+#include "Camera.h"
 
 namespace g3d {
 
-/**
- * @brief ½Ó¿Ú Camera¡£
-*/
-class ICamera :
-	public ITransformT,
-	public ITransformR {
+class PerspectiveCamera final :
+	public Camera {
 public:
-	ICamera() :
-		m_matPVChanged(false),
-		m_zNear(0.5f),
-		m_zFar(128.0f),
-		m_matP(),
-		m_matV() {}
-	virtual ~ICamera() = default;
+	PerspectiveCamera() = default;
+	virtual ~PerspectiveCamera() override = default;
 
 public:
-	float getZFar() const {
-		return m_zFar;
-	}
-
-	float getZNear() const {
-		return m_zNear;
-	}
-
-	const glm::mat4& getMatP() {
-		ensureMatPUpdated();
-		return m_matP;
-	}
-
-	const glm::mat4& getMatV() {
-		ensureMatVUpdated();
-		return m_matV;
-	}
-
-	const glm::mat4& getMatPV() {
-		ensureMatPVUpdated();
-		return m_matPV;
-	}
-
-protected:
-	void ensureMatPVUpdated() {
-		ensureMatPUpdated();
-		ensureMatVUpdated();
-		if (m_matPVChanged) {
-			m_matPV = m_matP * m_matV;
-			m_matPVChanged = false;
-		}
+	void setFOV(float degree) {
+		if (degree < 1.0f) degree = 1.0f;
+		else if (degree > 179.0f) degree = 179.0f;
+		m_fov = degree;
+		m_matP_needUpdate = true;
 		return;
 	}
-	virtual void ensureMatVUpdated() = 0;
-	virtual void ensureMatPUpdated() = 0;
+	void setAspectRatio(float ratio) {
+		m_aspectRatio = ratio;
+		m_matP_needUpdate = true;
+		return;
+	}
+
+	float getFOV() const {
+		return m_fov;
+	}
+	float getAspectRatio() const {
+		return m_aspectRatio;
+	}
 
 protected:
-	bool m_matPVChanged;
-	float m_zNear;
-	float m_zFar;
-	glm::mat4 m_matP;
-	glm::mat4 m_matV;
-	glm::mat4 m_matPV;
+	virtual void updateMatP() override;
+
+protected:
+	float m_fov;
+	float m_aspectRatio;
 };
 
 } // namespace g3d

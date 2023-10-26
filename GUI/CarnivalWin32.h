@@ -28,11 +28,14 @@ class CarnivalWin32 final :
     public Carnival {
 	friend class Carnival;
 protected:
-	CarnivalWin32() = default;
+	CarnivalWin32(bool mutipleWindows);
 public:
 	virtual ~CarnivalWin32() = default;
 
 public:
+	bool emplaceWindow(std::unique_ptr<Activity>&& activity, int nCmdShow);
+	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity) override;
+
 	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept override;
 	virtual void resetSleepCounter() noexcept override;
 	virtual void setSleepEnabled(bool allowSleep) noexcept override;

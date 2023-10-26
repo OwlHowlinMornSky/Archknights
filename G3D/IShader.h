@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "NonCopyable.h"
+#include "INonCopyable.h"
 
 #include <string>
 #include <SFML/OpenGL.hpp>
@@ -41,7 +41,7 @@ enum class ShaderType : size_t {
  * @brief ½Ó¿Ú Shader¡£
 */
 class IShader :
-	public NonCopyable {
+	public INonCopyable {
 public:
 	IShader() :
 		m_program(0) {}

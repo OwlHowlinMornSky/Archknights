@@ -47,7 +47,7 @@ public:
 	}
 
 protected:
-	virtual void ensureMatPUpdated() override;
+	virtual void updateMatP() override;
 
 public:
 	float m_dimX;

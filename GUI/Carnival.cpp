@@ -29,6 +29,10 @@ namespace {
 void fEmpty_vv() noexcept {}
 void fEmpty_vb(bool) noexcept {}
 
+const char g_str_winExcept[] = "Window Exception:\n";
+const char g_str_error[] = "Archnights: Error";
+const char g_str_unknown[] = "Unknown Exception.";
+
 } // namespace
 
 namespace GUI {
@@ -47,46 +51,96 @@ void Carnival::drop() noexcept {
 	return s_instance.reset();
 }
 
+GUI::Carnival::Carnival(bool mutipleWindows) :
+	m_mutipleWindows(mutipleWindows) {}
+
+GUI::Carnival::~Carnival() noexcept {
+	m_wnds.clear();
+	return;
+}
+
 void Carnival::run() noexcept {
 	ohms::TempGuard<std::function<void()>> idleGuard(GUI::OnIdle);
-	idleGuard = std::bind(&Carnival::onIdle, this);
 	ohms::TempGuard<std::function<void(bool)>> syslpGuard(GUI::OnSystemLoop);
-	syslpGuard = std::bind(&Carnival::onSystemLoop, this, std::placeholders::_1);
 	sf::Time dt;
-	m_clk.restart();
-	while (!m_wnds.empty()) {
-		try {
-			while (!m_wnds.empty()) {
-				dt = m_clk.restart();
-				for (const std::unique_ptr<Window>& wnd : m_wnds) {
-					wnd->update(dt);
+	if (m_mutipleWindows) {
+		idleGuard = std::bind(&Carnival::onIdle, this);
+		syslpGuard = std::bind(&Carnival::onSystemLoop, this, std::placeholders::_1);
+		m_clk.restart();
+		while (!m_wnds.empty()) {
+			try {
+				while (!m_wnds.empty()) {
+					for (const std::unique_ptr<Window>& wnd : m_wnds) {
+						wnd->handleEvent();
+					}
+					dt = m_clk.restart();
+					for (const std::unique_ptr<Window>& wnd : m_wnds) {
+						wnd->update(dt);
+					}
+					removeStoppedWindows();
+					systemMessagePump();
 				}
-				removeStoppedWindows();
 				systemMessagePump();
 			}
-			systemMessagePump();
+			catch (std::exception& e) {
+				std::string err(g_str_winExcept);
+				err.append(e.what());
+				showErrorMessageBox(g_str_error, err);
+			}
+			catch (...) {
+				std::string err(g_str_winExcept);
+				err.append(g_str_unknown);
+				showErrorMessageBox(g_str_error, err);
+			}
+		}
+	}
+	else {
+		idleGuard = std::bind(&Carnival::onIdleSingle, this);
+		syslpGuard = std::bind(&Carnival::onSystemLoopSingle, this, std::placeholders::_1);
+		m_clk.restart();
+		try {
+			while (!m_singleWnd->isWaitingForStop()) {
+				m_singleWnd->handleEvent();
+				dt = m_clk.restart();
+				m_singleWnd->update(dt);
+				systemMessagePump();
+			}
 		}
 		catch (std::exception& e) {
-			std::string err("Window Exception:\n");
+			std::string err(g_str_winExcept);
 			err.append(e.what());
-			showErrorMessageBox("Archnights: Error", err);
+			showErrorMessageBox(g_str_error, err);
 		}
 		catch (...) {
-			std::string err("Window Exception:\n");
-			err.append("Unknown Exception.");
-			showErrorMessageBox("Archnights: Error", err);
+			std::string err(g_str_winExcept);
+			err.append(g_str_unknown);
+			showErrorMessageBox(g_str_error, err);
 		}
 	}
 	return;
 }
 
-void Carnival::addWindow(std::unique_ptr<Window>&& wnd) {
+bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
 	assert(wnd->m_created);
-	return m_wnds.push_front(std::move(wnd));
+	assert(wnd->m_activity != nullptr);
+	if (!wnd->m_created || wnd->m_activity == nullptr)
+		return false;
+	if (m_mutipleWindows) {
+		m_wnds.push_front(std::move(wnd));
+	}
+	else {
+		assert(m_singleWnd == nullptr);
+		if (m_singleWnd != nullptr)
+			return false;
+		m_singleWnd = std::move(wnd);
+	}
+	return true;
 }
 
 void Carnival::removeStoppedWindows() noexcept {
-	std::list<std::unique_ptr<Window>>::iterator i = m_wnds.begin(), n = m_wnds.end();
+	std::list<std::unique_ptr<Window>>::iterator
+		i = m_wnds.begin(),
+		n = m_wnds.end();
 	while (i != n) {
 		if ((*i)->isWaitingForStop()) i = m_wnds.erase(i);
 		else ++i;
@@ -96,12 +150,25 @@ void Carnival::removeStoppedWindows() noexcept {
 
 void Carnival::onIdle() {
 	if (!m_wnds.empty()) {
-		sf::Time dt = m_clk.restart();
 		for (const std::unique_ptr<Window>& wnd : m_wnds) {
 			wnd->checkSizeInSystemLoop();
+			wnd->handleEvent();
+		}
+		sf::Time dt = m_clk.restart();
+		for (const std::unique_ptr<Window>& wnd : m_wnds) {
 			wnd->update(dt);
 		}
 		removeStoppedWindows();
+	}
+	return;
+}
+
+void Carnival::onIdleSingle() {
+	if (!m_singleWnd->isWaitingForStop()) {
+		m_singleWnd->checkSizeInSystemLoop();
+		m_singleWnd->handleEvent();
+		sf::Time dt = m_clk.restart();
+		m_singleWnd->update(dt);
 	}
 	return;
 }
@@ -113,12 +180,16 @@ void Carnival::onSystemLoop(bool enter) {
 	return;
 }
 
+void Carnival::onSystemLoopSingle(bool enter) {
+	return m_singleWnd->OnSystemLoop(enter);
+}
+
 } // namespace GUI
 
 #ifdef _WIN32
 #include "CarnivalWin32.h"
-void GUI::Carnival::initialize() noexcept {
-	s_instance.reset(new CarnivalWin32);
+void GUI::Carnival::setup(bool mutipleWindows) noexcept {
+	s_instance.reset(new CarnivalWin32(mutipleWindows));
 	return;
 }
 #endif

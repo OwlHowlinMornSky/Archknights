@@ -40,7 +40,7 @@ enum class WindowStatus {
 };
 
 class Window :
-	public sf::RenderWindow {
+	protected sf::RenderWindow {
 	friend class Carnival;
 public:
 	Window() noexcept;
@@ -51,6 +51,7 @@ public:
 	virtual void Close() noexcept = 0;
 
 public:
+	void handleEvent();
 	void update(sf::Time dtime);
 
 	bool setActivity(std::unique_ptr<Activity>&& activity) noexcept;
@@ -73,6 +74,7 @@ public:
 	 * @param size: 大小。
 	*/
 	void setSize(sf::Vector2u size) noexcept;
+
 	/**
 	 * @brief 获取当前窗口状态。
 	 * @return 窗口状态。
@@ -148,6 +150,53 @@ public:
 	}
 	bool isWaitingForStop() noexcept {
 		return m_waitToStop;
+	}
+public:
+	sf::Vector2u getSize() const {
+		return RenderWindow::getSize();
+	}
+	void setVerticalSyncEnabled(bool enabled) {
+		return RenderWindow::setVerticalSyncEnabled(enabled);
+	}
+	void setFramerateLimit(unsigned int limit) {
+		return RenderWindow::setFramerateLimit(limit);
+	}
+	bool setActive(bool active = true) {
+		return RenderWindow::setActive(active);
+	}
+	void display() {
+		return RenderWindow::display();
+	}
+	void clear(const sf::Color& color = sf::Color(0, 0, 0, 255)) {
+		return RenderWindow::clear(color);
+	}
+	void draw(
+		const sf::Drawable& drawable,
+		const sf::RenderStates& states = sf::RenderStates::Default
+	) {
+		return RenderWindow::draw(drawable, states);
+	}
+	void draw(
+		const sf::Vertex* vertices,
+		std::size_t vertexCount,
+		sf::PrimitiveType type,
+		const sf::RenderStates& states = sf::RenderStates::Default
+	) {
+		return RenderWindow::draw(vertices, vertexCount, type, states);
+	}
+	void draw(
+		const sf::VertexBuffer& vertexBuffer,
+		const sf::RenderStates& states = sf::RenderStates::Default
+	) {
+		return RenderWindow::draw(vertexBuffer, states);
+	}
+	void draw(
+		const sf::VertexBuffer& vertexBuffer,
+		std::size_t firstVertex,
+		std::size_t vertexCount,
+		const sf::RenderStates& states = sf::RenderStates::Default
+	) {
+		return RenderWindow::draw(vertexBuffer, firstVertex, vertexCount, states);
 	}
 
 protected:

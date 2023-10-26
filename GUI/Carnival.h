@@ -47,11 +47,11 @@ extern std::function<void(bool)> OnSystemLoop;
 */
 class Carnival {
 public:
-	Carnival() = default;
-	virtual ~Carnival() = default;
+	Carnival(bool mutipleWindows);
+	virtual ~Carnival() noexcept;
 
 public:
-	static void initialize() noexcept;
+	static void setup(bool mutipleWindows = true) noexcept;
 	static Carnival& instance() noexcept;
 	static void drop() noexcept;
 
@@ -61,7 +61,8 @@ public:
 	*/
 	void run() noexcept;
 
-	void addWindow(std::unique_ptr<Window>&& wnd);
+	bool pushWindow(std::unique_ptr<Window>&& wnd);
+	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity) = 0;
 
 public:
 	/**
@@ -84,13 +85,17 @@ public:
 protected:
 	void removeStoppedWindows() noexcept;
 	void onIdle();
+	void onIdleSingle();
 	void onSystemLoop(bool enter);
+	void onSystemLoopSingle(bool enter);
 
 	virtual void systemMessagePump() const noexcept = 0;
 
 protected:
-	std::list<std::unique_ptr<Window>> m_wnds;
+	bool m_mutipleWindows;
 	sf::Clock m_clk;
+	std::unique_ptr<Window> m_singleWnd;
+	std::list<std::unique_ptr<Window>> m_wnds;
 
 	static std::unique_ptr<Carnival> s_instance;
 }; // class ICarnival

@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "DefaultShader.h"
+#include "Shader.Default.h"
 
 namespace {
 

@@ -37,11 +37,7 @@ Window::~Window() noexcept {
 	return;
 }
 
-void Window::update(sf::Time dtime) {
-	if (m_activity == nullptr) {
-		stop();
-		return;
-	}
+void Window::handleEvent() {
 	sf::Event evt;
 	while (pollEvent(evt)) {
 		if (evt.type == sf::Event::Resized) {
@@ -57,8 +53,11 @@ void Window::update(sf::Time dtime) {
 		}
 		m_activity->handleEvent(evt);
 	}
-	m_activity->update(dtime);
 	return;
+}
+
+void Window::update(sf::Time dtime) {
+	return m_activity->update(dtime);
 }
 
 bool Window::setActivity(std::unique_ptr<Activity>&& activity) noexcept {
@@ -69,6 +68,9 @@ bool Window::setActivity(std::unique_ptr<Activity>&& activity) noexcept {
 	if (m_activity != nullptr)
 		m_activity->stop();
 	m_activity = std::move(activity);
+	sf::Event evt;
+	while (pollEvent(evt))
+		;
 	return true;
 }
 

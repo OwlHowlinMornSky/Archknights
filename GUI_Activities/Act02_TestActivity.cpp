@@ -21,6 +21,7 @@
 */
 #include "Act02_TestActivity.h"
 #include "Act01_DefaultEntry.h"
+#include "../GUI/Carnival.h"
 #include <iostream>
 
 namespace Activity {
@@ -32,13 +33,9 @@ Act02_TestActivity::Act02_TestActivity() noexcept :
 	m_disableMinimize(false),
 	m_disableClose(false) {
 
-	auto& modes = sf::VideoMode::getFullscreenModes();
-	std::cout << "W: " << modes[0].width <<
-		", H: " << modes[0].height <<
-		", bPP: " << modes[0].bitsPerPixel
-		<< std::endl;
-	m_modes = modes;
+	m_modes = sf::VideoMode::getFullscreenModes();
 	m_modeI = 0;
+	noticeSelectedMode();
 	return;
 }
 
@@ -59,6 +56,8 @@ bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
 }
 
 void Act02_TestActivity::stop() noexcept {
+	r_wnd = nullptr;
+	return;
 }
 
 void Act02_TestActivity::handleEvent(const sf::Event& evt) {
@@ -74,15 +73,31 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 			break;
 		case sf::Keyboard::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
+			std::cout
+				<< "Test: Minimize Enabled: "
+				<< std::boolalpha << r_wnd->isMinimizeEnabled()
+				<< std::endl;
 			break;
 		case sf::Keyboard::Num2:
 			r_wnd->setResizeEnabled(!r_wnd->isResizeEnabled());
+			std::cout
+				<< "Test: Resize Enabled: "
+				<< std::boolalpha << r_wnd->isResizeEnabled()
+				<< std::endl;
 			break;
 		case sf::Keyboard::Num3:
 			r_wnd->setCloseEnabled(!r_wnd->isCloseEnabled());
+			std::cout
+				<< "Test: Close Enabled: "
+				<< std::boolalpha << r_wnd->isCloseEnabled()
+				<< std::endl;
 			break;
 		case sf::Keyboard::Grave:
 			r_wnd->setSizingAsResized(!r_wnd->isSizingAsResized());
+			std::cout
+				<< "Test: SizingAsResized: "
+				<< std::boolalpha << r_wnd->isSizingAsResized()
+				<< std::endl;
 			break;
 		case sf::Keyboard::F1:
 			r_wnd->setWindowed();
@@ -96,18 +111,21 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 		case sf::Keyboard::F4:
 			r_wnd->setFullscreen(m_modes.at(m_modeI));
 			break;
+#ifdef _DEBUG
+		case sf::Keyboard::F:
+			GUI::Carnival::instance().emplaceWindow(std::make_unique<Act02_TestActivity>());
+			break;
+#endif // _DEBUG
 		case sf::Keyboard::Left:
 			if (m_modeI > 0) {
 				m_modeI--;
-				auto& mode = m_modes.at(m_modeI);
-				std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
+				noticeSelectedMode();
 			}
 			break;
 		case sf::Keyboard::Right:
 			if (m_modeI < m_modes.size() - 1) {
 				m_modeI++;
-				auto& mode = m_modes.at(m_modeI);
-				std::cout << "W: " << mode.width << ", H: " << mode.height << ", bPP: " << mode.bitsPerPixel << std::endl;
+				noticeSelectedMode();
 			}
 			break;
 		default:
@@ -139,15 +157,30 @@ void Act02_TestActivity::update(sf::Time deltaTime) {
 
 void Act02_TestActivity::OnEnterSysloop() noexcept {
 	//m_paused = true;
+	return;
 }
 
 void Act02_TestActivity::OnExitSysloop() noexcept {
 	m_paused = false;
+	return;
 }
 
 void Act02_TestActivity::updateSize() noexcept {
 	auto size = r_wnd->getClientSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
+	return;
+}
+
+void Act02_TestActivity::noticeSelectedMode() noexcept {
+	if (!m_modes.empty()) {
+		std::cout
+			<< "Test: Selected Mode: "
+			<< "W: " << m_modes[m_modeI].width
+			<< ", H: " << m_modes[m_modeI].height
+			<< ", bPP: " << m_modes[m_modeI].bitsPerPixel
+			<< std::endl;
+	}
+	return;
 }
 
 } // namespace Activity

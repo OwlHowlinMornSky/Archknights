@@ -21,11 +21,44 @@
 */
 #include "CarnivalWin32.h"
 
+#include "WindowWin32.h"
+#include <assert.h>
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 namespace GUI {
+
+CarnivalWin32::CarnivalWin32(bool mutipleWindows) :
+	Carnival(mutipleWindows) {}
+
+bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, int nCmdShow) {
+	assert(activity != nullptr);
+	if (activity == nullptr)
+		return false;
+	if (m_mutipleWindows) {
+		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
+		if (!wnd->Create(nCmdShow))
+			return false;
+		wnd->setActivity(std::move(activity));
+		m_wnds.push_front(std::move(wnd));
+	}
+	else {
+		assert(m_singleWnd == nullptr);
+		if (m_singleWnd != nullptr)
+			return false;
+		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
+		if (!wnd->Create(nCmdShow))
+			return false;
+		wnd->setActivity(std::move(activity));
+		m_singleWnd = std::move(wnd);
+	}
+	return true;
+}
+
+bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity) {
+	return emplaceWindow(std::move(activity), SW_SHOWNORMAL);
+}
 
 void CarnivalWin32::showErrorMessageBox(std::string_view title, std::string_view text) const noexcept {
 	MessageBoxA(NULL, text.data(), title.data(), MB_ICONERROR);

@@ -19,45 +19,19 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Camera.Orthographic.h"
 
-#include "Camera.h"
+#include <glm/gtx/transform.hpp>
 
 namespace g3d {
 
-class PerspectiveCamera final :
-	public Camera {
-public:
-	PerspectiveCamera() = default;
-	virtual ~PerspectiveCamera() override = default;
-
-public:
-	void setFOV(float degree) {
-		if (degree < 1.0f) degree = 1.0f;
-		else if (degree > 179.0f) degree = 179.0f;
-		m_fov = degree;
-		m_matP_needUpdate = true;
-		return;
-	}
-	void setAspectRatio(float ratio) {
-		m_aspectRatio = ratio;
-		m_matP_needUpdate = true;
-		return;
-	}
-
-	float getFOV() const {
-		return m_fov;
-	}
-	float getAspectRatio() const {
-		return m_aspectRatio;
-	}
-
-protected:
-	virtual void ensureMatPUpdated() override;
-
-protected:
-	float m_fov;
-	float m_aspectRatio;
-};
+void g3d::OrthographicCamera::updateMatP() {
+	float x = m_dimX / 2.0f;
+	float y = m_dimY / 2.0f;
+	m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar);
+	m_matP_needUpdate = false;
+	m_matPVChanged = true;
+	return;
+}
 
 } // namespace g3d
