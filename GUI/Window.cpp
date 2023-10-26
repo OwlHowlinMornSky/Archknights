@@ -35,7 +35,7 @@ Window::~Window() noexcept {
 	return;
 }
 
-bool Window::Create() noexcept {
+bool Window::Create(bool foreground) noexcept {
 	if (!isOpen()) return false;
 	m_created = true;
     return true;

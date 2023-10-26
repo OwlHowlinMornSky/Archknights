@@ -66,7 +66,7 @@ void Act05_Title::update(sf::Time dtime) {
 	m_scene->render();
 
 	r_wnd->setActive(true);
-	r_wnd->clear();
+	r_wnd->clear(sf::Color::Green);
 	r_wnd->draw(*m_scene);
 	r_wnd->display();
 	return;

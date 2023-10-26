@@ -182,6 +182,7 @@ void Scene_Title::update(float dt) {
 void Scene_Title::render() {
 	g3d::base::setActive(true);
 	m_rtex.setActive(true);
+	glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f)); // …Ë÷√clear—’…´
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 
 	sf::IntRect Viewport(

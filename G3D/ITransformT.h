@@ -30,7 +30,9 @@ namespace g3d {
 */
 class ITransformT {
 protected:
-	ITransformT() = default;
+	ITransformT() :
+		m_position(0.0f, 0.0f, 0.0f),
+		m_positionChanged(true) {}
 	ITransformT(const ITransformT&) = default;
 	ITransformT(ITransformT&&) = default;
 	~ITransformT() = default;

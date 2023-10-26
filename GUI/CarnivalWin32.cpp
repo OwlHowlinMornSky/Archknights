@@ -32,13 +32,14 @@ namespace GUI {
 CarnivalWin32::CarnivalWin32(bool mutipleWindows) :
 	Carnival(mutipleWindows) {}
 
-bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity) {
+bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground) {
 	assert(activity != nullptr);
 	if (activity == nullptr)
 		return false;
+	int nCmdShow = foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE;
 	if (m_mutipleWindows) {
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(SW_SHOWNORMAL))
+		if (!wnd->Create(nCmdShow))
 			return false;
 		wnd->changeActivity(std::move(activity));
 		m_wnds.push_front(std::move(wnd));
@@ -48,7 +49,7 @@ bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity) {
 		if (m_singleWnd != nullptr)
 			return false;
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(SW_SHOWNORMAL))
+		if (!wnd->Create(nCmdShow))
 			return false;
 		wnd->changeActivity(std::move(activity));
 		m_singleWnd = std::move(wnd);

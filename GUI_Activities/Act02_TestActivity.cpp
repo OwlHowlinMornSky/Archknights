@@ -20,7 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act02_TestActivity.h"
-#include "Act01_DefaultEntry.h"
+#include "Act01_DefaultEntrance.h"
 #include "../GUI/Carnival.h"
 #include <iostream>
 
@@ -69,7 +69,7 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
-			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntry>());
+			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntrance>());
 			break;
 		case sf::Keyboard::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
@@ -111,11 +111,9 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 		case sf::Keyboard::F4:
 			r_wnd->setFullscreen(m_modes.at(m_modeI));
 			break;
-#ifdef _DEBUG
 		case sf::Keyboard::F:
 			GUI::Carnival::instance().emplaceWindow(std::make_unique<Act02_TestActivity>());
 			break;
-#endif // _DEBUG
 		case sf::Keyboard::Left:
 			if (m_modeI > 0) {
 				m_modeI--;

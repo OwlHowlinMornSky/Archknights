@@ -21,7 +21,7 @@
 */
 #include "../GUI/CarnivalWin32.h"
 #include "../GUI/WindowWin32.h"
-#include "../GUI_Activities/Act01_DefaultEntry.h"
+#include "../GUI_Activities/Act01_DefaultEntrance.h"
 #include "framework.h"
 #include "UniqueInstance.h"
 #include "../G3D/base.h"
@@ -64,7 +64,7 @@ int APIENTRY wWinMain(
 			window->setSizingAsResized(true);
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.
-			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntry>());
+			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());
 			carnival.pushWindow(std::move(window));
 			carnival.run();
 		}

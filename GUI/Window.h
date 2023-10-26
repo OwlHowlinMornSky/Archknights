@@ -50,7 +50,7 @@ public:
 	virtual ~Window() noexcept;
 
 public:
-	virtual bool Create() noexcept;
+	virtual bool Create(bool foreground) noexcept;
 	virtual void Close() noexcept;
 
 public:

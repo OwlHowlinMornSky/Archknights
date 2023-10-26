@@ -76,7 +76,7 @@ public:
 	 * @param activity: 给定的 Activity。
 	 * @return 创建是否成功。
 	*/
-	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity) = 0;
+	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground = false) = 0;
 
 public:
 	/**

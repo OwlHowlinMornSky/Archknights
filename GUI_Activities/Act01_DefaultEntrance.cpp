@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Act01_DefaultEntry.h"
+#include "Act01_DefaultEntrance.h"
 #include "Act02_TestActivity.h"
 #include "Act03_Opening.h"
 
@@ -30,7 +30,7 @@
 
 namespace Activity {
 
-Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
+Act01_DefaultEntrance::Act01_DefaultEntrance() noexcept :
 	m_haveRunned(false),
 	r_wnd(nullptr) {
 #ifdef _DEBUG
@@ -42,7 +42,7 @@ Act01_DefaultEntry::Act01_DefaultEntry() noexcept :
 	return;
 }
 
-Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
+Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 #ifdef _DEBUG
 	g_sp.reset();
 	g_tex.reset();
@@ -50,18 +50,18 @@ Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
 	return;
 }
 
-bool Act01_DefaultEntry::start(GUI::Window& wnd) noexcept {
+bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
 	r_wnd->setSize({ 1280, 720 });
 	return true;
 }
 
-void Act01_DefaultEntry::stop() noexcept {
+void Act01_DefaultEntrance::stop() noexcept {
 	r_wnd = nullptr;
 	return;
 }
 
-void Act01_DefaultEntry::handleEvent(const sf::Event& evt) {
+void Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	switch (evt.type) {
 	case sf::Event::Closed:
@@ -90,7 +90,7 @@ void Act01_DefaultEntry::handleEvent(const sf::Event& evt) {
 	return;
 }
 
-void Act01_DefaultEntry::update(sf::Time dtime) {
+void Act01_DefaultEntrance::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r_wnd->clear(sf::Color::Red);
 	r_wnd->draw(*g_sp);
@@ -101,8 +101,8 @@ void Act01_DefaultEntry::update(sf::Time dtime) {
 	return;
 }
 
-void Act01_DefaultEntry::OnEnterSysloop() noexcept {}
+void Act01_DefaultEntrance::OnEnterSysloop() noexcept {}
 
-void Act01_DefaultEntry::OnExitSysloop() noexcept {}
+void Act01_DefaultEntrance::OnExitSysloop() noexcept {}
 
 } // namespace Activity

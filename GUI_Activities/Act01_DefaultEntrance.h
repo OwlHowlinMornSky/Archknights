@@ -30,11 +30,11 @@ namespace Activity {
 /**
  * @brief Ä¬ÈÏ³õÊ¼Activity¡£
 */
-class Act01_DefaultEntry final :
+class Act01_DefaultEntrance final :
 	public GUI::Activity {
 public:
-	Act01_DefaultEntry() noexcept;
-	virtual ~Act01_DefaultEntry() noexcept;
+	Act01_DefaultEntrance() noexcept;
+	virtual ~Act01_DefaultEntrance() noexcept;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;

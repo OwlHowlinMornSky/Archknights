@@ -32,7 +32,7 @@ class ITransformS {
 protected:
 	ITransformS() :
 		m_scale(1.0f, 1.0f, 1.0f),
-		m_scaleChanged(false) {}
+		m_scaleChanged(true) {}
 	ITransformS(const ITransformS&) = default;
 	ITransformS(ITransformS&&) = default;
 	~ITransformS() = default;

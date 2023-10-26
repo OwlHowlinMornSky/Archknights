@@ -269,11 +269,11 @@ bool WindowWin32::Create(int nCmdShow) noexcept {
 	if (!::MyCreateWindow(nCmdShow, m_hwnd))
 		return false;
 	RenderWindow::create(m_hwnd);
-	return Window::Create();
+	return Window::Create(true);
 }
 
-bool GUI::WindowWin32::Create() noexcept {
-	return Create(SW_SHOWNORMAL);
+bool GUI::WindowWin32::Create(bool foreground) noexcept {
+	return Create(foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
 }
 
 void WindowWin32::Close() noexcept {

@@ -37,7 +37,7 @@ public:
 	 * @return 创建是否成功。
 	*/
 	bool Create(int nCmdShow) noexcept;
-	virtual bool Create() noexcept override;
+	virtual bool Create(bool foreground) noexcept override;
 	virtual void Close() noexcept override;
 
 public:

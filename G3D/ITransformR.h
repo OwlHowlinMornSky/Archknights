@@ -31,8 +31,8 @@ namespace g3d {
 class ITransformR {
 protected:
 	ITransformR() :
-		m_rotation(),
-		m_rotationChanged(false) {}
+		m_rotation(0.0f, 0.0f, 0.0f),
+		m_rotationChanged(true) {}
 	ITransformR(const ITransformR&) = default;
 	ITransformR(ITransformR&&) = default;
 	~ITransformR() = default;

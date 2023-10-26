@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Act01_DefaultEntry.h">
+    <ClInclude Include="Act01_DefaultEntrance.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Act02_TestActivity.h">
@@ -38,7 +38,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Act01_DefaultEntry.cpp">
+    <ClCompile Include="Act01_DefaultEntrance.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Act02_TestActivity.cpp">

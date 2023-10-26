@@ -31,8 +31,8 @@ namespace g3d {
 class ITransformO {
 protected:
 	ITransformO() :
-		m_origin(),
-		m_originChanged(false) {}
+		m_origin(0.0f, 0.0f, 0.0f),
+		m_originChanged(true) {}
 	ITransformO(const ITransformO&) = default;
 	ITransformO(ITransformO&&) = default;
 	~ITransformO() = default;

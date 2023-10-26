@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Act01_DefaultEntry.h" />
+    <ClInclude Include="Act01_DefaultEntrance.h" />
     <ClInclude Include="Act02_TestActivity.h" />
     <ClInclude Include="Act03_Opening.h" />
     <ClInclude Include="Act04_Load.h" />
@@ -27,7 +27,7 @@
     <ClInclude Include="Graphics\Scene_Title.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Act01_DefaultEntry.cpp" />
+    <ClCompile Include="Act01_DefaultEntrance.cpp" />
     <ClCompile Include="Act02_TestActivity.cpp" />
     <ClCompile Include="Act03_Opening.cpp" />
     <ClCompile Include="Act04_Load.cpp" />
