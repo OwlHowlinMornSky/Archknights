@@ -19,12 +19,12 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "UniqueInstance.h"
 #include "../GUI/CarnivalWin32.h"
 #include "../GUI/WindowWin32.h"
 #include "../GUI_Activities/Act01_DefaultEntry.h"
-#include "../G3D/base.h"
 #include "framework.h"
+#include "UniqueInstance.h"
+#include "../G3D/base.h"
 
 namespace {
 
@@ -48,6 +48,7 @@ int APIENTRY wWinMain(
 		MessageBoxA(NULL, g_str_unique_inst, g_str_information, MB_ICONINFORMATION);
 		return 0;
 	}
+	// Initialize.
 #ifdef _DEBUG
 	GUI::Carnival::setup(true);
 #else
@@ -58,10 +59,12 @@ int APIENTRY wWinMain(
 	g3d::base::setActive(false);
 	try {
 		std::unique_ptr<GUI::WindowWin32> window = std::make_unique<GUI::WindowWin32>();
+		// Create window and run.
 		if (window->Create(nCmdShow)) {
 			window->setSizingAsResized(true);
 			window->setVerticalSyncEnabled(true);
-			window->setActivity(std::make_unique<Activity::Act01_DefaultEntry>());
+			// Start with default activity.
+			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntry>());
 			carnival.pushWindow(std::move(window));
 			carnival.run();
 		}
@@ -72,6 +75,7 @@ int APIENTRY wWinMain(
 	catch (...) {
 		MessageBoxA(NULL, g_str_unknown_exp, g_str_fatal_error, MB_ICONERROR);
 	}
+	// Clear.
 	g3d::base::drop();
 	GUI::Carnival::drop();
 	AppWin32::instanceExit();

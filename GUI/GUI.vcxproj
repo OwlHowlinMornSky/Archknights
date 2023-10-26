@@ -155,16 +155,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BgmSFML.h" />
+    <ClInclude Include="Callbacks.h" />
     <ClInclude Include="CarnivalWin32.h" />
     <ClInclude Include="FontMgr.h" />
     <ClInclude Include="Activity.h" />
     <ClInclude Include="Carnival.h" />
+    <ClInclude Include="IBgm.h" />
     <ClInclude Include="IFontMgr.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="TempGuard.h" />
     <ClInclude Include="WindowWin32.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Activity.cpp" />
+    <ClCompile Include="BgmSFML.cpp" />
+    <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="CarnivalWin32.cpp" />
     <ClCompile Include="Carnival.cpp" />
     <ClCompile Include="FontMgr.cpp" />

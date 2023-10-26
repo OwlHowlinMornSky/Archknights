@@ -26,12 +26,13 @@
 #include <SFML/System/FileInputStream.hpp>
 #include "IBgm.h"
 
-namespace Audio {
+namespace GUI {
 
 /**
- * @brief IBgm 在 SFML 的实现。
+ * @brief Bgm 在 SFML 的实现。
 */
-class BgmSFML final : public IBgm {
+class BgmSFML final :
+	public IBgm {
 public:
 	BgmSFML();
 	virtual ~BgmSFML() override;
@@ -83,8 +84,8 @@ public:
 	virtual float getLength() const override;
 
 protected:
-	std::unique_ptr<sf::Music> m_music;
-	std::unique_ptr<sf::FileInputStream> m_stream;
-}; // class BGM
+	std::unique_ptr<sf::Music> m_music; // SFML 的 Music 实例。
+	std::unique_ptr<sf::FileInputStream> m_stream; // SFML 的 文件流，它必须在 Music 实例之后析构。
+}; // class BgmSFML
 
-} // namespace Audio
+} // namespace GUI

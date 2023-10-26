@@ -22,12 +22,10 @@
 #include "Carnival.h"
 
 #include "TempGuard.h"
+#include "Callbacks.h"
 #include <assert.h>
 
 namespace {
-
-void fEmpty_vv() noexcept {}
-void fEmpty_vb(bool) noexcept {}
 
 const char g_str_winExcept[] = "Window Exception:\n";
 const char g_str_error[] = "Archnights: Error";
@@ -37,9 +35,7 @@ const char g_str_unknown[] = "Unknown Exception.";
 
 namespace GUI {
 
-std::function<void()> OnIdle(&::fEmpty_vv);
-std::function<void(bool)> OnSystemLoop(&::fEmpty_vb);
-
+// 唯一实例
 std::unique_ptr<Carnival> Carnival::s_instance(nullptr);
 
 Carnival& Carnival::instance() noexcept {
@@ -67,31 +63,28 @@ void Carnival::run() noexcept {
 		idleGuard = std::bind(&Carnival::onIdle, this);
 		syslpGuard = std::bind(&Carnival::onSystemLoop, this, std::placeholders::_1);
 		m_clk.restart();
-		while (!m_wnds.empty()) {
-			try {
-				while (!m_wnds.empty()) {
-					for (const std::unique_ptr<Window>& wnd : m_wnds) {
-						wnd->handleEvent();
-					}
-					dt = m_clk.restart();
-					for (const std::unique_ptr<Window>& wnd : m_wnds) {
-						wnd->update(dt);
-					}
-					removeStoppedWindows();
-					systemMessagePump();
+		try {
+			while (!m_wnds.empty()) {
+				for (const std::unique_ptr<Window>& wnd : m_wnds) {
+					wnd->handleEvent();
 				}
+				dt = m_clk.restart();
+				for (const std::unique_ptr<Window>& wnd : m_wnds) {
+					wnd->update(dt);
+				}
+				removeStoppedWindows();
 				systemMessagePump();
 			}
-			catch (std::exception& e) {
-				std::string err(g_str_winExcept);
-				err.append(e.what());
-				showErrorMessageBox(g_str_error, err);
-			}
-			catch (...) {
-				std::string err(g_str_winExcept);
-				err.append(g_str_unknown);
-				showErrorMessageBox(g_str_error, err);
-			}
+		}
+		catch (std::exception& e) {
+			std::string err(g_str_winExcept);
+			err.append(e.what());
+			showErrorMessageBox(g_str_error, err);
+		}
+		catch (...) {
+			std::string err(g_str_winExcept);
+			err.append(g_str_unknown);
+			showErrorMessageBox(g_str_error, err);
 		}
 	}
 	else {
@@ -105,6 +98,7 @@ void Carnival::run() noexcept {
 				m_singleWnd->update(dt);
 				systemMessagePump();
 			}
+			m_singleWnd.reset();
 		}
 		catch (std::exception& e) {
 			std::string err(g_str_winExcept);
@@ -121,6 +115,7 @@ void Carnival::run() noexcept {
 }
 
 bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
+	// 确保窗口已经 Create 并且含有有效 Activity。
 	assert(wnd->m_created);
 	assert(wnd->m_activity != nullptr);
 	if (!wnd->m_created || wnd->m_activity == nullptr)
@@ -129,6 +124,7 @@ bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
 		m_wnds.push_front(std::move(wnd));
 	}
 	else {
+		// 如果已经有窗口就失败。
 		assert(m_singleWnd == nullptr);
 		if (m_singleWnd != nullptr)
 			return false;
@@ -175,13 +171,13 @@ void Carnival::onIdleSingle() {
 
 void Carnival::onSystemLoop(bool enter) {
 	for (const std::unique_ptr<Window>& wnd : m_wnds) {
-		wnd->OnSystemLoop(enter);
+		wnd->onSystemLoop(enter);
 	}
 	return;
 }
 
 void Carnival::onSystemLoopSingle(bool enter) {
-	return m_singleWnd->OnSystemLoop(enter);
+	return m_singleWnd->onSystemLoop(enter);
 }
 
 } // namespace GUI

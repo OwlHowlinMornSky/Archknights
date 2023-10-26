@@ -64,19 +64,19 @@ public:
 		return m_zNear;
 	}
 
-	const glm::mat4& getMatP() {
+	glm::mat4& getMatP() {
 		if (m_matP_needUpdate) {
 			updateMatP();
 		}
 		return m_matP;
 	}
-	const glm::mat4& getMatV() {
+	glm::mat4& getMatV() {
 		if (m_positionChanged || m_rotationChanged) {
 			updateMatV();
 		}
 		return m_matV;
 	}
-	const glm::mat4& getMatPV() {
+	glm::mat4& getMatPV() {
 		ensureMatPVUpdated();
 		return m_matPV;
 	}

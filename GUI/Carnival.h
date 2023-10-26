@@ -22,37 +22,40 @@
 #pragma once
 
 #include <list>
-#include <functional>
 #include "Window.h"
 
 namespace GUI {
 
 /**
- * @brief 闲置状态的回调。
- * @brief 这玩意存在的目的主要就是防止 移动窗口 和 改变窗口大小 时 把主逻辑卡住。
- * @brief 方法是 设置定时器，定时器的回调 MyTimerProc 会调用这个玩意。
- * @brief 所以在主逻辑变迁的时候要改这个，不过用完一定记得改回来（因为有初始空函数）。
-*/
-extern std::function<void()> OnIdle;
-/**
- * @brief 进入或退出系统循环时的回调。参数为 true 则为 进入，false 为退出。
- * @brief 如上所述，就是 开始移动窗口 或者 开始改变窗口大小 时调用的。
- * @brief 可以通知你进行一些处理（比如暂停游戏什么的），
- * @brief 避免 退出移动或改变大小 的时候 突然出现一个 长达数秒 甚至数十秒 的 帧。
-*/
-extern std::function<void(bool)> OnSystemLoop;
-
-/**
- * @brief Carnival: 在 RenderWindow 中运行 Activity 的管理类。
+ * @brief Carnival: 管理所有窗口的类。
 */
 class Carnival {
-public:
+protected:
+	/**
+	 * @brief 构造函数。分为 单窗口模式 和 多窗口模式。
+	 * @param mutipleWindows: 是否启用多窗口。
+	*/
 	Carnival(bool mutipleWindows);
+public:
+	/**
+	 * @brief 析构函数。
+	*/
 	virtual ~Carnival() noexcept;
 
 public:
+	/**
+	 * @brief 初始化。Carnival 只能有一个实例，在该方法中构造。
+	 * @param mutipleWindows: 是否启用多窗口。
+	*/
 	static void setup(bool mutipleWindows = true) noexcept;
+	/**
+	 * @brief 获取 Carnival 的唯一实例。调用前必须先 setup。
+	 * @return Carnival 实例的引用。
+	*/
 	static Carnival& instance() noexcept;
+	/**
+	 * @brief 清理。销毁 Carnival 实例。
+	*/
 	static void drop() noexcept;
 
 public:
@@ -61,19 +64,30 @@ public:
 	*/
 	void run() noexcept;
 
+	/**
+	 * @brief 向 Carnival 添加窗口。在单窗口模式下添加第二个及以后的窗口都会失败。
+	 * @param wnd: 窗口，必须已经 Create，且含有有效 Activity。
+	 * @return 添加是否成功。
+	*/
 	bool pushWindow(std::unique_ptr<Window>&& wnd);
+	/**
+	 * @brief 让 Carnival 视条件创建一个 Window，并初始含有给定的 Activity。
+	 * @brief 在单窗口模式下创建第二个及以后的窗口都会失败。
+	 * @param activity: 给定的 Activity。
+	 * @return 创建是否成功。
+	*/
 	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity) = 0;
 
 public:
 	/**
-	 * @brief 显示一个消息框。
+	 * @brief 显示一个消息框。该 消息框 将含 Error 图标，且不依附于窗口。
 	 * @param title: 消息框的标题。
 	 * @param text: 消息框的内容。
 	*/
 	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept = 0;
 
 	/**
-	 * @brief 重置睡眠计数器（此处所说睡眠包括“单纯关闭屏幕”）。
+	 * @brief 重置系统睡眠计数器（此处所说睡眠包括“单纯关闭屏幕”）。
 	*/
 	virtual void resetSleepCounter() noexcept = 0;
 	/**
@@ -83,21 +97,41 @@ public:
 	virtual void setSleepEnabled(bool allowSleep) noexcept = 0;
 
 protected:
+	/**
+	 * @brief 移除 等待关闭 的窗口。
+	*/
 	void removeStoppedWindows() noexcept;
+	/**
+	 * @brief 系统循环中的 Idle 回调。
+	*/
 	void onIdle();
+	/**
+	 * @brief 系统循环中的 Idle 回调（单窗口模式）。
+	*/
 	void onIdleSingle();
+	/**
+	 * @brief 系统循环通知回调。
+	 * @param enter: ture 为 进入，false 为退出。
+	*/
 	void onSystemLoop(bool enter);
+	/**
+	 * @brief 系统循环通知回调（单窗口模式）。
+	 * @param enter: ture 为 进入，false 为退出。
+	*/
 	void onSystemLoopSingle(bool enter);
 
+	/**
+	 * @brief 消息循环。
+	*/
 	virtual void systemMessagePump() const noexcept = 0;
 
 protected:
-	bool m_mutipleWindows;
-	sf::Clock m_clk;
-	std::unique_ptr<Window> m_singleWnd;
-	std::list<std::unique_ptr<Window>> m_wnds;
+	bool m_mutipleWindows; // 启用多窗口模式的标记。【只在构造时修改！】
+	sf::Clock m_clk; // 时钟。
+	std::unique_ptr<Window> m_singleWnd; // 单窗口模式使用的。
+	std::list<std::unique_ptr<Window>> m_wnds; // 多窗口模式使用的。
 
-	static std::unique_ptr<Carnival> s_instance;
+	static std::unique_ptr<Carnival> s_instance; // 唯一实例。
 }; // class ICarnival
 
 } // namespace GUI

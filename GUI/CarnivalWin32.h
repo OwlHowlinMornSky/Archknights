@@ -24,16 +24,18 @@
 
 namespace GUI {
 
+/**
+ * @brief Carnival 在 Win32 下的实现。
+*/
 class CarnivalWin32 final :
     public Carnival {
-	friend class Carnival;
+	friend class Carnival; // 这是为了唯一实例的 setup 能够构造这个类。
 protected:
 	CarnivalWin32(bool mutipleWindows);
 public:
 	virtual ~CarnivalWin32() = default;
 
 public:
-	bool emplaceWindow(std::unique_ptr<Activity>&& activity, int nCmdShow);
 	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity) override;
 
 	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept override;

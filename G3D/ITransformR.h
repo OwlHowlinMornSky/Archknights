@@ -30,7 +30,9 @@ namespace g3d {
 */
 class ITransformR {
 protected:
-	ITransformR() = default;
+	ITransformR() :
+		m_rotation(),
+		m_rotationChanged(false) {}
 	ITransformR(const ITransformR&) = default;
 	ITransformR(ITransformR&&) = default;
 	~ITransformR() = default;
@@ -54,6 +56,15 @@ public:
 		m_rotation.y += dry;
 		m_rotation.z += drz;
 		m_rotationChanged = true;
+	}
+
+	void normalizeRotation() {
+		while (m_rotation.x < 0.0f) m_rotation.x += 360.0f;
+		while (m_rotation.x >= 360.0f) m_rotation.x -= 360.0f;
+		while (m_rotation.y < 0.0f) m_rotation.y += 360.0f;
+		while (m_rotation.y >= 360.0f) m_rotation.y -= 360.0f;
+		while (m_rotation.z < 0.0f) m_rotation.z += 360.0f;
+		while (m_rotation.z >= 360.0f) m_rotation.z -= 360.0f;
 	}
 
 protected:

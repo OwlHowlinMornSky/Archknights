@@ -70,12 +70,12 @@ void Act03_Opening::stop() noexcept {
 void Act03_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		r_wnd->stop();
+		r_wnd->setWaitingForStop();
 		break;
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
-		r_wnd->setActivity(std::make_unique<Act04_Load>());
+		r_wnd->changeActivity(std::make_unique<Act04_Load>());
 		break;
 #endif // _DEBUG
 	default:
@@ -166,7 +166,7 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		r_wnd->draw(circle[2]);
 		break;
 	case ST_OVER:
-		r_wnd->setActivity(std::make_unique<Act04_Load>());
+		r_wnd->changeActivity(std::make_unique<Act04_Load>());
 		return;
 		break;
 	default:

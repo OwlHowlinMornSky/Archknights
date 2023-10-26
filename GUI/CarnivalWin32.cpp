@@ -32,15 +32,15 @@ namespace GUI {
 CarnivalWin32::CarnivalWin32(bool mutipleWindows) :
 	Carnival(mutipleWindows) {}
 
-bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, int nCmdShow) {
+bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity) {
 	assert(activity != nullptr);
 	if (activity == nullptr)
 		return false;
 	if (m_mutipleWindows) {
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(nCmdShow))
+		if (!wnd->Create(SW_SHOWNORMAL))
 			return false;
-		wnd->setActivity(std::move(activity));
+		wnd->changeActivity(std::move(activity));
 		m_wnds.push_front(std::move(wnd));
 	}
 	else {
@@ -48,16 +48,12 @@ bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, int nCmd
 		if (m_singleWnd != nullptr)
 			return false;
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(nCmdShow))
+		if (!wnd->Create(SW_SHOWNORMAL))
 			return false;
-		wnd->setActivity(std::move(activity));
+		wnd->changeActivity(std::move(activity));
 		m_singleWnd = std::move(wnd);
 	}
 	return true;
-}
-
-bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity) {
-	return emplaceWindow(std::move(activity), SW_SHOWNORMAL);
 }
 
 void CarnivalWin32::showErrorMessageBox(std::string_view title, std::string_view text) const noexcept {

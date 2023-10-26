@@ -21,7 +21,7 @@
 */
 #include "WindowWin32.h"
 
-#include "Carnival.h"
+#include "Callbacks.h"
 #include "Activity.h"
 
 #include <strsafe.h>
@@ -215,7 +215,7 @@ bool MyRegisterClass() noexcept {
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	// 没必要重绘。
-	wcex.style = NULL;// CS_HREDRAW | CS_VREDRAW;
+	wcex.style = CS_OWNDC | CS_DBLCLKS;
 	wcex.lpfnWndProc = ::MyWndProc;
 	wcex.hInstance = GetModuleHandleW(NULL);
 	// ！！！未完成！！！图标激情制作中（雾
@@ -269,10 +269,7 @@ bool WindowWin32::Create(int nCmdShow) noexcept {
 	if (!::MyCreateWindow(nCmdShow, m_hwnd))
 		return false;
 	RenderWindow::create(m_hwnd);
-	if (!isOpen())
-		return false;
-	m_created = true;
-	return true;
+	return Window::Create();
 }
 
 bool GUI::WindowWin32::Create() noexcept {
@@ -280,25 +277,12 @@ bool GUI::WindowWin32::Create() noexcept {
 }
 
 void WindowWin32::Close() noexcept {
-	if (m_activity != nullptr) {
-		m_activity->stop();
-		m_activity.reset();
-	}
-	RenderWindow::close();
+	Window::Close();
 	if (m_hwnd) {
 		DestroyWindow(m_hwnd);
 		m_hwnd = 0;
 	}
 	return;
-}
-
-sf::Vector2u WindowWin32::getClientSize() const noexcept {
-	RECT rect{ 0 };
-	GetClientRect(m_hwnd, &rect);
-	return sf::Vector2u(
-		static_cast<unsigned int>(rect.right - rect.left),
-		static_cast<unsigned int>(rect.bottom - rect.top)
-	);
 }
 
 void WindowWin32::setCloseEnabled(bool enabled) noexcept {
@@ -381,10 +365,17 @@ bool WindowWin32::setBorderless() noexcept {
 	if (m_windowStatus == WindowStatus::Fullscreen) {
 		ChangeDisplaySettingsW(NULL, 0);
 	}
-	SetWindowLongPtrW(m_hwnd, GWL_STYLE,
-					  WS_OVERLAPPED | WS_SYSMENU | WS_BORDER | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-	SetWindowPos(m_hwnd, HWND_TOP, 0, 0,
-				 GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+	SetWindowLongPtrW(
+		m_hwnd, GWL_STYLE,
+		WS_OVERLAPPED | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+	);
+	SetWindowPos(
+		m_hwnd, HWND_TOP,
+		0, 0,
+		GetSystemMetrics(SM_CXSCREEN),
+		GetSystemMetrics(SM_CYSCREEN) + 1, // 加 1 是为了防止闪烁。
+		SWP_FRAMECHANGED
+	);
 	ShowWindow(m_hwnd, SW_SHOW);
 
 	m_windowStatus = WindowStatus::Borderless;
@@ -413,18 +404,12 @@ bool WindowWin32::setFullscreen(sf::VideoMode mode) noexcept {
 	}
 
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-	SetWindowPos(
-		m_hwnd, HWND_TOP,
-		0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
-		SWP_FRAMECHANGED
-	);
-
 	// Resize the window so that it fits the entire screen
 	SetWindowPos(
 		m_hwnd, HWND_TOP,
 		0, 0,
 		static_cast<int>(mode.width),
-		static_cast<int>(mode.height),
+		static_cast<int>(mode.height + 1), // 加 1 是为了防止闪烁。
 		SWP_FRAMECHANGED
 	);
 	ShowWindow(m_hwnd, SW_SHOW);
@@ -445,7 +430,7 @@ void WindowWin32::checkSizeInSystemLoop() noexcept {
 		if (m_sizingAsSized) {
 			setSize(size);
 			if (m_activity != nullptr) {
-				sf::Event evt;
+				sf::Event evt{};
 				evt.type = sf::Event::Resized;
 				evt.size.width = size.x;
 				evt.size.height = size.y;

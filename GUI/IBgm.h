@@ -23,10 +23,10 @@
 
 #include <string>
 
-namespace Audio {
+namespace GUI {
 
 /**
- * @brief 接口 Bgm: 播放特别构造的音乐文件所用。
+ * @brief Bgm 接口: 播放特别构造的音乐文件所用。
 */
 class IBgm {
 public:
@@ -40,7 +40,13 @@ public:
 	};
 
 public:
+	/**
+	 * @brief 默认构造函数。
+	*/
 	IBgm() = default;
+	/**
+	 * @brief 默认析构函数。
+	*/
 	virtual ~IBgm() = default;
 
 public:
@@ -95,6 +101,6 @@ public:
 	 * @return 总时长（秒）。
 	*/
 	virtual float getLength() const = 0;
-}; // class I_BGM
+}; // class IBgm
 
-} // namespace Audio
+} // namespace GUI

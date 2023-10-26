@@ -63,13 +63,13 @@ void Act02_TestActivity::stop() noexcept {
 void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		r_wnd->stop();
+		r_wnd->setWaitingForStop();
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
-			r_wnd->setActivity(std::make_unique<Act01_DefaultEntry>());
+			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntry>());
 			break;
 		case sf::Keyboard::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
@@ -166,7 +166,7 @@ void Act02_TestActivity::OnExitSysloop() noexcept {
 }
 
 void Act02_TestActivity::updateSize() noexcept {
-	auto size = r_wnd->getClientSize();
+	auto size = r_wnd->getSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
 	return;
 }

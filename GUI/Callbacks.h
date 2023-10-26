@@ -21,41 +21,23 @@
 */
 #pragma once
 
-#include "../GUI/Activity.h"
-#include "../GUI/IBgm.h"
+#include <functional>
 
-#include <SFML/Graphics.hpp>
+namespace GUI {
 
-namespace Activity {
+/**
+ * @brief 闲置状态的回调。
+ * @brief 这玩意存在的目的主要就是防止 移动窗口 和 改变窗口大小 时 把主逻辑卡住。
+ * @brief 方法是 设置定时器，定时器的回调 MyTimerProc 会调用这个玩意。
+ * @brief 所以在主逻辑变迁的时候要改这个，不过用完一定记得改回来（因为有初始空函数）。
+*/
+extern std::function<void()> OnIdle;
+/**
+ * @brief 进入或退出系统循环时的回调。参数为 true 则为 进入，false 为退出。
+ * @brief 如上所述，就是 开始移动窗口 或者 开始改变窗口大小 时调用的。
+ * @brief 可以通知你进行一些处理（比如暂停游戏什么的），
+ * @brief 避免 退出移动或改变大小 的时候 突然出现一个 长达数秒 甚至数十秒 的 帧。
+*/
+extern std::function<void(bool)> OnSystemLoop;
 
-class Act04_Load final :
-	public GUI::Activity {
-public:
-	Act04_Load() noexcept;
-	virtual ~Act04_Load() noexcept override = default;
-
-protected:
-	virtual bool start(GUI::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
-
-public:
-	virtual void handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	void updateSize(sf::Vector2u newWindowSize);
-
-protected:
-	int m_status;
-	GUI::Window* r_wnd;
-	std::unique_ptr<GUI::IBgm> m_bgm;
-	sf::Texture m_tex;
-	sf::Sprite m_sp;
-	sf::RectangleShape m_blackBar[2];
-	//sf::Text m_text;
-};
-
-}
+} // namespace GUI

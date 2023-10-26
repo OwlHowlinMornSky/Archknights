@@ -50,23 +50,34 @@ Act01_DefaultEntry::~Act01_DefaultEntry() noexcept {
 	return;
 }
 
+bool Act01_DefaultEntry::start(GUI::Window& wnd) noexcept {
+	r_wnd = &wnd;
+	r_wnd->setSize({ 1280, 720 });
+	return true;
+}
+
+void Act01_DefaultEntry::stop() noexcept {
+	r_wnd = nullptr;
+	return;
+}
+
 void Act01_DefaultEntry::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	switch (evt.type) {
 	case sf::Event::Closed:
-		r_wnd->stop();
+		r_wnd->setWaitingForStop();
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
-			r_wnd->stop();
+			r_wnd->setWaitingForStop();
 			break;
 		case sf::Keyboard::F:
-			r_wnd->setActivity(std::make_unique<Act03_Opening>());
+			r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 			break;
 		case sf::Keyboard::E:
-			r_wnd->setActivity(std::make_unique<Act02_TestActivity>());
+			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			break;
 		default:
 			break;
@@ -85,7 +96,7 @@ void Act01_DefaultEntry::update(sf::Time dtime) {
 	r_wnd->draw(*g_sp);
 	r_wnd->display();
 #else
-	r_wnd->setActivity(std::make_unique<Act03_Opening>());
+	r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 #endif
 	return;
 }
@@ -93,16 +104,5 @@ void Act01_DefaultEntry::update(sf::Time dtime) {
 void Act01_DefaultEntry::OnEnterSysloop() noexcept {}
 
 void Act01_DefaultEntry::OnExitSysloop() noexcept {}
-
-bool Act01_DefaultEntry::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
-	r_wnd->setSize({ 1280, 720 });
-	return true;
-}
-
-void Act01_DefaultEntry::stop() noexcept {
-	r_wnd = nullptr;
-	return;
-}
 
 } // namespace Activity

@@ -30,7 +30,6 @@ bool ___OHMS_EnsureUniqueInstance_instanceExist = false; // 是否存在实例。
 #pragma data_seg()
 // R: Read, W: Write, S: Shared.
 #pragma comment(linker, "/SECTION:___OHMS_EUI,RWS")
-
 /**
  * 简单来说就是通过共享数据段来标记实例。
 */

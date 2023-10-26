@@ -43,4 +43,4 @@ protected:
 	up_font m_levelTitle;
 };
 
-}
+} // namespace GUI

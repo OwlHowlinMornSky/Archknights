@@ -19,43 +19,18 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Callbacks.h"
 
-#include "../GUI/Activity.h"
-#include "../GUI/IBgm.h"
+namespace {
 
-#include <SFML/Graphics.hpp>
+void fEmpty_vv() noexcept {}
+void fEmpty_vb(bool) noexcept {}
 
-namespace Activity {
+} // namespace
 
-class Act04_Load final :
-	public GUI::Activity {
-public:
-	Act04_Load() noexcept;
-	virtual ~Act04_Load() noexcept override = default;
+namespace GUI {
 
-protected:
-	virtual bool start(GUI::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
+std::function<void()> OnIdle(&::fEmpty_vv);
+std::function<void(bool)> OnSystemLoop(&::fEmpty_vb);
 
-public:
-	virtual void handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	void updateSize(sf::Vector2u newWindowSize);
-
-protected:
-	int m_status;
-	GUI::Window* r_wnd;
-	std::unique_ptr<GUI::IBgm> m_bgm;
-	sf::Texture m_tex;
-	sf::Sprite m_sp;
-	sf::RectangleShape m_blackBar[2];
-	//sf::Text m_text;
-};
-
-}
+} // namespace GUI

@@ -31,36 +31,26 @@ Window::Window() noexcept :
 	m_windowStatus(GUI::WindowStatus::Windowed) {}
 
 Window::~Window() noexcept {
-	if (m_activity != nullptr)
+	Close();
+	return;
+}
+
+bool Window::Create() noexcept {
+	if (!isOpen()) return false;
+	m_created = true;
+    return true;
+}
+
+void Window::Close() noexcept {
+	if (m_activity != nullptr) {
 		m_activity->stop();
-	m_activity.reset();
-	return;
-}
-
-void Window::handleEvent() {
-	sf::Event evt;
-	while (pollEvent(evt)) {
-		if (evt.type == sf::Event::Resized) {
-			setView(
-				sf::View(
-					sf::FloatRect(
-						0.0f, 0.0f,
-						static_cast<float>(evt.size.width),
-						static_cast<float>(evt.size.height)
-					)
-				)
-			);
-		}
-		m_activity->handleEvent(evt);
+		m_activity.reset();
 	}
+	RenderWindow::close();
 	return;
 }
 
-void Window::update(sf::Time dtime) {
-	return m_activity->update(dtime);
-}
-
-bool Window::setActivity(std::unique_ptr<Activity>&& activity) noexcept {
+bool Window::changeActivity(std::unique_ptr<Activity>&& activity) noexcept {
 	if (activity == nullptr)
 		return false;
 	if (!activity->start(*this))
@@ -68,18 +58,11 @@ bool Window::setActivity(std::unique_ptr<Activity>&& activity) noexcept {
 	if (m_activity != nullptr)
 		m_activity->stop();
 	m_activity = std::move(activity);
+	// 清空 SFML 消息队列。
 	sf::Event evt;
 	while (pollEvent(evt))
 		;
 	return true;
-}
-
-void Window::OnSystemLoop(bool enter) {
-	if (enter)
-		m_activity->OnEnterSysloop();
-	else
-		m_activity->OnExitSysloop();
-	return;
 }
 
 void Window::setSizingAsResized(bool enabled) noexcept {
@@ -109,6 +92,37 @@ void Window::setSize(sf::Vector2u size) noexcept {
 
 WindowStatus Window::getWindowStatus() const noexcept {
 	return m_windowStatus;
+}
+
+void Window::handleEvent() {
+	sf::Event evt;
+	while (pollEvent(evt)) {
+		if (evt.type == sf::Event::Resized) {
+			setView(
+				sf::View(
+					sf::FloatRect(
+						0.0f, 0.0f,
+						static_cast<float>(evt.size.width),
+						static_cast<float>(evt.size.height)
+					)
+				)
+			);
+		}
+		m_activity->handleEvent(evt);
+	}
+	return;
+}
+
+void Window::update(sf::Time dtime) {
+	return m_activity->update(dtime);
+}
+
+void Window::onSystemLoop(bool enter) {
+	if (enter)
+		m_activity->OnEnterSysloop();
+	else
+		m_activity->OnExitSysloop();
+	return;
 }
 
 } // namespace GUI

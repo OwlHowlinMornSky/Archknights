@@ -27,9 +27,12 @@
 
 namespace {
 
+/**
+ * @brief 循环点数据。
+*/
 struct OHMSAUDIOCOMMENTSTRUCTURE {
-	long long offset;
-	long long length;
+	long long offset; // 循环起点。
+	long long length; // 循环长度。
 
 	OHMSAUDIOCOMMENTSTRUCTURE() :
 		offset(0),
@@ -58,6 +61,7 @@ bool getMusicOggCommentData(
 		return false;
 	}
 
+	// Ogg 文件 首4字节 为 “OggS”。
 	if (stream.read(tmp, 4) == -1) return false;
 	if (tmp[0] != 'O' || tmp[1] != 'g' || tmp[2] != 'g' || tmp[3] != 'S') {
 		sf::err() << "getMusicCommentData: wrong file type" << std::endl;
@@ -208,8 +212,7 @@ bool readMusicLoopPoint(sf::InputStream& stream, OHMSAUDIOCOMMENTSTRUCTURE& data
 
 } // namespace
 
-
-namespace Audio {
+namespace GUI {
 
 BgmSFML::BgmSFML() :
 	m_music(std::make_unique<sf::Music>()) {}
@@ -301,9 +304,11 @@ sf::Time BgmSFML::getDuration() const {
 }
 
 bool BgmSFML::openFromFile(std::string_view filename) {
+	// 必要的，先停止旧的 Music。
 	this->m_music->stop();
 
 	std::unique_ptr<sf::FileInputStream> stream = std::make_unique<sf::FileInputStream>();
+	// 尝试打开文件流。
 	if (!stream->open(filename.data())) {
 		sf::err() << "ohms::audio::BGM: open file stream failed" << std::endl;
 		return false;
@@ -311,11 +316,13 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 
 	bool failed = false;
 	OHMSAUDIOCOMMENTSTRUCTURE data;
+	// 读取循环点信息。
 	if (!readMusicLoopPoint(*stream, data)) {
 		sf::err() << "ohms::audio::BGM: read comment failed" << std::endl;
 		failed = true;
 	}
 
+	// 从文件流打开 Music。
 	if (!m_music->openFromStream(*stream)) {
 		sf::err() << "ohms::audio::BGM: Music open failed" << std::endl;
 		return false;
@@ -386,4 +393,4 @@ float BgmSFML::getLength() const {
 	return this->getDuration().asSeconds();
 }
 
-} // namespace Audio
+} // namespace GUI

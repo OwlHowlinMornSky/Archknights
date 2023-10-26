@@ -34,7 +34,7 @@ public:
 public:
 	virtual void setup() = 0;
 
-protected:
+public:
 	void clear();
 	void loadFromMemory(std::string_view shader, ShaderType type);
 	void linkShader();

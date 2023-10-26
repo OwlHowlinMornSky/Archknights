@@ -25,20 +25,26 @@
 
 namespace GUI {
 
+/**
+ * @brief 字体种类。以用在不同文本上来分类。
+*/
 enum class FontType : unsigned int {
-	CommonContext = 0,
-	MonoMunber,
-	LevelTitle
+	CommonContext = 0, // 一般文本。
+	MonoMunber, // 等宽数字。
+	LevelTitle // 关卡标题。
 };
 
+/**
+ * @brief 字体管理器 接口: 统一加载字体。
+*/
 class IFontMgr {
 public:
-	IFontMgr() noexcept = default;
+	IFontMgr() = default;
 	virtual ~IFontMgr() = default;
 
 public:
 	virtual void load() noexcept = 0;
 	virtual const sf::Font& getFont(FontType type) const noexcept = 0;
-};
+}; // class IFontMgr
 
 } // namespace GUI

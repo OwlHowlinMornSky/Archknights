@@ -21,7 +21,8 @@
 */
 #include "Act04_Load.h"
 
-#include "../Audio/BgmSFML.h"
+#include "../GUI/BgmSFML.h"
+#include "Act05_Title.h"
 
 #define ST_IN     (1)
 #define ST_NORMAL (2)
@@ -43,12 +44,12 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 	m_sp.setTexture(m_tex, true);
 	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
 
-	updateSize(r_wnd->getClientSize());
+	updateSize(r_wnd->getSize());
 
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
-	m_bgm = std::make_unique<Audio::BgmSFML>();
+	m_bgm = std::make_unique<GUI::BgmSFML>();
 	m_bgm->openFromFile("res/music/m_sys_title.ogg");
 	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
 	m_bgm->play();
@@ -69,7 +70,7 @@ void Act04_Load::stop() noexcept {
 void Act04_Load::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
-		r_wnd->stop();
+		r_wnd->setWaitingForStop();
 		break;
 	case sf::Event::KeyPressed:
 		//m_bgm.reset();
@@ -77,9 +78,11 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 	case sf::Event::MouseButtonPressed:
 		switch (evt.mouseButton.button) {
 		case sf::Mouse::Button::Left:
-			if (m_status == ST_NORMAL) {
-				m_status = ST_OUT;
-			}
+			//if (m_status == ST_NORMAL) {
+			//	m_status = ST_OUT;
+			//}
+			r_wnd->changeActivity(std::make_unique<Act05_Title>());
+			return;
 			break;
 		case sf::Mouse::Button::Right:
 			if (m_status == ST_OVER) {

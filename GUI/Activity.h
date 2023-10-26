@@ -29,26 +29,18 @@ namespace GUI {
  * @brief Activity: 于 Window 中执行的单个界面。
 */
 class Activity {
+	friend class Window;
 public:
+	/**
+	 * @brief 默认构造函数。
+	*/
 	Activity() = default;
+	/**
+	 * @brief 默认析构函数。
+	*/
 	virtual ~Activity() = default;
 
-public:
-	/**
-	 * @brief 处理事件。
-	 * @param evt: SFML 的事件。
-	*/
-	virtual void handleEvent(const sf::Event& evt) = 0;
-	/**
-	 * @brief 更新（包括绘制）。
-	 * @param deltaTime: 经过的时间。
-	*/
-	virtual void update(sf::Time dtime) = 0;
-
-	virtual void OnEnterSysloop() noexcept {}
-	virtual void OnExitSysloop() noexcept {}
-
-public:
+protected:
 	/**
 	 * @brief Activity 被创建后、运行前的处理。
 	 * @param wnd: 对所属 Window 的引用。
@@ -58,6 +50,27 @@ public:
 	 * @brief Activity 结束后、移除前的处理。
 	*/
 	virtual void stop() noexcept = 0;
+
+public:
+	/**
+	 * @brief 处理事件。
+	 * @param evt: SFML 的事件。
+	*/
+	virtual void handleEvent(const sf::Event& evt) = 0;
+	/**
+	 * @brief 更新（包括绘制）。
+	 * @param dtime: 经过的时间。
+	*/
+	virtual void update(sf::Time dtime) = 0;
+
+	/**
+	 * @brief 进入系统循环时的通知。
+	*/
+	virtual void OnEnterSysloop() noexcept;
+	/**
+	 * @brief 退出系统循环时的通知。
+	*/
+	virtual void OnExitSysloop() noexcept;
 }; // class IActivity
 
 } // namespace GUI

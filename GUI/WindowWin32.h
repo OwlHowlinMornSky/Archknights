@@ -31,12 +31,16 @@ public:
 	virtual ~WindowWin32() noexcept;
 
 public:
+	/**
+	 * @brief 给 main 函数用的 Create，因为要指定 nCmdShow。
+	 * @param nCmdShow: WinMain 的形参。
+	 * @return 创建是否成功。
+	*/
 	bool Create(int nCmdShow) noexcept;
 	virtual bool Create() noexcept override;
 	virtual void Close() noexcept override;
 
 public:
-	virtual sf::Vector2u getClientSize() const noexcept override;
 	virtual void setCloseEnabled(bool enabled) noexcept override;
 	virtual void setResizeEnabled(bool enabled) noexcept override;
 	virtual void setMinimizeEnabled(bool enabled) noexcept override;

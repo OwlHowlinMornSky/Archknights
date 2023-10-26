@@ -1,4 +1,4 @@
-﻿/*
+/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -23,15 +23,13 @@
 
 #include "../GUI/Activity.h"
 
-#include <SFML/Graphics.hpp>
+class Scene_Title;
 
-namespace Activity {
-
-class Act02_TestActivity final :
+class Act05_Title final :
 	public GUI::Activity {
 public:
-	Act02_TestActivity() noexcept;
-	virtual ~Act02_TestActivity() noexcept override;
+	Act05_Title();
+	virtual ~Act05_Title() noexcept;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;
@@ -45,20 +43,6 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	void updateSize() noexcept;
-	void noticeSelectedMode() noexcept;
-
-protected:
 	GUI::Window* r_wnd;
-	sf::RectangleShape m_shape;
-	std::vector<sf::VideoMode> m_modes;
-	size_t m_modeI;
-	bool m_paused;
-	bool m_disableClose;
-	bool m_disableResize;
-	bool m_disableMinimize;
-	sf::Texture m_tex;
-	sf::Sprite m_sp;
+	Scene_Title* m_scene;
 };
-
-} // namespace Activity

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{8cc16bf2-d8db-480d-af1b-93075350101e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Act01_DefaultEntry.h">
@@ -27,6 +30,12 @@
     <ClInclude Include="Act04_Load.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Act05_Title.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Scene_Title.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Act01_DefaultEntry.cpp">
@@ -40,6 +49,12 @@
     </ClCompile>
     <ClCompile Include="Act04_Load.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Act05_Title.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Scene_Title.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

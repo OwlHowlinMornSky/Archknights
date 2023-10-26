@@ -33,16 +33,16 @@ public:
 	Act03_Opening() noexcept;
 	virtual ~Act03_Opening() noexcept = default;
 
+protected:
+	virtual bool start(GUI::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
+
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
 	virtual void OnEnterSysloop() noexcept override;
 	virtual void OnExitSysloop() noexcept override;
-
-public:
-	virtual bool start(GUI::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
 
 protected:
 	int m_status;

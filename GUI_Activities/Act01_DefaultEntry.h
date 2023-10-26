@@ -27,11 +27,18 @@
 
 namespace Activity {
 
+/**
+ * @brief Ä¬ÈÏ³õÊ¼Activity¡£
+*/
 class Act01_DefaultEntry final :
 	public GUI::Activity {
 public:
 	Act01_DefaultEntry() noexcept;
 	virtual ~Act01_DefaultEntry() noexcept;
+
+protected:
+	virtual bool start(GUI::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
 
 public:
 	virtual void handleEvent(const sf::Event& evt) override;
@@ -39,10 +46,6 @@ public:
 
 	virtual void OnEnterSysloop() noexcept override;
 	virtual void OnExitSysloop() noexcept override;
-
-public:
-	virtual bool start(GUI::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
 
 protected:
 	GUI::Window* r_wnd;

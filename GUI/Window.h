@@ -39,6 +39,9 @@ enum class WindowStatus {
 	Fullscreen    // 全屏。
 };
 
+/**
+ * @brief 窗口。
+*/
 class Window :
 	protected sf::RenderWindow {
 	friend class Carnival;
@@ -47,16 +50,16 @@ public:
 	virtual ~Window() noexcept;
 
 public:
-	virtual bool Create() noexcept = 0;
-	virtual void Close() noexcept = 0;
+	virtual bool Create() noexcept;
+	virtual void Close() noexcept;
 
 public:
-	void handleEvent();
-	void update(sf::Time dtime);
-
-	bool setActivity(std::unique_ptr<Activity>&& activity) noexcept;
-
-	void OnSystemLoop(bool enter);
+	/**
+	 * @brief 修改窗口的 Activity。
+	 * @param activity: 给定的 Activity。
+	 * @return 修改是否成功。
+	*/
+	bool changeActivity(std::unique_ptr<Activity>&& activity) noexcept;
 
 	/**
 	 * @brief 设置是否把 sizing 消息当作 resized 消息让 Activity 处理。
@@ -82,53 +85,52 @@ public:
 	WindowStatus getWindowStatus() const noexcept;
 
 public:
-	virtual sf::Vector2u getClientSize() const noexcept = 0;
 	/**
-	 * @brief 设置 所管理窗口的 关闭按钮 是否启用。
+	 * @brief 设置 窗口的关闭按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
 	virtual void setCloseEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief 设置 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
+	 * @brief 设置 窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
 	virtual void setResizeEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief 设置 所管理窗口的 最小化按钮 是否启用。
+	 * @brief 设置 窗口的最小化按钮 是否启用。
 	 * @param enabled: True 则启用，否则禁用。
 	*/
 	virtual void setMinimizeEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief 检测 所管理窗口的 关闭按钮 是否启用。
+	 * @brief 检测 窗口的关闭按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
 	virtual bool isCloseEnabled() const noexcept = 0;
 	/**
-	 * @brief 检测 所管理窗口的 Resize 边框 和 最大化按钮 是否启用。
+	 * @brief 检测 窗口的 Resize 边框 和 最大化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
 	virtual bool isResizeEnabled() const noexcept = 0;
 	/**
-	 * @brief 检测 所管理窗口的 最小化按钮 是否启用。
+	 * @brief 检测 窗口的 最小化按钮 是否启用。
 	 * @return True 则已启用，否则已禁用。
 	*/
 	virtual bool isMinimizeEnabled() const noexcept = 0;
 
 	/**
-	 * @brief 显示一个消息框。
+	 * @brief 显示一个消息框。该消息框含 Information 图标，且依附于窗口。
 	 * @param title: 消息框的标题。
 	 * @param text: 消息框的内容。
 	*/
 	virtual void showMessageBox(std::string_view title, std::string_view text) const noexcept = 0;
 	/**
-	 * @brief 显示一个消息框。
+	 * @brief 显示一个消息框。该消息框含 Information 图标，且依附于窗口。
 	 * @param title: 消息框的标题。
 	 * @param text: 消息框的内容。
 	*/
 	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept = 0;
 
 	/**
-	 * @brief 设为一般窗口。
+	 * @brief 设为窗口化窗口。
 	*/
 	virtual void setWindowed() noexcept = 0;
 	/**
@@ -137,20 +139,13 @@ public:
 	virtual bool setBorderless() noexcept = 0;
 	/**
 	 * @brief 设为全屏。
+	 * @brief OpenGL 无法实现真正的独占全屏，所以其实这就是一个能改变屏幕分辨率的无边框。
 	 * @brief （如果分辨率与屏幕不一致，则会丢失焦点，至少我的机器上是这样）OHMS。
 	 * @param w: 宽。
 	 * @param h: 高。
 	*/
 	virtual bool setFullscreen(sf::VideoMode mode) noexcept = 0;
 
-public:
-	void stop() noexcept {
-		m_waitToStop = true;
-		return;
-	}
-	bool isWaitingForStop() noexcept {
-		return m_waitToStop;
-	}
 public:
 	sf::Vector2u getSize() const {
 		return RenderWindow::getSize();
@@ -200,14 +195,27 @@ public:
 	}
 
 protected:
+	void handleEvent();
+	void update(sf::Time dtime);
+	void onSystemLoop(bool enter);
 	virtual void checkSizeInSystemLoop() noexcept = 0;
+public:
+	/**
+	 * @brief 令窗口等待关闭。
+	*/
+	void setWaitingForStop() noexcept {
+		m_waitToStop = true;
+	}
+	bool isWaitingForStop() noexcept {
+		return m_waitToStop;
+	}
 
 protected:
-	bool m_created;
-	bool m_sizingAsSized;
-	bool m_waitToStop;
-	WindowStatus m_windowStatus;
-	std::unique_ptr<Activity> m_activity;
+	bool m_waitToStop; // 等待关闭的标记。
+	bool m_created; // 已经 Create 的标记。
+	bool m_sizingAsSized; // 将 sizing 消息作为 resized 消息让 Activity 处理的标记。
+	WindowStatus m_windowStatus; // 窗口状态。
+	std::unique_ptr<Activity> m_activity; // Activity。
 };
 
 } // namespace GUI
