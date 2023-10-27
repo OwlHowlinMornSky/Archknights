@@ -30,15 +30,15 @@ namespace Activity {
 class Act03_Opening final :
 	public GUI::Activity {
 public:
-	Act03_Opening() noexcept;
-	virtual ~Act03_Opening() noexcept = default;
+	Act03_Opening();
+	virtual ~Act03_Opening() noexcept;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;
 	virtual void stop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
+	virtual bool handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
 	virtual void OnEnterSysloop() noexcept override;

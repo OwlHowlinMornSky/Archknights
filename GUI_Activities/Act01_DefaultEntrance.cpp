@@ -20,39 +20,29 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act01_DefaultEntrance.h"
-#include "Act02_TestActivity.h"
 #include "Act03_Opening.h"
-
 #ifdef _DEBUG
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "Act02_TestActivity.h"
 #endif // _DEBUG
 
 namespace Activity {
 
-Act01_DefaultEntrance::Act01_DefaultEntrance() noexcept :
-	m_haveRunned(false),
+Act01_DefaultEntrance::Act01_DefaultEntrance() :
 	r_wnd(nullptr) {
-#ifdef _DEBUG
-	g_tex = std::make_unique<sf::Texture>();
-	g_sp = std::make_unique<sf::Sprite>();
-	g_tex->loadFromFile("assets/DefaultEntry.png");
-	g_sp->setTexture(*g_tex, true);
-#endif // _DEBUG
 	return;
 }
 
 Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
-#ifdef _DEBUG
-	g_sp.reset();
-	g_tex.reset();
-#endif // _DEBUG
 	return;
 }
 
 bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
 	r_wnd->setSize({ 1280, 720 });
+#ifdef _DEBUG
+	m_tex.loadFromFile("assets/DefaultEntry.png");
+	m_sp.setTexture(m_tex, true);
+#endif // _DEBUG
 	return true;
 }
 
@@ -61,23 +51,27 @@ void Act01_DefaultEntrance::stop() noexcept {
 	return;
 }
 
-void Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
+bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
+		return 1;
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
 			r_wnd->setWaitingForStop();
+			return 1;
 			break;
 		case sf::Keyboard::F:
 			r_wnd->changeActivity(std::make_unique<Act03_Opening>());
+			return 1;
 			break;
 		case sf::Keyboard::E:
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
+			return 1;
 			break;
 		default:
 			break;
@@ -87,13 +81,13 @@ void Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 		break;
 	}
 #endif // _DEBUG
-	return;
+	return 0;
 }
 
 void Act01_DefaultEntrance::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r_wnd->clear(sf::Color::Red);
-	r_wnd->draw(*g_sp);
+	r_wnd->draw(m_sp);
 	r_wnd->display();
 #else
 	r_wnd->changeActivity(std::make_unique<Act03_Opening>());

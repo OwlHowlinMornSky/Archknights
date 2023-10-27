@@ -117,8 +117,8 @@ void Carnival::run() noexcept {
 bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
 	// 确保窗口已经 Create 并且含有有效 Activity。
 	assert(wnd->m_created);
-	assert(wnd->m_activity != nullptr);
-	if (!wnd->m_created || wnd->m_activity == nullptr)
+	assert(wnd->m_activity != nullptr || wnd->m_waitToChange);
+	if (!wnd->m_created || (wnd->m_activity == nullptr && !wnd->m_waitToChange))
 		return false;
 	if (m_mutipleWindows) {
 		m_wnds.push_front(std::move(wnd));
@@ -147,8 +147,8 @@ void Carnival::removeStoppedWindows() noexcept {
 void Carnival::onIdle() {
 	if (!m_wnds.empty()) {
 		for (const std::unique_ptr<Window>& wnd : m_wnds) {
-			wnd->checkSizeInSystemLoop();
 			wnd->handleEvent();
+			wnd->checkSizeInSystemLoop();
 		}
 		sf::Time dt = m_clk.restart();
 		for (const std::unique_ptr<Window>& wnd : m_wnds) {
@@ -161,8 +161,8 @@ void Carnival::onIdle() {
 
 void Carnival::onIdleSingle() {
 	if (!m_singleWnd->isWaitingForStop()) {
-		m_singleWnd->checkSizeInSystemLoop();
 		m_singleWnd->handleEvent();
+		m_singleWnd->checkSizeInSystemLoop();
 		sf::Time dt = m_clk.restart();
 		m_singleWnd->update(dt);
 	}

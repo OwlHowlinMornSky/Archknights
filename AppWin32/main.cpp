@@ -61,7 +61,6 @@ int APIENTRY wWinMain(
 		std::unique_ptr<GUI::WindowWin32> window = std::make_unique<GUI::WindowWin32>();
 		// Create window and run.
 		if (window->Create(nCmdShow)) {
-			window->setSizingAsResized(true);
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.
 			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());

@@ -36,7 +36,7 @@ protected:
 	virtual void stop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
+	virtual bool handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
 	virtual void OnEnterSysloop() noexcept override;

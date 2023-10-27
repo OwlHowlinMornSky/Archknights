@@ -38,9 +38,11 @@
 
 namespace Activity {
 
-Act03_Opening::Act03_Opening() noexcept :
+Act03_Opening::Act03_Opening() :
 	m_status(0),
 	r_wnd(nullptr) {}
+
+Act03_Opening::~Act03_Opening() noexcept {}
 
 bool Act03_Opening::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
@@ -67,21 +69,23 @@ void Act03_Opening::stop() noexcept {
 	return;
 }
 
-void Act03_Opening::handleEvent(const sf::Event& evt) {
+bool Act03_Opening::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
+		return 1;
 		break;
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
 		r_wnd->changeActivity(std::make_unique<Act04_Load>());
+		return 1;
 		break;
 #endif // _DEBUG
 	default:
 		break;
 	}
-	return;
+	return 0;
 }
 
 void Act03_Opening::update(sf::Time deltaTime) {

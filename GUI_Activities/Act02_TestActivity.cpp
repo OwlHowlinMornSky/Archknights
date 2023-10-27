@@ -20,22 +20,21 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act02_TestActivity.h"
+
+#ifdef _DEBUG
 #include "Act01_DefaultEntrance.h"
 #include "../GUI/Carnival.h"
 #include <iostream>
 
 namespace Activity {
 
-Act02_TestActivity::Act02_TestActivity() noexcept :
+Act02_TestActivity::Act02_TestActivity() :
 	m_paused(false),
 	r_wnd(nullptr),
+	m_modeI(0),
 	m_disableResize(false),
 	m_disableMinimize(false),
 	m_disableClose(false) {
-
-	m_modes = sf::VideoMode::getFullscreenModes();
-	m_modeI = 0;
-	noticeSelectedMode();
 	return;
 }
 
@@ -45,6 +44,10 @@ Act02_TestActivity::~Act02_TestActivity() noexcept {
 
 bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
+
+	m_modes = sf::VideoMode::getFullscreenModes();
+	m_modeI = 0;
+	noticeSelectedMode();
 
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
@@ -60,16 +63,18 @@ void Act02_TestActivity::stop() noexcept {
 	return;
 }
 
-void Act02_TestActivity::handleEvent(const sf::Event& evt) {
+bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
+		return 1;
 		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
 			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntrance>());
+			return 1;
 			break;
 		case sf::Keyboard::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
@@ -136,7 +141,7 @@ void Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	default:
 		break;
 	}
-	return;
+	return 0;
 }
 
 void Act02_TestActivity::update(sf::Time deltaTime) {
@@ -164,7 +169,8 @@ void Act02_TestActivity::OnExitSysloop() noexcept {
 }
 
 void Act02_TestActivity::updateSize() noexcept {
-	auto size = r_wnd->getSize();
+	auto& view = r_wnd->getView();
+	sf::Vector2f size = view.getSize();
 	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
 	return;
 }
@@ -182,3 +188,4 @@ void Act02_TestActivity::noticeSelectedMode() noexcept {
 }
 
 } // namespace Activity
+#endif // _DEBUG

@@ -24,7 +24,8 @@
 #include "Graphics/Scene_Title.h"
 
 Act05_Title::Act05_Title() :
-	r_wnd(nullptr) {
+	r_wnd(nullptr),
+	m_scene(nullptr) {
 	return;
 }
 
@@ -50,13 +51,14 @@ void Act05_Title::stop() noexcept {
 	r_wnd = nullptr;
 }
 
-void Act05_Title::handleEvent(const sf::Event& evt) {
+bool Act05_Title::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
+		return 1;
 		break;
 	}
-	return;
+	return 0;
 }
 
 void Act05_Title::update(sf::Time dtime) {

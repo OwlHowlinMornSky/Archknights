@@ -31,9 +31,11 @@
 
 namespace Activity {
 
-Act04_Load::Act04_Load() noexcept :
+Act04_Load::Act04_Load() :
 	m_status(0),
 	r_wnd(nullptr) {}
+
+Act04_Load::~Act04_Load() noexcept {}
 
 bool Act04_Load::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
@@ -44,7 +46,15 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 	m_sp.setTexture(m_tex, true);
 	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
 
-	updateSize(r_wnd->getSize());
+	auto& view = r_wnd->getView();
+	sf::Vector2f size = view.getSize();
+	updateSize(
+		sf::Vector2u(
+			static_cast<unsigned int>(size.x),
+			static_cast<unsigned int>(size.y)
+		)
+	);
+	//updateSize(r_wnd->getSize());
 
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
@@ -67,7 +77,7 @@ void Act04_Load::stop() noexcept {
 	return;
 }
 
-void Act04_Load::handleEvent(const sf::Event& evt) {
+bool Act04_Load::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
@@ -82,7 +92,7 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 			//	m_status = ST_OUT;
 			//}
 			r_wnd->changeActivity(std::make_unique<Act05_Title>());
-			return;
+			return 1;
 			break;
 		case sf::Mouse::Button::Right:
 			if (m_status == ST_OVER) {
@@ -99,7 +109,7 @@ void Act04_Load::handleEvent(const sf::Event& evt) {
 	default:
 		break;
 	}
-	return;
+	return 0;
 }
 
 void Act04_Load::update(sf::Time deltaTime) {

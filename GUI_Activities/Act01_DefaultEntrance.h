@@ -33,7 +33,7 @@ namespace Activity {
 class Act01_DefaultEntrance final :
 	public GUI::Activity {
 public:
-	Act01_DefaultEntrance() noexcept;
+	Act01_DefaultEntrance();
 	virtual ~Act01_DefaultEntrance() noexcept;
 
 protected:
@@ -41,7 +41,7 @@ protected:
 	virtual void stop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
+	virtual bool handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
 	virtual void OnEnterSysloop() noexcept override;
@@ -49,9 +49,10 @@ public:
 
 protected:
 	GUI::Window* r_wnd;
-	bool m_haveRunned;
-	std::unique_ptr<sf::Texture> g_tex;
-	std::unique_ptr<sf::Sprite> g_sp;
+#ifdef _DEBUG
+	sf::Sprite m_sp;
+	sf::Texture m_tex;
+#endif // _DEBUG
 };
 
 } // namespace Activity

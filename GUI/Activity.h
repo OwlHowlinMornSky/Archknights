@@ -55,8 +55,9 @@ public:
 	/**
 	 * @brief 处理事件。
 	 * @param evt: SFML 的事件。
+	 * @return 返回 false 表示一切正常，返回 true 表示立即清空消息队列。
 	*/
-	virtual void handleEvent(const sf::Event& evt) = 0;
+	virtual bool handleEvent(const sf::Event& evt) = 0;
 	/**
 	 * @brief 更新（包括绘制）。
 	 * @param dtime: 经过的时间。

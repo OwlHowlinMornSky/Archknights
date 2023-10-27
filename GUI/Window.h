@@ -55,7 +55,7 @@ public:
 
 public:
 	/**
-	 * @brief 修改窗口的 Activity。
+	 * @brief 修改窗口的 Activity，将在下次 handleEvent 之前生效。
 	 * @param activity: 给定的 Activity。
 	 * @return 修改是否成功。
 	*/
@@ -150,6 +150,9 @@ public:
 	sf::Vector2u getSize() const {
 		return RenderWindow::getSize();
 	}
+	const sf::View& getView() const {
+		return RenderWindow::getView();
+	}
 	void setVerticalSyncEnabled(bool enabled) {
 		return RenderWindow::setVerticalSyncEnabled(enabled);
 	}
@@ -212,10 +215,12 @@ public:
 
 protected:
 	bool m_waitToStop; // 等待关闭的标记。
+	bool m_waitToChange; // 等待改变 Activity。
 	bool m_created; // 已经 Create 的标记。
 	bool m_sizingAsSized; // 将 sizing 消息作为 resized 消息让 Activity 处理的标记。
 	WindowStatus m_windowStatus; // 窗口状态。
 	std::unique_ptr<Activity> m_activity; // Activity。
+	std::unique_ptr<Activity> m_nextActivity; // 等待生效的 Activity。
 };
 
 } // namespace GUI

@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#ifdef _DEBUG
 #include "../GUI/Activity.h"
 
 #include <SFML/Graphics.hpp>
@@ -30,7 +31,7 @@ namespace Activity {
 class Act02_TestActivity final :
 	public GUI::Activity {
 public:
-	Act02_TestActivity() noexcept;
+	Act02_TestActivity();
 	virtual ~Act02_TestActivity() noexcept override;
 
 protected:
@@ -38,7 +39,7 @@ protected:
 	virtual void stop() noexcept override;
 
 public:
-	virtual void handleEvent(const sf::Event& evt) override;
+	virtual bool handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
 	virtual void OnEnterSysloop() noexcept override;
@@ -62,3 +63,4 @@ protected:
 };
 
 } // namespace Activity
+#endif // _DEBUG

@@ -28,6 +28,7 @@ Window::Window() noexcept :
 	m_created(false),
 	m_sizingAsSized(false),
 	m_waitToStop(false),
+	m_waitToChange(false),
 	m_windowStatus(GUI::WindowStatus::Windowed) {}
 
 Window::~Window() noexcept {
@@ -38,7 +39,7 @@ Window::~Window() noexcept {
 bool Window::Create(bool foreground) noexcept {
 	if (!isOpen()) return false;
 	m_created = true;
-    return true;
+	return true;
 }
 
 void Window::Close() noexcept {
@@ -53,15 +54,8 @@ void Window::Close() noexcept {
 bool Window::changeActivity(std::unique_ptr<Activity>&& activity) noexcept {
 	if (activity == nullptr)
 		return false;
-	if (!activity->start(*this))
-		return false;
-	if (m_activity != nullptr)
-		m_activity->stop();
-	m_activity = std::move(activity);
-	// 清空 SFML 消息队列。
-	sf::Event evt;
-	while (pollEvent(evt))
-		;
+	m_waitToChange = true;
+	m_nextActivity = std::move(activity);
 	return true;
 }
 
@@ -95,6 +89,17 @@ WindowStatus Window::getWindowStatus() const noexcept {
 }
 
 void Window::handleEvent() {
+	if (m_waitToChange) {
+		if (m_nextActivity->start(*this)) {
+			if (m_activity != nullptr)
+				m_activity->stop();
+			m_activity = std::move(m_nextActivity);
+		}
+		else {
+			m_nextActivity.reset();
+		}
+		m_waitToChange = false;
+	}
 	sf::Event evt;
 	while (pollEvent(evt)) {
 		if (evt.type == sf::Event::Resized) {
@@ -108,7 +113,11 @@ void Window::handleEvent() {
 				)
 			);
 		}
-		m_activity->handleEvent(evt);
+		if (m_activity->handleEvent(evt)) {
+			while (pollEvent(evt))
+				;
+			break;
+		}
 	}
 	return;
 }
