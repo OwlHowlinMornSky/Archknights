@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -86,6 +86,11 @@ void Window::setSize(sf::Vector2u size) noexcept {
 
 WindowStatus Window::getWindowStatus() const noexcept {
 	return m_windowStatus;
+}
+
+bool Window::available() const {
+	// 确保窗口已经 Create 并且含有有效 Activity。
+	return m_created && (m_activity != nullptr || m_waitToChange);
 }
 
 void Window::handleEvent() {

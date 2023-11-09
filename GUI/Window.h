@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -31,20 +31,19 @@ namespace GUI {
 class Activity;
 
 /**
- * @brief ´°¿ÚÀàĞÍ¡£
+ * @brief çª—å£ç±»å‹ã€‚
 */
 enum class WindowStatus {
-	Windowed = 0, // ´°¿Ú»¯¡£
-	Borderless,   // ÎŞ±ß¿ò¡£
-	Fullscreen    // È«ÆÁ¡£
+	Windowed = 0, // çª—å£åŒ–ã€‚
+	Borderless,   // æ— è¾¹æ¡†ã€‚
+	Fullscreen    // å…¨å±ã€‚
 };
 
 /**
- * @brief ´°¿Ú¡£
+ * @brief çª—å£ã€‚
 */
 class Window :
 	protected sf::RenderWindow {
-	friend class Carnival;
 public:
 	Window() noexcept;
 	virtual ~Window() noexcept;
@@ -55,94 +54,94 @@ public:
 
 public:
 	/**
-	 * @brief ĞŞ¸Ä´°¿ÚµÄ Activity£¬½«ÔÚÏÂ´Î handleEvent Ö®Ç°ÉúĞ§¡£
-	 * @param activity: ¸ø¶¨µÄ Activity¡£
-	 * @return ĞŞ¸ÄÊÇ·ñ³É¹¦¡£
+	 * @brief ä¿®æ”¹çª—å£çš„ Activityï¼Œå°†åœ¨ä¸‹æ¬¡ handleEvent ä¹‹å‰ç”Ÿæ•ˆã€‚
+	 * @param activity: ç»™å®šçš„ Activityã€‚
+	 * @return ä¿®æ”¹æ˜¯å¦æˆåŠŸã€‚
 	*/
 	bool changeActivity(std::unique_ptr<Activity>&& activity) noexcept;
 
 	/**
-	 * @brief ÉèÖÃÊÇ·ñ°Ñ sizing ÏûÏ¢µ±×÷ resized ÏûÏ¢ÈÃ Activity ´¦Àí¡£
-	 * @param enabled: ÊÇ·ñ¿ªÆô¡£
+	 * @brief è®¾ç½®æ˜¯å¦æŠŠ sizing æ¶ˆæ¯å½“ä½œ resized æ¶ˆæ¯è®© Activity å¤„ç†ã€‚
+	 * @param enabled: æ˜¯å¦å¼€å¯ã€‚
 	*/
 	void setSizingAsResized(bool enabled) noexcept;
 	/**
-	 * @brief ÊÇ·ñÒÑ°Ñ sizing ÏûÏ¢µ±×÷ resized ÏûÏ¢ÈÃ Activity ´¦Àí¡£
-	 * @return ÊÇ·ñ¿ªÆô¡£
+	 * @brief æ˜¯å¦å·²æŠŠ sizing æ¶ˆæ¯å½“ä½œ resized æ¶ˆæ¯è®© Activity å¤„ç†ã€‚
+	 * @return æ˜¯å¦å¼€å¯ã€‚
 	*/
 	bool isSizingAsResized() const noexcept;
 
 	/**
-	 * @brief ÉèÖÃ´°¿Ú´óĞ¡£¨Ë³±ã¸üĞÂView£©¡£
-	 * @param size: ´óĞ¡¡£
+	 * @brief è®¾ç½®çª—å£å¤§å°ï¼ˆé¡ºä¾¿æ›´æ–°Viewï¼‰ã€‚
+	 * @param size: å¤§å°ã€‚
 	*/
 	void setSize(sf::Vector2u size) noexcept;
 
 	/**
-	 * @brief »ñÈ¡µ±Ç°´°¿Ú×´Ì¬¡£
-	 * @return ´°¿Ú×´Ì¬¡£
+	 * @brief è·å–å½“å‰çª—å£çŠ¶æ€ã€‚
+	 * @return çª—å£çŠ¶æ€ã€‚
 	*/
 	WindowStatus getWindowStatus() const noexcept;
 
 public:
 	/**
-	 * @brief ÉèÖÃ ´°¿ÚµÄ¹Ø±Õ°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @param enabled: True ÔòÆôÓÃ£¬·ñÔò½ûÓÃ¡£
+	 * @brief è®¾ç½® çª—å£çš„å…³é—­æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @param enabled: True åˆ™å¯ç”¨ï¼Œå¦åˆ™ç¦ç”¨ã€‚
 	*/
 	virtual void setCloseEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief ÉèÖÃ ´°¿ÚµÄ Resize ±ß¿ò ºÍ ×î´ó»¯°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @param enabled: True ÔòÆôÓÃ£¬·ñÔò½ûÓÃ¡£
+	 * @brief è®¾ç½® çª—å£çš„ Resize è¾¹æ¡† å’Œ æœ€å¤§åŒ–æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @param enabled: True åˆ™å¯ç”¨ï¼Œå¦åˆ™ç¦ç”¨ã€‚
 	*/
 	virtual void setResizeEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief ÉèÖÃ ´°¿ÚµÄ×îĞ¡»¯°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @param enabled: True ÔòÆôÓÃ£¬·ñÔò½ûÓÃ¡£
+	 * @brief è®¾ç½® çª—å£çš„æœ€å°åŒ–æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @param enabled: True åˆ™å¯ç”¨ï¼Œå¦åˆ™ç¦ç”¨ã€‚
 	*/
 	virtual void setMinimizeEnabled(bool enabled) noexcept = 0;
 	/**
-	 * @brief ¼ì²â ´°¿ÚµÄ¹Ø±Õ°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @return True ÔòÒÑÆôÓÃ£¬·ñÔòÒÑ½ûÓÃ¡£
+	 * @brief æ£€æµ‹ çª—å£çš„å…³é—­æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @return True åˆ™å·²å¯ç”¨ï¼Œå¦åˆ™å·²ç¦ç”¨ã€‚
 	*/
 	virtual bool isCloseEnabled() const noexcept = 0;
 	/**
-	 * @brief ¼ì²â ´°¿ÚµÄ Resize ±ß¿ò ºÍ ×î´ó»¯°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @return True ÔòÒÑÆôÓÃ£¬·ñÔòÒÑ½ûÓÃ¡£
+	 * @brief æ£€æµ‹ çª—å£çš„ Resize è¾¹æ¡† å’Œ æœ€å¤§åŒ–æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @return True åˆ™å·²å¯ç”¨ï¼Œå¦åˆ™å·²ç¦ç”¨ã€‚
 	*/
 	virtual bool isResizeEnabled() const noexcept = 0;
 	/**
-	 * @brief ¼ì²â ´°¿ÚµÄ ×îĞ¡»¯°´Å¥ ÊÇ·ñÆôÓÃ¡£
-	 * @return True ÔòÒÑÆôÓÃ£¬·ñÔòÒÑ½ûÓÃ¡£
+	 * @brief æ£€æµ‹ çª—å£çš„ æœ€å°åŒ–æŒ‰é’® æ˜¯å¦å¯ç”¨ã€‚
+	 * @return True åˆ™å·²å¯ç”¨ï¼Œå¦åˆ™å·²ç¦ç”¨ã€‚
 	*/
 	virtual bool isMinimizeEnabled() const noexcept = 0;
 
 	/**
-	 * @brief ÏÔÊ¾Ò»¸öÏûÏ¢¿ò¡£¸ÃÏûÏ¢¿òº¬ Information Í¼±ê£¬ÇÒÒÀ¸½ÓÚ´°¿Ú¡£
-	 * @param title: ÏûÏ¢¿òµÄ±êÌâ¡£
-	 * @param text: ÏûÏ¢¿òµÄÄÚÈİ¡£
+	 * @brief æ˜¾ç¤ºä¸€ä¸ªæ¶ˆæ¯æ¡†ã€‚è¯¥æ¶ˆæ¯æ¡†å« Information å›¾æ ‡ï¼Œä¸”ä¾é™„äºçª—å£ã€‚
+	 * @param title: æ¶ˆæ¯æ¡†çš„æ ‡é¢˜ã€‚
+	 * @param text: æ¶ˆæ¯æ¡†çš„å†…å®¹ã€‚
 	*/
 	virtual void showMessageBox(std::string_view title, std::string_view text) const noexcept = 0;
 	/**
-	 * @brief ÏÔÊ¾Ò»¸öÏûÏ¢¿ò¡£¸ÃÏûÏ¢¿òº¬ Information Í¼±ê£¬ÇÒÒÀ¸½ÓÚ´°¿Ú¡£
-	 * @param title: ÏûÏ¢¿òµÄ±êÌâ¡£
-	 * @param text: ÏûÏ¢¿òµÄÄÚÈİ¡£
+	 * @brief æ˜¾ç¤ºä¸€ä¸ªæ¶ˆæ¯æ¡†ã€‚è¯¥æ¶ˆæ¯æ¡†å« Information å›¾æ ‡ï¼Œä¸”ä¾é™„äºçª—å£ã€‚
+	 * @param title: æ¶ˆæ¯æ¡†çš„æ ‡é¢˜ã€‚
+	 * @param text: æ¶ˆæ¯æ¡†çš„å†…å®¹ã€‚
 	*/
 	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept = 0;
 
 	/**
-	 * @brief ÉèÎª´°¿Ú»¯´°¿Ú¡£
+	 * @brief è®¾ä¸ºçª—å£åŒ–çª—å£ã€‚
 	*/
 	virtual void setWindowed() noexcept = 0;
 	/**
-	 * @brief ÉèÎªÎŞ±ß¿ò´°¿Ú¡£
+	 * @brief è®¾ä¸ºæ— è¾¹æ¡†çª—å£ã€‚
 	*/
 	virtual bool setBorderless() noexcept = 0;
 	/**
-	 * @brief ÉèÎªÈ«ÆÁ¡£
-	 * @brief OpenGL ÎŞ·¨ÊµÏÖÕæÕıµÄ¶ÀÕ¼È«ÆÁ£¬ËùÒÔÆäÊµÕâ¾ÍÊÇÒ»¸öÄÜ¸Ä±äÆÁÄ»·Ö±æÂÊµÄÎŞ±ß¿ò¡£
-	 * @brief £¨Èç¹û·Ö±æÂÊÓëÆÁÄ»²»Ò»ÖÂ£¬Ôò»á¶ªÊ§½¹µã£¬ÖÁÉÙÎÒµÄ»úÆ÷ÉÏÊÇÕâÑù£©OHMS¡£
-	 * @param w: ¿í¡£
-	 * @param h: ¸ß¡£
+	 * @brief è®¾ä¸ºå…¨å±ã€‚
+	 * @brief OpenGL æ— æ³•å®ç°çœŸæ­£çš„ç‹¬å å…¨å±ï¼Œæ‰€ä»¥å…¶å®è¿™å°±æ˜¯ä¸€ä¸ªèƒ½æ”¹å˜å±å¹•åˆ†è¾¨ç‡çš„æ— è¾¹æ¡†ã€‚
+	 * @brief ï¼ˆå¦‚æœåˆ†è¾¨ç‡ä¸å±å¹•ä¸ä¸€è‡´ï¼Œåˆ™ä¼šä¸¢å¤±ç„¦ç‚¹ï¼Œè‡³å°‘æˆ‘çš„æœºå™¨ä¸Šæ˜¯è¿™æ ·ï¼‰OHMSã€‚
+	 * @param w: å®½ã€‚
+	 * @param h: é«˜ã€‚
 	*/
 	virtual bool setFullscreen(sf::VideoMode mode) noexcept = 0;
 
@@ -197,14 +196,15 @@ public:
 		return RenderWindow::draw(vertexBuffer, firstVertex, vertexCount, states);
 	}
 
-protected:
+public:
+	bool available() const;
 	void handleEvent();
 	void update(sf::Time dtime);
 	void onSystemLoop(bool enter);
 	virtual void checkSizeInSystemLoop() noexcept = 0;
 public:
 	/**
-	 * @brief Áî´°¿ÚµÈ´ı¹Ø±Õ¡£
+	 * @brief ä»¤çª—å£ç­‰å¾…å…³é—­ã€‚
 	*/
 	void setWaitingForStop() noexcept {
 		m_waitToStop = true;
@@ -214,13 +214,13 @@ public:
 	}
 
 protected:
-	bool m_waitToStop; // µÈ´ı¹Ø±ÕµÄ±ê¼Ç¡£
-	bool m_waitToChange; // µÈ´ı¸Ä±ä Activity¡£
-	bool m_created; // ÒÑ¾­ Create µÄ±ê¼Ç¡£
-	bool m_sizingAsSized; // ½« sizing ÏûÏ¢×÷Îª resized ÏûÏ¢ÈÃ Activity ´¦ÀíµÄ±ê¼Ç¡£
-	WindowStatus m_windowStatus; // ´°¿Ú×´Ì¬¡£
-	std::unique_ptr<Activity> m_activity; // Activity¡£
-	std::unique_ptr<Activity> m_nextActivity; // µÈ´ıÉúĞ§µÄ Activity¡£
+	bool m_waitToStop; // ç­‰å¾…å…³é—­çš„æ ‡è®°ã€‚
+	bool m_waitToChange; // ç­‰å¾…æ”¹å˜ Activityã€‚
+	bool m_created; // å·²ç» Create çš„æ ‡è®°ã€‚
+	bool m_sizingAsSized; // å°† sizing æ¶ˆæ¯ä½œä¸º resized æ¶ˆæ¯è®© Activity å¤„ç†çš„æ ‡è®°ã€‚
+	WindowStatus m_windowStatus; // çª—å£çŠ¶æ€ã€‚
+	std::unique_ptr<Activity> m_activity; // Activityã€‚
+	std::unique_ptr<Activity> m_nextActivity; // ç­‰å¾…ç”Ÿæ•ˆçš„ Activityã€‚
 };
 
 } // namespace GUI

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -35,7 +35,7 @@ const char g_str_unknown[] = "Unknown Exception.";
 
 namespace GUI {
 
-// Î¨Ò»ÊµÀý
+// å”¯ä¸€å®žä¾‹
 std::unique_ptr<Carnival> Carnival::s_instance(nullptr);
 
 Carnival& Carnival::instance() noexcept {
@@ -115,16 +115,15 @@ void Carnival::run() noexcept {
 }
 
 bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
-	// È·±£´°¿ÚÒÑ¾­ Create ²¢ÇÒº¬ÓÐÓÐÐ§ Activity¡£
-	assert(wnd->m_created);
-	assert(wnd->m_activity != nullptr || wnd->m_waitToChange);
-	if (!wnd->m_created || (wnd->m_activity == nullptr && !wnd->m_waitToChange))
+	// ç¡®ä¿çª—å£å·²ç» Create å¹¶ä¸”å«æœ‰æœ‰æ•ˆ Activityã€‚
+	assert(wnd->available());
+	if (!wnd->available())
 		return false;
 	if (m_mutipleWindows) {
 		m_wnds.push_front(std::move(wnd));
 	}
 	else {
-		// Èç¹ûÒÑ¾­ÓÐ´°¿Ú¾ÍÊ§°Ü¡£
+		// å¦‚æžœå·²ç»æœ‰çª—å£å°±å¤±è´¥ã€‚
 		assert(m_singleWnd == nullptr);
 		if (m_singleWnd != nullptr)
 			return false;
@@ -165,6 +164,9 @@ void Carnival::onIdleSingle() {
 		m_singleWnd->checkSizeInSystemLoop();
 		sf::Time dt = m_clk.restart();
 		m_singleWnd->update(dt);
+	}
+	else {
+		m_singleWnd->Close();
 	}
 	return;
 }
