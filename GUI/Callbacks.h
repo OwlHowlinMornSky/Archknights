@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,17 +26,17 @@
 namespace GUI {
 
 /**
- * @brief ����״̬�Ļص���
- * @brief ��������ڵ�Ŀ����Ҫ���Ƿ�ֹ �ƶ����� �� �ı䴰�ڴ�С ʱ �����߼���ס��
- * @brief ������ ���ö�ʱ������ʱ���Ļص� MyTimerProc �����������⡣
- * @brief ���������߼���Ǩ��ʱ��Ҫ���������������һ���ǵøĻ�������Ϊ�г�ʼ�պ�������
+ * @brief 闲置状态的回调。
+ * @brief 这玩意存在的目的主要就是防止 移动窗口 和 改变窗口大小 时 把主逻辑卡住。
+ * @brief 方法是 设置定时器，定时器的回调 MyTimerProc 会调用这个玩意。
+ * @brief 所以在主逻辑变迁的时候要改这个，不过用完一定记得改回来（因为有初始空函数）。
 */
 extern std::function<void()> OnIdle;
 /**
- * @brief ������˳�ϵͳѭ��ʱ�Ļص�������Ϊ true ��Ϊ ���룬false Ϊ�˳���
- * @brief �������������� ��ʼ�ƶ����� ���� ��ʼ�ı䴰�ڴ�С ʱ���õġ�
- * @brief ����֪ͨ�����һЩ������������ͣ��Ϸʲô�ģ���
- * @brief ���� �˳��ƶ���ı��С ��ʱ�� ͻȻ����һ�� �������� ������ʮ�� �� ֡��
+ * @brief 进入或退出系统循环时的回调。参数为 true 则为 进入，false 为退出。
+ * @brief 如上所述，就是 开始移动窗口 或者 开始改变窗口大小 时调用的。
+ * @brief 可以通知你进行一些处理（比如暂停游戏什么的），
+ * @brief 避免 退出移动或改变大小 的时候 突然出现一个 长达数秒 甚至数十秒 的 帧。
 */
 extern std::function<void(bool)> OnSystemLoop;
 

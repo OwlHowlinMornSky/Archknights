@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -20,16 +20,17 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #pragma once
+
 #include "Carnival.h"
 
 namespace GUI {
 
 /**
- * @brief Carnival ÔÚ Win32 ÏÂµÄÊµÏÖ¡£
+ * @brief Carnival åœ¨ Win32 ä¸‹çš„å®ç°ã€‚
 */
 class CarnivalWin32 final :
     public Carnival {
-	friend class Carnival; // ÕâÊÇÎªÁËÎ¨Ò»ÊµÀıµÄ setup ÄÜ¹»¹¹ÔìÕâ¸öÀà¡£
+	friend class Carnival; // è¿™æ˜¯ä¸ºäº†å”¯ä¸€å®ä¾‹çš„ setup èƒ½å¤Ÿæ„é€ è¿™ä¸ªç±»ã€‚
 protected:
 	CarnivalWin32(bool mutipleWindows);
 public:

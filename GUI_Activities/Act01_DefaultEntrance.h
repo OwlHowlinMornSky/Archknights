@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -28,7 +28,7 @@
 namespace Activity {
 
 /**
- * @brief Ĭ�ϳ�ʼActivity��
+ * @brief 默认初始Activity。
 */
 class Act01_DefaultEntrance final :
 	public GUI::Activity {

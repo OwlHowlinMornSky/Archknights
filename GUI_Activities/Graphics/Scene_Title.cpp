@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -182,7 +182,7 @@ void Scene_Title::update(float dt) {
 void Scene_Title::render() {
 	g3d::base::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f)); // ÉèÖÃclearÑÕÉ«
+	glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f)); // è®¾ç½®clearé¢œè‰²
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 
 	sf::IntRect Viewport(

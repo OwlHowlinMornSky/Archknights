@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -29,16 +29,16 @@
 namespace g3d {
 
 /**
- * @brief ×ÅÉ«Æ÷ÀàĞÍ¡£
+ * @brief ç€è‰²å™¨ç±»å‹ã€‚
 */
 enum class ShaderType : size_t {
-	Vertex = 0, // ¶¥µã¡£
-	Fragment,   // Æ¬Ôª¡£
-	COUNT       // [¼ÆÊı]
+	Vertex = 0, // é¡¶ç‚¹ã€‚
+	Fragment,   // ç‰‡å…ƒã€‚
+	COUNT       // [è®¡æ•°]
 };
 
 /**
- * @brief ½Ó¿Ú Shader¡£
+ * @brief æ¥å£ Shaderã€‚
 */
 class IShader :
 	public INonCopyable {
@@ -49,15 +49,15 @@ public:
 
 public:
 	/**
-	 * @brief °ó¶¨ »ò È¡Ïû°ó¶¨ ×ÅÉ«Æ÷¡£
-	 * @brief "°ó¶¨"¾ÍÊÇÖ¸ ÔÚ OpenGL Àï ÆôÓÃ(Ê¹ÓÃ) Ä³¸ö×ÅÉ«Æ÷¡£
-	 * @brief [×¢Òâ] Õâ¸ö·½·¨ÊÇÔÚ "Shader.cpp" ÀïÊµÏÖµÄ¡£
-	 * @param shader: Òª°ó¶¨µÄ ×ÅÉ«Æ÷¡£Îª nullptr ÔòÊÇ È¡ÏûÏÈÇ°µÄ°ó¶¨¡£
+	 * @brief ç»‘å®š æˆ– å–æ¶ˆç»‘å®š ç€è‰²å™¨ã€‚
+	 * @brief "ç»‘å®š"å°±æ˜¯æŒ‡ åœ¨ OpenGL é‡Œ å¯ç”¨(ä½¿ç”¨) æŸä¸ªç€è‰²å™¨ã€‚
+	 * @brief [æ³¨æ„] è¿™ä¸ªæ–¹æ³•æ˜¯åœ¨ "Shader.cpp" é‡Œå®ç°çš„ã€‚
+	 * @param shader: è¦ç»‘å®šçš„ ç€è‰²å™¨ã€‚ä¸º nullptr åˆ™æ˜¯ å–æ¶ˆå…ˆå‰çš„ç»‘å®šã€‚
 	*/
 	static void Bind(IShader* shader);
 
 protected:
-	GLuint m_program; // ×ÅÉ«Æ÷³ÌĞò£¨OpenGL£©¡£
+	GLuint m_program; // ç€è‰²å™¨ç¨‹åºï¼ˆOpenGLï¼‰ã€‚
 };
 
 

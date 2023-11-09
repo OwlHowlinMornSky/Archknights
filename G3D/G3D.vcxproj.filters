@@ -62,9 +62,6 @@
     <ClInclude Include="Camera.Orthographic.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="﻿IModel.h">
-      <Filter>接口</Filter>
-    </ClInclude>
     <ClInclude Include="IShader.h">
       <Filter>接口</Filter>
     </ClInclude>
@@ -84,6 +81,9 @@
       <Filter>接口</Filter>
     </ClInclude>
     <ClInclude Include="INonCopyable.h">
+      <Filter>接口</Filter>
+    </ClInclude>
+    <ClInclude Include="IModel.h">
       <Filter>接口</Filter>
     </ClInclude>
   </ItemGroup>

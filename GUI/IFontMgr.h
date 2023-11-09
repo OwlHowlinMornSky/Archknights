@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,16 +26,16 @@
 namespace GUI {
 
 /**
- * @brief ×ÖÌåÖÖÀà¡£ÒÔÓÃÔÚ²»Í¬ÎÄ±¾ÉÏÀ´·ÖÀà¡£
+ * @brief å­—ä½“ç§ç±»ã€‚ä»¥ç”¨åœ¨ä¸åŒæ–‡æœ¬ä¸Šæ¥åˆ†ç±»ã€‚
 */
 enum class FontType : unsigned int {
-	CommonContext = 0, // Ò»°ãÎÄ±¾¡£
-	MonoMunber, // µÈ¿íÊı×Ö¡£
-	LevelTitle // ¹Ø¿¨±êÌâ¡£
+	CommonContext = 0, // ä¸€èˆ¬æ–‡æœ¬ã€‚
+	MonoMunber, // ç­‰å®½æ•°å­—ã€‚
+	LevelTitle // å…³å¡æ ‡é¢˜ã€‚
 };
 
 /**
- * @brief ×ÖÌå¹ÜÀíÆ÷ ½Ó¿Ú: Í³Ò»¼ÓÔØ×ÖÌå¡£
+ * @brief å­—ä½“ç®¡ç†å™¨ æ¥å£: ç»Ÿä¸€åŠ è½½å­—ä½“ã€‚
 */
 class IFontMgr {
 public:

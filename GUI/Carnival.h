@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -27,111 +27,111 @@
 namespace GUI {
 
 /**
- * @brief Carnival: ¹ÜÀíËùÓĞ´°¿ÚµÄÀà¡£
+ * @brief Carnival: ç®¡ç†æ‰€æœ‰çª—å£çš„ç±»ã€‚
 */
 class Carnival {
 protected:
 	/**
-	 * @brief ¹¹Ôìº¯Êı¡£·ÖÎª µ¥´°¿ÚÄ£Ê½ ºÍ ¶à´°¿ÚÄ£Ê½¡£
-	 * @param mutipleWindows: ÊÇ·ñÆôÓÃ¶à´°¿Ú¡£
+	 * @brief æ„é€ å‡½æ•°ã€‚åˆ†ä¸º å•çª—å£æ¨¡å¼ å’Œ å¤šçª—å£æ¨¡å¼ã€‚
+	 * @param mutipleWindows: æ˜¯å¦å¯ç”¨å¤šçª—å£ã€‚
 	*/
 	Carnival(bool mutipleWindows);
 public:
 	/**
-	 * @brief Îö¹¹º¯Êı¡£
+	 * @brief ææ„å‡½æ•°ã€‚
 	*/
 	virtual ~Carnival() noexcept;
 
 public:
 	/**
-	 * @brief ³õÊ¼»¯¡£Carnival Ö»ÄÜÓĞÒ»¸öÊµÀı£¬ÔÚ¸Ã·½·¨ÖĞ¹¹Ôì¡£
-	 * @param mutipleWindows: ÊÇ·ñÆôÓÃ¶à´°¿Ú¡£
+	 * @brief åˆå§‹åŒ–ã€‚Carnival åªèƒ½æœ‰ä¸€ä¸ªå®ä¾‹ï¼Œåœ¨è¯¥æ–¹æ³•ä¸­æ„é€ ã€‚
+	 * @param mutipleWindows: æ˜¯å¦å¯ç”¨å¤šçª—å£ã€‚
 	*/
 	static void setup(bool mutipleWindows = true) noexcept;
 	/**
-	 * @brief »ñÈ¡ Carnival µÄÎ¨Ò»ÊµÀı¡£µ÷ÓÃÇ°±ØĞëÏÈ setup¡£
-	 * @return Carnival ÊµÀıµÄÒıÓÃ¡£
+	 * @brief è·å– Carnival çš„å”¯ä¸€å®ä¾‹ã€‚è°ƒç”¨å‰å¿…é¡»å…ˆ setupã€‚
+	 * @return Carnival å®ä¾‹çš„å¼•ç”¨ã€‚
 	*/
 	static Carnival& instance() noexcept;
 	/**
-	 * @brief ÇåÀí¡£Ïú»Ù Carnival ÊµÀı¡£
+	 * @brief æ¸…ç†ã€‚é”€æ¯ Carnival å®ä¾‹ã€‚
 	*/
 	static void drop() noexcept;
 
 public:
 	/**
-	 * @brief ¿ªÊ¼Ö´ĞĞ¡£
+	 * @brief å¼€å§‹æ‰§è¡Œã€‚
 	*/
 	void run() noexcept;
 
 	/**
-	 * @brief Ïò Carnival Ìí¼Ó´°¿Ú¡£ÔÚµ¥´°¿ÚÄ£Ê½ÏÂÌí¼ÓµÚ¶ş¸ö¼°ÒÔºóµÄ´°¿Ú¶¼»áÊ§°Ü¡£
-	 * @param wnd: ´°¿Ú£¬±ØĞëÒÑ¾­ Create£¬ÇÒº¬ÓĞÓĞĞ§ Activity¡£
-	 * @return Ìí¼ÓÊÇ·ñ³É¹¦¡£
+	 * @brief å‘ Carnival æ·»åŠ çª—å£ã€‚åœ¨å•çª—å£æ¨¡å¼ä¸‹æ·»åŠ ç¬¬äºŒä¸ªåŠä»¥åçš„çª—å£éƒ½ä¼šå¤±è´¥ã€‚
+	 * @param wnd: çª—å£ï¼Œå¿…é¡»å·²ç» Createï¼Œä¸”å«æœ‰æœ‰æ•ˆ Activityã€‚
+	 * @return æ·»åŠ æ˜¯å¦æˆåŠŸã€‚
 	*/
 	bool pushWindow(std::unique_ptr<Window>&& wnd);
 	/**
-	 * @brief ÈÃ Carnival ÊÓÌõ¼ş´´½¨Ò»¸ö Window£¬²¢³õÊ¼º¬ÓĞ¸ø¶¨µÄ Activity¡£
-	 * @brief ÔÚµ¥´°¿ÚÄ£Ê½ÏÂ´´½¨µÚ¶ş¸ö¼°ÒÔºóµÄ´°¿Ú¶¼»áÊ§°Ü¡£
-	 * @param activity: ¸ø¶¨µÄ Activity¡£
-	 * @return ´´½¨ÊÇ·ñ³É¹¦¡£
+	 * @brief è®© Carnival è§†æ¡ä»¶åˆ›å»ºä¸€ä¸ª Windowï¼Œå¹¶åˆå§‹å«æœ‰ç»™å®šçš„ Activityã€‚
+	 * @brief åœ¨å•çª—å£æ¨¡å¼ä¸‹åˆ›å»ºç¬¬äºŒä¸ªåŠä»¥åçš„çª—å£éƒ½ä¼šå¤±è´¥ã€‚
+	 * @param activity: ç»™å®šçš„ Activityã€‚
+	 * @return åˆ›å»ºæ˜¯å¦æˆåŠŸã€‚
 	*/
 	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground = false) = 0;
 
 public:
 	/**
-	 * @brief ÏÔÊ¾Ò»¸öÏûÏ¢¿ò¡£¸Ã ÏûÏ¢¿ò ½«º¬ Error Í¼±ê£¬ÇÒ²»ÒÀ¸½ÓÚ´°¿Ú¡£
-	 * @param title: ÏûÏ¢¿òµÄ±êÌâ¡£
-	 * @param text: ÏûÏ¢¿òµÄÄÚÈİ¡£
+	 * @brief æ˜¾ç¤ºä¸€ä¸ªæ¶ˆæ¯æ¡†ã€‚è¯¥ æ¶ˆæ¯æ¡† å°†å« Error å›¾æ ‡ï¼Œä¸”ä¸ä¾é™„äºçª—å£ã€‚
+	 * @param title: æ¶ˆæ¯æ¡†çš„æ ‡é¢˜ã€‚
+	 * @param text: æ¶ˆæ¯æ¡†çš„å†…å®¹ã€‚
 	*/
 	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept = 0;
 
 	/**
-	 * @brief ÖØÖÃÏµÍ³Ë¯Ãß¼ÆÊıÆ÷£¨´Ë´¦ËùËµË¯Ãß°üÀ¨¡°µ¥´¿¹Ø±ÕÆÁÄ»¡±£©¡£
+	 * @brief é‡ç½®ç³»ç»Ÿç¡çœ è®¡æ•°å™¨ï¼ˆæ­¤å¤„æ‰€è¯´ç¡çœ åŒ…æ‹¬â€œå•çº¯å…³é—­å±å¹•â€ï¼‰ã€‚
 	*/
 	virtual void resetSleepCounter() noexcept = 0;
 	/**
-	 * @brief ÉèÖÃ×èÖ¹ÏµÍ³Ë¯Ãß£¨´Ë´¦ËùËµË¯Ãß°üÀ¨¡°µ¥´¿¹Ø±ÕÆÁÄ»¡±£©¡£
-	 * @param allowSleep: ÊÇ·ñÔÊĞíË¯Ãß£¬ÉèÎª false ¼´ ×èÖ¹Ë¯Ãß ÇÒ ±£³ÖÆÁÄ»µãÁÁ¡£
+	 * @brief è®¾ç½®é˜»æ­¢ç³»ç»Ÿç¡çœ ï¼ˆæ­¤å¤„æ‰€è¯´ç¡çœ åŒ…æ‹¬â€œå•çº¯å…³é—­å±å¹•â€ï¼‰ã€‚
+	 * @param allowSleep: æ˜¯å¦å…è®¸ç¡çœ ï¼Œè®¾ä¸º false å³ é˜»æ­¢ç¡çœ  ä¸” ä¿æŒå±å¹•ç‚¹äº®ã€‚
 	*/
 	virtual void setSleepEnabled(bool allowSleep) noexcept = 0;
 
 protected:
 	/**
-	 * @brief ÒÆ³ı µÈ´ı¹Ø±Õ µÄ´°¿Ú¡£
+	 * @brief ç§»é™¤ ç­‰å¾…å…³é—­ çš„çª—å£ã€‚
 	*/
 	void removeStoppedWindows() noexcept;
 	/**
-	 * @brief ÏµÍ³Ñ­»·ÖĞµÄ Idle »Øµ÷¡£
+	 * @brief ç³»ç»Ÿå¾ªç¯ä¸­çš„ Idle å›è°ƒã€‚
 	*/
 	void onIdle();
 	/**
-	 * @brief ÏµÍ³Ñ­»·ÖĞµÄ Idle »Øµ÷£¨µ¥´°¿ÚÄ£Ê½£©¡£
+	 * @brief ç³»ç»Ÿå¾ªç¯ä¸­çš„ Idle å›è°ƒï¼ˆå•çª—å£æ¨¡å¼ï¼‰ã€‚
 	*/
 	void onIdleSingle();
 	/**
-	 * @brief ÏµÍ³Ñ­»·Í¨Öª»Øµ÷¡£
-	 * @param enter: ture Îª ½øÈë£¬false ÎªÍË³ö¡£
+	 * @brief ç³»ç»Ÿå¾ªç¯é€šçŸ¥å›è°ƒã€‚
+	 * @param enter: ture ä¸º è¿›å…¥ï¼Œfalse ä¸ºé€€å‡ºã€‚
 	*/
 	void onSystemLoop(bool enter);
 	/**
-	 * @brief ÏµÍ³Ñ­»·Í¨Öª»Øµ÷£¨µ¥´°¿ÚÄ£Ê½£©¡£
-	 * @param enter: ture Îª ½øÈë£¬false ÎªÍË³ö¡£
+	 * @brief ç³»ç»Ÿå¾ªç¯é€šçŸ¥å›è°ƒï¼ˆå•çª—å£æ¨¡å¼ï¼‰ã€‚
+	 * @param enter: ture ä¸º è¿›å…¥ï¼Œfalse ä¸ºé€€å‡ºã€‚
 	*/
 	void onSystemLoopSingle(bool enter);
 
 	/**
-	 * @brief ÏûÏ¢Ñ­»·¡£
+	 * @brief æ¶ˆæ¯å¾ªç¯ã€‚
 	*/
 	virtual void systemMessagePump() const noexcept = 0;
 
 protected:
-	bool m_mutipleWindows; // ÆôÓÃ¶à´°¿ÚÄ£Ê½µÄ±ê¼Ç¡£¡¾Ö»ÔÚ¹¹ÔìÊ±ĞŞ¸Ä£¡¡¿
-	sf::Clock m_clk; // Ê±ÖÓ¡£
-	std::unique_ptr<Window> m_singleWnd; // µ¥´°¿ÚÄ£Ê½Ê¹ÓÃµÄ¡£
-	std::list<std::unique_ptr<Window>> m_wnds; // ¶à´°¿ÚÄ£Ê½Ê¹ÓÃµÄ¡£
+	bool m_mutipleWindows; // å¯ç”¨å¤šçª—å£æ¨¡å¼çš„æ ‡è®°ã€‚ã€åªåœ¨æ„é€ æ—¶ä¿®æ”¹ï¼ã€‘
+	sf::Clock m_clk; // æ—¶é’Ÿã€‚
+	std::unique_ptr<Window> m_singleWnd; // å•çª—å£æ¨¡å¼ä½¿ç”¨çš„ã€‚
+	std::list<std::unique_ptr<Window>> m_wnds; // å¤šçª—å£æ¨¡å¼ä½¿ç”¨çš„ã€‚
 
-	static std::unique_ptr<Carnival> s_instance; // Î¨Ò»ÊµÀı¡£
+	static std::unique_ptr<Carnival> s_instance; // å”¯ä¸€å®ä¾‹ã€‚
 }; // class ICarnival
 
 } // namespace GUI

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -23,15 +23,15 @@
 
 #include <mutex>
 
-// ¹²ÏíÊı¾İ¶Î¡£
+// å…±äº«æ•°æ®æ®µã€‚
 #pragma data_seg("___OHMS_EUI")
-std::mutex ___OHMS_EnsureUniqueInstance_Mutex; // »¥³âÌå¡£
-bool ___OHMS_EnsureUniqueInstance_instanceExist = false; // ÊÇ·ñ´æÔÚÊµÀı¡£
+std::mutex ___OHMS_EnsureUniqueInstance_Mutex; // äº’æ–¥ä½“ã€‚
+bool ___OHMS_EnsureUniqueInstance_instanceExist = false; // æ˜¯å¦å­˜åœ¨å®ä¾‹ã€‚
 #pragma data_seg()
 // R: Read, W: Write, S: Shared.
 #pragma comment(linker, "/SECTION:___OHMS_EUI,RWS")
 /**
- * ¼òµ¥À´Ëµ¾ÍÊÇÍ¨¹ı¹²ÏíÊı¾İ¶ÎÀ´±ê¼ÇÊµÀı¡£
+ * ç®€å•æ¥è¯´å°±æ˜¯é€šè¿‡å…±äº«æ•°æ®æ®µæ¥æ ‡è®°å®ä¾‹ã€‚
 */
 
 namespace AppWin32 {

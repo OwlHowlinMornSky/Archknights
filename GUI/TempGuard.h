@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -23,22 +23,22 @@
 namespace ohms {
 
 /**
- * @brief ÁÙÊ±»ñÈ¡ËùÓĞÈ¨£¬²¢±£»¤Ä¿±êµÄ¾ÉÓĞÖµ£¬Îö¹¹Ê±×Ô¶¯»¹Ô­¾ÉÖµ¡£
- * @tparam _T: ÈÎºÎ¿ÉÒÔÎŞÒì³£¸´ÖÆµÄÀàĞÍ¡£
+ * @brief ä¸´æ—¶è·å–æ‰€æœ‰æƒï¼Œå¹¶ä¿æŠ¤ç›®æ ‡çš„æ—§æœ‰å€¼ï¼Œææ„æ—¶è‡ªåŠ¨è¿˜åŸæ—§å€¼ã€‚
+ * @tparam _T: ä»»ä½•å¯ä»¥æ— å¼‚å¸¸å¤åˆ¶çš„ç±»å‹ã€‚
 */
 template<class _T>
 class TempGuard final {
 public:
 	/**
-	 * @brief ¹¹Ôìº¯Êı£¬×Ô¶¯¸´ÖÆ±£Áô¾ÉÖµ¡£
-	 * @param t: Ä¿±ê¶ÔÏó¡£
+	 * @brief æ„é€ å‡½æ•°ï¼Œè‡ªåŠ¨å¤åˆ¶ä¿ç•™æ—§å€¼ã€‚
+	 * @param t: ç›®æ ‡å¯¹è±¡ã€‚
 	*/
 	explicit TempGuard(_T& t) noexcept :
 		m_target(t) {
 		m_old = t;
 	}
 	/**
-	 * @brief Îö¹¹º¯Êı£¬×Ô¶¯»¹Ô­¾ÉÖµ¡£
+	 * @brief ææ„å‡½æ•°ï¼Œè‡ªåŠ¨è¿˜åŸæ—§å€¼ã€‚
 	*/
 	~TempGuard() noexcept {
 		m_target = m_old;
@@ -48,15 +48,15 @@ public:
 	TempGuard& operator=(const TempGuard&) = delete;
 
 	/**
-	 * @brief ÁÙÊ±ĞŞ¸Ä¡£°ÑÄ¿±êµÄÖµ±äÎªn¡£
-	 * @param n: ÁÙÊ±Öµ¡£
+	 * @brief ä¸´æ—¶ä¿®æ”¹ã€‚æŠŠç›®æ ‡çš„å€¼å˜ä¸ºnã€‚
+	 * @param n: ä¸´æ—¶å€¼ã€‚
 	*/
 	void operator=(const _T& n) noexcept {
 		m_target = n;
 	}
 	/**
-	 * @brief ÁÙÊ±ĞŞ¸Ä¡£°ÑÄ¿±êµÄÖµ±äÎªn¡£
-	 * @param n: ÁÙÊ±Öµ¡£
+	 * @brief ä¸´æ—¶ä¿®æ”¹ã€‚æŠŠç›®æ ‡çš„å€¼å˜ä¸ºnã€‚
+	 * @param n: ä¸´æ—¶å€¼ã€‚
 	*/
 	void operator=(_T&& n) noexcept {
 		m_target = n;

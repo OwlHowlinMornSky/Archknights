@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -28,7 +28,7 @@
 namespace g3d {
 
 /**
- * @brief Camera¡£
+ * @brief Cameraã€‚
 */
 class Camera :
 	public ITransformR,

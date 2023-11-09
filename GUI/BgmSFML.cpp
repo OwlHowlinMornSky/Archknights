@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -28,11 +28,11 @@
 namespace {
 
 /**
- * @brief Ñ­»·µãÊı¾İ¡£
+ * @brief å¾ªç¯ç‚¹æ•°æ®ã€‚
 */
 struct OHMSAUDIOCOMMENTSTRUCTURE {
-	long long offset; // Ñ­»·Æğµã¡£
-	long long length; // Ñ­»·³¤¶È¡£
+	long long offset; // å¾ªç¯èµ·ç‚¹ã€‚
+	long long length; // å¾ªç¯é•¿åº¦ã€‚
 
 	OHMSAUDIOCOMMENTSTRUCTURE() :
 		offset(0),
@@ -41,11 +41,11 @@ struct OHMSAUDIOCOMMENTSTRUCTURE {
 
 #ifdef FILE_STRICT
 /**
- * @brief ¶ÁÈ¡ OGG ÎÄ¼şÀï key Îª ¡°OHMSSPC¡± µÄ×¢ÊÍ¡£
- * @param stream: OGG ÎÄ¼ş¡£
- * @param buffer: »º³åÇø¡£
- * @param bufferLength: »º³åÇø³¤¶È¡£
- * @return ¶ÁÈ¡ÊÇ·ñ³É¹¦¡£
+ * @brief è¯»å– OGG æ–‡ä»¶é‡Œ key ä¸º â€œOHMSSPCâ€ çš„æ³¨é‡Šã€‚
+ * @param stream: OGG æ–‡ä»¶ã€‚
+ * @param buffer: ç¼“å†²åŒºã€‚
+ * @param bufferLength: ç¼“å†²åŒºé•¿åº¦ã€‚
+ * @return è¯»å–æ˜¯å¦æˆåŠŸã€‚
 */
 bool getMusicOggCommentData(
 	sf::InputStream& stream,
@@ -61,7 +61,7 @@ bool getMusicOggCommentData(
 		return false;
 	}
 
-	// Ogg ÎÄ¼ş Ê×4×Ö½Ú Îª ¡°OggS¡±¡£
+	// Ogg æ–‡ä»¶ é¦–4å­—èŠ‚ ä¸º â€œOggSâ€ã€‚
 	if (stream.read(tmp, 4) == -1) return false;
 	if (tmp[0] != 'O' || tmp[1] != 'g' || tmp[2] != 'g' || tmp[3] != 'S') {
 		sf::err() << "getMusicCommentData: wrong file type" << std::endl;
@@ -176,10 +176,10 @@ bool getMusicOggCommentData(
 #endif
 
 /**
- * @brief ¶ÁÈ¡ OHMS ÌØ¶¨µÄ Ñ­»·µã¡£
- * @param stream: ÎÄ¼şÁ÷¡£
- * @param data: [Out] ¶Áµ½µÄÑ­»·µãÊı¾İ¡£
- * @return ¶ÁÈ¡ÊÇ·ñ³É¹¦¡£
+ * @brief è¯»å– OHMS ç‰¹å®šçš„ å¾ªç¯ç‚¹ã€‚
+ * @param stream: æ–‡ä»¶æµã€‚
+ * @param data: [Out] è¯»åˆ°çš„å¾ªç¯ç‚¹æ•°æ®ã€‚
+ * @return è¯»å–æ˜¯å¦æˆåŠŸã€‚
 */
 bool readMusicLoopPoint(sf::InputStream& stream, OHMSAUDIOCOMMENTSTRUCTURE& data) {
 	unsigned char tmp[48];
@@ -304,11 +304,11 @@ sf::Time BgmSFML::getDuration() const {
 }
 
 bool BgmSFML::openFromFile(std::string_view filename) {
-	// ±ØÒªµÄ£¬ÏÈÍ£Ö¹¾ÉµÄ Music¡£
+	// å¿…è¦çš„ï¼Œå…ˆåœæ­¢æ—§çš„ Musicã€‚
 	this->m_music->stop();
 
 	std::unique_ptr<sf::FileInputStream> stream = std::make_unique<sf::FileInputStream>();
-	// ³¢ÊÔ´ò¿ªÎÄ¼şÁ÷¡£
+	// å°è¯•æ‰“å¼€æ–‡ä»¶æµã€‚
 	if (!stream->open(filename.data())) {
 		sf::err() << "ohms::audio::BGM: open file stream failed" << std::endl;
 		return false;
@@ -316,19 +316,19 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 
 	bool failed = false;
 	OHMSAUDIOCOMMENTSTRUCTURE data;
-	// ¶ÁÈ¡Ñ­»·µãĞÅÏ¢¡£
+	// è¯»å–å¾ªç¯ç‚¹ä¿¡æ¯ã€‚
 	if (!readMusicLoopPoint(*stream, data)) {
 		sf::err() << "ohms::audio::BGM: read comment failed" << std::endl;
 		failed = true;
 	}
 
-	// ´ÓÎÄ¼şÁ÷´ò¿ª Music¡£
+	// ä»æ–‡ä»¶æµæ‰“å¼€ Musicã€‚
 	if (!m_music->openFromStream(*stream)) {
 		sf::err() << "ohms::audio::BGM: Music open failed" << std::endl;
 		return false;
 	}
 
-	// ¶Áµ½µÄ»°¾ÍÉèÖÃÑ­»·µã¡£
+	// è¯»åˆ°çš„è¯å°±è®¾ç½®å¾ªç¯ç‚¹ã€‚
 	if (!failed) {
 		this->m_music->setLoopPoints(
 			sf::Music::TimeSpan(
@@ -337,7 +337,7 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 			)
 		);
 	}
-	// Ä¬ÈÏ¿ªÆôÑ­»·¡£
+	// é»˜è®¤å¼€å¯å¾ªç¯ã€‚
 	this->m_music->setLoop(true);
 
 	this->m_stream = std::move(stream);

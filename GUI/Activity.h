@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,50 +26,50 @@
 namespace GUI {
 
 /**
- * @brief Activity: ÓÚ Window ÖĞÖ´ĞĞµÄµ¥¸ö½çÃæ¡£
+ * @brief Activity: äº Window ä¸­æ‰§è¡Œçš„å•ä¸ªç•Œé¢ã€‚
 */
 class Activity {
 	friend class Window;
 public:
 	/**
-	 * @brief Ä¬ÈÏ¹¹Ôìº¯Êı¡£
+	 * @brief é»˜è®¤æ„é€ å‡½æ•°ã€‚
 	*/
 	Activity() = default;
 	/**
-	 * @brief Ä¬ÈÏÎö¹¹º¯Êı¡£
+	 * @brief é»˜è®¤ææ„å‡½æ•°ã€‚
 	*/
 	virtual ~Activity() = default;
 
 protected:
 	/**
-	 * @brief Activity ±»´´½¨ºó¡¢ÔËĞĞÇ°µÄ´¦Àí¡£
-	 * @param wnd: ¶ÔËùÊô Window µÄÒıÓÃ¡£
+	 * @brief Activity è¢«åˆ›å»ºåã€è¿è¡Œå‰çš„å¤„ç†ã€‚
+	 * @param wnd: å¯¹æ‰€å± Window çš„å¼•ç”¨ã€‚
 	*/
 	virtual bool start(GUI::Window& wnd) noexcept = 0;
 	/**
-	 * @brief Activity ½áÊøºó¡¢ÒÆ³ıÇ°µÄ´¦Àí¡£
+	 * @brief Activity ç»“æŸåã€ç§»é™¤å‰çš„å¤„ç†ã€‚
 	*/
 	virtual void stop() noexcept = 0;
 
 public:
 	/**
-	 * @brief ´¦ÀíÊÂ¼ş¡£
-	 * @param evt: SFML µÄÊÂ¼ş¡£
-	 * @return ·µ»Ø false ±íÊ¾Ò»ÇĞÕı³££¬·µ»Ø true ±íÊ¾Á¢¼´Çå¿ÕÏûÏ¢¶ÓÁĞ¡£
+	 * @brief å¤„ç†äº‹ä»¶ã€‚
+	 * @param evt: SFML çš„äº‹ä»¶ã€‚
+	 * @return è¿”å› false è¡¨ç¤ºä¸€åˆ‡æ­£å¸¸ï¼Œè¿”å› true è¡¨ç¤ºç«‹å³æ¸…ç©ºæ¶ˆæ¯é˜Ÿåˆ—ã€‚
 	*/
 	virtual bool handleEvent(const sf::Event& evt) = 0;
 	/**
-	 * @brief ¸üĞÂ£¨°üÀ¨»æÖÆ£©¡£
-	 * @param dtime: ¾­¹ıµÄÊ±¼ä¡£
+	 * @brief æ›´æ–°ï¼ˆåŒ…æ‹¬ç»˜åˆ¶ï¼‰ã€‚
+	 * @param dtime: ç»è¿‡çš„æ—¶é—´ã€‚
 	*/
 	virtual void update(sf::Time dtime) = 0;
 
 	/**
-	 * @brief ½øÈëÏµÍ³Ñ­»·Ê±µÄÍ¨Öª¡£
+	 * @brief è¿›å…¥ç³»ç»Ÿå¾ªç¯æ—¶çš„é€šçŸ¥ã€‚
 	*/
 	virtual void OnEnterSysloop() noexcept;
 	/**
-	 * @brief ÍË³öÏµÍ³Ñ­»·Ê±µÄÍ¨Öª¡£
+	 * @brief é€€å‡ºç³»ç»Ÿå¾ªç¯æ—¶çš„é€šçŸ¥ã€‚
 	*/
 	virtual void OnExitSysloop() noexcept;
 }; // class IActivity

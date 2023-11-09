@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,7 +26,7 @@
 namespace g3d {
 
 /**
- * @brief �ӿ� Transform ԭ�㣺���ڿ��޸�ԭ��Ŀɱ任���塣
+ * @brief 接口 Transform 原点：用于可修改原点的可变换物体。
 */
 class ITransformO {
 protected:

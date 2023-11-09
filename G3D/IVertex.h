@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -28,22 +28,22 @@
 namespace g3d {
 
 /**
- * @brief ¹«¹²µÄ¶¥µãÊôĞÔ¡£
+ * @brief å…¬å…±çš„é¡¶ç‚¹å±æ€§ã€‚
 */
 namespace VertexAttribute {
 
 enum : unsigned int {
-	Position = 0, // ¶¥µã×ø±ê¡£
-	TexCoord,     // ÎÆÀí×ø±ê¡£
-	Color,        // ÑÕÉ«¡£
-	Normal,       // ·¨Ïò¡£
-	COUNT         // [¼ÆÊı]
+	Position = 0, // é¡¶ç‚¹åæ ‡ã€‚
+	TexCoord,     // çº¹ç†åæ ‡ã€‚
+	Color,        // é¢œè‰²ã€‚
+	Normal,       // æ³•å‘ã€‚
+	COUNT         // [è®¡æ•°]
 };
 
 } // namespace VertexAttribute
 
 /**
- * @brief ¹«¹²µÄ»ù±¾¶¥µãÀàĞÍ¡£
+ * @brief å…¬å…±çš„åŸºæœ¬é¡¶ç‚¹ç±»å‹ã€‚
 */
 struct Vertex {
 	Vertex() :
@@ -100,10 +100,10 @@ struct Vertex {
 		color(tint),
 		texCoord(tex) {}
 
-	glm::vec3 position; // ¶¥µã×ø±ê¡£
-	glm::vec2 texCoord; // ÎÆÀí×ø±ê¡£
-	glm::vec4 color;    // ÑÕÉ«¡£
-	glm::vec3 normal;   // ·¨Ïò¡£
+	glm::vec3 position; // é¡¶ç‚¹åæ ‡ã€‚
+	glm::vec2 texCoord; // çº¹ç†åæ ‡ã€‚
+	glm::vec4 color;    // é¢œè‰²ã€‚
+	glm::vec3 normal;   // æ³•å‘ã€‚
 };
 
 } // namespace g3d

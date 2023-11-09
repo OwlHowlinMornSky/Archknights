@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,79 +26,79 @@
 namespace GUI {
 
 /**
- * @brief Bgm ½Ó¿Ú: ²¥·ÅÌØ±ğ¹¹ÔìµÄÒôÀÖÎÄ¼şËùÓÃ¡£
+ * @brief Bgm æ¥å£: æ’­æ”¾ç‰¹åˆ«æ„é€ çš„éŸ³ä¹æ–‡ä»¶æ‰€ç”¨ã€‚
 */
 class IBgm {
 public:
 	/**
-	 * @brief ²¥·Å×´Ì¬¡£
+	 * @brief æ’­æ”¾çŠ¶æ€ã€‚
 	*/
 	enum class Status {
-		Stopped, // ÒÑÍ£Ö¹¡£
-		Paused,  // ÒÑÔİÍ£¡£
-		Playing  // ²¥·ÅÖĞ¡£
+		Stopped, // å·²åœæ­¢ã€‚
+		Paused,  // å·²æš‚åœã€‚
+		Playing  // æ’­æ”¾ä¸­ã€‚
 	};
 
 public:
 	/**
-	 * @brief Ä¬ÈÏ¹¹Ôìº¯Êı¡£
+	 * @brief é»˜è®¤æ„é€ å‡½æ•°ã€‚
 	*/
 	IBgm() = default;
 	/**
-	 * @brief Ä¬ÈÏÎö¹¹º¯Êı¡£
+	 * @brief é»˜è®¤ææ„å‡½æ•°ã€‚
 	*/
 	virtual ~IBgm() = default;
 
 public:
 	/**
-	 * @brief ´ò¿ªÎÄ¼ş¡£
-	 * @param filename: ÎÄ¼şÃû£¨Ïà¶ÔÂ·¾¶»ò¾ø¶ÔÂ·¾¶£©¡£
-	 * @return ´ò¿ªÊÇ·ñ³É¹¦¡£
+	 * @brief æ‰“å¼€æ–‡ä»¶ã€‚
+	 * @param filename: æ–‡ä»¶åï¼ˆç›¸å¯¹è·¯å¾„æˆ–ç»å¯¹è·¯å¾„ï¼‰ã€‚
+	 * @return æ‰“å¼€æ˜¯å¦æˆåŠŸã€‚
 	*/
 	virtual [[nodiscard]] bool openFromFile(std::string_view filename) = 0;
 
 	/**
-	 * @brief ²¥·Å¡£ÒÑÍ£Ö¹µÄ»á´ÓÍ·¿ªÊ¼£¬ÔİÍ£µÄ»á¼ÌĞø¡£
+	 * @brief æ’­æ”¾ã€‚å·²åœæ­¢çš„ä¼šä»å¤´å¼€å§‹ï¼Œæš‚åœçš„ä¼šç»§ç»­ã€‚
 	*/
 	virtual void play() = 0;
 	/**
-	 * @brief ÔİÍ£¡£ÔÙ´Î play Ê±¼ÌĞø¡£
+	 * @brief æš‚åœã€‚å†æ¬¡ play æ—¶ç»§ç»­ã€‚
 	*/
 	virtual void pause() = 0;
 	/**
-	 * @brief Í£Ö¹¡£ÔÙ´Î play Ê±´ÓÍ·¿ªÊ¼¡£
+	 * @brief åœæ­¢ã€‚å†æ¬¡ play æ—¶ä»å¤´å¼€å§‹ã€‚
 	*/
 	virtual void stop() = 0;
 	/**
-	 * @brief »ñÈ¡µ±Ç°×´Ì¬¡£
-	 * @return ×´Ì¬¡£
+	 * @brief è·å–å½“å‰çŠ¶æ€ã€‚
+	 * @return çŠ¶æ€ã€‚
 	*/
 	virtual Status getStatus() const = 0;
 
 	/**
-	 * @brief »ñÈ¡µ±Ç°ÒôÁ¿¡£
-	 * @return ÒôÁ¿£¨0 ~ 100£©¡£
+	 * @brief è·å–å½“å‰éŸ³é‡ã€‚
+	 * @return éŸ³é‡ï¼ˆ0 ~ 100ï¼‰ã€‚
 	*/
 	virtual float getVolume() const = 0;
 	/**
-	 * @brief ÉèÖÃÒôÁ¿¡£
-	 * @param volume: ÒôÁ¿£¨0 ~ 100£©¡£
+	 * @brief è®¾ç½®éŸ³é‡ã€‚
+	 * @param volume: éŸ³é‡ï¼ˆ0 ~ 100ï¼‰ã€‚
 	*/
 	virtual void setVolume(float volume) = 0;
 
 	/**
-	 * @brief »ñÈ¡µ±Ç°²¥·ÅµÄÎ»ÖÃ¡£
-	 * @return Î»ÖÃ£¨Ãë£©¡£
+	 * @brief è·å–å½“å‰æ’­æ”¾çš„ä½ç½®ã€‚
+	 * @return ä½ç½®ï¼ˆç§’ï¼‰ã€‚
 	*/
 	virtual float getTime() const = 0;
 	/**
-	 * @brief ÉèÖÃ²¥·ÅÎ»ÖÃ¡£
-	 * @param seconds: ĞÂµÄÎ»ÖÃ£¨Ãë£©¡£
+	 * @brief è®¾ç½®æ’­æ”¾ä½ç½®ã€‚
+	 * @param seconds: æ–°çš„ä½ç½®ï¼ˆç§’ï¼‰ã€‚
 	*/
 	virtual void setTime(float seconds) = 0;
 	/**
-	 * @brief »ñÈ¡×ÜÊ±³¤¡£
-	 * @return ×ÜÊ±³¤£¨Ãë£©¡£
+	 * @brief è·å–æ€»æ—¶é•¿ã€‚
+	 * @return æ€»æ—¶é•¿ï¼ˆç§’ï¼‰ã€‚
 	*/
 	virtual float getLength() const = 0;
 }; // class IBgm

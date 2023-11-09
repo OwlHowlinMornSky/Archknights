@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -24,13 +24,13 @@
 namespace AppWin32 {
 
 /**
- * @brief Æô¶¯Î¨Ò»ÊµÀı¡£
- * @return Æô¶¯ÊÇ·ñ³É¹¦¡£
+ * @brief å¯åŠ¨å”¯ä¸€å®ä¾‹ã€‚
+ * @return å¯åŠ¨æ˜¯å¦æˆåŠŸã€‚
 */
 bool uniqueInstance() noexcept;
 
 /**
- * @brief ÍË³öÎ¨Ò»ÊµÀı¡£²»¹ıºÃÏñÒ²Ã»É¶ÒâÒå¡£
+ * @brief é€€å‡ºå”¯ä¸€å®ä¾‹ã€‚ä¸è¿‡å¥½åƒä¹Ÿæ²¡å•¥æ„ä¹‰ã€‚
 */
 void instanceExit() noexcept;
 

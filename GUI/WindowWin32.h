@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -20,6 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #pragma once
+
 #include "Window.h"
 
 namespace GUI {
@@ -32,9 +33,9 @@ public:
 
 public:
 	/**
-	 * @brief ¸ø main º¯ÊıÓÃµÄ Create£¬ÒòÎªÒªÖ¸¶¨ nCmdShow¡£
-	 * @param nCmdShow: WinMain µÄĞÎ²Î¡£
-	 * @return ´´½¨ÊÇ·ñ³É¹¦¡£
+	 * @brief ç»™ main å‡½æ•°ç”¨çš„ Createï¼Œå› ä¸ºè¦æŒ‡å®š nCmdShowã€‚
+	 * @param nCmdShow: WinMain çš„å½¢å‚ã€‚
+	 * @return åˆ›å»ºæ˜¯å¦æˆåŠŸã€‚
 	*/
 	bool Create(int nCmdShow) noexcept;
 	virtual bool Create(bool foreground) noexcept override;

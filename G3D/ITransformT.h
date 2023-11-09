@@ -1,4 +1,4 @@
-/*
+﻿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -26,7 +26,7 @@
 namespace g3d {
 
 /**
- * @brief �ӿ� Transform ƽ�ƣ����Կ�ƽ�ƵĿɱ任���塣
+ * @brief 接口 Transform 平移：用以可平移的可变换物体。
 */
 class ITransformT {
 protected:

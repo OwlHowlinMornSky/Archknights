@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 *    Archknights
 *
 *    Copyright (C) 2023  Tyler Parret True
@@ -32,28 +32,28 @@
 namespace {
 
 /**
- * @brief ¼ÆÊ±Æ÷»Øµ÷¡£
+ * @brief è®¡æ—¶å™¨å›è°ƒã€‚
 */
 void CALLBACK MyTimerProc(HWND hWnd, UINT message, UINT_PTR nTimerid, DWORD systemTick) {
 	return GUI::OnIdle();
 }
 
 /**
- * @brief ´°¿Ú»Øµ÷¡£
+ * @brief çª—å£å›è°ƒã€‚
 */
 LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	static UINT_PTR l_timerID = 0;
 	switch (message) {
-	// ±ØĞëÀ¹½Ø¸ÃÏûÏ¢£¬ÒòÎª DefWindowProc ½ÓÊÜºó»áÏú»Ù´°¿Ú¡£
-	// ´°¿ÚÊÇĞèÒªÔÚ main Àï×îºóÏú»ÙµÄ¡£
+	// å¿…é¡»æ‹¦æˆªè¯¥æ¶ˆæ¯ï¼Œå› ä¸º DefWindowProc æ¥å—åä¼šé”€æ¯çª—å£ã€‚
+	// çª—å£æ˜¯éœ€è¦åœ¨ main é‡Œæœ€åé”€æ¯çš„ã€‚
 	// Don't forward this to DefWindowProc because it will destroy the window.
 	case WM_CLOSE:
 		break;
 
 	case WM_GETMINMAXINFO:
 	{
-		// ¼ÆËã´°¿Ú×îĞ¡³ß´ç¡£
-		// ±£Ö¤µÄÊÇ ¿Í»§Çø ×îĞ¡Îª 120 * 90¡£
+		// è®¡ç®—çª—å£æœ€å°å°ºå¯¸ã€‚
+		// ä¿è¯çš„æ˜¯ å®¢æˆ·åŒº æœ€å°ä¸º 120 * 90ã€‚
 		// Compute the minimum size of the window.
 		const CREATESTRUCT& info = *(CREATESTRUCT*)lParam;
 		RECT rect = { 0, 0, 120, 90 };
@@ -62,7 +62,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		break;
 	}
 
-	// À¹½ØÈı´ó½ğ¸Õ¼üµÄÏûÏ¢¡£ÒòÎª°´ÏÂ²»ËÉÊÖ»áÖ±½Ó¿¨ËÀ¡£
+	// æ‹¦æˆªä¸‰å¤§é‡‘åˆšé”®çš„æ¶ˆæ¯ã€‚å› ä¸ºæŒ‰ä¸‹ä¸æ¾æ‰‹ä¼šç›´æ¥å¡æ­»ã€‚
 	case WM_NCLBUTTONDOWN:
 		switch (wParam) {
 		case HTMINBUTTON:
@@ -75,7 +75,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		}
 		break;
 
-	// ´¥·¢Èı´ó½ğ¸Õ¼üµÄ¹¦ÄÜ¡£
+	// è§¦å‘ä¸‰å¤§é‡‘åˆšé”®çš„åŠŸèƒ½ã€‚
 	case WM_NCLBUTTONUP:
 		switch (wParam) {
 		case HTMINBUTTON:
@@ -116,11 +116,11 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		}
 		break;
 
-	// ÓÒ¼üÒ²ÒªÀ¹½Ø£¬ÒòÎª°´ÏÂ²»ËÉÊÖÒ²»á¿¨ËÀ¡£
+	// å³é”®ä¹Ÿè¦æ‹¦æˆªï¼Œå› ä¸ºæŒ‰ä¸‹ä¸æ¾æ‰‹ä¹Ÿä¼šå¡æ­»ã€‚
 	case WM_NCRBUTTONDOWN:
 		break;
 
-	// ËÉ¿ªÓÒ¼ü¼´´ò¿ªÏµÍ³²Ëµ¥¡£
+	// æ¾å¼€å³é”®å³æ‰“å¼€ç³»ç»Ÿèœå•ã€‚
 	case WM_NCRBUTTONUP:
 		PostMessageW(hWnd, WM_CONTEXTMENU, NULL, lParam);
 		break;
@@ -166,8 +166,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	return 0;
 }
 
-WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // ´°¿ÚÀàµÄÃû³Æ¡£
-WCHAR szTitle[] = L"Archknights"; // ´°¿ÚµÄ ³õÊ¼ Ãû³Æ¡£
+WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // çª—å£ç±»çš„åç§°ã€‚
+WCHAR szTitle[] = L"Archknights"; // çª—å£çš„ åˆå§‹ åç§°ã€‚
 
 void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	LPVOID lpMsgBuf;
@@ -214,11 +214,11 @@ bool MyRegisterClass() noexcept {
 	WNDCLASSEX wcex{ 0 };
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-	// Ã»±ØÒªÖØ»æ¡£
+	// æ²¡å¿…è¦é‡ç»˜ã€‚
 	wcex.style = CS_OWNDC | CS_DBLCLKS;
 	wcex.lpfnWndProc = ::MyWndProc;
 	wcex.hInstance = GetModuleHandleW(NULL);
-	// £¡£¡£¡Î´Íê³É£¡£¡£¡Í¼±ê¼¤ÇéÖÆ×÷ÖĞ£¨Îí
+	// ï¼ï¼ï¼æœªå®Œæˆï¼ï¼ï¼å›¾æ ‡æ¿€æƒ…åˆ¶ä½œä¸­ï¼ˆé›¾
 	//wcex.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON0));
 	wcex.hIconSm = wcex.hIcon;
 	wcex.hbrBackground = (HBRUSH)COLOR_WINDOWFRAME;
@@ -297,7 +297,7 @@ void WindowWin32::setResizeEnabled(bool enabled) noexcept {
 		(style | (WS_SIZEBOX | WS_MAXIMIZEBOX)) :
 		(style & (~(WS_SIZEBOX | WS_MAXIMIZEBOX)));
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, style);
-	if (!enabled) // ±ØĞëÔÚ½ûÓÃ×î´ó»¯µÄÍ¬Ê±È¡Ïû×î´ó»¯¡£
+	if (!enabled) // å¿…é¡»åœ¨ç¦ç”¨æœ€å¤§åŒ–çš„åŒæ—¶å–æ¶ˆæœ€å¤§åŒ–ã€‚
 		ShowWindow(m_hwnd, SW_RESTORE);
 	return;
 }
@@ -306,7 +306,7 @@ void WindowWin32::setMinimizeEnabled(bool enabled) noexcept {
 	LONG_PTR style = GetWindowLongPtrW(m_hwnd, GWL_STYLE);
 	style = enabled ? (style | WS_MINIMIZEBOX) : (style & ~WS_MINIMIZEBOX);
 	SetWindowLongPtrW(m_hwnd, GWL_STYLE, style);
-	if (!enabled) // ±ØĞëÔÚ½ûÓÃ×îĞ¡»¯µÄÍ¬Ê±È¡Ïû×îĞ¡»¯¡£
+	if (!enabled) // å¿…é¡»åœ¨ç¦ç”¨æœ€å°åŒ–çš„åŒæ—¶å–æ¶ˆæœ€å°åŒ–ã€‚
 		ShowWindow(m_hwnd, SW_RESTORE);
 	return;
 }
@@ -373,7 +373,7 @@ bool WindowWin32::setBorderless() noexcept {
 		m_hwnd, HWND_TOP,
 		0, 0,
 		GetSystemMetrics(SM_CXSCREEN),
-		GetSystemMetrics(SM_CYSCREEN) + 1, // ¼Ó 1 ÊÇÎªÁË·ÀÖ¹ÉÁË¸¡£
+		GetSystemMetrics(SM_CYSCREEN) + 1, // åŠ  1 æ˜¯ä¸ºäº†é˜²æ­¢é—ªçƒã€‚
 		SWP_FRAMECHANGED
 	);
 	ShowWindow(m_hwnd, SW_SHOW);
@@ -409,7 +409,7 @@ bool WindowWin32::setFullscreen(sf::VideoMode mode) noexcept {
 		m_hwnd, HWND_TOP,
 		0, 0,
 		static_cast<int>(mode.width),
-		static_cast<int>(mode.height + 1), // ¼Ó 1 ÊÇÎªÁË·ÀÖ¹ÉÁË¸¡£
+		static_cast<int>(mode.height + 1), // åŠ  1 æ˜¯ä¸ºäº†é˜²æ­¢é—ªçƒã€‚
 		SWP_FRAMECHANGED
 	);
 	ShowWindow(m_hwnd, SW_SHOW);
