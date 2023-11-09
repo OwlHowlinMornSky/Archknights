@@ -19,6 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#include <locale>
 #include "../GUI/CarnivalWin32.h"
 #include "../GUI/WindowWin32.h"
 #include "../GUI_Activities/Act01_DefaultEntrance.h"
@@ -43,6 +44,7 @@ int APIENTRY wWinMain(
 ) {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+	std::locale::global(std::locale("en-us.utf8"));
 
 	if (!AppWin32::uniqueInstance()) {
 		MessageBoxA(NULL, g_str_unique_inst, g_str_information, MB_ICONINFORMATION);
