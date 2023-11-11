@@ -54,14 +54,12 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 			static_cast<unsigned int>(size.y)
 		)
 	);
-	//updateSize(r_wnd->getSize());
 
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
 	m_bgm = std::make_unique<GUI::BgmSFML>();
 	m_bgm->openFromFile("res/music/m_sys_title.ogg");
-	//m_bgm->openFromFile("res/music/m_sys_title_h.ogg");
 	m_bgm->play();
 
 	//m_text.setString(L"test测试あいうえお😅");
@@ -82,22 +80,11 @@ bool Act04_Load::handleEvent(const sf::Event& evt) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
 		break;
-	case sf::Event::KeyPressed:
-		//m_bgm.reset();
-		break;
 	case sf::Event::MouseButtonPressed:
 		switch (evt.mouseButton.button) {
 		case sf::Mouse::Button::Left:
-			//if (m_status == ST_NORMAL) {
-			//	m_status = ST_OUT;
-			//}
 			r_wnd->changeActivity(std::make_unique<Act05_Title>());
 			return 1;
-			break;
-		case sf::Mouse::Button::Right:
-			if (m_status == ST_OVER) {
-				m_status = ST_IN;
-			}
 			break;
 		default:
 			break;
@@ -187,12 +174,6 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	m_blackBar[1].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
 	m_blackBar[1].setOrigin(wx * 0.05f, wy * 0.05f);
 
-	/*
-	float fontSizef = wy * 0.08f;
-	unsigned int fontSize = static_cast<unsigned int>(fontSizef);
-	float fontRate = fontSizef / fontSize;
-	m_text.setCharacterSize(fontSize);
-	m_text.setScale(fontRate, fontRate);*/
 	//float fontSizef = wy * 0.08f;
 	//float fontRate = fontSizef / 36;
 	//m_text.setScale(fontRate, fontRate);
