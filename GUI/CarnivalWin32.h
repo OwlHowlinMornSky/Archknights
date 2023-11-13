@@ -34,7 +34,7 @@ class CarnivalWin32 final :
 protected:
 	CarnivalWin32(bool mutipleWindows);
 public:
-	virtual ~CarnivalWin32() = default;
+	virtual ~CarnivalWin32() override = default;
 
 public:
 	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground = false) override;

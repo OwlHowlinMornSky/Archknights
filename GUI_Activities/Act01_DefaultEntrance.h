@@ -34,7 +34,7 @@ class Act01_DefaultEntrance final :
 	public GUI::Activity {
 public:
 	Act01_DefaultEntrance();
-	virtual ~Act01_DefaultEntrance() noexcept;
+	virtual ~Act01_DefaultEntrance() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;

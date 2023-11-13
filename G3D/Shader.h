@@ -21,20 +21,39 @@
 */
 #pragma once
 
-#include "IShader.h"
+#include "INonCopyable.h"
+
+#include <string>
+#include <SFML/OpenGL.hpp>
 
 namespace g3d {
 
+/**
+ * @brief 着色器类型。
+*/
+enum class ShaderType : size_t {
+	Vertex = 0, // 顶点。
+	Fragment,   // 片元。
+	COUNT       // [计数]
+};
+
 class Shader :
-	public IShader {
+	public INonCopyable {
 public:
 	Shader();
-	virtual ~Shader() override;
+	virtual ~Shader();
 
 public:
 	virtual void setup() = 0;
 
 public:
+	/**
+	 * @brief 绑定 或 取消绑定 着色器。
+	 * @brief "绑定"就是指 在 OpenGL 里 启用(使用) 某个着色器。
+	 * @param shader: 要绑定的 着色器。为 nullptr 则是 取消先前的绑定。
+	*/
+	static void Bind(Shader* shader);
+
 	void clear();
 	void loadFromMemory(std::string_view shader, ShaderType type);
 	void linkShader();
@@ -49,6 +68,7 @@ public:
 	static GLuint buildShader(std::string_view l_src, unsigned int l_type);
 
 protected:
+	GLuint m_program; // 着色器程序。
 	GLuint m_shader[static_cast<size_t>(ShaderType::COUNT)];
 };
 

@@ -62,7 +62,18 @@ void checkError(GLuint l_shader, GLuint l_flag, bool l_program, std::string_view
 
 namespace g3d {
 
-void IShader::Bind(IShader* shader) {
+Shader::Shader() :
+	m_program(0) {
+	memset(m_shader, 0, sizeof(m_shader));
+	return;
+}
+
+Shader::~Shader() {
+	clear();
+	return;
+}
+
+void Shader::Bind(Shader* shader) {
 	if (shader) {
 		if (!shader->m_program) {
 #ifdef _DEBUG
@@ -78,16 +89,6 @@ void IShader::Bind(IShader* shader) {
 	else {
 		glCheck(glUseProgram(0));
 	}
-}
-
-Shader::Shader() {
-	memset(m_shader, 0, sizeof(m_shader));
-	return;
-}
-
-Shader::~Shader() {
-	clear();
-	return;
 }
 
 void Shader::clear() {

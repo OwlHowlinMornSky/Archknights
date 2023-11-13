@@ -30,7 +30,7 @@ class FontMgr final :
 	public IFontMgr {
 public:
 	FontMgr() noexcept = default;
-	virtual ~FontMgr() = default;
+	virtual ~FontMgr() override = default;
 
 public:
 	virtual void load() noexcept override;

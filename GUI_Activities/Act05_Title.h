@@ -29,7 +29,7 @@ class Act05_Title final :
 	public GUI::Activity {
 public:
 	Act05_Title();
-	virtual ~Act05_Title() noexcept;
+	virtual ~Act05_Title() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;

@@ -34,12 +34,11 @@
     <ClInclude Include="Camera.Perspective.h" />
     <ClInclude Include="GlCheck.h" />
     <ClInclude Include="IModel.h" />
-    <ClInclude Include="IShader.h" />
     <ClInclude Include="ITransformO.h" />
     <ClInclude Include="ITransformR.h" />
     <ClInclude Include="ITransformS.h" />
     <ClInclude Include="ITransformT.h" />
-    <ClInclude Include="IVertex.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="INonCopyable.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shader.Default.h" />

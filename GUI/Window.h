@@ -45,8 +45,8 @@ enum class WindowStatus {
 class Window :
 	protected sf::RenderWindow {
 public:
-	Window() noexcept;
-	virtual ~Window() noexcept;
+	Window();
+	virtual ~Window() noexcept override;
 
 public:
 	virtual bool Create(bool foreground) noexcept;

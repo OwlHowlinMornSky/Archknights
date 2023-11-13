@@ -24,7 +24,7 @@
 
 namespace GUI {
 
-Window::Window() noexcept :
+Window::Window() :
 	m_created(false),
 	m_sizingAsSized(false),
 	m_waitToStop(false),

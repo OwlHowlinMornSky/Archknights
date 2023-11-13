@@ -32,7 +32,7 @@ class Act04_Load final :
 	public GUI::Activity {
 public:
 	Act04_Load();
-	virtual ~Act04_Load() noexcept;
+	virtual ~Act04_Load() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;

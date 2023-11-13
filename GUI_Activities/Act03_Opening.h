@@ -31,7 +31,7 @@ class Act03_Opening final :
 	public GUI::Activity {
 public:
 	Act03_Opening();
-	virtual ~Act03_Opening() noexcept;
+	virtual ~Act03_Opening() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;

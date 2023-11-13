@@ -26,7 +26,7 @@
 #include "../../G3D/GlCheck.h"
 #include "../../G3D/Shader.h"
 #include "../../G3D/Camera.h"
-#include "../../G3D/IVertex.h"
+#include "../../G3D/Vertex.h"
 #include "../../G3D/Camera.Orthographic.h"
 
 #include <SFML/Graphics.hpp>

@@ -29,7 +29,7 @@ class WindowWin32 final :
 	public Window {
 public:
 	WindowWin32();
-	virtual ~WindowWin32() noexcept;
+	virtual ~WindowWin32() noexcept override;
 
 public:
 	/**
