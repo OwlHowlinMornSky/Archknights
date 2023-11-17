@@ -10,7 +10,7 @@ A Fan-made game of Arknights.
 
 <img src="doc/assets/screenshot230520212027.png" width="800px">
 
-## 依赖项 Dependencies
+## 依赖项  Requirements
 
  - zlib License
 	 - [SFML v2.6.0](https://github.com/SFML/SFML).
