@@ -33,6 +33,19 @@
 
 namespace {
 
+struct Vertex {
+	glm::vec3 vertex0;
+	glm::vec3 vertex1;
+	glm::vec2 offset;
+	glm::vec2 texCoord;
+
+	Vertex(glm::vec3 v0, glm::vec3 v1, glm::vec2 off) :
+		vertex0(v0),
+		vertex1(v1),
+		offset(off),
+		texCoord() {}
+};
+
 class Shader_Title_Sphere final :
 	public g3d::Shader {
 public:
@@ -45,11 +58,11 @@ public:
 	GLint m_ul_matm;
 };
 
-class LineLineModel final :
+class LineModel final :
 	public g3d::ITransformR {
 public:
 	void update();
-	bool LoadModelData(const std::vector<g3d::Vertex>& vertexArray);
+	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
 	void Draw();
 protected:
 	unsigned int vao;
@@ -76,9 +89,9 @@ protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 protected:
-	Shader_Title_Sphere m_shader;
+	::Shader_Title_Sphere m_shader;
 	g3d::OrthographicCamera m_camera;
-	LineLineModel m_llm;
+	::LineModel m_llm;
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;
 };

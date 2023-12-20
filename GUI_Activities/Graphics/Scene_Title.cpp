@@ -25,16 +25,19 @@
 
 #include "Scene_Title.h"
 
+#include <array>
 #include <vector>
+#include <fstream>
+#include <iostream>
 
 namespace {
 
 const char g_vs[] =
 "#version 330\n"\
-"layout(location = 0) attribute vec3 a_offset;"\
-"layout(location = 1) attribute vec2 a_texCoord;"\
-"layout(location = 2) attribute vec3 a_vertex1;"\
-"layout(location = 3) attribute vec3 a_vertex0;"\
+"layout(location = 0) attribute vec3 a_vertex0;"\
+"layout(location = 1) attribute vec3 a_vertex1;"\
+"layout(location = 2) attribute vec2 a_offset;"\
+"layout(location = 3) attribute vec2 a_texCoord;"\
 "uniform mat4 u_matP;"\
 "uniform mat4 u_matV;"\
 "uniform mat4 u_matM;"\
@@ -92,7 +95,7 @@ void Shader_Title_Sphere::update(g3d::Camera& camera) {
 	//this->updateUniformMat4fv(m_ul_matm, &(id[0][0]));
 }
 
-void LineLineModel::update() {
+void LineModel::update() {
 	if (m_rotationChanged) {
 		m_matM = glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -101,13 +104,13 @@ void LineLineModel::update() {
 	}
 }
 
-bool LineLineModel::LoadModelData(const std::vector<g3d::Vertex>& vertexArray) {
+bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 	this->drawCount = (unsigned int)vertexArray.size();
 
 	unsigned int stride = (unsigned int)sizeof(vertexArray[0]);
-	unsigned long long texCoordOffset = sizeof(vertexArray[0].position);
-	unsigned long long colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
-	unsigned long long normalOffset = colorOffset + sizeof(vertexArray[0].color);
+	unsigned long long offset1 = sizeof(vertexArray[0].vertex0);
+	unsigned long long offset2 = offset1 + sizeof(vertexArray[0].vertex1);
+	unsigned long long offset3 = offset2 + sizeof(vertexArray[0].offset);
 
 	if (this->vertexVBO) {
 		glCheck(glDeleteBuffers(1, &this->vertexVBO));
@@ -122,17 +125,17 @@ bool LineLineModel::LoadModelData(const std::vector<g3d::Vertex>& vertexArray) {
 	glCheck(glEnableVertexAttribArray(0));
 	glCheck(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, 0));
 	glCheck(glEnableVertexAttribArray(1));
-	glCheck(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
+	glCheck(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)offset1));
 	glCheck(glEnableVertexAttribArray(2));
-	glCheck(glVertexAttribPointer(2, /*4*/3, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
+	glCheck(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)offset2));
 	glCheck(glEnableVertexAttribArray(3));
-	glCheck(glVertexAttribPointer(3, 3, GL_FLOAT, GL_TRUE, stride, (void*)normalOffset));
+	glCheck(glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, stride, (void*)offset3));
 
 	glCheck(glBindVertexArray(0));
 	return true;
 }
 
-void LineLineModel::Draw() {
+void LineModel::Draw() {
 	glCheck(glBindVertexArray(this->vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, this->drawCount));
 	glCheck(glBindVertexArray(0));
@@ -141,7 +144,7 @@ void LineLineModel::Draw() {
 } // namespace
 
 Scene_Title::Scene_Title() {
-	m_camera.setDim(16.0f, 9.0f);
+	m_camera.setDim(16.0f / 3, 9.0f / 3);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 }
 
@@ -159,14 +162,47 @@ void Scene_Title::setup(sf::Vector2u size) {
 	glCheck(glEnable(GL_BLEND));
 	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 
-	glm::vec3 v0(0.0f, 0.0f, 0.0f);
-	glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
-	float thick = 0.1f;
-	std::vector<g3d::Vertex> va;
-	va.push_back(g3d::Vertex(glm::vec3(0.0f, thick, 0.0f), v0, v1));
-	va.push_back(g3d::Vertex(glm::vec3(0.0f, -thick, 0.0f), v0, v1));
-	va.push_back(g3d::Vertex(glm::vec3(1.0f, -thick, 0.0f), v0, v1));
-	va.push_back(g3d::Vertex(glm::vec3(1.0f, thick, 0.0f), v0, v1));
+	//glm::vec3 v0(0.0f, 0.0f, 0.0f);
+	//glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
+	float thick = 0.01f;
+
+	union I2F { // 用于把bin转化为float
+		unsigned long i = 0;
+		float f;
+	} a[3];
+
+	std::ifstream ifs;
+	ifs.open("assets/sphere.txt", std::ios::in);
+	if (!ifs.is_open()) {
+		std::cout << "Failed to Open Model File!" << std::endl;
+	}
+	ifs.unsetf(std::ios::dec);
+	ifs.setf(std::ios::hex); // 以16进制输入
+
+	std::array<glm::vec3, 42> vertices;
+	for (int i = 0; i < 42; ++i) {
+		ifs >> a[0].i >> a[1].i >> a[2].i;
+		vertices[i] = { a[0].f, a[1].f, a[2].f };
+	}
+
+	ifs.unsetf(std::ios::hex);
+	ifs.setf(std::ios::dec); // 以10进制输入
+
+	std::vector<::Vertex> va;
+	va.reserve(480);
+	for (int i = 0; i < 120; ++i) {
+		int ii[2];
+		ifs >> ii[0] >> ii[1];
+
+		glm::vec3& v0 = vertices[ii[0]];
+		glm::vec3& v1 = vertices[ii[1]];
+
+		va.emplace_back(v0, v1, glm::vec2(0.0f, thick));
+		va.emplace_back(v0, v1, glm::vec2(0.0f, -thick));
+		va.emplace_back(v0, v1, glm::vec2(1.0f, -thick));
+		va.emplace_back(v0, v1, glm::vec2(1.0f, thick));
+	}
+
 	m_llm.LoadModelData(va);
 	//linetest->Position = { -20.0f, 0.0f, 0.0f };
 	//linetest->load();}
@@ -182,7 +218,7 @@ void Scene_Title::update(float dt) {
 void Scene_Title::render() {
 	g3d::base::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f)); // 设置clear颜色
+	glCheck(glClearColor(1.0f, 1.0f, 1.0f, 0.8f)); // 设置clear颜色
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 
 	sf::IntRect Viewport(
