@@ -21,9 +21,11 @@
 */
 #pragma once
 
-#include "Window.h"
+#include <SFML/Window/Event.hpp>
 
 namespace GUI {
+
+class Window;
 
 /**
  * @brief Activity: 于 Window 中执行的单个界面。
