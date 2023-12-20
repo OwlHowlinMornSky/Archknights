@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 #include "../GUI/IBgm.h"
 
 #include <SFML/Graphics.hpp>

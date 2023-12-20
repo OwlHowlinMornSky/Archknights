@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -45,7 +46,7 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	int m_status;
+	int m_status; // 状态
 	GUI::Window* r_wnd;
 	sf::Time m_timer;
 	sf::CircleShape circle[3];

@@ -56,10 +56,11 @@ GUI::Carnival::~Carnival() noexcept {
 }
 
 void Carnival::run() noexcept {
+	// 临时替换回调
 	ohms::TempGuard<std::function<void()>> idleGuard(GUI::OnIdle);
 	ohms::TempGuard<std::function<void(bool)>> syslpGuard(GUI::OnSystemLoop);
 	sf::Time dt;
-	if (m_mutipleWindows) {
+	if (m_mutipleWindows) { // 多窗口模式
 		idleGuard = std::bind(&Carnival::onIdle, this);
 		syslpGuard = std::bind(&Carnival::onSystemLoop, this, std::placeholders::_1);
 		m_clk.restart();
@@ -87,7 +88,7 @@ void Carnival::run() noexcept {
 			showErrorMessageBox(g_str_error, err);
 		}
 	}
-	else {
+	else { // 单窗口模式
 		idleGuard = std::bind(&Carnival::onIdleSingle, this);
 		syslpGuard = std::bind(&Carnival::onSystemLoopSingle, this, std::placeholders::_1);
 		m_clk.restart();

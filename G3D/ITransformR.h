@@ -38,6 +38,9 @@ protected:
 	~ITransformR() = default;
 
 public:
+	/**
+	 * @brief 设置旋转值
+	*/
 	void setRotation(const glm::vec3& r) {
 		m_rotation = r;
 		m_rotationChanged = true;
@@ -51,6 +54,9 @@ public:
 		m_rotationChanged = true;
 	}
 
+	/**
+	 * @brief 旋转
+	*/
 	void rotate(float drx, float dry, float drz) {
 		m_rotation.x += drx;
 		m_rotation.y += dry;
@@ -58,6 +64,9 @@ public:
 		m_rotationChanged = true;
 	}
 
+	/**
+	 * @brief 归一化
+	*/
 	void normalizeRotation() {
 		while (m_rotation.x < 0.0f) m_rotation.x += 360.0f;
 		while (m_rotation.x >= 360.0f) m_rotation.x -= 360.0f;
@@ -68,8 +77,8 @@ public:
 	}
 
 protected:
-	mutable bool m_rotationChanged;
-	mutable glm::vec3 m_rotation;
+	mutable bool m_rotationChanged; // 标记旋转值是否修改过（使用后请置0）
+	mutable glm::vec3 m_rotation; // 旋转值
 };
 
 } // namespace g3d

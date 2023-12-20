@@ -38,6 +38,9 @@ protected:
 	~ITransformT() = default;
 
 public:
+	/**
+	 * @brief 设置位置
+	*/
 	void setPosition(const glm::vec3& p) {
 		m_position = p;
 		m_positionChanged = true;
@@ -51,35 +54,56 @@ public:
 		m_positionChanged = true;
 	}
 
+	/**
+	 * @brief 设置x坐标
+	*/
 	void setPosX(float px) {
 		m_position.x = px;
 		m_positionChanged = true;
 	}
+	/**
+	 * @brief 设置y坐标
+	*/
 	void setPosY(float py) {
 		m_position.y = py;
 		m_positionChanged = true;
 	}
+	/**
+	 * @brief 设置z坐标
+	*/
 	void setPosZ(float pz) {
 		m_position.z = pz;
 		m_positionChanged = true;
 	}
 
+	/**
+	 * @brief 设置xy坐标
+	*/
 	void setPosXY(float px, float py) {
 		m_position.x = px;
 		m_position.y = py;
 		m_positionChanged = true;
 	}
+	/**
+	 * @brief 设置xz坐标
+	*/
 	void setPosXZ(float px, float pz) {
 		m_position.x = px;
 		m_position.z = pz;
 		m_positionChanged = true;
 	}
+	/**
+	 * @brief 设置yz坐标
+	*/
 	void setPosYZ(float py, float pz) {
 		m_position.y = py;
 		m_position.z = pz;
 		m_positionChanged = true;
 	}
 
+	/**
+	 * @brief 移动
+	*/
 	void translate(float dpx, float dpy, float dpz) {
 		m_position.x += dpx;
 		m_position.y += dpy;
@@ -88,8 +112,8 @@ public:
 	}
 
 protected:
-	mutable bool m_positionChanged;
-	mutable glm::vec3 m_position;
+	mutable bool m_positionChanged; // 标记位置是否修改过（使用后请置0）
+	mutable glm::vec3 m_position; // 位置
 };
 
 } // namespace g3d

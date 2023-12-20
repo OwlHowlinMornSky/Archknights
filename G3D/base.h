@@ -23,10 +23,19 @@
 
 namespace g3d::base {
 
+/**
+ * @brief 加载G3D环境。包括初始化GLEW和创建Context。
+*/
 void setup();
 
+/**
+ * @brief 激活Context或取消。
+*/
 bool setActive(bool active);
 
+/**
+ * @brief 卸载G3D环境。包括销毁Context。
+*/
 void drop() noexcept;
 
 } // namespace g3d::base

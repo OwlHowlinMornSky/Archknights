@@ -38,8 +38,8 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 
 bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
 	r_wnd = &wnd;
-	r_wnd->setSize({ 1280, 720 });
-#ifdef _DEBUG
+	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
+#ifdef _DEBUG // 加载调试用的资源
 	m_tex.loadFromFile("assets/DefaultEntry.png");
 	m_sp.setTexture(m_tex, true);
 #endif // _DEBUG
@@ -54,25 +54,21 @@ void Act01_DefaultEntrance::stop() noexcept {
 bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	switch (evt.type) {
-	case sf::Event::Closed:
+	case sf::Event::Closed: // 关闭窗口
 		r_wnd->setWaitingForStop();
 		return 1;
-		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
-		case sf::Keyboard::Escape:
+		case sf::Keyboard::Escape: // 关闭窗口
 		case sf::Keyboard::Q:
 			r_wnd->setWaitingForStop();
 			return 1;
-			break;
-		case sf::Keyboard::F:
+		case sf::Keyboard::F: // 正常运行（进入Opening）
 			r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 			return 1;
-			break;
-		case sf::Keyboard::E:
+		case sf::Keyboard::E: // 进入调试Activity
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			return 1;
-			break;
 		default:
 			break;
 		}

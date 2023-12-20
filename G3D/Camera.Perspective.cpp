@@ -26,7 +26,9 @@
 namespace g3d {
 
 void g3d::PerspectiveCamera::updateMatP() {
+	// 计算矩阵
 	m_matP = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_zNear, m_zFar);
+	// 标记
 	m_matP_needUpdate = false;
 	m_matPVChanged = true;
 	return;

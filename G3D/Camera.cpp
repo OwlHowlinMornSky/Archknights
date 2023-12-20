@@ -26,14 +26,18 @@
 namespace g3d {
 
 void Camera::updateMatV() {
+	// 限制俯仰角
 	if (m_rotation.x < 0.0f)
 		m_rotation.x = 0.0f;
 	else if (m_rotation.x > 90.0f)
 		m_rotation.x = 90.0f;
+	// 计算旋转
 	m_matV = glm::rotate(glm::radians(-m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
 	m_matV *= glm::rotate(glm::radians(-m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 	m_matV *= glm::rotate(glm::radians(-m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	// 计算位移
 	m_matV *= glm::translate(-m_position);
+	// 标记
 	m_positionChanged = false;
 	m_rotationChanged = false;
 	m_matPVChanged = true;

@@ -50,8 +50,8 @@ protected:
 	virtual void updateMatP() override;
 
 public:
-	float m_dimX;
-	float m_dimY;
+	float m_dimX; // 画面宽度（不是半宽）
+	float m_dimY; // 画面高度（不是半高）
 };
 
 }

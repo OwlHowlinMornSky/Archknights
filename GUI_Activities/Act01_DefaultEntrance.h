@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -51,7 +52,7 @@ protected:
 	GUI::Window* r_wnd;
 #ifdef _DEBUG
 	sf::Sprite m_sp;
-	sf::Texture m_tex;
+	sf::Texture m_tex; // 调试显示图片的纹理
 #endif // _DEBUG
 };
 

@@ -101,8 +101,8 @@ protected:
 protected:
 	bool m_matPVChanged;
 	bool m_matP_needUpdate;
-	float m_zNear;
-	float m_zFar;
+	float m_zNear; // z of near plane
+	float m_zFar;  // z of far plane
 	glm::mat4 m_matP;
 	glm::mat4 m_matV;
 	glm::mat4 m_matPV;
