@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
