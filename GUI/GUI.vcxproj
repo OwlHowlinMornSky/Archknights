@@ -167,6 +167,7 @@
     <ClInclude Include="Carnival.h" />
     <ClInclude Include="IBgm.h" />
     <ClInclude Include="IFontMgr.h" />
+    <ClInclude Include="Reference.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="TempGuard.h" />
     <ClInclude Include="WindowWin32.h" />

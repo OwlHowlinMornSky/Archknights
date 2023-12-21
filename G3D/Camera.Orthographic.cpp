@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -26,9 +26,12 @@
 namespace g3d {
 
 void g3d::OrthographicCamera::updateMatP() {
+	// 计算半宽和半高
 	float x = m_dimX / 2.0f;
 	float y = m_dimY / 2.0f;
+	// 计算矩阵
 	m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar);
+	// 标记
 	m_matP_needUpdate = false;
 	m_matPVChanged = true;
 	return;

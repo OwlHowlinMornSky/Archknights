@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -48,10 +49,10 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	GUI::Window* r_wnd;
+	GUI::WndRef r_wnd;
 #ifdef _DEBUG
 	sf::Sprite m_sp;
-	sf::Texture m_tex;
+	sf::Texture m_tex; // 调试显示图片的纹理
 #endif // _DEBUG
 };
 

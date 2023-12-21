@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -26,7 +26,9 @@
 namespace g3d {
 
 void g3d::PerspectiveCamera::updateMatP() {
+	// 计算矩阵
 	m_matP = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_zNear, m_zFar);
+	// 标记
 	m_matP_needUpdate = false;
 	m_matPVChanged = true;
 	return;

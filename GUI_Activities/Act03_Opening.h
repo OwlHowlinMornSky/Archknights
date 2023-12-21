@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -45,8 +46,8 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	int m_status;
-	GUI::Window* r_wnd;
+	int m_status; // 状态
+	GUI::WndRef r_wnd;
 	sf::Time m_timer;
 	sf::CircleShape circle[3];
 };

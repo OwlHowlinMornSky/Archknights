@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -38,6 +38,9 @@ protected:
 	~ITransformS() = default;
 
 public:
+	/**
+	 * @brief 设置缩放
+	*/
 	void setScale(const glm::vec3& s) {
 		m_scale = s;
 		m_scaleChanged = true;
@@ -55,6 +58,9 @@ public:
 		m_scaleChanged = true;
 	}
 
+	/**
+	 * @brief 缩放
+	*/
 	void scale(float dsx, float dsy, float dsz) {
 		m_scale.x *= dsx;
 		m_scale.y *= dsy;
@@ -67,8 +73,8 @@ public:
 	}
 
 protected:
-	bool m_scaleChanged;
-	glm::vec3 m_scale;
+	bool m_scaleChanged; // 标记缩放值是否修改过（使用后请置0）
+	glm::vec3 m_scale; // 缩放值
 };
 
 } // namespace g3d

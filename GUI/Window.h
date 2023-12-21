@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -23,12 +23,11 @@
 
 #include <string_view>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
 #include <SFML/System/Time.hpp>
 
-namespace GUI {
+#include "Activity.h"
 
-class Activity;
+namespace GUI {
 
 /**
  * @brief 窗口类型。
@@ -198,9 +197,49 @@ public:
 
 public:
 	bool available() const;
-	void handleEvent();
-	void update(sf::Time dtime);
-	void onSystemLoop(bool enter);
+	void handleEvent() {
+		if (m_waitToChange) {
+			if (m_nextActivity->start(*this)) {
+				if (m_activity != nullptr)
+					m_activity->stop();
+				m_activity = std::move(m_nextActivity);
+			}
+			else {
+				m_nextActivity.reset();
+			}
+			m_waitToChange = false;
+		}
+		sf::Event evt;
+		while (pollEvent(evt)) {
+			if (evt.type == sf::Event::Resized) {
+				setView(
+					sf::View(
+						sf::FloatRect(
+							0.0f, 0.0f,
+							static_cast<float>(evt.size.width),
+							static_cast<float>(evt.size.height)
+						)
+					)
+				);
+			}
+			if (m_activity->handleEvent(evt)) {
+				while (pollEvent(evt))
+					;
+				break;
+			}
+		}
+		return;
+	}
+	void update(sf::Time dtime) {
+		return m_activity->update(dtime);
+	}
+	void onSystemLoop(bool enter) {
+		if (enter)
+			m_activity->OnEnterSysloop();
+		else
+			m_activity->OnExitSysloop();
+		return;
+	}
 	virtual void checkSizeInSystemLoop() noexcept = 0;
 public:
 	/**

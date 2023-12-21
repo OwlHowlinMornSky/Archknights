@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -38,6 +38,9 @@ protected:
 	~ITransformO() = default;
 
 public:
+	/**
+	 * @brief 设置原点位置
+	*/
 	void setOrigin(const glm::vec3& o) {
 		m_origin = o;
 		m_originChanged = true;
@@ -52,8 +55,8 @@ public:
 	}
 
 protected:
-	bool m_originChanged;
-	glm::vec3 m_origin;
+	bool m_originChanged; // 标记原点是否修改过（使用后请置0）
+	glm::vec3 m_origin; // 原点
 };
 
 } // namespace g3d

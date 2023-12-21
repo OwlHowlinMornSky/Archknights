@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -22,6 +22,10 @@
 #pragma once
 
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
+#include "../GUI/IBgm.h"
+
+#include <SFML/Graphics.hpp>
 
 class Scene_Title;
 
@@ -43,6 +47,7 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	GUI::Window* r_wnd;
+	GUI::WndRef r_wnd;
 	Scene_Title* m_scene;
+	std::unique_ptr<GUI::IBgm> m_bgm;
 };

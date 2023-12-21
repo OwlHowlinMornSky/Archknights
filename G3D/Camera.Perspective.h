@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -56,8 +56,8 @@ protected:
 	virtual void updateMatP() override;
 
 protected:
-	float m_fov;
-	float m_aspectRatio;
+	float m_fov; // 纵向视场角
+	float m_aspectRatio; // 宽高比
 };
 
 } // namespace g3d

@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -23,10 +23,19 @@
 
 namespace g3d::base {
 
+/**
+ * @brief 加载G3D环境。包括初始化GLEW和创建Context。
+*/
 void setup();
 
+/**
+ * @brief 激活Context或取消。
+*/
 bool setActive(bool active);
 
+/**
+ * @brief 卸载G3D环境。包括销毁Context。
+*/
 void drop() noexcept;
 
 } // namespace g3d::base

@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -30,11 +30,7 @@ namespace Activity {
 
 Act02_TestActivity::Act02_TestActivity() :
 	m_paused(false),
-	r_wnd(nullptr),
-	m_modeI(0),
-	m_disableResize(false),
-	m_disableMinimize(false),
-	m_disableClose(false) {
+	m_modeI(0) {
 	return;
 }
 
@@ -43,23 +39,28 @@ Act02_TestActivity::~Act02_TestActivity() noexcept {
 }
 
 bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 
+	// 复制所有屏幕模式
 	m_modes = sf::VideoMode::getFullscreenModes();
 	m_modeI = 0;
 	noticeSelectedMode();
 
+	// 设置中心正方形
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
-	updateSize();
 
+	// 加载调试信息
 	m_tex.loadFromFile("assets/TestActivity.png");
 	m_sp.setTexture(m_tex, true);
+
+	// 更新布局
+	updateSize();
 	return true;
 }
 
 void Act02_TestActivity::stop() noexcept {
-	r_wnd = nullptr;
+	r_wnd();
 	return;
 }
 
@@ -68,14 +69,12 @@ bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
 		return 1;
-		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Escape:
 		case sf::Keyboard::Q:
 			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntrance>());
 			return 1;
-			break;
 		case sf::Keyboard::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
 			std::cout
@@ -136,7 +135,7 @@ bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
 		}
 		break;
 	case sf::Event::Resized:
-		m_shape.setPosition(evt.size.width / 2.0f, evt.size.height / 2.0f);
+		updateSize();
 		break;
 	default:
 		break;

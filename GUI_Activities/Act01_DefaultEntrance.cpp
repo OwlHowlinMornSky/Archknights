@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -23,12 +23,12 @@
 #include "Act03_Opening.h"
 #ifdef _DEBUG
 #include "Act02_TestActivity.h"
+#include "../GameGraphics/Activity_Debug.h"
 #endif // _DEBUG
 
 namespace Activity {
 
-Act01_DefaultEntrance::Act01_DefaultEntrance() :
-	r_wnd(nullptr) {
+Act01_DefaultEntrance::Act01_DefaultEntrance() {
 	return;
 }
 
@@ -37,9 +37,9 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 }
 
 bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
-	r_wnd->setSize({ 1280, 720 });
-#ifdef _DEBUG
+	r_wnd = wnd;
+	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
+#ifdef _DEBUG // 加载调试用的资源
 	m_tex.loadFromFile("assets/DefaultEntry.png");
 	m_sp.setTexture(m_tex, true);
 #endif // _DEBUG
@@ -47,32 +47,31 @@ bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
 }
 
 void Act01_DefaultEntrance::stop() noexcept {
-	r_wnd = nullptr;
+	r_wnd();
 	return;
 }
 
 bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	switch (evt.type) {
-	case sf::Event::Closed:
+	case sf::Event::Closed: // 关闭窗口
 		r_wnd->setWaitingForStop();
 		return 1;
-		break;
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
-		case sf::Keyboard::Escape:
+		case sf::Keyboard::Escape: // 关闭窗口
 		case sf::Keyboard::Q:
 			r_wnd->setWaitingForStop();
 			return 1;
-			break;
-		case sf::Keyboard::F:
+		case sf::Keyboard::F: // 正常运行（进入Opening）
 			r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 			return 1;
-			break;
-		case sf::Keyboard::E:
+		case sf::Keyboard::E: // 进入调试Activity
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			return 1;
-			break;
+		case sf::Keyboard::T: // 进入GameDebug
+			r_wnd->changeActivity(std::make_unique<gamegui::Activity_Debug>());
+			return 1;
 		default:
 			break;
 		}

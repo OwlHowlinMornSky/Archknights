@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -32,13 +32,12 @@
 namespace Activity {
 
 Act04_Load::Act04_Load() :
-	m_status(0),
-	r_wnd(nullptr) {}
+	m_status(0) {}
 
 Act04_Load::~Act04_Load() noexcept {}
 
 bool Act04_Load::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 
 	m_tex.loadFromFile("res/textures/titleback.png");
 	m_tex.setSmooth(true);
@@ -72,6 +71,7 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 void Act04_Load::stop() noexcept {
 	m_bgm->stop();
 	m_status = 0;
+	r_wnd();
 	return;
 }
 

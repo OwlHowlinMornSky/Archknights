@@ -51,6 +51,9 @@
     <ClInclude Include="Callbacks.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Reference.h">
+      <Filter>接口</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FontMgr.cpp">

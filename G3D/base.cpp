@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -29,7 +29,7 @@
 
 namespace {
 
-std::unique_ptr<sf::Context> g_context;
+std::unique_ptr<sf::Context> g_context; // 专用Context
 
 class exception_glew_failed final :
 	public std::exception {
@@ -51,9 +51,9 @@ protected:
 namespace g3d::base {
 
 void setup() {
-	g_context = std::make_unique<sf::Context>();
+	g_context = std::make_unique<sf::Context>(); // 创建专用Context
 	//glewExperimental = GL_TRUE;
-	GLenum glew_err = glewInit();
+	GLenum glew_err = glewInit(); // 初始化GLEW
 	if (glew_err != GLEW_OK) {
 		throw ::exception_glew_failed(glew_err);
 	}

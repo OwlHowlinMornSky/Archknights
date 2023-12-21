@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -23,6 +23,7 @@
 
 #ifdef _DEBUG
 #include "../GUI/Activity.h"
+#include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -46,19 +47,22 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
+	/**
+	 * @brief 以新的窗口大小更新布局
+	*/
 	void updateSize() noexcept;
+	/**
+	 * @brief 在控制台输出当前选中的屏幕模式
+	*/
 	void noticeSelectedMode() noexcept;
 
 protected:
-	GUI::Window* r_wnd;
-	sf::RectangleShape m_shape;
-	std::vector<sf::VideoMode> m_modes;
-	size_t m_modeI;
-	bool m_paused;
-	bool m_disableClose;
-	bool m_disableResize;
-	bool m_disableMinimize;
-	sf::Texture m_tex;
+	GUI::WndRef r_wnd;
+	sf::RectangleShape m_shape; // 中心旋转的正方形
+	std::vector<sf::VideoMode> m_modes; // 所有屏幕模式的副本
+	size_t m_modeI; // 选择的屏幕模式标记
+	bool m_paused; // 暂停标记
+	sf::Texture m_tex; // 调试信息图片的纹理
 	sf::Sprite m_sp;
 };
 

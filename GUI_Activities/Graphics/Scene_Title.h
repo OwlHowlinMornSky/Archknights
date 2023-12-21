@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -28,10 +28,24 @@
 #include "../../G3D/Camera.h"
 #include "../../G3D/Vertex.h"
 #include "../../G3D/Camera.Orthographic.h"
+#include "../../G3D/ITransformS.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace {
+
+struct Vertex {
+	glm::vec3 vertex0;
+	glm::vec3 vertex1;
+	glm::vec2 offset;
+	glm::vec2 texCoord;
+
+	Vertex(glm::vec3 v0, glm::vec3 v1, glm::vec2 off) :
+		vertex0(v0),
+		vertex1(v1),
+		offset(off),
+		texCoord() {}
+};
 
 class Shader_Title_Sphere final :
 	public g3d::Shader {
@@ -45,11 +59,13 @@ public:
 	GLint m_ul_matm;
 };
 
-class LineLineModel final :
-	public g3d::ITransformR {
+class LineModel final :
+	public g3d::ITransformR,
+	public g3d::ITransformT,
+	public g3d::ITransformS {
 public:
 	void update();
-	bool LoadModelData(const std::vector<g3d::Vertex>& vertexArray);
+	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
 	void Draw();
 protected:
 	unsigned int vao;
@@ -76,9 +92,9 @@ protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 protected:
-	Shader_Title_Sphere m_shader;
+	::Shader_Title_Sphere m_shader;
 	g3d::OrthographicCamera m_camera;
-	LineLineModel m_llm;
+	::LineModel m_llm;
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;
 };

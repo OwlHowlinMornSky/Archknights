@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -21,9 +21,14 @@
 */
 #pragma once
 
-#include "Window.h"
+#include <SFML/Window/Event.hpp>
+#include "Reference.h"
 
 namespace GUI {
+
+class Window;
+
+typedef ohms::Ref<GUI::Window>  WndRef;
 
 /**
  * @brief Activity: 于 Window 中执行的单个界面。

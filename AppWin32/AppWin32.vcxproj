@@ -97,8 +97,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;$(OutDir)Game.lib;$(OutDir)GameGraphics.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,8 +119,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;$(OutDir)Game.lib;$(OutDir)GameGraphics.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -138,8 +138,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;$(OutDir)Game.lib;$(OutDir)GameGraphics.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,8 +160,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)GUI.lib;$(OutDir)GUI_Activities.lib;$(OutDir)G3D.lib;$(OutDir)Game.lib;$(OutDir)GameGraphics.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

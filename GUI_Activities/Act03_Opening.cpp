@@ -1,7 +1,7 @@
 ﻿/*
 *    Archknights
 *
-*    Copyright (C) 2023  Tyler Parret True
+*    Copyright (C) 2023-2024  Tyler Parret True
 *
 *    This program is free software: you can redistribute it and/or modify
 *    it under the terms of the GNU Affero General Public License as published
@@ -39,13 +39,12 @@
 namespace Activity {
 
 Act03_Opening::Act03_Opening() :
-	m_status(0),
-	r_wnd(nullptr) {}
+	m_status(0) {}
 
 Act03_Opening::~Act03_Opening() noexcept {}
 
 bool Act03_Opening::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 	m_status = 0;
 	m_timer = sf::Time::Zero;
 
@@ -65,7 +64,7 @@ bool Act03_Opening::start(GUI::Window& wnd) noexcept {
 void Act03_Opening::stop() noexcept {
 	m_timer = sf::Time::Zero;
 	m_status = 0;
-	r_wnd = nullptr;
+	r_wnd();
 	return;
 }
 
