@@ -3,17 +3,22 @@
 #include <iostream>
 #include <random>
 
+namespace {
+
+// 以随机值播种，若可能
+//std::random_device r;
+// 选择 0.4 与 0.9 间的随机数
+//std::default_random_engine e1(r());
+std::default_random_engine e1(233);
+std::uniform_real_distribution<float> uniform_dist(0.4f, 0.9f);
+
+}
+
 namespace game {
 
 Char001_Myrtle::Char001_Myrtle() {
 	m_cnt = 0.0f;
 	m_returnCnt = 0;
-
-	// 以随机值播种，若可能
-	std::random_device r;
-	// 选择 0.4 与 0.9 间的随机数
-	std::default_random_engine e1(r());
-	std::uniform_real_distribution<float> uniform_dist(0.4f, 0.9f);
 
 	m_doki = uniform_dist(e1);
 
@@ -47,6 +52,10 @@ void Char001_Myrtle::OnKicking() {
 
 void Char001_Myrtle::UnitReset() {
 	m_cnt = 0.0f;
+	m_returnCnt = 0;
+
+	m_doki = uniform_dist(e1);
+
 	std::cout << "Myrtle Reseted" << std::endl; // for test
 }
 

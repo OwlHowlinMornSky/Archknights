@@ -34,6 +34,9 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 }
 
 void Activity_Game::update(sf::Time dtime) {
+#ifdef _DEBUG
+	r->clear(sf::Color::White);
+#endif // _DEBUG
 	r_board->Update(dtime.asSeconds());
 	m_scene->update(dtime.asSeconds());
 	r->draw(*m_scene);

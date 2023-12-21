@@ -19,11 +19,11 @@ std::shared_ptr<Unit> UnitFactory::JoinOneUnit() {
 		std::cout << "Factory Made One" << std::endl; // for test
 		unit = CreateUnit();
 		m_units.push_back(unit);
-		unit->UnitOnCreated(*this, m_units.size());
+		unit->UnitOnCreated(*this, m_units.size()); // ProductID 从 1 开始，且是位置加一
 	}
 	else {
 		std::cout << "Factory Reset One" << std::endl; // for test
-		unit = m_units[m_storedUnits.top() - 1];
+		unit = m_units[m_storedUnits.top() - 1]; // ProductID 从 1 开始，所以位置要减一
 		m_storedUnits.pop();
 		unit->UnitReset();
 	}
@@ -38,7 +38,6 @@ void UnitFactory::ReturnUnit(Unit* unit) {
 
 void UnitFactory::OnJoined(size_t id, size_t location) {
 	Parent::OnJoined(id, location);
-	JoinOneUnit(); // for test
 	JoinOneUnit(); // for test
 	JoinOneUnit(); // for test
 	JoinOneUnit(); // for test

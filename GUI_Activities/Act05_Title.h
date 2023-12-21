@@ -23,6 +23,9 @@
 
 #include "../GUI/Activity.h"
 #include "../GUI/Window.h"
+#include "../GUI/IBgm.h"
+
+#include <SFML/Graphics.hpp>
 
 class Scene_Title;
 
@@ -46,4 +49,5 @@ public:
 protected:
 	GUI::WndRef r_wnd;
 	Scene_Title* m_scene;
+	std::unique_ptr<GUI::IBgm> m_bgm;
 };

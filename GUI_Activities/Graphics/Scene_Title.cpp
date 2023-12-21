@@ -58,7 +58,7 @@ const char g_vs[] =
 "  gl_Position = u_matP * finalPosition;"\
 "  vec4 depthPosition = vec4(mix(a_vertex0, a_vertex1, a_offset.x), 1.0);"\
 "  depthPosition = u_matM * depthPosition;"\
-"  v_alpha = 0.8 + depthPosition.z / 3.0;"\
+"  v_alpha = 0.75 + depthPosition.z / 1.5;"\
 "  v_uv = a_texCoord;"\
 "}";
 
@@ -69,9 +69,10 @@ const char g_fs[] =
 "varying vec2 v_uv;"\
 "void main() {"\
 "  vec4 cl = vec4(1.0, 0.9, 0.0, 1.0);"
-"  gl_FragColor = cl;"\
+"  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
 "}";
 //"  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
+//"  gl_FragColor = cl;"\
 
 void Shader_Title_Sphere::setup() {
 	clear();
@@ -97,9 +98,11 @@ void Shader_Title_Sphere::update(g3d::Camera& camera) {
 
 void LineModel::update() {
 	if (m_rotationChanged) {
-		m_matM = glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matM = glm::translate(m_position);
+		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matM *= glm::scale(m_scale);
 		m_rotationChanged = false;
 	}
 }
@@ -144,7 +147,7 @@ void LineModel::Draw() {
 } // namespace
 
 Scene_Title::Scene_Title() {
-	m_camera.setDim(16.0f / 3, 9.0f / 3);
+	m_camera.setDim(16.0f / 4, 9.0f / 4);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 }
 
@@ -164,7 +167,7 @@ void Scene_Title::setup(sf::Vector2u size) {
 
 	//glm::vec3 v0(0.0f, 0.0f, 0.0f);
 	//glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
-	float thick = 0.01f;
+	float thick = 0.0075f;
 
 	union I2F { // 用于把bin转化为float
 		unsigned long i = 0;
@@ -207,6 +210,9 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//linetest->Position = { -20.0f, 0.0f, 0.0f };
 	//linetest->load();}
 
+	m_llm.setPosition(0.5f, 0, 0);
+	m_llm.setScale(0.1f);
+
 	g3d::base::setActive(false);
 }
 
@@ -218,7 +224,7 @@ void Scene_Title::update(float dt) {
 void Scene_Title::render() {
 	g3d::base::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClearColor(1.0f, 1.0f, 1.0f, 0.8f)); // 设置clear颜色
+	glCheck(glClearColor(1.0f, 1.0f, 1.0f, 0.2f)); // 设置clear颜色
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 
 	sf::IntRect Viewport(

@@ -28,6 +28,7 @@
 #include "../../G3D/Camera.h"
 #include "../../G3D/Vertex.h"
 #include "../../G3D/Camera.Orthographic.h"
+#include "../../G3D/ITransformS.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -59,7 +60,9 @@ public:
 };
 
 class LineModel final :
-	public g3d::ITransformR {
+	public g3d::ITransformR,
+	public g3d::ITransformT,
+	public g3d::ITransformS {
 public:
 	void update();
 	bool LoadModelData(const std::vector<::Vertex>& vertexArray);

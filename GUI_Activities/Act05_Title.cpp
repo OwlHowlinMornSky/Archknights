@@ -21,6 +21,7 @@
 */
 #include "Act05_Title.h"
 
+#include "../GUI/BgmSFML.h"
 #include "Graphics/Scene_Title.h"
 
 Act05_Title::Act05_Title() :
@@ -39,6 +40,10 @@ bool Act05_Title::start(GUI::Window& wnd) noexcept {
 	m_scene->setup(r_wnd->getSize());
 
 	r_wnd->setActive(true);
+
+	m_bgm = std::make_unique<GUI::BgmSFML>();
+	m_bgm->openFromFile("res/music/m_sys_title.ogg");
+	m_bgm->play();
 	return true;
 }
 
