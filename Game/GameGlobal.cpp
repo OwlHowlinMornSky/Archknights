@@ -1,4 +1,5 @@
 ﻿#include "GameGlobal.h"
+#include "GameBoard.h"
 
 namespace {
 

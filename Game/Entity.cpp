@@ -2,7 +2,11 @@
 
 namespace game {
 
+void Entity::enter() {}
+
 void Entity::update(long long dt) {}
+
+void Entity::exit() {}
 
 void Entity::Changed_Position() {}
 

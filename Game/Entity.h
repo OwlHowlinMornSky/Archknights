@@ -10,7 +10,9 @@ public:
 	virtual ~Entity() = default;
 
 public:
+	virtual void enter();
 	virtual void update(long long dt);
+	virtual void exit();
 
 public:
 	glm::vec3 getPosition() const {
