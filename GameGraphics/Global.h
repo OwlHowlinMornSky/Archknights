@@ -1,18 +1,14 @@
 ﻿#pragma once
 
-#include <memory>
 #include <string>
 
-namespace game {
-
-class GameBoard;
+namespace gamegui {
 
 struct GlobalData {
 	std::string name;
-	std::unique_ptr<GameBoard> board;
 };
 
-class Global {
+class Global final {
 protected:
 	Global() = default;
 public:

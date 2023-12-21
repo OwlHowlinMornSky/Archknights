@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "../GUI/Window.h"
+#include "SceneCommon.h"
 
-namespace game {
+namespace gamegui {
 
 class Activity_Game final :
 	public GUI::Activity {
@@ -23,6 +24,7 @@ public:
 
 protected:
 	GUI::WndRef r;
+	std::unique_ptr<SceneCommon> m_scene;
 };
 
 }

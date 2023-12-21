@@ -18,9 +18,21 @@
     <ClCompile Include="GameGlobal.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GameBoard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameGlobal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBoard.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -70,7 +70,7 @@ bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			return 1;
 		case sf::Keyboard::T: // 进入GameDebug
-			r_wnd->changeActivity(std::make_unique<Activity_Debug>());
+			r_wnd->changeActivity(std::make_unique<gamegui::Activity_Debug>());
 			return 1;
 		default:
 			break;

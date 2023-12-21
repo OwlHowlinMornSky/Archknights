@@ -19,9 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameGlobal.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -87,7 +91,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -108,7 +112,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -129,7 +133,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -150,7 +154,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

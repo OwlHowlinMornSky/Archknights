@@ -1,26 +1,38 @@
 ﻿#include "Activity_Game.h"
+#include "Global.h"
 
-game::Activity_Game::Activity_Game() {}
+namespace gamegui {
 
-game::Activity_Game::~Activity_Game() noexcept {}
+Activity_Game::Activity_Game() {}
 
-bool game::Activity_Game::start(GUI::Window& wnd) noexcept {
+Activity_Game::~Activity_Game() noexcept {}
+
+bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
-
-	
-    return false;
+	m_scene = std::make_unique<SceneCommon>();
+	return true;
 }
 
-void game::Activity_Game::stop() noexcept {
+void Activity_Game::stop() noexcept {
+	m_scene.reset();
 	r();
+	return;
 }
 
-bool game::Activity_Game::handleEvent(const sf::Event& evt) {
+bool Activity_Game::handleEvent(const sf::Event& evt) {
+
 	return false;
 }
 
-void game::Activity_Game::update(sf::Time dtime) {}
+void Activity_Game::update(sf::Time dtime) {
+	m_scene->update(dtime.asMicroseconds());
+	r->draw(*m_scene);
+	r->display();
+	return;
+}
 
-void game::Activity_Game::OnEnterSysloop() noexcept {}
+void Activity_Game::OnEnterSysloop() noexcept {}
 
-void game::Activity_Game::OnExitSysloop() noexcept {}
+void Activity_Game::OnExitSysloop() noexcept {}
+
+}

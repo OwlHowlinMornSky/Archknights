@@ -1,12 +1,12 @@
-﻿#include "GameGlobal.h"
+﻿#include "Global.h"
 
 namespace {
 
-game::Global* g_instance = nullptr;
+gamegui::Global* g_instance = nullptr;
 
 }
 
-namespace game {
+namespace gamegui {
 
 Global* Global::instance() {
 	if (!::g_instance) {

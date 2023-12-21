@@ -1,4 +1,8 @@
 ﻿#include "Activity_Debug.h"
+#include "Activity_Game.h"
+#include "Global.h"
+
+namespace gamegui {
 
 Activity_Debug::Activity_Debug() {}
 
@@ -18,6 +22,14 @@ bool Activity_Debug::handleEvent(const sf::Event& evt) {
 	case sf::Event::Closed:
 		r->setWaitingForStop();
 		return true;
+	case sf::Event::KeyPressed:
+		switch (evt.key.code) {
+		case sf::Keyboard::Num1:
+			Global::instance()->data.name = "debug";
+			r->changeActivity(std::make_unique<Activity_Game>());
+			return true;
+		}
+		break;
 	}
 	return false;
 }
@@ -30,3 +42,5 @@ void Activity_Debug::update(sf::Time dtime) {
 void Activity_Debug::OnEnterSysloop() noexcept {}
 
 void Activity_Debug::OnExitSysloop() noexcept {}
+
+}

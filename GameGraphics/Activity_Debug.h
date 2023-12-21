@@ -2,6 +2,8 @@
 
 #include "../GUI/Window.h"
 
+namespace gamegui {
+
 class Activity_Debug final :
 	public GUI::Activity {
 public:
@@ -22,3 +24,5 @@ public:
 protected:
 	GUI::WndRef r;
 };
+
+}
