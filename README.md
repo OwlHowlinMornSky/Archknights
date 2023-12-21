@@ -14,9 +14,11 @@ A Fan-made game of Arknights.
 
  - zlib License
 	 - [SFML v2.6.0](https://github.com/SFML/SFML).
+ - MIT License
+	 - [GLM v0.9.9.8](https://github.com/g-truc/glm).
+	 - [Box2D v2.4.1](https://github.com/erincatto/box2d).
  - Other licenses
 	 - [GLEW v2.2.0](https://github.com/nigels-com/glew).
-	 - GLM v0.9.9.8.
 <!--
  - Optional 可选的
 	 - [Spine Runtimes v3.8](https://github.com/EsotericSoftware/spine-runtimes).
