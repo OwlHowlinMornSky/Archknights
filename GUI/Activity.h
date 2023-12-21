@@ -28,6 +28,8 @@ namespace GUI {
 
 class Window;
 
+typedef ohms::Ref<GUI::Window>  WndRef;
+
 /**
  * @brief Activity: 于 Window 中执行的单个界面。
 */

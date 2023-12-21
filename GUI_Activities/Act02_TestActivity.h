@@ -57,7 +57,7 @@ protected:
 	void noticeSelectedMode() noexcept;
 
 protected:
-	ohms::Ref<GUI::Window> r_wnd;
+	GUI::WndRef r_wnd;
 	sf::RectangleShape m_shape; // 中心旋转的正方形
 	std::vector<sf::VideoMode> m_modes; // 所有屏幕模式的副本
 	size_t m_modeI; // 选择的屏幕模式标记

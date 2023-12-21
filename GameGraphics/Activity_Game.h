@@ -22,7 +22,7 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	ohms::Ref<GUI::Window> r;
+	GUI::WndRef r;
 };
 
 }

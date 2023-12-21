@@ -47,7 +47,7 @@ public:
 
 protected:
 	int m_status; // 状态
-	ohms::Ref<GUI::Window> r_wnd;
+	GUI::WndRef r_wnd;
 	sf::Time m_timer;
 	sf::CircleShape circle[3];
 };
