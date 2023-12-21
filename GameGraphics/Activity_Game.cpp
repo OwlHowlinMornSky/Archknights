@@ -1,5 +1,7 @@
 ﻿#include "Activity_Game.h"
 #include "Global.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
 
 namespace gamegui {
 
@@ -9,6 +11,8 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
+	game::Global::instance()->data.name = "dabug";
+	game::Global::instance()->data.board = std::make_unique<game::GameBoard>();
 	m_scene = std::make_unique<SceneCommon>();
 	return true;
 }

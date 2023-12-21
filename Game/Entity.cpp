@@ -1,17 +1,38 @@
 ﻿#include "Entity.h"
+#include "GameGlobal.h"
+#include "GameBoard.h"
 
 namespace game {
 
-void Entity::enter() {}
+Entity::Entity() :
+	m_updatable(false),
 
-void Entity::update(long long dt) {}
+	m_position(),
+	m_rotation(),
+	m_scale(1.0f),
 
-void Entity::exit() {}
+	m_id(0),
+	m_location(0) {}
 
-void Entity::Changed_Position() {}
+void Entity::OnJoined(size_t id, size_t location) {
+	m_id = id;
+	m_location = location;
+}
 
-void Entity::Changed_Rotation() {}
+void Entity::OnUpdate(size_t dt) {}
 
-void Entity::Changed_Scale() {}
+void Entity::OnKicking() {
+	m_id = 0;
+}
+
+void Entity::OnPositionChanged() {}
+
+void Entity::OnRotationChanged() {}
+
+void Entity::OnScaleChanged() {}
+
+void Entity::KickSelf() const {
+	Global::instance()->data.board->KickEntity(m_location);
+}
 
 }

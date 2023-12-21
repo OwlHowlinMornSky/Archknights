@@ -22,11 +22,16 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameGlobal.h" />
+    <ClInclude Include="Reference.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitFactory.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
