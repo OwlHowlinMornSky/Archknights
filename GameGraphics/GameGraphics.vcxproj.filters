@@ -18,9 +18,15 @@
     <ClInclude Include="Activity_Game.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Activity_Debug.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Activity_Game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activity_Debug.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

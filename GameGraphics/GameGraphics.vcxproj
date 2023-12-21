@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Activity_Debug.cpp" />
     <ClCompile Include="Activity_Game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Activity_Debug.h" />
     <ClInclude Include="Activity_Game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
