@@ -3,6 +3,10 @@
 #include "../GUI/Window.h"
 #include "SceneCommon.h"
 
+namespace game {
+class GameBoard;
+}
+
 namespace gamegui {
 
 class Activity_Game final :
@@ -24,6 +28,7 @@ public:
 
 protected:
 	GUI::WndRef r;
+	game::GameBoard* r_board;
 	std::unique_ptr<SceneCommon> m_scene;
 };
 

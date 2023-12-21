@@ -2,6 +2,8 @@
 #include "GameGlobal.h"
 #include "GameBoard.h"
 
+#include <iostream>
+
 namespace game {
 
 Entity::Entity() :
@@ -17,6 +19,9 @@ Entity::Entity() :
 void Entity::OnJoined(size_t id, size_t location) {
 	m_id = id;
 	m_location = location;
+
+	// for test
+	std::cout << "Join: " << this << ", ID: " << id << ", Location: " << location << std::endl;
 }
 
 void Entity::OnUpdate(float dt) {}

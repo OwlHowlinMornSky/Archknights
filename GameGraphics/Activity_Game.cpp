@@ -5,13 +5,16 @@
 
 namespace gamegui {
 
-Activity_Game::Activity_Game() {}
+Activity_Game::Activity_Game() :
+	r_board(nullptr) {}
 
 Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
 	game::Global::instance()->data.board = std::make_unique<game::GameBoard>();
+	r_board = game::Global::instance()->data.board.get();
+	r_board->setup();
 	m_scene = std::make_unique<SceneCommon>();
 	return true;
 }
@@ -31,7 +34,8 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 }
 
 void Activity_Game::update(sf::Time dtime) {
-	m_scene->update(dtime.asMicroseconds());
+	r_board->Update(dtime.asSeconds());
+	m_scene->update(dtime.asSeconds());
 	r->draw(*m_scene);
 	r->display();
 	return;

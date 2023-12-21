@@ -2,7 +2,10 @@
 
 namespace game {
 
-Unit::Unit() {}
+Unit::Unit() :
+	m_productID(0) {
+	m_updatable = true;
+}
 
 Unit::~Unit() {}
 
@@ -12,7 +15,7 @@ void Unit::UnitOnCreated(UnitFactory& factory, size_t productID) {
 }
 
 void Unit::OnKicking() {
-	m_factory->ReturnUnit(m_productID);
+	m_factory->ReturnUnit(this);
 	return Parent::OnKicking();
 }
 

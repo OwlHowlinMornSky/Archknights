@@ -6,12 +6,15 @@ GameBoard::GameBoard() :
 	m_paused(false),
 	m_idCnt(0) {
 	m_physics = std::make_unique<b2World>(b2Vec2_zero);
-	m_rootLoader = std::make_shared<RootLoader>();
-	JoinEntity(m_rootLoader);
 }
 
 GameBoard::~GameBoard() {
 	m_rootLoader.reset();
+}
+
+void GameBoard::setup() {
+	m_rootLoader = std::make_shared<RootLoader>();
+	JoinEntity(m_rootLoader);
 }
 
 bool GameBoard::isEmpty() {
@@ -42,6 +45,7 @@ void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
 		m_entities[location] = entity;
 		entity->OnJoined(++m_idCnt, location);
 	}
+	assert(entity->getID());
 }
 
 void GameBoard::KickEntity(size_t location) {

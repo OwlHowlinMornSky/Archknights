@@ -14,6 +14,8 @@ public:
 	GameBoard();
 	~GameBoard();
 
+	void setup();
+
 public:
 	bool isEmpty();
 	void setPause(bool pause);

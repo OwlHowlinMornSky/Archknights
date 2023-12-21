@@ -14,7 +14,7 @@ public:
 	virtual ~SceneCommon() override;
 
 public:
-	void update(long long dt);
+	void update(float dt);
 
 	bool handleEvent(const sf::Event& evt);
 
