@@ -1,7 +1,10 @@
 ﻿#pragma once
 
+#include "Unit.h"
+
 namespace game {
 
-class Mover {};
+class Mover :
+	public Unit {};
 
 }

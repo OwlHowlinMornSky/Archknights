@@ -3,7 +3,9 @@
 namespace game {
 
 GameBoard::GameBoard() :
+	m_paused(false),
 	m_idCnt(0) {
+	m_physics = std::make_unique<b2World>(b2Vec2_zero);
 	m_rootLoader = std::make_shared<RootLoader>();
 	JoinEntity(m_rootLoader);
 }
@@ -16,7 +18,14 @@ bool GameBoard::isEmpty() {
 	return m_emptyLocation.size() == m_entities.size();
 }
 
-void GameBoard::Update(size_t dt) {
+void GameBoard::setPause(bool pause) {
+	m_paused = pause;
+}
+
+void GameBoard::Update(float dt) {
+	if (m_paused)
+		return;
+	m_physics->Step(dt, 3, 5);
 	for (std::shared_ptr<Entity>& e : m_entities)
 		if (e && e->isUpdatable())
 			e->OnUpdate(dt);

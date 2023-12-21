@@ -39,9 +39,6 @@
     <ClCompile Include="GameBoard.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="RootLoader.cpp">
       <Filter>Entities\源文件</Filter>
     </ClCompile>
@@ -60,18 +57,21 @@
     <ClCompile Include="Mover.cpp">
       <Filter>Units\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Char001_Myrtle.cpp">
+      <Filter>Units\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonFactory.cpp">
+      <Filter>Entities\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameGlobal.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameBoard.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Reference.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RootLoader.h">
@@ -94,6 +94,18 @@
     </ClInclude>
     <ClInclude Include="Mover.h">
       <Filter>Units\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Reference.h">
+      <Filter>Entities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Char001_Myrtle.h">
+      <Filter>Units\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonFactory.h">
+      <Filter>Entities\头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

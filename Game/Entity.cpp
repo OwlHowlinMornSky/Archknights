@@ -19,7 +19,7 @@ void Entity::OnJoined(size_t id, size_t location) {
 	m_location = location;
 }
 
-void Entity::OnUpdate(size_t dt) {}
+void Entity::OnUpdate(float dt) {}
 
 void Entity::OnKicking() {
 	m_id = 0;

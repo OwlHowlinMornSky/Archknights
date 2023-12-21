@@ -7,7 +7,7 @@ void RootLoader::OnJoined(size_t id, size_t location) {
 
 }
 
-void RootLoader::OnUpdate(size_t dt) {}
+void RootLoader::OnUpdate(float dt) {}
 
 void RootLoader::OnKicking() {
 	return Parent::OnKicking();

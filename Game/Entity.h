@@ -11,7 +11,7 @@ public:
 
 public:
 	virtual void OnJoined(size_t id, size_t location);
-	virtual void OnUpdate(size_t dt);
+	virtual void OnUpdate(float dt);
 	virtual void OnKicking();
 
 public:
