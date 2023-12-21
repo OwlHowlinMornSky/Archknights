@@ -54,6 +54,12 @@
     <ClCompile Include="MessageRepeater.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Units\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Mover.cpp">
+      <Filter>Units\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameGlobal.h">
@@ -82,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="MessageListeners.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Units\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Mover.h">
+      <Filter>Units\头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

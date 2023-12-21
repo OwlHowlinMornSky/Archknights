@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace gamegui {
 
@@ -14,6 +15,8 @@ public:
 
 public:
 	void update(long long dt);
+
+	bool handleEvent(const sf::Event& evt);
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {

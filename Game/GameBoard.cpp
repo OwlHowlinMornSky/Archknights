@@ -3,9 +3,14 @@
 namespace game {
 
 GameBoard::GameBoard() :
-	m_idCnt(0) {}
+	m_idCnt(0) {
+	m_rootLoader = std::make_shared<RootLoader>();
+	JoinEntity(m_rootLoader);
+}
 
-GameBoard::~GameBoard() {}
+GameBoard::~GameBoard() {
+	m_rootLoader.reset();
+}
 
 bool GameBoard::isEmpty() {
 	return m_emptyLocation.size() == m_entities.size();

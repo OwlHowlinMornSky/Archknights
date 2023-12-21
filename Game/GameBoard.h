@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include <deque>
 #include <stack>
+#include "RootLoader.h"
 
 namespace game {
 
@@ -26,6 +27,7 @@ protected:
 	size_t m_idCnt;
 	std::deque<std::shared_ptr<Entity>> m_entities;
 	std::stack<size_t> m_emptyLocation;
+	std::shared_ptr<RootLoader> m_rootLoader;
 };
 
 }

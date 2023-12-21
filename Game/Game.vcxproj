@@ -24,8 +24,10 @@
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="MessageListeners.h" />
     <ClInclude Include="MessageRepeater.h" />
+    <ClInclude Include="Mover.h" />
     <ClInclude Include="Reference.h" />
     <ClInclude Include="RootLoader.h" />
+    <ClInclude Include="Tower.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitFactory.h" />
   </ItemGroup>
@@ -34,7 +36,9 @@
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
     <ClCompile Include="MessageRepeater.cpp" />
+    <ClCompile Include="Mover.cpp" />
     <ClCompile Include="RootLoader.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
   </ItemGroup>

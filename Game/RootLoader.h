@@ -6,6 +6,7 @@ namespace game {
 
 class RootLoader :
 	public Entity {
+	using Parent = game::Entity;
 public:
 
 // 继承的
