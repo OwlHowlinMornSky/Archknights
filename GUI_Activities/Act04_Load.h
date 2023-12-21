@@ -51,7 +51,7 @@ protected:
 
 protected:
 	int m_status;
-	GUI::Window* r_wnd;
+	ohms::Ref<GUI::Window> r_wnd;
 	std::unique_ptr<GUI::IBgm> m_bgm;
 	sf::Texture m_tex;
 	sf::Sprite m_sp;

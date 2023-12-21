@@ -30,7 +30,6 @@ namespace Activity {
 
 Act02_TestActivity::Act02_TestActivity() :
 	m_paused(false),
-	r_wnd(nullptr),
 	m_modeI(0) {
 	return;
 }
@@ -40,7 +39,7 @@ Act02_TestActivity::~Act02_TestActivity() noexcept {
 }
 
 bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 
 	// 复制所有屏幕模式
 	m_modes = sf::VideoMode::getFullscreenModes();
@@ -61,7 +60,7 @@ bool Act02_TestActivity::start(GUI::Window& wnd) noexcept {
 }
 
 void Act02_TestActivity::stop() noexcept {
-	r_wnd = nullptr;
+	r_wnd();
 	return;
 }
 

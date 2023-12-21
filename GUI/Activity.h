@@ -22,6 +22,7 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
+#include "Reference.h"
 
 namespace GUI {
 

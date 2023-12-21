@@ -24,7 +24,6 @@
 #include "Graphics/Scene_Title.h"
 
 Act05_Title::Act05_Title() :
-	r_wnd(nullptr),
 	m_scene(nullptr) {
 	return;
 }
@@ -34,7 +33,7 @@ Act05_Title::~Act05_Title() noexcept {
 }
 
 bool Act05_Title::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 
 	m_scene = new Scene_Title;
 	m_scene->setup(r_wnd->getSize());
@@ -48,7 +47,7 @@ void Act05_Title::stop() noexcept {
 	delete m_scene;
 	g3d::base::setActive(false);
 	r_wnd->setActive(true);
-	r_wnd = nullptr;
+	r_wnd();
 }
 
 bool Act05_Title::handleEvent(const sf::Event& evt) {

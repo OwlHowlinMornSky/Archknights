@@ -27,8 +27,7 @@
 
 namespace Activity {
 
-Act01_DefaultEntrance::Act01_DefaultEntrance() :
-	r_wnd(nullptr) {
+Act01_DefaultEntrance::Act01_DefaultEntrance() {
 	return;
 }
 
@@ -37,7 +36,7 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 }
 
 bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
-	r_wnd = &wnd;
+	r_wnd = wnd;
 	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
 #ifdef _DEBUG // 加载调试用的资源
 	m_tex.loadFromFile("assets/DefaultEntry.png");
@@ -47,7 +46,7 @@ bool Act01_DefaultEntrance::start(GUI::Window& wnd) noexcept {
 }
 
 void Act01_DefaultEntrance::stop() noexcept {
-	r_wnd = nullptr;
+	r_wnd();
 	return;
 }
 

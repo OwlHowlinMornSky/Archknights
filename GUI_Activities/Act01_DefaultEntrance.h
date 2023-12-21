@@ -49,7 +49,7 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	GUI::Window* r_wnd;
+	ohms::Ref<GUI::Window> r_wnd;
 #ifdef _DEBUG
 	sf::Sprite m_sp;
 	sf::Texture m_tex; // 调试显示图片的纹理

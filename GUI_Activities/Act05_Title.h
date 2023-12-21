@@ -44,6 +44,6 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	GUI::Window* r_wnd;
+	ohms::Ref<GUI::Window> r_wnd;
 	Scene_Title* m_scene;
 };
