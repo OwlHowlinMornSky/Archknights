@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{480c672f-4871-4b6d-96c6-fa199e3947b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\头文件">
+      <UniqueIdentifier>{8f7c0a73-6311-464c-81e3-d827efd04dd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\源文件">
+      <UniqueIdentifier>{35207ee5-d7a0-444f-8045-66025b5b3bea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units">
+      <UniqueIdentifier>{19a2b145-7424-4590-a58e-a30e3ef46e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units\头文件">
+      <UniqueIdentifier>{d30bce38-d68a-4b79-a5d0-5ae8d6c438e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units\源文件">
+      <UniqueIdentifier>{3aab6f18-b4ac-48dd-8895-a2bd1bd175bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameGlobal.cpp">
@@ -24,10 +42,16 @@
     <ClCompile Include="Entity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="UnitFactory.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="RootLoader.cpp">
+      <Filter>Entities\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
+      <Filter>Entities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitFactory.cpp">
+      <Filter>Entities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageRepeater.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,13 +65,22 @@
     <ClInclude Include="Entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="UnitFactory.h">
+    <ClInclude Include="Reference.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RootLoader.h">
+      <Filter>Entities\头文件</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
+      <Filter>Entities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitFactory.h">
+      <Filter>Entities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageRepeater.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Reference.h">
+    <ClInclude Include="MessageListeners.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,7 +22,10 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameGlobal.h" />
+    <ClInclude Include="MessageListeners.h" />
+    <ClInclude Include="MessageRepeater.h" />
     <ClInclude Include="Reference.h" />
+    <ClInclude Include="RootLoader.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitFactory.h" />
   </ItemGroup>
@@ -30,6 +33,8 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
+    <ClCompile Include="MessageRepeater.cpp" />
+    <ClCompile Include="RootLoader.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
   </ItemGroup>

@@ -30,7 +30,7 @@ protected:
 
 // 继承的
 public:
-	virtual void OnKicking();
+	virtual void OnKicking() override;
 };
 
 }
