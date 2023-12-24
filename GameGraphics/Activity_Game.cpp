@@ -20,7 +20,6 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Activity_Game.h"
-#include "Global.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
 

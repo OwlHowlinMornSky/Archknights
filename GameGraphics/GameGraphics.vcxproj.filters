@@ -21,9 +21,6 @@
     <ClInclude Include="Activity_Debug.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SceneCommon.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -33,9 +30,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Activity_Debug.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Global.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SceneCommon.cpp">

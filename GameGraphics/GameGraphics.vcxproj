@@ -21,13 +21,11 @@
   <ItemGroup>
     <ClCompile Include="Activity_Debug.cpp" />
     <ClCompile Include="Activity_Game.cpp" />
-    <ClCompile Include="Global.cpp" />
     <ClCompile Include="SceneCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Activity_Debug.h" />
     <ClInclude Include="Activity_Game.h" />
-    <ClInclude Include="Global.h" />
     <ClInclude Include="SceneCommon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
