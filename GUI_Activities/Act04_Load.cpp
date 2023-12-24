@@ -180,4 +180,4 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	return;
 }
 
-}
+} // namespace Activity

@@ -24,6 +24,8 @@
 #include "../GUI/BgmSFML.h"
 #include "Graphics/Scene_Title.h"
 
+namespace Activity {
+
 Act05_Title::Act05_Title() :
 	m_scene(nullptr) {
 	return;
@@ -81,3 +83,5 @@ void Act05_Title::update(sf::Time dtime) {
 void Act05_Title::OnEnterSysloop() noexcept {}
 
 void Act05_Title::OnExitSysloop() noexcept {}
+
+} // namespace Activity

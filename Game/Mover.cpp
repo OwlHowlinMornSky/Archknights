@@ -23,4 +23,4 @@
 
 namespace game {
 
-}
+} // namespace game

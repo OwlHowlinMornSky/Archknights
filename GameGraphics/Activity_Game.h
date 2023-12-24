@@ -53,4 +53,4 @@ protected:
 	std::unique_ptr<SceneCommon> m_scene;
 };
 
-}
+} // namespace gamegui

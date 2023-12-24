@@ -87,4 +87,4 @@ void UnitFactory::OnKicking() {
 	return Parent::OnKicking();
 }
 
-}
+} // namespace game

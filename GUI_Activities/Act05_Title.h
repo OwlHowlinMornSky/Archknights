@@ -29,6 +29,8 @@
 
 class Scene_Title;
 
+namespace Activity {
+
 class Act05_Title final :
 	public GUI::Activity {
 public:
@@ -51,3 +53,5 @@ protected:
 	Scene_Title* m_scene;
 	std::unique_ptr<GUI::IBgm> m_bgm;
 };
+
+} // namespace Activity

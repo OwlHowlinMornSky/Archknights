@@ -41,4 +41,4 @@ void RootLoader::OnKicking() {
 	return Parent::OnKicking();
 }
 
-}
+} // namespace game

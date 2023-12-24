@@ -31,4 +31,4 @@ Global::Global() {}
 
 Global::~Global() {}
 
-} // namespace name
+} // namespace game

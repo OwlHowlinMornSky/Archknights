@@ -186,4 +186,4 @@ void Act03_Opening::OnEnterSysloop() noexcept {}
 
 void Act03_Opening::OnExitSysloop() noexcept {}
 
-}
+} // namespace Activity

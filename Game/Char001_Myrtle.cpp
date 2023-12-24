@@ -80,4 +80,4 @@ void Char001_Myrtle::UnitReset() {
 	std::cout << "Myrtle Reseted" << std::endl; // for test
 }
 
-}
+} // namespace game

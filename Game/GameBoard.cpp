@@ -81,5 +81,4 @@ std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
 	return m_entities[location];
 }
 
-
-}
+} // namespace game

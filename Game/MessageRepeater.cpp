@@ -38,4 +38,4 @@ void MessageRepeater::unregister_OnClosing(size_t id) {
 	onClosing.pop_back();
 }
 
-}
+} // namespace game

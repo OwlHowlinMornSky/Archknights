@@ -40,4 +40,4 @@ void Global::drop() {
 	delete ::g_instance;
 }
 
-}
+} // namespace gamegui

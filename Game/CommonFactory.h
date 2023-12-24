@@ -34,5 +34,4 @@ protected:
 	}
 };
 
-}
-
+} // namespace game

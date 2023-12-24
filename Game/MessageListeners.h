@@ -27,4 +27,4 @@ class OnClosing {
 public: virtual void trigger() = 0;
 };
 
-}
+} // namespace game

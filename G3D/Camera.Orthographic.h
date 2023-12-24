@@ -54,4 +54,4 @@ public:
 	float m_dimY; // 画面高度（不是半高）
 };
 
-}
+} // namespace g3d

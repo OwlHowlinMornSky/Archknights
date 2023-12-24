@@ -56,4 +56,4 @@ protected:
 	_T* m_ref;
 };
 
-}
+} // namespace game

@@ -49,4 +49,4 @@ protected:
 	sf::RenderTexture m_rtex;
 };
 
-}
+} // namespace gamegui

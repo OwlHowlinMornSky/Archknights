@@ -21,7 +21,6 @@
 */
 #include "Activity_Debug.h"
 #include "Activity_Game.h"
-#include "Global.h"
 #include "../Game/GameGlobal.h"
 
 namespace gamegui {
@@ -47,7 +46,6 @@ bool Activity_Debug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Num1:
-			Global::instance()->data.name = "debug";
 			game::Global::data.name = "dabug";
 			r->changeActivity(std::make_unique<Activity_Game>());
 			return true;
@@ -66,4 +64,4 @@ void Activity_Debug::OnEnterSysloop() noexcept {}
 
 void Activity_Debug::OnExitSysloop() noexcept {}
 
-}
+} // namespace gamegui

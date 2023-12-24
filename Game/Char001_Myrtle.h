@@ -49,4 +49,4 @@ protected:
 
 using Char001_Myrtle_Factory = CommonFactory<Char001_Myrtle>;
 
-}
+} // namespace game

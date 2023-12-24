@@ -61,4 +61,4 @@ protected:
 	bool m_paused;
 };
 
-}
+} // namespace game

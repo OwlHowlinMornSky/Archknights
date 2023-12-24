@@ -44,4 +44,4 @@ public:
 	std::unique_ptr<GameShow> show;
 };
 
-} // namespace name
+} // namespace game

@@ -53,4 +53,4 @@ protected:
 	_T* ref;
 };
 
-}
+} // namespace ohms

@@ -59,4 +59,4 @@ protected:
 	//sf::Text m_text;
 };
 
-}
+} // namespace Activity

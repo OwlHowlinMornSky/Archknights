@@ -34,4 +34,4 @@ protected:
 	b2Body* m_searchTarget;
 };
 
-}
+} // namespace game

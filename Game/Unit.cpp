@@ -40,4 +40,4 @@ void Unit::OnKicking() {
 	return Parent::OnKicking();
 }
 
-}
+} // namespace game

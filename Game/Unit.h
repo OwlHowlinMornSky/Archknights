@@ -50,5 +50,4 @@ public:
 	virtual void OnKicking() override;
 };
 
-}
-
+} // namespace game

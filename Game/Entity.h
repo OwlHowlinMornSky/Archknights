@@ -87,4 +87,4 @@ protected:
 	size_t m_location;
 };
 
-}
+} // namespace game

@@ -43,4 +43,4 @@ public:
 	GlobalData data;
 };
 
-}
+} // namespace gamegui

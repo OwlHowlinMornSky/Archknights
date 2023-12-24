@@ -69,4 +69,4 @@ void Activity_Game::OnEnterSysloop() noexcept {}
 
 void Activity_Game::OnExitSysloop() noexcept {}
 
-}
+} // namespace gamegui

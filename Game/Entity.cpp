@@ -61,4 +61,4 @@ void Entity::KickSelf() const {
 	Global::data.board->KickEntity(m_location);
 }
 
-}
+} // namespace game

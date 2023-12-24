@@ -33,4 +33,4 @@ bool SceneCommon::handleEvent(const sf::Event& evt) {
     return false;
 }
 
-}
+} // namespace gamegui

@@ -52,4 +52,4 @@ protected:
 	sf::CircleShape circle[3];
 };
 
-}
+} // namespace Activity

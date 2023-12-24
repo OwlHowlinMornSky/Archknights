@@ -36,4 +36,4 @@ protected:
 	static b2FixtureDef default_block_target;
 };
 
-}
+} // namespace game

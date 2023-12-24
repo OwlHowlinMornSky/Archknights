@@ -46,4 +46,4 @@ protected:
 	GUI::WndRef r;
 };
 
-}
+} // namespace gamegui
