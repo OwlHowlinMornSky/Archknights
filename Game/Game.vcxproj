@@ -24,6 +24,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameGlobal.h" />
+    <ClInclude Include="GameShow.h" />
     <ClInclude Include="MessageListeners.h" />
     <ClInclude Include="MessageRepeater.h" />
     <ClInclude Include="Mover.h" />
@@ -39,6 +40,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
+    <ClCompile Include="GameShow.cpp" />
     <ClCompile Include="MessageRepeater.cpp" />
     <ClCompile Include="Mover.cpp" />
     <ClCompile Include="RootLoader.cpp" />

@@ -31,6 +31,15 @@
     <Filter Include="Units\源文件">
       <UniqueIdentifier>{3aab6f18-b4ac-48dd-8895-a2bd1bd175bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphicsInterface">
+      <UniqueIdentifier>{c148b92a-82bb-4d6f-9f45-301e769ed32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsInterface\头文件">
+      <UniqueIdentifier>{132c8fe7-97a2-4bb3-a98c-c68f5b742734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsInterface\源文件">
+      <UniqueIdentifier>{2a8c60ae-6bc8-4548-b5a9-ad44e232b394}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameGlobal.cpp">
@@ -65,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="CommonFactory.cpp">
       <Filter>Entities\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameShow.cpp">
+      <Filter>GraphicsInterface\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="CommonFactory.h">
       <Filter>Entities\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameShow.h">
+      <Filter>GraphicsInterface\头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

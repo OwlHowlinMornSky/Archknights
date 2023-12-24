@@ -33,8 +33,8 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
-	game::Global::instance()->data.board = std::make_unique<game::GameBoard>();
-	r_board = game::Global::instance()->data.board.get();
+	game::Global::data.board = std::make_unique<game::GameBoard>();
+	r_board = game::Global::data.board.get();
 	r_board->setup();
 	m_scene = std::make_unique<SceneCommon>();
 	return true;

@@ -30,7 +30,7 @@ void RootLoader::OnJoined(size_t id, size_t location) {
 	Parent::OnJoined(id, location);
 
 	// for test
-	Global::instance()->data.board->JoinEntity(std::make_shared<Char001_Myrtle_Factory>());
+	Global::data.board->JoinEntity(std::make_shared<Char001_Myrtle_Factory>());
 
 	return;
 }

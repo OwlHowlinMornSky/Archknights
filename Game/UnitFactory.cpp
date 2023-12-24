@@ -48,7 +48,7 @@ std::shared_ptr<Unit> UnitFactory::JoinOneUnit() {
 		m_storedUnits.pop();
 		unit->UnitReset();
 	}
-	Global::instance()->data.board->JoinEntity(unit);
+	Global::data.board->JoinEntity(unit);
 	return unit;
 }
 
@@ -77,7 +77,7 @@ void UnitFactory::OnUpdate(float dt) {
 }
 
 void UnitFactory::OnKicking() {
-	auto& board = Global::instance()->data.board;
+	auto& board = Global::data.board;
 	for (std::shared_ptr<Unit>& u : m_units)
 		if (u->m_id)
 			board->KickEntity(u->m_location);

@@ -27,24 +27,21 @@
 namespace game {
 
 class GameBoard;
-
-struct GlobalData {
-	std::string name;
-	std::unique_ptr<GameBoard> board;
-};
+class GameShow;
 
 class Global {
 protected:
-	Global() = default;
+	Global();
 public:
-	~Global() = default;
+	~Global();
 
 public:
-	static Global* instance();
-	static void drop();
+	static Global data;
 
 public:
-	GlobalData data;
+	std::string name;
+	std::unique_ptr<GameBoard> board;
+	std::unique_ptr<GameShow> show;
 };
 
-}
+} // namespace name

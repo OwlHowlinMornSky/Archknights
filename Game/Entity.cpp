@@ -58,7 +58,7 @@ void Entity::OnRotationChanged() {}
 void Entity::OnScaleChanged() {}
 
 void Entity::KickSelf() const {
-	Global::instance()->data.board->KickEntity(m_location);
+	Global::data.board->KickEntity(m_location);
 }
 
 }

@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 
 namespace game {
 
@@ -47,28 +47,28 @@ public:
 		return m_updatable;
 	}
 
-	glm::vec3 getPosition() const {
+	glm::vec2 getPosition() const {
 		return m_position;
 	}
-	void setPosition(glm::vec3 pos) {
+	void setPosition(glm::vec2 pos) {
 		m_position = pos;
 		OnPositionChanged();
 	}
 
-	glm::vec3 getRotation() const {
-		return m_rotation;
-	}
-	void setRotation(glm::vec3 rot) {
-		m_rotation = rot;
-		OnRotationChanged();
-	}
-
-	glm::vec3 getScale() const {
+	glm::vec2 getScale() const {
 		return m_scale;
 	}
-	void setScale(glm::vec3 scl) {
+	void setScale(glm::vec2 scl) {
 		m_scale = scl;
 		OnScaleChanged();
+	}
+
+	float getRotation() const {
+		return m_rotation;
+	}
+	void setRotation(float rot) {
+		m_rotation = rot;
+		OnRotationChanged();
 	}
 
 protected:
@@ -80,9 +80,9 @@ protected:
 
 protected:
 	bool m_updatable;
-	glm::vec3 m_position;
-	glm::vec3 m_rotation;
-	glm::vec3 m_scale;
+	float m_rotation;
+	glm::vec2 m_position;
+	glm::vec2 m_scale;
 	size_t m_id;
 	size_t m_location;
 };

@@ -21,24 +21,14 @@
 */
 #include "GameGlobal.h"
 #include "GameBoard.h"
-
-namespace {
-
-game::Global* g_instance = nullptr;
-
-}
+#include "GameShow.h"
 
 namespace game {
 
-Global* Global::instance() {
-	if (!::g_instance) {
-		::g_instance = new Global;
-	}
-	return ::g_instance;
-}
+Global Global::data;
 
-void Global::drop() {
-	delete ::g_instance;
-}
+Global::Global() {}
 
-}
+Global::~Global() {}
+
+} // namespace name
