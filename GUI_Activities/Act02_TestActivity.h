@@ -22,7 +22,6 @@
 #pragma once
 
 #ifdef _DEBUG
-#include "../GUI/Activity.h"
 #include "../GUI/Window.h"
 
 #include <SFML/Graphics.hpp>

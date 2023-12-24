@@ -19,34 +19,19 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
-
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Window/Event.hpp>
+#include "SceneCommon.h"
 
 namespace gamegui {
 
-class SceneCommon final :
-	public sf::Drawable {
-public:
-	SceneCommon();
-	virtual ~SceneCommon() override;
+SceneCommon::SceneCommon() {}
 
-public:
-	void update(float dt);
+SceneCommon::~SceneCommon() {}
 
-	bool handleEvent(const sf::Event& evt);
+void SceneCommon::update(float dt) {
+}
 
-protected:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
-		return target.draw(m_sp, states);
-	}
-
-protected:
-	sf::Sprite m_sp;
-	sf::RenderTexture m_rtex;
-};
+bool SceneCommon::handleEvent(const sf::Event& evt) {
+    return false;
+}
 
 } // namespace gamegui

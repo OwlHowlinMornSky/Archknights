@@ -146,6 +146,8 @@ void LineModel::Draw() {
 
 } // namespace
 
+namespace title {
+
 Scene_Title::Scene_Title() {
 	m_camera.setDim(16.0f / 4, 9.0f / 4);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
@@ -254,3 +256,5 @@ void Scene_Title::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 	target.draw(m_sp, states);
 	return;
 }
+
+} // namespace title

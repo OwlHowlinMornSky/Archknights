@@ -21,16 +21,14 @@
 */
 #pragma once
 
-#include <memory>
-#include "../../G3D/base.h"
-#include "../../G3D/GlCheck.h"
-#include "../../G3D/Shader.h"
-#include "../../G3D/Camera.h"
-#include "../../G3D/Vertex.h"
-#include "../../G3D/Camera.Orthographic.h"
-#include "../../G3D/ITransformS.h"
+#include "../G3D/GlCheck.h"
+#include "../G3D/Shader.h"
+#include "../G3D/Camera.h"
+#include "../G3D/Vertex.h"
+#include "../G3D/Camera.Orthographic.h"
+#include "../G3D/ITransformS.h"
 
-#include <SFML/Graphics.hpp>
+#include "Scene_ITitle.h"
 
 namespace {
 
@@ -77,16 +75,18 @@ public:
 
 } // namespace
 
+namespace title {
+
 class Scene_Title final :
-	public sf::Drawable {
+	public Scene_ITitle {
 public:
 	Scene_Title();
 	~Scene_Title();
 
 public:
-	void setup(sf::Vector2u size);
-	void update(float dt);
-	void render();
+	virtual void setup(sf::Vector2u size) override;
+	virtual void update(float dt) override;
+	virtual void render() override;
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -98,3 +98,5 @@ protected:
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;
 };
+
+} // namespace title

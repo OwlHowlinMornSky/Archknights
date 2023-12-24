@@ -19,20 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Activity_Debug.cpp" />
-    <ClCompile Include="Activity_Game.cpp" />
     <ClCompile Include="SceneCommon.cpp" />
+    <ClCompile Include="Scene_ITitle.cpp" />
+    <ClCompile Include="Scene_Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Activity_Debug.h" />
-    <ClInclude Include="Activity_Game.h" />
     <ClInclude Include="SceneCommon.h" />
+    <ClInclude Include="Scene_ITitle.h" />
+    <ClInclude Include="Scene_Title.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{892ffa24-be27-4113-9f4b-835736dfa66d}</ProjectGuid>
-    <RootNamespace>GameGraphics</RootNamespace>
+    <ProjectGuid>{77e2f714-b254-4601-9640-04ce4980259d}</ProjectGuid>
+    <RootNamespace>GUI3D</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -91,7 +91,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -112,7 +112,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -133,7 +133,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -154,7 +154,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

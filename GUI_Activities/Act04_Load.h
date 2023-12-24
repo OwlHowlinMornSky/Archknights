@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../GUI/Activity.h"
 #include "../GUI/Window.h"
 #include "../GUI/IBgm.h"
 

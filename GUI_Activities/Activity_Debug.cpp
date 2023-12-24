@@ -19,28 +19,49 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameGlobal.h"
-#include "GameBoard.h"
-#include "GameShow.h"
+#include "Activity_Debug.h"
+#include "Activity_Game.h"
+#include "../Game/GameGlobal.h"
 
-namespace game {
+namespace Activity {
 
-Global Global::data;
+Activity_Debug::Activity_Debug() {}
 
-Global::Global() {}
+Activity_Debug::~Activity_Debug() noexcept {}
 
-Global::~Global() {}
-
-bool Global::setup() {
-	board = std::make_unique<game::GameBoard>();
-	board->setup();
+bool Activity_Debug::start(GUI::Window& wnd) noexcept {
+	r(wnd);
 	return true;
 }
 
-void Global::update(float dt) {
-	board->Update(dt);
+void Activity_Debug::stop() noexcept {
+	r();
 }
 
-void Global::drop() {}
+bool Activity_Debug::handleEvent(const sf::Event& evt) {
+	switch (evt.type) {
+	case sf::Event::Closed:
+		r->setWaitingForStop();
+		return true;
+	case sf::Event::KeyPressed:
+		switch (evt.key.code) {
+		case sf::Keyboard::Num1:
+			game::Global::data.name = "dabug";
+			r->changeActivity(std::make_unique<Activity_Game>());
+			return true;
+		}
+		break;
+	}
+	return false;
+}
 
-} // namespace game
+void Activity_Debug::update(sf::Time dtime) {
+	r->clear(sf::Color::Cyan);
+	r->display();
+}
+
+void Activity_Debug::OnEnterSysloop() noexcept {}
+
+void Activity_Debug::OnExitSysloop() noexcept {}
+
+} // namespace Activity

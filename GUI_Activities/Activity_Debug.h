@@ -22,19 +22,14 @@
 #pragma once
 
 #include "../GUI/Window.h"
-#include "SceneCommon.h"
 
-namespace game {
-class GameBoard;
-}
+namespace Activity {
 
-namespace gamegui {
-
-class Activity_Game final :
+class Activity_Debug final :
 	public GUI::Activity {
 public:
-	Activity_Game();
-	virtual ~Activity_Game() noexcept override;
+	Activity_Debug();
+	virtual ~Activity_Debug() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;
@@ -49,8 +44,6 @@ public:
 
 protected:
 	GUI::WndRef r;
-	game::GameBoard* r_board;
-	std::unique_ptr<SceneCommon> m_scene;
 };
 
-} // namespace gamegui
+} // namespace Activity

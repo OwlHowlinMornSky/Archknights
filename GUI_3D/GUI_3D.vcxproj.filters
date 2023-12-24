@@ -13,27 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Title">
+      <UniqueIdentifier>{b4aaf8d2-cf5d-4fa0-9e8f-0557be88ebfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Title\头文件">
+      <UniqueIdentifier>{2d139a39-4e1b-40f6-8b30-0ed77371a76c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Title\源文件">
+      <UniqueIdentifier>{82a55c46-cef8-4fdc-a87b-cfd41dd3196c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Activity_Game.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Activity_Debug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneCommon.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Activity_Game.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Activity_Debug.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="SceneCommon.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Title.cpp">
+      <Filter>Title\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_ITitle.cpp">
+      <Filter>Title\源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SceneCommon.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Title.h">
+      <Filter>Title\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_ITitle.h">
+      <Filter>Title\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

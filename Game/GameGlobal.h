@@ -36,12 +36,15 @@ public:
 	~Global();
 
 public:
-	static Global data;
+	bool setup();
+	void update(float dt);
+	void drop();
 
 public:
+	static Global data;
 	std::string name;
 	std::unique_ptr<GameBoard> board;
-	std::unique_ptr<GameShow> show;
+	std::shared_ptr<GameShow> show;
 };
 
 } // namespace game

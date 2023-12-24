@@ -22,7 +22,7 @@
 #include "Act05_Title.h"
 
 #include "../GUI/BgmSFML.h"
-#include "Graphics/Scene_Title.h"
+#include "../GUI_3D/Scene_ITitle.h"
 
 namespace Activity {
 
@@ -38,7 +38,7 @@ Act05_Title::~Act05_Title() noexcept {
 bool Act05_Title::start(GUI::Window& wnd) noexcept {
 	r_wnd = wnd;
 
-	m_scene = new Scene_Title;
+	m_scene = title::getScene();
 	m_scene->setup(r_wnd->getSize());
 
 	r_wnd->setActive(true);
@@ -51,7 +51,7 @@ bool Act05_Title::start(GUI::Window& wnd) noexcept {
 
 void Act05_Title::stop() noexcept {
 	g3d::base::setActive(true);
-	delete m_scene;
+	m_scene.reset();
 	g3d::base::setActive(false);
 	r_wnd->setActive(true);
 	r_wnd();

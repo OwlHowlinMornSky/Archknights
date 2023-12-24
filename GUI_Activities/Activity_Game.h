@@ -22,14 +22,15 @@
 #pragma once
 
 #include "../GUI/Window.h"
+#include "../GUI_3D/SceneCommon.h"
 
-namespace gamegui {
+namespace Activity {
 
-class Activity_Debug final :
+class Activity_Game final :
 	public GUI::Activity {
 public:
-	Activity_Debug();
-	virtual ~Activity_Debug() noexcept override;
+	Activity_Game();
+	virtual ~Activity_Game() noexcept override;
 
 protected:
 	virtual bool start(GUI::Window& wnd) noexcept override;
@@ -44,6 +45,7 @@ public:
 
 protected:
 	GUI::WndRef r;
+	std::shared_ptr<gamegui::SceneCommon> m_scene;
 };
 
-} // namespace gamegui
+} // namespace Activity

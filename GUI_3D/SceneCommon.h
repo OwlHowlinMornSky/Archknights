@@ -19,49 +19,36 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Activity_Debug.h"
-#include "Activity_Game.h"
-#include "../Game/GameGlobal.h"
+#pragma once
+
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Window/Event.hpp>
+#include "../Game/GameShow.h"
 
 namespace gamegui {
 
-Activity_Debug::Activity_Debug() {}
+class SceneCommon final :
+	public sf::Drawable,
+	public game::GameShow {
+public:
+	SceneCommon();
+	virtual ~SceneCommon() override;
 
-Activity_Debug::~Activity_Debug() noexcept {}
+public:
+	void update(float dt);
 
-bool Activity_Debug::start(GUI::Window& wnd) noexcept {
-	r(wnd);
-	return true;
-}
+	bool handleEvent(const sf::Event& evt);
 
-void Activity_Debug::stop() noexcept {
-	r();
-}
-
-bool Activity_Debug::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r->setWaitingForStop();
-		return true;
-	case sf::Event::KeyPressed:
-		switch (evt.key.code) {
-		case sf::Keyboard::Num1:
-			game::Global::data.name = "dabug";
-			r->changeActivity(std::make_unique<Activity_Game>());
-			return true;
-		}
-		break;
+protected:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
+		return target.draw(m_sp, states);
 	}
-	return false;
-}
 
-void Activity_Debug::update(sf::Time dtime) {
-	r->clear(sf::Color::Cyan);
-	r->display();
-}
-
-void Activity_Debug::OnEnterSysloop() noexcept {}
-
-void Activity_Debug::OnExitSysloop() noexcept {}
+protected:
+	sf::Sprite m_sp;
+	sf::RenderTexture m_rtex;
+};
 
 } // namespace gamegui

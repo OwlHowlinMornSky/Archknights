@@ -21,26 +21,25 @@
 */
 #include "Activity_Game.h"
 #include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
 
-namespace gamegui {
+namespace Activity {
 
-Activity_Game::Activity_Game() :
-	r_board(nullptr) {}
+Activity_Game::Activity_Game() {}
 
 Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
-	game::Global::data.board = std::make_unique<game::GameBoard>();
-	r_board = game::Global::data.board.get();
-	r_board->setup();
-	m_scene = std::make_unique<SceneCommon>();
+	m_scene = std::make_shared<gamegui::SceneCommon>();
+	game::Global::data.show = m_scene;
+	if (!game::Global::data.setup()) {
+		return false;
+	}
 	return true;
 }
 
 void Activity_Game::stop() noexcept {
-	m_scene.reset();
+	game::Global::data.drop();
 	r();
 	return;
 }
@@ -57,7 +56,7 @@ void Activity_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r->clear(sf::Color::White);
 #endif // _DEBUG
-	r_board->Update(dtime.asSeconds());
+	game::Global::data.update(dtime.asSeconds());
 	m_scene->update(dtime.asSeconds());
 	r->draw(*m_scene);
 	r->display();
@@ -68,4 +67,4 @@ void Activity_Game::OnEnterSysloop() noexcept {}
 
 void Activity_Game::OnExitSysloop() noexcept {}
 
-} // namespace gamegui
+} // namespace Activity
