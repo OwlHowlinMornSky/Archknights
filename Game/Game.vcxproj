@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Char001_Myrtle.h" />
     <ClInclude Include="CommonFactory.h" />
     <ClInclude Include="Entity.h" />
@@ -35,6 +37,8 @@
     <ClInclude Include="UnitFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Char001_Myrtle.cpp" />
     <ClCompile Include="CommonFactory.cpp" />
     <ClCompile Include="Entity.cpp" />

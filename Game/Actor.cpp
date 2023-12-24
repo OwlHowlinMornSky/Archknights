@@ -19,19 +19,8 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "SceneCommon.h"
+#include "Actor.h"
 
-namespace gamegui {
+namespace game {
 
-SceneCommon::SceneCommon() {}
-
-SceneCommon::~SceneCommon() {}
-
-void SceneCommon::update(float dt) {
-}
-
-bool SceneCommon::handleEvent(const sf::Event& evt) {
-    return false;
-}
-
-} // namespace gamegui
+} // namespace game

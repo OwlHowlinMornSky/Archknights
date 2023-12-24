@@ -30,7 +30,7 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(GUI::Window& wnd) noexcept {
 	r(wnd);
-	m_scene = std::make_shared<gamegui::SceneCommon>();
+	m_scene = std::make_shared<gamegui::Scene_GameCommon>();
 	game::Global::data.show = m_scene;
 	if (!game::Global::data.setup()) {
 		return false;

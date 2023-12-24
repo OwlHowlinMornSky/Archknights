@@ -19,13 +19,20 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_ITitle.h"
-#include "Scene_Title.h"
+#pragma once
 
-namespace title {
+#include <glm/vec3.hpp>
 
-std::unique_ptr<Scene_ITitle> getScene() {
-    return std::make_unique<Scene_Title>();
-}
+namespace game {
 
-} // namespace title
+class Actor {
+public:
+	virtual glm::vec3 getPosition() const = 0;
+	virtual void setPosition(glm::vec3 pos) = 0;
+	virtual glm::vec3 getRotation() const = 0;
+	virtual void setRotation(glm::vec3 rot) = 0;
+	virtual glm::vec3 getScale() const = 0;
+	virtual void setScale(glm::vec3 scl) = 0;
+};
+
+} // namespace game

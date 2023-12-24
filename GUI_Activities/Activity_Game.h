@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../GUI/Window.h"
-#include "../GUI_3D/SceneCommon.h"
+#include "../GUI_3D/Scene_GameCommon.h"
 
 namespace Activity {
 
@@ -45,7 +45,7 @@ public:
 
 protected:
 	GUI::WndRef r;
-	std::shared_ptr<gamegui::SceneCommon> m_scene;
+	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
 };
 
 } // namespace Activity

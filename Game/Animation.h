@@ -19,13 +19,13 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_ITitle.h"
-#include "Scene_Title.h"
+#pragma once
 
-namespace title {
+#include "Actor.h"
 
-std::unique_ptr<Scene_ITitle> getScene() {
-    return std::make_unique<Scene_Title>();
+namespace game {
+
+class Animation :
+    public Actor {};
+
 }
-
-} // namespace title

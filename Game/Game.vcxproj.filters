@@ -78,6 +78,12 @@
     <ClCompile Include="GameShow.cpp">
       <Filter>GraphicsInterface\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>GraphicsInterface\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>GraphicsInterface\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameGlobal.h">
@@ -120,6 +126,12 @@
       <Filter>Entities\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameShow.h">
+      <Filter>GraphicsInterface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>GraphicsInterface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
       <Filter>GraphicsInterface\头文件</Filter>
     </ClInclude>
   </ItemGroup>
