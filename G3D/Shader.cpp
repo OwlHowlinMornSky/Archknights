@@ -33,7 +33,6 @@ namespace {
 
 void checkError(GLuint l_shader, GLuint l_flag, bool l_program, std::string_view l_errorMsg) {
 	GLint success = 0;
-	GLchar error[1024] = { 0 };
 
 	if (l_program) {
 		glCheck(glGetProgramiv(l_shader, l_flag, &success));
@@ -44,6 +43,8 @@ void checkError(GLuint l_shader, GLuint l_flag, bool l_program, std::string_view
 
 	if (success)
 		return;
+
+	GLchar error[1024] = { 0 };
 
 	if (l_program) {
 		glCheck(glGetProgramInfoLog(l_shader, sizeof(error), nullptr, error));

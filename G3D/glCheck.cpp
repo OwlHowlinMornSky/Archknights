@@ -27,14 +27,6 @@
 #include <string>
 #include <iostream>
 
-#define GLEXT_GL_INVALID_FRAMEBUFFER_OPERATION 0x0506
-
-namespace {
-
-wchar_t output[4096];
-
-} // namespace
-
 namespace g3d::impl {
 
 void CheckGLError(const char* file, unsigned int line, const char* expression) {
@@ -72,7 +64,7 @@ void CheckGLError(const char* file, unsigned int line, const char* expression) {
 			error = "GL_OUT_OF_MEMORY";
 			description = "There is not enough memory left to execute the command.";
 			break;
-		case GLEXT_GL_INVALID_FRAMEBUFFER_OPERATION:
+		case GL_INVALID_FRAMEBUFFER_OPERATION:
 			error = "GL_INVALID_FRAMEBUFFER_OPERATION";
 			description = "The object bound to FRAMEBUFFER_BINDING is not \"framebuffer complete\".";
 			break;
