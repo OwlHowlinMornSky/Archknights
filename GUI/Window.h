@@ -194,6 +194,9 @@ public:
 	) {
 		return RenderWindow::draw(vertexBuffer, firstVertex, vertexCount, states);
 	}
+	void setIcon(unsigned int width, unsigned int height, const sf::Uint8* pixels) {
+		return RenderWindow::setIcon(width, height, pixels);
+	}
 
 public:
 	bool available() const;

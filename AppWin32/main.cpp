@@ -27,6 +27,9 @@
 #include "UniqueInstance.h"
 #include "../G3D/base.h"
 
+#include <SFML/GpuPreference.hpp>
+SFML_DEFINE_DISCRETE_GPU_PREFERENCE
+
 namespace {
 
 const char g_str_information[] = "Archknights: Information";
@@ -60,9 +63,12 @@ int APIENTRY wWinMain(
 	g3d::base::setup();
 	g3d::base::setActive(false);
 	try {
+		sf::Image icon;
+		icon.loadFromFile("assets/icon.png");
 		std::unique_ptr<GUI::WindowWin32> window = std::make_unique<GUI::WindowWin32>();
 		// Create window and run.
 		if (window->Create(nCmdShow)) {
+			window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.
 			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());
