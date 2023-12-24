@@ -34,10 +34,10 @@ namespace {
 
 const char g_vs[] =
 "#version 330\n"\
-"layout(location = 0) attribute vec3 a_vertex0;"\
-"layout(location = 1) attribute vec3 a_vertex1;"\
-"layout(location = 2) attribute vec2 a_offset;"\
-"layout(location = 3) attribute vec2 a_texCoord;"\
+"attribute vec3 a_vertex0;"\
+"attribute vec3 a_vertex1;"\
+"attribute vec2 a_offset;"\
+"attribute vec2 a_texCoord;"\
 "uniform mat4 u_matP;"\
 "uniform mat4 u_matV;"\
 "uniform mat4 u_matM;"\
@@ -78,6 +78,10 @@ void Shader_Title_Sphere::setup() {
 	clear();
 	loadFromMemory(g_vs, g3d::ShaderType::Vertex);
 	loadFromMemory(g_fs, g3d::ShaderType::Fragment);
+	glCheck(glBindAttribLocation(m_program, 0, "a_vertex0"));
+	glCheck(glBindAttribLocation(m_program, 1, "a_vertex1"));
+	glCheck(glBindAttribLocation(m_program, 2, "a_offset"));
+	glCheck(glBindAttribLocation(m_program, 3, "a_texCoord"));
 	linkShader();
 	Bind(this);
 	m_ul_matp = getUniformLocation("u_matP");
@@ -212,8 +216,8 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//linetest->Position = { -20.0f, 0.0f, 0.0f };
 	//linetest->load();}
 
-	m_llm.setPosition(0.5f, 0, 0);
-	m_llm.setScale(0.1f);
+	//m_llm.setPosition(0.5f, 0, 0);
+	//m_llm.setScale(0.1f);
 
 	g3d::base::setActive(false);
 }

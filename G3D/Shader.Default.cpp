@@ -19,15 +19,18 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#include <GL/glew.h>
 #include "Shader.Default.h"
+#include "Vertex.h"
+#include "glCheck.h"
 
 namespace {
 
 const char g_defaultVertexShader[] =
 "#version 330\n"\
-"layout(location = 0) attribute vec3 aVertexPos;"\
-"layout(location = 1) attribute vec4 aVertexColor;" \
-"layout(location = 2) attribute vec2 aVertexTexCoord;" \
+"attribute vec3 aVertexPos;"\
+"attribute vec2 aVertexTexCoord;" \
+"attribute vec4 aVertexColor;" \
 "uniform mat4 uMatPVM;" \
 "varying vec4 vTint;" \
 "varying vec2 vUv;" \
@@ -54,9 +57,9 @@ void DefaultShader::setup() {
 	clear();
 	loadFromMemory(g_defaultVertexShader, ShaderType::Vertex);
 	loadFromMemory(g_defaultFragShader, ShaderType::Fragment);
-	//glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Position), "position"));
-	//glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::TexCoord), "texCoord"));
-	//glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Color), "color"));
+	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Position), "aVertexPos"));
+	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::TexCoord), "aVertexTexCoord"));
+	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Color), "aVertexColor"));
 	linkShader();
 	Bind(this);
 	m_uniform = getUniformLocation("matPVM");
