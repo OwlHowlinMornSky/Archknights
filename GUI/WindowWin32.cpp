@@ -166,8 +166,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	return 0;
 }
 
-WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // 窗口类的名称。
-WCHAR szTitle[] = L"Archknights"; // 窗口的 初始 名称。
+const WCHAR szWindowClass[] = L"WndClass.OHMS.Archknights"; // 窗口类的名称。
+const WCHAR szTitle[] = L"Archknights"; // 窗口的 初始 名称。
 
 void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	LPVOID lpMsgBuf;
@@ -218,8 +218,6 @@ bool MyRegisterClass() noexcept {
 	wcex.style = CS_OWNDC | CS_DBLCLKS;
 	wcex.lpfnWndProc = ::MyWndProc;
 	wcex.hInstance = GetModuleHandleW(NULL);
-	// ！！！未完成！！！图标激情制作中（雾
-	//wcex.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON0));
 	wcex.hIconSm = wcex.hIcon;
 	wcex.hbrBackground = (HBRUSH)COLOR_WINDOWFRAME;
 	wcex.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
