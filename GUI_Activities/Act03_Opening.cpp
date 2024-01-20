@@ -48,16 +48,29 @@ bool Act03_Opening::start(GUI::Window& wnd) noexcept {
 	m_status = 0;
 	m_timer = sf::Time::Zero;
 
-	circle[0].setRadius(100.0f);
-	circle[0].setOrigin(100.0f, 100.0f);
-	circle[1].setRadius(100.0f);
-	circle[1].setOrigin(100.0f, 100.0f);
-	circle[2].setRadius(100.0f);
-	circle[2].setOrigin(100.0f, 100.0f);
+	m_tex[0].loadFromFile("assets/textures/work.png");
+	m_tex[1].loadFromFile("assets/textures/title.png");
+	m_tex[2].loadFromFile("assets/textures/bkgnd.png");
 
-	circle[0].setPosition(560.0f, 360.0f);
-	circle[1].setPosition(720.0f, 360.0f);
-	circle[2].setPosition(640.0f, 360.0f);
+	for (int i = 0; i < 3; ++i) {
+		m_tex[i].setSmooth(true);
+		m_tex[i].generateMipmap();
+		circle[i].setTexture(m_tex[i]);
+		circle[i].setOrigin(m_tex[i].getSize().x / 2.0f, m_tex[i].getSize().y / 2.0f);
+	}
+
+	updateSize();
+
+	//circle[0].setRadius(100.0f);
+	//circle[0].setOrigin(100.0f, 100.0f);
+	//circle[1].setRadius(100.0f);
+	//circle[1].setOrigin(100.0f, 100.0f);
+	//circle[2].setRadius(100.0f);
+	//circle[2].setOrigin(100.0f, 100.0f);
+
+	//circle[0].setPosition(560.0f, 360.0f);
+	//circle[1].setPosition(720.0f, 360.0f);
+	//circle[2].setPosition(640.0f, 360.0f);
 	return true;
 }
 
@@ -81,6 +94,9 @@ bool Act03_Opening::handleEvent(const sf::Event& evt) {
 		return 1;
 		break;
 #endif // _DEBUG
+	case sf::Event::Resized:
+		updateSize();
+		break;
 	default:
 		break;
 	}
@@ -90,15 +106,17 @@ bool Act03_Opening::handleEvent(const sf::Event& evt) {
 void Act03_Opening::update(sf::Time deltaTime) {
 	m_timer += deltaTime;
 	r_wnd->clear();
+	int r = 0;
 	switch (m_status) {
 	case ST_PIC0_IN:
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_PIC0_KEEP;
-			circle[0].setFillColor(sf::Color(255, 0, 0));
+			circle[0].setColor(sf::Color(255, 255, 255));
 		}
 		else {
-			circle[0].setFillColor(sf::Color(255 * m_timer.asMilliseconds() / 250, 0, 0));
+			r = 255 * m_timer.asMilliseconds() / 250;
+			circle[0].setColor(sf::Color(r, r, r));
 		}
 		r_wnd->draw(circle[0]);
 		break;
@@ -106,7 +124,7 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(1000)) {
 			m_timer -= sf::milliseconds(1000);
 			m_status = ST_PIC1_IN;
-			circle[0].setFillColor(sf::Color::Transparent);
+			circle[0].setColor(sf::Color::Transparent);
 		}
 		r_wnd->draw(circle[0]);
 		break;
@@ -114,17 +132,19 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_PIC1_KEEP;
-			circle[1].setFillColor(sf::Color(0, 255, 0));
+			circle[1].setColor(sf::Color(255, 255, 255));
 		}
 		else {
-			circle[1].setFillColor(sf::Color(0, 255 * m_timer.asMilliseconds() / 250, 0));
+			r = 255 * m_timer.asMilliseconds() / 250;
+			circle[1].setColor(sf::Color(r, r, r));
 		}
 		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC1_KEEP:
 		if (m_timer >= sf::milliseconds(1000)) {
 			m_timer -= sf::milliseconds(1000);
-			m_status = ST_PIC1_OUT;
+			//m_status = ST_PIC1_OUT;
+			m_status = ST_PIC2_IN;
 		}
 		r_wnd->draw(circle[1]);
 		break;
@@ -132,10 +152,11 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_PIC2_IN;
-			circle[1].setFillColor(sf::Color::Transparent);
+			circle[1].setColor(sf::Color::Transparent);
 		}
 		else {
-			circle[1].setFillColor(sf::Color(0, 255 - 255 * m_timer.asMilliseconds() / 250, 0));
+			r = 255 - 255 * m_timer.asMilliseconds() / 250;
+			circle[1].setColor(sf::Color(r, r, r));
 		}
 		r_wnd->draw(circle[1]);
 		break;
@@ -143,12 +164,14 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_PIC2_KEEP;
-			circle[2].setFillColor(sf::Color(0, 0, 255));
+			circle[2].setColor(sf::Color(255, 255, 255));
 		}
 		else {
-			circle[2].setFillColor(sf::Color(0, 0, 255 * m_timer.asMilliseconds() / 250));
+			r = 255 * m_timer.asMilliseconds() / 250;
+			circle[2].setColor(sf::Color(r, r, r));
 		}
 		r_wnd->draw(circle[2]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC2_KEEP:
 		if (m_timer >= sf::milliseconds(1750)) {
@@ -156,17 +179,22 @@ void Act03_Opening::update(sf::Time deltaTime) {
 			m_status = ST_PIC2_OUT;
 		}
 		r_wnd->draw(circle[2]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_PIC2_OUT:
 		if (m_timer >= sf::milliseconds(250)) {
 			m_timer -= sf::milliseconds(250);
 			m_status = ST_OVER;
-			circle[2].setFillColor(sf::Color::Transparent);
+			circle[2].setColor(sf::Color::Transparent);
+			circle[1].setColor(sf::Color::Transparent);
 		}
 		else {
-			circle[2].setFillColor(sf::Color(0, 0, 255 - 255 * m_timer.asMilliseconds() / 250));
+			r = 255 - 255 * m_timer.asMilliseconds() / 250;
+			circle[2].setColor(sf::Color(r, r, r));
+			circle[1].setColor(sf::Color(r, r, r));
 		}
 		r_wnd->draw(circle[2]);
+		r_wnd->draw(circle[1]);
 		break;
 	case ST_OVER:
 		r_wnd->changeActivity(std::make_unique<Act04_Load>());
@@ -174,9 +202,9 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		break;
 	default:
 		m_status = ST_PIC0_IN;
-		circle[0].setFillColor(sf::Color::Transparent);
-		circle[1].setFillColor(sf::Color::Transparent);
-		circle[2].setFillColor(sf::Color::Transparent);
+		circle[0].setColor(sf::Color::Transparent);
+		circle[1].setColor(sf::Color::Transparent);
+		circle[2].setColor(sf::Color::Transparent);
 		break;
 	}
 	return r_wnd->display();
@@ -185,5 +213,21 @@ void Act03_Opening::update(sf::Time deltaTime) {
 void Act03_Opening::OnEnterSysloop() noexcept {}
 
 void Act03_Opening::OnExitSysloop() noexcept {}
+
+void Act03_Opening::updateSize() {
+	auto& view = r_wnd->getView();
+	sf::Vector2f size = view.getSize();
+	for (int i = 0; i < 3; ++i) {
+		circle[i].setPosition(size / 2.0f);
+	}
+	float rate;
+	rate = size.y / m_tex[0].getSize().y;
+	circle[0].setScale(rate, rate);
+	rate = size.y / m_tex[1].getSize().y * 0.4f;
+	circle[1].setScale(rate, rate);
+	rate = size.y / m_tex[2].getSize().y;
+	circle[2].setScale(rate, rate);
+	return;
+}
 
 } // namespace Activity

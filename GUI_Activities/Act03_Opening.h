@@ -45,10 +45,16 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
+	void updateSize();
+
+protected:
 	int m_status; // 状态
 	GUI::WndRef r_wnd;
 	sf::Time m_timer;
-	sf::CircleShape circle[3];
+	sf::Texture m_tex[3];
+	sf::Sprite circle[3];
+
+	//sf::CircleShape circle[3];
 };
 
 } // namespace Activity
