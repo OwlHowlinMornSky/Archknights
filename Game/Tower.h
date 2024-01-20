@@ -30,8 +30,8 @@ class Tower :
 	public Unit {
 
 protected:
-	b2Body* m_blockDetector;
-	b2Body* m_searchTarget;
+	//b2Body* m_blockDetector;
+	//b2Body* m_searchTarget;
 };
 
 } // namespace game

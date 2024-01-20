@@ -25,13 +25,13 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Window/Event.hpp>
-#include "../Game/GameShow.h"
+#include "../Game/IGameShow.h"
 
 namespace gamegui {
 
 class Scene_GameCommon final :
 	public sf::Drawable,
-	public game::GameShow {
+	public game::IGameShow {
 public:
 	Scene_GameCommon();
 	virtual ~Scene_GameCommon() override;

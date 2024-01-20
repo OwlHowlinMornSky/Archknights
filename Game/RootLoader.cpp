@@ -21,7 +21,6 @@
 */
 #include "RootLoader.h"
 #include "GameGlobal.h"
-#include "GameBoard.h"
 #include "Char001_Myrtle.h"
 
 namespace game {

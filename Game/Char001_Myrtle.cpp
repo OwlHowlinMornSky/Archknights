@@ -42,13 +42,10 @@ Char001_Myrtle::Char001_Myrtle() {
 	m_returnCnt = 0;
 
 	m_doki = uniform_dist(e1);
-
-	std::cout << "Myrtle Created" << std::endl; // for test
 }
 
 void Char001_Myrtle::OnJoined(size_t id, size_t location) {
 	Parent::OnJoined(id, location);
-	std::cout << "Operator Myrtel Standby!" << std::endl; // for test
 }
 
 void Char001_Myrtle::OnUpdate(float dt) {
@@ -56,13 +53,9 @@ void Char001_Myrtle::OnUpdate(float dt) {
 	while (m_cnt >= m_doki) {
 		m_cnt -= m_doki;
 		m_returnCnt++;
-		// for test
-		std::cout << "Heart Beat From: ID: " << m_id << ", ProductID: " << m_productID << std::endl;
 	}
 	while (m_returnCnt >= 5) {
 		m_returnCnt -= 5;
-		// for test
-		std::cout << "Back Home: ID: " << m_id << ", ProductID: " << m_productID << std::endl;
 		KickSelf();
 	}
 }
@@ -76,8 +69,6 @@ void Char001_Myrtle::UnitReset() {
 	m_returnCnt = 0;
 
 	m_doki = uniform_dist(e1);
-
-	std::cout << "Myrtle Reseted" << std::endl; // for test
 }
 
 } // namespace game

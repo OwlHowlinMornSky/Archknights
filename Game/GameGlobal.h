@@ -26,8 +26,8 @@
 
 namespace game {
 
-class GameBoard;
-class GameShow;
+class IGameBoard;
+class IGameShow;
 
 class Global {
 protected:
@@ -43,8 +43,8 @@ public:
 public:
 	static Global data;
 	std::string name;
-	std::unique_ptr<GameBoard> board;
-	std::shared_ptr<GameShow> show;
+	std::unique_ptr<IGameBoard> board;
+	std::shared_ptr<IGameShow> show;
 };
 
 } // namespace game

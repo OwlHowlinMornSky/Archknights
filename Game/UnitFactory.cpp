@@ -19,10 +19,10 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Unit.h"
 #include "UnitFactory.h"
+#include "Unit.h"
 #include "GameGlobal.h"
-#include "GameBoard.h"
+#include "IGameBoard.h"
 
 #include <iostream>
 
@@ -38,13 +38,11 @@ UnitFactory::~UnitFactory() {
 std::shared_ptr<Unit> UnitFactory::JoinOneUnit() {
 	std::shared_ptr<Unit> unit;
 	if (m_storedUnits.empty()) {
-		std::cout << "Factory Made One" << std::endl; // for test
 		unit = CreateUnit();
 		m_units.push_back(unit);
 		unit->UnitOnCreated(*this, m_units.size()); // ProductID 从 1 开始，且是位置加一
 	}
 	else {
-		std::cout << "Factory Reset One" << std::endl; // for test
 		unit = m_units[m_storedUnits.top() - 1]; // ProductID 从 1 开始，所以位置要减一
 		m_storedUnits.pop();
 		unit->UnitReset();
@@ -54,7 +52,6 @@ std::shared_ptr<Unit> UnitFactory::JoinOneUnit() {
 }
 
 void UnitFactory::ReturnUnit(Unit* unit) {
-	std::cout << "Factory Recycled One" << std::endl; // for test
 	m_storedUnits.push(unit->m_productID);
 }
 

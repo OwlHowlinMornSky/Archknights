@@ -21,7 +21,7 @@
 */
 #include "Entity.h"
 #include "GameGlobal.h"
-#include "GameBoard.h"
+#include "IGameBoard.h"
 
 #include <iostream>
 
@@ -48,6 +48,7 @@ void Entity::OnJoined(size_t id, size_t location) {
 void Entity::OnUpdate(float dt) {}
 
 void Entity::OnKicking() {
+	std::cout << "Kick: " << this << ", ID: " << m_id << ", Location: " << m_location << std::endl;
 	m_id = 0;
 }
 

@@ -21,7 +21,7 @@
 */
 #include "GameGlobal.h"
 #include "GameBoard.h"
-#include "GameShow.h"
+#include "IGameShow.h"
 
 namespace game {
 

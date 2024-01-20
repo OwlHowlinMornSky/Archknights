@@ -30,10 +30,10 @@ class Mover :
 	public Unit {
 
 protected:
-	b2Body* m_blockTarget;
-	b2Body* m_searchTarget;
+	//b2Body* m_blockTarget;
+	//b2Body* m_searchTarget;
 
-	static b2FixtureDef default_block_target;
+	//static b2FixtureDef default_block_target;
 };
 
 } // namespace game

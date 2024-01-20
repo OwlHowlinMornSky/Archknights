@@ -19,8 +19,11 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameShow.h"
+#pragma once
 
 namespace game {
+
+class IGameShow {
+};
 
 } // namespace game

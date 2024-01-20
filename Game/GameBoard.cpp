@@ -20,6 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "GameBoard.h"
+#include "GamePhysics.h"
 
 namespace game {
 
@@ -35,7 +36,7 @@ GameBoard::~GameBoard() {
 void GameBoard::setup() {
 	m_paused = false;
 	m_repeater = std::make_unique<MessageRepeater>();
-	m_physics = std::make_unique<b2World>(b2Vec2_zero);
+	m_physics = std::make_unique<GamePhysics>();
 	m_rootLoader = std::make_shared<RootLoader>();
 	JoinEntity(m_rootLoader);
 }
@@ -65,7 +66,7 @@ void GameBoard::setPause(bool pause) {
 void GameBoard::Update(float dt) {
 	if (m_paused)
 		return;
-	m_physics->Step(dt, 3, 5);
+	//m_physics->Step(dt, 3, 5);
 	for (std::shared_ptr<Entity>& e : m_entities)
 		if (e && e->isUpdatable())
 			e->OnUpdate(dt);

@@ -21,47 +21,47 @@
 */
 #pragma once
 
-#include "GameGlobal.h"
-#include "Entity.h"
 #include <deque>
 #include <stack>
+
+#include "GameGlobal.h"
+#include "Entity.h"
 #include "RootLoader.h"
 #include "UnitFactory.h"
 #include "MessageRepeater.h"
-#include <box2d/box2d.h>
+#include "IGamePhysics.h"
+
+#include "IGameBoard.h"
 
 namespace game {
 
-class GameBoard final {
+class GameBoard final :
+	public IGameBoard {
 public:
 	GameBoard();
 	~GameBoard();
 
-	void setup();
-	void clear();
+	virtual void setup() override;
+	virtual void clear() override;
 
 public:
-	bool isEmpty();
-	void setPause(bool pause);
+	virtual bool isEmpty() override;
+	virtual void setPause(bool pause) override;
 
-	void Update(float dt);
+	virtual void Update(float dt) override;
 
 	/**
 	 * @brief 添加一个工厂。
 	 * @param factory 工厂。
 	 * @return 工厂id（从1开始）。
 	*/
-	size_t AddFactory(std::shared_ptr<UnitFactory> factory);
-	void JoinEntityFromFactory(size_t id);
+	virtual size_t AddFactory(std::shared_ptr<UnitFactory> factory) override;
+	virtual void JoinEntityFromFactory(size_t id) override;
 
-	void JoinEntity(std::shared_ptr<Entity> entity);
-	void KickEntity(size_t location);
+	virtual void JoinEntity(std::shared_ptr<Entity> entity) override;
+	virtual void KickEntity(size_t location) override;
 
-	//b2World& World() {
-	//	return *m_physics;
-	//}
-
-	std::shared_ptr<Entity> EntityAt(size_t location);
+	virtual std::shared_ptr<Entity> EntityAt(size_t location) override;
 
 protected:
 	size_t m_idCnt;
@@ -71,9 +71,10 @@ protected:
 	std::shared_ptr<RootLoader> m_rootLoader;
 
 	std::deque<std::shared_ptr<UnitFactory>> m_factories;
-	std::unique_ptr<b2World> m_physics;
 	std::unique_ptr<MessageRepeater> m_repeater;
-	
+
+	std::unique_ptr<IGamePhysics> m_physics;
+
 	bool m_paused;
 };
 
