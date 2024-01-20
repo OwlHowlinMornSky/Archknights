@@ -88,6 +88,8 @@ public:
 	virtual void update(float dt) override;
 	virtual void render() override;
 
+	virtual void resize(sf::Vector2u size) override;
+
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

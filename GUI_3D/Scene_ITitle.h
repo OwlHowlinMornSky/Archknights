@@ -33,6 +33,8 @@ public:
 	virtual void setup(sf::Vector2u size) = 0;
 	virtual void update(float dt) = 0;
 	virtual void render() = 0;
+
+	virtual void resize(sf::Vector2u size) = 0;
 };
 
 std::unique_ptr<Scene_ITitle> getScene();

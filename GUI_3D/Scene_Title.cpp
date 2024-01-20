@@ -153,8 +153,6 @@ void LineModel::Draw() {
 namespace title {
 
 Scene_Title::Scene_Title() {
-	m_camera.setDim(16.0f / 4, 9.0f / 4);
-	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 }
 
 Scene_Title::~Scene_Title() {}
@@ -163,6 +161,9 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
+
+	m_camera.setDim(9.0f / 4  * size.x / size.y, 9.0f / 4);
+	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 
 	g3d::base::setActive(true);
 
@@ -254,6 +255,12 @@ void Scene_Title::render() {
 
 	m_rtex.setActive(false);
 	g3d::base::setActive(false);
+}
+
+void Scene_Title::resize(sf::Vector2u size) {
+	m_rtex.create(size.x, size.y);
+	m_sp.setTexture(m_rtex.getTexture(), true);
+	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
 }
 
 void Scene_Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {

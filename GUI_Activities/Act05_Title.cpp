@@ -62,6 +62,8 @@ bool Act05_Title::handleEvent(const sf::Event& evt) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
 		return 1;
+	case sf::Event::Resized:
+		m_scene->resize({ evt.size.width, evt.size.height });
 		break;
 	}
 	return 0;
