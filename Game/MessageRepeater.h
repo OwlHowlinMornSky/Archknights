@@ -31,11 +31,11 @@ public:
 	void OnClosing();
 
 public:
-	size_t register_OnClosing(listener::OnClosing* c);
+	size_t register_OnClosing(listener::IOnClosing* c);
 	void unregister_OnClosing(size_t id);
 
 protected:
-	std::deque<listener::OnClosing*> onClosing;
+	std::deque<listener::IOnClosing*> onClosing;
 
 };
 

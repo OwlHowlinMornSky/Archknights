@@ -24,11 +24,11 @@
 namespace game {
 
 void MessageRepeater::OnClosing() {
-	for (listener::OnClosing*& c : onClosing)
-		c->trigger();
+	for (listener::IOnClosing*& c : onClosing)
+		c->OnClosing();
 }
 
-size_t MessageRepeater::register_OnClosing(listener::OnClosing* c) {
+size_t MessageRepeater::register_OnClosing(listener::IOnClosing* c) {
 	onClosing.emplace_back(c);
 	return onClosing.size() - 1;
 }

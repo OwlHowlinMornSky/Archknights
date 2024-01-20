@@ -23,8 +23,8 @@
 
 namespace game::listener {
 
-class OnClosing {
-public: virtual void trigger() = 0;
+class IOnClosing {
+public: virtual void OnClosing() = 0;
 };
 
 } // namespace game
