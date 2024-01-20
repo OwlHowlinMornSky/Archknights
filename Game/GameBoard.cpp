@@ -26,7 +26,6 @@ namespace game {
 GameBoard::GameBoard() :
 	m_paused(false),
 	m_idCnt(0) {
-	m_physics = std::make_unique<b2World>(b2Vec2_zero);
 }
 
 GameBoard::~GameBoard() {
@@ -34,8 +33,25 @@ GameBoard::~GameBoard() {
 }
 
 void GameBoard::setup() {
+	m_paused = false;
+	m_repeater = std::make_unique<MessageRepeater>();
+	m_physics = std::make_unique<b2World>(b2Vec2_zero);
 	m_rootLoader = std::make_shared<RootLoader>();
 	JoinEntity(m_rootLoader);
+}
+
+void GameBoard::clear() {
+	for (auto& i : m_entities) {
+		i->OnKicking();
+	}
+	m_entities.clear();
+	while (!m_emptyLocation.empty())
+		m_emptyLocation.pop();
+	m_rootLoader.reset();
+	m_factories.clear();
+	m_physics.reset();
+	m_repeater.reset();
+	m_paused = false;
 }
 
 bool GameBoard::isEmpty() {
@@ -53,6 +69,16 @@ void GameBoard::Update(float dt) {
 	for (std::shared_ptr<Entity>& e : m_entities)
 		if (e && e->isUpdatable())
 			e->OnUpdate(dt);
+}
+
+size_t GameBoard::AddFactory(std::shared_ptr<UnitFactory> factory) {
+	m_factories.push_back(factory);
+	return m_factories.size();
+}
+
+void GameBoard::JoinEntityFromFactory(size_t id) {
+	m_factories[id - 1]->JoinOneUnit();
+	return;
 }
 
 void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {

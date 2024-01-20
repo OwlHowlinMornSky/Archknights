@@ -19,8 +19,8 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "UnitFactory.h"
 #include "Unit.h"
+#include "UnitFactory.h"
 #include "GameGlobal.h"
 #include "GameBoard.h"
 
@@ -29,10 +29,11 @@
 namespace game {
 
 UnitFactory::UnitFactory() {
-	m_cnt = 0.0f;
 }
 
-UnitFactory::~UnitFactory() {}
+UnitFactory::~UnitFactory() {
+	Clear();
+}
 
 std::shared_ptr<Unit> UnitFactory::JoinOneUnit() {
 	std::shared_ptr<Unit> unit;
@@ -57,34 +58,11 @@ void UnitFactory::ReturnUnit(Unit* unit) {
 	m_storedUnits.push(unit->m_productID);
 }
 
-void UnitFactory::OnJoined(size_t id, size_t location) {
-	Parent::OnJoined(id, location);
-	JoinOneUnit(); // for test
-	JoinOneUnit(); // for test
-	JoinOneUnit(); // for test
-	m_updatable = true; // for test
-}
-
-void UnitFactory::OnUpdate(float dt) {
-	if (m_storedUnits.size() == m_units.size()) {
-		JoinOneUnit();
-	}
-	//m_cnt += dt;
-	//while (m_cnt >= 1.0f) {
-	//	m_cnt -= 1.0f;
-	//	JoinOneUnit();
-	//}
-}
-
-void UnitFactory::OnKicking() {
-	auto& board = Global::data.board;
-	for (std::shared_ptr<Unit>& u : m_units)
-		if (u->m_id)
-			board->KickEntity(u->m_location);
+void UnitFactory::Clear() {
 	m_units.clear();
 	while (!m_storedUnits.empty())
 		m_storedUnits.pop();
-	return Parent::OnKicking();
+	return;
 }
 
 } // namespace game

@@ -26,6 +26,8 @@
 #include <deque>
 #include <stack>
 #include "RootLoader.h"
+#include "UnitFactory.h"
+#include "MessageRepeater.h"
 #include <box2d/box2d.h>
 
 namespace game {
@@ -36,6 +38,7 @@ public:
 	~GameBoard();
 
 	void setup();
+	void clear();
 
 public:
 	bool isEmpty();
@@ -43,21 +46,34 @@ public:
 
 	void Update(float dt);
 
+	/**
+	 * @brief 添加一个工厂。
+	 * @param factory 工厂。
+	 * @return 工厂id（从1开始）。
+	*/
+	size_t AddFactory(std::shared_ptr<UnitFactory> factory);
+	void JoinEntityFromFactory(size_t id);
+
 	void JoinEntity(std::shared_ptr<Entity> entity);
 	void KickEntity(size_t location);
 
-	b2World& World() {
-		return *m_physics;
-	}
+	//b2World& World() {
+	//	return *m_physics;
+	//}
 
 	std::shared_ptr<Entity> EntityAt(size_t location);
 
 protected:
 	size_t m_idCnt;
+
 	std::deque<std::shared_ptr<Entity>> m_entities;
 	std::stack<size_t> m_emptyLocation;
 	std::shared_ptr<RootLoader> m_rootLoader;
+
+	std::deque<std::shared_ptr<UnitFactory>> m_factories;
 	std::unique_ptr<b2World> m_physics;
+	std::unique_ptr<MessageRepeater> m_repeater;
+	
 	bool m_paused;
 };
 

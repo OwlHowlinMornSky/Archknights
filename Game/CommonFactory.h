@@ -28,6 +28,10 @@ namespace game {
 template <class _T>
 class CommonFactory :
 	public UnitFactory {
+public:
+	CommonFactory() = default;
+	virtual ~CommonFactory() override = default;
+
 protected:
 	virtual std::shared_ptr<Unit> CreateUnit() const override {
 		return std::make_shared<_T>();

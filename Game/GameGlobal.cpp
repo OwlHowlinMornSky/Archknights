@@ -41,6 +41,9 @@ void Global::update(float dt) {
 	board->Update(dt);
 }
 
-void Global::drop() {}
+void Global::drop() {
+	board->clear();
+	board.reset();
+}
 
 } // namespace game

@@ -21,14 +21,12 @@
 */
 #pragma once
 
-#include "Entity.h"
 #include <deque>
 #include "MessageListeners.h"
 
 namespace game {
 
-class MessageRepeater :
-	public Entity {
+class MessageRepeater {
 public:
 	void OnClosing();
 

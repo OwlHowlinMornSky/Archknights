@@ -54,9 +54,6 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Entities\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="UnitFactory.cpp">
-      <Filter>Entities\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MessageRepeater.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
     <ClCompile Include="Char001_Myrtle.cpp">
       <Filter>Units\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CommonFactory.cpp">
-      <Filter>Entities\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GameShow.cpp">
       <Filter>GraphicsInterface\源文件</Filter>
     </ClCompile>
@@ -83,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>GraphicsInterface\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonFactory.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +96,6 @@
       <Filter>Entities\头文件</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
-      <Filter>Entities\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitFactory.h">
       <Filter>Entities\头文件</Filter>
     </ClInclude>
     <ClInclude Include="MessageRepeater.h">
@@ -116,14 +113,8 @@
     <ClInclude Include="Entity.h">
       <Filter>Entities\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Reference.h">
-      <Filter>Entities\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Char001_Myrtle.h">
       <Filter>Units\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonFactory.h">
-      <Filter>Entities\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameShow.h">
       <Filter>GraphicsInterface\头文件</Filter>
@@ -133,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>GraphicsInterface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Reference.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonFactory.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

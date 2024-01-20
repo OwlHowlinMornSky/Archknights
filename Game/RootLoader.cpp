@@ -26,11 +26,16 @@
 
 namespace game {
 
+RootLoader::RootLoader() {}
+
 void RootLoader::OnJoined(size_t id, size_t location) {
 	Parent::OnJoined(id, location);
 
 	// for test
-	Global::data.board->JoinEntity(std::make_shared<Char001_Myrtle_Factory>());
+	Global::data.board->AddFactory(std::make_shared<Char001_Myrtle_Factory>());
+	Global::data.board->JoinEntityFromFactory(1);
+	Global::data.board->JoinEntityFromFactory(1);
+	Global::data.board->JoinEntityFromFactory(1);
 
 	return;
 }

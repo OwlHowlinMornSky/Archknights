@@ -29,6 +29,7 @@ class RootLoader :
 	public Entity {
 	using Parent = game::Entity;
 public:
+	RootLoader();
 
 // 继承的
 public:
