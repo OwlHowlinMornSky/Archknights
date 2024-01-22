@@ -43,9 +43,8 @@ bool Act05_Title::start(GUI::Window& wnd) noexcept {
 
 	r_wnd->setActive(true);
 
-	m_bgm = std::make_unique<GUI::BgmSFML>();
-	m_bgm->openFromFile("res/music/m_sys_title.ogg");
-	m_bgm->play();
+	Global::BGM::instance.play("res/music/m_sys_title.ogg");
+	//Global::bgm->play();
 	return true;
 }
 

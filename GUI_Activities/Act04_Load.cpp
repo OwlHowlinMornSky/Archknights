@@ -57,9 +57,8 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
-	m_bgm = std::make_unique<GUI::BgmSFML>();
-	m_bgm->openFromFile("res/music/m_sys_title.ogg");
-	m_bgm->play();
+	//m_bgm = std::make_unique<GUI::BgmSFML>();
+	Global::BGM::instance.play("res/music/m_sys_title.ogg");
 
 	//m_text.setString(L"test测试あいうえお😅");
 	//m_text.setFont(r_wnd->getFontMgr().getFont(GUI::FontType::CommonContext));
@@ -69,7 +68,6 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 }
 
 void Act04_Load::stop() noexcept {
-	m_bgm->stop();
 	m_status = 0;
 	r_wnd();
 	return;

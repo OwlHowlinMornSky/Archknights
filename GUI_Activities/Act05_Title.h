@@ -22,7 +22,8 @@
 #pragma once
 
 #include "../GUI/Window.h"
-#include "../GUI/IBgm.h"
+//#include "../GUI/IBgm.h"
+#include "GlobalBGM.h"
 
 #include <SFML/Graphics.hpp>
 #include "../GUI_3D/Scene_ITitle.h"
@@ -49,7 +50,6 @@ public:
 protected:
 	GUI::WndRef r_wnd;
 	std::unique_ptr<title::Scene_ITitle> m_scene;
-	std::unique_ptr<GUI::IBgm> m_bgm;
 };
 
 } // namespace Activity

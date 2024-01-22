@@ -26,6 +26,7 @@
     <ClInclude Include="Act05_Title.h" />
     <ClInclude Include="Activity_Debug.h" />
     <ClInclude Include="Activity_Game.h" />
+    <ClInclude Include="GlobalBGM.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Act01_DefaultEntrance.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Act05_Title.cpp" />
     <ClCompile Include="Activity_Debug.cpp" />
     <ClCompile Include="Activity_Game.cpp" />
+    <ClCompile Include="GlobalBGM.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
