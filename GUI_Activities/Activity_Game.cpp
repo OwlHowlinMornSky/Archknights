@@ -40,6 +40,8 @@ bool Activity_Game::start(GUI::Window& wnd) noexcept {
 
 void Activity_Game::stop() noexcept {
 	game::Global::data.drop();
+	game::Global::data.show.reset();
+	m_scene.reset();
 	r();
 	return;
 }

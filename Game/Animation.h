@@ -26,6 +26,11 @@
 namespace game {
 
 class Animation :
-    public Actor {};
+    public Actor {
+public:
+	Animation();
+
+	virtual void Update(float dt) = 0;
+};
 
 }

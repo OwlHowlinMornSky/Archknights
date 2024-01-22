@@ -75,6 +75,12 @@
     <ClCompile Include="IGamePhysics.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>GraphicsInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="IActorFactory.cpp">
+      <Filter>GraphicsInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameGlobal.h">
@@ -133,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="IGamePhysics.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>GraphicsInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="IActorFactory.h">
+      <Filter>GraphicsInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

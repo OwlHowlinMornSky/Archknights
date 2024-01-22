@@ -21,27 +21,13 @@
 */
 #pragma once
 
-#include <memory>
+#include "Actor.h"
 
 namespace game {
 
-class Animation;
-class Model;
-class IActorFactory;
+class Model :
+	public Actor {
 
-class IGameShow {
-public:
-	IGameShow() = default;
-	virtual ~IGameShow() = default;
-
-public:
-	virtual void AddAnimation(std::shared_ptr<Animation> a) = 0;
-	virtual void AddModel(std::shared_ptr<Model> m) = 0;
-
-	virtual size_t RegisterFactory(std::unique_ptr<IActorFactory> f) = 0;
-	virtual bool AddActorFromFactory(size_t id) = 0;
-
-	virtual void Update(float dt) = 0;
 };
 
-} // namespace game
+}

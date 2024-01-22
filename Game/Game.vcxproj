@@ -27,11 +27,13 @@
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameGlobal.h" />
     <ClInclude Include="GamePhysics.h" />
+    <ClInclude Include="IActorFactory.h" />
     <ClInclude Include="IGamePhysics.h" />
     <ClInclude Include="IGameShow.h" />
     <ClInclude Include="IGameBoard.h" />
     <ClInclude Include="MessageListeners.h" />
     <ClInclude Include="MessageRepeater.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Mover.h" />
     <ClInclude Include="Reference.h" />
     <ClInclude Include="RootLoader.h" />
@@ -48,10 +50,12 @@
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameGlobal.cpp" />
     <ClCompile Include="GamePhysics.cpp" />
+    <ClCompile Include="IActorFactory.cpp" />
     <ClCompile Include="IGamePhysics.cpp" />
     <ClCompile Include="IGameShow.cpp" />
     <ClCompile Include="IGameBoard.cpp" />
     <ClCompile Include="MessageRepeater.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mover.cpp" />
     <ClCompile Include="RootLoader.cpp" />
     <ClCompile Include="Tower.cpp" />

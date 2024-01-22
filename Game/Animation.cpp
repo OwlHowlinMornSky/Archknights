@@ -23,4 +23,8 @@
 
 namespace game {
 
+Animation::Animation() {
+	this->m_type = Actor::Type::Animation;
 }
+
+} // namespace game

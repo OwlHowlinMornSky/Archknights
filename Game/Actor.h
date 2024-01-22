@@ -27,12 +27,27 @@ namespace game {
 
 class Actor {
 public:
+	enum class Type {
+		Animation = 0,
+		Model,
+		COUNT
+	};
+	Actor() = default;
+
 	virtual glm::vec3 getPosition() const = 0;
 	virtual void setPosition(glm::vec3 pos) = 0;
 	virtual glm::vec3 getRotation() const = 0;
 	virtual void setRotation(glm::vec3 rot) = 0;
 	virtual glm::vec3 getScale() const = 0;
 	virtual void setScale(glm::vec3 scl) = 0;
+
+	bool IsWaitingForQuit() const {
+		return m_waitingForQuit;
+	}
+
+protected:
+	bool m_waitingForQuit;
+	game::Actor::Type m_type;
 };
 
 } // namespace game
