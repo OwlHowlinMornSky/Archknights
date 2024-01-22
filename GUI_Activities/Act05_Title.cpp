@@ -44,7 +44,6 @@ bool Act05_Title::start(GUI::Window& wnd) noexcept {
 	r_wnd->setActive(true);
 
 	Global::BGM::instance.play("res/music/m_sys_title.ogg");
-	//Global::bgm->play();
 	return true;
 }
 

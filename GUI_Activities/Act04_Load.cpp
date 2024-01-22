@@ -57,7 +57,6 @@ bool Act04_Load::start(GUI::Window& wnd) noexcept {
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
-	//m_bgm = std::make_unique<GUI::BgmSFML>();
 	Global::BGM::instance.play("res/music/m_sys_title.ogg");
 
 	//m_text.setString(L"test测试あいうえお😅");

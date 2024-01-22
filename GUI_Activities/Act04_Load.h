@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../GUI/Window.h"
-//#include "../GUI/IBgm.h"
 #include "GlobalBGM.h"
 
 #include <SFML/Graphics.hpp>
@@ -52,7 +51,6 @@ protected:
 protected:
 	int m_status;
 	GUI::WndRef r_wnd;
-	//std::unique_ptr<GUI::IBgm> m_bgm;
 	sf::Texture m_tex;
 	sf::Sprite m_sp;
 	sf::RectangleShape m_blackBar[2];

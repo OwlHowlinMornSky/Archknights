@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../GUI/Window.h"
-//#include "../GUI/IBgm.h"
 #include "GlobalBGM.h"
 
 #include <SFML/Graphics.hpp>
