@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{2ff2fbaa-ff19-4c08-9996-c21273cf6903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Client">
+      <UniqueIdentifier>{6d556f39-8427-4c14-be95-35410ae84a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{069454b0-9873-4ee6-ac83-30325b5109c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Client">
+      <UniqueIdentifier>{24ee579e-f1a7-43aa-972b-b706e05b8302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Core">
+      <UniqueIdentifier>{cf4e50bb-e7b9-441d-9367-5fab51a414f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Core">
+      <UniqueIdentifier>{0cab25f2-3a89-47b1-b20a-12cfd9b2d206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\G3D">
+      <UniqueIdentifier>{29e9a2af-b110-40de-be49-82e48ea07312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\G3D">
+      <UniqueIdentifier>{cc2727f3-9f53-40f6-bb53-1e7ad5490cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Game">
+      <UniqueIdentifier>{4b45454f-42b3-458c-a76e-4a830f4dc79f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Game">
+      <UniqueIdentifier>{d34ae80c-5679-4a5d-83e1-f2e1adb4a876}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client\Activity.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\BgmSFML.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Callbacks.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Carnival.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\CarnivalWin32.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Window.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WindowWin32.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\G3dGlobal.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Camera.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Camera.Orthographic.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Camera.Perspective.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\GlCheck.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Shader.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Shader.Default.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actor.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Animation.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Entity.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameGlobal.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IActorFactory.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IGameBoard.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IGameShow.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Architecture.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\MysteryEngine\Client\Activity.h">
+      <Filter>Header files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Client\Carnival.h">
+      <Filter>Header files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Client\Bgm.h">
+      <Filter>Header files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Client\Window.h">
+      <Filter>Header files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Client\WindowWin32.h">
+      <Filter>Header files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\MEAPI.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\Reference.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\TempGuard.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\BgmSFML.h">
+      <Filter>Source files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Callbacks.h">
+      <Filter>Source files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\CarnivalWin32.h">
+      <Filter>Source files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\G3dGlobal.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Camera.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Camera.Orthographic.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Camera.Perspective.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\GlCheck.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\IModel.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ITransformO.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ITransformR.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ITransformS.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ITransformT.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Shader.Default.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Shader.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Vertex.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\NonCopyable.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\Actor.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\Animation.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\Entity.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\GameGlobal.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\IActorFactory.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\IGameBoard.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\IGameShow.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\Architecture.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\GLM.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -20,7 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <locale>
-#include "../GUI/CarnivalWin32.h"
+#include "../GUI/Carnival.h"
 #include "../GUI/WindowWin32.h"
 #include "../GUI_Activities/Act01_DefaultEntrance.h"
 #include "framework.h"
