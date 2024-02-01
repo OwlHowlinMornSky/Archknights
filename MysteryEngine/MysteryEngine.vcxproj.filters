@@ -207,6 +207,9 @@
       <Filter>Source files\Client</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="include\MysteryEngine\Game\TypeDef.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MysteryEngine.rc" />

@@ -22,6 +22,7 @@
 #pragma once
 
 #include <MysteryEngine/Core/GLM.h>
+#include <MysteryEngine/Game/TypeDef.h>
 
 namespace ME {
 
@@ -31,15 +32,19 @@ public:
 	virtual ~Entity() = default;
 
 public:
-	virtual void OnJoined(size_t id, size_t location);
-	virtual void OnUpdate(float dt);
+	void BasicOnJoined(EntityIdType id, EntityLocationType location);
+	void BasicOnKicking();
+	virtual void OnJoined();
 	virtual void OnKicking();
+	virtual void OnUpdate(float dt);
+
+	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 public:
-	size_t getID() const {
+	EntityIdType getID() const {
 		return m_id;
 	}
-	size_t getLocation() const {
+	EntityLocationType getLocation() const {
 		return m_location;
 	}
 
@@ -83,8 +88,8 @@ protected:
 	float m_rotation;
 	glm::vec2 m_position;
 	glm::vec2 m_scale;
-	size_t m_id;
-	size_t m_location;
+	EntityIdType m_id;
+	EntityLocationType m_location;
 };
 
 } // namespace game

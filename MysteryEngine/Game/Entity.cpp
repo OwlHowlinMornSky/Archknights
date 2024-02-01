@@ -37,20 +37,28 @@ Entity::Entity() :
 	m_id(0),
 	m_location(0) {}
 
-void Entity::OnJoined(size_t id, size_t location) {
+void Entity::BasicOnJoined(EntityIdType id, EntityLocationType location) {
 	m_id = id;
 	m_location = location;
 
 	// for test
 	std::cout << "Join: " << this << ", ID: " << id << ", Location: " << location << std::endl;
+	return OnJoined();
 }
 
-void Entity::OnUpdate(float dt) {}
-
-void Entity::OnKicking() {
+void Entity::BasicOnKicking() {
+	OnKicking();
 	std::cout << "Kick: " << this << ", ID: " << m_id << ", Location: " << m_location << std::endl;
 	m_id = 0;
 }
+
+void Entity::OnJoined() {}
+
+void Entity::OnKicking() {}
+
+void Entity::OnUpdate(float dt) {}
+
+MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {}
 
 void Entity::OnPositionChanged() {}
 

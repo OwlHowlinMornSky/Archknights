@@ -78,6 +78,7 @@
     <ClInclude Include="include\MysteryEngine\Game\IGameBoard.h" />
     <ClInclude Include="include\MysteryEngine\Game\IGameShow.h" />
     <ClInclude Include="include\MysteryEngine\Game\Architecture.h" />
+    <ClInclude Include="include\MysteryEngine\Game\TypeDef.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
