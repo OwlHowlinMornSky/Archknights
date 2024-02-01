@@ -49,6 +49,8 @@ public:
 	Window();
 	virtual ~Window() noexcept override;
 
+	static std::unique_ptr<ME::Window> Create1Window(int cmd);
+
 public:
 	virtual bool Create(bool foreground) noexcept;
 	virtual void Close() noexcept;
@@ -266,6 +268,8 @@ protected:
 	std::unique_ptr<Activity> m_activity; // Activity。
 	std::unique_ptr<Activity> m_nextActivity; // 等待生效的 Activity。
 };
+
+
 
 } // namespace GUI
 

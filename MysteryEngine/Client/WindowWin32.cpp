@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Client/WindowWin32.h>
+#include "WindowWin32.h"
 
 #include <strsafe.h>
 #include <SDKDDKVer.h>

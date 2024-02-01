@@ -26,7 +26,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
-#include <MysteryEngine/Client/WindowWin32.h>
+#include "WindowWin32.h"
 
 namespace ME {
 

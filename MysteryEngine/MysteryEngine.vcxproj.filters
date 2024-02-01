@@ -116,9 +116,6 @@
     <ClInclude Include="include\MysteryEngine\Client\Window.h">
       <Filter>Header files\Client</Filter>
     </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Client\WindowWin32.h">
-      <Filter>Header files\Client</Filter>
-    </ClInclude>
     <ClInclude Include="include\MysteryEngine\Core\MEAPI.h">
       <Filter>Header files\Core</Filter>
     </ClInclude>
@@ -206,5 +203,12 @@
     <ClInclude Include="include\MysteryEngine\Core\GLM.h">
       <Filter>Header files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Client\WindowWin32.h">
+      <Filter>Source files\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MysteryEngine.rc" />
   </ItemGroup>
 </Project>

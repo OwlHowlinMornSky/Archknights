@@ -21,7 +21,7 @@
 */
 #include <locale>
 #include <MysteryEngine/Client/Carnival.h>
-#include <MysteryEngine/Client/WindowWin32.h>
+#include <MysteryEngine/Client/Window.h>
 
 #include "Activities/Act01_DefaultEntrance.h"
 
@@ -59,13 +59,13 @@ int APIENTRY wWinMain(
 	ME::Carnival::setup(false);
 	ME::Carnival& carnival = ME::Carnival::instance();
 	ME::G3dGlobal::setup();
-	ME::G3dGlobal::setActive(false);
 	try {
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
-		std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
+
+		std::unique_ptr<ME::Window> window = ME::Window::Create1Window(nCmdShow);;
 		// Create window and run.
-		if (window->Create(nCmdShow)) {
+		if (window) {
 			window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.

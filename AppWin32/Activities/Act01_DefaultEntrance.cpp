@@ -39,6 +39,7 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 
 bool Act01_DefaultEntrance::start(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
+	r_wnd->setResizeEnabled(false);
 	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
 #ifdef _DEBUG // 加载调试用的资源
 	m_tex.loadFromFile("assets/DefaultEntry.png");

@@ -25,9 +25,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI_3D_API.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene_GameCommon.h" />
     <ClInclude Include="Scene_ITitle.h" />
     <ClInclude Include="Scene_Title.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

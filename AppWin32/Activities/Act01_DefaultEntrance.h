@@ -22,8 +22,9 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-
+#ifdef _DEBUG
 #include <SFML/Graphics.hpp>
+#endif // _DEBUG
 
 namespace Activity {
 

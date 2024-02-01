@@ -21,6 +21,8 @@
 */
 #include <MysteryEngine/Client/Window.h>
 
+#include "WindowWin32.h"
+
 namespace ME {
 
 Window::Window() :
@@ -33,6 +35,16 @@ Window::Window() :
 Window::~Window() noexcept {
 	Close();
 	return;
+}
+
+std::unique_ptr<ME::Window> Window::Create1Window(int cmd) {
+	std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
+	// Create window and run.
+	if (window->Create(cmd)) {
+		return std::move(window);
+	}
+	window.reset();
+	return nullptr;
 }
 
 bool Window::Create(bool foreground) noexcept {
