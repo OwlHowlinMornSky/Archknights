@@ -22,15 +22,17 @@
 #include <locale>
 #include <MysteryEngine/Client/Carnival.h>
 #include <MysteryEngine/Client/Window.h>
-
-#include "Activities/Act01_DefaultEntrance.h"
-
-#include "framework.h"
-#include "UniqueInstance.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
+#include "Activities/Act01_DefaultEntrance.h"
+#include "UniqueInstance.h"
+#include "framework.h"
+
+// Use discrete gpu.
+#ifdef ARCHKNIGHTS_LIMITED
 #include <SFML/GpuPreference.hpp>
 SFML_DEFINE_DISCRETE_GPU_PREFERENCE
+#endif
 
 namespace {
 
