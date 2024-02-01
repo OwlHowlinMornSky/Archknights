@@ -22,6 +22,7 @@
 #include <MysteryEngine/Game/Entity.h>
 #include <MysteryEngine/Game/GameGlobal.h>
 #include <MysteryEngine/Game/IGameBoard.h>
+#include <MysteryEngine/Game/MsgResult.h>
 
 #include <iostream>
 
@@ -56,9 +57,9 @@ void Entity::OnJoined() {}
 
 void Entity::OnKicking() {}
 
-void Entity::OnUpdate(float dt) {}
-
-MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {}
+MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+	return MsgResult::Unsubscribe;
+}
 
 void Entity::OnPositionChanged() {}
 

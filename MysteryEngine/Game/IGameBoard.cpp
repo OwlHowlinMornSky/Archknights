@@ -21,6 +21,8 @@
 */
 #include <MysteryEngine/Game/IGameBoard.h>
 
+#include <MysteryEngine/Game/MsgResult.h>
+
 namespace ME {
 
 bool IGameBoard::IsEmpty() {
@@ -60,23 +62,21 @@ std::shared_ptr<Entity> IGameBoard::EntityAt(size_t location) {
 }
 
 void IGameBoard::Update(float dt) {
-	// 目前注释掉的是自动注销逻辑，算是一种保险。
-	// 只要注册过的实体保证退场时注销，就不会需要这个。
-
-	//std::set<EntityLocationType> failedLoc;
+	// failedLoc相关的是自动注销逻辑，算是一种保险。
+	// 如果注册过的实体保证退场时注销，就不需要这个。
+	std::set<EntityLocationType> failedLoc;
 	for (EntityLocationType loc : m_trigger_update) {
 		if (m_entities[loc] == nullptr) {
-			//failedLoc.insert(loc);
+			failedLoc.insert(loc);
 			continue;
 		}
 		m_entities[loc]->OnUpdate(dt);
 	}
-	//if (failedLoc.size()) {
-	//	for (auto loc : failedLoc) {
-	//		m_trigger_update.erase(loc);
-	//	}
-	//}
-
+	if (failedLoc.size()) {
+		for (auto loc : failedLoc) {
+			m_trigger_update.erase(loc);
+		}
+	}
 }
 
 void IGameBoard::Register_Update(EntityLocationType location) {
@@ -94,29 +94,31 @@ MsgResultType IGameBoard::SendMsg(EntityLocationType location, MsgIdType msg, Ms
 }
 
 void IGameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	// 目前注释掉的是自动退订逻辑，算是一种保险。
-	// 只要注册过的实体保证退场时注销，就不会需要这个。
-
+	// failedLoc相关的是自动退订逻辑，算是一种保险。
+	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
 	auto& reg = mapIt->second;
-	//std::set<EntityLocationType> failedLoc;
+	std::set<EntityLocationType> failedLoc;
 	for (EntityLocationType loc : reg) {
 		if (m_entities[loc] == nullptr) { // 跳过离场位置。
-		//	failedLoc.insert(loc);
+			failedLoc.insert(loc);
 			continue;
 		}
-		m_entities[loc]->ReceiveMessage(msg, wparam, lparam);
+		MsgResultType res = m_entities[loc]->ReceiveMessage(msg, wparam, lparam);
+		if (res == MsgResult::Unsubscribe) { // 相当于消息失败。
+			failedLoc.insert(loc);
+		}
 	}
-	//if (failedLoc.size()) {
-	//	for (auto loc : failedLoc) {
-	//		reg.erase(loc);
-	//	}
-	//	if (reg.size() == 0) {
-	//		m_msgMap.erase(mapIt);
-	//	}
-	//}
+	if (failedLoc.size()) {
+		for (auto loc : failedLoc) {
+			reg.erase(loc);
+		}
+		if (reg.size() == 0) {
+			m_msgMap.erase(mapIt);
+		}
+	}
 }
 
 void IGameBoard::BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {

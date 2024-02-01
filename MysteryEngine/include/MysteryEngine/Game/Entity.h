@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include <functional>
 #include <MysteryEngine/Core/GLM.h>
 #include <MysteryEngine/Game/TypeDef.h>
 
@@ -36,7 +37,6 @@ public:
 	void BasicOnKicking();
 	virtual void OnJoined();
 	virtual void OnKicking();
-	virtual void OnUpdate(float dt);
 
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
@@ -90,6 +90,16 @@ protected:
 	glm::vec2 m_scale;
 	EntityIdType m_id;
 	EntityLocationType m_location;
+
+// Trigger入口
+public:
+	void OnUpdate(float dt) {
+		return this->onUpdate(dt);
+	}
+
+protected:
+	std::function<void(float)> onUpdate;
+
 };
 
 } // namespace game

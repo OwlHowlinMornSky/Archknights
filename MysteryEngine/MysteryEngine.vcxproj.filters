@@ -210,6 +210,9 @@
     <ClInclude Include="include\MysteryEngine\Game\TypeDef.h">
       <Filter>Header files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\MsgResult.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MysteryEngine.rc" />
