@@ -29,7 +29,7 @@
 namespace {
 
 const char g_str_winExcept[] = "Window Exception:\n";
-const char g_str_error[] = "Archnights: Error";
+const char g_str_error[] = "Mystery Engine: Error";
 const char g_str_unknown[] = "Unknown Exception.";
 
 } // namespace

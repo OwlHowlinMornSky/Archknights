@@ -20,10 +20,12 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 
 #include "Scene_Title.h"
+
+//#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
 #include <array>
 #include <vector>
@@ -76,8 +78,8 @@ const char g_fs[] =
 
 void Shader_Title_Sphere::setup() {
 	clear();
-	loadFromMemory(g_vs, g3d::ShaderType::Vertex);
-	loadFromMemory(g_fs, g3d::ShaderType::Fragment);
+	loadFromMemory(g_vs, ME::ShaderType::Vertex);
+	loadFromMemory(g_fs, ME::ShaderType::Fragment);
 	glCheck(glBindAttribLocation(m_program, 0, "a_vertex0"));
 	glCheck(glBindAttribLocation(m_program, 1, "a_vertex1"));
 	glCheck(glBindAttribLocation(m_program, 2, "a_offset"));
@@ -92,7 +94,7 @@ void Shader_Title_Sphere::setup() {
 	return;
 }
 
-void Shader_Title_Sphere::update(g3d::Camera& camera) {
+void Shader_Title_Sphere::update(ME::Camera& camera) {
 	Bind(this);
 	//glm::mat4 id{};
 	this->updateUniformMat4fv(m_ul_matp, &(camera.getMatP()[0][0]));
@@ -106,7 +108,7 @@ void LineModel::update() {
 		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_matM *= glm::scale(m_scale);
+		//m_matM *= glm::scale(m_scale);
 		m_rotationChanged = false;
 	}
 }
@@ -165,7 +167,7 @@ void Scene_Title::setup(sf::Vector2u size) {
 	m_camera.setDim(9.0f / 4  * size.x / size.y, 9.0f / 4);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 
-	g3d::base::setActive(true);
+	ME::G3dGlobal::setActive(true);
 
 	m_shader.setup();
 
@@ -220,7 +222,7 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//m_llm.setPosition(0.5f, 0, 0);
 	//m_llm.setScale(0.1f);
 
-	g3d::base::setActive(false);
+	ME::G3dGlobal::setActive(false);
 }
 
 void Scene_Title::update(float dt) {
@@ -229,7 +231,7 @@ void Scene_Title::update(float dt) {
 }
 
 void Scene_Title::render() {
-	g3d::base::setActive(true);
+	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
 	glCheck(glClearColor(1.0f, 1.0f, 1.0f, 0.2f)); // 设置clear颜色
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
@@ -244,17 +246,17 @@ void Scene_Title::render() {
 	m_llm.update();
 	m_shader.update(m_camera);
 
-	g3d::Shader::Bind(&m_shader);
+	ME::Shader::Bind(&m_shader);
 	m_shader.updateUniformMat4fv(m_shader.m_ul_matm, &(m_llm.m_matM[0][0]));
 
 	m_llm.Draw();
 
-	g3d::Shader::Bind(nullptr);
+	ME::Shader::Bind(nullptr);
 
 	m_rtex.display();
 
 	m_rtex.setActive(false);
-	g3d::base::setActive(false);
+	ME::G3dGlobal::setActive(false);
 }
 
 void Scene_Title::resize(sf::Vector2u size) {

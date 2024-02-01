@@ -31,6 +31,7 @@ namespace ME {
 class ME_API Window;
 
 typedef ME::Reference<ME::Window> WndRef;
+template class ME_API ME::Reference<ME::Window>;
 
 /**
  * @brief Activity: 于 Window 中执行的单个界面。

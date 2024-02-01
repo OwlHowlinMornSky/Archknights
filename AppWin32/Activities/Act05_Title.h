@@ -19,37 +19,36 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_GameCommon.h"
+#pragma once
 
-//#include "../Game/IActorFactory.h"
-//#include "../Game/Animation.h"
-//#include "../Game/Model.h"
+#include <MysteryEngine/Client/Window.h>
+#include "GlobalBGM.h"
 
-namespace gamegui {
+#include <SFML/Graphics.hpp>
+#include "../../GUI_3D/Scene_ITitle.h"
 
-Scene_GameCommon::Scene_GameCommon() {}
+namespace Activity {
 
-Scene_GameCommon::~Scene_GameCommon() {}
+class Act05_Title final :
+	public ME::Activity {
+public:
+	Act05_Title();
+	virtual ~Act05_Title() noexcept override;
 
-void Scene_GameCommon::update(float dt) {
-}
+protected:
+	virtual bool start(ME::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
 
-bool Scene_GameCommon::handleEvent(const sf::Event& evt) {
-    return false;
-}
+public:
+	virtual bool handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
 
-//void Scene_GameCommon::AddAnimation(std::shared_ptr<game::Animation> a) {}
-//
-//void Scene_GameCommon::AddModel(std::shared_ptr<game::Model> m) {}
-//
-//size_t Scene_GameCommon::RegisterFactory(std::unique_ptr<game::IActorFactory> f) {
-//	return size_t();
-//}
-//
-//bool Scene_GameCommon::AddActorFromFactory(size_t id) {
-//	return false;
-//}
-//
-//void Scene_GameCommon::Update(float dt) {}
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
 
-} // namespace gamegui
+protected:
+	ME::WndRef r_wnd;
+	std::unique_ptr<title::Scene_ITitle> m_scene;
+};
+
+} // namespace Activity

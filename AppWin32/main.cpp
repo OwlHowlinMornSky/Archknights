@@ -20,12 +20,14 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <locale>
-#include "../GUI/Carnival.h"
-#include "../GUI/WindowWin32.h"
-#include "../GUI_Activities/Act01_DefaultEntrance.h"
+#include <MysteryEngine/Client/Carnival.h>
+#include <MysteryEngine/Client/WindowWin32.h>
+
+#include "Activities/Act01_DefaultEntrance.h"
+
 #include "framework.h"
 #include "UniqueInstance.h"
-#include "../G3D/base.h"
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
 #include <SFML/GpuPreference.hpp>
 SFML_DEFINE_DISCRETE_GPU_PREFERENCE
@@ -54,18 +56,14 @@ int APIENTRY wWinMain(
 		return 0;
 	}
 	// Initialize.
-#ifdef _DEBUG
-	GUI::Carnival::setup(true);
-#else
-	GUI::Carnival::setup(false);
-#endif // _DEBUG
-	GUI::Carnival& carnival = GUI::Carnival::instance();
-	g3d::base::setup();
-	g3d::base::setActive(false);
+	ME::Carnival::setup(false);
+	ME::Carnival& carnival = ME::Carnival::instance();
+	ME::G3dGlobal::setup();
+	ME::G3dGlobal::setActive(false);
 	try {
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
-		std::unique_ptr<GUI::WindowWin32> window = std::make_unique<GUI::WindowWin32>();
+		std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
 		// Create window and run.
 		if (window->Create(nCmdShow)) {
 			window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -83,8 +81,8 @@ int APIENTRY wWinMain(
 		MessageBoxA(NULL, g_str_unknown_exp, g_str_fatal_error, MB_ICONERROR);
 	}
 	// Clear.
-	g3d::base::drop();
-	GUI::Carnival::drop();
+	ME::G3dGlobal::drop();
+	ME::Carnival::drop();
 	AppWin32::instanceExit();
 	return 0;
 }

@@ -25,13 +25,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Window/Event.hpp>
-#include "../Game/IGameShow.h"
+//#include "../Game/IGameShow.h"
+#include "GUI_3D_API.h"
 
 namespace gamegui {
 
-class Scene_GameCommon final :
-	public sf::Drawable,
-	public game::IGameShow {
+class G3D_API Scene_GameCommon final :
+	public sf::Drawable/*,
+	public game::IGameShow*/ {
 public:
 	Scene_GameCommon();
 	virtual ~Scene_GameCommon() override;
@@ -51,14 +52,14 @@ protected:
 	sf::RenderTexture m_rtex;
 
 // 继承的
-public:
-	virtual void AddAnimation(std::shared_ptr<game::Animation> a) override;
-	virtual void AddModel(std::shared_ptr<game::Model> m) override;
-
-	virtual size_t RegisterFactory(std::unique_ptr<game::IActorFactory> f) override;
-	virtual bool AddActorFromFactory(size_t id) override;
-
-	virtual void Update(float dt) override;
+//public:
+//	virtual void AddAnimation(std::shared_ptr<game::Animation> a) override;
+//	virtual void AddModel(std::shared_ptr<game::Model> m) override;
+//
+//	virtual size_t RegisterFactory(std::unique_ptr<game::IActorFactory> f) override;
+//	virtual bool AddActorFromFactory(size_t id) override;
+//
+//	virtual void Update(float dt) override;
 };
 
 } // namespace gamegui

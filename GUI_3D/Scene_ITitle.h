@@ -23,11 +23,12 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "../G3D/base.h"
+
+#include "GUI_3D_API.h"
 
 namespace title {
 
-class Scene_ITitle :
+class G3D_API Scene_ITitle :
 	public sf::Drawable {
 public:
 	virtual void setup(sf::Vector2u size) = 0;
@@ -37,6 +38,6 @@ public:
 	virtual void resize(sf::Vector2u size) = 0;
 };
 
-std::unique_ptr<Scene_ITitle> getScene();
+std::unique_ptr<Scene_ITitle> G3D_API getScene();
 
 } // namespace title

@@ -19,37 +19,10 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_GameCommon.h"
+#pragma once
 
-//#include "../Game/IActorFactory.h"
-//#include "../Game/Animation.h"
-//#include "../Game/Model.h"
-
-namespace gamegui {
-
-Scene_GameCommon::Scene_GameCommon() {}
-
-Scene_GameCommon::~Scene_GameCommon() {}
-
-void Scene_GameCommon::update(float dt) {
-}
-
-bool Scene_GameCommon::handleEvent(const sf::Event& evt) {
-    return false;
-}
-
-//void Scene_GameCommon::AddAnimation(std::shared_ptr<game::Animation> a) {}
-//
-//void Scene_GameCommon::AddModel(std::shared_ptr<game::Model> m) {}
-//
-//size_t Scene_GameCommon::RegisterFactory(std::unique_ptr<game::IActorFactory> f) {
-//	return size_t();
-//}
-//
-//bool Scene_GameCommon::AddActorFromFactory(size_t id) {
-//	return false;
-//}
-//
-//void Scene_GameCommon::Update(float dt) {}
-
-} // namespace gamegui
+#ifdef GUI_3D_OUTPUT
+#define G3D_API __declspec(dllexport)
+#else
+#define G3D_API __declspec(dllimport)
+#endif

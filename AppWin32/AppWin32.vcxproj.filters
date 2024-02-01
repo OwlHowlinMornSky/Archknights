@@ -13,6 +13,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Activities">
+      <UniqueIdentifier>{3656a50e-7a31-4c29-8d71-af8d3cba2092}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -27,6 +30,30 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Activities\Act01_DefaultEntrance.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act02_TestActivity.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act03_Opening.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act04_Load.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act05_Title.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Activity_Debug.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Activity_Game.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\GlobalBGM.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,6 +61,30 @@
     </ClCompile>
     <ClCompile Include="UniqueInstance.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act02_TestActivity.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act03_Opening.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act04_Load.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act05_Title.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Activity_Debug.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Activity_Game.cpp">
+      <Filter>Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\GlobalBGM.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

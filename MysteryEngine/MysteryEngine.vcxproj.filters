@@ -99,6 +99,9 @@
     <ClCompile Include="Game\Architecture.cpp">
       <Filter>Source files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Client\Bgm.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MysteryEngine\Client\Activity.h">

@@ -21,14 +21,15 @@
 */
 #pragma once
 
-#include "../G3D/GlCheck.h"
-#include "../G3D/Shader.h"
-#include "../G3D/Camera.h"
-#include "../G3D/Vertex.h"
-#include "../G3D/Camera.Orthographic.h"
-#include "../G3D/ITransformS.h"
+#include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/Shader.h>
+#include <MysteryEngine/G3D/Camera.h>
+#include <MysteryEngine/G3D/Vertex.h>
+#include <MysteryEngine/G3D/Camera.Orthographic.h>
+//#include <MysteryEngine/G3D/ITransformS.h>
 
 #include "Scene_ITitle.h"
+#include "GUI_3D_API.h"
 
 namespace {
 
@@ -46,10 +47,10 @@ struct Vertex {
 };
 
 class Shader_Title_Sphere final :
-	public g3d::Shader {
+	public ME::Shader {
 public:
 	virtual void setup();
-	void update(g3d::Camera& camera);
+	void update(ME::Camera& camera);
 protected:
 	GLint m_ul_matp;
 	GLint m_ul_matv;
@@ -58,9 +59,9 @@ public:
 };
 
 class LineModel final :
-	public g3d::ITransformR,
-	public g3d::ITransformT,
-	public g3d::ITransformS {
+	public ME::ITransformR,
+	public ME::ITransformT/*,
+	public ME::ITransformS*/ {
 public:
 	void update();
 	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
@@ -95,7 +96,7 @@ protected:
 
 protected:
 	::Shader_Title_Sphere m_shader;
-	g3d::OrthographicCamera m_camera;
+	ME::OrthographicCamera m_camera;
 	::LineModel m_llm;
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;

@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include <memory>
 #include <string_view>
 
 #include <MysteryEngine/Core/MEAPI.h>
@@ -103,6 +104,8 @@ public:
 	 * @return 总时长（秒）。
 	*/
 	virtual float getLength() const = 0;
-}; // class IBgm
+}; // class Bgm
 
-} // namespace GUI
+std::unique_ptr<Bgm> ME_API CreateBGM();
+
+} // namespace ME

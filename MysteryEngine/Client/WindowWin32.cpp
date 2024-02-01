@@ -166,8 +166,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	return 0;
 }
 
-const WCHAR szWindowClass[] = L"WndClass.OHMS.MysteryEngine"; // 窗口类的名称。
-const WCHAR szTitle[] = L"MysteryEngine"; // 窗口的 初始 名称。
+const WCHAR szWindowClass[] = L"WndClass.MysteryEngine.OHMS"; // 窗口类的名称。
+const WCHAR szTitle[] = L"Mystery Window"; // 窗口的 初始 名称。
 
 void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	LPVOID lpMsgBuf;
