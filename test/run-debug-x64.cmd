@@ -1,1 +1,1 @@
-publish\debug-x64\Archknights.exe
+publish\debug-x64\Archknights-d.exe

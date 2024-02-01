@@ -34,6 +34,7 @@ SFML_DEFINE_DISCRETE_GPU_PREFERENCE
 
 namespace {
 
+const char g_str_windowtitle[] = "Archknights";
 const char g_str_information[] = "Archknights: Information";
 const char g_str_unique_inst[] = "Another instance exists.";
 const char g_str_fatal_error[] = "Archknights: Fatal Error";
@@ -66,6 +67,7 @@ int APIENTRY wWinMain(
 		std::unique_ptr<ME::Window> window = ME::Window::Create1Window(nCmdShow);;
 		// Create window and run.
 		if (window) {
+			window->setTitle(g_str_windowtitle);
 			window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.

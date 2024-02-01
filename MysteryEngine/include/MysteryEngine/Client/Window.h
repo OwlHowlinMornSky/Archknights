@@ -201,6 +201,9 @@ public:
 	void setIcon(unsigned int width, unsigned int height, const sf::Uint8* pixels) {
 		return RenderWindow::setIcon(width, height, pixels);
 	}
+	void setTitle(const sf::String& title) {
+		return RenderWindow::setTitle(title);
+	}
 
 public:
 	bool available() const;
