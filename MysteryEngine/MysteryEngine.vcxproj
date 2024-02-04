@@ -146,6 +146,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +166,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -184,6 +186,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -203,6 +206,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -48,11 +48,24 @@ class ME_API Window :
 public:
 	Window();
 	virtual ~Window() noexcept override;
-
+	
+	/**
+	 * @brief 创建一个系统特定的窗口。
+	 * @param cmd: 显示参数。
+	 * @return 创建的窗口。如果失败可能为nullptr。
+	*/
 	static std::unique_ptr<ME::Window> Create1Window(int cmd);
 
 public:
+	/**
+	 * @brief 创建窗口。
+	 * @param foreground: 是否显示在前景。
+	 * @return 
+	*/
 	virtual bool Create(bool foreground) noexcept;
+	/**
+	 * @brief 销毁窗口。
+	*/
 	virtual void Close() noexcept;
 
 public:
@@ -258,6 +271,10 @@ public:
 	void setWaitingForStop() noexcept {
 		m_waitToStop = true;
 	}
+	/**
+	 * @brief 读取当前窗口是否等待关闭。
+	 * @return 是否等待关闭。
+	*/
 	bool isWaitingForStop() noexcept {
 		return m_waitToStop;
 	}

@@ -116,6 +116,10 @@ void Carnival::run() noexcept {
 	return;
 }
 
+void Carnival::Run() noexcept {
+	return run();
+}
+
 bool Carnival::pushWindow(std::unique_ptr<Window>&& wnd) {
 	// 确保窗口已经 Create 并且含有有效 Activity。
 	assert(wnd->available());

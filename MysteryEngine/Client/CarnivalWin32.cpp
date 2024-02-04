@@ -21,17 +21,105 @@
 */
 #include "CarnivalWin32.h"
 
+#include <functional>
 #include <assert.h>
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <MysteryEngine/Core/TempGuard.h>
 
 #include "WindowWin32.h"
+#include "Callbacks.h"
+
+namespace {
+
+const char g_str_winExcept[] = "Window Exception:\n";
+const char g_str_error[] = "Mystery Engine: Error";
+const char g_str_unknown[] = "Unknown Exception.";
+
+inline void g_systemMessagePump() noexcept {
+	MSG msg{ 0 };
+	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+	}
+	return;
+}
+
+} // namespace
 
 namespace ME {
 
 CarnivalWin32::CarnivalWin32(bool mutipleWindows) :
 	Carnival(mutipleWindows) {}
+
+void CarnivalWin32::Run() noexcept {
+	// 临时替换回调
+	ME::TempGuard<std::function<void()>> idleGuard(ME::OnIdle);
+	ME::TempGuard<std::function<void(bool)>> syslpGuard(ME::OnSystemLoop);
+	sf::Time dt;
+	if (m_mutipleWindows) { // 多窗口模式
+		idleGuard = std::bind(&CarnivalWin32::onIdle, this);
+		syslpGuard = std::bind(&CarnivalWin32::onSystemLoop, this, std::placeholders::_1);
+		m_clk.restart();
+		try {
+			while (!m_wnds.empty()) {
+				for (const std::unique_ptr<Window>& wnd : m_wnds) {
+					wnd->handleEvent();
+				}
+				dt = m_clk.restart();
+				for (const std::unique_ptr<Window>& wnd : m_wnds) {
+					wnd->update(dt);
+				}
+				// removeStoppedWindows();
+				std::list<std::unique_ptr<Window>>::iterator
+					i = m_wnds.begin(),
+					n = m_wnds.end();
+				while (i != n) {
+					if ((*i)->isWaitingForStop()) i = m_wnds.erase(i);
+					else ++i;
+				}
+				//end
+				g_systemMessagePump(); // systemMessagePump();
+			}
+		}
+		catch (std::exception& e) {
+			std::string err(g_str_winExcept);
+			err.append(e.what());
+			showErrorMessageBox(g_str_error, err);
+		}
+		catch (...) {
+			std::string err(g_str_winExcept);
+			err.append(g_str_unknown);
+			showErrorMessageBox(g_str_error, err);
+		}
+	}
+	else { // 单窗口模式
+		idleGuard = std::bind(&CarnivalWin32::onIdleSingle, this);
+		syslpGuard = std::bind(&CarnivalWin32::onSystemLoopSingle, this, std::placeholders::_1);
+		m_clk.restart();
+		try {
+			while (!m_singleWnd->isWaitingForStop()) {
+				m_singleWnd->handleEvent();
+				dt = m_clk.restart();
+				m_singleWnd->update(dt);
+				g_systemMessagePump(); // systemMessagePump();
+			}
+			m_singleWnd.reset();
+		}
+		catch (std::exception& e) {
+			std::string err(g_str_winExcept);
+			err.append(e.what());
+			showErrorMessageBox(g_str_error, err);
+		}
+		catch (...) {
+			std::string err(g_str_winExcept);
+			err.append(g_str_unknown);
+			showErrorMessageBox(g_str_error, err);
+		}
+	}
+	return;
+}
 
 bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground) {
 	assert(activity != nullptr);

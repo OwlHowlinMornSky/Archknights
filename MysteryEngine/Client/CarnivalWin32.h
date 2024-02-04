@@ -37,6 +37,8 @@ public:
 	virtual ~CarnivalWin32() override = default;
 
 public:
+	virtual void Run() noexcept override;
+
 	virtual bool emplaceWindow(std::unique_ptr<Activity>&& activity, bool foreground = false) override;
 
 	virtual void showErrorMessageBox(std::string_view title, std::string_view text) const noexcept override;

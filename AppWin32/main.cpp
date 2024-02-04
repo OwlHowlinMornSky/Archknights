@@ -75,7 +75,7 @@ int APIENTRY wWinMain(
 			// Start with default activity.
 			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());
 			carnival.pushWindow(std::move(window));
-			carnival.run();
+			carnival.Run();
 		}
 	}
 	catch (std::exception& exp) {

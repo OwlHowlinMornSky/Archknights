@@ -67,6 +67,11 @@ public:
 	void run() noexcept;
 
 	/**
+	 * @brief 减少虚函数的run。可能性能更好。
+	*/
+	virtual void Run() noexcept;
+
+	/**
 	 * @brief 向 Carnival 添加窗口。在单窗口模式下添加第二个及以后的窗口都会失败。
 	 * @param wnd: 窗口，必须已经 Create，且含有有效 Activity。
 	 * @return 添加是否成功。
