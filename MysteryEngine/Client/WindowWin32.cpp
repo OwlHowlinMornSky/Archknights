@@ -21,6 +21,8 @@
 */
 #include "WindowWin32.h"
 
+#ifdef SFML_SYSTEM_WINDOWS
+
 #include <strsafe.h>
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
@@ -445,3 +447,5 @@ void WindowWin32::checkSizeInSystemLoop() noexcept {
 }
 
 } // namespace GUI
+
+#endif

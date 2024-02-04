@@ -21,12 +21,13 @@
 */
 #pragma once
 
-#include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/Client/Window.h>
+
+#ifdef SFML_SYSTEM_WINDOWS
 
 namespace ME {
 
-class ME_API WindowWin32 final :
+class WindowWin32 final :
 	public Window {
 public:
 	WindowWin32();
@@ -68,3 +69,5 @@ protected:
 };
 
 } // namespace GUI
+
+#endif

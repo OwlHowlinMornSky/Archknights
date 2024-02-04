@@ -23,6 +23,8 @@
 
 #include <MysteryEngine/Client/Carnival.h>
 
+#ifdef SFML_SYSTEM_WINDOWS
+
 namespace ME {
 
 /**
@@ -50,3 +52,5 @@ protected:
 };
 
 } // namespace GUI
+
+#endif

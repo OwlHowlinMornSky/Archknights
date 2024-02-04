@@ -21,6 +21,10 @@
 */
 #pragma once
 
+#include <SFML/Config.hpp>
+
+#ifdef SFML_SYSTEM_WINDOWS
+
 #include <functional>
 
 namespace ME {
@@ -41,3 +45,5 @@ extern std::function<void()> OnIdle;
 extern std::function<void(bool)> OnSystemLoop;
 
 } // namespace GUI
+
+#endif

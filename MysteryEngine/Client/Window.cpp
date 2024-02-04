@@ -21,7 +21,20 @@
 */
 #include <MysteryEngine/Client/Window.h>
 
+#ifdef SFML_SYSTEM_WINDOWS
+
 #include "WindowWin32.h"
+std::unique_ptr<ME::Window> ME::Window::Create1Window(int cmd) { // this will be different on each system.
+	std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
+	// Create window and run.
+	if (window->Create(cmd)) {
+		return std::move(window);
+	}
+	window.reset();
+	return nullptr;
+}
+
+#endif
 
 namespace ME {
 
@@ -35,16 +48,6 @@ Window::Window() :
 Window::~Window() noexcept {
 	close();
 	return;
-}
-
-std::unique_ptr<ME::Window> Window::Create1Window(int cmd) { // this will be different on each system.
-	std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
-	// Create window and run.
-	if (window->Create(cmd)) {
-		return std::move(window);
-	}
-	window.reset();
-	return nullptr;
 }
 
 bool Window::create(bool foreground) noexcept {

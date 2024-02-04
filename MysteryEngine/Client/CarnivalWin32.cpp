@@ -21,6 +21,8 @@
 */
 #include "CarnivalWin32.h"
 
+#ifdef SFML_SYSTEM_WINDOWS
+
 #include <functional>
 #include <assert.h>
 #include <SDKDDKVer.h>
@@ -166,3 +168,5 @@ void CarnivalWin32::systemMessagePump() const noexcept {
 }
 
 } // namespace GUI
+
+#endif

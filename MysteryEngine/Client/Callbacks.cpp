@@ -21,6 +21,8 @@
 */
 #include "Callbacks.h"
 
+#ifdef SFML_SYSTEM_WINDOWS
+
 namespace {
 
 void fEmpty_vv() noexcept {}
@@ -34,3 +36,5 @@ std::function<void()> OnIdle(&::fEmpty_vv);
 std::function<void(bool)> OnSystemLoop(&::fEmpty_vb);
 
 } // namespace GUI
+
+#endif

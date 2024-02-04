@@ -190,10 +190,12 @@ void Carnival::onSystemLoopSingle(bool enter) {
 
 } // namespace GUI
 
-#ifdef _WIN32
+#ifdef SFML_SYSTEM_WINDOWS
+
 #include "CarnivalWin32.h"
 void ME::Carnival::setup(bool mutipleWindows) noexcept {
 	s_instance.reset(new CarnivalWin32(mutipleWindows));
 	return;
 }
+
 #endif
