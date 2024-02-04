@@ -3,7 +3,7 @@ mkdir publish\release-x64
 
 copy ..\x64\release\Archknights.exe /Y publish\release-x64\
 copy ..\x64\release\MysteryEngine.dll /Y publish\release-x64\
-copy ..\x64\release\GUI_3D.dll /Y publish\release-x64\
+copy ..\x64\release\Client.dll /Y publish\release-x64\
 
 copy %OHMS_LIB_DIR%\sfml\2.6.1\vc17-x64\bin\openal32.dll /Y publish\release-x64\
 copy %OHMS_LIB_DIR%\sfml\2.6.1\vc17-x64\bin\sfml-audio-2.dll /Y publish\release-x64\

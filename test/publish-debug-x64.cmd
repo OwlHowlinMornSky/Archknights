@@ -3,7 +3,7 @@ mkdir publish\debug-x64
 
 copy ..\x64\debug\Archknights-d.exe /Y publish\debug-x64\
 copy ..\x64\debug\MysteryEngine.dll /Y publish\debug-x64\
-copy ..\x64\debug\GUI_3D.dll /Y publish\debug-x64\
+copy ..\x64\debug\Client.dll /Y publish\debug-x64\
 
 copy %OHMS_LIB_DIR%\sfml\2.6.1\vc17-x64\bin\openal32.dll /Y publish\debug-x64\
 copy %OHMS_LIB_DIR%\sfml\2.6.1\vc17-x64\bin\sfml-audio-d-2.dll /Y publish\debug-x64\
