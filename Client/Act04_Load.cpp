@@ -80,8 +80,10 @@ bool Act04_Load::handleEvent(const sf::Event& evt) {
 	case sf::Event::MouseButtonPressed:
 		switch (evt.mouseButton.button) {
 		case sf::Mouse::Button::Left:
-			r_wnd->changeActivity(std::make_unique<Act05_Title>());
-			return 1;
+			if (m_status == ST_NORMAL) {
+				m_status = ST_OUT;
+				ME::GlobalBGM::stop();
+			}
 			break;
 		default:
 			break;
@@ -129,6 +131,8 @@ void Act04_Load::update(sf::Time deltaTime) {
 		break;
 	}
 	case ST_OVER:
+		m_status = 0;
+		r_wnd->changeActivity(std::make_unique<Act05_Title>());
 		break;
 	default:
 		m_status = ST_IN;
