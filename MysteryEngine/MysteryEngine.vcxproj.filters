@@ -31,6 +31,9 @@
     <Filter Include="Source files\Game">
       <UniqueIdentifier>{d34ae80c-5679-4a5d-83e1-f2e1adb4a876}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{3807e32b-1219-4817-8758-6fb3f556f35f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client\Activity.cpp">
@@ -209,7 +212,6 @@
     <ClInclude Include="Client\WindowWin32.h">
       <Filter>Source files\Client</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="include\MysteryEngine\Game\TypeDef.h">
       <Filter>Header files\Game</Filter>
     </ClInclude>
@@ -219,8 +221,13 @@
     <ClInclude Include="include\MysteryEngine\Client\GlobalBGM.h">
       <Filter>Header files\Client</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MysteryEngine.rc" />
+    <ResourceCompile Include="MysteryEngine.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

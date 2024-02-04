@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Act01_DefaultEntrance.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -50,6 +44,12 @@
     </ClInclude>
     <ClInclude Include="Scene_Title.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="API.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
