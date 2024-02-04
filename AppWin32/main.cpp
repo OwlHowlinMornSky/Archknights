@@ -72,7 +72,7 @@ int APIENTRY wWinMain(
 		// Create window and run.
 		if (window) {
 			window->setTitle(g_str_windowtitle);
-			window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+			window->setIcon(icon);
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.
 			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());

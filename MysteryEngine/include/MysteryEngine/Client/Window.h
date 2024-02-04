@@ -44,7 +44,7 @@ enum class ME_API WindowStatus {
  * @brief 窗口。
 */
 class ME_API Window :
-	protected sf::RenderWindow {
+	public sf::RenderWindow {
 public:
 	Window();
 	virtual ~Window() noexcept override;
@@ -62,11 +62,11 @@ public:
 	 * @param foreground: 是否显示在前景。
 	 * @return 
 	*/
-	virtual bool Create(bool foreground) noexcept;
+	virtual bool create(bool foreground) noexcept;
 	/**
 	 * @brief 销毁窗口。
 	*/
-	virtual void Close() noexcept;
+	virtual void close() noexcept;
 
 public:
 	/**
@@ -162,122 +162,25 @@ public:
 	virtual bool setFullscreen(sf::VideoMode mode) noexcept = 0;
 
 public:
-	sf::Vector2u getSize() const {
-		return RenderWindow::getSize();
-	}
-	const sf::View& getView() const {
-		return RenderWindow::getView();
-	}
-	void setVerticalSyncEnabled(bool enabled) {
-		return RenderWindow::setVerticalSyncEnabled(enabled);
-	}
-	void setFramerateLimit(unsigned int limit) {
-		return RenderWindow::setFramerateLimit(limit);
-	}
-	bool setActive(bool active = true) {
-		return RenderWindow::setActive(active);
-	}
-	void display() {
-		return RenderWindow::display();
-	}
-	void clear(const sf::Color& color = sf::Color(0, 0, 0, 255)) {
-		return RenderWindow::clear(color);
-	}
-	void draw(
-		const sf::Drawable& drawable,
-		const sf::RenderStates& states = sf::RenderStates::Default
-	) {
-		return RenderWindow::draw(drawable, states);
-	}
-	void draw(
-		const sf::Vertex* vertices,
-		std::size_t vertexCount,
-		sf::PrimitiveType type,
-		const sf::RenderStates& states = sf::RenderStates::Default
-	) {
-		return RenderWindow::draw(vertices, vertexCount, type, states);
-	}
-	void draw(
-		const sf::VertexBuffer& vertexBuffer,
-		const sf::RenderStates& states = sf::RenderStates::Default
-	) {
-		return RenderWindow::draw(vertexBuffer, states);
-	}
-	void draw(
-		const sf::VertexBuffer& vertexBuffer,
-		std::size_t firstVertex,
-		std::size_t vertexCount,
-		const sf::RenderStates& states = sf::RenderStates::Default
-	) {
-		return RenderWindow::draw(vertexBuffer, firstVertex, vertexCount, states);
-	}
-	void setIcon(unsigned int width, unsigned int height, const sf::Uint8* pixels) {
-		return RenderWindow::setIcon(width, height, pixels);
-	}
-	void setTitle(const sf::String& title) {
-		return RenderWindow::setTitle(title);
-	}
+	using sf::RenderWindow::setIcon;
+	void setIcon(const sf::Image& icon);
 
 public:
 	bool available() const;
-	void handleEvent() {
-		if (m_waitToChange) {
-			if (m_nextActivity->start(*this)) {
-				if (m_activity != nullptr)
-					m_activity->stop();
-				m_activity = std::move(m_nextActivity);
-			}
-			else {
-				m_nextActivity.reset();
-			}
-			m_waitToChange = false;
-		}
-		sf::Event evt;
-		while (pollEvent(evt)) {
-			if (evt.type == sf::Event::Resized) {
-				setView(
-					sf::View(
-						sf::FloatRect(
-							0.0f, 0.0f,
-							static_cast<float>(evt.size.width),
-							static_cast<float>(evt.size.height)
-						)
-					)
-				);
-			}
-			if (m_activity->handleEvent(evt)) {
-				while (pollEvent(evt))
-					;
-				break;
-			}
-		}
-		return;
-	}
-	void update(sf::Time dtime) {
-		return m_activity->update(dtime);
-	}
-	void onSystemLoop(bool enter) {
-		if (enter)
-			m_activity->OnEnterSysloop();
-		else
-			m_activity->OnExitSysloop();
-		return;
-	}
+	void handleEvent();
+	void update(sf::Time dtime);
+	void onSystemLoop(bool enter);
 	virtual void checkSizeInSystemLoop() noexcept = 0;
 public:
 	/**
 	 * @brief 令窗口等待关闭。
 	*/
-	void setWaitingForStop() noexcept {
-		m_waitToStop = true;
-	}
+	void setWaitingForStop() noexcept;
 	/**
 	 * @brief 读取当前窗口是否等待关闭。
 	 * @return 是否等待关闭。
 	*/
-	bool isWaitingForStop() noexcept {
-		return m_waitToStop;
-	}
+	bool isWaitingForStop() const noexcept;
 
 protected:
 	bool m_waitToStop; // 等待关闭的标记。

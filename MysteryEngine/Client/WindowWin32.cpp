@@ -256,7 +256,7 @@ WindowWin32::WindowWin32() :
 	m_hwnd(0) {}
 
 WindowWin32::~WindowWin32() noexcept {
-	Close();
+	close();
 	return;
 }
 
@@ -264,18 +264,20 @@ bool WindowWin32::Create(int nCmdShow) noexcept {
 	if (!g_wndClsRegistered)
 		if (!::MyRegisterClass())
 			return false;
-	if (!::MyCreateWindow(nCmdShow, m_hwnd))
+	HWND hwnd = NULL;
+	if (!::MyCreateWindow(nCmdShow, hwnd))
 		return false;
-	RenderWindow::create(m_hwnd);
-	return Window::Create(true);
+	sf::RenderWindow::create(hwnd);
+	m_hwnd = hwnd;
+	return ME::Window::create(true);
 }
 
-bool ME::WindowWin32::Create(bool foreground) noexcept {
+bool ME::WindowWin32::create(bool foreground) noexcept {
 	return Create(foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
 }
 
-void WindowWin32::Close() noexcept {
-	Window::Close();
+void WindowWin32::close() noexcept {
+	Window::close();
 	if (m_hwnd) {
 		DestroyWindow(m_hwnd);
 		m_hwnd = 0;

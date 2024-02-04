@@ -71,15 +71,7 @@ void CarnivalWin32::Run() noexcept {
 				for (const std::unique_ptr<Window>& wnd : m_wnds) {
 					wnd->update(dt);
 				}
-				// removeStoppedWindows();
-				std::list<std::unique_ptr<Window>>::iterator
-					i = m_wnds.begin(),
-					n = m_wnds.end();
-				while (i != n) {
-					if ((*i)->isWaitingForStop()) i = m_wnds.erase(i);
-					else ++i;
-				}
-				//end
+				removeStoppedWindows();
 				g_systemMessagePump(); // systemMessagePump();
 			}
 		}

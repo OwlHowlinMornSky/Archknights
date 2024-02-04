@@ -172,7 +172,7 @@ void Carnival::onIdleSingle() {
 		m_singleWnd->update(dt);
 	}
 	else {
-		m_singleWnd->Close();
+		m_singleWnd->close();
 	}
 	return;
 }

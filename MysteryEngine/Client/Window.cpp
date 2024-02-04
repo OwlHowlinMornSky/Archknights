@@ -33,11 +33,11 @@ Window::Window() :
 	m_windowStatus(ME::WindowStatus::Windowed) {}
 
 Window::~Window() noexcept {
-	Close();
+	close();
 	return;
 }
 
-std::unique_ptr<ME::Window> Window::Create1Window(int cmd) {
+std::unique_ptr<ME::Window> Window::Create1Window(int cmd) { // this will be different on each system.
 	std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
 	// Create window and run.
 	if (window->Create(cmd)) {
@@ -47,13 +47,13 @@ std::unique_ptr<ME::Window> Window::Create1Window(int cmd) {
 	return nullptr;
 }
 
-bool Window::Create(bool foreground) noexcept {
+bool Window::create(bool foreground) noexcept {
 	if (!isOpen()) return false;
 	m_created = true;
 	return true;
 }
 
-void Window::Close() noexcept {
+void Window::close() noexcept {
 	if (m_activity != nullptr) {
 		m_activity->stop();
 		m_activity.reset();
@@ -99,9 +99,67 @@ WindowStatus Window::getWindowStatus() const noexcept {
 	return m_windowStatus;
 }
 
+void Window::setIcon(const sf::Image& icon) {
+	return RenderWindow::setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+}
+
 bool Window::available() const {
 	// 确保窗口已经 Create 并且含有有效 Activity。
 	return m_created && (m_activity != nullptr || m_waitToChange);
+}
+
+void Window::handleEvent() {
+	if (m_waitToChange) {
+		if (m_nextActivity->start(*this)) {
+			if (m_activity != nullptr)
+				m_activity->stop();
+			m_activity = std::move(m_nextActivity);
+		}
+		else {
+			m_nextActivity.reset();
+		}
+		m_waitToChange = false;
+	}
+	sf::Event evt;
+	while (pollEvent(evt)) {
+		if (evt.type == sf::Event::Resized) {
+			setView(
+				sf::View(
+					sf::FloatRect(
+						0.0f, 0.0f,
+						static_cast<float>(evt.size.width),
+						static_cast<float>(evt.size.height)
+					)
+				)
+			);
+		}
+		if (m_activity->handleEvent(evt)) {
+			while (pollEvent(evt))
+				;
+			break;
+		}
+	}
+	return;
+}
+
+void Window::update(sf::Time dtime) {
+	return m_activity->update(dtime);
+}
+
+void Window::onSystemLoop(bool enter) {
+	if (enter)
+		m_activity->OnEnterSysloop();
+	else
+		m_activity->OnExitSysloop();
+	return;
+}
+
+void Window::setWaitingForStop() noexcept {
+	m_waitToStop = true;
+}
+
+bool Window::isWaitingForStop() const noexcept {
+	return m_waitToStop;
 }
 
 } // namespace GUI

@@ -39,8 +39,8 @@ public:
 	 * @return 创建是否成功。
 	*/
 	bool Create(int nCmdShow) noexcept;
-	virtual bool Create(bool foreground) noexcept override;
-	virtual void Close() noexcept override;
+	virtual bool create(bool foreground) noexcept override;
+	virtual void close() noexcept override;
 
 public:
 	virtual void setCloseEnabled(bool enabled) noexcept override;
