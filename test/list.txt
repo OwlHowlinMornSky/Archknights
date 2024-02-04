@@ -1,17 +1,16 @@
-project:
+This Project:
 	Archknights.exe  [DEBUG: Archknights-d.exe]
-sfml:
+	Client.dll
+	MysteryEngine.dll
+SFML:
 	sfml-audio-2.dll
 	sfml-graphics-2.dll
 	sfml-system-2.dll
 	sfml-window-2.dll
 	openal.dll
-opengl:
+Opengl:
 	glew32.dll
-license:
-	LICENSE
-	COPYING
+License:
+	LICENSE.txt
+	GNU AGPLv3.txt
 	README.txt
-
-[Notice]
-assets\ and res\ should be released separately and independently.
