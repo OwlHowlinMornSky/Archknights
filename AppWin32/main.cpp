@@ -20,10 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <locale>
-#include <MysteryEngine/Client/Carnival.h>
-#include <MysteryEngine/Client/Window.h>
-#include <MysteryEngine/G3D/G3dGlobal.h>
-#include <MysteryEngine/Client/GlobalBGM.h>
+#include <MysteryEngine/Core/Global.h>
 
 #include "../Client/Act01_DefaultEntrance.h"
 #include "UniqueInstance.h"
@@ -60,10 +57,8 @@ int APIENTRY wWinMain(
 		return 0;
 	}
 	// Initialize.
-	ME::Carnival::setup(false);
+	ME::EngineGlobal::setup(false);
 	ME::Carnival& carnival = ME::Carnival::instance();
-	ME::GlobalBGM::setup();
-	ME::G3dGlobal::setup();
 	try {
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
@@ -87,9 +82,7 @@ int APIENTRY wWinMain(
 		MessageBoxA(NULL, g_str_unknown_exp, g_str_fatal_error, MB_ICONERROR);
 	}
 	// Clear.
-	ME::G3dGlobal::drop();
-	ME::GlobalBGM::drop();
-	ME::Carnival::drop();
+	ME::EngineGlobal::drop();
 	AppWin32::instanceExit();
 	return 0;
 }

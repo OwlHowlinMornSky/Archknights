@@ -25,7 +25,7 @@
 
 namespace ME::MsgResult {
 
-enum : MsgResultType {
+enum ME_API : MsgResultType {
 	Unsubscribe = -1,
 	OK = 0,
 	MethodNotAllowed,

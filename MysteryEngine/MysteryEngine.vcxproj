@@ -28,13 +28,25 @@
     <ClCompile Include="Client\GlobalBGM.cpp" />
     <ClCompile Include="Client\Window.cpp" />
     <ClCompile Include="Client\WindowWin32.cpp" />
+    <ClCompile Include="Core\GLM.cpp" />
+    <ClCompile Include="Core\Global.cpp" />
+    <ClCompile Include="Core\NonCopyable.cpp" />
+    <ClCompile Include="Core\RandGen.cpp" />
+    <ClCompile Include="Core\Reference.cpp" />
+    <ClCompile Include="Core\TempGuard.cpp" />
     <ClCompile Include="G3D\G3dGlobal.cpp" />
     <ClCompile Include="G3D\Camera.cpp" />
     <ClCompile Include="G3D\Camera.Orthographic.cpp" />
     <ClCompile Include="G3D\Camera.Perspective.cpp" />
     <ClCompile Include="G3D\GlCheck.cpp" />
+    <ClCompile Include="G3D\IModel.cpp" />
+    <ClCompile Include="G3D\ITransformO.cpp" />
+    <ClCompile Include="G3D\ITransformR.cpp" />
+    <ClCompile Include="G3D\ITransformS.cpp" />
+    <ClCompile Include="G3D\ITransformT.cpp" />
     <ClCompile Include="G3D\Shader.cpp" />
     <ClCompile Include="G3D\Shader.Default.cpp" />
+    <ClCompile Include="G3D\Vertex.cpp" />
     <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="Game\Animation.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
@@ -43,6 +55,7 @@
     <ClCompile Include="Game\IGameBoard.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
     <ClCompile Include="Game\Architecture.cpp" />
+    <ClCompile Include="Game\MsgResult.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client\BgmSFML.h" />
@@ -55,8 +68,10 @@
     <ClInclude Include="include\MysteryEngine\Client\GlobalBGM.h" />
     <ClInclude Include="include\MysteryEngine\Client\Window.h" />
     <ClInclude Include="include\MysteryEngine\Core\GLM.h" />
+    <ClInclude Include="include\MysteryEngine\Core\Global.h" />
     <ClInclude Include="include\MysteryEngine\Core\MEAPI.h" />
     <ClInclude Include="include\MysteryEngine\Core\NonCopyable.h" />
+    <ClInclude Include="include\MysteryEngine\Core\RandGen.h" />
     <ClInclude Include="include\MysteryEngine\Core\Reference.h" />
     <ClInclude Include="include\MysteryEngine\Core\TempGuard.h" />
     <ClInclude Include="include\MysteryEngine\G3D\G3dGlobal.h" />

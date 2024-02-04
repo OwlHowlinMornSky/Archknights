@@ -26,7 +26,7 @@
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/Vertex.h>
 #include <MysteryEngine/G3D/Camera.Orthographic.h>
-//#include <MysteryEngine/G3D/ITransformS.h>
+#include <MysteryEngine/G3D/ITransformS.h>
 
 #include "Scene_ITitle.h"
 
@@ -59,8 +59,8 @@ public:
 
 class LineModel final :
 	public ME::ITransformR,
-	public ME::ITransformT/*,
-	public ME::ITransformS*/ {
+	public ME::ITransformT,
+	public ME::ITransformS {
 public:
 	void update();
 	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
@@ -99,6 +99,7 @@ protected:
 	::LineModel m_llm;
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;
+	float m_rotSpeed[3];
 };
 
 } // namespace title

@@ -19,42 +19,23 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include <MysteryEngine/Core/Global.h>
 
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/Client/GlobalBGM.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
-namespace ME {
+namespace ME::EngineGlobal {
 
-class Actor :
-	public IModel {
-public:
-	enum class Type {
-		Unknown = 0,
-		Animation,
-		Architecture,
-		COUNT
-	};
+void ME_API setup(bool multiWnd) {
+	ME::Carnival::setup(multiWnd);
+	ME::GlobalBGM::setup();
+	ME::G3dGlobal::setup();
+}
 
-public:
-	Actor() = default;
-	virtual ~Actor() = default;
+void ME_API drop() {
+	ME::G3dGlobal::drop();
+	ME::GlobalBGM::drop();
+	ME::Carnival::drop();
+}
 
-public:
-	virtual glm::vec3 getPosition() const = 0;
-	virtual void setPosition(glm::vec3 pos) = 0;
-	virtual glm::vec3 getRotation() const = 0;
-	virtual void setRotation(glm::vec3 rot) = 0;
-	virtual glm::vec3 getScale() const = 0;
-	virtual void setScale(glm::vec3 scl) = 0;
-
-	bool IsWaitingForQuit() const {
-		return m_waitingForQuit;
-	}
-
-protected:
-	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
-};
-
-} // namespace game
+}

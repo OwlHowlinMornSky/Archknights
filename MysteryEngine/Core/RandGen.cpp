@@ -19,42 +19,30 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include <MysteryEngine/Core/RandGen.h>
 
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/G3D/IModel.h>
+namespace {
 
-namespace ME {
+std::random_device rd;
+std::uniform_real_distribution<float> u1(0.0f, 1.0f);
 
-class Actor :
-	public IModel {
-public:
-	enum class Type {
-		Unknown = 0,
-		Animation,
-		Architecture,
-		COUNT
-	};
+}
 
-public:
-	Actor() = default;
-	virtual ~Actor() = default;
+namespace ME::RandGen {
 
-public:
-	virtual glm::vec3 getPosition() const = 0;
-	virtual void setPosition(glm::vec3 pos) = 0;
-	virtual glm::vec3 getRotation() const = 0;
-	virtual void setRotation(glm::vec3 rot) = 0;
-	virtual glm::vec3 getScale() const = 0;
-	virtual void setScale(glm::vec3 scl) = 0;
+std::mt19937 gen(rd());
 
-	bool IsWaitingForQuit() const {
-		return m_waitingForQuit;
-	}
+void reseed() {
+	return gen.seed(rd());;
+}
 
-protected:
-	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
-};
+unsigned int get() {
+	return gen();
+}
 
-} // namespace game
+float getUni01() {
+	return u1(gen);
+}
+
+
+}

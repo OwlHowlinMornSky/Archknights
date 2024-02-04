@@ -26,6 +26,7 @@
 //#include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <MysteryEngine/G3D/G3dGlobal.h>
+#include <MysteryEngine/Core/RandGen.h>
 
 #include <array>
 #include <vector>
@@ -222,11 +223,15 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//m_llm.setPosition(0.5f, 0, 0);
 	//m_llm.setScale(0.1f);
 
+	m_rotSpeed[0] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+	m_rotSpeed[1] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+	m_rotSpeed[2] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+
 	ME::G3dGlobal::setActive(false);
 }
 
 void Scene_Title::update(float dt) {
-	m_llm.rotate(20.0f * dt, 40.0f * dt, 60.0f * dt);
+	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
 	m_llm.normalizeRotation();
 }
 

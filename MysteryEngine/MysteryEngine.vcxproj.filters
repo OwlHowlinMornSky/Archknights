@@ -108,6 +108,45 @@
     <ClCompile Include="Client\GlobalBGM.cpp">
       <Filter>Source files\Client</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Global.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RandGen.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\ITransformS.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\IModel.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\ITransformO.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\ITransformR.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\ITransformT.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Vertex.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GLM.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\NonCopyable.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Reference.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\TempGuard.cpp">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\MsgResult.cpp">
+      <Filter>Source files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MysteryEngine\Client\Activity.h">
@@ -223,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\Global.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Core\RandGen.h">
+      <Filter>Header files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,8 +30,9 @@ class Animation;
 class Architecture;
 
 class IGameShow {
-public:
+protected:
 	IGameShow() = default;
+public:
 	virtual ~IGameShow() = default;
 
 public:

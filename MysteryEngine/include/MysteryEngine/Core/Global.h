@@ -21,40 +21,18 @@
 */
 #pragma once
 
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/Core/MEAPI.h>
+#include <MysteryEngine/Client/Carnival.h>
 
-namespace ME {
+namespace ME::EngineGlobal {
 
-class Actor :
-	public IModel {
-public:
-	enum class Type {
-		Unknown = 0,
-		Animation,
-		Architecture,
-		COUNT
-	};
+/**
+ * @brief 配置 carnival、bgm、g3d。
+ * @param multiWnd: carnival是否使用多窗口模式。
+ * @return 
+*/
+void ME_API setup(bool multiWnd);
 
-public:
-	Actor() = default;
-	virtual ~Actor() = default;
+void ME_API drop();
 
-public:
-	virtual glm::vec3 getPosition() const = 0;
-	virtual void setPosition(glm::vec3 pos) = 0;
-	virtual glm::vec3 getRotation() const = 0;
-	virtual void setRotation(glm::vec3 rot) = 0;
-	virtual glm::vec3 getScale() const = 0;
-	virtual void setScale(glm::vec3 scl) = 0;
-
-	bool IsWaitingForQuit() const {
-		return m_waitingForQuit;
-	}
-
-protected:
-	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
-};
-
-} // namespace game
+}

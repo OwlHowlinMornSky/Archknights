@@ -21,40 +21,17 @@
 */
 #pragma once
 
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/Core/MEAPI.h>
+#include <random>
 
-namespace ME {
+namespace ME::RandGen {
 
-class Actor :
-	public IModel {
-public:
-	enum class Type {
-		Unknown = 0,
-		Animation,
-		Architecture,
-		COUNT
-	};
+extern ME_API std::mt19937 gen;
 
-public:
-	Actor() = default;
-	virtual ~Actor() = default;
+void ME_API reseed();
 
-public:
-	virtual glm::vec3 getPosition() const = 0;
-	virtual void setPosition(glm::vec3 pos) = 0;
-	virtual glm::vec3 getRotation() const = 0;
-	virtual void setRotation(glm::vec3 rot) = 0;
-	virtual glm::vec3 getScale() const = 0;
-	virtual void setScale(glm::vec3 scl) = 0;
+unsigned int ME_API get();
 
-	bool IsWaitingForQuit() const {
-		return m_waitingForQuit;
-	}
+float ME_API getUni01();
 
-protected:
-	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
-};
-
-} // namespace game
+}
