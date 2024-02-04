@@ -19,37 +19,23 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_GameCommon.h"
+#pragma once
 
-//#include "../Game/IActorFactory.h"
-//#include "../Game/Animation.h"
-//#include "../Game/Model.h"
+#include <memory>
+#include <SFML/Graphics.hpp>
 
-namespace gamegui {
+namespace title {
 
-Scene_GameCommon::Scene_GameCommon() {}
+class Scene_ITitle :
+	public sf::Drawable {
+public:
+	virtual void setup(sf::Vector2u size) = 0;
+	virtual void update(float dt) = 0;
+	virtual void render() = 0;
 
-Scene_GameCommon::~Scene_GameCommon() {}
+	virtual void resize(sf::Vector2u size) = 0;
+};
 
-void Scene_GameCommon::update(float dt) {
-}
+std::unique_ptr<Scene_ITitle> getScene();
 
-bool Scene_GameCommon::handleEvent(const sf::Event& evt) {
-    return false;
-}
-
-//void Scene_GameCommon::AddAnimation(std::shared_ptr<game::Animation> a) {}
-//
-//void Scene_GameCommon::AddModel(std::shared_ptr<game::Model> m) {}
-//
-//size_t Scene_GameCommon::RegisterFactory(std::unique_ptr<game::IActorFactory> f) {
-//	return size_t();
-//}
-//
-//bool Scene_GameCommon::AddActorFromFactory(size_t id) {
-//	return false;
-//}
-//
-//void Scene_GameCommon::Update(float dt) {}
-
-} // namespace gamegui
+} // namespace title

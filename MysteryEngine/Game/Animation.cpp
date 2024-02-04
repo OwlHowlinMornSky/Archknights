@@ -24,6 +24,7 @@
 namespace ME {
 
 Animation::Animation() {
+	this->m_waitingForQuit = false;
 	this->m_type = Actor::Type::Animation;
 }
 

@@ -21,23 +21,39 @@
 */
 #pragma once
 
-#include <memory>
+#include <MysteryEngine/Client/Window.h>
+
 #include <SFML/Graphics.hpp>
 
-#include "GUI_3D_API.h"
+namespace Activity {
 
-namespace title {
-
-class G3D_API Scene_ITitle :
-	public sf::Drawable {
+class Act04_Load final :
+	public ME::Activity {
 public:
-	virtual void setup(sf::Vector2u size) = 0;
-	virtual void update(float dt) = 0;
-	virtual void render() = 0;
+	Act04_Load();
+	virtual ~Act04_Load() noexcept override;
 
-	virtual void resize(sf::Vector2u size) = 0;
+protected:
+	virtual bool start(ME::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
+
+public:
+	virtual bool handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
+
+protected:
+	void updateSize(sf::Vector2u newWindowSize);
+
+protected:
+	int m_status;
+	ME::WndRef r_wnd;
+	sf::Texture m_tex;
+	sf::Sprite m_sp;
+	sf::RectangleShape m_blackBar[2];
+	//sf::Text m_text;
 };
 
-std::unique_ptr<Scene_ITitle> G3D_API getScene();
-
-} // namespace title
+} // namespace Activity

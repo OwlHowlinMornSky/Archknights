@@ -21,8 +21,9 @@
 */
 #include "Act05_Title.h"
 
-#include "../../GUI_3D/Scene_ITitle.h"
+#include "Scene_ITitle.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
+#include <MysteryEngine/Client/GlobalBGM.h>
 
 namespace Activity {
 
@@ -43,7 +44,7 @@ bool Act05_Title::start(ME::Window& wnd) noexcept {
 
 	r_wnd->setActive(true);
 
-	Global::BGM::instance.play("res/music/m_sys_title.ogg");
+	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
 	return true;
 }
 

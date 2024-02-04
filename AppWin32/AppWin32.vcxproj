@@ -165,8 +165,9 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Lim-De|Win32'">
@@ -186,8 +187,9 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -210,8 +212,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Lim-Rel|Win32'">
@@ -234,8 +237,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -255,8 +259,9 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Lim-De|x64'">
@@ -276,8 +281,9 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -300,8 +306,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Lim-Rel|x64'">
@@ -324,33 +331,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)GUI_3D.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>GUI_3D.dll</DelayLoadDLLs>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;$(OutDir)Client.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Activities\Act01_DefaultEntrance.h" />
-    <ClInclude Include="Activities\Act02_TestActivity.h" />
-    <ClInclude Include="Activities\Act03_Opening.h" />
-    <ClInclude Include="Activities\Act04_Load.h" />
-    <ClInclude Include="Activities\Act05_Title.h" />
-    <ClInclude Include="Activities\Activity_Debug.h" />
-    <ClInclude Include="Activities\Activity_Game.h" />
-    <ClInclude Include="Activities\GlobalBGM.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UniqueInstance.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp" />
-    <ClCompile Include="Activities\Act02_TestActivity.cpp" />
-    <ClCompile Include="Activities\Act03_Opening.cpp" />
-    <ClCompile Include="Activities\Act04_Load.cpp" />
-    <ClCompile Include="Activities\Act05_Title.cpp" />
-    <ClCompile Include="Activities\Activity_Debug.cpp" />
-    <ClCompile Include="Activities\Activity_Game.cpp" />
-    <ClCompile Include="Activities\GlobalBGM.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UniqueInstance.cpp" />
   </ItemGroup>

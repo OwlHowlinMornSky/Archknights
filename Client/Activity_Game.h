@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -19,13 +19,33 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/Architecture.h>
+#pragma once
 
-namespace ME {
+#include <MysteryEngine/Client/Window.h>
+#include "Scene_GameCommon.h"
 
-Architecture::Architecture() {
-	this->m_waitingForQuit = false;
-	this->m_type = Type::Architecture;
-}
+namespace Activity {
 
-} // namespace game
+class Activity_Game final :
+	public ME::Activity {
+public:
+	Activity_Game();
+	virtual ~Activity_Game() noexcept override;
+
+protected:
+	virtual bool start(ME::Window& wnd) noexcept override;
+	virtual void stop() noexcept override;
+
+public:
+	virtual bool handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
+
+protected:
+	ME::WndRef r;
+	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
+};
+
+} // namespace Activity

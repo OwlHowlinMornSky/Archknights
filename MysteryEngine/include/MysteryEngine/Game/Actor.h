@@ -28,12 +28,17 @@ namespace ME {
 class Actor {
 public:
 	enum class Type {
-		Animation = 0,
-		Model,
+		Unknown = 0,
+		Animation,
+		Architecture,
 		COUNT
 	};
-	Actor() = default;
 
+public:
+	Actor() = default;
+	virtual ~Actor() = default;
+
+public:
 	virtual glm::vec3 getPosition() const = 0;
 	virtual void setPosition(glm::vec3 pos) = 0;
 	virtual glm::vec3 getRotation() const = 0;

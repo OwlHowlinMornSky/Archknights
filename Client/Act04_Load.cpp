@@ -22,6 +22,7 @@
 #include "Act04_Load.h"
 
 #include "Act05_Title.h"
+#include <MysteryEngine/Client/GlobalBGM.h>
 
 #define ST_IN     (1)
 #define ST_NORMAL (2)
@@ -56,7 +57,7 @@ bool Act04_Load::start(ME::Window& wnd) noexcept {
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
-	Global::BGM::instance.play("res/music/m_sys_title.ogg");
+	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
 
 	//m_text.setString(L"test测试あいうえお😅");
 	//m_text.setFont(r_wnd->getFontMgr().getFont(GUI::FontType::CommonContext));

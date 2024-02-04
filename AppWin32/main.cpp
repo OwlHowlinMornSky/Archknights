@@ -23,8 +23,9 @@
 #include <MysteryEngine/Client/Carnival.h>
 #include <MysteryEngine/Client/Window.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
+#include <MysteryEngine/Client/GlobalBGM.h>
 
-#include "Activities/Act01_DefaultEntrance.h"
+#include "../Client/Act01_DefaultEntrance.h"
 #include "UniqueInstance.h"
 #include "framework.h"
 
@@ -61,6 +62,7 @@ int APIENTRY wWinMain(
 	// Initialize.
 	ME::Carnival::setup(false);
 	ME::Carnival& carnival = ME::Carnival::instance();
+	ME::GlobalBGM::setup();
 	ME::G3dGlobal::setup();
 	try {
 		sf::Image icon;
@@ -86,6 +88,7 @@ int APIENTRY wWinMain(
 	}
 	// Clear.
 	ME::G3dGlobal::drop();
+	ME::GlobalBGM::drop();
 	ME::Carnival::drop();
 	AppWin32::instanceExit();
 	return 0;

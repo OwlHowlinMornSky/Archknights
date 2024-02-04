@@ -21,39 +21,8 @@
 */
 #pragma once
 
-#include <MysteryEngine/Client/Window.h>
-#ifdef _DEBUG
-#include <SFML/Graphics.hpp>
-#endif // _DEBUG
-
-namespace Activity {
-
-/**
- * @brief 默认初始Activity。
-*/
-class Act01_DefaultEntrance final :
-	public ME::Activity {
-public:
-	Act01_DefaultEntrance();
-	virtual ~Act01_DefaultEntrance() noexcept override;
-
-protected:
-	virtual bool start(ME::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
-
-public:
-	virtual bool handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	ME::WndRef r_wnd;
-#ifdef _DEBUG
-	sf::Sprite m_sp;
-	sf::Texture m_tex; // 调试显示图片的纹理
-#endif // _DEBUG
-};
-
-} // namespace Activity
+#ifdef CLIENT_OUTPUT
+#define CLIENT_API __declspec(dllexport)
+#else
+#define CLIENT_API __declspec(dllimport)
+#endif

@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,31 +21,15 @@
 */
 #pragma once
 
-#include <MysteryEngine/Client/Window.h>
-#include "../../GUI_3D/Scene_GameCommon.h"
+#include <MysteryEngine/Client/Bgm.h>
+#include <MysteryEngine/Core/MEAPI.h>
 
-namespace Activity {
+namespace ME::GlobalBGM {
 
-class Activity_Game final :
-	public ME::Activity {
-public:
-	Activity_Game();
-	virtual ~Activity_Game() noexcept override;
+bool ME_API setup();
+void ME_API drop();
 
-protected:
-	virtual bool start(ME::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
+void ME_API play(std::string_view file);
+void ME_API stop();
 
-public:
-	virtual bool handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	ME::WndRef r;
-	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
-};
-
-} // namespace Activity
+}

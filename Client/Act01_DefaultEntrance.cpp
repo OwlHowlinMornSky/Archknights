@@ -25,7 +25,6 @@
 #include "Act02_TestActivity.h"
 #include "Activity_Debug.h"
 #endif // _DEBUG
-#include "GlobalBGM.h"
 
 namespace Activity {
 
@@ -45,7 +44,6 @@ bool Act01_DefaultEntrance::start(ME::Window& wnd) noexcept {
 	m_tex.loadFromFile("assets/DefaultEntry.png");
 	m_sp.setTexture(m_tex, true);
 #endif // _DEBUG
-	Global::BGM::instance.setup();
 	return true;
 }
 

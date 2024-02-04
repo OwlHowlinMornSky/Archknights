@@ -102,6 +102,9 @@
     <ClCompile Include="Client\Bgm.cpp">
       <Filter>Source files\Client</Filter>
     </ClCompile>
+    <ClCompile Include="Client\GlobalBGM.cpp">
+      <Filter>Source files\Client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MysteryEngine\Client\Activity.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\Game\MsgResult.h">
       <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Client\GlobalBGM.h">
+      <Filter>Header files\Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

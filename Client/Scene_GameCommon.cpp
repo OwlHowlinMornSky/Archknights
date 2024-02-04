@@ -19,10 +19,19 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Scene_GameCommon.h"
 
-#ifdef GUI_3D_OUTPUT
-#define G3D_API __declspec(dllexport)
-#else
-#define G3D_API __declspec(dllimport)
-#endif
+namespace gamegui {
+
+Scene_GameCommon::Scene_GameCommon() {}
+
+Scene_GameCommon::~Scene_GameCommon() {}
+
+void Scene_GameCommon::update(float dt) {
+}
+
+bool Scene_GameCommon::handleEvent(const sf::Event& evt) {
+    return false;
+}
+
+} // namespace gamegui

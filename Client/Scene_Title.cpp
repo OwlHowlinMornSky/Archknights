@@ -233,7 +233,7 @@ void Scene_Title::update(float dt) {
 void Scene_Title::render() {
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClearColor(1.0f, 1.0f, 1.0f, 0.2f)); // 设置clear颜色
+	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 
 	sf::IntRect Viewport(

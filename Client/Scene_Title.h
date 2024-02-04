@@ -29,7 +29,6 @@
 //#include <MysteryEngine/G3D/ITransformS.h>
 
 #include "Scene_ITitle.h"
-#include "GUI_3D_API.h"
 
 namespace {
 

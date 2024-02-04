@@ -22,12 +22,12 @@
 #pragma once
 
 #include <memory>
+#include <list>
 
 namespace ME {
 
 class Animation;
-class Model;
-class IActorFactory;
+class Architecture;
 
 class IGameShow {
 public:
@@ -35,13 +35,14 @@ public:
 	virtual ~IGameShow() = default;
 
 public:
-	virtual void AddAnimation(std::shared_ptr<Animation> a) = 0;
-	virtual void AddModel(std::shared_ptr<Model> m) = 0;
+	void AddAnimation(std::shared_ptr<Animation> a);
+	void AddModel(std::shared_ptr<Architecture> m);
 
-	virtual size_t RegisterFactory(std::unique_ptr<IActorFactory> f) = 0;
-	virtual bool AddActorFromFactory(size_t id) = 0;
+	void Update(float dt);
 
-	virtual void Update(float dt) = 0;
+protected:
+	std::list<std::shared_ptr<Animation>> m_anims;
+	std::list<std::shared_ptr<Architecture>> m_archs;
 };
 
 } // namespace game

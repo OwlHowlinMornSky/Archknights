@@ -22,17 +22,17 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-#include "GlobalBGM.h"
 
 #include <SFML/Graphics.hpp>
+#include "Scene_ITitle.h"
 
 namespace Activity {
 
-class Act04_Load final :
+class Act05_Title final :
 	public ME::Activity {
 public:
-	Act04_Load();
-	virtual ~Act04_Load() noexcept override;
+	Act05_Title();
+	virtual ~Act05_Title() noexcept override;
 
 protected:
 	virtual bool start(ME::Window& wnd) noexcept override;
@@ -46,15 +46,8 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	void updateSize(sf::Vector2u newWindowSize);
-
-protected:
-	int m_status;
 	ME::WndRef r_wnd;
-	sf::Texture m_tex;
-	sf::Sprite m_sp;
-	sf::RectangleShape m_blackBar[2];
-	//sf::Text m_text;
+	std::unique_ptr<title::Scene_ITitle> m_scene;
 };
 
 } // namespace Activity

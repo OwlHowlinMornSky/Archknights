@@ -27,7 +27,8 @@ namespace ME {
 
 class Architecture :
 	public Actor {
-
+public:
+	Architecture();
 };
 
 }
