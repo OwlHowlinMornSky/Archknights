@@ -91,6 +91,9 @@
     <ClInclude Include="GameThings\Creator.h">
       <Filter>GameThings</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

@@ -61,7 +61,7 @@ const char g_vs[] =
 "  gl_Position = u_matP * finalPosition;"\
 "  vec4 depthPosition = vec4(mix(a_vertex0, a_vertex1, a_offset.x), 1.0);"\
 "  depthPosition = u_matM * depthPosition;"\
-"  v_alpha = 0.75 + depthPosition.z / 1.5;"\
+"  v_alpha = 0.75 + depthPosition.z / 2.0;"\
 "  v_uv = a_texCoord;"\
 "}";
 
@@ -109,7 +109,7 @@ void LineModel::update() {
 		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
-		//m_matM *= glm::scale(m_scale);
+		m_matM *= glm::scale(m_scale);
 		m_rotationChanged = false;
 	}
 }
@@ -155,9 +155,20 @@ void LineModel::Draw() {
 
 namespace Scene {
 
-Title::Title() {}
+Title::Title() :
+	m_rotSpeed() {}
 
 Title::~Title() {}
+
+void Title::SetScale(float r) {
+	sf::Vector2u size = m_rtex.getSize();
+	m_camera.setDim(9.0f / 4 * size.x / size.y / r, 9.0f / 4 / r);
+	return;
+}
+
+void Title::SetOffset(float r) {
+	m_llm.setPosition(0.0f, 0.0f, 0.0f - r);
+}
 
 void Title::setup(sf::Vector2u size) {
 	//m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
@@ -166,7 +177,6 @@ void Title::setup(sf::Vector2u size) {
 
 	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
-
 
 	//glm::vec3 v0(0.0f, 0.0f, 0.0f);
 	//glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
@@ -209,9 +219,9 @@ void Title::setup(sf::Vector2u size) {
 		va.emplace_back(v0, v1, glm::vec2(1.0f, thick));
 	}
 
-	m_rotSpeed[0] = ME::RandGen::getUni01() * 40.0f + 20.0f;
-	m_rotSpeed[1] = ME::RandGen::getUni01() * 40.0f + 20.0f;
-	m_rotSpeed[2] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+	m_rotSpeed[0] = ME::RandGen::getUni01() * 20.0f + 5.0f;
+	m_rotSpeed[1] = ME::RandGen::getUni01() * 20.0f + 5.0f;
+	m_rotSpeed[2] = ME::RandGen::getUni01() * 20.0f + 5.0f;
 
 
 	ME::G3dGlobal::setActive(true);
@@ -223,7 +233,6 @@ void Title::setup(sf::Vector2u size) {
 
 	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 
-	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
 
 	m_llm.LoadModelData(va);
 	//linetest->Position = { -20.0f, 0.0f, 0.0f };
@@ -235,8 +244,9 @@ void Title::setup(sf::Vector2u size) {
 	ME::G3dGlobal::setActive(false);
 }
 
-void Title::update(float dt) {
-	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
+void Title::update(sf::Time dt) {
+	float ddt = dt.asSeconds();
+	m_llm.rotate(m_rotSpeed[0] * ddt, m_rotSpeed[1] * ddt, m_rotSpeed[2] * ddt);
 	m_llm.normalizeRotation();
 }
 
@@ -244,6 +254,7 @@ void Title::render() {
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
+	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
 
 	m_llm.update();
 	m_shader.update(m_camera);
@@ -268,8 +279,7 @@ void Title::resize(sf::Vector2u size) {
 }
 
 void Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(m_sp, states);
-	return;
+	return target.draw(m_sp, states);
 }
 
 } // namespace Scene

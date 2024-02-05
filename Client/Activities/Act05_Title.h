@@ -46,8 +46,19 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
+	void updateSize();
+
+protected:
 	ME::WndRef r_wnd;
-	std::unique_ptr<Scene::ITitle> m_scene;
+	std::unique_ptr<Scene::Scene_ITitle> m_scene;
+
+	sf::Texture m_titleTex;
+	sf::Sprite m_titleSp;
+
+	int m_st;
+
+	sf::RectangleShape m_screen;
+	sf::Time m_timer;
 };
 
 } // namespace Activity

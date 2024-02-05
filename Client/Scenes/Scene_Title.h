@@ -29,6 +29,7 @@
 #include <MysteryEngine/G3D/ITransformS.h>
 
 #include "Scene_ITitle.h"
+#include <SFML/Graphics.hpp>
 
 namespace {
 
@@ -78,14 +79,18 @@ public:
 namespace Scene {
 
 class Title final :
-	public ITitle {
+	public Scene_ITitle {
 public:
 	Title();
 	~Title();
 
 public:
+	virtual void SetScale(float r) override;
+	virtual void SetOffset(float r) override;
+
+public:
 	virtual void setup(sf::Vector2u size) override;
-	virtual void update(float dt) override;
+	virtual void update(sf::Time dt) override;
 	virtual void render() override;
 
 	virtual void resize(sf::Vector2u size) override;

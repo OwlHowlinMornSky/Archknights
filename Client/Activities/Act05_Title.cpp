@@ -25,9 +25,16 @@
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/Client/GlobalBGM.h>
 
+#define ST_IN     (1)
+#define ST_NORMAL (2)
+#define ST_LINK   (3)
+#define ST_OUT    (4)
+#define ST_OVER   (5)
+
 namespace Activity {
 
 Act05_Title::Act05_Title() :
+	m_st(0),
 	m_scene(nullptr) {
 	return;
 }
@@ -39,10 +46,17 @@ Act05_Title::~Act05_Title() noexcept {
 bool Act05_Title::start(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
-	m_scene = Scene::ITitle::GetTitle();
+	m_scene = Scene::Factory::GetTitle();
 	m_scene->setup(r_wnd->getSize());
 
+	m_titleTex.loadFromFile("assets/textures/title.png");
+	m_titleTex.setSmooth(true);
+	m_titleSp.setTexture(m_titleTex, true);
+	m_titleSp.setOrigin(m_titleTex.getSize().x / 2.0f, m_titleTex.getSize().y / 2.0f);
+
 	//r_wnd->setActive(true);
+
+	updateSize();
 
 	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
 	return true;
@@ -61,28 +75,101 @@ bool Act05_Title::handleEvent(const sf::Event& evt) {
 	case sf::Event::Closed:
 		r_wnd->setWaitingForStop();
 		return 1;
+	case sf::Event::MouseButtonPressed:
+		if (m_st == ST_NORMAL) {
+			m_st = ST_LINK;
+			m_timer = sf::Time::Zero;
+		}
+		break;
 	case sf::Event::Resized:
-		m_scene->resize({ evt.size.width, evt.size.height });
+		updateSize();
 		break;
 	}
 	return 0;
 }
 
 void Act05_Title::update(sf::Time dtime) {
-	r_wnd->setActive(false);
+	m_timer += dtime;
+	switch (m_st) {
+	case ST_IN:
+		if (m_timer > sf::milliseconds(255)) {
+			m_st = ST_NORMAL;
+		}
+		else {
+			m_screen.setFillColor(sf::Color(0, 0, 0, 255 - m_timer.asMilliseconds()));
+			r_wnd->setActive(false);
+			m_scene->update(dtime);
+			m_scene->render();
+			r_wnd->setActive(true);
+			r_wnd->clear();
+			r_wnd->draw(*m_scene);
+			r_wnd->draw(m_titleSp);
+			r_wnd->draw(m_screen);
+			r_wnd->display();
+			break;
+		}
+		[[fallthrough]];
+	case ST_NORMAL:
+		r_wnd->setActive(false);
+		m_scene->update(dtime);
+		m_scene->render();
+		r_wnd->setActive(true);
+		r_wnd->clear();
+		r_wnd->draw(*m_scene);
+		r_wnd->draw(m_titleSp);
+		r_wnd->display();
+		break;
+	case ST_LINK:
+		if (m_timer > sf::milliseconds(2550)) {
+			m_st = ST_NORMAL;
+		}
+		else {
+			m_scene->SetScale(1.0f);
+			m_scene->SetOffset(-0.5f);
 
-	m_scene->update(dtime.asSeconds());
-	m_scene->render();
-
-	r_wnd->setActive(true);
-	r_wnd->clear();
-	r_wnd->draw(*m_scene);
-	r_wnd->display();
+			r_wnd->setActive(false);
+			m_scene->update(dtime);
+			m_scene->render();
+			r_wnd->setActive(true);
+			r_wnd->clear();
+			r_wnd->draw(*m_scene);
+			r_wnd->draw(m_titleSp);
+			r_wnd->draw(m_screen);
+			r_wnd->display();
+			break;
+		}
+		break;
+	case ST_OUT:
+		break;
+	case ST_OVER:
+		break;
+	default:
+		m_st = ST_IN;
+		m_screen.setFillColor(sf::Color::Black);
+		m_scene->SetScale(0.75f);
+		m_scene->SetOffset(0.5f);
+		m_timer = sf::Time::Zero;
+	}
 	return;
 }
 
 void Act05_Title::OnEnterSysloop() noexcept {}
 
 void Act05_Title::OnExitSysloop() noexcept {}
+
+void Act05_Title::updateSize() {
+	auto& view = r_wnd->getView();
+	sf::Vector2f size = view.getSize();
+
+	m_scene->resize(r_wnd->getSize());
+	m_screen.setSize(size);
+
+	float rate;
+
+	rate = size.y / m_titleTex.getSize().y * 0.4f;
+	m_titleSp.setScale(rate, rate);
+	m_titleSp.setPosition(size.x * 0.5f, size.y * 0.35f);
+
+}
 
 } // namespace Activity

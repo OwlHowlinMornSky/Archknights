@@ -22,21 +22,18 @@
 #pragma once
 
 #include <memory>
-#include <SFML/Graphics.hpp>
+#include "Scene.h"
 
 namespace Scene {
 
-class ITitle :
-	public sf::Drawable {
+class Scene_ITitle :
+	public Scene {
 public:
-	static std::unique_ptr<ITitle> GetTitle();
-public:
-	virtual void setup(sf::Vector2u size) = 0;
-	virtual void update(float dt) = 0;
-	virtual void render() = 0;
-
-	virtual void resize(sf::Vector2u size) = 0;
+	virtual void SetScale(float r) = 0;
+	virtual void SetOffset(float r) = 0;
 };
 
-
+namespace Factory {
+std::unique_ptr<Scene_ITitle> GetTitle();
+}
 } // namespace Scene

@@ -19,13 +19,24 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_ITitle.h"
-#include "Scene_Title.h"
+#pragma once
 
-namespace Scene::Factory {
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/System/Time.hpp>
 
-std::unique_ptr<Scene_ITitle> GetTitle() {
-    return std::make_unique<Title>();
+namespace Scene {
+
+class Scene :
+	public sf::Drawable {
+public:
+	Scene() = default;
+	virtual ~Scene() = default;
+
+	virtual void setup(sf::Vector2u size) = 0;
+	virtual void update(sf::Time dt) = 0;
+	virtual void render() = 0;
+
+	virtual void resize(sf::Vector2u size) = 0;
+};
+
 }
-
-} // namespace Scene
