@@ -1,55 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Activities">
+      <UniqueIdentifier>{4321d445-58c3-4ebd-8af0-74fd722c7881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Act01_DefaultEntrance.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Act02_TestActivity.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Act03_Opening.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Act04_Load.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Act05_Title.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Activity_Debug.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Activity_Game.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_GameCommon.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_ITitle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Title.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="API.h">
       <Filter>资源文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act01_DefaultEntrance.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act02_TestActivity.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act03_Opening.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act04_Load.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Act05_Title.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Activity_Debug.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Activities\Activity_Game.h">
+      <Filter>Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Scene_GameCommon.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Scene_ITitle.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Scene_Title.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,35 +56,38 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Act01_DefaultEntrance.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Act02_TestActivity.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Act02_TestActivity.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Act03_Opening.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Act03_Opening.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Act04_Load.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Act04_Load.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Act05_Title.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Act05_Title.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Activity_Debug.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Activity_Debug.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Activity_Game.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Activities\Activity_Game.cpp">
+      <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_GameCommon.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Scenes\Scene_GameCommon.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_ITitle.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Scenes\Scene_ITitle.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Title.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Scenes\Scene_Title.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="API.cpp">
+      <Filter>资源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

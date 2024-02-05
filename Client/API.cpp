@@ -19,33 +19,9 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "API.h"
+#include "Activities/Act01_DefaultEntrance.h"
 
-#include <MysteryEngine/Client/Window.h>
-#include "Scene_GameCommon.h"
-
-namespace Activity {
-
-class Activity_Game final :
-	public ME::Activity {
-public:
-	Activity_Game();
-	virtual ~Activity_Game() noexcept override;
-
-protected:
-	virtual bool start(ME::Window& wnd) noexcept override;
-	virtual void stop() noexcept override;
-
-public:
-	virtual bool handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	ME::WndRef r;
-	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
-};
-
-} // namespace Activity
+std::unique_ptr<ME::Activity> GetClientEntrance() {
+    return std::make_unique<Activity::Act01_DefaultEntrance>();
+}

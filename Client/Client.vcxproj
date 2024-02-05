@@ -155,33 +155,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Act01_DefaultEntrance.h" />
-    <ClInclude Include="Act02_TestActivity.h" />
-    <ClInclude Include="Act03_Opening.h" />
-    <ClInclude Include="Act04_Load.h" />
-    <ClInclude Include="Act05_Title.h" />
-    <ClInclude Include="Activity_Debug.h" />
-    <ClInclude Include="Activity_Game.h" />
+    <ClInclude Include="Activities\Act01_DefaultEntrance.h" />
+    <ClInclude Include="Activities\Act02_TestActivity.h" />
+    <ClInclude Include="Activities\Act03_Opening.h" />
+    <ClInclude Include="Activities\Act04_Load.h" />
+    <ClInclude Include="Activities\Act05_Title.h" />
+    <ClInclude Include="Activities\Activity_Debug.h" />
+    <ClInclude Include="Activities\Activity_Game.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scene_GameCommon.h" />
-    <ClInclude Include="Scene_ITitle.h" />
-    <ClInclude Include="Scene_Title.h" />
+    <ClInclude Include="Scenes\Scene_GameCommon.h" />
+    <ClInclude Include="Scenes\Scene_ITitle.h" />
+    <ClInclude Include="Scenes\Scene_Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Act01_DefaultEntrance.cpp" />
-    <ClCompile Include="Act02_TestActivity.cpp" />
-    <ClCompile Include="Act03_Opening.cpp" />
-    <ClCompile Include="Act04_Load.cpp" />
-    <ClCompile Include="Act05_Title.cpp" />
-    <ClCompile Include="Activity_Debug.cpp" />
-    <ClCompile Include="Activity_Game.cpp" />
-    <ClCompile Include="Scene_GameCommon.cpp" />
-    <ClCompile Include="Scene_ITitle.cpp" />
-    <ClCompile Include="Scene_Title.cpp" />
+    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp" />
+    <ClCompile Include="Activities\Act02_TestActivity.cpp" />
+    <ClCompile Include="Activities\Act03_Opening.cpp" />
+    <ClCompile Include="Activities\Act04_Load.cpp" />
+    <ClCompile Include="Activities\Act05_Title.cpp" />
+    <ClCompile Include="Activities\Activity_Debug.cpp" />
+    <ClCompile Include="Activities\Activity_Game.cpp" />
+    <ClCompile Include="API.cpp" />
+    <ClCompile Include="Scenes\Scene_GameCommon.cpp" />
+    <ClCompile Include="Scenes\Scene_ITitle.cpp" />
+    <ClCompile Include="Scenes\Scene_Title.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

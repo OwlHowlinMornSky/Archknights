@@ -22,7 +22,7 @@
 #include <locale>
 #include <MysteryEngine/Core/Global.h>
 
-#include "../Client/Act01_DefaultEntrance.h"
+#include "../Client/API.h"
 #include "UniqueInstance.h"
 #include "framework.h"
 
@@ -70,7 +70,7 @@ int APIENTRY wWinMain(
 			window->setIcon(icon);
 			window->setVerticalSyncEnabled(true);
 			// Start with default activity.
-			window->changeActivity(std::make_unique<Activity::Act01_DefaultEntrance>());
+			window->changeActivity(GetClientEntrance());
 			carnival.pushWindow(std::move(window));
 			carnival.Run();
 		}

@@ -22,21 +22,17 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-#ifdef _DEBUG
+
 #include <SFML/Graphics.hpp>
-#endif // _DEBUG
-#include "API.h"
+#include "../Scenes/Scene_ITitle.h"
 
 namespace Activity {
 
-/**
- * @brief 默认初始Activity。
-*/
-class CLIENT_API Act01_DefaultEntrance final :
+class Act05_Title final :
 	public ME::Activity {
 public:
-	Act01_DefaultEntrance();
-	virtual ~Act01_DefaultEntrance() noexcept override;
+	Act05_Title();
+	virtual ~Act05_Title() noexcept override;
 
 protected:
 	virtual bool start(ME::Window& wnd) noexcept override;
@@ -51,10 +47,7 @@ public:
 
 protected:
 	ME::WndRef r_wnd;
-#ifdef _DEBUG
-	sf::Sprite m_sp;
-	sf::Texture m_tex; // 调试显示图片的纹理
-#endif // _DEBUG
+	std::unique_ptr<title::Scene_ITitle> m_scene;
 };
 
 } // namespace Activity

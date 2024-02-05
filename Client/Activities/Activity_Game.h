@@ -22,17 +22,15 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-
-#include <SFML/Graphics.hpp>
-#include "Scene_ITitle.h"
+#include "../Scenes/Scene_GameCommon.h"
 
 namespace Activity {
 
-class Act05_Title final :
+class Activity_Game final :
 	public ME::Activity {
 public:
-	Act05_Title();
-	virtual ~Act05_Title() noexcept override;
+	Activity_Game();
+	virtual ~Activity_Game() noexcept override;
 
 protected:
 	virtual bool start(ME::Window& wnd) noexcept override;
@@ -46,8 +44,8 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
-	ME::WndRef r_wnd;
-	std::unique_ptr<title::Scene_ITitle> m_scene;
+	ME::WndRef r;
+	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
 };
 
 } // namespace Activity
