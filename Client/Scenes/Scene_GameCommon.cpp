@@ -20,18 +20,42 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Scene_GameCommon.h"
+#include <assert.h>
 
-namespace gamegui {
+namespace {
 
-Scene_GameCommon::Scene_GameCommon() {}
+std::unique_ptr<Scene::GameCommon> g_gamecommon;
 
-Scene_GameCommon::~Scene_GameCommon() {}
-
-void Scene_GameCommon::update(float dt) {
 }
 
-bool Scene_GameCommon::handleEvent(const sf::Event& evt) {
-    return false;
+namespace Scene {
+
+GameCommon::GameCommon() {}
+
+GameCommon::~GameCommon() {}
+
+void GameCommon::setup() {
+	if (g_gamecommon)
+		return;
+	g_gamecommon = std::make_unique<GameCommon>();
 }
 
-} // namespace gamegui
+GameCommon* GameCommon::instance() {
+	assert(g_gamecommon != nullptr);
+	return g_gamecommon.get();
+}
+
+void GameCommon::drop() {
+	g_gamecommon.reset();
+}
+
+void GameCommon::Render() {
+
+
+}
+
+void GameCommon::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	return target.draw(m_sp, states);
+}
+
+} // namespace Scene

@@ -22,7 +22,6 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-#include "../Scenes/Scene_GameCommon.h"
 
 namespace Activity {
 
@@ -45,7 +44,6 @@ public:
 
 protected:
 	ME::WndRef r;
-	std::shared_ptr<gamegui::Scene_GameCommon> m_scene;
 };
 
 } // namespace Activity

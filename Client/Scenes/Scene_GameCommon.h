@@ -24,31 +24,39 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Window/Context.hpp>
 #include <SFML/Window/Event.hpp>
 #include <MysteryEngine/Game/IGameShow.h>
 
-namespace gamegui {
+namespace Scene {
 
-class Scene_GameCommon final :
+class GameCommon final :
 	public sf::Drawable,
 	public ME::IGameShow {
 public:
-	Scene_GameCommon();
-	virtual ~Scene_GameCommon() override;
+	GameCommon();
+	virtual ~GameCommon() override;
 
 public:
-	void update(float dt);
+	static void setup();
+	static GameCommon* instance();
+	static void drop();
 
-	bool handleEvent(const sf::Event& evt);
+public:
+	void Render();
 
-protected:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
-		return target.draw(m_sp, states);
+	void update(float dt) {
+		//Update(dt);
+		Render();
 	}
 
 protected:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+protected:
+	sf::Context m_ctx;
 	sf::Sprite m_sp;
 	sf::RenderTexture m_rtex;
 };
 
-} // namespace gamegui
+} // namespace Scene

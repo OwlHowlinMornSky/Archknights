@@ -39,20 +39,20 @@ Act05_Title::~Act05_Title() noexcept {
 bool Act05_Title::start(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
-	m_scene = title::getScene();
+	m_scene = Scene::ITitle::GetTitle();
 	m_scene->setup(r_wnd->getSize());
 
-	r_wnd->setActive(true);
+	//r_wnd->setActive(true);
 
 	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
 	return true;
 }
 
 void Act05_Title::stop() noexcept {
-	ME::G3dGlobal::setActive(true);
+	//ME::G3dGlobal::setActive(true);
 	m_scene.reset();
-	ME::G3dGlobal::setActive(false);
-	r_wnd->setActive(true);
+	//ME::G3dGlobal::setActive(false);
+	//r_wnd->setActive(true);
 	r_wnd();
 }
 

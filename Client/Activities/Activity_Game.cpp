@@ -20,7 +20,13 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Activity_Game.h"
-//#include "../Game/GameGlobal.h"
+#include "../Scenes/Scene_GameCommon.h"
+
+namespace {
+
+Scene::GameCommon* r_scene = nullptr;
+
+}
 
 namespace Activity {
 
@@ -30,27 +36,19 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(ME::Window& wnd) noexcept {
 	r(wnd);
-	m_scene = std::make_shared<gamegui::Scene_GameCommon>();
-	//game::Global::data.show = m_scene;
-	//if (!game::Global::data.setup()) {
-	return false;
-	//}
+	Scene::GameCommon::setup();
+	r_scene = Scene::GameCommon::instance();
 	return true;
 }
 
 void Activity_Game::stop() noexcept {
-	//game::Global::data.drop();
-	//game::Global::data.show.reset();
-	m_scene.reset();
+	r_scene = nullptr;
+	Scene::GameCommon::drop();
 	r();
 	return;
 }
 
 bool Activity_Game::handleEvent(const sf::Event& evt) {
-	if (m_scene->handleEvent(evt)) {
-		// 返回
-		return true;
-	}
 	return false;
 }
 
@@ -59,8 +57,8 @@ void Activity_Game::update(sf::Time dtime) {
 	r->clear(sf::Color::White);
 #endif // _DEBUG
 	//game::Global::data.update(dtime.asSeconds());
-	m_scene->update(dtime.asSeconds());
-	r->draw(*m_scene);
+	r_scene->update(dtime.asSeconds());
+	r->draw(*r_scene);
 	r->display();
 	return;
 }

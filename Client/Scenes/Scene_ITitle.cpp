@@ -22,10 +22,10 @@
 #include "Scene_ITitle.h"
 #include "Scene_Title.h"
 
-namespace title {
+namespace Scene {
 
-std::unique_ptr<Scene_ITitle> getScene() {
-    return std::make_unique<Scene_Title>();
+std::unique_ptr<ITitle> ITitle::GetTitle() {
+    return std::make_unique<Title>();
 }
 
-} // namespace title
+} // namespace Scene

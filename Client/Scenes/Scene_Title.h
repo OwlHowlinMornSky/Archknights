@@ -75,13 +75,13 @@ public:
 
 } // namespace
 
-namespace title {
+namespace Scene {
 
-class Scene_Title final :
-	public Scene_ITitle {
+class Title final :
+	public ITitle {
 public:
-	Scene_Title();
-	~Scene_Title();
+	Title();
+	~Title();
 
 public:
 	virtual void setup(sf::Vector2u size) override;

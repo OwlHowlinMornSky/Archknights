@@ -47,7 +47,7 @@ public:
 
 protected:
 	ME::WndRef r_wnd;
-	std::unique_ptr<title::Scene_ITitle> m_scene;
+	std::unique_ptr<Scene::ITitle> m_scene;
 };
 
 } // namespace Activity

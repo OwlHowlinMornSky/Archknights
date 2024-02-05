@@ -24,10 +24,12 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 
-namespace title {
+namespace Scene {
 
-class Scene_ITitle :
+class ITitle :
 	public sf::Drawable {
+public:
+	static std::unique_ptr<ITitle> GetTitle();
 public:
 	virtual void setup(sf::Vector2u size) = 0;
 	virtual void update(float dt) = 0;
@@ -36,6 +38,5 @@ public:
 	virtual void resize(sf::Vector2u size) = 0;
 };
 
-std::unique_ptr<Scene_ITitle> getScene();
 
-} // namespace title
+} // namespace Scene

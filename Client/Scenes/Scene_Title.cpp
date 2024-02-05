@@ -153,27 +153,20 @@ void LineModel::Draw() {
 
 } // namespace
 
-namespace title {
+namespace Scene {
 
-Scene_Title::Scene_Title() {
-}
+Title::Title() {}
 
-Scene_Title::~Scene_Title() {}
+Title::~Title() {}
 
-void Scene_Title::setup(sf::Vector2u size) {
+void Title::setup(sf::Vector2u size) {
 	//m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
 
-	m_camera.setDim(9.0f / 4  * size.x / size.y, 9.0f / 4);
+	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
 	m_camera.setPosition(0.0f, 0.0f, 10.0f);
 
-	ME::G3dGlobal::setActive(true);
-
-	m_shader.setup();
-
-	glCheck(glEnable(GL_BLEND));
-	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 
 	//glm::vec3 v0(0.0f, 0.0f, 0.0f);
 	//glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
@@ -216,6 +209,22 @@ void Scene_Title::setup(sf::Vector2u size) {
 		va.emplace_back(v0, v1, glm::vec2(1.0f, thick));
 	}
 
+	m_rotSpeed[0] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+	m_rotSpeed[1] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+	m_rotSpeed[2] = ME::RandGen::getUni01() * 40.0f + 20.0f;
+
+
+	ME::G3dGlobal::setActive(true);
+
+	m_shader.setup();
+
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
+
+	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
+
+	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
+
 	m_llm.LoadModelData(va);
 	//linetest->Position = { -20.0f, 0.0f, 0.0f };
 	//linetest->load();}
@@ -223,30 +232,18 @@ void Scene_Title::setup(sf::Vector2u size) {
 	//m_llm.setPosition(0.5f, 0, 0);
 	//m_llm.setScale(0.1f);
 
-	m_rotSpeed[0] = ME::RandGen::getUni01() * 40.0f + 20.0f;
-	m_rotSpeed[1] = ME::RandGen::getUni01() * 40.0f + 20.0f;
-	m_rotSpeed[2] = ME::RandGen::getUni01() * 40.0f + 20.0f;
-
 	ME::G3dGlobal::setActive(false);
 }
 
-void Scene_Title::update(float dt) {
+void Title::update(float dt) {
 	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
 	m_llm.normalizeRotation();
 }
 
-void Scene_Title::render() {
+void Title::render() {
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
-
-	sf::IntRect Viewport(
-		0, 0,
-		m_rtex.getSize().x,
-		m_rtex.getSize().y
-	);
-	glCheck(glViewport(Viewport.left, Viewport.top, Viewport.width, Viewport.height));
 
 	m_llm.update();
 	m_shader.update(m_camera);
@@ -260,19 +257,19 @@ void Scene_Title::render() {
 
 	m_rtex.display();
 
-	m_rtex.setActive(false);
+	//m_rtex.setActive(false);
 	ME::G3dGlobal::setActive(false);
 }
 
-void Scene_Title::resize(sf::Vector2u size) {
+void Title::resize(sf::Vector2u size) {
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
 	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
 }
 
-void Scene_Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(m_sp, states);
 	return;
 }
 
-} // namespace title
+} // namespace Scene
