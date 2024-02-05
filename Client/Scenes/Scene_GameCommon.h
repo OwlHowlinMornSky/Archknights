@@ -32,23 +32,20 @@ namespace Scene {
 
 class GameCommon final :
 	public sf::Drawable,
-	public ME::IGameShow {
+	public Game::IGameShow {
 public:
 	GameCommon();
 	virtual ~GameCommon() override;
 
 public:
-	static void setup();
+	static int setup();
 	static GameCommon* instance();
 	static void drop();
 
 public:
 	void Render();
 
-	void update(float dt) {
-		//Update(dt);
-		Render();
-	}
+	void update(float dt);
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -21,7 +21,9 @@
 */
 #pragma once
 
-#include "MsgResult.h"
+namespace Game::Creator {
 
-namespace Game {
+int setup();
+void drop();
+
 }

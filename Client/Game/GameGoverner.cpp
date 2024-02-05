@@ -19,9 +19,22 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "GameGoverner.h"
 
-#include "MsgResult.h"
+#include "GameGlobal.h"
 
-namespace Game {
+namespace Game::GameGoverment {
+
+int setup() {
+	if (Game::GameGlobal::government)
+		return 1;
+	Game::GameGlobal::government = std::make_unique<GameGoverner>();
+	return 0;
 }
+
+void drop() {
+	Game::GameGlobal::government.reset();
+}
+
+}
+

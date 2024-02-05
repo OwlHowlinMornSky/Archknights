@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -24,7 +24,7 @@
 #include <memory>
 #include <list>
 
-namespace ME {
+namespace Game {
 
 class Animation;
 class Architecture;
@@ -46,4 +46,4 @@ protected:
 	std::list<std::shared_ptr<Architecture>> m_archs;
 };
 
-} // namespace game
+} // namespace Game

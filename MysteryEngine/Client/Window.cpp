@@ -112,16 +112,14 @@ bool Window::available() const {
 }
 
 void Window::handleEvent() {
-	if (m_waitToChange) {
-		if (m_nextActivity->start(*this)) {
+	while (m_waitToChange) {
+		m_waitToChange = false;
+		std::unique_ptr<Activity> tmp = std::move(m_nextActivity);
+		if (tmp->start(*this)) {
 			if (m_activity != nullptr)
 				m_activity->stop();
-			m_activity = std::move(m_nextActivity);
+			m_activity = std::move(tmp);
 		}
-		else {
-			m_nextActivity.reset();
-		}
-		m_waitToChange = false;
 	}
 	sf::Event evt;
 	while (pollEvent(evt)) {

@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -20,14 +20,15 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "GameGlobal.h"
-#include "IGameBoard.h"
+#include "GameBoard.h"
 #include "IGameShow.h"
 
-namespace ME {
+namespace Game {
 namespace GameGlobal {
 
-std::unique_ptr<IGameBoard> board;
+std::unique_ptr<GameBoard> board;
 std::shared_ptr<IGameShow> show;
+std::unique_ptr<GameGoverner> government;
 
 }
-} // namespace game
+} // namespace Game

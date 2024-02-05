@@ -19,9 +19,26 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "Creator.h"
 
-#include "MsgResult.h"
+#include "../Scenes/Scene_GameCommon.h"
+#include "../Game/GameBoard.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameGoverner.h"
 
 namespace Game {
+
+int Creator::setup() {
+	Game::GameGoverment::setup();
+	Scene::GameCommon::setup();
+	Game::GameBoard::setup();
+	return 0;
+}
+
+void Creator::drop() {
+	Game::GameBoard::drop();
+	Scene::GameCommon::drop();
+	Game::GameGoverment::drop();
+}
+
 }

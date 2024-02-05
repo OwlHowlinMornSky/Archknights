@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -23,7 +23,7 @@
 
 #include "Actor.h"
 
-namespace ME {
+namespace Game {
 
 class Animation :
     public Actor {

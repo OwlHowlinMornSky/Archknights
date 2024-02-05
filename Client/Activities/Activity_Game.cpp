@@ -21,6 +21,7 @@
 */
 #include "Activity_Game.h"
 #include "../Scenes/Scene_GameCommon.h"
+#include "../GameThings/Creator.h"
 
 namespace {
 
@@ -36,19 +37,22 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::start(ME::Window& wnd) noexcept {
 	r(wnd);
-	Scene::GameCommon::setup();
+	int res = Game::Creator::setup();
 	r_scene = Scene::GameCommon::instance();
-	return true;
+	return res == 0;
 }
 
 void Activity_Game::stop() noexcept {
 	r_scene = nullptr;
-	Scene::GameCommon::drop();
+	Game::Creator::drop();
 	r();
 	return;
 }
 
 bool Activity_Game::handleEvent(const sf::Event& evt) {
+	if (evt.type == sf::Event::Closed) {
+		r->setWaitingForStop();
+	}
 	return false;
 }
 

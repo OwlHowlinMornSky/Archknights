@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -29,15 +29,18 @@
 
 #include "Entity.h"
 
-namespace ME {
+namespace Game {
 
 /**
- * @brief 游戏板 接口：定义了游戏板的基本功能。
+ * @brief 游戏板：定义了游戏场地基本功能。
 */
-class IGameBoard {
+class GameBoard {
 public:
-	IGameBoard();
-	virtual ~IGameBoard();
+	GameBoard();
+	virtual ~GameBoard();
+
+	static int setup();
+	static void drop();
 
 // 基础功能
 public:
@@ -137,19 +140,6 @@ public:
 
 protected:
 	std::map<MsgIdType, std::set<EntityLocationType>> m_msgMap; // 消息订阅表。
-
-
-// 接口
-public:
-	/**
-	 * @brief 创建游戏板实例后的初始设置。
-	*/
-	virtual void Setup() = 0;
-	/**
-	 * @brief 使用完毕后必要的清理。
-	*/
-	virtual void Clear() = 0;
-
 };
 
 }

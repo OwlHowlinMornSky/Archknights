@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,11 +21,11 @@
 */
 #include "Animation.h"
 
-namespace ME {
+namespace Game {
 
 Animation::Animation() {
 	this->m_waitingForQuit = false;
 	this->m_type = Actor::Type::Animation;
 }
 
-} // namespace game
+} // namespace Game

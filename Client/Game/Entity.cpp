@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,12 +21,12 @@
 */
 #include "Entity.h"
 #include "GameGlobal.h"
-#include "IGameBoard.h"
+#include "GameBoard.h"
 #include "MsgResult.h"
 
 #include <iostream>
 
-namespace ME {
+namespace Game {
 
 Entity::Entity() :
 	m_updatable(false),
@@ -71,4 +71,4 @@ void Entity::KickSelf() const {
 	GameGlobal::board->KickEntity(m_location);
 }
 
-} // namespace game
+} // namespace Game

@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -23,7 +23,7 @@
 
 #include <glm/glm.hpp>
 
-namespace ME {
+namespace Game {
 
 typedef size_t EntityIdType;
 typedef size_t EntityLocationType;
@@ -33,4 +33,4 @@ typedef size_t   MsgWparamType;
 typedef intptr_t MsgLparamType;
 typedef intptr_t MsgResultType;
 
-} // namespace game
+} // namespace Game

@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -24,10 +24,10 @@
 #include <glm/glm.hpp>
 #include <MysteryEngine/G3D/IModel.h>
 
-namespace ME {
+namespace Game {
 
 class Actor :
-	public IModel {
+	public ME::IModel {
 public:
 	enum class Type {
 		Unknown = 0,
@@ -54,7 +54,7 @@ public:
 
 protected:
 	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
+	Actor::Type m_type;
 };
 
-} // namespace game
+} // namespace Game

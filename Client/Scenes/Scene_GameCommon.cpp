@@ -20,11 +20,12 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Scene_GameCommon.h"
+#include "../Game/GameGlobal.h"
 #include <assert.h>
 
 namespace {
 
-std::unique_ptr<Scene::GameCommon> g_gamecommon;
+std::shared_ptr<Scene::GameCommon> g_gamecommon;
 
 }
 
@@ -34,10 +35,12 @@ GameCommon::GameCommon() {}
 
 GameCommon::~GameCommon() {}
 
-void GameCommon::setup() {
+int GameCommon::setup() {
 	if (g_gamecommon)
-		return;
+		return 1;
 	g_gamecommon = std::make_unique<GameCommon>();
+	Game::GameGlobal::show = g_gamecommon;
+	return 0;
 }
 
 GameCommon* GameCommon::instance() {
@@ -46,12 +49,18 @@ GameCommon* GameCommon::instance() {
 }
 
 void GameCommon::drop() {
+	Game::GameGlobal::show.reset();
 	g_gamecommon.reset();
 }
 
 void GameCommon::Render() {
 
 
+}
+
+void GameCommon::update(float dt) {
+	Update(dt);
+	Render();
 }
 
 void GameCommon::draw(sf::RenderTarget& target, sf::RenderStates states) const {

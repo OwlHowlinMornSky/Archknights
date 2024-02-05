@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,11 +21,11 @@
 */
 #include "Architecture.h"
 
-namespace ME {
+namespace Game {
 
 Architecture::Architecture() {
 	this->m_waitingForQuit = false;
 	this->m_type = Type::Architecture;
 }
 
-} // namespace game
+} // namespace Game

@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -23,16 +23,18 @@
 
 #include <memory>
 #include <string>
+#include "GameGoverner.h"
 
-namespace ME {
+namespace Game {
 
-class IGameBoard;
+class GameBoard;
 class IGameShow;
 
 namespace GameGlobal {
 
-extern std::unique_ptr<IGameBoard> board;
+extern std::unique_ptr<GameBoard> board;
 extern std::shared_ptr<IGameShow> show;
+extern std::unique_ptr<GameGoverner> government;
 
 }
-} // namespace game
+} // namespace Game

@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -23,13 +23,13 @@
 
 #include "TypeDef.h"
 
-namespace ME::MsgResult {
+namespace Game::MsgResult {
 
-enum ME_API : MsgResultType {
+enum : MsgResultType {
 	Unsubscribe = -1,
 	OK = 0,
 	MethodNotAllowed,
 	COUNT
 };
 
-} // namespace game
+} // namespace Game

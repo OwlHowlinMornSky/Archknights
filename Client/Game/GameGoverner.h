@@ -21,7 +21,28 @@
 */
 #pragma once
 
-#include "MsgResult.h"
+#include <array>
+#include "TypeDef.h"
 
 namespace Game {
+
+namespace GovernerType {
+enum Type {
+	Unknown = 0,
+	PlayerInputHandler,
+	PlayerCardBar,
+	MoverPathManager,
+	MapPathManager,
+	COUNT
+};
 }
+
+using GameGoverner = std::array<EntityLocationType, GovernerType::COUNT>;
+
+namespace GameGoverment {
+
+int setup();
+void drop();
+
+}
+} // namespace Game

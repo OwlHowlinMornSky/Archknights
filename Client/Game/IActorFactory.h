@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -25,7 +25,7 @@
 #include "Animation.h"
 #include "Architecture.h"
 
-namespace ME {
+namespace Game {
 
 class IActorFactory {
 public:

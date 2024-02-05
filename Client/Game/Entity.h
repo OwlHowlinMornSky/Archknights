@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -24,7 +24,7 @@
 #include <functional>
 #include "TypeDef.h"
 
-namespace ME {
+namespace Game {
 
 class Entity {
 public:
@@ -101,4 +101,4 @@ protected:
 
 };
 
-} // namespace game
+} // namespace Game

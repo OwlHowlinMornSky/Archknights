@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -19,22 +19,39 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "IGameBoard.h"
+#include "GameBoard.h"
 
 #include "MsgResult.h"
+#include "GameGlobal.h"
 
-namespace ME {
+namespace Game {
 
-bool IGameBoard::IsEmpty() {
+GameBoard::GameBoard() :
+	m_entityIdCnt(0) {}
+
+GameBoard::~GameBoard() {}
+
+int GameBoard::setup() {
+	if (Game::GameGlobal::board)
+		return 1;
+	Game::GameGlobal::board = std::make_unique<GameBoard>();
+	return 0;
+}
+
+void GameBoard::drop() {
+	Game::GameGlobal::board.reset();
+}
+
+bool GameBoard::IsEmpty() {
 	// 空闲位置数量等于实体位置数量说明没有实体。
 	return m_entities.size() == m_emptyLocations.size();
 }
 
-void IGameBoard::SetPaused(bool pause) {
+void GameBoard::SetPaused(bool pause) {
 
 }
 
-void IGameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
+void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
 	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
 	if (m_emptyLocations.empty()) { // 没有空闲位置
 		m_entities.push_back(entity); // 直接放在末尾。
@@ -48,7 +65,7 @@ void IGameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
 	}
 }
 
-void IGameBoard::KickEntity(size_t location) {
+void GameBoard::KickEntity(size_t location) {
 	assert(location < m_entities.size());
 	assert(m_entities[location]); // 在场。
 	m_entities[location]->BasicOnKicking(); // 通知。
@@ -56,12 +73,12 @@ void IGameBoard::KickEntity(size_t location) {
 	m_emptyLocations.push(location); // 记录空位。
 }
 
-std::shared_ptr<Entity> IGameBoard::EntityAt(size_t location) {
+std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
 	assert(location < m_entities.size());
 	return m_entities[location];
 }
 
-void IGameBoard::Update(float dt) {
+void GameBoard::Update(float dt) {
 	// failedLoc相关的是自动注销逻辑，算是一种保险。
 	// 如果注册过的实体保证退场时注销，就不需要这个。
 	std::set<EntityLocationType> failedLoc;
@@ -79,21 +96,21 @@ void IGameBoard::Update(float dt) {
 	}
 }
 
-void IGameBoard::Register_Update(EntityLocationType location) {
+void GameBoard::Register_Update(EntityLocationType location) {
 	m_trigger_update.insert(location);
 }
 
-void IGameBoard::Unregister_Update(EntityLocationType location) {
+void GameBoard::Unregister_Update(EntityLocationType location) {
 	m_trigger_update.erase(location);
 }
 
-MsgResultType IGameBoard::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
 	assert(m_entities[location]); // 在场。
 	return m_entities[location]->ReceiveMessage(msg, wparam, lparam);
 }
 
-void IGameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void GameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	// failedLoc相关的是自动退订逻辑，算是一种保险。
 	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
@@ -121,7 +138,7 @@ void IGameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamTyp
 	}
 }
 
-void IGameBoard::BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void GameBoard::BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	for (auto& entity : m_entities) {
 		if (entity == nullptr) // 跳过离场位置。
 			continue;
@@ -129,11 +146,11 @@ void IGameBoard::BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType
 	}
 }
 
-void IGameBoard::SubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void GameBoard::SubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	m_msgMap[msg].insert(location);
 }
 
-void IGameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void GameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
@@ -144,4 +161,4 @@ void IGameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	}
 }
 
-} // namespace game
+} // namespace Game

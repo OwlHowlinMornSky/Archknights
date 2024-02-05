@@ -11,7 +11,10 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
+    <Filter Include="GameBase">
+      <UniqueIdentifier>{787e72d9-9430-4ee7-870c-62d9206b208c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameThings">
       <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -52,35 +55,41 @@
     <ClInclude Include="Scenes\Scene_Title.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Game\TypeDef.h">
+      <Filter>GameBase</Filter>
+    </ClInclude>
     <ClInclude Include="Game\Actor.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\Animation.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\Architecture.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\Entity.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameGlobal.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\IActorFactory.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="Game\IGameBoard.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="Game\GameBoard.h">
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\IGameShow.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\MsgResult.h">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="Game\TypeDef.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="Game\GameGoverner.h">
+      <Filter>GameBase</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\Creator.h">
+      <Filter>GameThings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,31 +132,37 @@
       <Filter>资源文件</Filter>
     </ClCompile>
     <ClCompile Include="Game\Actor.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\Animation.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\Architecture.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\Entity.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameGlobal.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\IActorFactory.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
-    <ClCompile Include="Game\IGameBoard.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Game\GameBoard.cpp">
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\IGameShow.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\MsgResult.cpp">
-      <Filter>Game</Filter>
+      <Filter>GameBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameGoverner.cpp">
+      <Filter>GameBase</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\Creator.cpp">
+      <Filter>GameThings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

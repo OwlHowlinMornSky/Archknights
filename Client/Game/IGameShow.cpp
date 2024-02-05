@@ -1,5 +1,5 @@
 ﻿/*
-*    Mystery Engine
+*    Archknights
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -24,7 +24,7 @@
 #include "Animation.h"
 #include "Architecture.h"
 
-namespace ME {
+namespace Game {
 
 void IGameShow::AddAnimation(std::shared_ptr<Animation> a) {
 	m_anims.push_back(a);
@@ -40,4 +40,4 @@ void IGameShow::Update(float dt) {
 	}
 }
 
-} // namespace game
+} // namespace Game
