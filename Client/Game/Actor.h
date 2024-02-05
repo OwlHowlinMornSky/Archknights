@@ -19,15 +19,42 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/GameGlobal.h>
-#include <MysteryEngine/Game/IGameBoard.h>
-#include <MysteryEngine/Game/IGameShow.h>
+#pragma once
+
+#include <glm/glm.hpp>
+#include <MysteryEngine/G3D/IModel.h>
 
 namespace ME {
-namespace GameGlobal {
 
-std::unique_ptr<IGameBoard> board;
-std::shared_ptr<IGameShow> show;
+class Actor :
+	public IModel {
+public:
+	enum class Type {
+		Unknown = 0,
+		Animation,
+		Architecture,
+		COUNT
+	};
 
-}
+public:
+	Actor() = default;
+	virtual ~Actor() = default;
+
+public:
+	virtual glm::vec3 getPosition() const = 0;
+	virtual void setPosition(glm::vec3 pos) = 0;
+	virtual glm::vec3 getRotation() const = 0;
+	virtual void setRotation(glm::vec3 rot) = 0;
+	virtual glm::vec3 getScale() const = 0;
+	virtual void setScale(glm::vec3 scl) = 0;
+
+	bool IsWaitingForQuit() const {
+		return m_waitingForQuit;
+	}
+
+protected:
+	bool m_waitingForQuit;
+	ME::Actor::Type m_type;
+};
+
 } // namespace game

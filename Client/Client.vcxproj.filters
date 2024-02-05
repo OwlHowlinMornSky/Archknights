@@ -11,6 +11,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h">
@@ -48,6 +51,36 @@
     </ClInclude>
     <ClInclude Include="Scenes\Scene_Title.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Actor.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Animation.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Architecture.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Entity.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameGlobal.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\IActorFactory.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\IGameBoard.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\IGameShow.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MsgResult.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TypeDef.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +121,33 @@
     </ClCompile>
     <ClCompile Include="API.cpp">
       <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actor.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Animation.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Architecture.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Entity.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameGlobal.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IActorFactory.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IGameBoard.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\IGameShow.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\MsgResult.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

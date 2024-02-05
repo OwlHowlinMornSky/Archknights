@@ -19,13 +19,17 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/Animation.h>
+#pragma once
 
-namespace ME {
+#include "TypeDef.h"
 
-Animation::Animation() {
-	this->m_waitingForQuit = false;
-	this->m_type = Actor::Type::Animation;
-}
+namespace ME::MsgResult {
+
+enum ME_API : MsgResultType {
+	Unsubscribe = -1,
+	OK = 0,
+	MethodNotAllowed,
+	COUNT
+};
 
 } // namespace game

@@ -19,17 +19,8 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "IActorFactory.h"
 
-#include <MysteryEngine/Game/TypeDef.h>
-
-namespace ME::MsgResult {
-
-enum ME_API : MsgResultType {
-	Unsubscribe = -1,
-	OK = 0,
-	MethodNotAllowed,
-	COUNT
-};
+namespace ME {
 
 } // namespace game

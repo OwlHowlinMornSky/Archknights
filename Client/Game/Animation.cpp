@@ -19,16 +19,13 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
-
-#include <MysteryEngine/Game/Actor.h>
+#include "Animation.h"
 
 namespace ME {
 
-class Architecture :
-	public Actor {
-public:
-	Architecture();
-};
-
+Animation::Animation() {
+	this->m_waitingForQuit = false;
+	this->m_type = Actor::Type::Animation;
 }
+
+} // namespace game

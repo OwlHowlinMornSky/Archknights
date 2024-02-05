@@ -19,13 +19,15 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/Architecture.h>
+#include "GameGlobal.h"
+#include "IGameBoard.h"
+#include "IGameShow.h"
 
 namespace ME {
+namespace GameGlobal {
 
-Architecture::Architecture() {
-	this->m_waitingForQuit = false;
-	this->m_type = Type::Architecture;
+std::unique_ptr<IGameBoard> board;
+std::shared_ptr<IGameShow> show;
+
 }
-
 } // namespace game

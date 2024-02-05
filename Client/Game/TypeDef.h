@@ -19,8 +19,18 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/IActorFactory.h>
+#pragma once
+
+#include <glm/glm.hpp>
 
 namespace ME {
+
+typedef size_t EntityIdType;
+typedef size_t EntityLocationType;
+
+typedef uint32_t MsgIdType;
+typedef size_t   MsgWparamType;
+typedef intptr_t MsgLparamType;
+typedef intptr_t MsgResultType;
 
 } // namespace game

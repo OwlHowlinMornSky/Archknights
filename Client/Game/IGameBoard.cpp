@@ -19,9 +19,9 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/IGameBoard.h>
+#include "IGameBoard.h"
 
-#include <MysteryEngine/Game/MsgResult.h>
+#include "MsgResult.h"
 
 namespace ME {
 

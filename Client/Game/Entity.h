@@ -22,8 +22,7 @@
 #pragma once
 
 #include <functional>
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/Game/TypeDef.h>
+#include "TypeDef.h"
 
 namespace ME {
 

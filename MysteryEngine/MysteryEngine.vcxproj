@@ -47,15 +47,6 @@
     <ClCompile Include="G3D\Shader.cpp" />
     <ClCompile Include="G3D\Shader.Default.cpp" />
     <ClCompile Include="G3D\Vertex.cpp" />
-    <ClCompile Include="Game\Actor.cpp" />
-    <ClCompile Include="Game\Animation.cpp" />
-    <ClCompile Include="Game\Entity.cpp" />
-    <ClCompile Include="Game\GameGlobal.cpp" />
-    <ClCompile Include="Game\IActorFactory.cpp" />
-    <ClCompile Include="Game\IGameBoard.cpp" />
-    <ClCompile Include="Game\IGameShow.cpp" />
-    <ClCompile Include="Game\Architecture.cpp" />
-    <ClCompile Include="Game\MsgResult.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client\BgmSFML.h" />
@@ -87,16 +78,6 @@
     <ClInclude Include="include\MysteryEngine\G3D\Shader.Default.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Shader.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Vertex.h" />
-    <ClInclude Include="include\MysteryEngine\Game\Actor.h" />
-    <ClInclude Include="include\MysteryEngine\Game\Animation.h" />
-    <ClInclude Include="include\MysteryEngine\Game\Entity.h" />
-    <ClInclude Include="include\MysteryEngine\Game\GameGlobal.h" />
-    <ClInclude Include="include\MysteryEngine\Game\IActorFactory.h" />
-    <ClInclude Include="include\MysteryEngine\Game\IGameBoard.h" />
-    <ClInclude Include="include\MysteryEngine\Game\IGameShow.h" />
-    <ClInclude Include="include\MysteryEngine\Game\Architecture.h" />
-    <ClInclude Include="include\MysteryEngine\Game\MsgResult.h" />
-    <ClInclude Include="include\MysteryEngine\Game\TypeDef.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

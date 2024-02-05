@@ -21,16 +21,24 @@
 */
 #pragma once
 
-#include <MysteryEngine/Core/GLM.h>
+#include <memory>
+#include "Animation.h"
+#include "Architecture.h"
 
 namespace ME {
 
-typedef size_t EntityIdType;
-typedef size_t EntityLocationType;
+class IActorFactory {
+public:
+	enum class Type {
+		Animation = 0,
+		Model
+	};
 
-typedef uint32_t MsgIdType;
-typedef size_t   MsgWparamType;
-typedef intptr_t MsgLparamType;
-typedef intptr_t MsgResultType;
+	virtual std::shared_ptr<Animation> GetOneAnimation() = 0;
+	virtual std::shared_ptr<Architecture> GetOneModel() = 0;
 
-} // namespace game
+protected:
+	Type m_type;
+};
+
+}

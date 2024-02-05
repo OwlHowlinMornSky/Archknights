@@ -19,25 +19,13 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/IGameShow.h>
-
-#include <MysteryEngine/Game/Animation.h>
-#include <MysteryEngine/Game/Architecture.h>
+#include "Architecture.h"
 
 namespace ME {
 
-void IGameShow::AddAnimation(std::shared_ptr<Animation> a) {
-	m_anims.push_back(a);
-}
-
-void IGameShow::AddModel(std::shared_ptr<Architecture> m) {
-	m_archs.push_back(m);
-}
-
-void IGameShow::Update(float dt) {
-	for (auto& i : m_anims) {
-		i->Update(dt);
-	}
+Architecture::Architecture() {
+	this->m_waitingForQuit = false;
+	this->m_type = Type::Architecture;
 }
 
 } // namespace game

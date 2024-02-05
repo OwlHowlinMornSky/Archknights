@@ -26,7 +26,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Window/Context.hpp>
 #include <SFML/Window/Event.hpp>
-#include <MysteryEngine/Game/IGameShow.h>
+#include "../Game/IGameShow.h"
 
 namespace Scene {
 

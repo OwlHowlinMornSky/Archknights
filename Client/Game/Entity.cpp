@@ -19,10 +19,10 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/Game/Entity.h>
-#include <MysteryEngine/Game/GameGlobal.h>
-#include <MysteryEngine/Game/IGameBoard.h>
-#include <MysteryEngine/Game/MsgResult.h>
+#include "Entity.h"
+#include "GameGlobal.h"
+#include "IGameBoard.h"
+#include "MsgResult.h"
 
 #include <iostream>
 

@@ -25,12 +25,6 @@
     <Filter Include="Source files\G3D">
       <UniqueIdentifier>{cc2727f3-9f53-40f6-bb53-1e7ad5490cad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header files\Game">
-      <UniqueIdentifier>{4b45454f-42b3-458c-a76e-4a830f4dc79f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Game">
-      <UniqueIdentifier>{d34ae80c-5679-4a5d-83e1-f2e1adb4a876}</UniqueIdentifier>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{3807e32b-1219-4817-8758-6fb3f556f35f}</UniqueIdentifier>
     </Filter>
@@ -78,30 +72,6 @@
     <ClCompile Include="G3D\Shader.Default.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Actor.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Animation.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Entity.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameGlobal.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\IActorFactory.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\IGameBoard.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\IGameShow.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Architecture.cpp">
-      <Filter>Source files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Client\Bgm.cpp">
       <Filter>Source files\Client</Filter>
     </ClCompile>
@@ -143,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="Core\TempGuard.cpp">
       <Filter>Source files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\MsgResult.cpp">
-      <Filter>Source files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,41 +188,11 @@
     <ClInclude Include="include\MysteryEngine\Core\NonCopyable.h">
       <Filter>Header files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\Actor.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\Animation.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\Entity.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\GameGlobal.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\IActorFactory.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\IGameBoard.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\IGameShow.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\Architecture.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="include\MysteryEngine\Core\GLM.h">
       <Filter>Header files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Client\WindowWin32.h">
       <Filter>Source files\Client</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\TypeDef.h">
-      <Filter>Header files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\Game\MsgResult.h">
-      <Filter>Header files\Game</Filter>
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\Client\GlobalBGM.h">
       <Filter>Header files\Client</Filter>

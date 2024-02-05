@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include <MysteryEngine/Game/MsgResult.h>
+#include "MsgResult.h"
 
 namespace ME {
 }

@@ -19,42 +19,25 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "IGameShow.h"
 
-#include <MysteryEngine/Core/GLM.h>
-#include <MysteryEngine/G3D/IModel.h>
+#include "Animation.h"
+#include "Architecture.h"
 
 namespace ME {
 
-class Actor :
-	public IModel {
-public:
-	enum class Type {
-		Unknown = 0,
-		Animation,
-		Architecture,
-		COUNT
-	};
+void IGameShow::AddAnimation(std::shared_ptr<Animation> a) {
+	m_anims.push_back(a);
+}
 
-public:
-	Actor() = default;
-	virtual ~Actor() = default;
+void IGameShow::AddModel(std::shared_ptr<Architecture> m) {
+	m_archs.push_back(m);
+}
 
-public:
-	virtual glm::vec3 getPosition() const = 0;
-	virtual void setPosition(glm::vec3 pos) = 0;
-	virtual glm::vec3 getRotation() const = 0;
-	virtual void setRotation(glm::vec3 rot) = 0;
-	virtual glm::vec3 getScale() const = 0;
-	virtual void setScale(glm::vec3 scl) = 0;
-
-	bool IsWaitingForQuit() const {
-		return m_waitingForQuit;
+void IGameShow::Update(float dt) {
+	for (auto& i : m_anims) {
+		i->Update(dt);
 	}
-
-protected:
-	bool m_waitingForQuit;
-	ME::Actor::Type m_type;
-};
+}
 
 } // namespace game

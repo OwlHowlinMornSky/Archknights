@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include <MysteryEngine/Game/Actor.h>
+#include "Actor.h"
 
 namespace ME {
 

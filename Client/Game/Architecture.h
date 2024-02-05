@@ -21,24 +21,14 @@
 */
 #pragma once
 
-#include <memory>
-#include <MysteryEngine/Game/Animation.h>
-#include <MysteryEngine/Game/Architecture.h>
+#include "Actor.h"
 
 namespace ME {
 
-class IActorFactory {
+class Architecture :
+	public Actor {
 public:
-	enum class Type {
-		Animation = 0,
-		Model
-	};
-
-	virtual std::shared_ptr<Animation> GetOneAnimation() = 0;
-	virtual std::shared_ptr<Architecture> GetOneModel() = 0;
-
-protected:
-	Type m_type;
+	Architecture();
 };
 
 }

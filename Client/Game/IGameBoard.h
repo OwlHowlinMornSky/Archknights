@@ -27,7 +27,7 @@
 #include <deque>
 #include <stack>
 
-#include <MysteryEngine/Game/Entity.h>
+#include "Entity.h"
 
 namespace ME {
 
