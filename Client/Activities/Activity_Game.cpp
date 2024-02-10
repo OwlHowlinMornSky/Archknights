@@ -22,6 +22,8 @@
 #include "Activity_Game.h"
 #include "../Scenes/Scene_GameCommon.h"
 #include "../GameThings/Creator.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
 
 namespace {
 
@@ -52,7 +54,10 @@ void Activity_Game::stop() noexcept {
 bool Activity_Game::handleEvent(const sf::Event& evt) {
 	if (evt.type == sf::Event::Closed) {
 		r->setWaitingForStop();
+		return true;
 	}
+	sf::Event e = evt;
+	Game::GameGlobal::board->DistributeMsg(1, 0, (intptr_t)&e);
 	return false;
 }
 
@@ -60,14 +65,16 @@ void Activity_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r->clear(sf::Color::White);
 #endif // _DEBUG
-	//game::Global::data.update(dtime.asSeconds());
+	Game::GameGlobal::board->Update(dtime.asSeconds());
 	r_scene->update(dtime.asSeconds());
 	r->draw(*r_scene);
 	r->display();
 	return;
 }
 
-void Activity_Game::OnEnterSysloop() noexcept {}
+void Activity_Game::OnEnterSysloop() noexcept {
+	Game::GameGlobal::board->SetPaused(true);
+}
 
 void Activity_Game::OnExitSysloop() noexcept {}
 
