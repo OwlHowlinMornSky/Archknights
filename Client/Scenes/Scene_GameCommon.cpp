@@ -27,12 +27,6 @@
 //#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
 
-namespace {
-
-std::shared_ptr<Scene::GameCommon> g_gamecommon;
-
-}
-
 namespace Scene {
 
 GameCommon::GameCommon() {}
@@ -40,26 +34,19 @@ GameCommon::GameCommon() {}
 GameCommon::~GameCommon() {}
 
 int GameCommon::setup() {
-	if (g_gamecommon)
+	if (Game::GameGlobal::show)
 		return 1;
-	g_gamecommon = std::make_unique<GameCommon>();
-	Game::GameGlobal::show = g_gamecommon;
+	Game::GameGlobal::show = std::make_unique<GameCommon>();
 	return 0;
-}
-
-GameCommon* GameCommon::instance() {
-	assert(g_gamecommon != nullptr);
-	return g_gamecommon.get();
 }
 
 void GameCommon::drop() {
 	Game::GameGlobal::show.reset();
-	g_gamecommon.reset();
 }
 
 void GameCommon::Render() {
 	for (auto& i : m_anims) {
-		i->Draw();
+		i->Draw(*m_camera);
 	}
 }
 

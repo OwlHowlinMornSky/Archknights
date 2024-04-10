@@ -25,7 +25,26 @@
 
 #include "IGameShow.h"
 
+#include <MysteryEngine/G3D/Camera.Perspective.h>
+
 namespace Game {
+
+IGameShow::IGameShow() {
+	auto cam = std::make_shared<ME::PerspectiveCamera>();
+	cam->setFOV(45.0f);
+	cam->setAspectRatio(16.0f / 9.0f);
+	cam->setZNear(0.25f);
+	cam->setZFar(128.0f);
+	SetCamera(cam);
+}
+
+void IGameShow::SetCamera(std::shared_ptr<ME::Camera> cam) {
+	m_camera = cam;
+}
+
+std::shared_ptr<ME::Camera> IGameShow::GetCamera() const {
+	return m_camera;
+}
 
 void IGameShow::AddAnimation(std::shared_ptr<ME::IModel> a) {
 	m_anims.push_back(a);

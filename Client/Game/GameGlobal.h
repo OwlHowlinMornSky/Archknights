@@ -33,7 +33,7 @@ class IGameShow;
 namespace GameGlobal {
 
 extern std::unique_ptr<GameBoard> board;
-extern std::shared_ptr<IGameShow> show;
+extern std::unique_ptr<IGameShow> show;
 extern std::unique_ptr<GameGoverner> government;
 
 }

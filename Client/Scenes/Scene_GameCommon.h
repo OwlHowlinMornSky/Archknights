@@ -33,7 +33,6 @@ public:
 
 public:
 	static int setup();
-	static GameCommon* instance();
 	static void drop();
 
 protected:

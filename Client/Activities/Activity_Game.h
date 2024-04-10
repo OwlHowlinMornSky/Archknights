@@ -43,6 +43,9 @@ public:
 	virtual void OnExitSysloop() noexcept override;
 
 protected:
+	void ExitGame(int code);
+
+protected:
 	ME::WndRef r;
 };
 

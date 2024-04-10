@@ -25,6 +25,7 @@
 #include <MysteryEngine/Core/NonCopyable.h>
 #include <MysteryEngine/Core/GLM.h>
 
+#include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/ITransformT.h>
 #include <MysteryEngine/G3D/ITransformR.h>
 #include <MysteryEngine/G3D/ITransformS.h>
@@ -47,7 +48,7 @@ public:
 
 public:
 	virtual void Update(float dt) = 0;
-	virtual void Draw() = 0;
+	virtual void Draw(ME::Camera& camera) = 0;
 
 	void SetWaitingForQuit();
 	bool IsWaitingForQuit() const;
@@ -57,7 +58,7 @@ protected:
 
 protected:
 	bool m_waitingForQuit;
-	glm::mat4 m_matV;
+	glm::mat4 m_matM;
 };
 
 } // namespace g3d

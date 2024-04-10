@@ -24,12 +24,7 @@
 #include "../GameThings/Creator.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
-
-namespace {
-
-Scene::GameCommon* r_scene = nullptr;
-
-}
+#include "../Activities/Act01_DefaultEntrance.h"
 
 namespace Activity {
 
@@ -40,12 +35,11 @@ Activity_Game::~Activity_Game() noexcept {}
 bool Activity_Game::start(ME::Window& wnd) noexcept {
 	r(wnd);
 	int res = Game::Creator::setup();
-	r_scene = Scene::GameCommon::instance();
+	Game::GameGlobal::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
 	return res == 0;
 }
 
 void Activity_Game::stop() noexcept {
-	r_scene = nullptr;
 	Game::Creator::drop();
 	r();
 	return;
@@ -66,8 +60,8 @@ void Activity_Game::update(sf::Time dtime) {
 	r->clear(sf::Color::White);
 #endif // _DEBUG
 	Game::GameGlobal::board->Update(dtime.asSeconds());
-	r_scene->update(dtime.asSeconds());
-	r->draw(*r_scene);
+	Game::GameGlobal::show->Update(dtime.asSeconds());
+	r->draw(*Game::GameGlobal::show);
 	r->display();
 	return;
 }
@@ -77,5 +71,14 @@ void Activity_Game::OnEnterSysloop() noexcept {
 }
 
 void Activity_Game::OnExitSysloop() noexcept {}
+
+void Activity_Game::ExitGame(int code) {
+	switch (code) {
+	case 4321:
+		r->changeActivity(std::make_unique<Act01_DefaultEntrance>());
+		break;
+	}
+	return;
+}
 
 } // namespace Activity

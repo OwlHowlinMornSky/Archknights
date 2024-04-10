@@ -27,7 +27,7 @@ namespace Game {
 namespace GameGlobal {
 
 std::unique_ptr<GameBoard> board;
-std::shared_ptr<IGameShow> show;
+std::unique_ptr<IGameShow> show;
 std::unique_ptr<GameGoverner> government;
 
 }

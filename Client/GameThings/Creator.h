@@ -21,9 +21,29 @@
 */
 #pragma once
 
+#include "../Game/Entity.h"
+
 namespace Game::Creator {
 
 int setup();
 void drop();
+
+class GameInitalizator final :
+	public Game::Entity {
+public:
+	virtual void OnJoined();
+	virtual void OnKicking();
+
+	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+
+protected:
+	void LoadStart();
+	void LoadThread();
+	void LoadUpdate(float dt);
+	void LoadOver();
+
+protected:
+	size_t cc;
+};
 
 }

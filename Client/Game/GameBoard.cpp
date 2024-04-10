@@ -42,6 +42,10 @@ void GameBoard::drop() {
 	Game::GameGlobal::board.reset();
 }
 
+void GameBoard::SetExitCallback(std::function<void(int)> cb) {
+	m_exitCallback = cb;
+}
+
 bool GameBoard::IsEmpty() {
 	// 空闲位置数量等于实体位置数量说明没有实体。
 	return m_entities.size() == m_emptyLocations.size();
@@ -71,6 +75,10 @@ void GameBoard::KickEntity(size_t location) {
 	m_entities[location]->BasicOnKicking(); // 通知。
 	m_entities[location].reset(); // 置空！这是保证“在场”“离场”概念的基础。
 	m_emptyLocations.push(location); // 记录空位。
+}
+
+void GameBoard::ExitGame(int code) {
+	m_exitCallback(code);
 }
 
 std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {

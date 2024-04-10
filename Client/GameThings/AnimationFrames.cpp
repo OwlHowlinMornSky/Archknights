@@ -76,10 +76,15 @@ void AnimationFrames::Update(float dt) {
 	return;
 }
 
-void AnimationFrames::Draw() {
+void AnimationFrames::Draw(ME::Camera& camera) {
 	ME::Shader::Bind(g_shader);
 
-	g_shader->updatePVM(&(m_matV[0][0]));
+	if (m_positionChanged || m_rotationChanged || m_scaleChanged || m_originChanged) {
+		ComputeMatrix();
+		m_positionChanged = m_rotationChanged = m_scaleChanged = m_originChanged = false;
+	}
+	glm::mat4 pvm = camera.getMatPV() * m_matM;
+	g_shader->updatePVM(&(pvm[0][0]));
 
 	glCheck(glBindVertexArray(this->vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, this->drawCount));

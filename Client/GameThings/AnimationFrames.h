@@ -35,7 +35,7 @@ public:
 
 public:
 	virtual void Update(float dt) override;
-	virtual void Draw() override;
+	virtual void Draw(ME::Camera& camera) override;
 
 protected:
 	float m_test;

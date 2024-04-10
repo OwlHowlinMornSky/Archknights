@@ -64,9 +64,6 @@
     <ClInclude Include="Game\GameGlobal.h">
       <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="Game\IActorFactory.h">
-      <Filter>GameBase</Filter>
-    </ClInclude>
     <ClInclude Include="Game\GameBoard.h">
       <Filter>GameBase</Filter>
     </ClInclude>
@@ -132,9 +129,6 @@
       <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameGlobal.cpp">
-      <Filter>GameBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\IActorFactory.cpp">
       <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameBoard.cpp">

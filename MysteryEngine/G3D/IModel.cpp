@@ -26,7 +26,8 @@
 namespace ME {
 
 IModel::IModel() :
-	m_waitingForQuit(false) {}
+	m_waitingForQuit(false),
+	m_matM() {}
 
 IModel::~IModel() {}
 
