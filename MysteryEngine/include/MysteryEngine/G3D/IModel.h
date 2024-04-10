@@ -23,6 +23,12 @@
 
 #include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/Core/NonCopyable.h>
+#include <MysteryEngine/Core/GLM.h>
+
+#include <MysteryEngine/G3D/ITransformT.h>
+#include <MysteryEngine/G3D/ITransformR.h>
+#include <MysteryEngine/G3D/ITransformS.h>
+#include <MysteryEngine/G3D/ITransformO.h>
 
 namespace ME {
 
@@ -30,8 +36,28 @@ namespace ME {
  * @brief 可绘制的对象。
 */
 class ME_API IModel :
-	public NonCopyable {
+	public NonCopyable,
+	public ITransformO,
+	public ITransformR,
+	public ITransformS,
+	public ITransformT {
+public:
+	IModel();
+	virtual ~IModel();
 
+public:
+	virtual void Update(float dt) = 0;
+	virtual void Draw() = 0;
+
+	void SetWaitingForQuit();
+	bool IsWaitingForQuit() const;
+
+protected:
+	void ComputeMatrix();
+
+protected:
+	bool m_waitingForQuit;
+	glm::mat4 m_matV;
 };
 
 } // namespace g3d

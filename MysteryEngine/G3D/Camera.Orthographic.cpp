@@ -25,6 +25,20 @@
 
 namespace ME {
 
+void OrthographicCamera::setDim(float x, float y) {
+	m_dimX = x;
+	m_dimY = y;
+	m_matP_needUpdate = true;
+}
+
+float OrthographicCamera::getDimX() const {
+	return m_dimX;
+}
+
+float OrthographicCamera::getDimY() const {
+	return m_dimY;
+}
+
 void ME::OrthographicCamera::updateMatP() {
 	// 计算半宽和半高
 	float x = m_dimX / 2.0f;

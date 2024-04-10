@@ -36,67 +36,21 @@ class ME_API Camera :
 	public ITransformR,
 	public ITransformT {
 public:
-	Camera() :
-		m_matPVChanged(false),
-		m_matP_needUpdate(false),
-		m_zNear(0.5f),
-		m_zFar(128.0f),
-		m_matP(),
-		m_matV(),
-		m_matPV() {}
+	Camera();
 	virtual ~Camera() = default;
 
 public:
-	void setZFar(float z) {
-		if (z > m_zNear && z <= 65536.0f) {
-			m_zFar = z;
-			m_matP_needUpdate = true;
-		}
-		return;
-	}
-	float getZFar() const {
-		return m_zFar;
-	}
-	void setZNear(float z) {
-		m_zNear = z;
-		m_matP_needUpdate = true;
-		return;
-	}
-	float getZNear() const {
-		return m_zNear;
-	}
+	void setZFar(float z);
+	float getZFar() const;
+	void setZNear(float z);
+	float getZNear() const;
 
-	glm::mat4& getMatP() {
-		if (m_matP_needUpdate) {
-			updateMatP();
-		}
-		return m_matP;
-	}
-	glm::mat4& getMatV() {
-		if (m_positionChanged || m_rotationChanged) {
-			updateMatV();
-		}
-		return m_matV;
-	}
-	glm::mat4& getMatPV() {
-		ensureMatPVUpdated();
-		return m_matPV;
-	}
+	glm::mat4& getMatP();
+	glm::mat4& getMatV();
+	glm::mat4& getMatPV();
 
 protected:
-	void ensureMatPVUpdated() {
-		if (m_matP_needUpdate) {
-			updateMatP();
-		}
-		if (m_positionChanged || m_rotationChanged) {
-			updateMatV();
-		}
-		if (m_matPVChanged) {
-			m_matPV = m_matP * m_matV;
-			m_matPVChanged = false;
-		}
-		return;
-	}
+	void ensureMatPVUpdated();
 	void updateMatV();
 	virtual void updateMatP() = 0;
 

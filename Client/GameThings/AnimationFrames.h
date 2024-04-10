@@ -19,8 +19,30 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Actor.h"
+#pragma once
+
+#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/G3D/Vertex.h>
+#include <string_view>
+#include <array>
 
 namespace Game {
 
-} // namespace Game
+class AnimationFrames :
+	public ME::IModel {
+public:
+	int Load(std::string_view file);
+
+public:
+	virtual void Update(float dt) override;
+	virtual void Draw() override;
+
+protected:
+	float m_test;
+	std::array<ME::Vertex, 4> vertexArray;
+	unsigned int vao;
+	unsigned int vertexVBO;
+	unsigned int drawCount;
+};
+
+}

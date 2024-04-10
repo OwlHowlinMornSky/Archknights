@@ -25,6 +25,28 @@
 
 namespace ME {
 
+void PerspectiveCamera::setFOV(float degree) {
+	if (degree < 1.0f) degree = 1.0f;
+	else if (degree > 179.0f) degree = 179.0f;
+	m_fov = degree;
+	m_matP_needUpdate = true;
+	return;
+}
+
+void PerspectiveCamera::setAspectRatio(float ratio) {
+	m_aspectRatio = ratio;
+	m_matP_needUpdate = true;
+	return;
+}
+
+float PerspectiveCamera::getFOV() const {
+	return m_fov;
+}
+
+float PerspectiveCamera::getAspectRatio() const {
+	return m_aspectRatio;
+}
+
 void ME::PerspectiveCamera::updateMatP() {
 	// 计算矩阵
 	m_matP = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_zNear, m_zFar);

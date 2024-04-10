@@ -58,15 +58,6 @@
     <ClInclude Include="Game\TypeDef.h">
       <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Actor.h">
-      <Filter>GameBase</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Animation.h">
-      <Filter>GameBase</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Architecture.h">
-      <Filter>GameBase</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Entity.h">
       <Filter>GameBase</Filter>
     </ClInclude>
@@ -93,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="Scenes\Scene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\AnimationFrames.h">
+      <Filter>GameThings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,15 +128,6 @@
     <ClCompile Include="API.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Actor.cpp">
-      <Filter>GameBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Animation.cpp">
-      <Filter>GameBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Architecture.cpp">
-      <Filter>GameBase</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Entity.cpp">
       <Filter>GameBase</Filter>
     </ClCompile>
@@ -165,6 +150,9 @@
       <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="GameThings\Creator.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\AnimationFrames.cpp">
       <Filter>GameThings</Filter>
     </ClCompile>
   </ItemGroup>

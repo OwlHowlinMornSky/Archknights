@@ -33,25 +33,11 @@ public:
 	virtual ~PerspectiveCamera() override = default;
 
 public:
-	void setFOV(float degree) {
-		if (degree < 1.0f) degree = 1.0f;
-		else if (degree > 179.0f) degree = 179.0f;
-		m_fov = degree;
-		m_matP_needUpdate = true;
-		return;
-	}
-	void setAspectRatio(float ratio) {
-		m_aspectRatio = ratio;
-		m_matP_needUpdate = true;
-		return;
-	}
+	void setFOV(float degree);
+	void setAspectRatio(float ratio);
 
-	float getFOV() const {
-		return m_fov;
-	}
-	float getAspectRatio() const {
-		return m_aspectRatio;
-	}
+	float getFOV() const;
+	float getAspectRatio() const;
 
 protected:
 	virtual void updateMatP() override;

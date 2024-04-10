@@ -24,26 +24,36 @@
 #include <memory>
 #include <list>
 
+#include <MysteryEngine/G3D/IModel.h>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+
 namespace Game {
 
-class Animation;
-class Architecture;
-
-class IGameShow {
+class IGameShow :
+	public sf::Drawable {
 protected:
 	IGameShow() = default;
 public:
 	virtual ~IGameShow() = default;
 
 public:
-	void AddAnimation(std::shared_ptr<Animation> a);
-	void AddModel(std::shared_ptr<Architecture> m);
+	void AddAnimation(std::shared_ptr<ME::IModel> a);
 
 	void Update(float dt);
 
 protected:
-	std::list<std::shared_ptr<Animation>> m_anims;
-	std::list<std::shared_ptr<Architecture>> m_archs;
+	virtual void Render() = 0;
+	virtual void UpdateModels(float dt) = 0;
+
+protected:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+protected:
+	std::list<std::shared_ptr<ME::IModel>> m_anims;
+	sf::Sprite m_sp;
+	sf::RenderTexture m_rtex;
 };
 
 } // namespace Game

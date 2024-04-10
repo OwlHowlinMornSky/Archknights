@@ -25,6 +25,70 @@
 
 namespace ME {
 
+Camera::Camera() :
+	m_matPVChanged(false),
+	m_matP_needUpdate(false),
+	m_zNear(0.5f),
+	m_zFar(128.0f),
+	m_matP(),
+	m_matV(),
+	m_matPV() {}
+
+void Camera::setZFar(float z) {
+	if (z > m_zNear && z <= 65536.0f) {
+		m_zFar = z;
+		m_matP_needUpdate = true;
+	}
+	return;
+}
+
+float Camera::getZFar() const {
+	return m_zFar;
+}
+
+void Camera::setZNear(float z) {
+	m_zNear = z;
+	m_matP_needUpdate = true;
+	return;
+}
+
+float Camera::getZNear() const {
+	return m_zNear;
+}
+
+glm::mat4& Camera::getMatP() {
+	if (m_matP_needUpdate) {
+		updateMatP();
+	}
+	return m_matP;
+}
+
+glm::mat4& Camera::getMatV() {
+	if (m_positionChanged || m_rotationChanged) {
+		updateMatV();
+	}
+	return m_matV;
+}
+
+glm::mat4& Camera::getMatPV() {
+	ensureMatPVUpdated();
+	return m_matPV;
+}
+
+void Camera::ensureMatPVUpdated() {
+	if (m_matP_needUpdate) {
+		updateMatP();
+	}
+	if (m_positionChanged || m_rotationChanged) {
+		updateMatV();
+	}
+	if (m_matPVChanged) {
+		m_matPV = m_matP * m_matV;
+		m_matPVChanged = false;
+	}
+	return;
+}
+
 void Camera::updateMatV() {
 	// 限制俯仰角
 	if (m_rotation.x < 0.0f)

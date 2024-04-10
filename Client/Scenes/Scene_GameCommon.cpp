@@ -19,8 +19,12 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+//#include <GL/glew.h>
+//#include <MysteryEngine/G3D/GlCheck.h>
+
 #include "Scene_GameCommon.h"
 #include "../Game/GameGlobal.h"
+//#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
 
 namespace {
@@ -54,17 +58,15 @@ void GameCommon::drop() {
 }
 
 void GameCommon::Render() {
-
-
+	for (auto& i : m_anims) {
+		i->Draw();
+	}
 }
 
-void GameCommon::update(float dt) {
-	Update(dt);
-	Render();
-}
-
-void GameCommon::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	return target.draw(m_sp, states);
+void GameCommon::UpdateModels(float dt) {
+	for (auto& i : m_anims) {
+		i->Update(dt);
+	}
 }
 
 } // namespace Scene

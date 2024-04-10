@@ -33,19 +33,11 @@ public:
 	virtual ~OrthographicCamera() override = default;
 
 public:
-	void setDim(float x, float y) {
-		m_dimX = x;
-		m_dimY = y;
-		m_matP_needUpdate = true;
-	}
+	void setDim(float x, float y);
 
-	float getDimX() const {
-		return m_dimX;
-	}
+	float getDimX() const;
 
-	float getDimY() const {
-		return m_dimY;
-	}
+	float getDimY() const;
 
 protected:
 	virtual void updateMatP() override;

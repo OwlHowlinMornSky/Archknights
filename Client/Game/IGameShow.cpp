@@ -19,25 +19,36 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "IGameShow.h"
+#include <GL/glew.h>
+#include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
-#include "Animation.h"
-#include "Architecture.h"
+#include "IGameShow.h"
 
 namespace Game {
 
-void IGameShow::AddAnimation(std::shared_ptr<Animation> a) {
+void IGameShow::AddAnimation(std::shared_ptr<ME::IModel> a) {
 	m_anims.push_back(a);
 }
 
-void IGameShow::AddModel(std::shared_ptr<Architecture> m) {
-	m_archs.push_back(m);
+void IGameShow::Update(float dt) {
+	UpdateModels(dt);
+
+	ME::G3dGlobal::setActive(true);
+	m_rtex.setActive(true);
+	glCheck(glClear(GL_COLOR_BUFFER_BIT));
+	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
+
+	Render();
+
+	m_rtex.display();
+
+	m_rtex.setActive(false);
+	ME::G3dGlobal::setActive(false);
 }
 
-void IGameShow::Update(float dt) {
-	for (auto& i : m_anims) {
-		i->Update(dt);
-	}
+void IGameShow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	return target.draw(m_sp, states);
 }
 
 } // namespace Game

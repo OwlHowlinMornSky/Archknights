@@ -24,4 +24,22 @@
 #include <MysteryEngine/G3D/IModel.h>
 
 namespace ME {
+
+IModel::IModel() :
+	m_waitingForQuit(false) {}
+
+IModel::~IModel() {}
+
+void IModel::SetWaitingForQuit() {
+	m_waitingForQuit = true;
+}
+
+bool IModel::IsWaitingForQuit() const {
+	return m_waitingForQuit;
+}
+
+void IModel::ComputeMatrix() {
+
+}
+
 }

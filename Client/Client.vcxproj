@@ -163,10 +163,8 @@
     <ClInclude Include="Activities\Activity_Debug.h" />
     <ClInclude Include="Activities\Activity_Game.h" />
     <ClInclude Include="API.h" />
+    <ClInclude Include="GameThings\AnimationFrames.h" />
     <ClInclude Include="GameThings\Creator.h" />
-    <ClInclude Include="Game\Actor.h" />
-    <ClInclude Include="Game\Animation.h" />
-    <ClInclude Include="Game\Architecture.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\IActorFactory.h" />
@@ -193,10 +191,8 @@
     <ClCompile Include="Activities\Activity_Debug.cpp" />
     <ClCompile Include="Activities\Activity_Game.cpp" />
     <ClCompile Include="API.cpp" />
+    <ClCompile Include="GameThings\AnimationFrames.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
-    <ClCompile Include="Game\Actor.cpp" />
-    <ClCompile Include="Game\Animation.cpp" />
-    <ClCompile Include="Game\Architecture.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\GameGlobal.cpp" />
     <ClCompile Include="Game\IActorFactory.cpp" />

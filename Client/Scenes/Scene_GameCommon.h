@@ -21,17 +21,11 @@
 */
 #pragma once
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Window/Context.hpp>
-#include <SFML/Window/Event.hpp>
 #include "../Game/IGameShow.h"
 
 namespace Scene {
 
 class GameCommon final :
-	public sf::Drawable,
 	public Game::IGameShow {
 public:
 	GameCommon();
@@ -42,18 +36,9 @@ public:
 	static GameCommon* instance();
 	static void drop();
 
-public:
-	void Render();
-
-	void update(float dt);
-
 protected:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-protected:
-	sf::Context m_ctx;
-	sf::Sprite m_sp;
-	sf::RenderTexture m_rtex;
+	virtual void Render() override;
+	virtual void UpdateModels(float dt) override;
 };
 
 } // namespace Scene
