@@ -38,7 +38,7 @@ enum class ME_API WindowStatus {
 	Windowed = 0, // 窗口化。
 	Borderless,   // 无边框。
 	Fullscreen    // 全屏。
-};
+}; // enum class WindowStatus
 
 /**
  * @brief 窗口。
@@ -190,9 +190,6 @@ protected:
 	WindowStatus m_windowStatus; // 窗口状态。
 	std::unique_ptr<Activity> m_activity; // Activity。
 	std::unique_ptr<Activity> m_nextActivity; // 等待生效的 Activity。
-};
-
-
+}; // class Window
 
 } // namespace GUI
-

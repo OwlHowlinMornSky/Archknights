@@ -26,6 +26,9 @@
 
 namespace ME {
 
+/**
+ * @brief 透视相机。
+ */
 class ME_API PerspectiveCamera final :
 	public Camera {
 public:
@@ -47,4 +50,4 @@ protected:
 	float m_aspectRatio; // 宽高比
 };
 
-} // namespace g3d
+} // namespace ME

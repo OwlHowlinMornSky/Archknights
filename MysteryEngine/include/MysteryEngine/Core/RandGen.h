@@ -34,4 +34,4 @@ unsigned int ME_API get();
 
 float ME_API getUni01();
 
-}
+} // namespace ME::RandGen

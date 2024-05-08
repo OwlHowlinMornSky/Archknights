@@ -76,6 +76,6 @@ public:
 protected:
 	bool m_scaleChanged; // 标记缩放值是否修改过（使用后请置0）
 	glm::vec3 m_scale; // 缩放值
-};
+}; // class ITransformS
 
-} // namespace g3d
+} // namespace ME

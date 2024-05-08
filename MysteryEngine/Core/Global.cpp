@@ -38,4 +38,4 @@ void ME_API drop() {
 	ME::Carnival::drop();
 }
 
-}
+} // namespace ME::EngineGlobal

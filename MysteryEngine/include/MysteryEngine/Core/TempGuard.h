@@ -68,6 +68,6 @@ public:
 protected:
 	_T& m_target;
 	_T m_old;
-};
+}; // template class TempGuard
 
-} // namespace ohms
+} // namespace ME

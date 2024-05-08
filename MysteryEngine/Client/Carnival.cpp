@@ -188,7 +188,7 @@ void Carnival::onSystemLoopSingle(bool enter) {
 	return m_singleWnd->onSystemLoop(enter);
 }
 
-} // namespace GUI
+} // namespace ME
 
 #ifdef SFML_SYSTEM_WINDOWS
 

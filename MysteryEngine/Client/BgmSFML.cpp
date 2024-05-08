@@ -393,4 +393,4 @@ float BgmSFML::getLength() const {
 	return this->getDuration().asSeconds();
 }
 
-} // namespace GUI
+} // namespace ME

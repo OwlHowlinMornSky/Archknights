@@ -33,7 +33,7 @@ void ME_API CheckGLError(
 	const char* expression
 );
 
-} // namespace g3d::impl
+} // namespace ME::impl
 
 #define glCheck(expr) do{expr; ME::impl::CheckGLError(__FILE__,__LINE__,#expr);} while(false)
 

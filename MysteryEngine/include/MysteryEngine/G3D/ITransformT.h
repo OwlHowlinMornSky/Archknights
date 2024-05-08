@@ -115,6 +115,6 @@ public:
 protected:
 	mutable bool m_positionChanged; // 标记位置是否修改过（使用后请置0）
 	mutable glm::vec3 m_position; // 位置
-};
+}; // class ITransformT
 
-} // namespace g3d
+} // namespace ME

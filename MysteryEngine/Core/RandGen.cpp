@@ -26,7 +26,7 @@ namespace {
 std::random_device rd;
 std::uniform_real_distribution<float> u1(0.0f, 1.0f);
 
-}
+} // namespace
 
 namespace ME::RandGen {
 
@@ -44,5 +44,4 @@ float getUni01() {
 	return u1(gen);
 }
 
-
-}
+} // namespace ME::RandGen

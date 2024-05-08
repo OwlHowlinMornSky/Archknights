@@ -80,6 +80,6 @@ public:
 protected:
 	mutable bool m_rotationChanged; // 标记旋转值是否修改过（使用后请置0）
 	mutable glm::vec3 m_rotation; // 旋转值
-};
+}; // class ITransformR
 
-} // namespace g3d
+} // namespace ME

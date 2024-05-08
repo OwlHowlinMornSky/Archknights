@@ -59,6 +59,6 @@ protected:
 protected:
 	bool m_waitingForQuit;
 	glm::mat4 m_matM;
-};
+}; // class IModel
 
-} // namespace g3d
+} // namespace ME

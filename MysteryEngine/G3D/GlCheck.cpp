@@ -86,6 +86,6 @@ void CheckGLError(const char* file, unsigned int line, const char* expression) {
 	return;
 }
 
-} // namespace g3d::impl
+} // namespace ME::impl
 
 #endif // _DEBUG

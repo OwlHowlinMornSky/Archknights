@@ -27,4 +27,4 @@ void Activity::OnEnterSysloop() noexcept {}
 
 void Activity::OnExitSysloop() noexcept {}
 
-} // namespace GUI
+} // namespace ME

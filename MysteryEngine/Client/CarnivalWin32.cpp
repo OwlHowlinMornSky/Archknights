@@ -167,6 +167,6 @@ void CarnivalWin32::systemMessagePump() const noexcept {
 	return;
 }
 
-} // namespace GUI
+} // namespace ME
 
 #endif

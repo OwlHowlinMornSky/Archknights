@@ -43,4 +43,4 @@ void IModel::ComputeMatrix() {
 
 }
 
-}
+} // namespace ME

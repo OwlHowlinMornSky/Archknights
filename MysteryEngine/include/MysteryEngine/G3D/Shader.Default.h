@@ -39,6 +39,6 @@ public:
 
 protected:
 	GLint m_uniform;
-};
+}; // class DefaultShader
 
-} // namespace g3d
+} // namespace ME

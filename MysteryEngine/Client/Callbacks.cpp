@@ -35,6 +35,6 @@ namespace ME {
 std::function<void()> OnIdle(&::fEmpty_vv);
 std::function<void(bool)> OnSystemLoop(&::fEmpty_vb);
 
-} // namespace GUI
+} // namespace ME
 
 #endif

@@ -139,6 +139,6 @@ protected:
 	std::list<std::unique_ptr<Window>> m_wnds; // 多窗口模式使用的。
 
 	static std::unique_ptr<Carnival> s_instance; // 唯一实例。
-}; // class ICarnival
+}; // class Carnival
 
-} // namespace GUI
+} // namespace ME

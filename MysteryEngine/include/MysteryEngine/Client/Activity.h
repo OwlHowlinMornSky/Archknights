@@ -80,6 +80,6 @@ public:
 	 * @brief 退出系统循环时的通知。
 	*/
 	virtual void OnExitSysloop() noexcept;
-}; // class IActivity
+}; // class Activity
 
-} // namespace GUI
+} // namespace ME

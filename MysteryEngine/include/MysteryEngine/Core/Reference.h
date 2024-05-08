@@ -53,6 +53,6 @@ public:
 
 protected:
 	_T* ref;
-};
+}; // template class Reference
 
-} // namespace ohms
+} // namespace ME

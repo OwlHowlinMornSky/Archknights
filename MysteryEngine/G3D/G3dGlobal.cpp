@@ -69,4 +69,4 @@ void drop() noexcept {
 	return g_context.reset();
 }
 
-} // namespace g3d::base
+} // namespace ME::G3dGlobal

@@ -66,7 +66,7 @@ protected:
 	sf::Vector2u m_oldSize;
 	sf::Vector2u m_lastSizeWhenWindowed;
 	sf::Vector2i m_lastPositionWhenWindowed;
-};
+}; // class WindowWin32
 
 } // namespace GUI
 

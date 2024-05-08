@@ -28,4 +28,4 @@ std::unique_ptr<Bgm> CreateBGM() {
     return std::make_unique<BgmSFML>();
 }
 
-}
+} // namespace ME

@@ -49,8 +49,8 @@ public:
 
 protected:
 	virtual void systemMessagePump() const noexcept override;
-};
+}; // class CarnivalWin32
 
-} // namespace GUI
+} // namespace ME
 
 #endif

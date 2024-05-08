@@ -56,4 +56,4 @@ void ME::PerspectiveCamera::updateMatP() {
 	return;
 }
 
-} // namespace g3d
+} // namespace ME

@@ -44,6 +44,6 @@ extern std::function<void()> OnIdle;
 */
 extern std::function<void(bool)> OnSystemLoop;
 
-} // namespace GUI
+} // namespace ME
 
 #endif

@@ -106,6 +106,10 @@ public:
 	virtual float getLength() const = 0;
 }; // class Bgm
 
+/**
+ * @brief 构造一个BGM实例。
+ * @return 实例指针。
+ */
 std::unique_ptr<Bgm> ME_API CreateBGM();
 
 } // namespace ME

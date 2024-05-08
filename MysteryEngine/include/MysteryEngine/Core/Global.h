@@ -29,10 +29,12 @@ namespace ME::EngineGlobal {
 /**
  * @brief 配置 carnival、bgm、g3d。
  * @param multiWnd: carnival是否使用多窗口模式。
- * @return 
 */
 void ME_API setup(bool multiWnd);
 
+/**
+ * @brief 销毁 carnival、bgm、g3d，并清理。
+ */
 void ME_API drop();
 
-}
+} // namespace ME::EngineGlobal

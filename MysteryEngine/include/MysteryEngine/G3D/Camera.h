@@ -30,7 +30,7 @@
 namespace ME {
 
 /**
- * @brief Camera。
+ * @brief Camera 接口，具体实现有 透视相机 和 正交相机。
 */
 class ME_API Camera :
 	public ITransformR,
@@ -62,6 +62,6 @@ protected:
 	glm::mat4 m_matP;
 	glm::mat4 m_matV;
 	glm::mat4 m_matPV;
-};
+}; // class Camera
 
-} // namespace g3d
+} // namespace ME

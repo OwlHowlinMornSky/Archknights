@@ -32,4 +32,4 @@ void ME_API drop();
 void ME_API play(std::string_view file);
 void ME_API stop();
 
-}
+} // ME::GlobalBGM

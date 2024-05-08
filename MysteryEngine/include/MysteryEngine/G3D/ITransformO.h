@@ -58,6 +58,6 @@ public:
 protected:
 	bool m_originChanged; // 标记原点是否修改过（使用后请置0）
 	glm::vec3 m_origin; // 原点
-};
+}; // class ITransformO
 
-} // namespace g3d
+} // namespace ME

@@ -99,7 +99,7 @@ void run() {
 	return;
 }
 
-}
+} // namespace
 
 namespace ME::GlobalBGM {
 
@@ -133,7 +133,7 @@ void GlobalBGM::stop() {
 	data->m_cmds.push("s;");
 }
 
-}
+} // namespace ME::GlobalBGM
 
 #else
 
@@ -141,7 +141,7 @@ namespace {
 
 std::unique_ptr<ME::Bgm> m_bgm;
 
-}
+} // namespace
 
 namespace ME::GlobalBGM {
 
@@ -165,6 +165,6 @@ void GlobalBGM::stop() {
 	::m_bgm->stop();
 }
 
-}
+} // namespace ME::GlobalBGM
 
 #endif

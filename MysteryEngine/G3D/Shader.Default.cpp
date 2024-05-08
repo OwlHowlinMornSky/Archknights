@@ -49,7 +49,7 @@ const char g_defaultFragShader[] =
 "    gl_FragColor = texture2D(uTex, vUv) * vTint;"\
 "}";
 
-}
+} // namespace
 
 namespace ME {
 
@@ -75,4 +75,4 @@ void DefaultShader::updatePVM(GLfloat* pvm) const {
 	updateUniformMat4fv(m_uniform, pvm);
 }
 
-} // namespace g3d
+} // namespace ME

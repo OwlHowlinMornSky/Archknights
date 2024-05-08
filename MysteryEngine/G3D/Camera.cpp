@@ -108,4 +108,4 @@ void Camera::updateMatV() {
 	return;
 }
 
-} // namespace g3d
+} // namespace ME

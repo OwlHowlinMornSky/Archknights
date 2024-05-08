@@ -90,4 +90,4 @@ protected:
 	std::unique_ptr<sf::FileInputStream> m_stream; // SFML 的 文件流，它必须在 Music 实例之后析构。
 }; // class BgmSFML
 
-} // namespace GUI
+} // namespace ME

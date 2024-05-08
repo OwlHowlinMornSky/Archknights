@@ -30,7 +30,6 @@ namespace ME {
  * @brief 公共的顶点属性。
 */
 namespace VertexAttribute {
-
 enum ME_API : unsigned int {
 	Position = 0, // 顶点坐标。
 	TexCoord,     // 纹理坐标。
@@ -38,7 +37,6 @@ enum ME_API : unsigned int {
 	Normal,       // 法向。
 	COUNT         // [计数]
 };
-
 } // namespace VertexAttribute
 
 /**
@@ -103,6 +101,6 @@ struct ME_API Vertex {
 	glm::vec2 texCoord; // 纹理坐标。
 	glm::vec4 color;    // 颜色。
 	glm::vec3 normal;   // 法向。
-};
+}; // struct Vertex
 
-} // namespace g3d
+} // namespace ME

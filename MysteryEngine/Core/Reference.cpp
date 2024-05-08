@@ -23,5 +23,6 @@
 
 #include <MysteryEngine/Core/Reference.h>
 
+// 有cpp才会编译
 namespace ME {
 }

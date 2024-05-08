@@ -26,6 +26,9 @@
 
 namespace ME {
 
+/**
+ * @brief 正交相机。
+ */
 class ME_API OrthographicCamera final :
 	public Camera {
 public:
@@ -47,4 +50,4 @@ public:
 	float m_dimY; // 画面高度（不是半高）
 };
 
-} // namespace g3d
+} // namespace ME

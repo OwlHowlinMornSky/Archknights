@@ -163,4 +163,4 @@ bool Window::isWaitingForStop() const noexcept {
 	return m_waitToStop;
 }
 
-} // namespace GUI
+} // namespace ME

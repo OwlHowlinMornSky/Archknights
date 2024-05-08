@@ -51,4 +51,4 @@ void ME::OrthographicCamera::updateMatP() {
 	return;
 }
 
-} // namespace g3d
+} // namespace ME

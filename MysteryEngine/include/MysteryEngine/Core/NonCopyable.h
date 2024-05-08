@@ -38,4 +38,4 @@ protected:
 	NonCopyable& operator=(const NonCopyable&) = delete;
 }; // class NonCopyable
 
-} // namespace g3d
+} // namespace ME

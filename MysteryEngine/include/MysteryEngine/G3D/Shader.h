@@ -36,7 +36,7 @@ enum class ME_API ShaderType : size_t {
 	Vertex = 0, // 顶点。
 	Fragment,   // 片元。
 	COUNT       // [计数]
-};
+}; // enum class ShaderType
 
 class ME_API Shader :
 	public NonCopyable {
@@ -71,6 +71,6 @@ public:
 protected:
 	GLuint m_program; // 着色器程序。
 	GLuint m_shader[static_cast<size_t>(ShaderType::COUNT)];
-};
+}; // class Shader
 
-} // namespace g3d
+} // namespace ME

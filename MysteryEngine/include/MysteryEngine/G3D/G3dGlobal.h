@@ -40,4 +40,4 @@ bool ME_API setActive(bool active);
 */
 void ME_API drop() noexcept;
 
-} // namespace g3d::base
+} // namespace ME::G3dGlobal

@@ -446,6 +446,6 @@ void WindowWin32::checkSizeInSystemLoop() noexcept {
 	return;
 }
 
-} // namespace GUI
+} // namespace ME
 
 #endif
