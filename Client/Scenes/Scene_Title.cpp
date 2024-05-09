@@ -65,6 +65,47 @@ const char g_vs[] =
 "  v_uv = a_texCoord;"\
 "}";
 
+const char g_vs2[] =
+"#version 330\n\
+attribute vec3 a_vertex0;\
+attribute vec3 a_vertex1;\
+attribute vec2 a_offset;\
+attribute vec2 a_texCoord;\
+uniform mat4 u_matP;\
+uniform mat4 u_matV;\
+uniform mat4 u_matM;\
+varying float v_alpha;\
+varying vec2 v_uv;\
+\
+void main() {\
+  vec4 vertex0 = vec4(a_vertex0, 1.0);\
+  vec4 vertex1 = vec4(a_vertex1, 1.0);\
+  vec4 center = vec4(0.0, 0.0, 0.0, 1.0);\
+  \
+  mat4 mat_vm = u_matV * u_matM;\
+  vertex0 = mat_vm * vertex0;\
+  vertex1 = mat_vm * vertex1;\
+  center = mat_vm * center;\
+  \
+  vertex0 *= center.z / vertex0.z;\
+  vertex1 *= center.z / vertex1.z;\
+  \
+  vec4 delta = vertex1 - vertex0;\
+  vec2 nn = vec2(-delta.y, delta.x);\
+  nn /= length(nn);\
+  nn *= a_offset.y;\
+  \
+  vec4 finalPosition = mix(vertex0, vertex1, a_offset.x);\
+  finalPosition.xy += nn;\
+  \
+  gl_Position = u_matP * finalPosition;\
+  \
+  vec4 depthPosition = vec4(mix(a_vertex0, a_vertex1, a_offset.x), 1.0);\
+  depthPosition = u_matM * depthPosition;\
+  v_alpha = 0.75 + depthPosition.z / 2.0;\
+  v_uv = a_texCoord;\
+}";
+
 const char g_fs[] =
 "#version 330\n"\
 "uniform sampler2D u_texture0;"\
@@ -79,7 +120,7 @@ const char g_fs[] =
 
 void Shader_Title_Sphere::setup() {
 	clear();
-	loadFromMemory(g_vs, ME::ShaderType::Vertex);
+	loadFromMemory(g_vs2, ME::ShaderType::Vertex);
 	loadFromMemory(g_fs, ME::ShaderType::Fragment);
 	glCheck(glBindAttribLocation(m_program, 0, "a_vertex0"));
 	glCheck(glBindAttribLocation(m_program, 1, "a_vertex1"));
@@ -97,7 +138,6 @@ void Shader_Title_Sphere::setup() {
 
 void Shader_Title_Sphere::update(ME::Camera& camera) {
 	Bind(this);
-	//glm::mat4 id{};
 	this->updateUniformMat4fv(m_ul_matp, &(camera.getMatP()[0][0]));
 	this->updateUniformMat4fv(m_ul_matv, &(camera.getMatV()[0][0]));
 	//this->updateUniformMat4fv(m_ul_matm, &(id[0][0]));
@@ -162,7 +202,8 @@ Title::~Title() {}
 
 void Title::SetScale(float r) {
 	sf::Vector2u size = m_rtex.getSize();
-	m_camera.setDim(9.0f / 4 * size.x / size.y / r, 9.0f / 4 / r);
+	//m_camerah.setDim(9.0f / 4 * size.x / size.y / r, 9.0f / 4 / r);
+	m_camera.setAspectRatio(1.0f * size.x / size.y);
 	return;
 }
 
@@ -175,11 +216,12 @@ void Title::setup(sf::Vector2u size) {
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
 
-	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
-	m_camera.setPosition(0.0f, 0.0f, 10.0f);
+	//m_camerah.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
+	//m_camerah.setPosition(0.0f, 0.0f, 10.0f);
+	m_camera.setAspectRatio(1.0f * size.x / size.y);
+	m_camera.setPosition(0.0f, 0.0f, 12.0f);
+	m_camera.setFOV(9.0f);
 
-	//glm::vec3 v0(0.0f, 0.0f, 0.0f);
-	//glm::vec4 v1(2.0f, 2.0f, 2.0f, 0.0f);
 	float thick = 0.0075f;
 
 	union I2F { // 用于把bin转化为float
@@ -275,7 +317,8 @@ void Title::render() {
 void Title::resize(sf::Vector2u size) {
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
-	m_camera.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
+	//m_camerah.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
+	m_camera.setAspectRatio(1.0f * size.x / size.y);
 }
 
 void Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {
