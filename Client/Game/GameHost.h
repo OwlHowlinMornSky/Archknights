@@ -26,7 +26,7 @@
 
 namespace Game {
 
-namespace GovernerType {
+namespace HostJob {
 enum Type {
 	Unknown = 0,
 	PlayerInputHandler,
@@ -37,9 +37,9 @@ enum Type {
 };
 }
 
-using GameGoverner = std::array<EntityLocationType, GovernerType::COUNT>;
+using GameHost = std::array<EntityLocationType, HostJob::COUNT>;
 
-namespace GameGoverment {
+namespace GameHolder {
 
 int setup();
 void drop();

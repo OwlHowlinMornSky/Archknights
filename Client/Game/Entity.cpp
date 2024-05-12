@@ -61,6 +61,8 @@ MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLpa
 	return MsgResult::Unsubscribe;
 }
 
+void Entity::FixedUpdate(float dt) {}
+
 void Entity::OnPositionChanged() {}
 
 void Entity::OnRotationChanged() {}

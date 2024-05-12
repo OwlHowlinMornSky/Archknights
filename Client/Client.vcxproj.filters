@@ -73,7 +73,7 @@
     <ClInclude Include="Game\MsgResult.h">
       <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameGoverner.h">
+    <ClInclude Include="Game\GameHost.h">
       <Filter>GameBase</Filter>
     </ClInclude>
     <ClInclude Include="GameThings\Creator.h">
@@ -140,7 +140,7 @@
     <ClCompile Include="Game\MsgResult.cpp">
       <Filter>GameBase</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameGoverner.cpp">
+    <ClCompile Include="Game\GameHost.cpp">
       <Filter>GameBase</Filter>
     </ClCompile>
     <ClCompile Include="GameThings\Creator.cpp">

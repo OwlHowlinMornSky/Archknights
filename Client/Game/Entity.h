@@ -75,6 +75,8 @@ public:
 		OnRotationChanged();
 	}
 
+	virtual void FixedUpdate(float dt);
+
 protected:
 	virtual void OnPositionChanged();
 	virtual void OnRotationChanged();
@@ -91,13 +93,13 @@ protected:
 	EntityLocationType m_location;
 
 // Trigger入口
-public:
-	void OnUpdate(float dt) {
-		return this->onUpdate(dt);
-	}
+//public:
+	//void OnUpdate(float dt) {
+	//	return this->onUpdate(dt);
+	//}
 
-protected:
-	std::function<void(float)> onUpdate;
+//protected:
+//	std::function<void(float)> onUpdate;
 
 };
 

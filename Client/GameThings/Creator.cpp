@@ -24,7 +24,7 @@
 #include "../Scenes/Scene_GameCommon.h"
 #include "../Game/GameBoard.h"
 #include "../Game/GameGlobal.h"
-#include "../Game/GameGoverner.h"
+#include "../Game/GameHost.h"
 #include "../Game/MsgResult.h"
 
 #include <thread>
@@ -33,7 +33,7 @@
 namespace Game::Creator {
 
 int setup() {
-	Game::GameGoverment::setup();
+	Game::GameHolder::setup();
 	Scene::GameCommon::setup();
 	Game::GameBoard::setup();
 	Game::GameGlobal::board->JoinEntity(std::make_shared<GameInitalizator>());
@@ -43,18 +43,22 @@ int setup() {
 void drop() {
 	Game::GameBoard::drop();
 	Scene::GameCommon::drop();
-	Game::GameGoverment::drop();
+	Game::GameHolder::drop();
 }
 
 void GameInitalizator::OnJoined() {
 	LoadStart();
-	onUpdate = std::bind(&GameInitalizator::LoadUpdate, this, std::placeholders::_1);
-	GameGlobal::board->Register_Update(m_location);
+	//onUpdate = std::bind(&GameInitalizator::LoadUpdate, this, std::placeholders::_1);
+	//GameGlobal::board->Register_Update(m_location);
 }
 
 void GameInitalizator::OnKicking() {
 	//GameGlobal::board->Unregister_Update(m_location);
 	LoadOver();
+}
+
+void GameInitalizator::FixedUpdate(float dt) {
+	LoadUpdate(dt);
 }
 
 MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {

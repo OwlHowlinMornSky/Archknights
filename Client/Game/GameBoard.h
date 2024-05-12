@@ -94,15 +94,15 @@ public:
 	 * @brief 注册trigger。注册为update的一员。
 	 * @param location 本实体的位置。
 	*/
-	void Register_Update(EntityLocationType location);
+	//void Register_Update(EntityLocationType location);
 	/**
 	 * @brief 注销trigger。退出update集合。
 	 * @param location 本实体的位置。
 	*/
-	void Unregister_Update(EntityLocationType location);
+	//void Unregister_Update(EntityLocationType location);
 
-protected:
-	std::set<EntityLocationType> m_trigger_update; // update的trigger成员。
+//protected:
+	//std::set<EntityLocationType> m_trigger_update; // update的trigger成员。
 
 
 // 事件控制器

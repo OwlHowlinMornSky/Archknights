@@ -19,21 +19,21 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameGoverner.h"
+#include "GameHost.h"
 
 #include "GameGlobal.h"
 
-namespace Game::GameGoverment {
+namespace Game::GameHolder {
 
 int setup() {
-	if (Game::GameGlobal::government)
+	if (Game::GameGlobal::holders)
 		return 1;
-	Game::GameGlobal::government = std::make_unique<GameGoverner>();
+	Game::GameGlobal::holders = std::make_unique<GameHost>();
 	return 0;
 }
 
 void drop() {
-	Game::GameGlobal::government.reset();
+	Game::GameGlobal::holders.reset();
 }
 
 }
