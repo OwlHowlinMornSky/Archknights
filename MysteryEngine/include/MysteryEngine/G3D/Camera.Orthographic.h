@@ -42,6 +42,8 @@ public:
 
 	float getDimY() const;
 
+	virtual Camera::Type getType() const override;
+
 protected:
 	virtual void updateMatP() override;
 

@@ -93,8 +93,8 @@ void Camera::updateMatV() {
 	// 限制俯仰角
 	if (m_rotation.x < 0.0f)
 		m_rotation.x = 0.0f;
-	else if (m_rotation.x > 90.0f)
-		m_rotation.x = 90.0f;
+	else if (m_rotation.x > 180.0f)
+		m_rotation.x = 180.0f;
 	// 计算旋转
 	m_matV = glm::rotate(glm::radians(-m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
 	m_matV *= glm::rotate(glm::radians(-m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));

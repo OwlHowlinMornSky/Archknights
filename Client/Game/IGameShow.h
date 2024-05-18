@@ -40,6 +40,8 @@ public:
 	virtual ~IGameShow() = default;
 
 public:
+	void SetSize(sf::Vector2u size);
+
 	void SetCamera(std::shared_ptr<ME::Camera> cam);
 	std::shared_ptr<ME::Camera> GetCamera() const;
 

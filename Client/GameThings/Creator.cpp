@@ -30,6 +30,9 @@
 #include <thread>
 #include <functional>
 
+#include <MysteryEngine/G3D/Camera.Perspective.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
+
 namespace Game::Creator {
 
 int setup() {
@@ -84,6 +87,37 @@ void GameInitalizator::LoadStart() {
 
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
+	auto cam = std::make_shared<ME::PerspectiveCamera>();
+	Game::GameGlobal::show->SetCamera(cam);
+	cam->setAspectRatio(16.0f / 9.0f);
+	cam->setFOV(45.0f);
+	//cam->setPosition(0.0f, -3.0f, 5.0f);
+	cam->setPosition(0.0f, 0.0f, 5.0f);
+	//cam->setRotation(30.0f, 0.0f, 0.0f);
+	cam->setRotation(0.0f, 0.0f, 0.0f);
+
+	//cam->setZNear(0.5f);
+	//cam->setZFar(50.0f);
+
+	mngr = new ohms::SpineManager();
+	auto set = mngr->addPose("char_151_myrtle", 0);
+
+	ME::G3dGlobal::setActive(true);
+	auto anim = set->runOneEntity();
+	ME::G3dGlobal::setActive(false);
+
+	anim->setPosition(0.0f, 0.0f, 0.0f);
+	anim->setRotation(0.0f, 0.0f, 0.0f);
+	anim->setOrigin(0.0f, 0.0f, 0.0f);
+	anim->setScale(1.0f, 1.0f, 1.0f);
+
+	//anim->addAnimation(0, "")
+	//anim->addEmptyAnimation(0, true, 0.0f);
+
+	std::shared_ptr<ohms::SpineEntity> ani(anim);
+	Game::GameGlobal::show->AddAnimation(ani);
+
+
 }
 
 void GameInitalizator::LoadThread() {}
@@ -93,9 +127,9 @@ void GameInitalizator::LoadUpdate(float dt) {
 
 	GameGlobal::board->DistributeMsg(5678, cc, 0);
 
-	if (cc >= 430) {
-		GameGlobal::board->BroadcastMsg(9876, 0, 0);
-	}
+	//if (cc >= 430) {
+	//	GameGlobal::board->BroadcastMsg(9876, 0, 0);
+	//}
 
 	//cc--;
 	//if (cc == 0)

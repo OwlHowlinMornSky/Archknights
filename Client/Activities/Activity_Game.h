@@ -22,6 +22,7 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
+#include "../Spine.h"
 
 namespace Activity {
 
@@ -45,8 +46,12 @@ public:
 protected:
 	void ExitGame(int code);
 
+	void UpdateSize();
+
 protected:
 	ME::WndRef r;
+	ohms::SpineManager* mngr;
+	ohms::SpineEntity* anim;
 };
 
 } // namespace Activity

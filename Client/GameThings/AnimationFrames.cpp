@@ -76,7 +76,7 @@ void AnimationFrames::Update(float dt) {
 	return;
 }
 
-void AnimationFrames::Draw(ME::Camera& camera) {
+void AnimationFrames::Draw(ME::Camera& camera, ME::Shader& shader) {
 	ME::Shader::Bind(g_shader);
 
 	if (m_positionChanged || m_rotationChanged || m_scaleChanged || m_originChanged) {

@@ -85,6 +85,12 @@
     <ClInclude Include="GameThings\AnimationFrames.h">
       <Filter>GameThings</Filter>
     </ClInclude>
+    <ClInclude Include="char_151_myrtle.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="Spine.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -147,6 +153,9 @@
       <Filter>GameThings</Filter>
     </ClCompile>
     <ClCompile Include="GameThings\AnimationFrames.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="Spine.cpp">
       <Filter>GameThings</Filter>
     </ClCompile>
   </ItemGroup>

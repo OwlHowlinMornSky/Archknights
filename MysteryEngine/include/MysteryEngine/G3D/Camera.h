@@ -36,6 +36,14 @@ class ME_API Camera :
 	public ITransformR,
 	public ITransformT {
 public:
+	enum class Type {
+		Orthographic = 1,
+		Perspective,
+
+		COUNT
+	};
+
+public:
 	Camera();
 	virtual ~Camera() = default;
 
@@ -48,6 +56,8 @@ public:
 	glm::mat4& getMatP();
 	glm::mat4& getMatV();
 	glm::mat4& getMatPV();
+
+	virtual Camera::Type getType() const = 0;
 
 protected:
 	void ensureMatPVUpdated();

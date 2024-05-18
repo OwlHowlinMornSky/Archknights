@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../Game/Entity.h"
+#include "../Spine.h"
 
 namespace Game::Creator {
 
@@ -46,6 +47,7 @@ protected:
 
 protected:
 	size_t cc;
+	ohms::SpineManager* mngr;
 };
 
 }

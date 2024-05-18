@@ -30,6 +30,7 @@
 #include <MysteryEngine/G3D/ITransformR.h>
 #include <MysteryEngine/G3D/ITransformS.h>
 #include <MysteryEngine/G3D/ITransformO.h>
+#include <MysteryEngine/G3D/Shader.h>
 
 namespace ME {
 
@@ -48,7 +49,7 @@ public:
 
 public:
 	virtual void Update(float dt) = 0;
-	virtual void Draw(ME::Camera& camera) = 0;
+	virtual void Draw(ME::Camera& camera, ME::Shader& shader) = 0;
 
 	void SetWaitingForQuit();
 	bool IsWaitingForQuit() const;

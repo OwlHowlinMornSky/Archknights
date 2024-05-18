@@ -38,6 +38,19 @@ IGameShow::IGameShow() {
 	SetCamera(cam);
 }
 
+void IGameShow::SetSize(sf::Vector2u size) {
+	m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
+	m_sp.setTexture(m_rtex.getTexture(), true);
+
+	switch (m_camera->getType()) {
+	case ME::Camera::Type::Perspective:
+		((ME::PerspectiveCamera*)m_camera.get())->setAspectRatio(1.0f * size.x / size.y);
+		break;
+	default:
+		break;
+	}
+}
+
 void IGameShow::SetCamera(std::shared_ptr<ME::Camera> cam) {
 	m_camera = cam;
 }
@@ -55,8 +68,26 @@ void IGameShow::Update(float dt) {
 
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
-	glCheck(glClear(GL_COLOR_BUFFER_BIT));
+
+	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+
+	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
+
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
+	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	glCheck(glEnable(GL_DEPTH_TEST));
+	glCheck(glDepthMask(GL_TRUE));
+
+	glCheck(glEnable(GL_CULL_FACE));
+	glCheck(glCullFace(GL_BACK));
+
+	//glCheck(glEnable(GL_BLEND));
+	glCheck(glDisable(GL_CULL_FACE));
+	glCheck(glDepthMask(GL_FALSE));
+
+	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 
 	Render();
 

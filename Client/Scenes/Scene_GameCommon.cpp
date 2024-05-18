@@ -22,14 +22,20 @@
 //#include <GL/glew.h>
 //#include <MysteryEngine/G3D/GlCheck.h>
 
+#include <MysteryEngine/G3D/Shader.Default.h>
+
 #include "Scene_GameCommon.h"
 #include "../Game/GameGlobal.h"
 //#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
 
+
 namespace Scene {
 
-GameCommon::GameCommon() {}
+GameCommon::GameCommon() {
+	m_ds = new ME::DefaultShader();
+	m_ds->setup();
+}
 
 GameCommon::~GameCommon() {}
 
@@ -45,9 +51,13 @@ void GameCommon::drop() {
 }
 
 void GameCommon::Render() {
+	ME::Shader::Bind(m_ds);
+
 	for (auto& i : m_anims) {
-		i->Draw(*m_camera);
+		i->Draw(*m_camera, *m_ds);
 	}
+
+	ME::Shader::Bind(nullptr);
 }
 
 void GameCommon::UpdateModels(float dt) {

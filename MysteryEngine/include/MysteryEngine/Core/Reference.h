@@ -51,6 +51,10 @@ public:
 		return ref;
 	}
 
+	const _T* operator->() const {
+		return ref;
+	}
+
 protected:
 	_T* ref;
 }; // template class Reference

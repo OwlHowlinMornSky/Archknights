@@ -42,6 +42,8 @@ public:
 	float getFOV() const;
 	float getAspectRatio() const;
 
+	virtual Camera::Type getType() const override;
+
 protected:
 	virtual void updateMatP() override;
 

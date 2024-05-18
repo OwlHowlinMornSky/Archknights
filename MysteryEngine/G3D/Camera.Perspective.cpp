@@ -47,6 +47,10 @@ float PerspectiveCamera::getAspectRatio() const {
 	return m_aspectRatio;
 }
 
+Camera::Type PerspectiveCamera::getType() const {
+    return Camera::Type::Perspective;
+}
+
 void ME::PerspectiveCamera::updateMatP() {
 	// 计算矩阵
 	m_matP = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_zNear, m_zFar);

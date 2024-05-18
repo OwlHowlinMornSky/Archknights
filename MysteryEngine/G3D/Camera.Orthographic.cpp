@@ -39,6 +39,10 @@ float OrthographicCamera::getDimY() const {
 	return m_dimY;
 }
 
+Camera::Type OrthographicCamera::getType() const {
+    return Camera::Type::Orthographic;
+}
+
 void ME::OrthographicCamera::updateMatP() {
 	// 计算半宽和半高
 	float x = m_dimX / 2.0f;

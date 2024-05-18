@@ -23,6 +23,10 @@
 
 #include <MysteryEngine/G3D/IModel.h>
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 namespace ME {
 
 IModel::IModel() :
@@ -40,7 +44,16 @@ bool IModel::IsWaitingForQuit() const {
 }
 
 void IModel::ComputeMatrix() {
+	glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
+	glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));
 
+	glm::mat4 matrix_rotY = glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 matrix_rotX = glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::mat4 matrix_rotZ = glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	glm::mat4 matrix_rotation = matrix_rotZ * matrix_rotY * matrix_rotX;
+
+	m_matM = matrix_pos * matrix_rotation * matrix_scale;
 }
 
 } // namespace ME

@@ -65,7 +65,7 @@ void DefaultShader::setup() {
 	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Color), "aVertexColor"));
 	linkShader();
 	Bind(this);
-	m_uniform = getUniformLocation("matPVM");
+	glCheck(m_uniform = getUniformLocation("uMatPVM"));
 	updateUniform1iName("uTex", 0);
 	Bind(nullptr);
 	return;
