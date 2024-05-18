@@ -50,8 +50,6 @@ protected:
 
 protected:
 	ME::WndRef r;
-	ohms::SpineManager* mngr;
-	ohms::SpineEntity* anim;
 };
 
 } // namespace Activity

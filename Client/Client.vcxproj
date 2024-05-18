@@ -300,6 +300,7 @@
     <ClInclude Include="Activities\Act05_Title.h" />
     <ClInclude Include="Activities\Activity_Debug.h" />
     <ClInclude Include="Activities\Activity_Game.h" />
+    <ClInclude Include="ActorGroup.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="char_151_myrtle.h" />
     <ClInclude Include="GameThings\AnimationFrames.h" />
@@ -311,6 +312,7 @@
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Scene_GameCommon.h" />
@@ -329,6 +331,7 @@
     <ClCompile Include="Activities\Act05_Title.cpp" />
     <ClCompile Include="Activities\Activity_Debug.cpp" />
     <ClCompile Include="Activities\Activity_Game.cpp" />
+    <ClCompile Include="ActorGroup.cpp" />
     <ClCompile Include="API.cpp" />
     <ClCompile Include="GameThings\AnimationFrames.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
@@ -338,6 +341,7 @@
     <ClCompile Include="Game\GameHost.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
     <ClCompile Include="Game\MsgResult.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />
     <ClCompile Include="Scenes\Scene_ITitle.cpp" />
     <ClCompile Include="Scenes\Scene_Title.cpp" />

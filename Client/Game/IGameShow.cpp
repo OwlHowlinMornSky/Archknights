@@ -59,17 +59,19 @@ std::shared_ptr<ME::Camera> IGameShow::GetCamera() const {
 	return m_camera;
 }
 
-void IGameShow::AddAnimation(std::shared_ptr<ME::IModel> a) {
+void IGameShow::AddModel(std::shared_ptr<ME::IModel> a) {
 	m_anims.push_back(a);
 }
 
 void IGameShow::Update(float dt) {
-	UpdateModels(dt);
+	for (auto& i : m_anims) {
+		i->Update(dt);
+	}
 
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
 
-	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	//glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
 	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
@@ -82,12 +84,6 @@ void IGameShow::Update(float dt) {
 
 	glCheck(glEnable(GL_CULL_FACE));
 	glCheck(glCullFace(GL_BACK));
-
-	//glCheck(glEnable(GL_BLEND));
-	glCheck(glDisable(GL_CULL_FACE));
-	glCheck(glDepthMask(GL_FALSE));
-
-	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 
 	Render();
 

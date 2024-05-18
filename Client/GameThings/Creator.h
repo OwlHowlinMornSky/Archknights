@@ -23,6 +23,7 @@
 
 #include "../Game/Entity.h"
 #include "../Spine.h"
+#include "../Ground.h"
 
 namespace Game::Creator {
 
@@ -48,6 +49,7 @@ protected:
 protected:
 	size_t cc;
 	ohms::SpineManager* mngr;
+	std::shared_ptr<ObjModel> gd;
 };
 
 }

@@ -10,10 +10,7 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <MysteryEngine/G3D/Vertex.h>
 
-#define spine_to3d_scale_i (128.0f)
-#define spine_global_scale (0.7125f)
-
-#define outline_thickness (0.02f)
+#include "ActorGroup.h"
 
 namespace ohms {
 
@@ -35,7 +32,6 @@ struct SpinePose {
  * @brief skeleton entity and its animation states
  */
 class SpineEntity final :
-	public sf::Drawable,
 	public ME::IModel {
 	friend class SpineEntitySet;
 	friend class SpineManager;
@@ -47,7 +43,6 @@ public:
 public:
 	virtual void Update(float dt) override;
 	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	/// <summary>
 	/// 设置动画。
@@ -143,7 +138,8 @@ protected:
 	spine::Vector<spine::Bone*>* bonesRef;
 	mutable spine::Vector<float> worldVertices;
 	mutable spine::SkeletonClipping clipper;
-	std::vector<ME::Vertex> vertexArray;
+	std::vector<Game::ActorVertex> vertexArray;
+	//std::vector<ME::Vertex> vertexArray;
 }; // end class SpineEntity
 
 /// <summary>

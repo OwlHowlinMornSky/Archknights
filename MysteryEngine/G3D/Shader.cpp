@@ -147,28 +147,44 @@ GLint Shader::getUniformLocation(const char* name) const {
 	return glGetUniformLocation(m_program, name);
 }
 
+void Shader::updateUniform1i(GLint pos, GLint val) const {
+	glCheck(glUniform1i(pos, val));
+}
+
 void Shader::updateUniform1iName(const char* name, GLint val) const {
 	glCheck(glUniform1i(glGetUniformLocation(m_program, name), val));
+}
+
+void Shader::updateUniform2f(GLint pos, GLfloat val0, GLfloat val1) const {
+	glCheck(glUniform2f(pos, val0, val1));
 }
 
 void Shader::updateUniform2fName(const char* name, GLfloat val0, GLfloat val1) const {
 	glCheck(glUniform2f(glGetUniformLocation(m_program, name), val0, val1));
 }
 
+void Shader::updateUniform3f(GLint pos, GLfloat val0, GLfloat val1, GLfloat val2) const {
+	glCheck(glUniform3f(pos, val0, val1, val2));
+}
+
 void Shader::updateUniform3fName(const char* name, GLfloat val0, GLfloat val1, GLfloat val2) const {
 	glCheck(glUniform3f(glGetUniformLocation(m_program, name), val0, val1, val2));
+}
+
+void Shader::updateUniform4f(GLint pos, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const {
+	glCheck(glUniform4f(pos, val0, val1, val2, val3));
 }
 
 void Shader::updateUniform4fName(const char* name, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const {
 	glCheck(glUniform4f(glGetUniformLocation(m_program, name), val0, val1, val2, val3));
 }
 
-void Shader::updateUniformMat4fvName(const char* name, GLfloat* pvm) const {
-	glCheck(glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, GL_FALSE, pvm));
-}
-
 void Shader::updateUniformMat4fv(GLint pos, GLfloat* pvm) const {
 	glCheck(glUniformMatrix4fv(pos, 1, GL_FALSE, pvm));
+}
+
+void Shader::updateUniformMat4fvName(const char* name, GLfloat* pvm) const {
+	glCheck(glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, GL_FALSE, pvm));
 }
 
 GLuint Shader::buildShader(std::string_view l_src, unsigned int l_type) {

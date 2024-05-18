@@ -87,35 +87,20 @@ std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
 }
 
 void GameBoard::Update(float dt) {
-	// failedLoc相关的是自动注销逻辑，算是一种保险。
-	// 如果注册过的实体保证退场时注销，就不需要这个。
-	/*std::set<EntityLocationType> failedLoc;
-	for (EntityLocationType loc : m_trigger_update) {
-		if (m_entities[loc] == nullptr) {
-			failedLoc.insert(loc);
-			continue;
-		}
-		m_entities[loc]->OnUpdate(dt);
-	}
-	if (failedLoc.size()) {
-		for (auto loc : failedLoc) {
-			m_trigger_update.erase(loc);
-		}
-	}*/
 	for (std::shared_ptr<Entity> entity : m_entities) {
 		if (entity == nullptr)
 			continue;
 		entity->FixedUpdate(dt);
 	}
+	while (!m_readyForExit.empty()) {
+		KickEntity(m_readyForExit.top());
+		m_readyForExit.pop();
+	}
 }
 
-/*void GameBoard::Register_Update(EntityLocationType location) {
-	m_trigger_update.insert(location);
+void GameBoard::RegistryForExit(EntityLocationType location) {
+	m_readyForExit.push(location);
 }
-
-void GameBoard::Unregister_Update(EntityLocationType location) {
-	m_trigger_update.erase(location);
-}*/
 
 MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());

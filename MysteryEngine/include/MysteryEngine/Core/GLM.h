@@ -30,7 +30,7 @@
 
 #include <MysteryEngine/Core/MEAPI.h>
 
-// 用于转移接口，免得连接器warning。
+// 用于转移接口，免得链接器warning。
 namespace glm {
 
 template struct ME_API vec<2, float, defaultp>;

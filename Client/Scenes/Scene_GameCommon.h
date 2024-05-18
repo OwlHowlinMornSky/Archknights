@@ -37,7 +37,6 @@ public:
 
 protected:
 	virtual void Render() override;
-	virtual void UpdateModels(float dt) override;
 
 protected:
 	ME::Shader* m_ds;

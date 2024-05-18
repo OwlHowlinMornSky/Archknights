@@ -70,7 +70,8 @@ void Entity::OnRotationChanged() {}
 void Entity::OnScaleChanged() {}
 
 void Entity::KickSelf() const {
-	GameGlobal::board->KickEntity(m_location);
+	//GameGlobal::board->KickEntity(m_location);
+	GameGlobal::board->RegistryForExit(m_location);
 }
 
 } // namespace Game

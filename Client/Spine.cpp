@@ -8,12 +8,16 @@
 #include <GL/glew.h>
 
 #include "Spine.h"
-
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/GlCheck.h>
 
+
 namespace {
+
+constexpr float spine_to3d_scale_i = 128.0f;
+constexpr float spine_global_scale = 0.7125f;
+constexpr float outline_thickness  = 0.02f;
 
 /// <summary>
 /// 矩形的 index
@@ -25,7 +29,7 @@ spine::Vector<unsigned short> quadIndices;
 /// </summary>
 /// <param name="blendFactor"></param>
 /// <returns></returns>
-sf::Uint32 factorToGlConstant(sf::BlendMode::Factor blendFactor) {
+/*sf::Uint32 factorToGlConstant(sf::BlendMode::Factor blendFactor) {
 	switch (blendFactor) {
 	case sf::BlendMode::Zero:             return GL_ZERO;
 	case sf::BlendMode::One:              return GL_ONE;
@@ -52,7 +56,7 @@ static const sf::BlendMode normalPma = sf::BlendMode(sf::BlendMode::One, sf::Ble
 static const sf::BlendMode additivePma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::One);
 static const sf::BlendMode multiplyPma = sf::BlendMode(sf::BlendMode::DstColor, sf::BlendMode::OneMinusSrcAlpha);
 static const sf::BlendMode screenPma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcColor);
-
+*/
 } // end namespace
 
 namespace ohms {
@@ -87,7 +91,7 @@ SpineEntity::SpineEntity(const ohms::SpinePose* pose) :
 	this->worldVertices.clear();
 	this->worldVertices.ensureCapacity(SPINE_MESH_VERTEX_COUNT_MAX);
 	this->skeleton->setScaleX(spine_global_scale);
-	this->skeleton->setScaleY(-spine_global_scale);
+	this->skeleton->setScaleY(spine_global_scale);
 
 	this->bonesRef = &this->skeleton->getBones();
 
@@ -115,14 +119,16 @@ void SpineEntity::Update(float dt) {
 void SpineEntity::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	ComputeMatrix();
 
+	Game::ActorShader* sh = (Game::ActorShader*)shader;
+
 	glm::mat4 viewProj = camera->getMatPV() * this->m_matM;
 
-	//glm::fvec3 campos = { camera->Position.x - this->Position.x, camera->Position.y - this->Position.y, camera->Position.z - this->Position.z };
-	shader->updateUniformMat4fvName("uMatPVM", &viewProj[0][0]);
-	//shader->UpdateUniform(UniformType::TransformV, &camera->ViewMatrix()[0][0]);
-	//shader->UpdateUniform(UniformType::TransformM, &this->transform[0][0]);
-	//shader->UpdateUniform(UniformType::CameraPosition, &campos);
-	//this->shaderRef = static_cast<ohms::shader::Spine*>(shader);
+	glm::vec3 camP = camera->getPos();
+	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
+	shader->updateUniformMat4fv(sh->m_matPVM, &viewProj[0][0]);
+	shader->updateUniformMat4fv(sh->m_matM, &m_matM[0][0]);
+	shader->updateUniform3f(sh->m_campos, campos[0], campos[1], campos[2]);
+
 	return;
 }
 void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
@@ -136,7 +142,8 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	UpdateShader(&shader, &camera);
 
 	spine::BlendMode previousBlend;
-	ME::Vertex vertex;
+	//Game::ActorVertex vertex;
+	//ME::Vertex vertex;
 	sf::Texture* texture = nullptr;
 	for (size_t i = 0, n = this->skeleton->getSlots().size(); i < n; ++i) {
 		spine::Slot& slot = *this->skeleton->getDrawOrder()[i];
@@ -213,7 +220,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		}
 
 		if (previousBlend != blend || previousTexture != texture) {
-
+			/*
 			drawCount = (GLsizei)vertexArray.size();
 			GLsizei stride = sizeof(vertexArray[0]);
 			size_t texCoordOffset = sizeof(vertexArray[0].position);
@@ -240,6 +247,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 			glCheck(glBindVertexArray(0));
 
 			vertexArray.clear();
+			*/
 			previousTexture = texture;
 			previousBlend = blend;
 		}
@@ -256,7 +264,8 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		for (size_t ii = 0; ii < indicesCount; ++ii) {
 			unsigned int index = (*indices)[ii] << 1;
 			vertexArray.emplace_back(
-				glm::vec3((*vertices)[index] / spine_to3d_scale_i, (*vertices)[index + 1] / spine_to3d_scale_i, 0.0f),
+				//glm::vec3((*vertices)[index], (*vertices)[index + 1], 0.0f),
+				glm::vec2((*vertices)[index], (*vertices)[index + 1]),
 				glm::vec2((*uvs)[index], (*uvs)[index + 1]),
 				glm::vec4(light.r * light.a, light.g * light.a, light.b * light.a, light.a)
 			);
@@ -269,383 +278,40 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	GLsizei stride = sizeof(vertexArray[0]);
 	size_t texCoordOffset = sizeof(vertexArray[0].position);
 	size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
-	size_t normalOffset = colorOffset + sizeof(vertexArray[0].color);
-
 
 	glCheck(glBindVertexArray(vao));
 
 	glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
 
 	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Position)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Position), 3, GL_FLOAT, GL_FALSE, stride, 0));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::TexCoord)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Color)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Color)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
 
 	sf::Texture::bind(texture);
 
-	/*if (this->outline) {
-		this->shaderRef->outline = true;
+	if (this->outline) {
+		Game::ActorShader* sh = (Game::ActorShader*)&shader;
+		sh->updateUniform4f(sh->m_coverClr, 1.0f, 1.0f, 0.0f, 1.0f);
+		sh->updateUniform1i(sh->m_cover, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
-			this->shaderRef->offsetX = outline_thickness * cosf(0.7853981633974483f * i);
-			this->shaderRef->offsetY = outline_thickness * sinf(0.7853981633974483f * i);
-			this->shaderRef->Update();
+			float offsetX = outline_thickness * cosf(0.7853981633974483f * i);
+			float offsetY = outline_thickness * sinf(0.7853981633974483f * i);
+			sh->updateUniform2f(sh->m_offset, offsetX, offsetY);
 			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 		}
-		this->shaderRef->outline = false;
-		this->shaderRef->Update();
-	}*/
+		sh->updateUniform1i(sh->m_cover, 0);
+		sh->updateUniform2f(sh->m_offset, 0.0f, 0.0f);
+		sh->updateUniform4f(sh->m_coverClr, 1.0f, 1.0f, 1.0f, 1.0f);
+	}
 
 	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 
 	glCheck(glBindVertexArray(0));
 	return;
-}
-/*
-void SpineEntity::DrawH(ME::Camera& camera, ME::Shader& shader) {
-	// Early out if skeleton is invisible
-	if (this->skeleton->getColor().a == 0.0f)
-		return;
-
-	vertexArray.clear();
-	sf::Texture* texture = nullptr;
-	spine::Slot* slot = nullptr;
-	spine::Attachment* attachment = nullptr;
-
-	for (size_t i = 0, n = this->skeleton->getSlots().size(); i < n; ++i) {
-		slot = this->skeleton->getDrawOrder()[i];
-		attachment = slot->getAttachment();
-		if (!attachment) continue;
-		// Early out if the slot color is 0 or the bone is not active
-		if (slot->getColor().a == 0 || !slot->getBone().isActive()) {
-			this->clipper.clipEnd(*slot);
-			continue;
-		}
-		spine::Vector<float>* vertices = &worldVertices;
-		size_t verticesCount = 0;
-		spine::Vector<float>* uvs = nullptr;
-		spine::Vector<unsigned short>* indices = nullptr;
-		size_t indicesCount = 0;
-		spine::Color* attachmentColor;
-
-		if (attachment->getRTTI().isExactly(spine::RegionAttachment::rtti)) {
-			spine::RegionAttachment* regionAttachment = (spine::RegionAttachment*)attachment;
-			attachmentColor = &regionAttachment->getColor();
-			// Early out if the slot color is 0
-			if (attachmentColor->a == 0) {
-				clipper.clipEnd(*slot);
-				continue;
-			}
-			worldVertices.setSize(8, 0);
-			regionAttachment->computeWorldVertices(slot->getBone(), worldVertices, 0, 2);
-			verticesCount = 4;
-			uvs = &regionAttachment->getUVs();
-			indices = &quadIndices;
-			indicesCount = 6;
-			texture = (sf::Texture*)((spine::AtlasRegion*)regionAttachment->getRendererObject())->page->getRendererObject();
-		}
-		else if (attachment->getRTTI().isExactly(spine::MeshAttachment::rtti)) {
-			spine::MeshAttachment* mesh = (spine::MeshAttachment*)attachment;
-			attachmentColor = &mesh->getColor();
-			// Early out if the slot color is 0
-			if (attachmentColor->a == 0) {
-				clipper.clipEnd(*slot);
-				continue;
-			}
-			worldVertices.setSize(mesh->getWorldVerticesLength(), 0);
-			texture = (sf::Texture*)((spine::AtlasRegion*)mesh->getRendererObject())->page->getRendererObject();
-			mesh->computeWorldVertices(*slot, 0, mesh->getWorldVerticesLength(), worldVertices, 0, 2);
-			verticesCount = mesh->getWorldVerticesLength() >> 1;
-			uvs = &mesh->getUVs();
-			indices = &mesh->getTriangles();
-			indicesCount = mesh->getTriangles().size();
-		}
-		else if (attachment->getRTTI().isExactly(spine::ClippingAttachment::rtti)) {
-			spine::ClippingAttachment* clip = (spine::ClippingAttachment*)slot->getAttachment();
-			clipper.clipStart(*slot, clip);
-			continue;
-		}
-		else continue;
-
-		spine::Color light;
-		light.r = this->skeleton->getColor().r * slot->getColor().r * attachmentColor->r;
-		light.g = this->skeleton->getColor().g * slot->getColor().g * attachmentColor->g;
-		light.b = this->skeleton->getColor().b * slot->getColor().b * attachmentColor->b;
-		light.a = this->skeleton->getColor().a * slot->getColor().a * attachmentColor->a;
-
-		if (clipper.isClipping()) {
-			clipper.clipTriangles(worldVertices, *indices, *uvs, 2);
-			vertices = &clipper.getClippedVertices();
-			verticesCount = clipper.getClippedVertices().size() >> 1;
-			uvs = &clipper.getClippedUVs();
-			indices = &clipper.getClippedTriangles();
-			indicesCount = clipper.getClippedTriangles().size();
-		}
-
-		for (size_t ii = 0; ii < indicesCount; ++ii) {
-			unsigned int index = (*indices)[ii] << 1;
-			vertexArray.emplace_back(
-				glm::vec3((*vertices)[index] / spine_to3d_scale_i, (*vertices)[index + 1] / spine_to3d_scale_i, 0.0f),
-				glm::vec2((*uvs)[index], (*uvs)[index + 1]),
-				glm::vec4(light.r * light.a, light.g * light.a, light.b * light.a, light.a)
-			);
-		}
-		clipper.clipEnd(*slot);
-	}
-	clipper.clipEnd();
-
-	size_t tempSize = vertexArray.size();
-	if (tempSize > (size_t)INT_MAX) {
-		//throw std::exception("Vertex Array Too Huge!");
-		return;
-	}
-	drawCount = (GLsizei)tempSize;
-
-	GLsizei stride = sizeof(vertexArray[0]);
-	size_t texCoordOffset = sizeof(vertexArray[0].position);
-	size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
-	size_t normalOffset = colorOffset + sizeof(vertexArray[0].color);
-
-	UpdateShader(&shader, &camera);
-
-	glCheck(glBindVertexArray(vao));
-
-	glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
-
-	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Position)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Position), 3, GL_FLOAT, GL_FALSE, stride, 0));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::TexCoord)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Color)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
-
-	sf::Texture::bind(texture);
-
-	/*if (this->outline) {
-		this->shaderRef->outline = true;
-		for (unsigned char i = 0; i < 8; ++i) {
-			this->shaderRef->offsetX = outline_thickness * cosf(0.7853981633974483f * i);
-			this->shaderRef->offsetY = outline_thickness * sinf(0.7853981633974483f * i);
-			this->shaderRef->Update();
-			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
-		}
-		this->shaderRef->outline = false;
-		this->shaderRef->Update();
-	}/
-
-	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
-
-	glCheck(glBindVertexArray(0));
-	return;
-}*/
-
-void SpineEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	states.transform.translate(200.0f, 200.0f);
-
-	sf::VertexArray* vertexArray = new sf::VertexArray();
-	vertexArray->setPrimitiveType(sf::PrimitiveType::Triangles);
-	vertexArray->clear();
-	states.texture = NULL;
-
-	spine::VertexEffect* vertexEffect = nullptr;
-
-	// Early out if skeleton is invisible
-	if (skeleton->getColor().a == 0) return;
-
-	if (vertexEffect != NULL) vertexEffect->begin(*skeleton);
-
-	sf::Vertex vertex;
-	sf::Texture* texture = NULL;
-	for (unsigned i = 0; i < skeleton->getSlots().size(); ++i) {
-		spine::Slot& slot = *skeleton->getDrawOrder()[i];
-		spine::Attachment* attachment = slot.getAttachment();
-		if (!attachment) continue;
-
-		// Early out if the slot color is 0 or the bone is not active
-		if (slot.getColor().a == 0 || !slot.getBone().isActive()) {
-			clipper.clipEnd(slot);
-			continue;
-		}
-
-		spine::Vector<float>* vertices = &worldVertices;
-		int verticesCount = 0;
-		spine::Vector<float>* uvs = NULL;
-		spine::Vector<unsigned short>* indices = NULL;
-		int indicesCount = 0;
-		spine::Color* attachmentColor;
-
-		if (attachment->getRTTI().isExactly(spine::RegionAttachment::rtti)) {
-			spine::RegionAttachment* regionAttachment = (spine::RegionAttachment*)attachment;
-			attachmentColor = &regionAttachment->getColor();
-
-			// Early out if the slot color is 0
-			if (attachmentColor->a == 0) {
-				clipper.clipEnd(slot);
-				continue;
-			}
-
-			worldVertices.setSize(8, 0);
-			regionAttachment->computeWorldVertices(slot.getBone(), worldVertices, 0, 2);
-			verticesCount = 4;
-			uvs = &regionAttachment->getUVs();
-			indices = &quadIndices;
-			indicesCount = 6;
-			texture = (sf::Texture*)((spine::AtlasRegion*)regionAttachment->getRendererObject())->page->getRendererObject();
-
-		}
-		else if (attachment->getRTTI().isExactly(spine::MeshAttachment::rtti)) {
-			spine::MeshAttachment* mesh = (spine::MeshAttachment*)attachment;
-			attachmentColor = &mesh->getColor();
-
-			// Early out if the slot color is 0
-			if (attachmentColor->a == 0) {
-				clipper.clipEnd(slot);
-				continue;
-			}
-
-			worldVertices.setSize(mesh->getWorldVerticesLength(), 0);
-			texture = (sf::Texture*)((spine::AtlasRegion*)mesh->getRendererObject())->page->getRendererObject();
-			mesh->computeWorldVertices(slot, 0, mesh->getWorldVerticesLength(), worldVertices, 0, 2);
-			verticesCount = mesh->getWorldVerticesLength() >> 1;
-			uvs = &mesh->getUVs();
-			indices = &mesh->getTriangles();
-			indicesCount = mesh->getTriangles().size();
-
-		}
-		else if (attachment->getRTTI().isExactly(spine::ClippingAttachment::rtti)) {
-			spine::ClippingAttachment* clip = (spine::ClippingAttachment*)slot.getAttachment();
-			clipper.clipStart(slot, clip);
-			continue;
-		}
-		else continue;
-
-		sf::Uint8 r = static_cast<sf::Uint8>(skeleton->getColor().r * slot.getColor().r * attachmentColor->r * 255);
-		sf::Uint8 g = static_cast<sf::Uint8>(skeleton->getColor().g * slot.getColor().g * attachmentColor->g * 255);
-		sf::Uint8 b = static_cast<sf::Uint8>(skeleton->getColor().b * slot.getColor().b * attachmentColor->b * 255);
-		sf::Uint8 a = static_cast<sf::Uint8>(skeleton->getColor().a * slot.getColor().a * attachmentColor->a * 255);
-		vertex.color.r = r;
-		vertex.color.g = g;
-		vertex.color.b = b;
-		vertex.color.a = a;
-
-		sf::Color light;
-		light.r = r / 255.0f;
-		light.g = g / 255.0f;
-		light.b = b / 255.0f;
-		light.a = a / 255.0f;
-
-		sf::BlendMode blend;
-		//if (!usePremultipliedAlpha) {
-		if (!true) {
-			switch (slot.getData().getBlendMode()) {
-			case spine::BlendMode_Normal:
-				blend = normal;
-				break;
-			case spine::BlendMode_Additive:
-				blend = additive;
-				break;
-			case spine::BlendMode_Multiply:
-				blend = multiply;
-				break;
-			case spine::BlendMode_Screen:
-				blend = screen;
-				break;
-			default:
-				blend = normal;
-			}
-		}
-		else {
-			switch (slot.getData().getBlendMode()) {
-			case spine::BlendMode_Normal:
-				blend = normalPma;
-				break;
-			case spine::BlendMode_Additive:
-				blend = additivePma;
-				break;
-			case spine::BlendMode_Multiply:
-				blend = multiplyPma;
-				break;
-			case spine::BlendMode_Screen:
-				blend = screenPma;
-				break;
-			default:
-				blend = normalPma;
-			}
-		}
-
-		if (states.texture == 0) states.texture = texture;
-
-		if (states.blendMode != blend || states.texture != texture) {
-			target.draw(*vertexArray, states);
-			vertexArray->clear();
-			states.blendMode = blend;
-			states.texture = texture;
-		}
-
-		if (clipper.isClipping()) {
-			clipper.clipTriangles(worldVertices, *indices, *uvs, 2);
-			vertices = &clipper.getClippedVertices();
-			verticesCount = clipper.getClippedVertices().size() >> 1;
-			uvs = &clipper.getClippedUVs();
-			indices = &clipper.getClippedTriangles();
-			indicesCount = clipper.getClippedTriangles().size();
-		}
-
-		sf::Vector2u size = texture->getSize();
-
-		/*if (vertexEffect != 0) {
-			tempUvs.clear();
-			tempColors.clear();
-			for (int ii = 0; ii < verticesCount; ii++) {
-				sf::Color vertexColor = light;
-				sf::Color dark;
-				dark.r = dark.g = dark.b = dark.a = 0;
-				int index = ii << 1;
-				float x = (*vertices)[index];
-				float y = (*vertices)[index + 1];
-				float u = (*uvs)[index];
-				float v = (*uvs)[index + 1];
-				vertexEffect->transform(x, y, u, v, vertexColor, dark);
-				(*vertices)[index] = x;
-				(*vertices)[index + 1] = y;
-				tempUvs.add(u);
-				tempUvs.add(v);
-				tempColors.add(vertexColor);
-			}
-
-			for (int ii = 0; ii < indicesCount; ++ii) {
-				int index = (*indices)[ii] << 1;
-				vertex.position.x = (*vertices)[index];
-				vertex.position.y = (*vertices)[index + 1];
-				vertex.texCoords.x = (*uvs)[index] * size.x;
-				vertex.texCoords.y = (*uvs)[index + 1] * size.y;
-				Color vertexColor = tempColors[index >> 1];
-				vertex.color.r = static_cast<Uint8>(vertexColor.r * 255);
-				vertex.color.g = static_cast<Uint8>(vertexColor.g * 255);
-				vertex.color.b = static_cast<Uint8>(vertexColor.b * 255);
-				vertex.color.a = static_cast<Uint8>(vertexColor.a * 255);
-				vertexArray->append(vertex);
-			}
-		}*/
-		//else {
-			for (int ii = 0; ii < indicesCount; ++ii) {
-				int index = (*indices)[ii] << 1;
-				vertex.position.x = (*vertices)[index];
-				vertex.position.y = (*vertices)[index + 1];
-				vertex.texCoords.x = (*uvs)[index] * size.x;
-				vertex.texCoords.y = (*uvs)[index + 1] * size.y;
-				vertexArray->append(vertex);
-			}
-		//}
-		clipper.clipEnd(slot);
-	}
-	target.draw(*vertexArray, states);
-	clipper.clipEnd();
-
-	if (vertexEffect != 0) vertexEffect->end();
 }
 
 spine::TrackEntry* SpineEntity::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {
@@ -806,10 +472,6 @@ void SFMLTextureLoader::load(spine::AtlasPage& page, const spine::String& path) 
 void SFMLTextureLoader::unload(void* texture) {
 	delete (sf::Texture*)texture;
 }
-
-//SpineExtension* getDefaultExtension() {
-//	return new DefaultSpineExtension();
-//}
 
 // end class SpineManager
 } // end namespace ohms

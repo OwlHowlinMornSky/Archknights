@@ -83,27 +83,17 @@ protected:
 	std::stack<size_t> m_emptyLocations; // 空闲位置，是实体所在deque的偏移。由实体退场产生。
 	std::function<void(int)> m_exitCallback;
 
-// 触发器
 public:
 	/**
-	 * @brief 更新游戏板。本质是一个trigger，只有注册的实体会被更新。
+	 * @brief 更新游戏板。
 	 * @param dt 时间增量。
 	*/
 	void Update(float dt);
-	/**
-	 * @brief 注册trigger。注册为update的一员。
-	 * @param location 本实体的位置。
-	*/
-	//void Register_Update(EntityLocationType location);
-	/**
-	 * @brief 注销trigger。退出update集合。
-	 * @param location 本实体的位置。
-	*/
-	//void Unregister_Update(EntityLocationType location);
 
-//protected:
-	//std::set<EntityLocationType> m_trigger_update; // update的trigger成员。
+	void RegistryForExit(EntityLocationType location);
 
+protected:
+	std::stack<EntityLocationType> m_readyForExit;
 
 // 事件控制器
 public:

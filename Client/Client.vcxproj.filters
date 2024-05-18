@@ -91,6 +91,12 @@
     <ClInclude Include="Spine.h">
       <Filter>GameThings</Filter>
     </ClInclude>
+    <ClInclude Include="ActorGroup.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -158,5 +164,9 @@
     <ClCompile Include="Spine.cpp">
       <Filter>GameThings</Filter>
     </ClCompile>
+    <ClCompile Include="ActorGroup.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp" />
   </ItemGroup>
 </Project>

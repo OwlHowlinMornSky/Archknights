@@ -60,10 +60,4 @@ void GameCommon::Render() {
 	ME::Shader::Bind(nullptr);
 }
 
-void GameCommon::UpdateModels(float dt) {
-	for (auto& i : m_anims) {
-		i->Update(dt);
-	}
-}
-
 } // namespace Scene

@@ -23,6 +23,10 @@
 
 #include <MysteryEngine/G3D/ITransformT.h>
 
-// 有cpp才会编译
 namespace ME {
+
+const glm::vec3& ITransformT::getPos() const {
+	return m_position;
+}
+
 }

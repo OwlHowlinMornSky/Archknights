@@ -45,13 +45,12 @@ public:
 	void SetCamera(std::shared_ptr<ME::Camera> cam);
 	std::shared_ptr<ME::Camera> GetCamera() const;
 
-	void AddAnimation(std::shared_ptr<ME::IModel> a);
+	void AddModel(std::shared_ptr<ME::IModel> a);
 
 	void Update(float dt);
 
 protected:
 	virtual void Render() = 0;
-	virtual void UpdateModels(float dt) = 0;
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

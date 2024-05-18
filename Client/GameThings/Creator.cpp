@@ -32,6 +32,8 @@
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
+#include "../ActorGroup.h"
+#include "../Ground.h"
 
 namespace Game::Creator {
 
@@ -51,12 +53,9 @@ void drop() {
 
 void GameInitalizator::OnJoined() {
 	LoadStart();
-	//onUpdate = std::bind(&GameInitalizator::LoadUpdate, this, std::placeholders::_1);
-	//GameGlobal::board->Register_Update(m_location);
 }
 
 void GameInitalizator::OnKicking() {
-	//GameGlobal::board->Unregister_Update(m_location);
 	LoadOver();
 }
 
@@ -87,14 +86,17 @@ void GameInitalizator::LoadStart() {
 
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
+
+	auto gp = std::make_shared<ActorGroup>();
+
 	auto cam = std::make_shared<ME::PerspectiveCamera>();
 	Game::GameGlobal::show->SetCamera(cam);
 	cam->setAspectRatio(16.0f / 9.0f);
-	cam->setFOV(45.0f);
-	//cam->setPosition(0.0f, -3.0f, 5.0f);
-	cam->setPosition(0.0f, 0.0f, 5.0f);
-	//cam->setRotation(30.0f, 0.0f, 0.0f);
-	cam->setRotation(0.0f, 0.0f, 0.0f);
+	cam->setFOV(40.0f);
+	cam->setPosition(0.0f, -5.5f, 8.66025f);
+	//cam->setPosition(0.0f, 0.0f, 5.0f);
+	cam->setRotation(30.0f, 0.0f, 0.0f);
+	//cam->setRotation(0.0f, 0.0f, 0.0f);
 
 	//cam->setZNear(0.5f);
 	//cam->setZFar(50.0f);
@@ -111,11 +113,34 @@ void GameInitalizator::LoadStart() {
 	anim->setOrigin(0.0f, 0.0f, 0.0f);
 	anim->setScale(1.0f, 1.0f, 1.0f);
 
-	//anim->addAnimation(0, "")
+	//anim->addAnimation(0, "Idle", true, 0.0f);
 	//anim->addEmptyAnimation(0, true, 0.0f);
+	anim->setAnimation(0, "Default", false);
+	anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
+	anim->setAnimation(2, "Blink", true);
+	anim->setAnimation(3, "Start", false);
+	anim->addAnimation(3, "Idle", true, 0.0f);
+
+	anim->outline = true;
 
 	std::shared_ptr<ohms::SpineEntity> ani(anim);
-	Game::GameGlobal::show->AddAnimation(ani);
+	//Game::GameGlobal::show->AddModel(ani);
+
+	gp->AddActor(ani);
+
+	////////////////////
+
+	ME::G3dGlobal::setActive(true);
+	gd = std::make_shared<ObjModel>();
+	gd->LoadModelData("res/main_7-3/main.obj");
+	//gd->setRotation(0.0f, 0.0f, 180.0f);
+	gd->setScale(-1.0f, 1.0f, -1.0f);
+	ME::G3dGlobal::setActive(false);
+
+	////////////////////
+
+	Game::GameGlobal::show->AddModel(gd);
+	Game::GameGlobal::show->AddModel(gp);
 
 
 }
@@ -123,7 +148,7 @@ void GameInitalizator::LoadStart() {
 void GameInitalizator::LoadThread() {}
 
 void GameInitalizator::LoadUpdate(float dt) {
-	printf_s("%zd ", cc);
+	//printf_s("%zd ", cc);
 
 	GameGlobal::board->DistributeMsg(5678, cc, 0);
 
@@ -134,6 +159,8 @@ void GameInitalizator::LoadUpdate(float dt) {
 	//cc--;
 	//if (cc == 0)
 	//	KickSelf();
+
+	//gd->rotate(0.0f, 0.5f, 0.0f);
 }
 
 void GameInitalizator::LoadOver() {

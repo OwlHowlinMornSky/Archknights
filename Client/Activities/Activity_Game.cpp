@@ -36,27 +36,6 @@ bool Activity_Game::start(ME::Window& wnd) noexcept {
 	r(wnd);
 	int res = Game::Creator::setup();
 	Game::GameGlobal::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
-
-
-	
-	mngr = new ohms::SpineManager();
-	auto set = mngr->addPose("char_151_myrtle", 0);
-
-	//ME::G3dGlobal::setActive(true);
-	anim = set->runOneEntity();
-	//ME::G3dGlobal::setActive(false);
-
-	anim->setPosition(0.0f, 0.0f, 0.0f);
-	anim->setRotation(0.0f, 0.0f, 0.0f);
-	anim->setOrigin(0.0f, 0.0f, 0.0f);
-	anim->setScale(1.0f, 1.0f, 1.0f);
-
-	//anim->addAnimation(0, "")
-	//anim->addEmptyAnimation(0, true, 0.0f);
-
-	//std::shared_ptr<ohms::SpineEntity> ani(anim);
-	//Game::GameGlobal::show->AddAnimation(ani);
-
 	UpdateSize();
 	return res == 0;
 }
@@ -68,9 +47,13 @@ void Activity_Game::stop() noexcept {
 }
 
 bool Activity_Game::handleEvent(const sf::Event& evt) {
-	if (evt.type == sf::Event::Closed) {
+	switch (evt.type) {
+	case sf::Event::Closed:
 		r->setWaitingForStop();
 		return true;
+	case sf::Event::Resized:
+		UpdateSize();
+		break;
 	}
 	sf::Event e = evt;
 	Game::GameGlobal::board->DistributeMsg(1, 0, (intptr_t)&e);
@@ -79,18 +62,11 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 
 void Activity_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
-	//r->clear(sf::Color::White);
 	r->clear(sf::Color(0x333333FF));
 #endif // _DEBUG
 	Game::GameGlobal::board->Update(dtime.asSeconds());
 	Game::GameGlobal::show->Update(dtime.asSeconds());
-
-	anim->Update(dtime.asSeconds());
-
 	r->draw(*Game::GameGlobal::show);
-
-	r->draw(*anim);
-
 	r->display();
 	return;
 }
@@ -112,7 +88,6 @@ void Activity_Game::ExitGame(int code) {
 
 void Activity_Game::UpdateSize() {
 	Game::GameGlobal::show->SetSize(r->getSize());
-
 	//auto& view = r->getView();
 	//sf::Vector2f size = view.getSize();
 }
