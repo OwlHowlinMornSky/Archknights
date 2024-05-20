@@ -13,11 +13,13 @@
 #include <glm/matrix.hpp>
 
 #include <MysteryEngine/G3D/Shader.h>
+
+#include "../ModelFactory.h"
 //#include "V3DLight.h"
 
 ///3D Model Class for Loading and Rendering models in the .OBJ file format using TinyOBJLoader.
 class ObjModel :
-	public ME::IModel {
+	public IObjModel {
 protected:
 	///The structure of each individual shape.
 	struct ModelData {

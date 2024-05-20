@@ -147,3 +147,7 @@ void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
 }
 
 }
+
+std::shared_ptr<Game::IActorGroup> Factory::Create_ActorGroup() {
+	return std::make_shared<Game::ActorGroup>();
+}

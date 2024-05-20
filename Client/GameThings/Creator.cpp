@@ -32,8 +32,8 @@
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
-#include "../Models/ActorGroup.h"
-#include "../Models/Ground.h"
+//#include "../Models/ActorGroup.h"
+//#include "../Models/Ground.h"
 
 namespace Game::Creator {
 
@@ -87,7 +87,7 @@ void GameInitalizator::LoadStart() {
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
 
-	auto gp = std::make_shared<ActorGroup>();
+	auto gp = Factory::Create_ActorGroup();
 
 	auto cam = std::make_shared<ME::PerspectiveCamera>();
 	Game::GameGlobal::show->SetCamera(cam);
@@ -101,7 +101,7 @@ void GameInitalizator::LoadStart() {
 	//cam->setZNear(0.5f);
 	//cam->setZFar(50.0f);
 
-	mngr = new ohms::SpineManager();
+	mngr = Factory::Create_SpineManager();
 	auto set = mngr->addPose("char_151_myrtle", 0);
 
 	ME::G3dGlobal::setActive(true);
@@ -113,17 +113,15 @@ void GameInitalizator::LoadStart() {
 	anim->setOrigin(0.0f, 0.0f, 0.0f);
 	anim->setScale(1.0f, 1.0f, 1.0f);
 
-	//anim->addAnimation(0, "Idle", true, 0.0f);
-	//anim->addEmptyAnimation(0, true, 0.0f);
-	anim->setAnimation(0, "Default", false);
-	anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
-	anim->setAnimation(2, "Blink", true);
-	anim->setAnimation(3, "Start", false);
-	anim->addAnimation(3, "Idle", true, 0.0f);
+	//anim->setAnimation(0, "Default", false);
+	//anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
+	//anim->setAnimation(2, "Blink", true);
+	//anim->setAnimation(3, "Start", false);
+	//anim->addAnimation(3, "Idle", true, 0.0f);
 
-	anim->outline = true;
+	//anim->outline = true;
 
-	std::shared_ptr<ohms::SpineEntity> ani(anim);
+	std::shared_ptr<ohms::ISpineEntity> ani(anim);
 	//Game::GameGlobal::show->AddModel(ani);
 
 	gp->AddActor(ani);
@@ -131,7 +129,7 @@ void GameInitalizator::LoadStart() {
 	////////////////////
 
 	ME::G3dGlobal::setActive(true);
-	gd = std::make_shared<ObjModel>();
+	gd = Factory::Create_ObjModel();
 	gd->LoadModelData("res/main_7-3/main.obj");
 	//gd->setRotation(0.0f, 0.0f, 180.0f);
 	gd->setScale(-1.0f, 1.0f, -1.0f);

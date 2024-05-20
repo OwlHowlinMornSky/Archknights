@@ -103,6 +103,9 @@
     <ClInclude Include="Models\tiny_obj_loader.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="ModelFactory.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

@@ -11,6 +11,7 @@
 #include <MysteryEngine/G3D/Vertex.h>
 
 #include "ActorGroup.h"
+#include "../ModelFactory.h"
 
 namespace ohms {
 
@@ -32,9 +33,7 @@ struct SpinePose {
  * @brief skeleton entity and its animation states
  */
 class SpineEntity final :
-	public ME::IModel {
-	friend class SpineEntitySet;
-	friend class SpineManager;
+	public ISpineEntity {
 	typedef ME::IModel Parent;
 public:
 	SpineEntity(const ohms::SpinePose* pose);
@@ -145,7 +144,8 @@ protected:
 /// <summary>
 /// Spine 集合, 是一个 pose 对应的所有 entity 的集合
 /// </summary>
-class SpineEntitySet final {
+class SpineEntitySet final :
+	public ISpineEntitySet {
 public:
 	SpineEntitySet(const ohms::SpinePose* pose);
 	~SpineEntitySet();
@@ -169,7 +169,8 @@ public:
 /// <summary>
 /// Spine 管理器
 /// </summary>
-class SpineManager final {
+class SpineManager final :
+	public ISpineManager {
 public:
 	SpineManager();
 	~SpineManager();
@@ -181,6 +182,7 @@ public:
 
 private:
 	bool addPoseBinary(const std::string& binaryPath, const std::string& atlasPath);
+
 private:
 	//ME::Shader* shaderRef;
 	//ME::Camera* cameraRef;

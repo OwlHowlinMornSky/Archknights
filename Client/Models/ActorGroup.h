@@ -3,6 +3,7 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 #include <list>
+#include "../ModelFactory.h"
 
 namespace Game {
 
@@ -61,8 +62,8 @@ struct ActorVertex {
 	glm::vec4 color;    // 颜色。
 };
 
-class ActorGroup :
-	public ME::IModel {
+class ActorGroup final:
+	public IActorGroup {
 public:
 	ActorGroup();
 

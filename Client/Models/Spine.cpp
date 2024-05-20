@@ -475,3 +475,7 @@ void SFMLTextureLoader::unload(void* texture) {
 
 // end class SpineManager
 } // end namespace ohms
+
+std::unique_ptr<ohms::ISpineManager> Factory::Create_SpineManager() {
+	return std::make_unique<ohms::SpineManager>();
+}

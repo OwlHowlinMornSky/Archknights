@@ -368,3 +368,7 @@ void ObjModel::UpdateShader(ME::Camera& camera, ME::Shader& shader) {
 
 	//this->shader = shader;
 }
+
+std::shared_ptr<IObjModel> Factory::Create_ObjModel() {
+	return std::make_shared<ObjModel>();
+}

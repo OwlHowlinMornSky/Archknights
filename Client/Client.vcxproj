@@ -310,6 +310,7 @@
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
+    <ClInclude Include="ModelFactory.h" />
     <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
