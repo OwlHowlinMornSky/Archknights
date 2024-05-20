@@ -36,7 +36,7 @@ bool Activity_Game::start(ME::Window& wnd) noexcept {
 	r(wnd);
 	int res = Game::Creator::setup();
 	Game::GameGlobal::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
-	UpdateSize();
+	UpdateSize(r->getRealtimeSize());
 	return res == 0;
 }
 
@@ -52,7 +52,7 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 		r->setWaitingForStop();
 		return true;
 	case sf::Event::Resized:
-		UpdateSize();
+		UpdateSize({ evt.size.width, evt.size.height });
 		break;
 	}
 	sf::Event e = evt;
@@ -86,8 +86,8 @@ void Activity_Game::ExitGame(int code) {
 	return;
 }
 
-void Activity_Game::UpdateSize() {
-	Game::GameGlobal::show->SetSize(r->getSize());
+void Activity_Game::UpdateSize(sf::Vector2u size) {
+	Game::GameGlobal::show->SetSize(size);
 	//auto& view = r->getView();
 	//sf::Vector2f size = view.getSize();
 }

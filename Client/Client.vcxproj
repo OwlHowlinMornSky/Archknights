@@ -300,10 +300,8 @@
     <ClInclude Include="Activities\Act05_Title.h" />
     <ClInclude Include="Activities\Activity_Debug.h" />
     <ClInclude Include="Activities\Activity_Game.h" />
-    <ClInclude Include="ActorGroup.h" />
     <ClInclude Include="API.h" />
-    <ClInclude Include="char_151_myrtle.h" />
-    <ClInclude Include="GameThings\AnimationFrames.h" />
+    <ClInclude Include="GameThings\char_151_myrtle.h" />
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
@@ -312,13 +310,16 @@
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
-    <ClInclude Include="Ground.h" />
+    <ClInclude Include="Models\ActorGroup.h" />
+    <ClInclude Include="Models\AnimationFrames.h" />
+    <ClInclude Include="Models\Ground.h" />
+    <ClInclude Include="Models\Spine.h" />
+    <ClInclude Include="Models\tiny_obj_loader.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Scene_GameCommon.h" />
     <ClInclude Include="Scenes\Scene_ITitle.h" />
     <ClInclude Include="Scenes\Scene_Title.h" />
-    <ClInclude Include="Spine.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -331,9 +332,7 @@
     <ClCompile Include="Activities\Act05_Title.cpp" />
     <ClCompile Include="Activities\Activity_Debug.cpp" />
     <ClCompile Include="Activities\Activity_Game.cpp" />
-    <ClCompile Include="ActorGroup.cpp" />
     <ClCompile Include="API.cpp" />
-    <ClCompile Include="GameThings\AnimationFrames.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\GameGlobal.cpp" />
@@ -341,11 +340,13 @@
     <ClCompile Include="Game\GameHost.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
     <ClCompile Include="Game\MsgResult.cpp" />
-    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Models\ActorGroup.cpp" />
+    <ClCompile Include="Models\AnimationFrames.cpp" />
+    <ClCompile Include="Models\Ground.cpp" />
+    <ClCompile Include="Models\Spine.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />
     <ClCompile Include="Scenes\Scene_ITitle.cpp" />
     <ClCompile Include="Scenes\Scene_Title.cpp" />
-    <ClCompile Include="Spine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -145,6 +145,11 @@ public:
 	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept = 0;
 
 	/**
+	 * @brief 获取窗口实际大小（消息循环中也正确）。
+	 */
+	virtual sf::Vector2u getRealtimeSize() const noexcept = 0;
+
+	/**
 	 * @brief 设为窗口化窗口。
 	*/
 	virtual void setWindowed() noexcept = 0;

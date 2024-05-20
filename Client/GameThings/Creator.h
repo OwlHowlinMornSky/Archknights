@@ -22,8 +22,8 @@
 #pragma once
 
 #include "../Game/Entity.h"
-#include "../Spine.h"
-#include "../Ground.h"
+#include "../Models/Spine.h"
+#include "../Models/Ground.h"
 
 namespace Game::Creator {
 

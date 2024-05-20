@@ -22,7 +22,6 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
-#include "../Spine.h"
 
 namespace Activity {
 
@@ -46,7 +45,7 @@ public:
 protected:
 	void ExitGame(int code);
 
-	void UpdateSize();
+	void UpdateSize(sf::Vector2u size);
 
 protected:
 	ME::WndRef r;

@@ -54,6 +54,8 @@ public:
 	virtual void showMessageBox(std::string_view title, std::string_view text) const noexcept override;
 	virtual void showMessageBox(std::wstring_view title, std::wstring_view text) const noexcept override;
 
+	virtual sf::Vector2u getRealtimeSize() const noexcept override;
+
 	virtual void setWindowed() noexcept override;
 	virtual bool setBorderless() noexcept override;
 	virtual bool setFullscreen(sf::VideoMode mode) noexcept override;

@@ -342,6 +342,16 @@ void WindowWin32::showMessageBox(std::wstring_view title, std::wstring_view text
 	return;
 }
 
+sf::Vector2u WindowWin32::getRealtimeSize() const noexcept {
+	RECT rect{ 0 };
+	GetClientRect(m_hwnd, &rect);
+	sf::Vector2u size(
+		static_cast<unsigned int>(rect.right - rect.left),
+		static_cast<unsigned int>(rect.bottom - rect.top)
+	);
+    return size;
+}
+
 void WindowWin32::setWindowed() noexcept {
 	if (m_windowStatus == WindowStatus::Windowed)
 		return;

@@ -11,11 +11,14 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameBase">
-      <UniqueIdentifier>{787e72d9-9430-4ee7-870c-62d9206b208c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameThings">
       <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{787e72d9-9430-4ee7-870c-62d9206b208c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{63fea06b-7ddb-4159-8590-e975d4627293}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,25 +59,25 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Game\TypeDef.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Entity.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameGlobal.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameBoard.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\IGameShow.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\MsgResult.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameHost.h">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="GameThings\Creator.h">
       <Filter>GameThings</Filter>
@@ -82,20 +85,23 @@
     <ClInclude Include="Scenes\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\AnimationFrames.h">
+    <ClInclude Include="GameThings\char_151_myrtle.h">
       <Filter>GameThings</Filter>
     </ClInclude>
-    <ClInclude Include="char_151_myrtle.h">
-      <Filter>GameThings</Filter>
+    <ClInclude Include="Models\ActorGroup.h">
+      <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Spine.h">
-      <Filter>GameThings</Filter>
+    <ClInclude Include="Models\AnimationFrames.h">
+      <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="ActorGroup.h">
-      <Filter>GameThings</Filter>
+    <ClInclude Include="Models\Ground.h">
+      <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>GameThings</Filter>
+    <ClInclude Include="Models\Spine.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\tiny_obj_loader.h">
+      <Filter>Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,35 +144,37 @@
       <Filter>资源文件</Filter>
     </ClCompile>
     <ClCompile Include="Game\Entity.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameGlobal.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameBoard.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\IGameShow.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\MsgResult.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameHost.cpp">
-      <Filter>GameBase</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="GameThings\Creator.cpp">
       <Filter>GameThings</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\AnimationFrames.cpp">
-      <Filter>GameThings</Filter>
+    <ClCompile Include="Models\ActorGroup.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="Spine.cpp">
-      <Filter>GameThings</Filter>
+    <ClCompile Include="Models\AnimationFrames.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="ActorGroup.cpp">
-      <Filter>GameThings</Filter>
+    <ClCompile Include="Models\Ground.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Models\Spine.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

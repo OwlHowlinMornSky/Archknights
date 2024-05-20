@@ -32,8 +32,8 @@
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
-#include "../ActorGroup.h"
-#include "../Ground.h"
+#include "../Models/ActorGroup.h"
+#include "../Models/Ground.h"
 
 namespace Game::Creator {
 
