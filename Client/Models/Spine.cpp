@@ -137,31 +137,17 @@ void SpineEntity::Update(float dt) {
 	return;
 }
 
-void SpineEntity::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
-	ComputeMatrix();
-
-	glm::mat4 viewProj = camera->getMatPV() * this->m_matM;
-
-	glm::vec3 camP = camera->getPos();
-	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
-
-	shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PVM, &viewProj[0][0]);
-	shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
-	shader->UpdateUniform(Game::ActorShaderUniformId::Vec3_CamPos, &campos[0]);
-
-	return;
-}
 void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	vertexArray.clear();
-	sf::Texture* previousTexture = nullptr;
 
 	// Early out if skeleton is invisible
 	if (this->skeleton->getColor().a == 0.0f)
 		return;
 
-	UpdateShader(&shader, &camera);
+	UpdateShader(shader, camera);
 
 	spine::BlendMode previousBlend;
+	sf::Texture* previousTexture = nullptr;
 	sf::Texture* texture = nullptr;
 	for (size_t i = 0, n = this->skeleton->getSlots().size(); i < n; ++i) {
 		spine::Slot& slot = *this->skeleton->getDrawOrder()[i];
@@ -238,34 +224,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		}
 
 		if (previousBlend != blend || previousTexture != texture) {
-			/*
-			drawCount = (GLsizei)vertexArray.size();
-			GLsizei stride = sizeof(vertexArray[0]);
-			size_t texCoordOffset = sizeof(vertexArray[0].position);
-			size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
-			size_t normalOffset = colorOffset + sizeof(vertexArray[0].color);
-
-
-			glCheck(glBindVertexArray(vao));
-
-			glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
-
-			glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
-			glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Position)));
-			glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Position), 3, GL_FLOAT, GL_FALSE, stride, 0));
-			glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::TexCoord)));
-			glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-			glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::VertexAttribute::Color)));
-			glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::VertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
-
-			sf::Texture::bind(texture);
-
-			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
-
-			glCheck(glBindVertexArray(0));
-
-			vertexArray.clear();
-			*/
+			DrawVertices(shader, previousTexture);
 			previousTexture = texture;
 			previousBlend = blend;
 		}
@@ -282,7 +241,6 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		for (size_t ii = 0; ii < indicesCount; ++ii) {
 			unsigned int index = (*indices)[ii] << 1;
 			vertexArray.emplace_back(
-				//glm::vec3((*vertices)[index], (*vertices)[index + 1], 0.0f),
 				glm::vec2((*vertices)[index], (*vertices)[index + 1]),
 				glm::vec2((*uvs)[index], (*uvs)[index + 1]),
 				glm::vec4(light.r * light.a, light.g * light.a, light.b * light.a, light.a)
@@ -291,45 +249,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		clipper.clipEnd(slot);
 	}
 	clipper.clipEnd();
-
-	drawCount = (GLsizei)vertexArray.size();
-	GLsizei stride = sizeof(vertexArray[0]);
-	size_t texCoordOffset = sizeof(vertexArray[0].position);
-	size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
-
-	glCheck(glBindVertexArray(vao));
-
-	glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
-
-	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Color)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
-
-	sf::Texture::bind(texture);
-
-	if (this->outline) {
-		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
-		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
-		for (unsigned char i = 0; i < 8; ++i) {
-			shader.UpdateUniform2(
-				Game::ActorShaderUniformId::Vec2_Offset,
-				::CircleOffsetX[i],
-				::CircleOffsetY[i]
-			);
-			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
-		}
-		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 0);
-		shader.UpdateUniform2(Game::ActorShaderUniformId::Vec2_Offset, 0.0f, 0.0f);
-		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
-
-	glCheck(glBindVertexArray(0));
+	DrawVertices(shader, texture);
 	return;
 }
 
@@ -382,6 +302,64 @@ sf::Vector2f SpineEntity::getBonePositionByIndex(int boneIndex) const {
 int SpineEntity::getBoneIndex(const std::string& boneName) const {
 	return this->skeleton->findBoneIndex(boneName.c_str());
 }
+
+void SpineEntity::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
+	ComputeMatrix();
+
+	glm::mat4 viewProj = camera.getMatPV() * this->m_matM;
+
+	glm::vec3 camP = camera.getPos();
+	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
+
+	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_PVM, &viewProj[0][0]);
+	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
+	shader.UpdateUniform(Game::ActorShaderUniformId::Vec3_CamPos, &campos[0]);
+
+	return;
+}
+
+void SpineEntity::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
+	drawCount = (GLsizei)vertexArray.size();
+	GLsizei stride = sizeof(vertexArray[0]);
+	size_t texCoordOffset = sizeof(vertexArray[0].position);
+	size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
+
+	glCheck(glBindVertexArray(vao));
+
+	glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
+
+	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Color)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
+
+	sf::Texture::bind(texture);
+
+	if (this->outline) {
+		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
+		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
+		for (unsigned char i = 0; i < 8; ++i) {
+			shader.UpdateUniform2(
+				Game::ActorShaderUniformId::Vec2_Offset,
+				::CircleOffsetX[i],
+				::CircleOffsetY[i]
+			);
+			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
+		}
+		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 0);
+		shader.UpdateUniform2(Game::ActorShaderUniformId::Vec2_Offset, 0.0f, 0.0f);
+		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
+	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
+
+	glCheck(glBindVertexArray(0));
+	vertexArray.clear();
+}
+
 // end class SpineEntity
 
 // class SpineEntitySet
@@ -389,10 +367,6 @@ SpineEntitySet::SpineEntitySet(const ohms::SpinePose* pose) :
 	poseRef(pose) {}
 
 SpineEntitySet::~SpineEntitySet() {
-	//while (!this->entities.empty()) {
-	//	delete this->entities.top();
-	//	this->entities.pop();
-	//}
 	return;
 }
 
@@ -405,8 +379,6 @@ SpineEntity* SpineEntitySet::runOneEntity() {
 
 // class SpineManager
 SpineManager::SpineManager() {
-	//this->timeScale = 1.0f;
-
 	this->usePremultipliedAlpha = true;
 	this->tempUvs.ensureCapacity(16);
 	this->tempColors.ensureCapacity(16);
@@ -418,11 +390,6 @@ SpineManager::SpineManager() {
 	quadIndices.add(2);
 	quadIndices.add(3);
 	quadIndices.add(0);
-
-	//this->timeScale = 1.0f;
-
-	//this->shaderRef = nullptr;
-	//this->cameraRef = nullptr;
 	return;
 }
 

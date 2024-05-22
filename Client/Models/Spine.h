@@ -114,7 +114,9 @@ public:
 	int getBoneIndex(const std::string& boneName) const;
 
 protected:
-	void UpdateShader(ME::Shader* shader, ME::Camera* camera);
+	void UpdateShader(ME::Shader& shader, ME::Camera& camera);
+
+	void DrawVertices(ME::Shader& shader, sf::Texture* texture);
 
 protected:
 	bool outline;
