@@ -78,6 +78,13 @@ public:
 	std::shared_ptr<Entity> EntityAt(size_t location);
 
 protected:
+	/** 关于踢出实体的操作
+	 * 目前是踢出后原地置空，并记录空位。
+	 * 其实也可以踢出后将末尾移至该位，当然移除末尾时不用移动。
+	 * 可以利用优先队列保存欲退出的实体，从后往前移除。
+	 * 不能从前往后移除，因为这样不能保证末尾实体的状态。
+	 */
+
 	EntityIdType m_entityIdCnt; // 实体id计数，用于让每个实体都有独一无二的标识和判断方法。
 	std::deque<std::shared_ptr<Entity>> m_entities; // 在场实体所处空间。在场即指针不为空，应当保证退场同时置为nullptr。
 	std::stack<size_t> m_emptyLocations; // 空闲位置，是实体所在deque的偏移。由实体退场产生。

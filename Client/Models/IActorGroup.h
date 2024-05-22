@@ -7,8 +7,7 @@ namespace Game {
 
 namespace ActorShaderUniformId {
 enum : int {
-	Mat4_PVM = 0,
-	Mat4_PV,
+	Mat4_PV = 0,
 	Mat4_M,
 	Vec3_CamPos,
 	Vec2_Offset,

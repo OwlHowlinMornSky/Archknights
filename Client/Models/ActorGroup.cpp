@@ -8,13 +8,16 @@ namespace {
 
 const std::string fragment_spine =
 "#version 330\n"\
-"uniform sampler2D texture;"\
-"uniform bool enableCoverColor;"\
-"varying vec4 tint;"\
-"varying vec2 uv;"\
+
+"uniform sampler2D uTexture;"\
+"uniform bool uEnableCvrClr;"\
+
+"varying vec4 vTint;"\
+"varying vec2 vUv;"\
+
 "void main() {"\
-" vec4 texColor = texture2D(texture, uv);"\
-" gl_FragColor = (enableCoverColor ? vec4(texColor.w) : texColor) * tint;"\
+" vec4 texColor = texture2D(uTexture, vUv);"\
+" gl_FragColor = (uEnableCvrClr ? vec4(texColor.w) : texColor) * vTint;"\
 "}";
 
 /// <summary>
@@ -45,28 +48,40 @@ const std::string vertex_projection =
 "}";
 #else
 "#version 330\n"\
-"attribute vec2 position; "\
-"attribute vec4 color; "\
-"attribute vec2 texCoord;"\
-"uniform mat4 pvm;"\
-"uniform mat4 matpv;"\
-"uniform mat4 model;"\
-"uniform vec3 camPosition;"\
-"uniform vec2 offset;"\
-"uniform bool enableCoverColor;"\
-"uniform vec4 coverColor;"\
-"varying vec4 tint;"\
-"varying vec2 uv;"\
+
+"attribute vec2 aPosition; "\
+"attribute vec4 aColor; "\
+"attribute vec2 aTexCoord;"\
+
+"uniform mat4 uMatPV;"\
+"uniform mat4 uMatM;"\
+"uniform vec3 uVecCamPos;"\
+"uniform vec2 uVecOffset;"\
+"uniform bool uEnableCvrClr;"\
+"uniform vec4 uVecCvrClr;"\
+
+"varying vec4 vTint;"\
+"varying vec2 vUv;"\
+
 "void main() {"\
-" tint = enableCoverColor ? color.w * coverColor : color * coverColor;"\
-" uv = texCoord;"\
-" vec2 tmpPos = position / 128.0;"\
-" vec3 truePos = vec3(tmpPos.x + offset.x, (tmpPos.y + offset.y) * 0.86602540378443864676372317075294, (tmpPos.y + offset.y) * 0.5);"\
-" gl_Position = pvm * vec4(truePos, 1.0);"\
-" vec3 vectorPositionToCamera = camPosition - truePos;"\
-" vec4 projPos = vec4(truePos - vectorPositionToCamera * mix(truePos.z / vectorPositionToCamera.z, truePos.y / vectorPositionToCamera.y, step(0.0, position.y)), 1.0);"\
-" vec4 finalProjection = pvm * projPos;"\
-" gl_Position.z = mix(gl_Position.w * finalProjection.z / finalProjection.w, gl_Position.z, step(0.0, min(truePos.z, (camPosition.y + 0.1))));"\
+" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"\
+" vUv = aTexCoord;"\
+
+" vec2 VertexPosInModel = aPosition / 128.0 + uVecOffset;"\
+" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"\
+" vec4 OrgPosInGlobal = uMatM * vec4(uVecOffset.xy, 0.0, 1.0);"\
+
+" gl_Position = uMatPV * VertexPosInGlobal;"\
+
+" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"\
+" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"\
+
+" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"\
+
+" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / CamPosInOrg.z, VertexPosInOrg.y / CamPosInOrg.y, step(0.0, aPosition.y)), 1.0);"\
+" vec4 FakeProjection = uMatPV * FakePosInGlobal;"\
+
+" gl_Position.z = mix(gl_Position.w * FakeProjection.z / FakeProjection.w, gl_Position.z, step(0.0, min(OrgPosInGlobal.z, (uVecCamPos.y + 0.1))));"\
 "}";
 #endif
 
@@ -80,35 +95,34 @@ public:
 		clear();
 		loadFromMemory(vertex_projection, ME::ShaderType::Vertex);
 		loadFromMemory(fragment_spine, ME::ShaderType::Fragment);
-		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "position"));
-		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "texCoord"));
-		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "color"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "aPosition"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "aTexCoord"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "aColor"));
 		linkShader();
 		Bind(this);
 
-		m_uniforms[Game::ActorShaderUniformId::Mat4_PVM] = getUniformLocation("pvm");
-		m_uniforms[Game::ActorShaderUniformId::Mat4_PV] = getUniformLocation("matpv");
-		m_uniforms[Game::ActorShaderUniformId::Mat4_M] = getUniformLocation("model");
-		m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos] = getUniformLocation("camPosition");
-		m_uniforms[Game::ActorShaderUniformId::Vec2_Offset] = getUniformLocation("offset");
-		m_uniforms[Game::ActorShaderUniformId::Int1_CvrClr] = getUniformLocation("enableCoverColor");
-		m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr] = getUniformLocation("coverColor");
+		m_uniforms[Game::ActorShaderUniformId::Mat4_PV] = getUniformLocation("uMatPV");
+		m_uniforms[Game::ActorShaderUniformId::Mat4_M] = getUniformLocation("uMatM");
+		m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos] = getUniformLocation("uVecCamPos");
+		m_uniforms[Game::ActorShaderUniformId::Vec2_Offset] = getUniformLocation("uVecOffset");
+		m_uniforms[Game::ActorShaderUniformId::Int1_CvrClr] = getUniformLocation("uEnableCvrClr");
+		m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr] = getUniformLocation("uVecCvrClr");
 
 		updateUniform1i(m_uniforms[Game::ActorShaderUniformId::Int1_CvrClr], 0);
 		updateUniform2f(m_uniforms[Game::ActorShaderUniformId::Vec2_Offset], 0.0f, 0.0f);
 		updateUniform4f(m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr], 1.0f, 1.0f, 1.0f, 1.0f);
 
-		updateUniform1iName("texture", 0);
+		updateUniform1iName("uTexture", 0);
 		Bind(nullptr);
 	}
 
 	virtual void UpdateUniform(int id, GLfloat* data) const override {
 		switch (id) {
-		case Game::ActorShaderUniformId::Mat4_PVM:
-			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_PVM], data);
+		case Game::ActorShaderUniformId::Mat4_PV:
+			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_PV], data);
 			break;
-		case Game::ActorShaderUniformId::Mat4_MRot:
-			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_MRot], data);
+		case Game::ActorShaderUniformId::Mat4_M:
+			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_M], data);
 			break;
 		case Game::ActorShaderUniformId::Vec3_CamPos:
 			updateUniform3f(m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos], data[0], data[1], data[2]);
@@ -180,6 +194,10 @@ void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
 	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 
 	ME::Shader::Bind(m_shader.get());
+
+	m_shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PV, &(camera.getMatPV()[0][0]));
+	m_shader->UpdateUniform3(Game::ActorShaderUniformId::Vec3_CamPos, camera.getPos()[0], camera.getPos()[1], camera.getPos()[2]);
+
 	for (std::shared_ptr<IModel>& i : m_actors) {
 		i->Draw(camera, *m_shader);
 	}

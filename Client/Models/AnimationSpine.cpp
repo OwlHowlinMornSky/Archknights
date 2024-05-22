@@ -316,18 +316,10 @@ int SpineAnimation::getBoneIndex(const std::string& boneName) const {
 void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
 	if (m_positionChanged || m_rotationChanged) {
 		ComputeMatrix();
-
+		m_positionChanged = false;
+		m_rotationChanged = false;
 	}
-
-	glm::mat4 viewProj = camera.getMatPV() * m_matM;
-
-	glm::vec3 camP = camera.getPos();
-	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
-
-	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_PVM, &viewProj[0][0]);
-	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_MRot, &m_matM[0][0]);
-	shader.UpdateUniform(Game::ActorShaderUniformId::Vec3_CamPos, &campos[0]);
-
+	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
 	return;
 }
 

@@ -115,6 +115,9 @@ void GameInitalizator::LoadStart() {
 	animation->setOrigin(0.0f, 0.0f, 0.0f);
 	animation->setScale(1.0f, 1.0f, 1.0f);
 
+	animation->setRotation(30.0f, 80.0f, 0.0f);
+	//animation->setPosition(-5.0f, 1.25f, 0.0f);
+
 	//anim->setAnimation(0, "Default", false);
 	//anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
 	//anim->setAnimation(2, "Blink", true);
