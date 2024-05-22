@@ -19,17 +19,25 @@ constexpr float spine_to3d_scale_i = 128.0f;
 constexpr float spine_global_scale = 0.7125f;
 constexpr float outline_thickness  = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
-constexpr float CircleOffsetX[4] = {
+const float CircleOffsetX[8] = {
 	1.0f * outline_thickness,
 	halfsqrt2 * outline_thickness,
 	-0.0f * outline_thickness,
-	-halfsqrt2 * outline_thickness
+	-halfsqrt2 * outline_thickness,
+	-1.0f * outline_thickness,
+	-halfsqrt2 * outline_thickness,
+	0.0f * outline_thickness,
+	halfsqrt2 * outline_thickness
 };
-constexpr float CircleOffsetY[4] = {
+const float CircleOffsetY[8] = {
 	0.0f * outline_thickness,
 	halfsqrt2 * outline_thickness,
 	1.0f * outline_thickness,
-	halfsqrt2 * outline_thickness
+	halfsqrt2 * outline_thickness,
+	-0.0f * outline_thickness,
+	-halfsqrt2 * outline_thickness,
+	-1.0f * outline_thickness,
+	-halfsqrt2 * outline_thickness
 };
 
 /// <summary>
@@ -307,19 +315,11 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
 		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
-			unsigned char j = i % 4;
-			if (i & 4)
-				shader.UpdateUniform2(
-					Game::ActorShaderUniformId::Vec2_Offset,
-					(-::CircleOffsetX[j]),
-					(-::CircleOffsetY[j])
-				);
-			else
-				shader.UpdateUniform2(
-					Game::ActorShaderUniformId::Vec2_Offset,
-					::CircleOffsetX[j],
-					::CircleOffsetY[j]
-				);
+			shader.UpdateUniform2(
+				Game::ActorShaderUniformId::Vec2_Offset,
+				::CircleOffsetX[i],
+				::CircleOffsetY[i]
+			);
 			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 		}
 		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 0);
