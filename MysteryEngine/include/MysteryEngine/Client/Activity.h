@@ -49,6 +49,7 @@ public:
 	virtual ~Activity() = default;
 
 protected:
+
 	/**
 	 * @brief Activity 被创建后、运行前的处理。
 	 * @param wnd: 对所属 Window 的引用。

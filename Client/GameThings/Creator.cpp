@@ -119,7 +119,7 @@ void GameInitalizator::LoadStart() {
 	//anim->setAnimation(3, "Start", false);
 	//anim->addAnimation(3, "Idle", true, 0.0f);
 
-	//anim->outline = true;
+	anim->SetOutline(true);
 
 	std::shared_ptr<ohms::ISpineEntity> ani(anim);
 	//Game::GameGlobal::show->AddModel(ani);

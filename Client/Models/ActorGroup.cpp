@@ -69,33 +69,77 @@ const std::string vertex_projection =
 "}";
 #endif
 
+class ActorShader final :
+	public ME::Shader {
+protected:
+	int m_uniforms[Game::ActorShaderUniformId::COUNT];
+
+public:
+	virtual void setup() override {
+		clear();
+		loadFromMemory(vertex_projection, ME::ShaderType::Vertex);
+		loadFromMemory(fragment_spine, ME::ShaderType::Fragment);
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "position"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "texCoord"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "color"));
+		linkShader();
+		Bind(this);
+
+		m_uniforms[Game::ActorShaderUniformId::Mat4_PVM] = getUniformLocation("pvm");
+		m_uniforms[Game::ActorShaderUniformId::Mat4_M] = getUniformLocation("model");
+		m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos] = getUniformLocation("camPosition");
+		m_uniforms[Game::ActorShaderUniformId::Vec2_Offset] = getUniformLocation("offset");
+		m_uniforms[Game::ActorShaderUniformId::Int1_CvrClr] = getUniformLocation("enableCoverColor");
+		m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr] = getUniformLocation("coverColor");
+
+		updateUniform1i(m_uniforms[Game::ActorShaderUniformId::Int1_CvrClr], 0);
+		updateUniform2f(m_uniforms[Game::ActorShaderUniformId::Vec2_Offset], 0.0f, 0.0f);
+		updateUniform4f(m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr], 1.0f, 1.0f, 1.0f, 1.0f);
+
+		updateUniform1iName("texture", 0);
+		Bind(nullptr);
+	}
+
+	virtual void UpdateUniform(int id, GLfloat* data) const override {
+		switch (id) {
+		case Game::ActorShaderUniformId::Mat4_PVM:
+			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_PVM], data);
+			break;
+		case Game::ActorShaderUniformId::Mat4_M:
+			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_M], data);
+			break;
+		case Game::ActorShaderUniformId::Vec3_CamPos:
+			updateUniform3f(m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos], data[0], data[1], data[2]);
+			break;
+		case Game::ActorShaderUniformId::Vec2_Offset:
+			updateUniform2f(m_uniforms[Game::ActorShaderUniformId::Vec2_Offset], data[0], data[1]);
+			break;
+		case Game::ActorShaderUniformId::Vec4_CvrClr:
+			updateUniform4f(m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr], data[0], data[1], data[2], data[3]);
+			break;
+		}
+	}
+
+	virtual void UpdateUniform1(int id, GLfloat val0) const override {
+	}
+	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const override {
+		updateUniform2f(m_uniforms[id], val0, val1);
+	}
+	virtual void UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
+		updateUniform3f(m_uniforms[id], val0, val1, val2);
+	}
+	virtual void UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
+		updateUniform4f(m_uniforms[id], val0, val1, val2, val3);
+	}
+
+	virtual void UpdateUniformI1(int id, GLint val) const override {
+		updateUniform1i(m_uniforms[id], val);
+	}
+};
+
 }
 
 namespace Game {
-
-void ActorShader::setup() {
-	clear();
-	loadFromMemory(vertex_projection, ME::ShaderType::Vertex);
-	loadFromMemory(fragment_spine, ME::ShaderType::Fragment);
-	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "position"));
-	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "texCoord"));
-	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "color"));
-	linkShader();
-	Bind(this);
-	m_matPVM = getUniformLocation("pvm");
-	m_matM = getUniformLocation("model");
-	m_campos = getUniformLocation("camPosition");
-	m_offset = getUniformLocation("offset");
-	m_cover = getUniformLocation("enableCoverColor");
-	m_coverClr = getUniformLocation("coverColor");
-
-	updateUniform1i(m_cover, 0);
-	updateUniform2f(m_offset, 0.0f, 0.0f);
-	updateUniform4f(m_coverClr, 1.0f, 1.0f, 1.0f, 1.0f);
-
-	updateUniform1iName("texture", 0);
-	Bind(nullptr);
-}
 
 ActorGroup::ActorGroup() {
 	m_shader = std::make_unique<ActorShader>();

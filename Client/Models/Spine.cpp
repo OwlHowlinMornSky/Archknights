@@ -18,6 +18,19 @@ namespace {
 constexpr float spine_to3d_scale_i = 128.0f;
 constexpr float spine_global_scale = 0.7125f;
 constexpr float outline_thickness  = 0.02f;
+constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
+constexpr float CircleOffsetX[4] = {
+	1.0f * outline_thickness,
+	halfsqrt2 * outline_thickness,
+	-0.0f * outline_thickness,
+	-halfsqrt2 * outline_thickness
+};
+constexpr float CircleOffsetY[4] = {
+	0.0f * outline_thickness,
+	halfsqrt2 * outline_thickness,
+	1.0f * outline_thickness,
+	halfsqrt2 * outline_thickness
+};
 
 /// <summary>
 /// 矩形的 index
@@ -119,15 +132,14 @@ void SpineEntity::Update(float dt) {
 void SpineEntity::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	ComputeMatrix();
 
-	Game::ActorShader* sh = (Game::ActorShader*)shader;
-
 	glm::mat4 viewProj = camera->getMatPV() * this->m_matM;
 
 	glm::vec3 camP = camera->getPos();
 	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
-	shader->updateUniformMat4fv(sh->m_matPVM, &viewProj[0][0]);
-	shader->updateUniformMat4fv(sh->m_matM, &m_matM[0][0]);
-	shader->updateUniform3f(sh->m_campos, campos[0], campos[1], campos[2]);
+
+	shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PVM, &viewProj[0][0]);
+	shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
+	shader->UpdateUniform(Game::ActorShaderUniformId::Vec3_CamPos, &campos[0]);
 
 	return;
 }
@@ -142,8 +154,6 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	UpdateShader(&shader, &camera);
 
 	spine::BlendMode previousBlend;
-	//Game::ActorVertex vertex;
-	//ME::Vertex vertex;
 	sf::Texture* texture = nullptr;
 	for (size_t i = 0, n = this->skeleton->getSlots().size(); i < n; ++i) {
 		spine::Slot& slot = *this->skeleton->getDrawOrder()[i];
@@ -294,24 +304,37 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	sf::Texture::bind(texture);
 
 	if (this->outline) {
-		Game::ActorShader* sh = (Game::ActorShader*)&shader;
-		sh->updateUniform4f(sh->m_coverClr, 1.0f, 1.0f, 0.0f, 1.0f);
-		sh->updateUniform1i(sh->m_cover, 1);
+		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
+		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
-			float offsetX = outline_thickness * cosf(0.7853981633974483f * i);
-			float offsetY = outline_thickness * sinf(0.7853981633974483f * i);
-			sh->updateUniform2f(sh->m_offset, offsetX, offsetY);
+			unsigned char j = i % 4;
+			if (i & 4)
+				shader.UpdateUniform2(
+					Game::ActorShaderUniformId::Vec2_Offset,
+					(-::CircleOffsetX[j]),
+					(-::CircleOffsetY[j])
+				);
+			else
+				shader.UpdateUniform2(
+					Game::ActorShaderUniformId::Vec2_Offset,
+					::CircleOffsetX[j],
+					::CircleOffsetY[j]
+				);
 			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 		}
-		sh->updateUniform1i(sh->m_cover, 0);
-		sh->updateUniform2f(sh->m_offset, 0.0f, 0.0f);
-		sh->updateUniform4f(sh->m_coverClr, 1.0f, 1.0f, 1.0f, 1.0f);
+		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 0);
+		shader.UpdateUniform2(Game::ActorShaderUniformId::Vec2_Offset, 0.0f, 0.0f);
+		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 
 	glCheck(glBindVertexArray(0));
 	return;
+}
+
+void SpineEntity::SetOutline(bool enabled) {
+	this->outline = enabled;
 }
 
 spine::TrackEntry* SpineEntity::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {

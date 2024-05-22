@@ -187,6 +187,18 @@ void Shader::updateUniformMat4fvName(const char* name, GLfloat* pvm) const {
 	glCheck(glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, GL_FALSE, pvm));
 }
 
+void Shader::UpdateUniform(int id, GLfloat* data) const {}
+
+void Shader::UpdateUniform1(int id, GLfloat val0) const {}
+
+void Shader::UpdateUniform2(int id, GLfloat val0, GLfloat val1) const {}
+
+void Shader::UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const {}
+
+void Shader::UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const {}
+
+void Shader::UpdateUniformI1(int id, GLint val) const {}
+
 GLuint Shader::buildShader(std::string_view l_src, unsigned int l_type) {
 	GLuint shaderID = glCreateShader(l_type);
 	if (!shaderID) {

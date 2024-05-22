@@ -42,6 +42,7 @@ public:
 public:
 	virtual void Update(float dt) override;
 	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void SetOutline(bool enabled) override;
 
 	/// <summary>
 	/// 设置动画。
@@ -112,13 +113,11 @@ public:
 	sf::Vector2f getBonePositionByIndex(int boneIndex) const;
 	int getBoneIndex(const std::string& boneName) const;
 
-public:
-	bool outline;
-
 protected:
 	void UpdateShader(ME::Shader* shader, ME::Camera* camera);
 
 protected:
+	bool outline;
 	/// <summary>
 	/// Vertex Array Object ID.
 	/// </summary>

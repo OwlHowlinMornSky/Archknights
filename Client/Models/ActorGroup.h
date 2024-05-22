@@ -8,28 +8,13 @@
 namespace Game {
 
 namespace ActorVertexAttribute {
-enum ME_API : unsigned int {
+enum : unsigned int {
 	Position = 0, // 顶点坐标。
 	TexCoord,     // 纹理坐标。
 	Color,        // 颜色。
 	COUNT         // [计数]
 };
 } // namespace ActorVertexAttribute
-
-
-class ActorShader final :
-	public ME::Shader {
-public:
-	int m_matPVM;
-	int m_matM;
-	int m_campos;
-	int m_offset;
-	int m_cover;
-	int m_coverClr;
-
-public:
-	virtual void setup() override;
-};
 
 struct ActorVertex {
 	ActorVertex() :

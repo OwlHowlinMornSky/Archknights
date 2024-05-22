@@ -70,6 +70,15 @@ public:
 	void updateUniformMat4fv(GLint pos, GLfloat* pvm) const;
 	void updateUniformMat4fvName(const char* name, GLfloat* pvm) const;
 
+	virtual void UpdateUniform(int id, GLfloat* data) const;
+
+	virtual void UpdateUniform1(int id, GLfloat val0) const;
+	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const;
+	virtual void UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const;
+	virtual void UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const;
+
+	virtual void UpdateUniformI1(int id, GLint val) const;
+
 	static GLuint buildShader(std::string_view l_src, unsigned int l_type);
 
 protected:

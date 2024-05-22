@@ -3,10 +3,14 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 
+//#include <spine/AnimationState.h>
+
 namespace ohms {
 
 class ISpineEntity :
 	public ME::IModel {
+public:
+	virtual void SetOutline(bool enabled) = 0;
 };
 
 class ISpineEntitySet {
@@ -22,6 +26,19 @@ public:
 }
 
 namespace Game {
+
+namespace ActorShaderUniformId {
+enum : int {
+	Mat4_PVM = 0,
+	Mat4_M,
+	Vec3_CamPos,
+	Vec2_Offset,
+	Int1_CvrClr,
+	Vec4_CvrClr,
+
+	COUNT
+};
+}
 
 class IActorGroup :
 	public ME::IModel {
