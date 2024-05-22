@@ -49,6 +49,7 @@ const std::string vertex_projection =
 "attribute vec4 color; "\
 "attribute vec2 texCoord;"\
 "uniform mat4 pvm;"\
+"uniform mat4 matpv;"\
 "uniform mat4 model;"\
 "uniform vec3 camPosition;"\
 "uniform vec2 offset;"\
@@ -63,7 +64,7 @@ const std::string vertex_projection =
 " vec3 truePos = vec3(tmpPos.x + offset.x, (tmpPos.y + offset.y) * 0.86602540378443864676372317075294, (tmpPos.y + offset.y) * 0.5);"\
 " gl_Position = pvm * vec4(truePos, 1.0);"\
 " vec3 vectorPositionToCamera = camPosition - truePos;"\
-" vec4 projPos = vec4(truePos - vectorPositionToCamera * mix(truePos.z / vectorPositionToCamera.z, truePos.y / vectorPositionToCamera.y, step(0.0, truePos.z)), 1.0);"\
+" vec4 projPos = vec4(truePos - vectorPositionToCamera * mix(truePos.z / vectorPositionToCamera.z, truePos.y / vectorPositionToCamera.y, step(0.0, position.y)), 1.0);"\
 " vec4 finalProjection = pvm * projPos;"\
 " gl_Position.z = mix(gl_Position.w * finalProjection.z / finalProjection.w, gl_Position.z, step(0.0, min(truePos.z, (camPosition.y + 0.1))));"\
 "}";
@@ -86,6 +87,7 @@ public:
 		Bind(this);
 
 		m_uniforms[Game::ActorShaderUniformId::Mat4_PVM] = getUniformLocation("pvm");
+		m_uniforms[Game::ActorShaderUniformId::Mat4_PV] = getUniformLocation("matpv");
 		m_uniforms[Game::ActorShaderUniformId::Mat4_M] = getUniformLocation("model");
 		m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos] = getUniformLocation("camPosition");
 		m_uniforms[Game::ActorShaderUniformId::Vec2_Offset] = getUniformLocation("offset");
@@ -105,8 +107,8 @@ public:
 		case Game::ActorShaderUniformId::Mat4_PVM:
 			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_PVM], data);
 			break;
-		case Game::ActorShaderUniformId::Mat4_M:
-			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_M], data);
+		case Game::ActorShaderUniformId::Mat4_MRot:
+			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_MRot], data);
 			break;
 		case Game::ActorShaderUniformId::Vec3_CamPos:
 			updateUniform3f(m_uniforms[Game::ActorShaderUniformId::Vec3_CamPos], data[0], data[1], data[2]);

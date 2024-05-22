@@ -7,7 +7,7 @@
 
 #include <GL/glew.h>
 
-#include "Spine.h"
+#include "AnimationSpine.h"
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/GlCheck.h>
@@ -299,14 +299,14 @@ spine::Animation* SpineAnimation::findAnimation(const std::string& animationName
 	return m_pose.skeletonData->findAnimation(animationName.c_str());
 }
 
-sf::Vector2f SpineAnimation::getBonePosition(const std::string& boneName) const {
+glm::vec2 SpineAnimation::getBonePosition(const std::string& boneName) const {
 	spine::Bone* bone = m_skeleton->findBone(boneName.c_str());
-	return sf::Vector2f(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
+	return glm::vec2(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
 }
 
-sf::Vector2f SpineAnimation::getBonePositionByIndex(int boneIndex) const {
+glm::vec2 SpineAnimation::getBonePositionByIndex(int boneIndex) const {
 	spine::Bone* bone = m_bonesRef[0][boneIndex];
-	return sf::Vector2f(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
+	return glm::vec2(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
 }
 
 int SpineAnimation::getBoneIndex(const std::string& boneName) const {
@@ -314,7 +314,10 @@ int SpineAnimation::getBoneIndex(const std::string& boneName) const {
 }
 
 void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
-	ComputeMatrix();
+	if (m_positionChanged || m_rotationChanged) {
+		ComputeMatrix();
+
+	}
 
 	glm::mat4 viewProj = camera.getMatPV() * m_matM;
 
@@ -322,7 +325,7 @@ void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
 	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
 
 	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_PVM, &viewProj[0][0]);
-	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
+	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_MRot, &m_matM[0][0]);
 	shader.UpdateUniform(Game::ActorShaderUniformId::Vec3_CamPos, &campos[0]);
 
 	return;

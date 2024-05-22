@@ -23,6 +23,8 @@
 
 #include "../Game/Entity.h"
 
+#include "../Models/IAnimationSpine.h"
+
 namespace Game::Creator {
 
 int setup();
@@ -46,6 +48,7 @@ protected:
 
 protected:
 	size_t cc;
+	std::unique_ptr<ohms::ISpinePose> m_testpose;
 };
 
 }

@@ -51,7 +51,7 @@ void IModel::ComputeMatrix() {
 	glm::mat4 matrix_rotX = glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 	glm::mat4 matrix_rotZ = glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 matrix_rotation = matrix_rotZ * matrix_rotY * matrix_rotX;
+	glm::mat4 matrix_rotation = matrix_rotZ * matrix_rotX * matrix_rotY;
 
 	m_matM = matrix_pos * matrix_rotation * matrix_scale;
 }

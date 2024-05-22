@@ -34,7 +34,6 @@
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
 #include "../Models/IGround.h"
-#include "../Models/ISpine.h"
 #include "../Models/IActorGroup.h"
 
 namespace Game::Creator {
@@ -105,11 +104,10 @@ void GameInitalizator::LoadStart() {
 
 	auto spineFactory = ohms::ISpineFactory::Create();
 
-	std::unique_ptr<ohms::ISpinePose> pose;
-	spineFactory->CreatePose(pose, "char_151_myrtle", 0);
+	spineFactory->CreatePose(m_testpose, "char_151_myrtle", 0);
 
 	ME::G3dGlobal::setActive(true);
-	auto animation = pose->CreateAnimation();
+	auto animation = m_testpose->CreateAnimation();
 	ME::G3dGlobal::setActive(false);
 
 	animation->setPosition(0.0f, 0.0f, 0.0f);

@@ -97,19 +97,25 @@
     <ClInclude Include="Models\Ground.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Spine.h">
+    <ClInclude Include="Models\AnimationSpine.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\tiny_obj_loader.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\ISpine.h">
+    <ClInclude Include="Models\IAnimationSpine.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\IGround.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\IActorGroup.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\IActor.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Actor.h">
       <Filter>Models</Filter>
     </ClInclude>
   </ItemGroup>
@@ -182,8 +188,9 @@
     <ClCompile Include="Models\Ground.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Spine.cpp">
+    <ClCompile Include="Models\AnimationSpine.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Actor.cpp" />
   </ItemGroup>
 </Project>

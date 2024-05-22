@@ -303,6 +303,7 @@
     <ClInclude Include="API.h" />
     <ClInclude Include="GameThings\char_151_myrtle.h" />
     <ClInclude Include="GameThings\Creator.h" />
+    <ClInclude Include="GameThings\IActor.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\GameBoard.h" />
@@ -310,13 +311,14 @@
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
+    <ClInclude Include="Models\Actor.h" />
     <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IActorGroup.h" />
-    <ClInclude Include="Models\ISpine.h" />
+    <ClInclude Include="Models\IAnimationSpine.h" />
     <ClInclude Include="Models\IGround.h" />
-    <ClInclude Include="Models\Spine.h" />
+    <ClInclude Include="Models\AnimationSpine.h" />
     <ClInclude Include="Models\tiny_obj_loader.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
@@ -343,10 +345,11 @@
     <ClCompile Include="Game\GameHost.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
     <ClCompile Include="Game\MsgResult.cpp" />
+    <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />
     <ClCompile Include="Models\Ground.cpp" />
-    <ClCompile Include="Models\Spine.cpp" />
+    <ClCompile Include="Models\AnimationSpine.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />
     <ClCompile Include="Scenes\Scene_ITitle.cpp" />
     <ClCompile Include="Scenes\Scene_Title.cpp" />

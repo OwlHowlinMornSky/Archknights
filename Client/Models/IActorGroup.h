@@ -8,6 +8,7 @@ namespace Game {
 namespace ActorShaderUniformId {
 enum : int {
 	Mat4_PVM = 0,
+	Mat4_PV,
 	Mat4_M,
 	Vec3_CamPos,
 	Vec2_Offset,
@@ -20,6 +21,10 @@ enum : int {
 
 class IActorGroup :
 	public ME::IModel {
+public:
+	IActorGroup() = default;
+	virtual ~IActorGroup() = default;
+
 public:
 	virtual void AddActor(std::shared_ptr<IModel> actor) = 0;
 
