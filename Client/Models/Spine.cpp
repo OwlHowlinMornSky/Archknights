@@ -78,70 +78,80 @@ static const sf::BlendMode additivePma = sf::BlendMode(sf::BlendMode::One, sf::B
 static const sf::BlendMode multiplyPma = sf::BlendMode(sf::BlendMode::DstColor, sf::BlendMode::OneMinusSrcAlpha);
 static const sf::BlendMode screenPma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcColor);
 */
+
+class SFMLTextureLoader :
+	public spine::TextureLoader {
+public:
+	virtual void load(spine::AtlasPage& page, const spine::String& path) {
+		sf::Texture* texture = new sf::Texture();
+		if (!texture->loadFromFile(path.buffer())) return;
+
+		if (page.magFilter == spine::TextureFilter_Linear) texture->setSmooth(true);
+		if (page.uWrap == spine::TextureWrap_Repeat && page.vWrap == spine::TextureWrap_Repeat) texture->setRepeated(true);
+
+		page.setRendererObject(texture);
+		sf::Vector2u size = texture->getSize();
+		page.width = size.x;
+		page.height = size.y;
+	}
+
+	virtual void unload(void* texture) {
+		delete (sf::Texture*)texture;
+	}
+
+public:
+	static SFMLTextureLoader instance; // 基类和本类构造函数什么都不干，因此可以为全局。
+};
+SFMLTextureLoader SFMLTextureLoader::instance;
+
 } // end namespace
 
 namespace ohms {
 
-SpinePose::SpinePose() :
-	atlas(nullptr),
-	skeletonData(nullptr),
-	animationStateData(nullptr) {}
+// class SpineAnimation
+SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
+	m_pose(_pose),
+	m_outline(false)
 
-SpinePose::~SpinePose() {
-	delete animationStateData;
-	delete skeletonData;
-	delete atlas;
-}
-
-// class SpineEntity
-SpineEntity::SpineEntity(const ohms::SpinePose* pose) :
-	poseRef(pose),
-
-	outline(false),
-
-	skeleton(nullptr),
-	animationState(nullptr),
-
-	drawCount(0) {
-
+{
 	// Create the skeleton
-	this->skeleton = new spine::Skeleton(pose->skeletonData);
+	m_skeleton = new spine::Skeleton(m_pose.skeletonData);
 	// Create the animation state
-	this->animationState = new spine::AnimationState(pose->animationStateData);
+	m_animationState = new spine::AnimationState(m_pose.animationStateData);
 
-	this->worldVertices.clear();
-	this->worldVertices.ensureCapacity(SPINE_MESH_VERTEX_COUNT_MAX);
-	this->skeleton->setScaleX(spine_global_scale);
-	this->skeleton->setScaleY(spine_global_scale);
+	worldVertices.clear();
+	worldVertices.ensureCapacity(SPINE_MESH_VERTEX_COUNT_MAX);
+	m_skeleton->setScaleX(spine_global_scale);
+	m_skeleton->setScaleY(spine_global_scale);
 
-	this->bonesRef = &this->skeleton->getBones();
+	m_bonesRef = &m_skeleton->getBones();
 
-	glCheck(glGenVertexArrays(1, &this->vao));
-	glCheck(glBindVertexArray(this->vao));
-	glCheck(glGenBuffers(1, &this->vertexVBO));
+	glCheck(glGenVertexArrays(1, &m_vao));
+	glCheck(glBindVertexArray(m_vao));
+	glCheck(glGenBuffers(1, &m_vertexVBO));
 	glCheck(glBindVertexArray(0));
 	return;
 }
 
-SpineEntity::~SpineEntity() {
-	delete this->skeleton;
-	delete this->animationState;
+SpineAnimation::~SpineAnimation() {
+	delete m_animationState;
+	delete m_skeleton;
 	return;
 }
 
-void SpineEntity::Update(float dt) {
-	this->skeleton->update(dt);
-	this->animationState->update(dt);
-	this->animationState->apply(*this->skeleton);
-	this->skeleton->updateWorldTransform();
+void SpineAnimation::Update(float dt) {
+	m_skeleton->update(dt);
+	m_animationState->update(dt);
+	m_animationState->apply(*m_skeleton);
+	m_skeleton->updateWorldTransform();
 	return;
 }
 
-void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
+void SpineAnimation::Draw(ME::Camera& camera, ME::Shader& shader) {
 	vertexArray.clear();
 
 	// Early out if skeleton is invisible
-	if (this->skeleton->getColor().a == 0.0f)
+	if (m_skeleton->getColor().a == 0.0f)
 		return;
 
 	UpdateShader(shader, camera);
@@ -149,14 +159,14 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 	spine::BlendMode previousBlend;
 	sf::Texture* previousTexture = nullptr;
 	sf::Texture* texture = nullptr;
-	for (size_t i = 0, n = this->skeleton->getSlots().size(); i < n; ++i) {
-		spine::Slot& slot = *this->skeleton->getDrawOrder()[i];
+	for (size_t i = 0, n = m_skeleton->getSlots().size(); i < n; ++i) {
+		spine::Slot& slot = *m_skeleton->getDrawOrder()[i];
 		spine::Attachment* attachment = slot.getAttachment();
 		if (!attachment) continue;
 
 		// Early out if the slot color is 0 or the bone is not active
 		if (slot.getColor().a == 0 || !slot.getBone().isActive()) {
-			this->clipper.clipEnd(slot);
+			m_clipper.clipEnd(slot);
 			continue;
 		}
 
@@ -173,7 +183,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 
 			// Early out if the slot color is 0
 			if (attachmentColor->a == 0) {
-				clipper.clipEnd(slot);
+				m_clipper.clipEnd(slot);
 				continue;
 			}
 
@@ -191,7 +201,7 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 
 			// Early out if the slot color is 0
 			if (attachmentColor->a == 0) {
-				clipper.clipEnd(slot);
+				m_clipper.clipEnd(slot);
 				continue;
 			}
 
@@ -205,16 +215,16 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 		}
 		else if (attachment->getRTTI().isExactly(spine::ClippingAttachment::rtti)) {
 			spine::ClippingAttachment* clip = (spine::ClippingAttachment*)slot.getAttachment();
-			clipper.clipStart(slot, clip);
+			m_clipper.clipStart(slot, clip);
 			continue;
 		}
 		else continue;
 
 		spine::Color light;
-		light.r = this->skeleton->getColor().r * slot.getColor().r * attachmentColor->r;
-		light.g = this->skeleton->getColor().g * slot.getColor().g * attachmentColor->g;
-		light.b = this->skeleton->getColor().b * slot.getColor().b * attachmentColor->b;
-		light.a = this->skeleton->getColor().a * slot.getColor().a * attachmentColor->a;
+		light.r = m_skeleton->getColor().r * slot.getColor().r * attachmentColor->r;
+		light.g = m_skeleton->getColor().g * slot.getColor().g * attachmentColor->g;
+		light.b = m_skeleton->getColor().b * slot.getColor().b * attachmentColor->b;
+		light.a = m_skeleton->getColor().a * slot.getColor().a * attachmentColor->a;
 
 		spine::BlendMode blend = slot.getData().getBlendMode();
 
@@ -229,13 +239,13 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 			previousBlend = blend;
 		}
 
-		if (clipper.isClipping()) {
-			clipper.clipTriangles(worldVertices, *indices, *uvs, 2);
-			vertices = &clipper.getClippedVertices();
-			verticesCount = clipper.getClippedVertices().size() >> 1;
-			uvs = &clipper.getClippedUVs();
-			indices = &clipper.getClippedTriangles();
-			indicesCount = clipper.getClippedTriangles().size();
+		if (m_clipper.isClipping()) {
+			m_clipper.clipTriangles(worldVertices, *indices, *uvs, 2);
+			vertices = &m_clipper.getClippedVertices();
+			verticesCount = m_clipper.getClippedVertices().size() >> 1;
+			uvs = &m_clipper.getClippedUVs();
+			indices = &m_clipper.getClippedTriangles();
+			indicesCount = m_clipper.getClippedTriangles().size();
 		}
 
 		for (size_t ii = 0; ii < indicesCount; ++ii) {
@@ -246,67 +256,67 @@ void SpineEntity::Draw(ME::Camera& camera, ME::Shader& shader) {
 				glm::vec4(light.r * light.a, light.g * light.a, light.b * light.a, light.a)
 			);
 		}
-		clipper.clipEnd(slot);
+		m_clipper.clipEnd(slot);
 	}
-	clipper.clipEnd();
+	m_clipper.clipEnd();
 	DrawVertices(shader, texture);
 	return;
 }
 
-void SpineEntity::SetOutline(bool enabled) {
-	this->outline = enabled;
+void SpineAnimation::SetOutline(bool enabled) {
+	m_outline = enabled;
 }
 
-spine::TrackEntry* SpineEntity::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {
-	return this->animationState->setAnimation(trackIndex, animationName.c_str(), loop);
+spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {
+	return m_animationState->setAnimation(trackIndex, animationName.c_str(), loop);
 }
 
-spine::TrackEntry* SpineEntity::setAnimation(size_t trackIndex, spine::Animation* animation, bool loop) {
-	return this->animationState->setAnimation(trackIndex, animation, loop);
+spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, spine::Animation* animation, bool loop) {
+	return m_animationState->setAnimation(trackIndex, animation, loop);
 }
 
-spine::TrackEntry* SpineEntity::setEmptyAnimation(size_t trackIndex, float mixDuration) {
-	return this->animationState->setEmptyAnimation(trackIndex, mixDuration);
+spine::TrackEntry* SpineAnimation::setEmptyAnimation(size_t trackIndex, float mixDuration) {
+	return m_animationState->setEmptyAnimation(trackIndex, mixDuration);
 }
 
-void SpineEntity::setEmptyAnimations(float mixDuration) {
-	return this->animationState->setEmptyAnimations(mixDuration);
+void SpineAnimation::setEmptyAnimations(float mixDuration) {
+	return m_animationState->setEmptyAnimations(mixDuration);
 }
 
-spine::TrackEntry* SpineEntity::addAnimation(size_t trackIndex, const std::string& animationName, bool loop, float delay) {
-	return this->animationState->addAnimation(trackIndex, animationName.c_str(), loop, delay);
+spine::TrackEntry* SpineAnimation::addAnimation(size_t trackIndex, const std::string& animationName, bool loop, float delay) {
+	return m_animationState->addAnimation(trackIndex, animationName.c_str(), loop, delay);
 }
 
-spine::TrackEntry* SpineEntity::addAnimation(size_t trackIndex, spine::Animation* animation, bool loop, float delay) {
-	return this->animationState->addAnimation(trackIndex, animation, loop, delay);
+spine::TrackEntry* SpineAnimation::addAnimation(size_t trackIndex, spine::Animation* animation, bool loop, float delay) {
+	return m_animationState->addAnimation(trackIndex, animation, loop, delay);
 }
 
-spine::TrackEntry* SpineEntity::addEmptyAnimation(size_t trackIndex, bool loop, float delay) {
-	return this->animationState->addEmptyAnimation(trackIndex, loop, delay);
+spine::TrackEntry* SpineAnimation::addEmptyAnimation(size_t trackIndex, bool loop, float delay) {
+	return m_animationState->addEmptyAnimation(trackIndex, loop, delay);
 }
 
-spine::Animation* SpineEntity::findAnimation(const std::string& animationName) const {
-	return this->poseRef->skeletonData->findAnimation(animationName.c_str());
+spine::Animation* SpineAnimation::findAnimation(const std::string& animationName) const {
+	return m_pose.skeletonData->findAnimation(animationName.c_str());
 }
 
-sf::Vector2f SpineEntity::getBonePosition(const std::string& boneName) const {
-	spine::Bone* bone = this->skeleton->findBone(boneName.c_str());
+sf::Vector2f SpineAnimation::getBonePosition(const std::string& boneName) const {
+	spine::Bone* bone = m_skeleton->findBone(boneName.c_str());
 	return sf::Vector2f(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
 }
 
-sf::Vector2f SpineEntity::getBonePositionByIndex(int boneIndex) const {
-	spine::Bone* bone = (*(this->bonesRef))[boneIndex];
+sf::Vector2f SpineAnimation::getBonePositionByIndex(int boneIndex) const {
+	spine::Bone* bone = m_bonesRef[0][boneIndex];
 	return sf::Vector2f(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
 }
 
-int SpineEntity::getBoneIndex(const std::string& boneName) const {
-	return this->skeleton->findBoneIndex(boneName.c_str());
+int SpineAnimation::getBoneIndex(const std::string& boneName) const {
+	return m_skeleton->findBoneIndex(boneName.c_str());
 }
 
-void SpineEntity::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
+void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
 	ComputeMatrix();
 
-	glm::mat4 viewProj = camera.getMatPV() * this->m_matM;
+	glm::mat4 viewProj = camera.getMatPV() * m_matM;
 
 	glm::vec3 camP = camera.getPos();
 	glm::vec3 campos = { camP.x - m_position.x, camP.y - m_position.y, camP.z - m_position.z };
@@ -318,15 +328,15 @@ void SpineEntity::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
 	return;
 }
 
-void SpineEntity::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
-	drawCount = (GLsizei)vertexArray.size();
+void SpineAnimation::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
+	GLsizei drawCount = (GLsizei)vertexArray.size();
 	GLsizei stride = sizeof(vertexArray[0]);
 	size_t texCoordOffset = sizeof(vertexArray[0].position);
 	size_t colorOffset = texCoordOffset + sizeof(vertexArray[0].texCoord);
 
-	glCheck(glBindVertexArray(vao));
+	glCheck(glBindVertexArray(m_vao));
 
-	glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexVBO));
+	glCheck(glBindBuffer(GL_ARRAY_BUFFER, m_vertexVBO));
 
 	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_DYNAMIC_DRAW));
 	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
@@ -338,7 +348,7 @@ void SpineEntity::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
 
 	sf::Texture::bind(texture);
 
-	if (this->outline) {
+	if (m_outline) {
 		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
 		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
@@ -360,29 +370,26 @@ void SpineEntity::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
 	vertexArray.clear();
 }
 
-// end class SpineEntity
+// end class SpineAnimation
 
-// class SpineEntitySet
-SpineEntitySet::SpineEntitySet(const ohms::SpinePose* pose) :
-	poseRef(pose) {}
+// class SpinePose
+SpinePose::SpinePose(ohms::SpinePoseData _pose) :
+	m_pose(_pose) {}
 
-SpineEntitySet::~SpineEntitySet() {
+SpinePose::~SpinePose() {
+	delete m_pose.animationStateData;
+	delete m_pose.skeletonData;
+	delete m_pose.atlas;
 	return;
 }
 
-SpineEntity* SpineEntitySet::runOneEntity() {
-	ohms::SpineEntity* res = nullptr;
-	res = new SpineEntity(poseRef);
-	return res;
+std::shared_ptr<ISpineAnimation> SpinePose::CreateAnimation() {
+	return std::make_shared<SpineAnimation>(m_pose);
 }
-// end class SpineEntitySet
+// end class SpinePose
 
-// class SpineManager
-SpineManager::SpineManager() {
-	this->usePremultipliedAlpha = true;
-	this->tempUvs.ensureCapacity(16);
-	this->tempColors.ensureCapacity(16);
-
+// class SpineFactory
+SpineFactory::SpineFactory() {
 	quadIndices.clear();
 	quadIndices.add(0);
 	quadIndices.add(1);
@@ -393,79 +400,65 @@ SpineManager::SpineManager() {
 	return;
 }
 
-SpineManager::~SpineManager() {
+SpineFactory::~SpineFactory() {
 	return;
 }
 
-bool SpineManager::addPoseBinary(const std::string& binaryPath, const std::string& atlasPath) {
-	ohms::SpinePose* pose = new ohms::SpinePose;
+bool SpineFactory::CreatePose(std::unique_ptr<ISpinePose>& ptr, const std::string& name, unsigned char type) {
+	ohms::ISpinePose* res = nullptr;
+	switch (type) {
+	case 0:
+		res = createPoseBinary(
+			std::string("res/characters/").append(name).append("/animation/batf/skel").c_str(),
+			std::string("res/characters/").append(name).append("/animation/batf/atlas").c_str()
+		);
+		break;
+	case 1:
+		res = createPoseBinary(
+			std::string("res/characters/").append(name).append("/animation/batb/skel").c_str(),
+			std::string("res/characters/").append(name).append("/animation/batb/atlas").c_str()
+		);
+		break;
+	case 2:
+		res = createPoseBinary(
+			std::string("res/characters/").append(name).append("/animation/building/skel").c_str(),
+			std::string("res/characters/").append(name).append("/animation/building/atlas").c_str()
+		);
+		break;
+	}
+	if (res != nullptr)
+		ptr = std::unique_ptr<ISpinePose>(res);
+	return res != nullptr;
+}
+
+ohms::SpinePose* SpineFactory::createPoseBinary(const std::string& binaryPath, const std::string& atlasPath) {
+	ohms::SpinePoseData pose{};
 
 	// Load the texture atlas
-	pose->atlas = new spine::Atlas(atlasPath.c_str(), &this->texLoader);
-	if (pose->atlas->getPages().size() == 0) {
-		printf("Failed to load atlas");
-		delete pose;
-		return false;
+	pose.atlas = new spine::Atlas(atlasPath.c_str(), &::SFMLTextureLoader::instance);
+	if (pose.atlas->getPages().size() == 0) {
+		//printf("Failed to load atlas");
+		return nullptr;
 	}
 
 	// Load the skeleton data
-	spine::SkeletonBinary binary(pose->atlas);
-	pose->skeletonData = binary.readSkeletonDataFile(binaryPath.c_str());
+	spine::SkeletonBinary binary(pose.atlas);
+	pose.skeletonData = binary.readSkeletonDataFile(binaryPath.c_str());
 
-	if (!pose->skeletonData) {
-		printf("Failed to load skeleton data");
-		delete pose;
-		return false;
+	if (!pose.skeletonData) {
+		//printf("Failed to load skeleton data");
+		delete pose.atlas;
+		return nullptr;
 	}
 	// Setup
-	pose->animationStateData = new spine::AnimationStateData(pose->skeletonData);
+	pose.animationStateData = new spine::AnimationStateData(pose.skeletonData);
 
-	ohms::SpineEntitySet* set = new ohms::SpineEntitySet(pose);
-	this->sets.push_back(set);
-	this->poses.push_back(pose);
-	return true;
+	return new ohms::SpinePose(pose);
 }
 
-ohms::SpineEntitySet* SpineManager::addPose(const std::string& name, unsigned char type) {
-	bool ok = false;
-	switch (type) {
-	case 0:
-		ok = this->addPoseBinary(std::string("res/characters/").append(name).append("/animation/batf/skel").c_str(), std::string("res/characters/").append(name).append("/animation/batf/atlas").c_str());
-		break;
-	case 1:
-		ok = this->addPoseBinary(std::string("res/characters/").append(name).append("/animation/batb/skel").c_str(), std::string("res/characters/").append(name).append("/animation/batb/atlas").c_str());
-		break;
-	case 2:
-		ok = this->addPoseBinary(std::string("res/characters/").append(name).append("/animation/building/skel").c_str(), std::string("res/characters/").append(name).append("/animation/building/atlas").c_str());
-		break;
-	default:
-		break;
-	}
-	if (!ok)
-		return nullptr;
-	return this->sets.back();
-}
-
-void SFMLTextureLoader::load(spine::AtlasPage& page, const spine::String& path) {
-	sf::Texture* texture = new sf::Texture();
-	if (!texture->loadFromFile(path.buffer())) return;
-
-	if (page.magFilter == spine::TextureFilter_Linear) texture->setSmooth(true);
-	if (page.uWrap == spine::TextureWrap_Repeat && page.vWrap == spine::TextureWrap_Repeat) texture->setRepeated(true);
-
-	page.setRendererObject(texture);
-	sf::Vector2u size = texture->getSize();
-	page.width = size.x;
-	page.height = size.y;
-}
-
-void SFMLTextureLoader::unload(void* texture) {
-	delete (sf::Texture*)texture;
-}
-
-// end class SpineManager
+// end class SpineFactory
 } // end namespace ohms
 
-std::unique_ptr<ohms::ISpineManager> Factory::Create_SpineManager() {
-	return std::make_unique<ohms::SpineManager>();
+std::unique_ptr<ohms::ISpineFactory> ohms::ISpineFactory::Create() {
+	return std::make_unique<ohms::SpineFactory>();
 }

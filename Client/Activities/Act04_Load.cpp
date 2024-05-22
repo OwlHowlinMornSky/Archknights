@@ -36,12 +36,16 @@ Act04_Load::Act04_Load() :
 
 Act04_Load::~Act04_Load() noexcept {}
 
-bool Act04_Load::start(ME::Window& wnd) noexcept {
+bool Act04_Load::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
 	m_tex.loadFromFile("assets/textures/bkgnd.png");
 	m_tex.setSmooth(true);
 	m_tex.generateMipmap();
+	return true;
+}
+
+void Act04_Load::start() noexcept {
 	m_sp.setTexture(m_tex, true);
 	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
 
@@ -63,7 +67,7 @@ bool Act04_Load::start(ME::Window& wnd) noexcept {
 	//m_text.setFont(r_wnd->getFontMgr().getFont(GUI::FontType::CommonContext));
 	//m_text.setFillColor(sf::Color::White);
 	//m_text.setCharacterSize(36);
-	return true;
+	return;
 }
 
 void Act04_Load::stop() noexcept {

@@ -38,9 +38,15 @@ Act02_TestActivity::~Act02_TestActivity() noexcept {
 	return;
 }
 
-bool Act02_TestActivity::start(ME::Window& wnd) noexcept {
+bool Act02_TestActivity::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
+	// 加载调试信息
+	m_tex.loadFromFile("assets/TestActivity.png");
+	m_sp.setTexture(m_tex, true);
+	return true;
+}
 
+void Act02_TestActivity::start() noexcept {
 	// 复制所有屏幕模式
 	m_modes = sf::VideoMode::getFullscreenModes();
 	m_modeI = 0;
@@ -50,13 +56,9 @@ bool Act02_TestActivity::start(ME::Window& wnd) noexcept {
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setSize({ 100.0f, 100.0f });
 
-	// 加载调试信息
-	m_tex.loadFromFile("assets/TestActivity.png");
-	m_sp.setTexture(m_tex, true);
-
 	// 更新布局
 	updateSize();
-	return true;
+	return;
 }
 
 void Act02_TestActivity::stop() noexcept {

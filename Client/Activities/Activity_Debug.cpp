@@ -29,9 +29,13 @@ Activity_Debug::Activity_Debug() {}
 
 Activity_Debug::~Activity_Debug() noexcept {}
 
-bool Activity_Debug::start(ME::Window& wnd) noexcept {
+bool Activity_Debug::prepare(ME::Window& wnd) noexcept {
 	r(wnd);
 	return true;
+}
+
+void Activity_Debug::start() noexcept {
+	return;
 }
 
 void Activity_Debug::stop() noexcept {

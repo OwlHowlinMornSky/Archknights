@@ -43,14 +43,18 @@ Act03_Opening::Act03_Opening() :
 
 Act03_Opening::~Act03_Opening() noexcept {}
 
-bool Act03_Opening::start(ME::Window& wnd) noexcept {
+bool Act03_Opening::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
-	m_status = 0;
-	m_timer = sf::Time::Zero;
 
 	m_tex[0].loadFromFile("assets/textures/work.png");
 	m_tex[1].loadFromFile("assets/textures/title.png");
 	m_tex[2].loadFromFile("assets/textures/bkgnd.png");
+	return true;
+}
+
+void Act03_Opening::start() noexcept {
+	m_status = 0;
+	m_timer = sf::Time::Zero;
 
 	for (int i = 0; i < 3; ++i) {
 		m_tex[i].setSmooth(true);
@@ -71,7 +75,7 @@ bool Act03_Opening::start(ME::Window& wnd) noexcept {
 	//circle[0].setPosition(560.0f, 360.0f);
 	//circle[1].setPosition(720.0f, 360.0f);
 	//circle[2].setPosition(640.0f, 360.0f);
-	return true;
+	return;
 }
 
 void Act03_Opening::stop() noexcept {

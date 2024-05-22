@@ -115,10 +115,11 @@ void Window::handleEvent() {
 	while (m_waitToChange) {
 		m_waitToChange = false;
 		std::unique_ptr<Activity> tmp = std::move(m_nextActivity);
-		if (tmp->start(*this)) {
+		if (tmp->prepare(*this)) {
 			if (m_activity != nullptr)
 				m_activity->stop();
 			m_activity = std::move(tmp);
+			m_activity->start();
 		}
 	}
 	sf::Event evt;

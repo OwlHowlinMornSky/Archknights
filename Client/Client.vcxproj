@@ -310,10 +310,12 @@
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
-    <ClInclude Include="ModelFactory.h" />
     <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
+    <ClInclude Include="Models\IActorGroup.h" />
+    <ClInclude Include="Models\ISpine.h" />
+    <ClInclude Include="Models\IGround.h" />
     <ClInclude Include="Models\Spine.h" />
     <ClInclude Include="Models\tiny_obj_loader.h" />
     <ClInclude Include="resource.h" />

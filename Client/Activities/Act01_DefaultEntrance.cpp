@@ -36,17 +36,21 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 	return;
 }
 
-bool Act01_DefaultEntrance::start(ME::Window& wnd) noexcept {
+bool Act01_DefaultEntrance::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
-#ifndef _DEBUG
-	r_wnd->setResizeEnabled(false);
-#endif
-	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
 #ifdef _DEBUG // 加载调试用的资源
 	m_tex.loadFromFile("assets/DefaultEntry.png");
 	m_sp.setTexture(m_tex, true);
 #endif // _DEBUG
-	return true;
+    return true;
+}
+
+void Act01_DefaultEntrance::start() noexcept {
+#ifndef _DEBUG
+	r_wnd->setResizeEnabled(false);
+#endif
+	r_wnd->setSize({ 1280, 720 }); // 初始化窗口大小
+	return;
 }
 
 void Act01_DefaultEntrance::stop() noexcept {

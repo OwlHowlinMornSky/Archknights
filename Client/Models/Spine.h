@@ -11,7 +11,7 @@
 #include <MysteryEngine/G3D/Vertex.h>
 
 #include "ActorGroup.h"
-#include "../ModelFactory.h"
+#include "ISpine.h"
 
 namespace ohms {
 
@@ -19,25 +19,22 @@ namespace ohms {
  * @brief 完备的造型数据, 由所有骨架共享
  * @brief Setup pose data, shared by all skeletons
  */
-struct SpinePose {
+struct SpinePoseData {
 	spine::Atlas* atlas;
 	spine::SkeletonData* skeletonData;
 	spine::AnimationStateData* animationStateData;
-
-	SpinePose();
-	~SpinePose();
 };
 
 /**
  * @brief 骨架实体 及其 动画状态
  * @brief skeleton entity and its animation states
  */
-class SpineEntity final :
-	public ISpineEntity {
+class SpineAnimation final :
+	public ISpineAnimation {
 	typedef ME::IModel Parent;
 public:
-	SpineEntity(const ohms::SpinePose* pose);
-	~SpineEntity();
+	SpineAnimation(const ohms::SpinePoseData _pose);
+	~SpineAnimation();
 
 public:
 	virtual void Update(float dt) override;
@@ -119,81 +116,50 @@ protected:
 	void DrawVertices(ME::Shader& shader, sf::Texture* texture);
 
 protected:
-	bool outline;
+	bool m_outline;
 	/// <summary>
 	/// Vertex Array Object ID.
 	/// </summary>
-	unsigned int vao;
+	unsigned int m_vao;
 	/// <summary>
 	/// Vertex Buffer Object for Vertices.
 	/// </summary>
-	unsigned int vertexVBO;
-	/// <summary>
-	/// Depending on input, the amount of vertices or indices that are needed to be drawn for this object.
-	/// </summary>
-	GLsizei drawCount;
-	const ohms::SpinePose* poseRef;
-	spine::Skeleton* skeleton;
-	spine::AnimationState* animationState;
-	spine::Vector<spine::Bone*>* bonesRef;
-	mutable spine::Vector<float> worldVertices;
-	mutable spine::SkeletonClipping clipper;
+	unsigned int m_vertexVBO;
+	spine::Skeleton* m_skeleton;
+	spine::AnimationState* m_animationState;
+	spine::Vector<spine::Bone*>* m_bonesRef;
+	const ohms::SpinePoseData m_pose;
 	std::vector<Game::ActorVertex> vertexArray;
-	//std::vector<ME::Vertex> vertexArray;
-}; // end class SpineEntity
-
-/// <summary>
-/// Spine 集合, 是一个 pose 对应的所有 entity 的集合
-/// </summary>
-class SpineEntitySet final :
-	public ISpineEntitySet {
-public:
-	SpineEntitySet(const ohms::SpinePose* pose);
-	~SpineEntitySet();
-
-public:
-	SpineEntity* runOneEntity();
-
-protected:
-	const ohms::SpinePose* poseRef;
-}; // end class SpineEntitySet
-
-
-class SFMLTextureLoader :
-	public spine::TextureLoader {
-public:
-	virtual void load(spine::AtlasPage& page, const spine::String& path);
-
-	virtual void unload(void* texture);
+	mutable spine::Vector<float> worldVertices;
+	mutable spine::SkeletonClipping m_clipper;
 };
 
-/// <summary>
-/// Spine 管理器
-/// </summary>
-class SpineManager final :
-	public ISpineManager {
+
+class SpinePose final :
+	public ISpinePose {
 public:
-	SpineManager();
-	~SpineManager();
+	SpinePose(ohms::SpinePoseData _pose);
+	~SpinePose();
 
 public:
-	ohms::SpineEntitySet* addPose(const std::string& name, unsigned char type);
-	//ohms::SpineEntitySet* getSetByName(const std::string& name);
-	//const ohms::SpinePose* getPoseByName(const std::string& name);
+	virtual std::shared_ptr<ISpineAnimation> CreateAnimation() override;
+
+protected:
+	ohms::SpinePoseData m_pose;
+};
+
+
+class SpineFactory final :
+	public ISpineFactory {
+public:
+	SpineFactory();
+	~SpineFactory();
+
+public:
+	virtual bool CreatePose(std::unique_ptr<ISpinePose>& ptr, const std::string& name, unsigned char type) override;
 
 private:
-	bool addPoseBinary(const std::string& binaryPath, const std::string& atlasPath);
+	ohms::SpinePose* createPoseBinary(const std::string& binaryPath, const std::string& atlasPath);
+};
 
-private:
-	//ME::Shader* shaderRef;
-	//ME::Camera* cameraRef;
-	//float timeScale;
-	std::vector<ME::Vertex> vertexArray;
-	mutable spine::Vector<float> tempUvs;
-	mutable spine::Vector<spine::Color> tempColors;
-	mutable bool usePremultipliedAlpha;
-	SFMLTextureLoader texLoader;
-	std::list<ohms::SpinePose*> poses;
-	std::list<ohms::SpineEntitySet*> sets;
-}; // end class SpineManager
 } // end namespace ohms

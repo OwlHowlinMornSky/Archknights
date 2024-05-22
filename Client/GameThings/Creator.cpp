@@ -32,8 +32,10 @@
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
-//#include "../Models/ActorGroup.h"
-//#include "../Models/Ground.h"
+
+#include "../Models/IGround.h"
+#include "../Models/ISpine.h"
+#include "../Models/IActorGroup.h"
 
 namespace Game::Creator {
 
@@ -87,31 +89,33 @@ void GameInitalizator::LoadStart() {
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
 
-	auto gp = Factory::Create_ActorGroup();
+	auto actorGroup = Game::IActorGroup::Create();
 
-	auto cam = std::make_shared<ME::PerspectiveCamera>();
-	Game::GameGlobal::show->SetCamera(cam);
-	cam->setAspectRatio(16.0f / 9.0f);
-	cam->setFOV(40.0f);
-	cam->setPosition(0.0f, -5.5f, 8.66025f);
+	auto camera = std::make_shared<ME::PerspectiveCamera>();
+	Game::GameGlobal::show->SetCamera(camera);
+	camera->setAspectRatio(16.0f / 9.0f);
+	camera->setFOV(40.0f);
+	camera->setPosition(0.0f, -5.5f, 8.66025f);
 	//cam->setPosition(0.0f, 0.0f, 5.0f);
-	cam->setRotation(30.0f, 0.0f, 0.0f);
+	camera->setRotation(30.0f, 0.0f, 0.0f);
 	//cam->setRotation(0.0f, 0.0f, 0.0f);
 
 	//cam->setZNear(0.5f);
 	//cam->setZFar(50.0f);
 
-	mngr = Factory::Create_SpineManager();
-	auto set = mngr->addPose("char_151_myrtle", 0);
+	auto spineFactory = ohms::ISpineFactory::Create();
+
+	std::unique_ptr<ohms::ISpinePose> pose;
+	spineFactory->CreatePose(pose, "char_151_myrtle", 0);
 
 	ME::G3dGlobal::setActive(true);
-	auto anim = set->runOneEntity();
+	auto animation = pose->CreateAnimation();
 	ME::G3dGlobal::setActive(false);
 
-	anim->setPosition(0.0f, 0.0f, 0.0f);
-	anim->setRotation(0.0f, 0.0f, 0.0f);
-	anim->setOrigin(0.0f, 0.0f, 0.0f);
-	anim->setScale(1.0f, 1.0f, 1.0f);
+	animation->setPosition(0.0f, 0.0f, 0.0f);
+	animation->setRotation(0.0f, 0.0f, 0.0f);
+	animation->setOrigin(0.0f, 0.0f, 0.0f);
+	animation->setScale(1.0f, 1.0f, 1.0f);
 
 	//anim->setAnimation(0, "Default", false);
 	//anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
@@ -119,27 +123,23 @@ void GameInitalizator::LoadStart() {
 	//anim->setAnimation(3, "Start", false);
 	//anim->addAnimation(3, "Idle", true, 0.0f);
 
-	anim->SetOutline(true);
+	animation->SetOutline(true);
 
-	std::shared_ptr<ohms::ISpineEntity> ani(anim);
-	//Game::GameGlobal::show->AddModel(ani);
-
-	gp->AddActor(ani);
+	actorGroup->AddActor(animation);
 
 	////////////////////
 
 	ME::G3dGlobal::setActive(true);
-	gd = Factory::Create_ObjModel();
-	gd->LoadModelData("res/main_7-3/main.obj");
+	auto ground = IObjModel::Create();
+	ground->LoadModelData("res/main_7-3/main.obj");
 	//gd->setRotation(0.0f, 0.0f, 180.0f);
-	gd->setScale(-1.0f, 1.0f, -1.0f);
+	ground->setScale(-1.0f, 1.0f, -1.0f);
 	ME::G3dGlobal::setActive(false);
 
 	////////////////////
 
-	Game::GameGlobal::show->AddModel(gd);
-	Game::GameGlobal::show->AddModel(gp);
-
+	Game::GameGlobal::show->AddModel(ground);
+	Game::GameGlobal::show->AddModel(actorGroup);
 
 }
 

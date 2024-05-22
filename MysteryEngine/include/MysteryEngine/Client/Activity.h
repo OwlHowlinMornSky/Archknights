@@ -49,12 +49,16 @@ public:
 	virtual ~Activity() = default;
 
 protected:
-
 	/**
 	 * @brief Activity 被创建后、运行前的处理。
 	 * @param wnd: 对所属 Window 的引用。
+	 * @return 是否可以运行。
 	*/
-	virtual bool start(ME::Window& wnd) noexcept = 0;
+	virtual bool prepare(ME::Window& wnd) noexcept = 0;
+	/**
+	 * @brief Activity 即将运行的通知。
+	*/
+	virtual void start() noexcept = 0;
 	/**
 	 * @brief Activity 结束后、移除前的处理。
 	*/

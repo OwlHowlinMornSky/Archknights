@@ -32,12 +32,15 @@ Activity_Game::Activity_Game() {}
 
 Activity_Game::~Activity_Game() noexcept {}
 
-bool Activity_Game::start(ME::Window& wnd) noexcept {
+bool Activity_Game::prepare(ME::Window& wnd) noexcept {
 	r(wnd);
 	int res = Game::Creator::setup();
+	return res == 0;
+}
+
+void Activity_Game::start() noexcept {
 	Game::GameGlobal::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
 	UpdateSize(r->getRealtimeSize());
-	return res == 0;
 }
 
 void Activity_Game::stop() noexcept {

@@ -43,14 +43,18 @@ Act05_Title::~Act05_Title() noexcept {
 	return;
 }
 
-bool Act05_Title::start(ME::Window& wnd) noexcept {
+bool Act05_Title::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
-
-	m_scene = Scene::Factory::GetTitle();
-	m_scene->setup(r_wnd->getSize());
 
 	m_titleTex.loadFromFile("assets/textures/title.png");
 	m_titleTex.setSmooth(true);
+	return true;
+}
+
+void Act05_Title::start() noexcept {
+	m_scene = Scene::Factory::GetTitle();
+	m_scene->setup(r_wnd->getSize());
+
 	m_titleSp.setTexture(m_titleTex, true);
 	m_titleSp.setOrigin(m_titleTex.getSize().x / 2.0f, m_titleTex.getSize().y / 2.0f);
 
@@ -59,7 +63,7 @@ bool Act05_Title::start(ME::Window& wnd) noexcept {
 	updateSize();
 
 	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
-	return true;
+	return;
 }
 
 void Act05_Title::stop() noexcept {

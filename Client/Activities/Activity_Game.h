@@ -32,7 +32,8 @@ public:
 	virtual ~Activity_Game() noexcept override;
 
 protected:
-	virtual bool start(ME::Window& wnd) noexcept override;
+	virtual bool prepare(ME::Window& wnd) noexcept override;
+	virtual void start() noexcept override;
 	virtual void stop() noexcept override;
 
 public:

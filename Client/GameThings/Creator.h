@@ -22,9 +22,6 @@
 #pragma once
 
 #include "../Game/Entity.h"
-//#include "../Models/Spine.h"
-//#include "../Models/Ground.h"
-#include "../ModelFactory.h"
 
 namespace Game::Creator {
 
@@ -49,8 +46,6 @@ protected:
 
 protected:
 	size_t cc;
-	std::unique_ptr<ohms::ISpineManager> mngr;
-	std::shared_ptr<IObjModel> gd;
 };
 
 }

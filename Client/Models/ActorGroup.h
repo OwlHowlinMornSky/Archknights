@@ -3,7 +3,7 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 #include <list>
-#include "../ModelFactory.h"
+#include "IActorGroup.h"
 
 namespace Game {
 
