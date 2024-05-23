@@ -132,14 +132,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -151,14 +151,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -172,7 +172,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -180,8 +180,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -195,7 +195,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -203,8 +203,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-$(Configuration)-static;$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -216,14 +216,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-Debug-static</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -235,14 +235,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;spinert_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-Debug-static;$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;spinert_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -256,7 +256,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -264,8 +264,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-Release-static</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -279,7 +279,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -287,8 +287,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;spinert_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(Platform)\lib-Release-static;$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;spinert_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
