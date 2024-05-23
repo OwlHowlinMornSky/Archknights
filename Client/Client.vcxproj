@@ -313,6 +313,7 @@
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\IActor.h" />
+    <ClInclude Include="GameThings\Initalizator.h" />
     <ClInclude Include="GameThings\ISummonMngr.h" />
     <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
@@ -361,13 +362,13 @@
     <ClCompile Include="GameThings\char_151_myrtle_factory.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
     <ClCompile Include="GameThings\EntityFactory.cpp" />
+    <ClCompile Include="GameThings\Initalizator.cpp" />
     <ClCompile Include="GameThings\SummonMngr.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\GameGlobal.cpp" />
     <ClCompile Include="Game\GameBoard.cpp" />
     <ClCompile Include="Game\GameHost.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
-    <ClCompile Include="Game\MsgResult.cpp" />
     <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />

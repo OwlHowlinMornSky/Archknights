@@ -24,6 +24,8 @@
 #include "MsgResult.h"
 #include "GameGlobal.h"
 
+#include <cassert>
+
 namespace Game {
 
 GameBoard::GameBoard() :

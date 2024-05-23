@@ -157,6 +157,9 @@
     <ClInclude Include="GameThings\char_128_plosis_factory.h">
       <Filter>GameThings\Units</Filter>
     </ClInclude>
+    <ClInclude Include="GameThings\Initalizator.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -207,9 +210,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\IGameShow.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\MsgResult.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameHost.cpp">
@@ -265,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="GameThings\char_128_plosis_factory.cpp">
       <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\Initalizator.cpp">
+      <Filter>GameThings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

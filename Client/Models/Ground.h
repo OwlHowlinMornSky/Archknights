@@ -49,8 +49,6 @@ protected:
 	glm::mat4 transform;
 	///Material Data for rendering.
 	//V3DMaterial* material;
-	///Pointer to shader so I can update the material for each model.
-	//V3DShader* shader;
 
 public:
 	ObjModel();

@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <glm/glm.hpp>
-
 namespace Game {
 
 typedef size_t EntityIdType;

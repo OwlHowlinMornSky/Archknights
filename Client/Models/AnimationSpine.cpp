@@ -45,40 +45,6 @@ const float CircleOffsetY[8] = {
 /// </summary>
 spine::Vector<unsigned short> quadIndices;
 
-/// <summary>
-/// Convert an sf::BlendMode::Factor constant to the corresponding OpenGL constant.
-/// </summary>
-/// <param name="blendFactor"></param>
-/// <returns></returns>
-/*sf::Uint32 factorToGlConstant(sf::BlendMode::Factor blendFactor) {
-	switch (blendFactor) {
-	case sf::BlendMode::Zero:             return GL_ZERO;
-	case sf::BlendMode::One:              return GL_ONE;
-	case sf::BlendMode::SrcColor:         return GL_SRC_COLOR;
-	case sf::BlendMode::OneMinusSrcColor: return GL_ONE_MINUS_SRC_COLOR;
-	case sf::BlendMode::DstColor:         return GL_DST_COLOR;
-	case sf::BlendMode::OneMinusDstColor: return GL_ONE_MINUS_DST_COLOR;
-	case sf::BlendMode::SrcAlpha:         return GL_SRC_ALPHA;
-	case sf::BlendMode::OneMinusSrcAlpha: return GL_ONE_MINUS_SRC_ALPHA;
-	case sf::BlendMode::DstAlpha:         return GL_DST_ALPHA;
-	case sf::BlendMode::OneMinusDstAlpha: return GL_ONE_MINUS_DST_ALPHA;
-	}
-	sf::err() << "Invalid value for sf::BlendMode::Factor! Fallback to sf::BlendMode::Zero." << std::endl;
-	assert(false);
-	return GL_ZERO;
-}
-
-static const sf::BlendMode normal = sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::OneMinusSrcAlpha);
-static const sf::BlendMode additive = sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::One);
-static const sf::BlendMode multiply = sf::BlendMode(sf::BlendMode::DstColor, sf::BlendMode::OneMinusSrcAlpha);
-static const sf::BlendMode screen = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcColor);
-
-static const sf::BlendMode normalPma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcAlpha);
-static const sf::BlendMode additivePma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::One);
-static const sf::BlendMode multiplyPma = sf::BlendMode(sf::BlendMode::DstColor, sf::BlendMode::OneMinusSrcAlpha);
-static const sf::BlendMode screenPma = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcColor);
-*/
-
 class SFMLTextureLoader :
 	public spine::TextureLoader {
 public:
@@ -121,8 +87,6 @@ SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
 
 	worldVertices.clear();
 	worldVertices.ensureCapacity(SPINE_MESH_VERTEX_COUNT_MAX);
-	//m_skeleton->setScaleX(spine_global_scale);
-	//m_skeleton->setScaleY(spine_global_scale);
 
 	m_bonesRef = &m_skeleton->getBones();
 

@@ -29,11 +29,9 @@
 namespace Game {
 
 Entity::Entity() :
-	m_updatable(false),
-
-	m_position(),
-	m_rotation(),
-	m_scale(1.0f),
+	m_position{ 0.0f, 0.0f },
+	m_rotation(0.0f),
+	m_scale{ 1.0f, 1.0f },
 
 	m_id(0),
 	m_location(0) {}
@@ -63,6 +61,43 @@ MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLpa
 
 void Entity::FixedUpdate(float dt) {}
 
+EntityIdType Entity::getID() const {
+	return m_id;
+}
+
+EntityLocationType Entity::getLocation() const {
+	return m_location;
+}
+
+const float* Entity::getPosition() const {
+	return m_position;
+}
+
+void Entity::setPosition(float x, float y) {
+	m_position[0] = x;
+	m_position[1] = y;
+	OnPositionChanged();
+}
+
+const float* Entity::getScale() const {
+	return m_scale;
+}
+
+void Entity::setScale(float x, float y) {
+	m_scale[0] = x;
+	m_scale[1] = y;
+	OnScaleChanged();
+}
+
+float Entity::getRotation() const {
+	return m_rotation;
+}
+
+void Entity::setRotation(float rot) {
+	m_rotation = rot;
+	OnRotationChanged();
+}
+
 void Entity::OnPositionChanged() {}
 
 void Entity::OnRotationChanged() {}
@@ -70,7 +105,6 @@ void Entity::OnRotationChanged() {}
 void Entity::OnScaleChanged() {}
 
 void Entity::KickSelf() const {
-	//GameGlobal::board->KickEntity(m_location);
 	GameGlobal::board->RegistryForExit(m_location);
 }
 

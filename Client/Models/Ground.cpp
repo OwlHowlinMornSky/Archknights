@@ -32,23 +32,6 @@ ObjModel::~ObjModel() {
 	//delete material;
 }
 
-//void ObjModel::updateTransform() {
-//	//S * R * T
-//	glm::mat4 matrix_pos = glm::translate(glm::vec3(Position.x, Position.y, Position.z));
-//	glm::mat4 matrix_scale = glm::scale(glm::vec3(Scale.x, Scale.y, Scale.z));
-//	// Represent each stored rotation as a different matrix, because 
-//	// we store angles. 
-//	// x  y  z 
-//	glm::mat4 matrix_rotX = glm::rotate(Rotation.x * (VFRAME_PI / 180.0f), glm::vec3(1, 0, 0));
-//	glm::mat4 matrix_rotY = glm::rotate(Rotation.y * (VFRAME_PI / 180.0f), glm::vec3(0, 1, 0));
-//	glm::mat4 matrix_rotZ = glm::rotate(Rotation.z * (VFRAME_PI / 180.0f), glm::vec3(0, 0, 1));
-//	// Create a rotation matrix. 
-//	// Multiply in reverse order it needs to be applied. 
-//	glm::mat4 matrix_rotation = matrix_rotZ * matrix_rotY * matrix_rotX;
-//	// Apply transforms in reverse order they need to be applied in. 
-//	transform = matrix_pos * matrix_rotation * matrix_scale;
-//}
-
 bool ObjModel::LoadModelData(const char* filename) {
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
@@ -57,14 +40,6 @@ bool ObjModel::LoadModelData(const char* filename) {
 	modelData.clear();
 	materials.clear();
 	textures.clear();
-
-	/*minimum.x = FLT_MAX;
-	minimum.y = FLT_MAX;
-	minimum.z = FLT_MAX;
-	maximum.x = -FLT_MAX;
-	maximum.y = -FLT_MAX;
-	maximum.z = -FLT_MAX;*/
-
 
 	std::string path = GetBaseDir(filename);
 	path += "/";
@@ -98,7 +73,6 @@ bool ObjModel::LoadModelData(const char* filename) {
 	for (const tinyobj::shape_t& shape : shapes) {
 		ModelData md;
 		std::vector<float> vb; // pos(3float), normal(3float), color(4float)
-
 
 		for (unsigned int f = 0; f < shape.mesh.indices.size() / 3; ++f) {
 
@@ -244,18 +218,6 @@ bool ObjModel::LoadModelData(const char* filename) {
 		}
 
 		modelData.push_back(md);
-
-		//for (unsigned int v = 0; v + 2 < vb.size(); v += 3) // OHMS
-		//	//for (unsigned int v = 0; v  < vb.size(); v += 3) // OHMS
-		//{
-		//	minimum.x = std::fminf(vb[v + 0], minimum.x);
-		//	maximum.x = std::fmaxf(vb[v + 0], maximum.x);
-		//	minimum.y = std::fminf(vb[v + 1], minimum.y);
-		//	maximum.y = std::fmaxf(vb[v + 1], maximum.y);
-		//	minimum.z = std::fminf(vb[v + 2], minimum.z);
-		//	maximum.z = std::fmaxf(vb[v + 2], maximum.z);
-		//}
-
 	}
 	return r;
 }
@@ -352,21 +314,8 @@ void ObjModel::UpdateShader(ME::Camera& camera, ME::Shader& shader) {
 
 	ComputeMatrix();
 
-	//if (camera) {
 	glm::mat4 viewProj = camera.getMatPV() * m_matM;// transform;
 	shader.updateUniformMat4fvName("uMatPVM", &viewProj[0][0]);
-	//shader.UpdateUniform(UniformType::TransformPVM, &viewProj[0][0]);
-	//shader.UpdateUniform(UniformType::TransformV, &camera->ViewMatrix()[0][0]);
-	//shader.UpdateUniform(UniformType::TransformM, &transform[0][0]);
-	//}
-	//else {
-	//	glm::mat4 identity;
-	//	shader->UpdateUniform(UniformType::TransformPVM, &transform[0][0]);
-	//	shader->UpdateUniform(UniformType::TransformV, &identity[0][0]);
-	//	shader->UpdateUniform(UniformType::TransformM, &transform[0][0]);
-	//}
-
-	//this->shader = shader;
 }
 
 std::shared_ptr<IObjModel> IObjModel::Create() {

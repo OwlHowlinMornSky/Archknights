@@ -50,7 +50,6 @@ bool Activity_Debug::handleEvent(const sf::Event& evt) {
 	case sf::Event::KeyPressed:
 		switch (evt.key.code) {
 		case sf::Keyboard::Num1:
-			//game::Global::data.name = "dabug";
 			r->changeActivity(std::make_unique<Activity_Game>());
 			return true;
 		}

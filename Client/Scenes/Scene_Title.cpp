@@ -23,47 +23,14 @@
 
 #include "Scene_Title.h"
 
-//#include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/Core/RandGen.h>
 
 #include <array>
 #include <vector>
-//#include <fstream>
-//#include <iostream>
 
 namespace {
-
-const char g_vs[] =
-"#version 330\n"\
-"attribute vec3 a_vertex0;"\
-"attribute vec3 a_vertex1;"\
-"attribute vec2 a_offset;"\
-"attribute vec2 a_texCoord;"\
-"uniform mat4 u_matP;"\
-"uniform mat4 u_matV;"\
-"uniform mat4 u_matM;"\
-"varying float v_alpha;"\
-"varying vec2 v_uv;"\
-"void main() {"\
-"  vec4 vertex0 = vec4(a_vertex0, 1.0);"\
-"  vec4 vertex1 = vec4(a_vertex1, 1.0);"\
-"  mat4 mat_vm = u_matV * u_matM;"\
-"  vertex0 = mat_vm * vertex0;"\
-"  vertex1 = mat_vm * vertex1;"\
-"  vec4 delta = vertex1 - vertex0;"\
-"  vec2 nn = vec2(-delta.y, delta.x);"\
-"  nn = nn / length(nn);"\
-"  nn *= a_offset.y;"\
-"  vec4 finalPosition = mix(vertex0, vertex1, a_offset.x);"\
-"  finalPosition.xy += nn;"\
-"  gl_Position = u_matP * finalPosition;"\
-"  vec4 depthPosition = vec4(mix(a_vertex0, a_vertex1, a_offset.x), 1.0);"\
-"  depthPosition = u_matM * depthPosition;"\
-"  v_alpha = 0.75 + depthPosition.z / 2.0;"\
-"  v_uv = a_texCoord;"\
-"}";
 
 const char g_vs2[] =
 "#version 330\n\
@@ -115,8 +82,6 @@ const char g_fs[] =
 "  vec4 cl = vec4(1.0, 0.9, 0.0, 1.0);"
 "  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
 "}";
-//"  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
-//"  gl_FragColor = cl;"\
 
 void Shader_Title_Sphere::setup() {
 	clear();
@@ -140,7 +105,6 @@ void Shader_Title_Sphere::update(ME::Camera& camera) {
 	Bind(this);
 	this->updateUniformMat4fv(m_ul_matp, &(camera.getMatP()[0][0]));
 	this->updateUniformMat4fv(m_ul_matv, &(camera.getMatV()[0][0]));
-	//this->updateUniformMat4fv(m_ul_matm, &(id[0][0]));
 }
 
 void LineModel::update() {
@@ -261,7 +225,6 @@ Title::~Title() {}
 
 void Title::SetScale(float r) {
 	sf::Vector2u size = m_rtex.getSize();
-	//m_camerah.setDim(9.0f / 4 * size.x / size.y / r, 9.0f / 4 / r);
 	m_camera.setAspectRatio(1.0f * size.x / size.y);
 	return;
 }
@@ -271,12 +234,9 @@ void Title::SetOffset(float r) {
 }
 
 void Title::setup(sf::Vector2u size) {
-	//m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
 
-	//m_camerah.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
-	//m_camerah.setPosition(0.0f, 0.0f, 10.0f);
 	m_camera.setAspectRatio(1.0f * size.x / size.y);
 	m_camera.setPosition(0.0f, 0.0f, 12.0f);
 	m_camera.setFOV(9.0f);
@@ -288,36 +248,19 @@ void Title::setup(sf::Vector2u size) {
 		float f;
 	} a[3];
 
-	//std::ifstream ifs;
-	//ifs.open("assets/sphere.txt", std::ios::in);
-	//if (!ifs.is_open()) {
-	//	std::cout << "Failed to Open Model File!" << std::endl;
-	//}
-	//ifs.unsetf(std::ios::dec);
-	//ifs.setf(std::ios::hex); // 以16进制输入
-
 	std::array<glm::vec3, 42> vertices;
 	for (int i = 0; i < 42; ++i) {
-		//ifs >> a[0].i >> a[1].i >> a[2].i;
 		a[0].i = Vertices[i * 3];
 		a[1].i = Vertices[i * 3 + 1];
 		a[2].i = Vertices[i * 3 + 2];
 		vertices[i] = { a[0].f, a[1].f, a[2].f };
 	}
 
-	//ifs.unsetf(std::ios::hex);
-	//ifs.setf(std::ios::dec); // 以10进制输入
-
 	std::vector<::Vertex> va;
 	va.reserve(480);
 	for (int i = 0; i < 120; ++i) {
-		int ii[2];
-		//ifs >> ii[0] >> ii[1];
-		ii[0] = Indices[(i << 1)];
-		ii[1] = Indices[(i << 1) | 1];
-
-		glm::vec3& v0 = vertices[ii[0]];
-		glm::vec3& v1 = vertices[ii[1]];
+		glm::vec3& v0 = vertices[Indices[(i << 1)]];
+		glm::vec3& v1 = vertices[Indices[(i << 1) | 1]];
 
 		va.emplace_back(v0, v1, glm::vec2(0.0f, thick));
 		va.emplace_back(v0, v1, glm::vec2(0.0f, -thick));
@@ -344,13 +287,7 @@ void Title::setup(sf::Vector2u size) {
 
 	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 
-
 	m_llm.LoadModelData(va);
-	//linetest->Position = { -20.0f, 0.0f, 0.0f };
-	//linetest->load();}
-
-	//m_llm.setPosition(0.5f, 0, 0);
-	//m_llm.setScale(0.1f);
 
 	ME::G3dGlobal::setActive(false);
 }
@@ -386,7 +323,6 @@ void Title::render() {
 void Title::resize(sf::Vector2u size) {
 	m_rtex.create(size.x, size.y);
 	m_sp.setTexture(m_rtex.getTexture(), true);
-	//m_camerah.setDim(9.0f / 4 * size.x / size.y, 9.0f / 4);
 	m_camera.setAspectRatio(1.0f * size.x / size.y);
 }
 

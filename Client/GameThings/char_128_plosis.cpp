@@ -21,5 +21,5 @@ Game::MsgResultType Units::Char_128_Plosis::ReceiveMessage(Game::MsgIdType msg, 
 }
 
 void Units::Char_128_Plosis::OnPositionChanged() {
-	m_actor->SetPosition(m_position.x, m_position.y, 0.0f);
+	m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
 }

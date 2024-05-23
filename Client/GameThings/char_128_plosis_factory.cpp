@@ -6,7 +6,7 @@
 bool Game::Char_128_Plosis_Factory::Load() {
 	auto fac = ohms::ISpineFactory::Instance();
 
-	test = false;
+	test = true;
 
 	if (test) {
 		char res = fac->CreatePose2(m_pose[0], m_pose[1], "char_128_plosis_epoque#3");

@@ -54,8 +54,6 @@ protected:
 	sf::Time m_timer;
 	sf::Texture m_tex[3];
 	sf::Sprite circle[3];
-
-	//sf::CircleShape circle[3];
 };
 
 } // namespace Activity

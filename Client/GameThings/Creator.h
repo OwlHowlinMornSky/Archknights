@@ -28,21 +28,4 @@ namespace Game::Creator {
 int setup();
 void drop();
 
-class GameInitalizator final :
-	public Game::Entity {
-public:
-	virtual void OnJoined();
-	virtual void OnKicking();
-
-	virtual void FixedUpdate(float dt) override;
-
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
-
-protected:
-	void LoadThread();
-
-protected:
-	float pos[2];
-};
-
 }

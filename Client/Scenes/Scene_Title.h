@@ -25,7 +25,6 @@
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/Vertex.h>
-//#include <MysteryEngine/G3D/Camera.Orthographic.h>
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/ITransformS.h>
 
@@ -101,7 +100,6 @@ protected:
 
 protected:
 	::Shader_Title_Sphere m_shader;
-	//ME::OrthographicCamera m_camerah;
 	ME::PerspectiveCamera m_camera;
 	::LineModel m_llm;
 	sf::RenderTexture m_rtex;

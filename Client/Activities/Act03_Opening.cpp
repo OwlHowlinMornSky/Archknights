@@ -64,17 +64,6 @@ void Act03_Opening::start() noexcept {
 	}
 
 	updateSize();
-
-	//circle[0].setRadius(100.0f);
-	//circle[0].setOrigin(100.0f, 100.0f);
-	//circle[1].setRadius(100.0f);
-	//circle[1].setOrigin(100.0f, 100.0f);
-	//circle[2].setRadius(100.0f);
-	//circle[2].setOrigin(100.0f, 100.0f);
-
-	//circle[0].setPosition(560.0f, 360.0f);
-	//circle[1].setPosition(720.0f, 360.0f);
-	//circle[2].setPosition(640.0f, 360.0f);
 	return;
 }
 

@@ -11,7 +11,6 @@ Units::Char_151_Myrtle::Char_151_Myrtle() {}
 Units::Char_151_Myrtle::~Char_151_Myrtle() {}
 
 void Units::Char_151_Myrtle::OnJoined() {
-	//m_actor->SetPosition(-5.0f, 1.2f, 0.0f);
 	m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
@@ -73,5 +72,5 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 }
 
 void Units::Char_151_Myrtle::OnPositionChanged() {
-	m_actor->SetPosition(m_position.x, m_position.y, 0.0f);
+	m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
 }

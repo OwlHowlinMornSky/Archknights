@@ -59,7 +59,7 @@ MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, Ms
 
 			float* pos = (float*)lparam;
 
-			entity->setPosition({ pos[0], pos[1] });
+			entity->setPosition(pos[0], pos[1]); // test
 
 			GameGlobal::board->JoinEntity(entity);
 		}

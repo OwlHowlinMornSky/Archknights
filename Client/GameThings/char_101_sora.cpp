@@ -19,5 +19,5 @@ Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Ga
 }
 
 void Units::Char_101_Sora::OnPositionChanged() {
-	m_actor->SetPosition(m_position.x, m_position.y, 0.0f);
+	m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
 }

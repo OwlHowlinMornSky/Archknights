@@ -134,10 +134,6 @@ public:
 
 		updateUniform1iName("uTexture", 0);
 
-		//GLint test = 0;
-		//glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &test);
-		//printf_s("Max: %d\n", test);
-
 		Bind(nullptr);
 	}
 

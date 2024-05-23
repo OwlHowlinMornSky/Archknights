@@ -42,40 +42,17 @@ public:
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 public:
-	EntityIdType getID() const {
-		return m_id;
-	}
-	EntityLocationType getLocation() const {
-		return m_location;
-	}
+	EntityIdType getID() const;
+	EntityLocationType getLocation() const;
 
-	bool isUpdatable() const {
-		return m_updatable;
-	}
+	const float* getPosition() const;
+	void setPosition(float x, float y);
 
-	glm::vec2 getPosition() const {
-		return m_position;
-	}
-	void setPosition(glm::vec2 pos) {
-		m_position = pos;
-		OnPositionChanged();
-	}
+	const float* getScale() const;
+	void setScale(float x, float y);
 
-	glm::vec2 getScale() const {
-		return m_scale;
-	}
-	void setScale(glm::vec2 scl) {
-		m_scale = scl;
-		OnScaleChanged();
-	}
-
-	float getRotation() const {
-		return m_rotation;
-	}
-	void setRotation(float rot) {
-		m_rotation = rot;
-		OnRotationChanged();
-	}
+	float getRotation() const;
+	void setRotation(float rot);
 
 protected:
 	virtual void OnPositionChanged();
@@ -85,22 +62,11 @@ protected:
 	void KickSelf() const;
 
 protected:
-	bool m_updatable;
 	float m_rotation;
-	glm::vec2 m_position;
-	glm::vec2 m_scale;
+	float m_position[2];
+	float m_scale[2];
 	EntityIdType m_id;
 	EntityLocationType m_location;
-
-// Trigger入口
-//public:
-	//void OnUpdate(float dt) {
-	//	return this->onUpdate(dt);
-	//}
-
-//protected:
-//	std::function<void(float)> onUpdate;
-
 };
 
 } // namespace Game
