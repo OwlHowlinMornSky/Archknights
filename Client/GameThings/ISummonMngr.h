@@ -10,7 +10,7 @@ class ISummonMngr :
 	public Entity {
 public:
 	virtual void AddBegin() = 0;
-	virtual void AddEntity(size_t id, std::string_view testname, bool test) = 0;
+	virtual bool AddEntity(size_t id) = 0;
 	virtual void AddEnd() = 0;
 
 public:

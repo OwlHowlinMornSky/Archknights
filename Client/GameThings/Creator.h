@@ -42,7 +42,7 @@ protected:
 	void LoadThread();
 
 protected:
-	int pos;
+	float pos[2];
 };
 
 }

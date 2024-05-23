@@ -62,7 +62,7 @@ void Act05_Title::start() noexcept {
 
 	updateSize();
 
-	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
+	ME::GlobalBGM::play("res/music/m_sys_title_h.ogg");
 	return;
 }
 

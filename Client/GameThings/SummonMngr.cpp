@@ -3,9 +3,7 @@
 #include "../Game/MsgResult.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
-#include "CreateInfoForUnit.h"
-#include "../Models/Actor.h"
-#include <MysteryEngine/G3D/G3dGlobal.h>
+#include "../Models/IAnimationSpine.h"
 #include "MsgId.h"
 
 namespace Game {
@@ -19,27 +17,20 @@ void SummonMngr::AddBegin() {
 	return;
 }
 
-void SummonMngr::AddEntity(size_t id, std::string_view testname, bool test) {
+bool SummonMngr::AddEntity(size_t id) {
 	SummonData data;
-	bool res = true;
-
-	//data.animDouble = test;
-	//data.id = id;
-
-	//if (test) {
-	//	res = m_animFactory->CreatePose2(data.animPose[0], data.animPose[1], testname);
-	//}
-	//else {
-	//	res = m_animFactory->CreatePose(data.animPose[0], testname, 0);
-	//}
+	data.id = id;
 
 	data.factory = EntityFactory::Create(id);
+	if (data.factory == nullptr) {
+		return false;
+	}
 	if (!data.factory->Load()) {
-		res = false;
+		return false;
 	}
 
 	m_data.push_back(std::move(data));
-	//return res;
+	return true;
 }
 
 void SummonMngr::AddEnd() {
@@ -62,31 +53,13 @@ MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, Ms
 	case MsgId::Summon:
 		if (wparam < m_data.size()) {
 			SummonData& data = m_data[wparam];
-			CreateInfoForUnit info;
-
-			/*auto actorGroup = Game::IActorGroup::Instance();
-			ME::G3dGlobal::setActive(true);
-			if (data.animDouble) {
-				auto actor = std::make_shared<ActorSpine2>(
-					data.animPose[0]->CreateAnimation(),
-					data.animPose[1]->CreateAnimation()
-				);
-				actorGroup->AddActor(actor);
-				info.actor = actor;
-			}
-			else {
-				auto actor = std::make_shared<ActorSpine>(
-					data.animPose[0]->CreateAnimation()
-				);
-				actorGroup->AddActor(actor);
-				info.actor = actor;
-			}
-			ME::G3dGlobal::setActive(false);*/
 
 			std::shared_ptr<Entity> entity;
-			data.factory->CreateEntity(entity, &info);
+			data.factory->CreateEntity(entity);
 
-			entity->setPosition({ lparam, 0.0f });
+			float* pos = (float*)lparam;
+
+			entity->setPosition({ pos[0], pos[1] });
 
 			GameGlobal::board->JoinEntity(entity);
 		}

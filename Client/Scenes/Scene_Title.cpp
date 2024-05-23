@@ -30,8 +30,8 @@
 
 #include <array>
 #include <vector>
-#include <fstream>
-#include <iostream>
+//#include <fstream>
+//#include <iostream>
 
 namespace {
 
@@ -146,9 +146,9 @@ void Shader_Title_Sphere::update(ME::Camera& camera) {
 void LineModel::update() {
 	if (m_rotationChanged) {
 		m_matM = glm::translate(m_position);
-		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_matM *= glm::scale(m_scale);
 		m_rotationChanged = false;
 	}
@@ -191,6 +191,65 @@ void LineModel::Draw() {
 	glCheck(glBindVertexArray(0));
 }
 
+constexpr unsigned long Vertices[] = {
+	0x3f59c440, 0, 0x3f069650,
+	0x3f069650, 0x3f59c440, 0,
+	0, 0x3f069650, 0x3f59c440,
+	0, 0xbf069650, 0x3f59c440,
+	0x3f069650, 0xbf59c440, 0,
+	0x3f59c440, 0, 0xbf069650,
+	0xbf59c440, 0, 0xbf069650,
+	0, 0x3f069650, 0xbf59c440,
+	0xbf069650, 0x3f59c440, 0,
+	0xbf59c440, 0, 0x3f069650,
+	0xbf069650, 0xbf59c440, 0,
+	0, 0xbf069650, 0xbf59c440,
+	0x3f4f1bbd, 0x3f000000, 0x3e9e3779,
+	0x3f000000, 0x3e9e3779, 0x3f4f1bbd,
+	0x3f000000, 0xbe9e3779, 0x3f4f1bbd,
+	0x3f4f1bbd, 0xbf000000, 0x3e9e3779,
+	0x3f800000, 0, 0,
+	0x3e9e3779, 0x3f4f1bbd, 0x3f000000,
+	0, 0, 0x3f800000,
+	0x3e9e3779, 0xbf4f1bbd, 0x3f000000,
+	0x3f4f1bbd, 0xbf000000, 0xbe9e3779,
+	0x3f4f1bbd, 0x3f000000, 0xbe9e3779,
+	0x3e9e3779, 0x3f4f1bbd, 0xbf000000,
+	0xbe9e3779, 0x3f4f1bbd, 0x3f000000,
+	0xbf000000, 0xbe9e3779, 0x3f4f1bbd,
+	0, 0xbf800000, 0,
+	0x3f000000, 0xbe9e3779, 0xbf4f1bbd,
+	0, 0x3f800000, 0,
+	0xbf000000, 0x3e9e3779, 0x3f4f1bbd,
+	0xbe9e3779, 0xbf4f1bbd, 0x3f000000,
+	0x3e9e3779, 0xbf4f1bbd, 0xbf000000,
+	0x3f000000, 0x3e9e3779, 0xbf4f1bbd,
+	0xbf000000, 0x3e9e3779, 0xbf4f1bbd,
+	0xbf4f1bbd, 0x3f000000, 0xbe9e3779,
+	0xbf800000, 0, 0,
+	0xbf4f1bbd, 0xbf000000, 0xbe9e3779,
+	0xbf000000, 0xbe9e3779, 0xbf4f1bbd,
+	0xbe9e3779, 0x3f4f1bbd, 0xbf000000,
+	0xbf4f1bbd, 0x3f000000, 0x3e9e3779,
+	0xbf4f1bbd, 0xbf000000, 0x3e9e3779,
+	0xbe9e3779, 0xbf4f1bbd, 0xbf000000,
+	0, 0, 0xbf800000
+};
+
+constexpr int Indices[] = {
+	0, 12, 12, 1, 0, 13, 13, 2, 0, 14, 14, 3, 0, 15, 15, 4, 0, 16, 16, 5, 1, 17, 17,
+	2, 2, 18, 18, 3, 3, 19, 19, 4, 4, 20, 20, 5, 5, 21, 21, 1, 1, 22, 22, 7, 2, 23, 23,
+	8, 3, 24, 24, 9, 4, 25, 25, 10, 5, 26, 26, 11, 8, 27, 27, 1, 9, 28, 28, 2, 10, 29,
+	29, 3, 11, 30, 30, 4, 7, 31, 31, 5, 6, 32, 32, 7, 6, 33, 33, 8, 6, 34, 34, 9, 6,
+	35, 35, 10, 6, 36, 36, 11, 7, 37, 37, 8, 8, 38, 38, 9, 9, 39, 39, 10, 10, 40, 40,
+	11, 11, 41, 41, 7, 13, 12, 12, 17, 17, 13, 14, 13, 13, 18, 18, 14, 15, 14, 14, 19,
+	19, 15, 16, 15, 15, 20, 20, 16, 12, 16, 16, 21, 21, 12, 32, 33, 33, 37, 37, 32, 33,
+	34, 34, 38, 38, 33, 34, 35, 35, 39, 39, 34, 35, 36, 36, 40, 40, 35, 36, 32, 32, 41,
+	41, 36, 27, 22, 22, 37, 37, 27, 28, 23, 23, 38, 38, 28, 29, 24, 24, 39, 39, 29, 30,
+	25, 25, 40, 40, 30, 31, 26, 26, 41, 41, 31, 27, 23, 23, 17, 17, 27, 28, 24, 24, 18,
+	18, 28, 29, 25, 25, 19, 19, 29, 30, 26, 26, 20, 20, 30, 31, 22, 22, 21, 21, 31,
+};
+
 } // namespace
 
 namespace Scene {
@@ -229,28 +288,33 @@ void Title::setup(sf::Vector2u size) {
 		float f;
 	} a[3];
 
-	std::ifstream ifs;
-	ifs.open("assets/sphere.txt", std::ios::in);
-	if (!ifs.is_open()) {
-		std::cout << "Failed to Open Model File!" << std::endl;
-	}
-	ifs.unsetf(std::ios::dec);
-	ifs.setf(std::ios::hex); // 以16进制输入
+	//std::ifstream ifs;
+	//ifs.open("assets/sphere.txt", std::ios::in);
+	//if (!ifs.is_open()) {
+	//	std::cout << "Failed to Open Model File!" << std::endl;
+	//}
+	//ifs.unsetf(std::ios::dec);
+	//ifs.setf(std::ios::hex); // 以16进制输入
 
 	std::array<glm::vec3, 42> vertices;
 	for (int i = 0; i < 42; ++i) {
-		ifs >> a[0].i >> a[1].i >> a[2].i;
+		//ifs >> a[0].i >> a[1].i >> a[2].i;
+		a[0].i = Vertices[i * 3];
+		a[1].i = Vertices[i * 3 + 1];
+		a[2].i = Vertices[i * 3 + 2];
 		vertices[i] = { a[0].f, a[1].f, a[2].f };
 	}
 
-	ifs.unsetf(std::ios::hex);
-	ifs.setf(std::ios::dec); // 以10进制输入
+	//ifs.unsetf(std::ios::hex);
+	//ifs.setf(std::ios::dec); // 以10进制输入
 
 	std::vector<::Vertex> va;
 	va.reserve(480);
 	for (int i = 0; i < 120; ++i) {
 		int ii[2];
-		ifs >> ii[0] >> ii[1];
+		//ifs >> ii[0] >> ii[1];
+		ii[0] = Indices[(i << 1)];
+		ii[1] = Indices[(i << 1) | 1];
 
 		glm::vec3& v0 = vertices[ii[0]];
 		glm::vec3& v1 = vertices[ii[1]];
@@ -265,6 +329,11 @@ void Title::setup(sf::Vector2u size) {
 	m_rotSpeed[1] = ME::RandGen::getUni01() * 20.0f + 5.0f;
 	m_rotSpeed[2] = ME::RandGen::getUni01() * 20.0f + 5.0f;
 
+	m_llm.setRotation(
+		ME::RandGen::getUni01() * 360.0f,
+		ME::RandGen::getUni01() * 360.0f,
+		ME::RandGen::getUni01() * 360.0f
+	);
 
 	ME::G3dGlobal::setActive(true);
 

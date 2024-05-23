@@ -6,11 +6,11 @@
 
 namespace Units {
 
-class Char_151_Myrtle final :
+class Char_128_Plosis final :
 	public Game::Entity {
 public:
-	Char_151_Myrtle();
-	virtual ~Char_151_Myrtle();
+	Char_128_Plosis();
+	virtual ~Char_128_Plosis();
 
 public:
 	virtual void OnJoined();

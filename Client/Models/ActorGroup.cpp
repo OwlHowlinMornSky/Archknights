@@ -26,25 +26,40 @@ const std::string fragment_spine =
 const std::string vertex_projection =
 #ifndef _DEBUG
 "#version 330\n"\
-"attribute vec2 position; "\
-"attribute vec4 color; "\
-"attribute vec2 texCoord;"\
-"uniform mat4 pvm;"\
-"uniform vec3 camPosition;"\
-"uniform vec2 offset;"\
-"uniform bool enableCoverColor;"\
-"uniform vec4 coverColor;"\
-"varying vec4 tint;"\
-"varying vec2 uv;"\
+
+"attribute vec2 aPosition; "\
+"attribute vec4 aColor; "\
+"attribute vec2 aTexCoord;"\
+
+"uniform mat4 uMatPV;"\
+"uniform mat4 uMatM;"\
+"uniform vec3 uVecCamPos;"\
+"uniform vec2 uVecOffset;"\
+"uniform bool uEnableCvrClr;"\
+"uniform vec4 uVecCvrClr;"\
+
+"varying vec4 vTint;"\
+"varying vec2 vUv;"\
+
 "void main() {"\
-" tint = enableCoverColor ? color.w * coverColor : color * coverColor;"\
-" uv = texCoord;"\
-" vec2 tmpPos = position / 128.0;"\
-" vec3 truePos = vec3(tmpPos.x + offset.x, (tmpPos.y + offset.y) * 0.86602540378443864676372317075294, (tmpPos.y + offset.y) * 0.5);"\
-" gl_Position = pvm * vec4(truePos, 1.0);"\
-" vec3 vectorPositionToCamera = camPosition - truePos;"\
-" vec4 finalProjection = pvm * vec4(truePos - vectorPositionToCamera * mix(truePos.z / vectorPositionToCamera.z, truePos.y / vectorPositionToCamera.y, step(0.0, truePos.z)), 1.0);"\
-" gl_Position.z = gl_Position.w * finalProjection.z / finalProjection.w;"\
+" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"\
+" vUv = aTexCoord;"\
+
+" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"\
+" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"\
+" vec4 OrgPosInGlobal = uMatM * vec4(uVecOffset.xy, 0.0, 1.0);"\
+
+" gl_Position = uMatPV * VertexPosInGlobal;"\
+
+" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"\
+" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"\
+
+" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"\
+
+" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / CamPosInOrg.z, VertexPosInOrg.y / CamPosInOrg.y, step(0.0, aPosition.y)), 1.0);"\
+" vec4 FakeProjection = uMatPV * FakePosInGlobal;"\
+
+" gl_Position.z = gl_Position.w * FakeProjection.z / FakeProjection.w;"\
 "}";
 #else
 "#version 330\n"\

@@ -29,7 +29,7 @@
 // Use discrete gpu.
 #ifdef ARCHKNIGHTS_LIMITED
 #include <SFML/GpuPreference.hpp>
-SFML_DEFINE_DISCRETE_GPU_PREFERENCE
+//SFML_DEFINE_DISCRETE_GPU_PREFERENCE
 #endif
 
 namespace {

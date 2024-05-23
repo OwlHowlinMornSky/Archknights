@@ -127,14 +127,8 @@
     <ClInclude Include="GameThings\EntityFactory.h">
       <Filter>GameThings</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\CreateInfoForUnit.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
     <ClInclude Include="GameThings\MsgId.h">
       <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\char_151_myrtle_factory.h">
-      <Filter>GameThings\Units</Filter>
     </ClInclude>
     <ClInclude Include="GameThings\char_101_sora.h">
       <Filter>GameThings\Units</Filter>
@@ -142,7 +136,25 @@
     <ClInclude Include="GameThings\char_151_myrtle.h">
       <Filter>GameThings\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Models\char_151_myrtle_actor.h">
+    <ClInclude Include="GameThings\char_101_sora_factory.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_101_sora_actor.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_151_myrtle_actor.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_151_myrtle_factory.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_128_plosis.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_128_plosis_actor.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_128_plosis_factory.h">
       <Filter>GameThings\Units</Filter>
     </ClInclude>
   </ItemGroup>
@@ -233,10 +245,25 @@
     <ClCompile Include="GameThings\char_151_myrtle.cpp">
       <Filter>GameThings\Units</Filter>
     </ClCompile>
-    <ClCompile Include="Models\char_151_myrtle_factory.cpp">
+    <ClCompile Include="GameThings\char_101_sora_factory.cpp">
       <Filter>GameThings\Units</Filter>
     </ClCompile>
-    <ClCompile Include="Models\char_151_myrtle_actor.cpp">
+    <ClCompile Include="GameThings\char_101_sora_actor.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_151_myrtle_actor.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_151_myrtle_factory.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_128_plosis.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_128_plosis_actor.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_128_plosis_factory.cpp">
       <Filter>GameThings\Units</Filter>
     </ClCompile>
   </ItemGroup>

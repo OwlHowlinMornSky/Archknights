@@ -12,15 +12,13 @@ class ActorSpine :
 	public ME::IModel,
 	public IActor {
 public:
-	ActorSpine(std::shared_ptr<ohms::ISpineAnimation> _a);
+	ActorSpine(std::shared_ptr<ohms::ISpineAnimation> _f);
 	virtual ~ActorSpine();
 
 public:
 	virtual void Exit() override;
 
 	virtual void InitDirection(Direction direction) override;
-
-	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
 	virtual void SetOutline(bool enabled) override;
@@ -52,8 +50,6 @@ public:
 	virtual void Exit() override;
 
 	virtual void InitDirection(Direction direction) override;
-
-	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
 	virtual void SetOutline(bool enabled) override;

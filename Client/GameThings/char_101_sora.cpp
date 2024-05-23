@@ -21,16 +21,3 @@ Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Ga
 void Units::Char_101_Sora::OnPositionChanged() {
 	m_actor->SetPosition(m_position.x, m_position.y, 0.0f);
 }
-
-#include "CreateInfoForUnit.h"
-
-bool Game::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Entity>& ptr, void* createInfo) {
-	CreateInfoForUnit* info = (CreateInfoForUnit*)createInfo;
-
-	auto unit = std::make_shared<Units::Char_101_Sora>();
-	unit->m_actor = info->actor;
-
-	ptr = unit;
-
-	return true;
-}

@@ -15,7 +15,7 @@ public:
 	virtual bool Load() {
 		return false;
 	}
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr, void* createInfo) = 0;
+	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
 
 public:
 	static std::unique_ptr<EntityFactory> Create(size_t entityId);

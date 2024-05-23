@@ -1,6 +1,6 @@
 ﻿#include "char_151_myrtle_factory.h"
 
-#include "../GameThings/char_151_myrtle.h"
+#include "char_151_myrtle.h"
 #include "char_151_myrtle_actor.h"
 
 namespace Game {
@@ -15,7 +15,7 @@ bool Char_151_Mytle_Factory::Load() {
 	return true;
 }
 
-bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr, void* createInfo) {
+bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 	auto unit = std::make_shared<Units::Char_151_Myrtle>();
 
 

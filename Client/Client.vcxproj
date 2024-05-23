@@ -216,13 +216,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
@@ -242,7 +242,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;libspine_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;spinert_3_8-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -256,7 +256,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -264,7 +264,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
@@ -288,7 +288,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\lib;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\lib\Release\$(Platform);$(OHMS_LIB_DIR)\spine2d\3.8\lib-$(platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;libspine_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(OutDir)MysteryEngine.lib;glew32.lib;opengl32.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;spinert_3_8-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
@@ -302,8 +302,14 @@
     <ClInclude Include="Activities\Activity_Game.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="GameThings\char_101_sora.h" />
+    <ClInclude Include="GameThings\char_101_sora_actor.h" />
+    <ClInclude Include="GameThings\char_101_sora_factory.h" />
+    <ClInclude Include="GameThings\char_128_plosis.h" />
+    <ClInclude Include="GameThings\char_128_plosis_actor.h" />
+    <ClInclude Include="GameThings\char_128_plosis_factory.h" />
     <ClInclude Include="GameThings\char_151_myrtle.h" />
-    <ClInclude Include="GameThings\CreateInfoForUnit.h" />
+    <ClInclude Include="GameThings\char_151_myrtle_actor.h" />
+    <ClInclude Include="GameThings\char_151_myrtle_factory.h" />
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\IActor.h" />
@@ -319,9 +325,7 @@
     <ClInclude Include="Game\TypeDef.h" />
     <ClInclude Include="Models\Actor.h" />
     <ClInclude Include="Models\ActorGroup.h" />
-    <ClInclude Include="Models\char_151_myrtle_actor.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
-    <ClInclude Include="Models\char_151_myrtle_factory.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IActorGroup.h" />
     <ClInclude Include="Models\IAnimationSpine.h" />
@@ -347,7 +351,14 @@
     <ClCompile Include="Activities\Activity_Game.cpp" />
     <ClCompile Include="API.cpp" />
     <ClCompile Include="GameThings\char_101_sora.cpp" />
+    <ClCompile Include="GameThings\char_101_sora_actor.cpp" />
+    <ClCompile Include="GameThings\char_101_sora_factory.cpp" />
+    <ClCompile Include="GameThings\char_128_plosis.cpp" />
+    <ClCompile Include="GameThings\char_128_plosis_actor.cpp" />
+    <ClCompile Include="GameThings\char_128_plosis_factory.cpp" />
     <ClCompile Include="GameThings\char_151_myrtle.cpp" />
+    <ClCompile Include="GameThings\char_151_myrtle_actor.cpp" />
+    <ClCompile Include="GameThings\char_151_myrtle_factory.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
     <ClCompile Include="GameThings\EntityFactory.cpp" />
     <ClCompile Include="GameThings\SummonMngr.cpp" />
@@ -360,8 +371,6 @@
     <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />
-    <ClCompile Include="Models\char_151_myrtle_actor.cpp" />
-    <ClCompile Include="Models\char_151_myrtle_factory.cpp" />
     <ClCompile Include="Models\Ground.cpp" />
     <ClCompile Include="Models\AnimationSpine.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />

@@ -16,7 +16,7 @@
 namespace {
 
 constexpr float spine_to3d_scale_i = 256.0f;
-constexpr float spine_global_scale = 0.7125f;
+//constexpr float spine_global_scale = 0.7125f;
 constexpr float outline_thickness  = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
 const float CircleOffsetX[8] = {
@@ -121,8 +121,8 @@ SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
 
 	worldVertices.clear();
 	worldVertices.ensureCapacity(SPINE_MESH_VERTEX_COUNT_MAX);
-	m_skeleton->setScaleX(spine_global_scale);
-	m_skeleton->setScaleY(spine_global_scale);
+	//m_skeleton->setScaleX(spine_global_scale);
+	//m_skeleton->setScaleY(spine_global_scale);
 
 	m_bonesRef = &m_skeleton->getBones();
 
@@ -307,12 +307,12 @@ spine::Animation* SpineAnimation::findAnimation(const std::string& animationName
 
 glm::vec2 SpineAnimation::getBonePosition(const std::string& boneName) const {
 	spine::Bone* bone = m_skeleton->findBone(boneName.c_str());
-	return glm::vec2(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
+	return glm::vec2(bone->getWorldX() / spine_to3d_scale_i * m_scale.x, bone->getWorldY() / spine_to3d_scale_i * m_scale.y);
 }
 
 glm::vec2 SpineAnimation::getBonePositionByIndex(int boneIndex) const {
 	spine::Bone* bone = m_bonesRef[0][boneIndex];
-	return glm::vec2(bone->getWorldX() / (-spine_to3d_scale_i) * spine_global_scale, bone->getWorldY() / spine_to3d_scale_i * spine_global_scale);
+	return glm::vec2(bone->getWorldX() / spine_to3d_scale_i * m_scale.x, bone->getWorldY() / spine_to3d_scale_i * m_scale.y);
 }
 
 int SpineAnimation::getBoneIndex(const std::string& boneName) const {
@@ -320,10 +320,11 @@ int SpineAnimation::getBoneIndex(const std::string& boneName) const {
 }
 
 void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {
-	if (m_positionChanged || m_rotationChanged) {
+	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
 		ComputeMatrix();
 		m_positionChanged = false;
 		m_rotationChanged = false;
+		m_scaleChanged = false;
 	}
 	shader.UpdateUniform(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
 	return;

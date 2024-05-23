@@ -91,13 +91,15 @@ void GameInitalizator::OnJoined() {
 	GameGlobal::board->JoinEntity(summonmngr);
 
 	summonmngr->AddBegin();
-	summonmngr->AddEntity(151, "char_151_myrtle", true);
-	//summonmngr->AddEntity(101, "char_101_sora", false);
+	summonmngr->AddEntity(151);
+	summonmngr->AddEntity(101);
+	summonmngr->AddEntity(128);
 	summonmngr->AddEnd();
 
 	///////////////////
 
-	pos = 5;
+	pos[0] = 0.0f;
+	pos[1] = 0.0f;
 	Game::GameGlobal::board->SubscribeMsg(MsgId::GuiEvent, m_location);
 }
 
@@ -119,12 +121,25 @@ MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wpar
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
 			case sf::Keyboard::Num1:
-				GameGlobal::board->DistributeMsg(2, 0, pos);
-				pos--;
+				GameGlobal::board->DistributeMsg(2, 0, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num2:
-				GameGlobal::board->DistributeMsg(2, 1, pos);
-				pos--;
+				GameGlobal::board->DistributeMsg(2, 1, (intptr_t)this->pos);
+				break;
+			case sf::Keyboard::Num3:
+				GameGlobal::board->DistributeMsg(2, 2, (intptr_t)this->pos);
+				break;
+			case sf::Keyboard::Left:
+				pos[0] -= 1.0f;
+				break;
+			case sf::Keyboard::Right:
+				pos[0] += 1.0f;
+				break;
+			case sf::Keyboard::Down:
+				pos[1] -= 1.0f;
+				break;
+			case sf::Keyboard::Up:
+				pos[1] += 1.0f;
 				break;
 			}
 			break;

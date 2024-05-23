@@ -23,8 +23,8 @@
 #include "Act03_Opening.h"
 #ifdef _DEBUG
 #include "Act02_TestActivity.h"
-#include "Activity_Debug.h"
 #endif // _DEBUG
+#include "Activity_Debug.h"
 
 namespace Activity {
 
@@ -96,7 +96,8 @@ void Act01_DefaultEntrance::update(sf::Time dtime) {
 	r_wnd->draw(m_sp);
 	r_wnd->display();
 #else
-	r_wnd->changeActivity(std::make_unique<Act03_Opening>());
+	r_wnd->changeActivity(std::make_unique<Activity_Debug>());
+	//r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 #endif
 	return;
 }

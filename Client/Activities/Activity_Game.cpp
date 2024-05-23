@@ -20,10 +20,10 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Activity_Game.h"
-#include "../Scenes/Scene_GameCommon.h"
-#include "../GameThings/Creator.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
+#include "../Scenes/Scene_GameCommon.h"
+#include "../GameThings/Creator.h"
 #include "../Activities/Act01_DefaultEntrance.h"
 
 namespace Activity {

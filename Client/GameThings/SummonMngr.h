@@ -20,7 +20,7 @@ public:
 
 public:
 	virtual void AddBegin() override;
-	virtual void AddEntity(size_t id, std::string_view testname, bool test) override;
+	virtual bool AddEntity(size_t id) override;
 	virtual void AddEnd() override;
 
 public:
@@ -33,7 +33,6 @@ public:
 
 protected:
 	std::vector<SummonData> m_data;
-	//std::unique_ptr<ohms::ISpineFactory> m_animFactory;
 };
 
 }

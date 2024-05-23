@@ -1,19 +1,8 @@
 ﻿#pragma once
 
-#include "EntityFactory.h"
-
-namespace Game {
-
-class Char_101_Sora_Factory final :
-	public EntityFactory {
-public:
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr, void* createInfo) override;
-};
-
-}
-
 #include "../Game/Entity.h"
 #include "IActor.h"
+#include <memory>
 
 namespace Units {
 
