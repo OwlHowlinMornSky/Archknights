@@ -11,6 +11,7 @@
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
 namespace {
 
@@ -125,10 +126,14 @@ SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
 
 	m_bonesRef = &m_skeleton->getBones();
 
+	ME::G3dGlobal::setActive(true);
+
 	glCheck(glGenVertexArrays(1, &m_vao));
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glGenBuffers(1, &m_vertexVBO));
 	glCheck(glBindVertexArray(0));
+
+	ME::G3dGlobal::setActive(false);
 
 	setRotation(30.0f, 0.0f, 0.0f);
 	return;
@@ -470,6 +475,19 @@ ohms::SpinePose* SpineFactory::createPoseBinary(
 // end class SpineFactory
 } // end namespace ohms
 
-std::unique_ptr<ohms::ISpineFactory> ohms::ISpineFactory::Create() {
-	return std::make_unique<ohms::SpineFactory>();
+namespace {
+
+std::unique_ptr<ohms::SpineFactory> g_spineFactoryInstance;
+
+}
+
+ohms::ISpineFactory* ohms::ISpineFactory::Instance() {
+	if (g_spineFactoryInstance == nullptr) {
+		g_spineFactoryInstance = std::make_unique<ohms::SpineFactory>();
+	}
+	return g_spineFactoryInstance.get();
+}
+
+void ohms::ISpineFactory::Drop() {
+	g_spineFactoryInstance.reset();
 }

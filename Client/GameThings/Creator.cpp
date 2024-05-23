@@ -41,6 +41,7 @@
 
 #include "ISummonMngr.h"
 #include <SFML/Window/Event.hpp>
+#include "MsgId.h"
 
 namespace Game::Creator {
 
@@ -61,11 +62,7 @@ void drop() {
 }
 
 void GameInitalizator::OnJoined() {
-	cc = 0;
-
 	GameGlobal::board->SubscribeMsg(5678, m_location);
-
-	auto actorGroup = Game::IActorGroup::Instance();
 
 	auto camera = std::make_shared<ME::PerspectiveCamera>();
 	Game::GameGlobal::show->SetCamera(camera);
@@ -74,92 +71,59 @@ void GameInitalizator::OnJoined() {
 	camera->setPosition(0.0f, -5.5f, 8.66025f);
 	camera->setRotation(30.0f, 0.0f, 0.0f);
 
+	////////////////////
+	ME::G3dGlobal::setActive(true);
+
+	auto ground = IObjModel::Create();
+	ground->LoadModelData("res/main_7-3/main.obj");
+	//ground->setRotation(0.0f, 180.0f, 0.0f);
+	ground->setScale(-1.0f, 1.0f, -1.0f);
+
+	auto actorGroup = Game::IActorGroup::Instance();
+
+	ME::G3dGlobal::setActive(false);
+
+	Game::GameGlobal::show->AddModel(ground);
+	Game::GameGlobal::show->AddModel(actorGroup);
+	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
 	GameGlobal::board->JoinEntity(summonmngr);
 
 	summonmngr->AddBegin();
 	summonmngr->AddEntity(151, "char_151_myrtle", true);
+	//summonmngr->AddEntity(101, "char_101_sora", false);
 	summonmngr->AddEnd();
 
-
-	//auto spineFactory = ohms::ISpineFactory::Create();
-
-	//spineFactory->CreatePose(m_testpose, "char_128_plosis_epoque#3", 0);
-	//spineFactory->CreatePose(m_testpose1, "char_128_plosis_epoque#3", 1);
-	//spineFactory->CreatePose(m_testpose, "char_151_myrtle", 0);
-	//spineFactory->CreatePose(m_testpose1, "char_151_myrtle", 1);
-
-	//ME::G3dGlobal::setActive(true);
-	//auto animation = m_testpose->CreateAnimation();
-	//auto animation1 = m_testpose1->CreateAnimation();
-	//ME::G3dGlobal::setActive(false);
-
-
-	//animation->SetOutline(true);
-	//animation1->SetOutline(true);
-
-	//actorGroup->AddActor(animation);
-
-	//auto actor = std::make_shared<ActorSpine2>(animation, animation1);
-
-	//actorGroup->AddActor(actor);
-
-	//auto unit = std::make_shared<Units::Char_151_Myrtle>();
-	//unit->m_actor = actor;
-
-	//GameGlobal::board->JoinEntity(unit);
-
-	////////////////////
-
-	ME::G3dGlobal::setActive(true);
-	auto ground = IObjModel::Create();
-	ground->LoadModelData("res/main_7-3/main.obj");
-	//gd->setRotation(0.0f, 0.0f, 180.0f);
-	ground->setScale(-1.0f, 1.0f, -1.0f);
-	ME::G3dGlobal::setActive(false);
-
-	////////////////////
-
-	Game::GameGlobal::show->AddModel(ground);
-	Game::GameGlobal::show->AddModel(actorGroup);
+	///////////////////
 
 	pos = 5;
-	Game::GameGlobal::board->SubscribeMsg(1, m_location);
+	Game::GameGlobal::board->SubscribeMsg(MsgId::GuiEvent, m_location);
 }
 
 void GameInitalizator::OnKicking() {
-	Game::GameGlobal::board->UnsubscribeMsg(1, m_location);
+	Game::GameGlobal::board->UnsubscribeMsg(MsgId::GuiEvent, m_location);
+
 	GameGlobal::board->BroadcastMsg(1234, 0, 0);
 }
 
 void GameInitalizator::FixedUpdate(float dt) {
-
-	//printf_s("%zd ", cc);
-
-	//GameGlobal::board->DistributeMsg(5678, cc, 0);
-
-	//if (cc >= 430) {
-	//	GameGlobal::board->BroadcastMsg(9876, 0, 0);
-	//}
-
-	//cc--;
-	//if (cc == 0)
-	//	KickSelf();
-
-	//gd->rotate(0.0f, 0.5f, 0.0f);
 }
 
 MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {
-	case 1:
+	case MsgId::GuiEvent:
 	{
 		auto e = (sf::Event*)lparam;
 		switch (e->type) {
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
-			case sf::Keyboard::Space:
+			case sf::Keyboard::Num1:
 				GameGlobal::board->DistributeMsg(2, 0, pos);
+				pos--;
+				break;
+			case sf::Keyboard::Num2:
+				GameGlobal::board->DistributeMsg(2, 1, pos);
 				pos--;
 				break;
 			}
@@ -167,9 +131,6 @@ MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wpar
 		}
 		break;
 	}
-	case 5678:
-		cc = wparam + 1;
-		break;
 	case 9876:
 		GameGlobal::board->UnsubscribeMsg(5678, m_location);
 		KickSelf();

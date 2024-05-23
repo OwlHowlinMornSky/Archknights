@@ -23,8 +23,6 @@
 
 #include "../Game/Entity.h"
 
-//#include "../Models/IAnimationSpine.h"
-
 namespace Game::Creator {
 
 int setup();
@@ -44,10 +42,7 @@ protected:
 	void LoadThread();
 
 protected:
-	size_t cc;
 	int pos;
-	//std::unique_ptr<ohms::ISpinePose> m_testpose;
-	//std::unique_ptr<ohms::ISpinePose> m_testpose1;
 };
 
 }

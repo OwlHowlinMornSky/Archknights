@@ -4,20 +4,20 @@
 #include "../Game/GameBoard.h"
 #include "../Game/MsgResult.h"
 #include <SFML/Window/Event.hpp>
+#include "MsgId.h"
 
-Units::Char_151_Myrtle::Char_151_Myrtle() {
-}
+Units::Char_151_Myrtle::Char_151_Myrtle() {}
 
 Units::Char_151_Myrtle::~Char_151_Myrtle() {}
 
 void Units::Char_151_Myrtle::OnJoined() {
 	//m_actor->SetPosition(-5.0f, 1.2f, 0.0f);
 	m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
-	Game::GameGlobal::board->SubscribeMsg(1, m_location);
+	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
-	Game::GameGlobal::board->UnsubscribeMsg(1, m_location);
+	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 	m_actor->Exit();
 }
 
@@ -25,7 +25,7 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {}
 
 Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case 1:
+	case Game::MsgId::GuiEvent:
 	{
 		auto e = (sf::Event*)lparam;
 		switch (e->type) {
@@ -74,17 +74,4 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 
 void Units::Char_151_Myrtle::OnPositionChanged() {
 	m_actor->SetPosition(m_position.x, m_position.y, 0.0f);
-}
-
-#include "CreateInfoForUnit.h"
-
-bool Game::Char_151_Myrtle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr, void* createInfo) {
-	CreateInfoForUnit* info = (CreateInfoForUnit*)createInfo;
-
-	auto unit = std::make_shared<Units::Char_151_Myrtle>();
-	unit->m_actor = info->actor;
-
-	ptr = unit;
-
-    return true;
 }

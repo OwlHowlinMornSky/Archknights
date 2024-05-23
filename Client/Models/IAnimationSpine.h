@@ -57,7 +57,8 @@ public:
 	) = 0;
 
 public:
-	static std::unique_ptr<ISpineFactory> Create();
+	static ISpineFactory* Instance();
+	static void Drop();
 };
 
 }

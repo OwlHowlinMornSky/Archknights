@@ -20,6 +20,9 @@
     <Filter Include="Models">
       <UniqueIdentifier>{63fea06b-7ddb-4159-8590-e975d4627293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameThings\Units">
+      <UniqueIdentifier>{d23d45d5-047b-4b4c-9cca-4432e6c78157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h">
@@ -85,9 +88,6 @@
     <ClInclude Include="Scenes\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\char_151_myrtle.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
     <ClInclude Include="Models\ActorGroup.h">
       <Filter>Models</Filter>
     </ClInclude>
@@ -129,6 +129,21 @@
     </ClInclude>
     <ClInclude Include="GameThings\CreateInfoForUnit.h">
       <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\MsgId.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\char_151_myrtle_factory.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_101_sora.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\char_151_myrtle.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\char_151_myrtle_actor.h">
+      <Filter>GameThings\Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,12 +221,23 @@
     <ClCompile Include="Models\Actor.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\char_151_myrtle.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
     <ClCompile Include="GameThings\SummonMngr.cpp">
       <Filter>GameThings</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\EntityFactory.cpp" />
+    <ClCompile Include="GameThings\EntityFactory.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_101_sora.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_151_myrtle.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\char_151_myrtle_factory.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\char_151_myrtle_actor.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

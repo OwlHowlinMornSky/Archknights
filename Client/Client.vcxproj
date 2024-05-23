@@ -301,12 +301,14 @@
     <ClInclude Include="Activities\Activity_Debug.h" />
     <ClInclude Include="Activities\Activity_Game.h" />
     <ClInclude Include="API.h" />
+    <ClInclude Include="GameThings\char_101_sora.h" />
     <ClInclude Include="GameThings\char_151_myrtle.h" />
     <ClInclude Include="GameThings\CreateInfoForUnit.h" />
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\IActor.h" />
     <ClInclude Include="GameThings\ISummonMngr.h" />
+    <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
@@ -317,7 +319,9 @@
     <ClInclude Include="Game\TypeDef.h" />
     <ClInclude Include="Models\Actor.h" />
     <ClInclude Include="Models\ActorGroup.h" />
+    <ClInclude Include="Models\char_151_myrtle_actor.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
+    <ClInclude Include="Models\char_151_myrtle_factory.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IActorGroup.h" />
     <ClInclude Include="Models\IAnimationSpine.h" />
@@ -342,6 +346,7 @@
     <ClCompile Include="Activities\Activity_Debug.cpp" />
     <ClCompile Include="Activities\Activity_Game.cpp" />
     <ClCompile Include="API.cpp" />
+    <ClCompile Include="GameThings\char_101_sora.cpp" />
     <ClCompile Include="GameThings\char_151_myrtle.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
     <ClCompile Include="GameThings\EntityFactory.cpp" />
@@ -355,6 +360,8 @@
     <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />
+    <ClCompile Include="Models\char_151_myrtle_actor.cpp" />
+    <ClCompile Include="Models\char_151_myrtle_factory.cpp" />
     <ClCompile Include="Models\Ground.cpp" />
     <ClCompile Include="Models\AnimationSpine.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />

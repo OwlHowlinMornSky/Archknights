@@ -6,6 +6,7 @@
 #include "CreateInfoForUnit.h"
 #include "../Models/Actor.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
+#include "MsgId.h"
 
 namespace Game {
 
@@ -14,53 +15,56 @@ SummonMngr::SummonMngr() {}
 SummonMngr::~SummonMngr() {}
 
 void SummonMngr::AddBegin() {
-	m_animFactory = ohms::ISpineFactory::Create();
+	ohms::ISpineFactory::Instance();
 	return;
 }
 
 void SummonMngr::AddEntity(size_t id, std::string_view testname, bool test) {
 	SummonData data;
-	bool res;
+	bool res = true;
 
-	data.animDouble = test;
-	data.id = id;
+	//data.animDouble = test;
+	//data.id = id;
 
-	if (test) {
-		res = m_animFactory->CreatePose2(data.animPose[0], data.animPose[1], testname);
-	}
-	else {
-		res = m_animFactory->CreatePose(data.animPose[0], testname, 0);
-	}
+	//if (test) {
+	//	res = m_animFactory->CreatePose2(data.animPose[0], data.animPose[1], testname);
+	//}
+	//else {
+	//	res = m_animFactory->CreatePose(data.animPose[0], testname, 0);
+	//}
 
 	data.factory = EntityFactory::Create(id);
+	if (!data.factory->Load()) {
+		res = false;
+	}
 
 	m_data.push_back(std::move(data));
-	return;
+	//return res;
 }
 
 void SummonMngr::AddEnd() {
-	m_animFactory.reset();
+	ohms::ISpineFactory::Drop();
 	return;
 }
 
 void SummonMngr::OnJoined() {
-	GameGlobal::board->SubscribeMsg(2, m_location);
+	GameGlobal::board->SubscribeMsg(MsgId::Summon, m_location);
 }
 
 void SummonMngr::OnKicking() {
-	GameGlobal::board->UnsubscribeMsg(2, m_location);
+	GameGlobal::board->UnsubscribeMsg(MsgId::Summon, m_location);
 }
 
 void SummonMngr::FixedUpdate(float dt) {}
 
 MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {
-	case 2:
+	case MsgId::Summon:
 		if (wparam < m_data.size()) {
 			SummonData& data = m_data[wparam];
 			CreateInfoForUnit info;
 
-			auto actorGroup = Game::IActorGroup::Instance();
+			/*auto actorGroup = Game::IActorGroup::Instance();
 			ME::G3dGlobal::setActive(true);
 			if (data.animDouble) {
 				auto actor = std::make_shared<ActorSpine2>(
@@ -77,7 +81,7 @@ MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, Ms
 				actorGroup->AddActor(actor);
 				info.actor = actor;
 			}
-			ME::G3dGlobal::setActive(false);
+			ME::G3dGlobal::setActive(false);*/
 
 			std::shared_ptr<Entity> entity;
 			data.factory->CreateEntity(entity, &info);

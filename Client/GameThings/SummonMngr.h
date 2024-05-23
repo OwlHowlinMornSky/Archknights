@@ -2,16 +2,13 @@
 
 #include "ISummonMngr.h"
 
-#include "../Models/IAnimationSpine.h"
 #include "EntityFactory.h"
 #include <vector>
 
 namespace Game {
 
 struct SummonData {
-	bool animDouble;
 	size_t id;
-	std::unique_ptr<ohms::ISpinePose> animPose[2];
 	std::unique_ptr<EntityFactory> factory;
 };
 
@@ -36,7 +33,7 @@ public:
 
 protected:
 	std::vector<SummonData> m_data;
-	std::unique_ptr<ohms::ISpineFactory> m_animFactory;
+	//std::unique_ptr<ohms::ISpineFactory> m_animFactory;
 };
 
 }
