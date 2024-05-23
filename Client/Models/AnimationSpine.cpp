@@ -29,6 +29,18 @@
 #include <GL/glew.h>
 
 #include "AnimationSpine.h"
+#include <spine/TextureLoader.h>
+#include <spine/BlendMode.h>
+#include <spine/Bone.h>
+#include <spine/SlotData.h>
+#include <spine/Attachment.h>
+#include <spine/RegionAttachment.h>
+#include <spine/MeshAttachment.h>
+#include <spine/ClippingAttachment.h>
+#include <spine/SkeletonData.h>
+#include <spine/SkeletonBinary.h>
+#include <spine/AnimationStateData.h>
+
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/GlCheck.h>

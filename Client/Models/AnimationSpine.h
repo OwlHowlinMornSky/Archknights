@@ -21,7 +21,11 @@
 */
 #pragma once
 
-#include <spine/spine.h>
+#include <spine/Atlas.h>
+#include <spine/Skeleton.h>
+#include <spine/AnimationState.h>
+#include <spine/SkeletonClipping.h>
+
 #include <SFML/Graphics.hpp>
 
 #include <list>
