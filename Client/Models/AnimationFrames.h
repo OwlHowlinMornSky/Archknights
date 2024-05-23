@@ -28,6 +28,7 @@
 #include <array>
 
 #include "IAnimation.h"
+#include "ActorGroup.h"
 
 namespace Game {
 

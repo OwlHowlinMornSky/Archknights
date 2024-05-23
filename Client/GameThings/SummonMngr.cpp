@@ -25,11 +25,7 @@
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
 
-#ifdef ARCHKNIGHTS_LIMITED
 #include "../Models/IAnimation.h"
-#else
-
-#endif // ARCHKNIGHTS_LIMITED
 
 #include "MsgId.h"
 

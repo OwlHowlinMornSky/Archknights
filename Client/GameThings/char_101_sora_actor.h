@@ -36,7 +36,7 @@ public:
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 };
 #else
-using Char_101_Sora_Actor_Vanilla = Actor2;
+using Char_101_Sora_Actor_Vanilla = Actor;
 #endif // ARCHKNIGHTS_LIMITED
 
 }

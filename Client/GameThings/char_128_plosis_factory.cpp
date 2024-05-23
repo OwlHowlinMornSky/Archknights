@@ -27,6 +27,7 @@
 bool Game::Char_128_Plosis_Factory::Load() {
 	auto fac = Game::IAnimationFactory::Instance();
 
+#ifdef ARCHKNIGHTS_LIMITED
 	test = true;
 
 	if (test) {
@@ -39,6 +40,11 @@ bool Game::Char_128_Plosis_Factory::Load() {
 		if (res != 3)
 			return false;
 	}
+#else
+	char res = fac->CreatePose2(m_pose[0], m_pose[1], "char_128_plosis");
+	if (res != 3)
+		return false;
+#endif // ARCHKNIGHTS_LIMITED
 
 	return true;
 }
@@ -46,10 +52,10 @@ bool Game::Char_128_Plosis_Factory::Load() {
 bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 	auto unit = std::make_shared<Units::Char_128_Plosis>();
 
-
 	auto anim0 = m_pose[0]->CreateAnimation();
 	auto anim1 = m_pose[1]->CreateAnimation();
 
+#ifdef ARCHKNIGHTS_LIMITED
 	if (test) {
 		auto actor = std::make_shared<Char_128_Plosis_Actor_Epoque>(anim0, anim1);
 		Game::IActorGroup::Instance()->AddActor(actor);
@@ -60,6 +66,11 @@ bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 		Game::IActorGroup::Instance()->AddActor(actor);
 		unit->m_actor = actor;
 	}
+#else
+	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
+	Game::IActorGroup::Instance()->AddActor(actor);
+	unit->m_actor = actor;
+#endif // ARCHKNIGHTS_LIMITED
 
 	ptr = unit;
 
