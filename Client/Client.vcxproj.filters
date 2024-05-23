@@ -23,6 +23,9 @@
     <Filter Include="GameThings\Units">
       <UniqueIdentifier>{d23d45d5-047b-4b4c-9cca-4432e6c78157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cc47649d-1e17-4765-b218-c1958fb0fd17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h">
@@ -159,6 +162,18 @@
     </ClInclude>
     <ClInclude Include="Models\IActor.h">
       <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IWorld.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IDetector.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IBody.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IWall.h">
+      <Filter>Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

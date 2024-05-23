@@ -333,6 +333,10 @@
     <ClInclude Include="Models\IGround.h" />
     <ClInclude Include="Models\AnimationSpine.h" />
     <ClInclude Include="Models\tiny_obj_loader.h" />
+    <ClInclude Include="Physics\IBody.h" />
+    <ClInclude Include="Physics\IDetector.h" />
+    <ClInclude Include="Physics\IWall.h" />
+    <ClInclude Include="Physics\IWorld.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Scene_GameCommon.h" />
