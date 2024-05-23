@@ -24,12 +24,12 @@
 #include <mutex>
 
 // 共享数据段。
-#pragma data_seg("___OHMS_EUI")
+#pragma data_seg("OHMS_EUI")
 std::mutex ___OHMS_EnsureUniqueInstance_Mutex; // 互斥体。
 bool ___OHMS_EnsureUniqueInstance_instanceExist = false; // 是否存在实例。
 #pragma data_seg()
 // R: Read, W: Write, S: Shared.
-#pragma comment(linker, "/SECTION:___OHMS_EUI,RWS")
+#pragma comment(linker, "/SECTION:OHMS_EUI,RWS")
 /**
  * 简单来说就是通过共享数据段来标记实例。
 */
