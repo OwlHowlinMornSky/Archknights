@@ -20,7 +20,8 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Act03_Opening.h"
-#include "Act04_Load.h"
+//#include "Act04_Load.h"
+#include "Act05_Title.h"
 
 #define ST_PIC0_IN   (1)
 #define ST_PIC0_KEEP (2)
@@ -44,7 +45,11 @@ bool Act03_Opening::prepare(ME::Window& wnd) noexcept {
 
 	m_tex[0].loadFromFile("assets/textures/work.png");
 	m_tex[1].loadFromFile("assets/textures/title.png");
+#ifdef ARCHKNIGHTS_LIMITED
+	m_tex[2].loadFromFile("res/textures/bkgnd.png");
+#else
 	m_tex[2].loadFromFile("assets/textures/bkgnd.png");
+#endif // ARCHKNIGHTS_LIMITED
 	return true;
 }
 
@@ -79,7 +84,8 @@ bool Act03_Opening::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
 	case sf::Event::KeyPressed:
 		m_status = ST_OVER;
-		r_wnd->changeActivity(std::make_unique<Act04_Load>());
+		//r_wnd->changeActivity(std::make_unique<Act04_Load>());
+		r_wnd->changeActivity(std::make_unique<Act05_Title>());
 		return 1;
 		break;
 #endif // _DEBUG
@@ -186,7 +192,8 @@ void Act03_Opening::update(sf::Time deltaTime) {
 		r_wnd->draw(circle[1]);
 		break;
 	case ST_OVER:
-		r_wnd->changeActivity(std::make_unique<Act04_Load>());
+		//r_wnd->changeActivity(std::make_unique<Act04_Load>());
+		r_wnd->changeActivity(std::make_unique<Act05_Title>());
 		return;
 		break;
 	default:
@@ -214,7 +221,7 @@ void Act03_Opening::updateSize() {
 	circle[0].setScale(rate, rate);
 	rate = size.y / m_tex[1].getSize().y * 0.4f;
 	circle[1].setScale(rate, rate);
-	rate = size.y / m_tex[2].getSize().y;
+	rate = std::max(size.y / m_tex[2].getSize().y, size.x / m_tex[2].getSize().x);
 	circle[2].setScale(rate, rate);
 	return;
 }

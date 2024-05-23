@@ -39,7 +39,11 @@ Act04_Load::~Act04_Load() noexcept {}
 bool Act04_Load::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
+#ifdef ARCHKNIGHTS_LIMITED
+	m_tex.loadFromFile("res/textures/bkgnd.png");
+#else
 	m_tex.loadFromFile("assets/textures/bkgnd.png");
+#endif // ARCHKNIGHTS_LIMITED
 	m_tex.setSmooth(true);
 	m_tex.generateMipmap();
 	return true;
