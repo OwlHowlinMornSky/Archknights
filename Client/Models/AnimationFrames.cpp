@@ -79,9 +79,9 @@ void AnimationFrames::Update(float dt) {
 void AnimationFrames::Draw(ME::Camera& camera, ME::Shader& shader) {
 	ME::Shader::Bind(g_shader);
 
-	if (m_positionChanged || m_rotationChanged || m_scaleChanged || m_originChanged) {
+	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
 		ComputeMatrix();
-		m_positionChanged = m_rotationChanged = m_scaleChanged = m_originChanged = false;
+		m_positionChanged = m_rotationChanged = m_scaleChanged = false;
 	}
 	glm::mat4 pvm = camera.getMatPV() * m_matM;
 	g_shader->updatePVM(&(pvm[0][0]));

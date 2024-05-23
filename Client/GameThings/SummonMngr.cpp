@@ -21,8 +21,7 @@ bool SummonMngr::AddEntity(size_t id) {
 	SummonData data;
 	data.id = id;
 
-	data.factory = EntityFactory::Create(id);
-	if (data.factory == nullptr) {
+	if (!EntityFactory::Create(data.factory, id)) {
 		return false;
 	}
 	if (!data.factory->Load()) {

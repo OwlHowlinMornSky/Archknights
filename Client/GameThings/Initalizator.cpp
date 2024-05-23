@@ -21,14 +21,14 @@
 */
 #include "Initalizator.h"
 
+#include "../Game/GameGlobal.h"
 #include "../Scenes/Scene_GameCommon.h"
 #include "../Game/GameBoard.h"
-#include "../Game/GameGlobal.h"
 #include "../Game/GameHost.h"
 #include "../Game/MsgResult.h"
 
-#include <thread>
-#include <functional>
+//#include <thread>
+//#include <functional>
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>

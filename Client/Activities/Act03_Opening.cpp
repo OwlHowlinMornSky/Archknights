@@ -22,10 +22,6 @@
 #include "Act03_Opening.h"
 #include "Act04_Load.h"
 
-#include <SFML/Graphics.hpp>
-
-#include <assert.h>
-
 #define ST_PIC0_IN   (1)
 #define ST_PIC0_KEEP (2)
 #define ST_PIC1_IN   (3)

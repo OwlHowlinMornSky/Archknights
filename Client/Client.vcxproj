@@ -312,7 +312,6 @@
     <ClInclude Include="GameThings\char_151_myrtle_factory.h" />
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
-    <ClInclude Include="GameThings\IActor.h" />
     <ClInclude Include="GameThings\Initalizator.h" />
     <ClInclude Include="GameThings\ISummonMngr.h" />
     <ClInclude Include="GameThings\MsgId.h" />
@@ -328,6 +327,7 @@
     <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
+    <ClInclude Include="Models\IActor.h" />
     <ClInclude Include="Models\IActorGroup.h" />
     <ClInclude Include="Models\IAnimationSpine.h" />
     <ClInclude Include="Models\IGround.h" />

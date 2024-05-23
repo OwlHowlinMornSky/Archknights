@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../GameThings/IActor.h"
+#include "IActor.h"
 #include <MysteryEngine/G3D/IModel.h>
 
 #include "AnimationSpine.h"

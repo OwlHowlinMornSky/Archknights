@@ -112,9 +112,6 @@
     <ClInclude Include="Models\IActorGroup.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\IActor.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Actor.h">
       <Filter>Models</Filter>
     </ClInclude>
@@ -159,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="GameThings\Initalizator.h">
       <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\IActor.h">
+      <Filter>Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

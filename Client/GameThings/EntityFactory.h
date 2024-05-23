@@ -2,7 +2,6 @@
 
 #include <memory>
 #include "../Game/Entity.h"
-#include "IActor.h"
 
 namespace Game {
 
@@ -12,13 +11,11 @@ public:
 	virtual ~EntityFactory() = default;
 
 public:
-	virtual bool Load() {
-		return false;
-	}
+	virtual bool Load() = 0;
 	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
 
 public:
-	static std::unique_ptr<EntityFactory> Create(size_t entityId);
+	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
 };
 
 }

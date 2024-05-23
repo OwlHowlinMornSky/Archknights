@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <cstdint>
+
 namespace Game {
 
 typedef size_t EntityIdType;

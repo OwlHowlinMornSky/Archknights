@@ -21,7 +21,6 @@
 */
 #include "Activity_Debug.h"
 #include "Activity_Game.h"
-//#include "../Game/GameGlobal.h"
 
 namespace Activity {
 

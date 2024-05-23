@@ -29,7 +29,6 @@
 #include <MysteryEngine/G3D/ITransformT.h>
 #include <MysteryEngine/G3D/ITransformR.h>
 #include <MysteryEngine/G3D/ITransformS.h>
-#include <MysteryEngine/G3D/ITransformO.h>
 #include <MysteryEngine/G3D/Shader.h>
 
 namespace ME {
@@ -39,7 +38,6 @@ namespace ME {
 */
 class ME_API IModel :
 	public NonCopyable,
-	public ITransformO,
 	public ITransformR,
 	public ITransformS,
 	public ITransformT {

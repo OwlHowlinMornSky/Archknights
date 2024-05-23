@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include <functional>
 #include "TypeDef.h"
 
 namespace Game {

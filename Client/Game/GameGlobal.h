@@ -22,7 +22,6 @@
 #pragma once
 
 #include <memory>
-#include <string>
 #include "GameHost.h"
 
 namespace Game {

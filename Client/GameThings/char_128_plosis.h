@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../Game/Entity.h"
-#include "IActor.h"
+#include "../Models/IActor.h"
 #include <memory>
 
 namespace Units {

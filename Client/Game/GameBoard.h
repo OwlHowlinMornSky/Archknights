@@ -26,6 +26,7 @@
 #include <set>
 #include <deque>
 #include <stack>
+#include <functional>
 
 #include "Entity.h"
 

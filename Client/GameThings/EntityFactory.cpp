@@ -8,14 +8,19 @@ std::unique_ptr<Game::EntityFactory> Create151();
 
 }
 
-std::unique_ptr<Game::EntityFactory> Game::EntityFactory::Create(size_t entityId) {
+bool Game::EntityFactory::Create(std::unique_ptr<Game::EntityFactory>& ptr, size_t entityId) {
 	switch (entityId) {
 	case 101:
-		return EntityFactoryLink::Create101();
+		ptr = EntityFactoryLink::Create101();
+		break;
 	case 128:
-		return EntityFactoryLink::Create128();
+		ptr = EntityFactoryLink::Create128();
+		break;
 	case 151:
-		return EntityFactoryLink::Create151();
+		ptr = EntityFactoryLink::Create151();
+		break;
+	default:
+		return false;
 	}
-    return std::unique_ptr<EntityFactory>();
+    return true;
 }

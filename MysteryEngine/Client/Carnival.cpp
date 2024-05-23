@@ -21,7 +21,7 @@
 */
 #include <MysteryEngine/Client/Carnival.h>
 
-#include <assert.h>
+#include <cassert>
 
 #include <MysteryEngine/Core/TempGuard.h>
 #include "Callbacks.h"

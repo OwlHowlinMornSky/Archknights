@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../Game/Entity.h"
-
 namespace Game::Creator {
 
 int setup();
