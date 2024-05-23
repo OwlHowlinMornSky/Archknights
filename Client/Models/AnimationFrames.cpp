@@ -19,6 +19,9 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+
+#ifndef ARCHKNIGHTS_LIMITED
+
 #include <GL/glew.h>
 #include <MysteryEngine/G3D/GlCheck.h>
 
@@ -93,4 +96,44 @@ void AnimationFrames::Draw(ME::Camera& camera, ME::Shader& shader) {
 	ME::Shader::Bind(nullptr);
 }
 
+std::shared_ptr<ME::IModel> FramesPose::CreateAnimation() {
+	auto res = std::make_shared<AnimationFrames>();
+
+	return res;
 }
+
+bool FramesFactory::CreatePose(
+	std::unique_ptr<IAnimationPose>& ptr,
+	std::string_view name, unsigned char type
+) {
+	return false;
+}
+
+char FramesFactory::CreatePose2(
+	std::unique_ptr<IAnimationPose>& ptr0,
+	std::unique_ptr<IAnimationPose>& ptr1,
+	std::string_view name
+) {
+	return 0;
+}
+
+}
+
+namespace {
+
+std::unique_ptr<Game::FramesFactory> g_frameFactoryInstance;
+
+}
+
+Game::IAnimationFactory* Game::IAnimationFactory::Instance() {
+	if (g_frameFactoryInstance == nullptr) {
+		g_frameFactoryInstance = std::make_unique<Game::FramesFactory>();
+	}
+	return g_frameFactoryInstance.get();
+}
+
+void Game::IAnimationFactory::Drop() {
+	g_frameFactoryInstance.reset();
+}
+
+#endif // !ARCHKNIGHTS_LIMITED

@@ -25,23 +25,23 @@
 
 namespace Game {
 
-ActorSpine::ActorSpine(std::shared_ptr<ohms::ISpineAnimation> _f) :
+Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_isRolling(false),
 	m_direction(Direction::FR),
 	m_targetDirection(Direction::FR),
 	m_currentRLDirection(false),
 	m_current(nullptr),
 	m_holdPTR(_f) {
-	m_current = (ohms::SpineAnimation*)m_holdPTR.get();
+	m_current = (CurrentAnimationClass*)m_holdPTR.get();
 }
 
-ActorSpine::~ActorSpine() {}
+Actor::~Actor() {}
 
-void ActorSpine::Exit() {
+void Actor::Exit() {
 	SetWaitingForQuit();
 }
 
-void ActorSpine::InitDirection(Direction direction) {
+void Actor::InitDirection(Direction direction) {
 	if (direction == Direction::BR) direction = Direction::FR;
 	if (direction == Direction::BL) direction = Direction::FL;
 	m_direction = direction;
@@ -50,16 +50,22 @@ void ActorSpine::InitDirection(Direction direction) {
 	m_holdPTR->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
 }
 
-void ActorSpine::SetPosition(float x, float y, float z) {
+void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
+#ifndef ARCHKNIGHTS_LIMITED
+
+#endif // !ARCHKNIGHTS_LIMITED
+}
+
+void Actor::SetPosition(float x, float y, float z) {
 	this->setPosition(x, y, z);
 	m_holdPTR->setPosition(x, y, z);
 }
 
-void ActorSpine::SetOutline(bool enabled) {
+void Actor::SetOutline(bool enabled) {
 	return m_holdPTR->SetOutline(enabled);
 }
 
-void ActorSpine::Update(float dt) {
+void Actor::Update(float dt) {
 	if (m_isRolling) {
 		float Delta = dt * 30.0f;
 		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
@@ -85,11 +91,11 @@ void ActorSpine::Update(float dt) {
 	return;
 }
 
-void ActorSpine::Draw(ME::Camera& camera, ME::Shader& shader) {
+void Actor::Draw(ME::Camera& camera, ME::Shader& shader) {
 	return m_current->Draw(camera, shader);
 }
 
-void ActorSpine::SetDirection(bool RL) {
+void Actor::SetDirection(bool RL) {
 	if (RL) {
 		m_direction = Direction::FL;
 	}
@@ -100,7 +106,7 @@ void ActorSpine::SetDirection(bool RL) {
 }
 
 
-ActorSpine2::ActorSpine2(std::shared_ptr<ohms::ISpineAnimation> _f, std::shared_ptr<ohms::ISpineAnimation> _b) :
+Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 	m_isRolling(false),
 	m_direction(Direction::FR),
 	m_targetDirection(Direction::FR),
@@ -113,13 +119,13 @@ ActorSpine2::ActorSpine2(std::shared_ptr<ohms::ISpineAnimation> _f, std::shared_
 	m_current = GetAnimation(m_currentFBDirection);
 }
 
-ActorSpine2::~ActorSpine2() {}
+Actor2::~Actor2() {}
 
-void ActorSpine2::Exit() {
+void Actor2::Exit() {
 	SetWaitingForQuit();
 }
 
-void ActorSpine2::InitDirection(Direction direction) {
+void Actor2::InitDirection(Direction direction) {
 	m_direction = direction;
 	m_targetDirection = direction;
 	m_currentFBDirection = (static_cast<char>(direction) & 0x02);
@@ -131,18 +137,24 @@ void ActorSpine2::InitDirection(Direction direction) {
 	return;
 }
 
-void ActorSpine2::SetPosition(float x, float y, float z) {
+void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
+#ifndef ARCHKNIGHTS_LIMITED
+
+#endif // !ARCHKNIGHTS_LIMITED
+}
+
+void Actor2::SetPosition(float x, float y, float z) {
 	this->setPosition(x, y, z);
 	m_holdPTR[0]->setPosition(x, y, z);
 	m_holdPTR[1]->setPosition(x, y, z);
 }
 
-void ActorSpine2::SetOutline(bool enabled) {
+void Actor2::SetOutline(bool enabled) {
 	m_holdPTR[0]->SetOutline(enabled);
 	m_holdPTR[1]->SetOutline(enabled);
 }
 
-void ActorSpine2::Update(float dt) {
+void Actor2::Update(float dt) {
 	if (m_isRolling) {
 		float Delta = dt * 30.0f;
 		bool nowRL = (m_currentRLDirection < 0.0f);
@@ -217,15 +229,15 @@ void ActorSpine2::Update(float dt) {
 	return;
 }
 
-void ActorSpine2::Draw(ME::Camera& camera, ME::Shader& shader) {
+void Actor2::Draw(ME::Camera& camera, ME::Shader& shader) {
 	return m_current->Draw(camera, shader);
 }
 
-ohms::SpineAnimation* ActorSpine2::GetAnimation(bool back) {
-	return (ohms::SpineAnimation*)m_holdPTR[back].get();
+CurrentAnimationClass* Actor2::GetAnimation(bool back) {
+	return (CurrentAnimationClass*)m_holdPTR[back].get();
 }
 
-void ActorSpine2::SetDirection(bool RL, bool FB) {
+void Actor2::SetDirection(bool RL, bool FB) {
 	if (FB) {
 		if (RL) {
 			m_direction = Direction::BL;

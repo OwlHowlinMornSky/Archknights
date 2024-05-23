@@ -25,10 +25,11 @@
 
 namespace Game {
 
+#ifdef ARCHKNIGHTS_LIMITED
 class Char_128_Plosis_Actor_Vanilla final :
-	public ActorSpine2 {
+	public Actor2 {
 public:
-	Char_128_Plosis_Actor_Vanilla(std::shared_ptr<ohms::ISpineAnimation> _f, std::shared_ptr<ohms::ISpineAnimation> _b);
+	Char_128_Plosis_Actor_Vanilla(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Char_128_Plosis_Actor_Vanilla() = default;
 
 public:
@@ -36,13 +37,16 @@ public:
 };
 
 class Char_128_Plosis_Actor_Epoque final :
-	public ActorSpine2 {
+	public Actor2 {
 public:
-	Char_128_Plosis_Actor_Epoque(std::shared_ptr<ohms::ISpineAnimation> _f, std::shared_ptr<ohms::ISpineAnimation> _b);
+	Char_128_Plosis_Actor_Epoque(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Char_128_Plosis_Actor_Epoque() = default;
 
 public:
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 };
+#else
+using Char_128_Plosis_Actor_Vanilla = Actor2;
+#endif // ARCHKNIGHTS_LIMITED
 
 }

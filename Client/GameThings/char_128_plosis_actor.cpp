@@ -21,10 +21,12 @@
 */
 #include "char_128_plosis_actor.h"
 
+#ifdef ARCHKNIGHTS_LIMITED
+
 Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
-	std::shared_ptr<ohms::ISpineAnimation> _f,
-	std::shared_ptr<ohms::ISpineAnimation> _b
-) : ActorSpine2(_f, _b) {
+	std::shared_ptr<ME::IModel> _f,
+	std::shared_ptr<ME::IModel> _b
+) : Actor2(_f, _b) {
 	_f->setScale(0.65f);
 	_b->setScale(0.65f);
 }
@@ -59,9 +61,9 @@ void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, 
 }
 
 Game::Char_128_Plosis_Actor_Epoque::Char_128_Plosis_Actor_Epoque(
-	std::shared_ptr<ohms::ISpineAnimation> _f,
-	std::shared_ptr<ohms::ISpineAnimation> _b
-) : ActorSpine2(_f, _b) {
+	std::shared_ptr<ME::IModel> _f,
+	std::shared_ptr<ME::IModel> _b
+) : Actor2(_f, _b) {
 	_f->setScale(0.65f);
 	_b->setScale(0.65f);
 }
@@ -94,3 +96,5 @@ void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, D
 		break;
 	}
 }
+
+#endif // ARCHKNIGHTS_LIMITED

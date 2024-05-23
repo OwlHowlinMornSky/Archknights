@@ -231,7 +231,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>CLIENT_OUTPUT;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CLIENT_OUTPUT;ARCHKNIGHTS_LIMITED;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -275,7 +275,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>CLIENT_OUTPUT;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CLIENT_OUTPUT;ARCHKNIGHTS_LIMITED;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -329,7 +329,7 @@
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IActor.h" />
     <ClInclude Include="Models\IActorGroup.h" />
-    <ClInclude Include="Models\IAnimationSpine.h" />
+    <ClInclude Include="Models\IAnimation.h" />
     <ClInclude Include="Models\IGround.h" />
     <ClInclude Include="Models\AnimationSpine.h" />
     <ClInclude Include="Models\tiny_obj_loader.h" />

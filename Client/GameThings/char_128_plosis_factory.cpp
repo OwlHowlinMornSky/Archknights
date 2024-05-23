@@ -25,7 +25,7 @@
 #include "char_128_plosis_actor.h"
 
 bool Game::Char_128_Plosis_Factory::Load() {
-	auto fac = ohms::ISpineFactory::Instance();
+	auto fac = Game::IAnimationFactory::Instance();
 
 	test = true;
 

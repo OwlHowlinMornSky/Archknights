@@ -25,7 +25,7 @@
 #include "char_101_sora_actor.h"
 
 bool Game::Char_101_Sora_Factory::Load() {
-	auto fac = ohms::ISpineFactory::Instance();
+	auto fac = Game::IAnimationFactory::Instance();
 
 	bool res = fac->CreatePose(m_pose[0], "char_101_sora", 0);
 	if (!res)

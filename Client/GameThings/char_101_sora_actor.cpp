@@ -21,9 +21,11 @@
 */
 #include "char_101_sora_actor.h"
 
+#ifdef ARCHKNIGHTS_LIMITED
+
 Game::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
-	std::shared_ptr<ohms::ISpineAnimation> _f
-) : ActorSpine(_f) {
+	std::shared_ptr<ME::IModel> _f
+) : Actor(_f) {
 	_f->setScale(0.725f);
 }
 
@@ -55,3 +57,5 @@ void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Di
 		break;
 	}
 }
+
+#endif // ARCHKNIGHTS_LIMITED

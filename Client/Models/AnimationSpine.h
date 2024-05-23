@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#ifdef ARCHKNIGHTS_LIMITED
+
 #include <spine/Atlas.h>
 #include <spine/Skeleton.h>
 #include <spine/AnimationState.h>
@@ -35,11 +37,9 @@
 #include <MysteryEngine/G3D/Vertex.h>
 
 #include "ActorGroup.h"
-#include "IAnimationSpine.h"
+#include "IAnimation.h"
 
-
-namespace ohms {
-
+namespace Game {
 
 struct SpinePoseData {
 	spine::Atlas* atlas;
@@ -48,11 +48,11 @@ struct SpinePoseData {
 };
 
 
-class SpineAnimation :
-	public ISpineAnimation {
+class SpineAnimation final :
+	public ME::IModel {
 	typedef ME::IModel Parent;
 public:
-	SpineAnimation(const ohms::SpinePoseData _pose);
+	SpineAnimation(const Game::SpinePoseData _pose);
 	~SpineAnimation();
 
 public:
@@ -88,7 +88,7 @@ protected:
 	spine::Skeleton* m_skeleton;
 	spine::AnimationState* m_animationState;
 	spine::Vector<spine::Bone*>* m_bonesRef;
-	const ohms::SpinePoseData m_pose;
+	const Game::SpinePoseData m_pose;
 	std::vector<Game::ActorVertex> vertexArray;
 	mutable spine::Vector<float> worldVertices;
 	mutable spine::SkeletonClipping m_clipper;
@@ -96,36 +96,38 @@ protected:
 
 
 class SpinePose final :
-	public ISpinePose {
+	public IAnimationPose {
 public:
-	SpinePose(ohms::SpinePoseData _pose);
+	SpinePose(Game::SpinePoseData _pose);
 	~SpinePose();
 
 public:
-	virtual std::shared_ptr<ISpineAnimation> CreateAnimation() override;
+	virtual std::shared_ptr<ME::IModel> CreateAnimation() override;
 
 protected:
-	ohms::SpinePoseData m_pose;
+	Game::SpinePoseData m_pose;
 };
 
 
 class SpineFactory final :
-	public ISpineFactory {
+	public IAnimationFactory {
 public:
 	SpineFactory();
 	~SpineFactory();
 
 public:
-	virtual bool CreatePose(std::unique_ptr<ISpinePose>& ptr, std::string_view name, unsigned char type) override;
+	virtual bool CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) override;
 	virtual char CreatePose2(
-		std::unique_ptr<ISpinePose>& ptr0,
-		std::unique_ptr<ISpinePose>& ptr1,
+		std::unique_ptr<IAnimationPose>& ptr0,
+		std::unique_ptr<IAnimationPose>& ptr1,
 		std::string_view name
 	) override;
 
 private:
-	ohms::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);
+	Game::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);
 };
 
 
 }
+
+#endif // ARCHKNIGHTS_LIMITED

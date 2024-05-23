@@ -24,7 +24,13 @@
 #include "../Game/MsgResult.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
-#include "../Models/IAnimationSpine.h"
+
+#ifdef ARCHKNIGHTS_LIMITED
+#include "../Models/IAnimation.h"
+#else
+
+#endif // ARCHKNIGHTS_LIMITED
+
 #include "MsgId.h"
 
 namespace Game {
@@ -34,7 +40,7 @@ SummonMngr::SummonMngr() {}
 SummonMngr::~SummonMngr() {}
 
 void SummonMngr::AddBegin() {
-	ohms::ISpineFactory::Instance();
+	Game::IAnimationFactory::Instance();
 	return;
 }
 
@@ -54,7 +60,7 @@ bool SummonMngr::AddEntity(size_t id) {
 }
 
 void SummonMngr::AddEnd() {
-	ohms::ISpineFactory::Drop();
+	Game::IAnimationFactory::Drop();
 	return;
 }
 

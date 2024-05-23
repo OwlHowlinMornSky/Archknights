@@ -49,6 +49,8 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Draw(ME::Camera& camera, ME::Shader& shader) = 0;
 
+	virtual void SetOutline(bool enabled);
+
 	void SetWaitingForQuit();
 	bool IsWaitingForQuit() const;
 

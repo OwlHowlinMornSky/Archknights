@@ -25,14 +25,18 @@
 
 namespace Game {
 
+#ifdef ARCHKNIGHTS_LIMITED
 class Char_101_Sora_Actor_Vanilla final :
-	public ActorSpine {
+	public Actor {
 public:
-	Char_101_Sora_Actor_Vanilla(std::shared_ptr<ohms::ISpineAnimation> _a);
+	Char_101_Sora_Actor_Vanilla(std::shared_ptr<ME::IModel> _a);
 	virtual ~Char_101_Sora_Actor_Vanilla() = default;
 
 public:
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 };
+#else
+using Char_101_Sora_Actor_Vanilla = Actor2;
+#endif // ARCHKNIGHTS_LIMITED
 
 }

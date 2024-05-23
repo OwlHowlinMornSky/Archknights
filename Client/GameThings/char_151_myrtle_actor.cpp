@@ -21,10 +21,12 @@
 */
 #include "char_151_myrtle_actor.h"
 
+#ifdef ARCHKNIGHTS_LIMITED
+
 Game::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
-	std::shared_ptr<ohms::ISpineAnimation> _f,
-	std::shared_ptr<ohms::ISpineAnimation> _b
-) : ActorSpine2(_f, _b) {
+	std::shared_ptr<ME::IModel> _f,
+	std::shared_ptr<ME::IModel> _b
+) : Actor2(_f, _b) {
 	_f->setScale(0.575f);
 	_b->setScale(0.575f);
 }
@@ -57,3 +59,5 @@ void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, D
 		break;
 	}
 }
+
+#endif // ARCHKNIGHTS_LIMITED

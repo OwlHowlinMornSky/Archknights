@@ -19,6 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
+#ifdef ARCHKNIGHTS_LIMITED
 
 #define SPINE_SHORT_NAMES
 
@@ -105,10 +106,10 @@ SFMLTextureLoader SFMLTextureLoader::instance;
 
 } // end namespace
 
-namespace ohms {
+namespace Game {
 
 // class SpineAnimation
-SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
+SpineAnimation::SpineAnimation(const Game::SpinePoseData _pose) :
 	m_pose(_pose),
 	m_outline(false)
 
@@ -372,7 +373,7 @@ void SpineAnimation::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
 // end class SpineAnimation
 
 // class SpinePose
-SpinePose::SpinePose(ohms::SpinePoseData _pose) :
+SpinePose::SpinePose(Game::SpinePoseData _pose) :
 	m_pose(_pose) {}
 
 SpinePose::~SpinePose() {
@@ -382,7 +383,7 @@ SpinePose::~SpinePose() {
 	return;
 }
 
-std::shared_ptr<ISpineAnimation> SpinePose::CreateAnimation() {
+std::shared_ptr<ME::IModel> SpinePose::CreateAnimation() {
 	return std::make_shared<SpineAnimation>(m_pose);
 }
 // end class SpinePose
@@ -403,8 +404,8 @@ SpineFactory::~SpineFactory() {
 	return;
 }
 
-bool SpineFactory::CreatePose(std::unique_ptr<ISpinePose>& ptr, std::string_view name, unsigned char type) {
-	ohms::ISpinePose* res = nullptr;
+bool SpineFactory::CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) {
+	Game::IAnimationPose* res = nullptr;
 	std::string path("res/chararts/");
 	switch (type) {
 	case 0: path += "bat0/"; break;
@@ -415,13 +416,13 @@ bool SpineFactory::CreatePose(std::unique_ptr<ISpinePose>& ptr, std::string_view
 	path += name;
 	res = createPoseBinary(path + ".skel", path + ".atlas");
 	if (res != nullptr)
-		ptr = std::unique_ptr<ISpinePose>(res);
+		ptr = std::unique_ptr<IAnimationPose>(res);
 	return res != nullptr;
 }
 
 char SpineFactory::CreatePose2(
-	std::unique_ptr<ISpinePose>& ptr0,
-	std::unique_ptr<ISpinePose>& ptr1,
+	std::unique_ptr<IAnimationPose>& ptr0,
+	std::unique_ptr<IAnimationPose>& ptr1,
 	std::string_view name
 ) {
 	char res = 0;
@@ -429,24 +430,24 @@ char SpineFactory::CreatePose2(
 	std::string path1("res/chararts/bat1/");
 	path0 += name;
 	path1 += name;
-	ohms::ISpinePose* res0 = createPoseBinary(path0 + ".skel", path0 + ".atlas");
-	ohms::ISpinePose* res1 = createPoseBinary(path1 + ".skel", path1 + ".atlas");
+	Game::IAnimationPose* res0 = createPoseBinary(path0 + ".skel", path0 + ".atlas");
+	Game::IAnimationPose* res1 = createPoseBinary(path1 + ".skel", path1 + ".atlas");
 	if (res0 != nullptr) {
-		ptr0 = std::unique_ptr<ISpinePose>(res0);
+		ptr0 = std::unique_ptr<IAnimationPose>(res0);
 		res |= 0x01;
 	}
 	if (res1 != nullptr) {
-		ptr1 = std::unique_ptr<ISpinePose>(res1);
+		ptr1 = std::unique_ptr<IAnimationPose>(res1);
 		res |= 0x02;
 	}
 	return res;
 }
 
-ohms::SpinePose* SpineFactory::createPoseBinary(
+Game::SpinePose* SpineFactory::createPoseBinary(
 	std::string_view binaryPath,
 	std::string_view atlasPath
 ) {
-	ohms::SpinePoseData pose{};
+	Game::SpinePoseData pose{};
 
 	// Load the texture atlas
 	pose.atlas = new spine::Atlas(atlasPath.data(), &::SFMLTextureLoader::instance);
@@ -467,7 +468,7 @@ ohms::SpinePose* SpineFactory::createPoseBinary(
 	// Setup
 	pose.animationStateData = new spine::AnimationStateData(pose.skeletonData);
 
-	return new ohms::SpinePose(pose);
+	return new Game::SpinePose(pose);
 }
 
 // end class SpineFactory
@@ -475,17 +476,19 @@ ohms::SpinePose* SpineFactory::createPoseBinary(
 
 namespace {
 
-std::unique_ptr<ohms::SpineFactory> g_spineFactoryInstance;
+std::unique_ptr<Game::SpineFactory> g_spineFactoryInstance;
 
 }
 
-ohms::ISpineFactory* ohms::ISpineFactory::Instance() {
+Game::IAnimationFactory* Game::IAnimationFactory::Instance() {
 	if (g_spineFactoryInstance == nullptr) {
-		g_spineFactoryInstance = std::make_unique<ohms::SpineFactory>();
+		g_spineFactoryInstance = std::make_unique<Game::SpineFactory>();
 	}
 	return g_spineFactoryInstance.get();
 }
 
-void ohms::ISpineFactory::Drop() {
+void Game::IAnimationFactory::Drop() {
 	g_spineFactoryInstance.reset();
 }
+
+#endif // ARCHKNIGHTS_LIMITED

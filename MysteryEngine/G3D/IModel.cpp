@@ -35,6 +35,8 @@ IModel::IModel() :
 
 IModel::~IModel() {}
 
+void IModel::SetOutline(bool enabled) {}
+
 void IModel::SetWaitingForQuit() {
 	m_waitingForQuit = true;
 }

@@ -30,7 +30,7 @@
 #ifdef ARCHKNIGHTS_LIMITED
 #include <SFML/GpuPreference.hpp>
 //SFML_DEFINE_DISCRETE_GPU_PREFERENCE
-#endif
+#endif // ARCHKNIGHTS_LIMITED
 
 namespace {
 

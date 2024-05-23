@@ -25,14 +25,18 @@
 
 namespace Game {
 
+#ifdef ARCHKNIGHTS_LIMITED
 class Char_151_Mytle_Actor_Vanilla final :
-	public ActorSpine2 {
+	public Actor2 {
 public:
-	Char_151_Mytle_Actor_Vanilla(std::shared_ptr<ohms::ISpineAnimation> _f, std::shared_ptr<ohms::ISpineAnimation> _b);
+	Char_151_Mytle_Actor_Vanilla(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Char_151_Mytle_Actor_Vanilla() = default;
 
 public:
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 };
+#else
+using Char_151_Mytle_Actor_Vanilla = Actor2;
+#endif // ARCHKNIGHTS_LIMITED
 
 }

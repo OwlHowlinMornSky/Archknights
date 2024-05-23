@@ -27,7 +27,7 @@
 namespace Game {
 
 bool Char_151_Mytle_Factory::Load() {
-	auto fac = ohms::ISpineFactory::Instance();
+	auto fac = Game::IAnimationFactory::Instance();
 
 	char res = fac->CreatePose2(m_pose[0], m_pose[1], "char_151_myrtle");
 	if (res != 3)

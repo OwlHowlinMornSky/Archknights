@@ -21,14 +21,17 @@
 */
 #pragma once
 
-#include <MysteryEngine/G3D/IModel.h>
+#ifndef ARCHKNIGHTS_LIMITED
+
 #include <MysteryEngine/G3D/Vertex.h>
 #include <string_view>
 #include <array>
 
+#include "IAnimation.h"
+
 namespace Game {
 
-class AnimationFrames :
+class AnimationFrames final :
 	public ME::IModel {
 public:
 	int Load(std::string_view file);
@@ -45,4 +48,28 @@ protected:
 	unsigned int drawCount;
 };
 
+class FramesPose final :
+	public IAnimationPose {
+public:
+	virtual std::shared_ptr<ME::IModel> CreateAnimation() override;
+};
+
+class FramesFactory final :
+	public IAnimationFactory {
+public:
+	virtual bool CreatePose(
+		std::unique_ptr<IAnimationPose>& ptr,
+		std::string_view name,
+		unsigned char type
+	) override;
+
+	virtual char CreatePose2(
+		std::unique_ptr<IAnimationPose>& ptr0,
+		std::unique_ptr<IAnimationPose>& ptr1,
+		std::string_view name
+	) override;
+};
+
 }
+
+#endif // !ARCHKNIGHTS_LIMITED
