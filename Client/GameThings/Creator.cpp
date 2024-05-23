@@ -36,6 +36,12 @@
 #include "../Models/IGround.h"
 #include "../Models/IActorGroup.h"
 
+//#include "../Models/Actor.h"
+//#include "char_151_myrtle.h"
+
+#include "ISummonMngr.h"
+#include <SFML/Window/Event.hpp>
+
 namespace Game::Creator {
 
 int setup() {
@@ -50,83 +56,59 @@ void drop() {
 	Game::GameBoard::drop();
 	Scene::GameCommon::drop();
 	Game::GameHolder::drop();
+
+	Game::IActorGroup::Drop(); // 清除实例
 }
 
 void GameInitalizator::OnJoined() {
-	LoadStart();
-}
-
-void GameInitalizator::OnKicking() {
-	LoadOver();
-}
-
-void GameInitalizator::FixedUpdate(float dt) {
-	LoadUpdate(dt);
-}
-
-MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	switch (msg) {
-	case 5678:
-		cc = wparam + 1;
-		break;
-	case 9876:
-		GameGlobal::board->UnsubscribeMsg(5678, m_location);
-		KickSelf();
-		break;
-	case 1234:
-		GameGlobal::board->ExitGame(4321);
-		break;
-	}
-	return MsgResult::OK;
-}
-
-void GameInitalizator::LoadStart() {
-	//cc = 120;
-
 	cc = 0;
 
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
-
-	auto actorGroup = Game::IActorGroup::Create();
+	auto actorGroup = Game::IActorGroup::Instance();
 
 	auto camera = std::make_shared<ME::PerspectiveCamera>();
 	Game::GameGlobal::show->SetCamera(camera);
 	camera->setAspectRatio(16.0f / 9.0f);
 	camera->setFOV(40.0f);
 	camera->setPosition(0.0f, -5.5f, 8.66025f);
-	//cam->setPosition(0.0f, 0.0f, 5.0f);
 	camera->setRotation(30.0f, 0.0f, 0.0f);
-	//cam->setRotation(0.0f, 0.0f, 0.0f);
 
-	//cam->setZNear(0.5f);
-	//cam->setZFar(50.0f);
 
-	auto spineFactory = ohms::ISpineFactory::Create();
+	auto summonmngr = ISummonMngr::Create();
+	GameGlobal::board->JoinEntity(summonmngr);
 
-	spineFactory->CreatePose(m_testpose, "char_151_myrtle", 0);
+	summonmngr->AddBegin();
+	summonmngr->AddEntity(151, "char_151_myrtle", true);
+	summonmngr->AddEnd();
 
-	ME::G3dGlobal::setActive(true);
-	auto animation = m_testpose->CreateAnimation();
-	ME::G3dGlobal::setActive(false);
 
-	animation->setPosition(0.0f, 0.0f, 0.0f);
-	animation->setRotation(0.0f, 0.0f, 0.0f);
-	animation->setOrigin(0.0f, 0.0f, 0.0f);
-	animation->setScale(1.0f, 1.0f, 1.0f);
+	//auto spineFactory = ohms::ISpineFactory::Create();
 
-	animation->setRotation(30.0f, 80.0f, 0.0f);
-	//animation->setPosition(-5.0f, 1.25f, 0.0f);
+	//spineFactory->CreatePose(m_testpose, "char_128_plosis_epoque#3", 0);
+	//spineFactory->CreatePose(m_testpose1, "char_128_plosis_epoque#3", 1);
+	//spineFactory->CreatePose(m_testpose, "char_151_myrtle", 0);
+	//spineFactory->CreatePose(m_testpose1, "char_151_myrtle", 1);
 
-	//anim->setAnimation(0, "Default", false);
-	//anim->setAnimation(1, "FlagFlutter", true)->setDelay(anim->findAnimation("Start")->getDuration());
-	//anim->setAnimation(2, "Blink", true);
-	//anim->setAnimation(3, "Start", false);
-	//anim->addAnimation(3, "Idle", true, 0.0f);
+	//ME::G3dGlobal::setActive(true);
+	//auto animation = m_testpose->CreateAnimation();
+	//auto animation1 = m_testpose1->CreateAnimation();
+	//ME::G3dGlobal::setActive(false);
 
-	animation->SetOutline(true);
 
-	actorGroup->AddActor(animation);
+	//animation->SetOutline(true);
+	//animation1->SetOutline(true);
+
+	//actorGroup->AddActor(animation);
+
+	//auto actor = std::make_shared<ActorSpine2>(animation, animation1);
+
+	//actorGroup->AddActor(actor);
+
+	//auto unit = std::make_shared<Units::Char_151_Myrtle>();
+	//unit->m_actor = actor;
+
+	//GameGlobal::board->JoinEntity(unit);
 
 	////////////////////
 
@@ -142,14 +124,20 @@ void GameInitalizator::LoadStart() {
 	Game::GameGlobal::show->AddModel(ground);
 	Game::GameGlobal::show->AddModel(actorGroup);
 
+	pos = 5;
+	Game::GameGlobal::board->SubscribeMsg(1, m_location);
 }
 
-void GameInitalizator::LoadThread() {}
+void GameInitalizator::OnKicking() {
+	Game::GameGlobal::board->UnsubscribeMsg(1, m_location);
+	GameGlobal::board->BroadcastMsg(1234, 0, 0);
+}
 
-void GameInitalizator::LoadUpdate(float dt) {
+void GameInitalizator::FixedUpdate(float dt) {
+
 	//printf_s("%zd ", cc);
 
-	GameGlobal::board->DistributeMsg(5678, cc, 0);
+	//GameGlobal::board->DistributeMsg(5678, cc, 0);
 
 	//if (cc >= 430) {
 	//	GameGlobal::board->BroadcastMsg(9876, 0, 0);
@@ -162,8 +150,37 @@ void GameInitalizator::LoadUpdate(float dt) {
 	//gd->rotate(0.0f, 0.5f, 0.0f);
 }
 
-void GameInitalizator::LoadOver() {
-	GameGlobal::board->BroadcastMsg(1234, 0, 0);
+MsgResultType GameInitalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+	switch (msg) {
+	case 1:
+	{
+		auto e = (sf::Event*)lparam;
+		switch (e->type) {
+		case sf::Event::KeyPressed:
+			switch (e->key.code) {
+			case sf::Keyboard::Space:
+				GameGlobal::board->DistributeMsg(2, 0, pos);
+				pos--;
+				break;
+			}
+			break;
+		}
+		break;
+	}
+	case 5678:
+		cc = wparam + 1;
+		break;
+	case 9876:
+		GameGlobal::board->UnsubscribeMsg(5678, m_location);
+		KickSelf();
+		break;
+	case 1234:
+		GameGlobal::board->ExitGame(4321);
+		break;
+	}
+	return MsgResult::OK;
 }
+
+void GameInitalizator::LoadThread() {}
 
 }

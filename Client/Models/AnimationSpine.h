@@ -91,10 +91,15 @@ public:
 	~SpineFactory();
 
 public:
-	virtual bool CreatePose(std::unique_ptr<ISpinePose>& ptr, const std::string& name, unsigned char type) override;
+	virtual bool CreatePose(std::unique_ptr<ISpinePose>& ptr, std::string_view name, unsigned char type) override;
+	virtual char CreatePose2(
+		std::unique_ptr<ISpinePose>& ptr0,
+		std::unique_ptr<ISpinePose>& ptr1,
+		std::string_view name
+	) override;
 
 private:
-	ohms::SpinePose* createPoseBinary(const std::string& binaryPath, const std::string& atlasPath);
+	ohms::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);
 };
 
 

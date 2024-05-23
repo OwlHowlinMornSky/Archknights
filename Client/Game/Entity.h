@@ -37,6 +37,8 @@ public:
 	virtual void OnJoined();
 	virtual void OnKicking();
 
+	virtual void FixedUpdate(float dt);
+
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 public:
@@ -74,8 +76,6 @@ public:
 		m_rotation = rot;
 		OnRotationChanged();
 	}
-
-	virtual void FixedUpdate(float dt);
 
 protected:
 	virtual void OnPositionChanged();

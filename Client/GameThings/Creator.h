@@ -23,7 +23,7 @@
 
 #include "../Game/Entity.h"
 
-#include "../Models/IAnimationSpine.h"
+//#include "../Models/IAnimationSpine.h"
 
 namespace Game::Creator {
 
@@ -41,14 +41,13 @@ public:
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 protected:
-	void LoadStart();
 	void LoadThread();
-	void LoadUpdate(float dt);
-	void LoadOver();
 
 protected:
 	size_t cc;
-	std::unique_ptr<ohms::ISpinePose> m_testpose;
+	int pos;
+	//std::unique_ptr<ohms::ISpinePose> m_testpose;
+	//std::unique_ptr<ohms::ISpinePose> m_testpose1;
 };
 
 }

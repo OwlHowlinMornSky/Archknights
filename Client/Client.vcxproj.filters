@@ -118,6 +118,18 @@
     <ClInclude Include="Models\Actor.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="GameThings\SummonMngr.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\ISummonMngr.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\EntityFactory.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\CreateInfoForUnit.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -191,6 +203,15 @@
     <ClCompile Include="Models\AnimationSpine.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Actor.cpp" />
+    <ClCompile Include="Models\Actor.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\char_151_myrtle.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\SummonMngr.cpp">
+      <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\EntityFactory.cpp" />
   </ItemGroup>
 </Project>

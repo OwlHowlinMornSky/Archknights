@@ -302,8 +302,12 @@
     <ClInclude Include="Activities\Activity_Game.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="GameThings\char_151_myrtle.h" />
+    <ClInclude Include="GameThings\CreateInfoForUnit.h" />
     <ClInclude Include="GameThings\Creator.h" />
+    <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\IActor.h" />
+    <ClInclude Include="GameThings\ISummonMngr.h" />
+    <ClInclude Include="GameThings\SummonMngr.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\GameBoard.h" />
@@ -338,7 +342,10 @@
     <ClCompile Include="Activities\Activity_Debug.cpp" />
     <ClCompile Include="Activities\Activity_Game.cpp" />
     <ClCompile Include="API.cpp" />
+    <ClCompile Include="GameThings\char_151_myrtle.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
+    <ClCompile Include="GameThings\EntityFactory.cpp" />
+    <ClCompile Include="GameThings\SummonMngr.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\GameGlobal.cpp" />
     <ClCompile Include="Game\GameBoard.cpp" />

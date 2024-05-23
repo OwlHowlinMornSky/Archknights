@@ -12,10 +12,9 @@
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/GlCheck.h>
 
-
 namespace {
 
-constexpr float spine_to3d_scale_i = 128.0f;
+constexpr float spine_to3d_scale_i = 256.0f;
 constexpr float spine_global_scale = 0.7125f;
 constexpr float outline_thickness  = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
@@ -130,6 +129,8 @@ SpineAnimation::SpineAnimation(const ohms::SpinePoseData _pose) :
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glGenBuffers(1, &m_vertexVBO));
 	glCheck(glBindVertexArray(0));
+
+	setRotation(30.0f, 0.0f, 0.0f);
 	return;
 }
 
@@ -399,38 +400,53 @@ SpineFactory::~SpineFactory() {
 	return;
 }
 
-bool SpineFactory::CreatePose(std::unique_ptr<ISpinePose>& ptr, const std::string& name, unsigned char type) {
+bool SpineFactory::CreatePose(std::unique_ptr<ISpinePose>& ptr, std::string_view name, unsigned char type) {
 	ohms::ISpinePose* res = nullptr;
+	std::string path("res/chararts/");
 	switch (type) {
-	case 0:
-		res = createPoseBinary(
-			std::string("res/characters/").append(name).append("/animation/batf/skel").c_str(),
-			std::string("res/characters/").append(name).append("/animation/batf/atlas").c_str()
-		);
-		break;
-	case 1:
-		res = createPoseBinary(
-			std::string("res/characters/").append(name).append("/animation/batb/skel").c_str(),
-			std::string("res/characters/").append(name).append("/animation/batb/atlas").c_str()
-		);
-		break;
-	case 2:
-		res = createPoseBinary(
-			std::string("res/characters/").append(name).append("/animation/building/skel").c_str(),
-			std::string("res/characters/").append(name).append("/animation/building/atlas").c_str()
-		);
-		break;
+	case 0: path += "bat0/"; break;
+	case 1: path += "bat1/"; break;
+	case 2: path += "build/build_"; break;
+	default: return false;
 	}
+	path += name;
+	res = createPoseBinary(path + ".skel", path + ".atlas");
 	if (res != nullptr)
 		ptr = std::unique_ptr<ISpinePose>(res);
 	return res != nullptr;
 }
 
-ohms::SpinePose* SpineFactory::createPoseBinary(const std::string& binaryPath, const std::string& atlasPath) {
+char SpineFactory::CreatePose2(
+	std::unique_ptr<ISpinePose>& ptr0,
+	std::unique_ptr<ISpinePose>& ptr1,
+	std::string_view name
+) {
+	char res = 0;
+	std::string path0("res/chararts/bat0/");
+	std::string path1("res/chararts/bat1/");
+	path0 += name;
+	path1 += name;
+	ohms::ISpinePose* res0 = createPoseBinary(path0 + ".skel", path0 + ".atlas");
+	ohms::ISpinePose* res1 = createPoseBinary(path1 + ".skel", path1 + ".atlas");
+	if (res0 != nullptr) {
+		ptr0 = std::unique_ptr<ISpinePose>(res0);
+		res |= 0x01;
+	}
+	if (res1 != nullptr) {
+		ptr1 = std::unique_ptr<ISpinePose>(res1);
+		res |= 0x02;
+	}
+	return res;
+}
+
+ohms::SpinePose* SpineFactory::createPoseBinary(
+	std::string_view binaryPath,
+	std::string_view atlasPath
+) {
 	ohms::SpinePoseData pose{};
 
 	// Load the texture atlas
-	pose.atlas = new spine::Atlas(atlasPath.c_str(), &::SFMLTextureLoader::instance);
+	pose.atlas = new spine::Atlas(atlasPath.data(), &::SFMLTextureLoader::instance);
 	if (pose.atlas->getPages().size() == 0) {
 		//printf("Failed to load atlas");
 		return nullptr;
@@ -438,7 +454,7 @@ ohms::SpinePose* SpineFactory::createPoseBinary(const std::string& binaryPath, c
 
 	// Load the skeleton data
 	spine::SkeletonBinary binary(pose.atlas);
-	pose.skeletonData = binary.readSkeletonDataFile(binaryPath.c_str());
+	pose.skeletonData = binary.readSkeletonDataFile(binaryPath.data());
 
 	if (!pose.skeletonData) {
 		//printf("Failed to load skeleton data");

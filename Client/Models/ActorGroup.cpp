@@ -67,7 +67,7 @@ const std::string vertex_projection =
 " vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"\
 " vUv = aTexCoord;"\
 
-" vec2 VertexPosInModel = aPosition / 128.0 + uVecOffset;"\
+" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"\
 " vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"\
 " vec4 OrgPosInGlobal = uMatM * vec4(uVecOffset.xy, 0.0, 1.0);"\
 
@@ -89,6 +89,11 @@ class ActorShader final :
 	public ME::Shader {
 protected:
 	int m_uniforms[Game::ActorShaderUniformId::COUNT];
+
+public:
+	ActorShader() :
+		m_uniforms() {}
+	virtual ~ActorShader() = default;
 
 public:
 	virtual void setup() override {
@@ -113,6 +118,11 @@ public:
 		updateUniform4f(m_uniforms[Game::ActorShaderUniformId::Vec4_CvrClr], 1.0f, 1.0f, 1.0f, 1.0f);
 
 		updateUniform1iName("uTexture", 0);
+
+		//GLint test = 0;
+		//glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &test);
+		//printf_s("Max: %d\n", test);
+
 		Bind(nullptr);
 	}
 
@@ -136,8 +146,7 @@ public:
 		}
 	}
 
-	virtual void UpdateUniform1(int id, GLfloat val0) const override {
-	}
+	virtual void UpdateUniform1(int id, GLfloat val0) const override {}
 	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const override {
 		updateUniform2f(m_uniforms[id], val0, val1);
 	}
@@ -212,6 +221,19 @@ void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
 
 }
 
-std::shared_ptr<Game::IActorGroup> Game::IActorGroup::Create() {
-	return std::make_shared<Game::ActorGroup>();
+namespace {
+
+std::shared_ptr<Game::ActorGroup> g_group;
+
+}
+
+std::shared_ptr<Game::IActorGroup> Game::IActorGroup::Instance() {
+	if(g_group == nullptr)
+		g_group = std::make_shared<Game::ActorGroup>();
+	return g_group;
+}
+
+void Game::IActorGroup::Drop() {
+	g_group.reset();
+	return;
 }

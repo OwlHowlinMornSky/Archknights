@@ -34,9 +34,16 @@ public:
 public:
 	IActor() = default;
 	virtual ~IActor() = default;
+	
+	virtual void Exit() = 0;
 
-	virtual void TriggerAnimation(AnimationEvent type, Direction direction) = 0;
+	virtual void InitDirection(Direction direction) = 0;
+
+	virtual void TriggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
 	virtual void TriggerAnimationEx(int excode, void* data) {}
+
+	virtual void SetPosition(float x, float y, float z) = 0;
+	virtual void SetOutline(bool enabled) {}
 };
 
 }

@@ -28,7 +28,8 @@ public:
 	virtual void AddActor(std::shared_ptr<IModel> actor) = 0;
 
 public:
-	static std::shared_ptr<Game::IActorGroup> Create();
+	static std::shared_ptr<Game::IActorGroup> Instance();
+	static void Drop(); // 在Creator.cpp清除
 };
 
 }
