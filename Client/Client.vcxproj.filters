@@ -175,6 +175,18 @@
     <ClInclude Include="Physics\IWall.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\World.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Detector.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IFixture.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Body.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -283,6 +295,15 @@
     </ClCompile>
     <ClCompile Include="GameThings\Initalizator.cpp">
       <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Detector.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\World.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Body.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

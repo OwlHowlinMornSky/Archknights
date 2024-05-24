@@ -24,6 +24,8 @@
 #include "../Game/Entity.h"
 #include "../Models/IActor.h"
 #include <memory>
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
 
 namespace Units {
 
@@ -46,6 +48,9 @@ protected:
 
 public:
 	std::shared_ptr<Game::IActor> m_actor;
+	std::unique_ptr<Physics::IBody> m_body;
+	std::unique_ptr<Physics::IDetector> m_inde;
+	bool m_test;
 };
 
 }

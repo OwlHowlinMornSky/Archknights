@@ -21,8 +21,6 @@
 */
 #include "char_151_myrtle.h"
 
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
 #include "../Game/MsgResult.h"
 #include <SFML/Window/Event.hpp>
 #include "MsgId.h"
@@ -34,14 +32,42 @@ Units::Char_151_Myrtle::~Char_151_Myrtle() {}
 void Units::Char_151_Myrtle::OnJoined() {
 	m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
+
+	m_body = Game::GameGlobal::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1]);
+	m_body->SetId(m_id);
+	m_body->SetLocation(m_location);
+
+	m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
+	m_inde->SetId(m_id);
+	m_inde->SetLocation(m_location);
+
+	m_test = false;
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
+	m_inde.reset();
+	m_body.reset();
+
 	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 	m_actor->Exit();
 }
 
-void Units::Char_151_Myrtle::FixedUpdate(float dt) {}
+void Units::Char_151_Myrtle::FixedUpdate(float dt) {
+	
+	if (m_test)
+		return;
+
+	bool atk = false;
+	for (auto it = m_inde->ListBegin(), n = m_inde->ListEnd(); it != n; ++it) {
+		atk = true;
+	}
+
+	if (atk) {
+		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
+		m_test = true;
+	}
+
+}
 
 Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {

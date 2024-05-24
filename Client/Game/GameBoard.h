@@ -29,6 +29,7 @@
 #include <functional>
 
 #include "Entity.h"
+#include "../Physics/IWorld.h"
 
 namespace Game {
 
@@ -90,6 +91,9 @@ protected:
 	std::deque<std::shared_ptr<Entity>> m_entities; // 在场实体所处空间。在场即指针不为空，应当保证退场同时置为nullptr。
 	std::stack<size_t> m_emptyLocations; // 空闲位置，是实体所在deque的偏移。由实体退场产生。
 	std::function<void(int)> m_exitCallback;
+
+public:
+	std::unique_ptr<Physics::IWorld> m_world;
 
 public:
 	/**

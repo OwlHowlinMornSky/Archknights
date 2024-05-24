@@ -29,9 +29,14 @@
 namespace Game {
 
 GameBoard::GameBoard() :
-	m_entityIdCnt(0) {}
+	m_entityIdCnt(0) {
+	m_world = Physics::IWorld::CreateWorld();
+}
 
-GameBoard::~GameBoard() {}
+GameBoard::~GameBoard() {
+	m_entities.clear();
+	m_world.reset();
+}
 
 int GameBoard::setup() {
 	if (Game::GameGlobal::board)
@@ -89,6 +94,7 @@ std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
 }
 
 void GameBoard::Update(float dt) {
+	m_world->Update(dt);
 	for (std::shared_ptr<Entity> entity : m_entities) {
 		if (entity == nullptr)
 			continue;
