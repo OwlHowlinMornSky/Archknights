@@ -48,7 +48,9 @@ void Entity::BasicOnJoined(EntityIdType id, EntityLocationType location) {
 void Entity::BasicOnKicking() {
 	OnKicking();
 	std::cout << "Kick: " << this << ", ID: " << m_id << ", Location: " << m_location << std::endl;
+	m_location = 0;
 	m_id = 0;
+	return;
 }
 
 void Entity::OnJoined() {}
@@ -106,6 +108,10 @@ void Entity::OnScaleChanged() {}
 
 void Entity::KickSelf() const {
 	GameGlobal::board->RegistryForExit(m_location);
+}
+
+MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+    return MsgResult::OK;
 }
 
 } // namespace Game

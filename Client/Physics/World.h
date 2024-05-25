@@ -52,7 +52,7 @@ public:
 	virtual std::unique_ptr<IBody> CreateBodyMoverRectangle(float x, float y) override;
 
 	virtual std::unique_ptr<IDetector> CreateDetectorCircle(float x, float y, float radius) override;
-	virtual std::unique_ptr<IDetector> CreateDetectorRows(float x, float y, Rows* tiles) override;
+	virtual std::unique_ptr<IDetector> CreateDetectorRows(float x, float y, Rows rows) override;
 	virtual std::unique_ptr<IDetector> CreateDetectorTiles(float x, float y, size_t length, int* tiles) override;
 
 protected:

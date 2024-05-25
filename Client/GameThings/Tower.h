@@ -19,30 +19,38 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Creator.h"
+#pragma once
 
-#include "../Scenes/Scene_GameCommon.h"
-#include "../Game/GameBoard.h"
-#include "../Game/GameHost.h"
+#include "../Game/Entity.h"
+#include "../Models/IActor.h"
 #include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
+#include <memory>
 
-#include "../Models/IActorGroup.h"
-#include "Initalizator.h"
+namespace Units {
 
-namespace Game::Creator {
+class Tower :
+	public Game::Entity {
+public:
+	Tower();
+	virtual ~Tower();
 
-int setup() {
-	Game::GameHolder::setup();
-	Scene::GameCommon::setup();
-	Game::GameBoard::setup();
-	Game::GameGlobal::board->JoinEntity(std::make_shared<Game::Initalizator>());
-	return 0;
-}
+public:
+	virtual void OnJoined();
+	virtual void OnKicking();
 
-void drop() {
-	Game::IActorGroup::Drop(); // 清除实例
-	Game::GameBoard::drop();
-	Scene::GameCommon::drop();
-	Game::GameHolder::drop();
-}
+	virtual void FixedUpdate(float dt);
+
+	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+
+protected:
+	virtual void OnPositionChanged();
+
+public:
+	bool m_active, m_died;
+	std::shared_ptr<Game::IActor> m_actor;
+	std::unique_ptr<Physics::IBody> m_body;
+	std::unique_ptr<Physics::IDetector> m_detector;
+};
+
 }

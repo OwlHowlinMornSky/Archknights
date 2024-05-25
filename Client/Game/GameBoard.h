@@ -45,6 +45,7 @@ public:
 	static void drop();
 
 	void SetExitCallback(std::function<void(int)> cb);
+	void Clear();
 
 // 基础功能
 public:
@@ -80,13 +81,6 @@ public:
 	std::shared_ptr<Entity> EntityAt(size_t location);
 
 protected:
-	/** 关于踢出实体的操作
-	 * 目前是踢出后原地置空，并记录空位。
-	 * 其实也可以踢出后将末尾移至该位，当然移除末尾时不用移动。
-	 * 可以利用优先队列保存欲退出的实体，从后往前移除。
-	 * 不能从前往后移除，因为这样不能保证末尾实体的状态。
-	 */
-
 	EntityIdType m_entityIdCnt; // 实体id计数，用于让每个实体都有独一无二的标识和判断方法。
 	std::deque<std::shared_ptr<Entity>> m_entities; // 在场实体所处空间。在场即指针不为空，应当保证退场同时置为nullptr。
 	std::stack<size_t> m_emptyLocations; // 空闲位置，是实体所在deque的偏移。由实体退场产生。
@@ -110,8 +104,8 @@ protected:
 // 事件控制器
 public:
 	/**
-	 * @brief 向指定实体发送消息。
-	 * @param location 指定实体的位置。
+	 * @brief 向指定位置发送消息。
+	 * @param location 指定位置。
 	 * @param msg 消息id。
 	 * @param wparam 消息w参数。
 	 * @param lparam 消息l参数。
@@ -119,19 +113,29 @@ public:
 	*/
 	MsgResultType SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
+	 * @brief 向指定实体发送消息。
+	 * @param location 指定的位置。
+	 * @param id 指定的实体。
+	 * @param msg 消息id。
+	 * @param wparam 消息w参数。
+	 * @param lparam 消息l参数。
+	 * @return 消息回执。
+	*/
+	MsgResultType TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	/**
 	 * @brief 分发消息。即 向所有订阅指定消息的实体发送消息。
 	 * @param msg 消息id。即 指定消息。
 	 * @param wparam 消息w参数。
 	 * @param lparam 消息l参数。
 	*/
-	void DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	void PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 广播消息。即向在场所有实体发送消息。
 	 * @param msg 消息id。
 	 * @param wparam 消息w参数。
 	 * @param lparam 消息l参数。
 	*/
-	void BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	void Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 订阅消息。
 	 * @param msg 订阅的消息id。

@@ -87,7 +87,7 @@ void Initalizator::OnJoined() {
 void Initalizator::OnKicking() {
 	Game::GameGlobal::board->UnsubscribeMsg(MsgId::GuiEvent, m_location);
 
-	GameGlobal::board->BroadcastMsg(1234, 0, 0);
+	GameGlobal::board->Broadcast(1234, 0, 0);
 }
 
 void Initalizator::FixedUpdate(float dt) {}
@@ -101,13 +101,13 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
 			case sf::Keyboard::Num1:
-				GameGlobal::board->DistributeMsg(2, 0, (intptr_t)this->pos);
+				GameGlobal::board->PostMsg(2, 0, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num2:
-				GameGlobal::board->DistributeMsg(2, 1, (intptr_t)this->pos);
+				GameGlobal::board->PostMsg(2, 1, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num3:
-				GameGlobal::board->DistributeMsg(2, 2, (intptr_t)this->pos);
+				GameGlobal::board->PostMsg(2, 2, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Left:
 				pos[0] -= 1.0f;

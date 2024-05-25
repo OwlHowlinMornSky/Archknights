@@ -9,6 +9,9 @@ namespace Physics {
 void MyContactListener::BeginContact(b2Contact* contact) {
 	IFixture* fix1 = (IFixture*)contact->GetFixtureA()->GetUserData().pointer;
 	IFixture* fix2 = (IFixture*)contact->GetFixtureB()->GetUserData().pointer;
+	printf_s("%d %d: ", contact->GetFixtureA()->IsSensor(), contact->GetFixtureB()->IsSensor());
+	if (!fix1 || !fix2)
+		return;
 	if (fix1->IsMaster())
 		fix1->OnBeginContact(fix2);
 	if (fix2->IsMaster())
@@ -19,6 +22,8 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 void MyContactListener::EndContact(b2Contact* contact) {
 	IFixture* fix1 = (IFixture*)contact->GetFixtureA()->GetUserData().pointer;
 	IFixture* fix2 = (IFixture*)contact->GetFixtureB()->GetUserData().pointer;
+	if (!fix1 || !fix2)
+		return;
 	if (fix1->IsMaster())
 		fix1->OnEndContact(fix2);
 	if (fix2->IsMaster())
@@ -70,8 +75,10 @@ std::unique_ptr<IDetector> World::CreateDetectorCircle(float x, float y, float r
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorRows(float x, float y, Rows* tiles) {
-	return std::unique_ptr<IDetector>();
+std::unique_ptr<IDetector> World::CreateDetectorRows(float x, float y, Rows rows) {
+	auto res = std::make_unique<DetectorIndependent>();
+	res->CreateRows(&m_world, { x, y }, rows);
+	return std::move(res);
 }
 
 std::unique_ptr<IDetector> World::CreateDetectorTiles(float x, float y, size_t length, int* tiles) {

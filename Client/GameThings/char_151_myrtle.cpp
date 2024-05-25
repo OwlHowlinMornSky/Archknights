@@ -24,49 +24,51 @@
 #include "../Game/MsgResult.h"
 #include <SFML/Window/Event.hpp>
 #include "MsgId.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
 
 Units::Char_151_Myrtle::Char_151_Myrtle() {}
 
 Units::Char_151_Myrtle::~Char_151_Myrtle() {}
 
 void Units::Char_151_Myrtle::OnJoined() {
-	m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
+	Parent::OnJoined();
+
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
-	m_body = Game::GameGlobal::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1]);
-	m_body->SetId(m_id);
-	m_body->SetLocation(m_location);
+	Physics::Rows rows{};
+	rows.length = 2;
+	uint32_t wd[2] = { 0, 0 };
+	rows.widths = wd;
 
-	m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
-	m_inde->SetId(m_id);
-	m_inde->SetLocation(m_location);
+	//m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
+	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(m_position[0], m_position[1], rows);
+	m_detector->SetId(m_id);
+	m_detector->SetLocation(m_location);
 
-	m_test = false;
+	m_died = false;
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
-	m_inde.reset();
-	m_body.reset();
-
 	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
-	m_actor->Exit();
+
+	Parent::OnKicking();
 }
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
-	
-	if (m_test)
+	if (m_died) {
+		m_time += dt;
+		if (m_time >= 1.2f) {
+			KickSelf();
+		}
 		return;
-
-	bool atk = false;
-	for (auto it = m_inde->ListBegin(), n = m_inde->ListEnd(); it != n; ++it) {
-		atk = true;
 	}
 
-	if (atk) {
-		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
-		m_test = true;
+	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+		if (it->first != m_id) {
+			Game::GameGlobal::board->TellMsg(it->second.location, it->first, 114514, 0, 0);
+		}
 	}
-
 }
 
 Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
@@ -112,12 +114,15 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 		}
 		break;
 	}
+	case 114514:
+		if (m_died)
+			break;
+		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
+		m_died = true;
+		m_time = 0.0f;
+		break;
 	default:
 		return Game::MsgResult::Unsubscribe;
 	}
 	return Game::MsgResult::OK;
-}
-
-void Units::Char_151_Myrtle::OnPositionChanged() {
-	m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
 }

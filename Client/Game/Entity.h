@@ -26,6 +26,7 @@
 namespace Game {
 
 class Entity {
+	friend class GameBoard;
 public:
 	Entity();
 	virtual ~Entity() = default;
@@ -59,6 +60,8 @@ protected:
 	virtual void OnScaleChanged();
 
 	void KickSelf() const;
+
+	MsgResultType DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 protected:
 	float m_rotation;

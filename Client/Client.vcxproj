@@ -314,8 +314,10 @@
     <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\Initalizator.h" />
     <ClInclude Include="GameThings\ISummonMngr.h" />
+    <ClInclude Include="GameThings\Mover.h" />
     <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
+    <ClInclude Include="GameThings\Tower.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\GameBoard.h" />
@@ -372,6 +374,7 @@
     <ClCompile Include="GameThings\EntityFactory.cpp" />
     <ClCompile Include="GameThings\Initalizator.cpp" />
     <ClCompile Include="GameThings\SummonMngr.cpp" />
+    <ClCompile Include="GameThings\Tower.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\GameGlobal.cpp" />
     <ClCompile Include="Game\GameBoard.cpp" />

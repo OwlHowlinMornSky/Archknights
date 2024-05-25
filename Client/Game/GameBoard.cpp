@@ -33,10 +33,7 @@ GameBoard::GameBoard() :
 	m_world = Physics::IWorld::CreateWorld();
 }
 
-GameBoard::~GameBoard() {
-	m_entities.clear();
-	m_world.reset();
-}
+GameBoard::~GameBoard() {}
 
 int GameBoard::setup() {
 	if (Game::GameGlobal::board)
@@ -46,11 +43,28 @@ int GameBoard::setup() {
 }
 
 void GameBoard::drop() {
+	Game::GameGlobal::board->Clear();
 	Game::GameGlobal::board.reset();
 }
 
 void GameBoard::SetExitCallback(std::function<void(int)> cb) {
 	m_exitCallback = cb;
+}
+
+void GameBoard::Clear() {
+	for (auto& entity : m_entities) {
+		if (entity == nullptr)
+			continue;
+		entity->BasicOnKicking();
+	}
+	m_entities.clear();
+	while (!m_readyForExit.empty())
+		m_readyForExit.pop();
+	while (!m_emptyLocations.empty())
+		m_emptyLocations.pop();
+	m_entityIdCnt = 0;
+	m_world.reset();
+	m_msgMap.clear();
 }
 
 bool GameBoard::IsEmpty() {
@@ -112,11 +126,26 @@ void GameBoard::RegistryForExit(EntityLocationType location) {
 
 MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
-	assert(m_entities[location]); // 在场。
+	//assert(m_entities[location]); // 在场。
+	if (m_entities[location] == nullptr) {
+		return MsgResult::EmptyPlace;
+	}
 	return m_entities[location]->ReceiveMessage(msg, wparam, lparam);
 }
 
-void GameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType GameBoard::TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+	assert(location < m_entities.size());
+	//assert(m_entities[location]); // 在场。
+	if (m_entities[location] == nullptr) {
+		return MsgResult::EmptyPlace;
+	}
+	if (m_entities[location]->m_id != id) {
+		return MsgResult::IncorrectId;
+	}
+	return m_entities[location]->ReceiveMessage(msg, wparam, lparam);
+}
+
+void GameBoard::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	// failedLoc相关的是自动退订逻辑，算是一种保险。
 	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
@@ -144,7 +173,7 @@ void GameBoard::DistributeMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType
 	}
 }
 
-void GameBoard::BroadcastMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void GameBoard::Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	for (auto& entity : m_entities) {
 		if (entity == nullptr) // 跳过离场位置。
 			continue;

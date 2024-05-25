@@ -59,7 +59,7 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 		break;
 	}
 	sf::Event e = evt;
-	Game::GameGlobal::board->DistributeMsg(1, 0, (intptr_t)&e);
+	Game::GameGlobal::board->PostMsg(1, 0, (intptr_t)&e);
 	return false;
 }
 

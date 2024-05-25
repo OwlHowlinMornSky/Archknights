@@ -29,6 +29,8 @@ enum : MsgResultType {
 	Unsubscribe = -1,
 	OK = 0,
 	MethodNotAllowed,
+	EmptyPlace,
+	IncorrectId,
 	COUNT
 };
 

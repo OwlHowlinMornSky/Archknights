@@ -21,16 +21,13 @@
 */
 #pragma once
 
-#include "../Game/Entity.h"
-#include "../Models/IActor.h"
-#include <memory>
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
+#include "Tower.h"
 
 namespace Units {
 
 class Char_151_Myrtle final :
-	public Game::Entity {
+	public Tower {
+	using Parent = Tower;
 public:
 	Char_151_Myrtle();
 	virtual ~Char_151_Myrtle();
@@ -43,14 +40,8 @@ public:
 
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
-protected:
-	virtual void OnPositionChanged();
-
 public:
-	std::shared_ptr<Game::IActor> m_actor;
-	std::unique_ptr<Physics::IBody> m_body;
-	std::unique_ptr<Physics::IDetector> m_inde;
-	bool m_test;
+	float m_time;
 };
 
 }

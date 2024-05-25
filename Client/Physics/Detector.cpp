@@ -16,9 +16,11 @@ void Detector::SetPosition(float x, float y) {
 }
 
 void Detector::OnBeginContact(IFixture* another) {
-	m_list[another->m_id].count++;
+	auto& i = m_list[another->m_id];
+	i.count++;
+	i.location = another->m_loc;
 
-	printf_s("%zd vs. %zd\n", m_id, another->m_id);
+	printf_s("%zd find %zd.\n", m_id, another->m_id);
 	return;
 }
 
@@ -65,6 +67,43 @@ void Detector::CreateCircle(b2Body* body, b2Vec2 pos, float radius) {
 	return;
 }
 
+void Detector::CreateRows(b2Body* body, b2Vec2 pos, Rows tiles) {
+	if (!m_fixtures.empty())
+		return;
+
+	b2PolygonShape shape;
+	b2FixtureDef fixDef;
+	fixDef.shape = &shape;
+	fixDef.isSensor = true;
+	fixDef.filter.groupIndex = -1;
+	fixDef.filter.maskBits = 0b0000000000001000;
+	fixDef.filter.categoryBits = 0b0000000000000100;
+	fixDef.userData.pointer = (uintptr_t)this;
+	//fixDef.friction = 0.0f;
+
+	size_t i = 0, n = tiles.length;
+	float offset = static_cast<float>(tiles.offset);
+	while (i < n) {
+		uint32_t w = tiles.widths[i];
+
+		size_t j = i + 1;
+		while (j < n && tiles.widths[j] == w)
+			j++;
+
+		float d = static_cast<float>(j - i);
+		float hd = d / 2.0f;
+		float hw = static_cast<float>(w) - 0.5f;
+
+		shape.SetAsBox(hd, hw, { offset + hd - 0.5f, 0.0f }, 0.0f);
+		b2Fixture* fixture = body->CreateFixture(&fixDef);
+		m_fixtures.push_back(fixture);
+
+		offset += d;
+		i = j;
+	}
+	m_master = true;
+}
+
 DetectorIndependent::DetectorIndependent() :
 	m_body(nullptr) {}
 
@@ -93,6 +132,53 @@ void DetectorIndependent::CreateCircle(b2World* world, b2Vec2 pos, float radius)
 	bodyDef.fixedRotation = true;
 	m_body = world->CreateBody(&bodyDef);
 	return Detector::CreateCircle(m_body, pos, radius);
+}
+
+void DetectorIndependent::CreateRows(b2World* world, b2Vec2 pos, Rows rows) {
+	if (m_body)
+		return;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position = pos;
+	bodyDef.fixedRotation = true;
+	m_body = world->CreateBody(&bodyDef);
+	return Detector::CreateRows(m_body, pos, rows);
+}
+
+void DetectorIndependent::CreateTiles(b2World* world, b2Vec2 pos, size_t length, int* tiles) {
+	if (m_body)
+		return;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position = pos;
+	bodyDef.fixedRotation = true;
+	m_body = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	b2FixtureDef fixDef;
+	fixDef.shape = &shape;
+	fixDef.isSensor = true;
+	fixDef.filter.groupIndex = -1;
+	fixDef.filter.maskBits = 0b0000000000001000;
+	fixDef.filter.categoryBits = 0b0000000000000100;
+	fixDef.userData.pointer = (uintptr_t)this;
+	//fixDef.friction = 0.0f;
+
+	size_t i = 0, n = length;
+	while (i < n) {
+		float x = static_cast<float>(tiles[i << 1]);
+		float y = static_cast<float>(tiles[(i << 1) | 1]);
+
+		shape.SetAsBox(0.5f, 0.5f, { -x, -y }, 0.0f);
+		b2Fixture* fixture = m_body->CreateFixture(&fixDef);
+		m_fixtures.push_back(fixture);
+
+		i++;
+	}
+	m_master = true;
+	return;
 }
 
 }

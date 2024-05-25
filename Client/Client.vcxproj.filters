@@ -187,6 +187,12 @@
     <ClInclude Include="Physics\Body.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="GameThings\Tower.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\Mover.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -305,5 +311,6 @@
     <ClCompile Include="Physics\Body.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="GameThings\Tower.cpp" />
   </ItemGroup>
 </Project>
