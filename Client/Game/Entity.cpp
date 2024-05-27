@@ -24,6 +24,8 @@
 #include "GameBoard.h"
 #include "MsgResult.h"
 
+#include "BasicMsgId.h"
+
 #include <iostream>
 
 namespace Game {
@@ -34,7 +36,11 @@ Entity::Entity() :
 	m_scale{ 1.0f, 1.0f },
 
 	m_id(0),
-	m_location(0) {}
+	m_location(0),
+
+	m_hp(256.0f)
+
+{}
 
 void Entity::BasicOnJoined(EntityIdType id, EntityLocationType location) {
 	m_id = id;
@@ -111,7 +117,25 @@ void Entity::KickSelf() const {
 }
 
 MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-    return MsgResult::OK;
+	switch (msg) {
+	case Game::MsgId::OnGetAttack:
+		ReceiveMessage(Game::MsgId::OnGetDamage, wparam, 0);
+		break;
+	case Game::MsgId::OnGetDamage:
+		m_hp -= wparam;
+		ReceiveMessage(Game::MsgId::OnHpChanged, wparam, 0);
+		break;
+	case Game::MsgId::OnHpChanged:
+		if (m_hp <= 0)
+			ReceiveMessage(Game::MsgId::OnHpDropToZero, wparam, 0);
+		break;
+	case Game::MsgId::OnHpDropToZero:
+		KickSelf();
+		break;
+	default:
+		return MsgResult::Unsubscribe;
+	}
+	return MsgResult::OK;
 }
 
 } // namespace Game

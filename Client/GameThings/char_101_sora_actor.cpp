@@ -32,6 +32,8 @@ Game::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
 void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
+		cnt_StartOver = 0;
+		cnt_OnStart = 0;
 		m_current->setAnimation(0, "Start", false);
 		m_current->addAnimation(0, "Idle", true, 0.0f);
 		break;
@@ -52,6 +54,7 @@ void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Di
 		}*/
 		break;
 	case AnimationEvent::Die:
+		cnt_DieOver = 0;
 		InitDirection((static_cast<char>(m_targetDirection) & 0x01) ? Direction::FL : Direction::FR);
 		m_current->setAnimation(0, "Die", false);
 		break;

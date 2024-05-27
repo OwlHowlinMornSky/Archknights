@@ -72,7 +72,6 @@ void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, D
 		cnt_OnAttack = 0;
 		cnt_AttackOver = 0;
 		modify->setAnimation(0, "Attack", false);
-		//modify->addAnimation(0, "Default", false, 0.0f);
 		break;
 	case AnimationEvent::Stun:
 	case AnimationEvent::Die:
@@ -81,7 +80,7 @@ void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, D
 		break;
 	case AnimationEvent::Skill0:
 		modify->setAnimation(0, "Skill_Begin", false);
-		modify->addAnimation(0, "Skill_Loop", false, 0.0f);
+		modify->addAnimation(0, "Skill_Loop", true, 0.0f);
 		break;
 	default:
 		modify->setAnimation(0, "Default", false);

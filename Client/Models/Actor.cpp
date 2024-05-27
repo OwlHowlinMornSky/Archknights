@@ -103,39 +103,32 @@ void Actor::Draw(ME::Camera& camera, ME::Shader& shader) {
 }
 
 void Actor::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
-	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
-
 	switch (type) {
-	case spine::EventType_Start:
-		printf_s("spine: start.\n");
-		break;
-	case spine::EventType_Interrupt:
-		printf_s("spine: interrupt.\n");
-		break;
-	case spine::EventType_End:
-		printf_s("spine: end.\n");
-		break;
 	case spine::EventType_Complete:
-		printf_s("spine: complete.\n");
-		break;
-	case spine::EventType_Dispose:
-		printf_s("spine: dispose.\n");
+		if (entry && entry->getAnimation()) {
+			const spine::String& animationName = entry->getAnimation()->getName();
+			if (animationName == "Die") {
+				cnt_DieOver++;
+			}
+			else if (animationName == "Start") {
+				cnt_StartOver++;
+			}
+			else if (animationName == "Attack") {
+				cnt_AttackOver++;
+			}
+		}
 		break;
 	case spine::EventType_Event:
-		printf(
-			"spine: event: %d \'%s\'(%zd), \'%s\'(%zd): %d, %f, \'%s\'(%zd).\n",
-			entry->getTrackIndex(),
-			animationName.buffer(), animationName.length(),
-			event->getData().getName().buffer(), event->getData().getName().length(),
-			event->getIntValue(),
-			event->getFloatValue(),
-			event->getStringValue().buffer(), event->getStringValue().length()
-		);
-		//printf_s("spine: event \'%s\'(%zd).\n", event->getStringValue().buffer(), event->getStringValue().length());
+	{
+		const spine::String& eventName = event->getData().getName();
+		if (eventName == "OnAttack") {
+			cnt_OnAttack++;
+		}
+		else if (eventName == "OnStart") {
+			cnt_OnStart++;
+		}
 		break;
-	default:
-		printf_s("spine: unknown %d\n", type);
-		break;
+	}
 	}
 }
 
@@ -310,54 +303,32 @@ void Actor2::Draw(ME::Camera& camera, ME::Shader& shader) {
 }
 
 void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
-	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
-
 	switch (type) {
-	//case spine::EventType_Start:
-		//printf_s("spine: start.\n");
-	//	break;
-	//case spine::EventType_Interrupt:
-	//	printf_s("spine: interrupt.\n");
-	//	break;
-	//case spine::EventType_End:
-	//	printf_s("spine: end.\n");
-	//	break;
 	case spine::EventType_Complete:
-		//printf_s("spine: complete.\n");
-		if (animationName == "Die") {
-			cnt_DieOver++;
-		}
-		else if (animationName == "Start") {
-			cnt_StartOver++;
-		}
-		else if (animationName == "Attack") {
-			cnt_AttackOver++;
+		if (entry && entry->getAnimation()) {
+			const spine::String& animationName = entry->getAnimation()->getName();
+			if (animationName == "Die") {
+				cnt_DieOver++;
+			}
+			else if (animationName == "Start") {
+				cnt_StartOver++;
+			}
+			else if (animationName == "Attack") {
+				cnt_AttackOver++;
+			}
 		}
 		break;
-	//case spine::EventType_Dispose:
-		//printf_s("spine: dispose.\n");
-	//	break;
 	case spine::EventType_Event:
-		if (event->getData().getName() == "OnAttack") {
+	{
+		const spine::String& eventName = event->getData().getName();
+		if (eventName == "OnAttack") {
 			cnt_OnAttack++;
 		}
-		else if (event->getData().getName() == "OnStart") {
+		else if (eventName == "OnStart") {
 			cnt_OnStart++;
 		}
-		/*printf(
-			"spine: event: %d \'%s\'(%zd), \'%s\'(%zd): %d, %f, \'%s\'(%zd).\n",
-			entry->getTrackIndex(),
-			animationName.buffer(), animationName.length(),
-			event->getData().getName().buffer(), event->getData().getName().length(),
-			event->getIntValue(),
-			event->getFloatValue(),
-			event->getStringValue().buffer(), event->getStringValue().length()
-		);*/
-		//printf_s("spine: event \'%s\'(%zd).\n", event->getStringValue().buffer(), event->getStringValue().length());
 		break;
-	//default:
-		//printf_s("spine: unknown %d\n", type);
-	//	break;
+	}
 	}
 }
 

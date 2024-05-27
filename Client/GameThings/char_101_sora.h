@@ -21,14 +21,13 @@
 */
 #pragma once
 
-#include "../Game/Entity.h"
-#include "../Models/IActor.h"
-#include <memory>
+#include "Tower.h"
 
 namespace Units {
 
 class Char_101_Sora final :
-	public Game::Entity {
+	public Tower {
+	using Parent = Tower;
 public:
 	Char_101_Sora();
 	virtual ~Char_101_Sora();
@@ -40,12 +39,6 @@ public:
 	virtual void FixedUpdate(float dt);
 
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
-
-protected:
-	virtual void OnPositionChanged();
-
-public:
-	std::shared_ptr<Game::IActor> m_actor;
 };
 
 }

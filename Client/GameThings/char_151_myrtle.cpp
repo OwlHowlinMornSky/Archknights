@@ -22,7 +22,6 @@
 #include "char_151_myrtle.h"
 
 #include "../Game/MsgResult.h"
-#include <SFML/Window/Event.hpp>
 #include "MsgId.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
@@ -33,8 +32,6 @@ Units::Char_151_Myrtle::~Char_151_Myrtle() {}
 
 void Units::Char_151_Myrtle::OnJoined() {
 	Parent::OnJoined();
-
-	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Physics::Rows rows{};
 	rows.length = 2;
@@ -49,30 +46,20 @@ void Units::Char_151_Myrtle::OnJoined() {
 	m_active = false;
 	m_died = false;
 	m_attacking = false;
-
-	hp = 100.0f;
-
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
-	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
-
 	Parent::OnKicking();
 }
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 	if (!m_active) {
-		//if (m_actor->AnimEventCnt_OnStart()) {
 		if (m_actor->AnimEvent_StartOver()) {
 			m_active = true;
 		}
 		return;
 	}
 	if (m_died) {
-		//m_time += dt;
-		//if (m_time >= 1.2f) {
-		//	KickSelf();
-		//}
 		if (m_actor->AnimEvent_DieOver()) {
 			KickSelf();
 		}
@@ -94,8 +81,7 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 		else {
 			int cnt = m_actor->AnimEventCnt_OnAttack();
 			while (cnt--) {
-				//Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, 114514, 0, 0);
-				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 11, 0);
+				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 52, 0);
 				m_attacked = true;
 			}
 		}
@@ -119,80 +105,8 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 
 Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case Game::MsgId::GuiEvent:
-	{
-		auto e = (sf::Event*)lparam;
-		switch (e->type) {
-		case sf::Event::KeyPressed:
-			switch (e->key.code) {
-			case sf::Keyboard::Numpad1:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Idle,
-					Game::IActor::Direction::FL
-				);
-				break;
-			case sf::Keyboard::Numpad3:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Idle,
-					Game::IActor::Direction::FR
-				);
-				break;
-			case sf::Keyboard::Numpad7:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Idle,
-					Game::IActor::Direction::BL
-				);
-				break;
-			case sf::Keyboard::Numpad9:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Idle,
-					Game::IActor::Direction::BR
-				);
-				break;
-			case sf::Keyboard::Num0:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Die,
-					Game::IActor::Direction::FR
-				);
-				break;
-			case sf::Keyboard::Numpad5:
-				m_actor->TriggerAnimation(
-					Game::IActor::AnimationEvent::Attack
-				);
-				break;
-			}
-			break;
-		}
-		break;
-	}
-	case Game::MsgId::OnSelecting:
-		if (m_active && !m_died) {
-			return Game::MsgResult::OK;
-		}
-		else {
-			return Game::MsgResult::MethodNotAllowed;
-		}
-		break;
-	case Game::MsgId::OnGetAttack:
-		this->ReceiveMessage(Game::MsgId::OnGetDamage, wparam, 0);
-		break;
-	case Game::MsgId::OnGetDamage:
-		this->hp -= wparam;
-		this->ReceiveMessage(Game::MsgId::OnHpChanged, wparam, 0);
-		break;
-	case Game::MsgId::OnHpChanged:
-		if (hp <= 0) {
-			this->ReceiveMessage(Game::MsgId::OnHpDropToZero, wparam, 0);
-		}
-		break;
-	case Game::MsgId::OnHpDropToZero:
-		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
-		m_died = true;
-		m_body.reset();
-		m_detector.reset();
-		break;
 	default:
-		return Game::MsgResult::Unsubscribe;
+		return DefTowerProc(msg, wparam, lparam);
 	}
 	return Game::MsgResult::OK;
 }

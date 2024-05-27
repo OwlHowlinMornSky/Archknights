@@ -34,6 +34,8 @@ Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
+		cnt_StartOver = 0;
+		cnt_OnStart = 0;
 		m_current->setAnimation(0, "Start", false);
 		m_current->addAnimation(0, "Idle", true, 0.0f);
 		break;
@@ -54,6 +56,7 @@ void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, 
 		}
 		break;
 	case AnimationEvent::Die:
+		cnt_DieOver = 0;
 		InitDirection((static_cast<char>(m_targetDirection) & 0x01) ? Direction::FL : Direction::FR);
 		m_current->setAnimation(0, "Die", false);
 		break;
@@ -71,6 +74,8 @@ Game::Char_128_Plosis_Actor_Epoque::Char_128_Plosis_Actor_Epoque(
 void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
+		cnt_StartOver = 0;
+		cnt_OnStart = 0;
 		m_current->setAnimation(0, "Start", false);
 		m_current->addAnimation(0, "Idle", true, 0.0f);
 		break;
@@ -91,6 +96,7 @@ void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, D
 		}
 		break;
 	case AnimationEvent::Die:
+		cnt_DieOver = 0;
 		InitDirection((static_cast<char>(m_targetDirection) & 0x01) ? Direction::FL : Direction::FR);
 		m_current->setAnimation(0, "Die", false);
 		break;

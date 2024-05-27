@@ -89,7 +89,7 @@ public:
 		COUNT
 	};
 	Attribute attributes[AttributeType::COUNT];
-	Attribute::ValueType hp;
+	Attribute::ValueType m_hp;
 };
 
 } // namespace Game

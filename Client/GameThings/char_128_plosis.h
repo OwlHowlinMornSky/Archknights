@@ -21,14 +21,13 @@
 */
 #pragma once
 
-#include "../Game/Entity.h"
-#include "../Models/IActor.h"
-#include <memory>
+#include "Tower.h"
 
 namespace Units {
 
 class Char_128_Plosis final :
-	public Game::Entity {
+	public Tower {
+	using Parent = Tower;
 public:
 	Char_128_Plosis();
 	virtual ~Char_128_Plosis();
@@ -41,11 +40,7 @@ public:
 
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
-protected:
-	virtual void OnPositionChanged();
-
 public:
-	std::shared_ptr<Game::IActor> m_actor;
 };
 
 }

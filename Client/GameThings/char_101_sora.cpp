@@ -26,19 +26,28 @@ Units::Char_101_Sora::Char_101_Sora() {}
 Units::Char_101_Sora::~Char_101_Sora() {}
 
 void Units::Char_101_Sora::OnJoined() {
-	m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
+	Parent::OnJoined();
 }
 
 void Units::Char_101_Sora::OnKicking() {
-	m_actor->Exit();
+	Parent::OnKicking();
 }
 
-void Units::Char_101_Sora::FixedUpdate(float dt) {}
+void Units::Char_101_Sora::FixedUpdate(float dt) {
+	if (!m_active) {
+		if (m_actor->AnimEvent_StartOver()) {
+			m_active = true;
+		}
+		return;
+	}
+	if (m_died) {
+		if (m_actor->AnimEvent_DieOver()) {
+			KickSelf();
+		}
+		return;
+	}
+}
 
 Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
-	return Game::MsgResultType();
-}
-
-void Units::Char_101_Sora::OnPositionChanged() {
-	m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
+	return DefTowerProc(msg, wparam, lparam);
 }

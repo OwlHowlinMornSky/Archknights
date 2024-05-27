@@ -46,6 +46,8 @@ public:
 protected:
 	virtual void OnPositionChanged();
 
+	Game::MsgResultType DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+
 public:
 	bool m_active, m_died;
 	std::shared_ptr<Game::IActor> m_actor;
