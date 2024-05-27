@@ -21,29 +21,29 @@
 */
 #pragma once
 
-#include "Tower.h"
+#include "TypeDef.h"
 
-namespace Units {
+namespace Game {
+namespace MsgId {
+enum Basic : MsgIdType {
+	Null = 0,
+	GuiEvent,
+	Summon,
 
-class Char_151_Myrtle final :
-	public Tower {
-	using Parent = Tower;
-public:
-	Char_151_Myrtle();
-	virtual ~Char_151_Myrtle();
+	//ENTITY_CHANGES = 0x00010000,
+	OnHpChanged,
+	OnHpDropToZero,
 
-public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	OnAttackBegin,
+	OnAttackEnd,
+	OnGetAttack,
+	OnGetHeal,
+	OnGetDamage,
 
-	virtual void FixedUpdate(float dt);
+	OnSetModify,
+	OnCancelModify,
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
-
-public:
-	bool m_attacking, m_attacked;
-	Game::EntityLocationType m_targetAd;
-	Game::EntityIdType m_targetId;
+	EXTERN_START,// = 0x01000000
 };
-
+}
 }

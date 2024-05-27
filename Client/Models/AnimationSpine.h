@@ -76,6 +76,8 @@ public:
 	glm::vec2 getBonePositionByIndex(int boneIndex) const;
 	int getBoneIndex(const std::string& boneName) const;
 
+	void setListener(spine::AnimationStateListenerObject* listener);
+
 protected:
 	void UpdateShader(ME::Shader& shader, ME::Camera& camera);
 

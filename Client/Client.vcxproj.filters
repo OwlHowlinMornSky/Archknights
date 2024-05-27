@@ -193,6 +193,15 @@
     <ClInclude Include="GameThings\Mover.h">
       <Filter>GameThings\Units</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Attribute.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Modifier.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BasicMsgId.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -311,6 +320,11 @@
     <ClCompile Include="Physics\Body.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\Tower.cpp" />
+    <ClCompile Include="Game\Modifier.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\Tower.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

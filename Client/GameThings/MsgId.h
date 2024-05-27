@@ -21,14 +21,16 @@
 */
 #pragma once
 
-#include "../Game/TypeDef.h"
+#include "../Game/BasicMsgId.h"
 
 namespace Game {
 namespace MsgId {
-enum : MsgIdType {
-	Null = 0,
-	GuiEvent,
-	Summon
+enum Extern : MsgIdType {
+	START = Basic::EXTERN_START,
+
+	OnSelecting,
+
+
 };
 }
 }

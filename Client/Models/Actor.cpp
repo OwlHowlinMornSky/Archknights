@@ -23,6 +23,12 @@
 
 #include "IActorGroup.h"
 
+#ifdef ARCHKNIGHTS_LIMITED
+#include <spine/Event.h>
+#include <spine/Animation.h>
+#include <spine/EventData.h>
+#endif // ARCHKNIGHTS_LIMITED
+
 namespace Game {
 
 Actor::Actor(std::shared_ptr<ME::IModel> _f) :
@@ -33,6 +39,7 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_current(nullptr),
 	m_holdPTR(_f) {
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
+	m_current->setListener(this);
 }
 
 Actor::~Actor() {}
@@ -95,6 +102,73 @@ void Actor::Draw(ME::Camera& camera, ME::Shader& shader) {
 	return m_current->Draw(camera, shader);
 }
 
+void Actor::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
+	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
+
+	switch (type) {
+	case spine::EventType_Start:
+		printf_s("spine: start.\n");
+		break;
+	case spine::EventType_Interrupt:
+		printf_s("spine: interrupt.\n");
+		break;
+	case spine::EventType_End:
+		printf_s("spine: end.\n");
+		break;
+	case spine::EventType_Complete:
+		printf_s("spine: complete.\n");
+		break;
+	case spine::EventType_Dispose:
+		printf_s("spine: dispose.\n");
+		break;
+	case spine::EventType_Event:
+		printf(
+			"spine: event: %d \'%s\'(%zd), \'%s\'(%zd): %d, %f, \'%s\'(%zd).\n",
+			entry->getTrackIndex(),
+			animationName.buffer(), animationName.length(),
+			event->getData().getName().buffer(), event->getData().getName().length(),
+			event->getIntValue(),
+			event->getFloatValue(),
+			event->getStringValue().buffer(), event->getStringValue().length()
+		);
+		//printf_s("spine: event \'%s\'(%zd).\n", event->getStringValue().buffer(), event->getStringValue().length());
+		break;
+	default:
+		printf_s("spine: unknown %d\n", type);
+		break;
+	}
+}
+
+int Actor::AnimEventCnt_OnStart() {
+	auto res = cnt_OnStart;
+	cnt_OnStart = 0;
+	return res;
+}
+
+int Actor::AnimEventCnt_OnAttack() {
+	auto res = cnt_OnAttack;
+	cnt_OnAttack = 0;
+	return res;
+}
+
+int Actor::AnimEvent_DieOver() {
+	auto res = cnt_DieOver;
+	cnt_DieOver = 0;
+	return res;
+}
+
+int Actor::AnimEvent_StartOver() {
+	auto res = cnt_StartOver;
+	cnt_StartOver = 0;
+	return res;
+}
+
+int Actor::AnimEvent_AttackOver() {
+	auto res = cnt_AttackOver;
+	cnt_AttackOver = 0;
+	return res;
+}
+
 void Actor::SetDirection(bool RL) {
 	if (RL) {
 		m_direction = Direction::FL;
@@ -117,6 +191,8 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 	m_holdPTR[0] = _f;
 	m_holdPTR[1] = _b;
 	m_current = GetAnimation(m_currentFBDirection);
+	GetAnimation(false)->setListener(this);
+	GetAnimation(true)->setListener(this);
 }
 
 Actor2::~Actor2() {}
@@ -231,6 +307,88 @@ void Actor2::Update(float dt) {
 
 void Actor2::Draw(ME::Camera& camera, ME::Shader& shader) {
 	return m_current->Draw(camera, shader);
+}
+
+void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
+	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
+
+	switch (type) {
+	//case spine::EventType_Start:
+		//printf_s("spine: start.\n");
+	//	break;
+	//case spine::EventType_Interrupt:
+	//	printf_s("spine: interrupt.\n");
+	//	break;
+	//case spine::EventType_End:
+	//	printf_s("spine: end.\n");
+	//	break;
+	case spine::EventType_Complete:
+		//printf_s("spine: complete.\n");
+		if (animationName == "Die") {
+			cnt_DieOver++;
+		}
+		else if (animationName == "Start") {
+			cnt_StartOver++;
+		}
+		else if (animationName == "Attack") {
+			cnt_AttackOver++;
+		}
+		break;
+	//case spine::EventType_Dispose:
+		//printf_s("spine: dispose.\n");
+	//	break;
+	case spine::EventType_Event:
+		if (event->getData().getName() == "OnAttack") {
+			cnt_OnAttack++;
+		}
+		else if (event->getData().getName() == "OnStart") {
+			cnt_OnStart++;
+		}
+		/*printf(
+			"spine: event: %d \'%s\'(%zd), \'%s\'(%zd): %d, %f, \'%s\'(%zd).\n",
+			entry->getTrackIndex(),
+			animationName.buffer(), animationName.length(),
+			event->getData().getName().buffer(), event->getData().getName().length(),
+			event->getIntValue(),
+			event->getFloatValue(),
+			event->getStringValue().buffer(), event->getStringValue().length()
+		);*/
+		//printf_s("spine: event \'%s\'(%zd).\n", event->getStringValue().buffer(), event->getStringValue().length());
+		break;
+	//default:
+		//printf_s("spine: unknown %d\n", type);
+	//	break;
+	}
+}
+
+int Actor2::AnimEventCnt_OnStart() {
+	auto res = cnt_OnStart;
+	cnt_OnStart = 0;
+	return res;
+}
+
+int Actor2::AnimEventCnt_OnAttack() {
+	auto res = cnt_OnAttack;
+	cnt_OnAttack = 0;
+	return res;
+}
+
+int Actor2::AnimEvent_DieOver() {
+	auto res = cnt_DieOver;
+	cnt_DieOver = 0;
+	return res;
+}
+
+int Actor2::AnimEvent_StartOver() {
+	auto res = cnt_StartOver;
+	cnt_StartOver = 0;
+	return res;
+}
+
+int Actor2::AnimEvent_AttackOver() {
+	auto res = cnt_AttackOver;
+	cnt_AttackOver = 0;
+	return res;
 }
 
 CurrentAnimationClass* Actor2::GetAnimation(bool back) {

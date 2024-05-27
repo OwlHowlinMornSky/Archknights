@@ -26,7 +26,7 @@ namespace Game {
 class IActor {
 public:
 	enum class AnimationEvent : char {
-		None = 0,
+		Default = 0,
 		Begin,
 		Idle,
 		Attack,
@@ -64,6 +64,13 @@ public:
 
 	virtual void SetPosition(float x, float y, float z) = 0;
 	virtual void SetOutline(bool enabled) {}
+
+public:
+	virtual int AnimEventCnt_OnStart() = 0;
+	virtual int AnimEventCnt_OnAttack() = 0;
+	virtual int AnimEvent_DieOver() = 0;
+	virtual int AnimEvent_StartOver() = 0;
+	virtual int AnimEvent_AttackOver() = 0;
 };
 
 }

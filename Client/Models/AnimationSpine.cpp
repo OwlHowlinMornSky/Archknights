@@ -272,7 +272,7 @@ void SpineAnimation::SetOutline(bool enabled) {
 }
 
 spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {
-	return m_animationState->setAnimation(trackIndex, animationName.c_str(), loop);
+	 return m_animationState->setAnimation(trackIndex, animationName.c_str(), loop);
 }
 
 spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, spine::Animation* animation, bool loop) {
@@ -315,6 +315,10 @@ glm::vec2 SpineAnimation::getBonePositionByIndex(int boneIndex) const {
 
 int SpineAnimation::getBoneIndex(const std::string& boneName) const {
 	return m_skeleton->findBoneIndex(boneName.c_str());
+}
+
+void SpineAnimation::setListener(spine::AnimationStateListenerObject* listener) {
+	return m_animationState->setListener(listener);
 }
 
 void SpineAnimation::UpdateShader(ME::Shader& shader, ME::Camera& camera) {

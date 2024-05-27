@@ -318,11 +318,14 @@
     <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
     <ClInclude Include="GameThings\Tower.h" />
+    <ClInclude Include="Game\Attribute.h" />
+    <ClInclude Include="Game\BasicMsgId.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\GameBoard.h" />
     <ClInclude Include="Game\GameHost.h" />
     <ClInclude Include="Game\IGameShow.h" />
+    <ClInclude Include="Game\Modifier.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
     <ClInclude Include="Models\Actor.h" />
@@ -380,6 +383,7 @@
     <ClCompile Include="Game\GameBoard.cpp" />
     <ClCompile Include="Game\GameHost.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
+    <ClCompile Include="Game\Modifier.cpp" />
     <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />

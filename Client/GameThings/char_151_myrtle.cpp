@@ -46,7 +46,12 @@ void Units::Char_151_Myrtle::OnJoined() {
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 
+	m_active = false;
 	m_died = false;
+	m_attacking = false;
+
+	hp = 100.0f;
+
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
@@ -56,17 +61,58 @@ void Units::Char_151_Myrtle::OnKicking() {
 }
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
+	if (!m_active) {
+		//if (m_actor->AnimEventCnt_OnStart()) {
+		if (m_actor->AnimEvent_StartOver()) {
+			m_active = true;
+		}
+		return;
+	}
 	if (m_died) {
-		m_time += dt;
-		if (m_time >= 1.2f) {
+		//m_time += dt;
+		//if (m_time >= 1.2f) {
+		//	KickSelf();
+		//}
+		if (m_actor->AnimEvent_DieOver()) {
 			KickSelf();
 		}
 		return;
 	}
-
-	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-		if (it->first != m_id) {
-			Game::GameGlobal::board->TellMsg(it->second.location, it->first, 114514, 0, 0);
+	if (m_attacking) {
+		if (m_actor->AnimEvent_AttackOver()) {
+			m_attacking = false;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Idle
+			);
+		}
+		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
+			m_attacking = false;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Idle
+			);
+		}
+		else {
+			int cnt = m_actor->AnimEventCnt_OnAttack();
+			while (cnt--) {
+				//Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, 114514, 0, 0);
+				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 11, 0);
+				m_attacked = true;
+			}
+		}
+	}
+	if (!m_attacking) {
+		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+			if (it->first != m_id) {
+				m_targetAd = it->second.location;
+				m_targetId = it->first;
+				if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK) {
+					m_attacking = true;
+					m_attacked = false;
+					m_actor->TriggerAnimation(
+						Game::IActor::AnimationEvent::Attack
+					);
+				}
+			}
 		}
 	}
 }
@@ -109,17 +155,41 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 					Game::IActor::Direction::FR
 				);
 				break;
+			case sf::Keyboard::Numpad5:
+				m_actor->TriggerAnimation(
+					Game::IActor::AnimationEvent::Attack
+				);
+				break;
 			}
 			break;
 		}
 		break;
 	}
-	case 114514:
-		if (m_died)
-			break;
+	case Game::MsgId::OnSelecting:
+		if (m_active && !m_died) {
+			return Game::MsgResult::OK;
+		}
+		else {
+			return Game::MsgResult::MethodNotAllowed;
+		}
+		break;
+	case Game::MsgId::OnGetAttack:
+		this->ReceiveMessage(Game::MsgId::OnGetDamage, wparam, 0);
+		break;
+	case Game::MsgId::OnGetDamage:
+		this->hp -= wparam;
+		this->ReceiveMessage(Game::MsgId::OnHpChanged, wparam, 0);
+		break;
+	case Game::MsgId::OnHpChanged:
+		if (hp <= 0) {
+			this->ReceiveMessage(Game::MsgId::OnHpDropToZero, wparam, 0);
+		}
+		break;
+	case Game::MsgId::OnHpDropToZero:
 		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
 		m_died = true;
-		m_time = 0.0f;
+		m_body.reset();
+		m_detector.reset();
 		break;
 	default:
 		return Game::MsgResult::Unsubscribe;

@@ -22,6 +22,7 @@
 #pragma once
 
 #include "TypeDef.h"
+#include "Attribute.h"
 
 namespace Game {
 
@@ -69,6 +70,26 @@ protected:
 	float m_scale[2];
 	EntityIdType m_id;
 	EntityLocationType m_location;
+public:
+	enum AttributeType : int {
+		MaxHp = 0, // 最大HP
+
+		Atk,       // 攻击力
+		AtkSpd,    // 攻击速度
+		AtkGap,    // 攻击间隔
+		Def,       // 防御力
+		MagDef,    // 魔抗
+
+		MaxBlock,  // 最大阻挡数
+		MoveSpd,   // 移动速度
+		WightLv,   // 重量等级
+
+		MpGrowSpd, // 回蓝速度
+
+		COUNT
+	};
+	Attribute attributes[AttributeType::COUNT];
+	Attribute::ValueType hp;
 };
 
 } // namespace Game
