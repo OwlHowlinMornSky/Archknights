@@ -46,6 +46,9 @@ void Entity::BasicOnJoined(EntityIdType id, EntityLocationType location) {
 	m_id = id;
 	m_location = location;
 
+	attributes[AttributeType::MaxHp].original = 256.0f;
+	attributes[AttributeType::MaxHp].effective = 256.0f;
+
 	// for test
 	std::cout << "Join: " << this << ", ID: " << id << ", Location: " << location << std::endl;
 	return OnJoined();
@@ -65,6 +68,43 @@ void Entity::OnKicking() {}
 
 MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	return MsgResult::Unsubscribe;
+}
+
+std::list<Modifier>::iterator Entity::Modify(AttributeType attribute, Modifier& data) {
+	m_modifiers[attribute].push_back(data);
+	std::list<Modifier>::iterator res = m_modifiers[attribute].end();
+	res--;
+	OnModifierChanged(attribute);
+	return res;
+}
+
+void Entity::ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator) {
+	m_modifiers[attribute].erase(iterator);
+	OnModifierChanged(attribute);
+	return;
+}
+
+void Entity::OnModifierChanged(AttributeType attribute) {
+	Attribute::ValueType grow = 0, percent = 1, add = 0, times = 1;
+	for (auto& it : m_modifiers[attribute]) {
+		grow += it.value[Modifier::ModifyType::Grow];
+		percent += it.value[Modifier::ModifyType::Percent];
+		add += it.value[Modifier::ModifyType::Add];
+		auto t = it.value[Modifier::ModifyType::Times];
+		if (t <= 0)
+			t += 1;
+		times *= t;
+	}
+	if (percent < 0)
+		percent = 0;
+	Attribute::ValueType res = attributes[attribute].original;
+	res = ((res + grow) * percent + add) * times;
+	if (res > attributes[attribute].max)
+		res = attributes[attribute].max;
+	else if (res < attributes[attribute].min)
+		res = attributes[attribute].min;
+	attributes[attribute].effective = res;
+	return;
 }
 
 void Entity::FixedUpdate(float dt) {}
@@ -126,8 +166,13 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 		ReceiveMessage(Game::MsgId::OnHpChanged, wparam, 0);
 		break;
 	case Game::MsgId::OnHpChanged:
-		if (m_hp <= 0)
+		if (m_hp <= 0.0f) {
+			m_hp = 0;
 			ReceiveMessage(Game::MsgId::OnHpDropToZero, wparam, 0);
+		}
+		else if (m_hp > attributes[AttributeType::MaxHp].effective) {
+			m_hp = attributes[AttributeType::MaxHp].effective;
+		}
 		break;
 	case Game::MsgId::OnHpDropToZero:
 		KickSelf();

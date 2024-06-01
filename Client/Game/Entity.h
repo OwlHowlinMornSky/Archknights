@@ -24,10 +24,34 @@
 #include "TypeDef.h"
 #include "Attribute.h"
 
+#include <list>
+
 namespace Game {
+
+struct Modifier;
 
 class Entity {
 	friend class GameBoard;
+
+public:
+	enum AttributeType : int {
+		MaxHp = 0, // 最大HP
+
+		Atk,       // 攻击力
+		AtkSpd,    // 攻击速度
+		AtkGap,    // 攻击间隔
+		Def,       // 防御力
+		MagDef,    // 魔抗
+
+		MaxBlock,  // 最大阻挡数
+		MoveSpd,   // 移动速度
+		WightLv,   // 重量等级
+
+		MpGrowSpd, // 回蓝速度
+
+		COUNT
+	};
+
 public:
 	Entity();
 	virtual ~Entity() = default;
@@ -41,6 +65,10 @@ public:
 	virtual void FixedUpdate(float dt);
 
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+
+	std::list<Modifier>::iterator Modify(AttributeType attribute, Modifier& data);
+	void ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator);
+	virtual void OnModifierChanged(AttributeType attribute);
 
 public:
 	EntityIdType getID() const;
@@ -65,31 +93,17 @@ protected:
 	MsgResultType DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 protected:
+	Attribute::ValueType m_hp;
 	float m_rotation;
 	float m_position[2];
 	float m_scale[2];
 	EntityIdType m_id;
 	EntityLocationType m_location;
-public:
-	enum AttributeType : int {
-		MaxHp = 0, // 最大HP
 
-		Atk,       // 攻击力
-		AtkSpd,    // 攻击速度
-		AtkGap,    // 攻击间隔
-		Def,       // 防御力
-		MagDef,    // 魔抗
-
-		MaxBlock,  // 最大阻挡数
-		MoveSpd,   // 移动速度
-		WightLv,   // 重量等级
-
-		MpGrowSpd, // 回蓝速度
-
-		COUNT
-	};
 	Attribute attributes[AttributeType::COUNT];
-	Attribute::ValueType m_hp;
+	std::list<Modifier> m_modifiers[AttributeType::COUNT];
 };
 
 } // namespace Game
+
+#include "Modifier.h"

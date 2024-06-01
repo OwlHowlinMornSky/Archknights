@@ -22,6 +22,7 @@
 #include "char_128_plosis.h"
 
 #include "../Game/MsgResult.h"
+#include "MsgId.h"
 
 Units::Char_128_Plosis::Char_128_Plosis() {}
 
@@ -29,6 +30,7 @@ Units::Char_128_Plosis::~Char_128_Plosis() {}
 
 void Units::Char_128_Plosis::OnJoined() {
 	Parent::OnJoined();
+	printf_s("HP: %f\n", m_hp);
 }
 
 void Units::Char_128_Plosis::OnKicking() {
@@ -51,5 +53,8 @@ void Units::Char_128_Plosis::FixedUpdate(float dt) {
 }
 
 Game::MsgResultType Units::Char_128_Plosis::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+	if (msg == Game::MsgId::OnHpChanged) {
+		printf_s("HP: %f\n", m_hp);
+	}
 	return DefTowerProc(msg, wparam, lparam);
 }

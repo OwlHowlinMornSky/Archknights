@@ -40,9 +40,6 @@ enum Basic : MsgIdType {
 	OnGetHeal,
 	OnGetDamage,
 
-	OnSetModify,
-	OnCancelModify,
-
 	EXTERN_START,// = 0x01000000
 };
 }

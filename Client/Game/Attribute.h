@@ -4,37 +4,29 @@
 namespace Game {
 
 struct Attribute {
-	enum ModifyType : int {
-		Grow = 0,
-		Percent,
-		Add,
-		Times,
-
-		COUNT
-	};
-
 	using ValueType = float;
-
-	bool changed;
 
 	ValueType original;
 	ValueType effective;
-
-	ValueType modify[ModifyType::COUNT];
+	ValueType max, min;
 
 	Attribute() :
-		changed(false),
-		original(1),
-		effective(1),
-		modify{ 0, 0, 0, 1 } {}
+		original(0.0f),
+		effective(0.0f),
+		max(4294967296.0f),
+		min(0.0f) {}
 
-	ValueType GetValue() noexcept {
-		if (changed) {
-			effective = ((original + modify[Grow]) * (modify[Percent] + 1) + modify[Add]) * modify[Times];
-			changed = false;
-		}
-		return effective;
-	}
+	Attribute(ValueType _org) :
+		original(_org),
+		effective(0.0f),
+		max(4294967296.0f),
+		min(0.0f) {}
+
+	Attribute(ValueType _org, ValueType _min, ValueType _max) :
+		original(_org),
+		effective(0.0f),
+		max(_max),
+		min(_min) {}
 };
 
 }
