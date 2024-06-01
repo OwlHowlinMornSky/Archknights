@@ -43,7 +43,8 @@ int GameBoard::setup() {
 }
 
 void GameBoard::drop() {
-	Game::GameGlobal::board->Clear();
+	if (Game::GameGlobal::board != nullptr)
+		Game::GameGlobal::board->Clear();
 	Game::GameGlobal::board.reset();
 }
 
@@ -52,10 +53,15 @@ void GameBoard::SetExitCallback(std::function<void(int)> cb) {
 }
 
 void GameBoard::Clear() {
-	for (auto& entity : m_entities) {
-		if (entity == nullptr)
+	for (size_t n = m_entities.size(), i = n - 1; i != 0; --i) {
+		if (m_entities[i] == nullptr)
 			continue;
-		entity->BasicOnKicking();
+		m_entities[i]->BasicOnKicking();
+		m_entities[i].reset();
+	}
+	if (m_entities[0] != nullptr) {
+		m_entities[0]->BasicOnKicking();
+		m_entities[0].reset();
 	}
 	m_entities.clear();
 	while (!m_readyForExit.empty())
