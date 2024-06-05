@@ -53,35 +53,35 @@ std::unique_ptr<IWall> World::CreateWall() {
 	return std::unique_ptr<IWall>();
 }
 
-std::unique_ptr<IBody> World::CreateBodyTowerCircle(float x, float y) {
+std::unique_ptr<IBody> World::CreateBodyTowerCircle(float x, float y, uint8_t type) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircle(&m_world, { x, y }, 0.25f);
+	res->CreateCircle(&m_world, type, false, { x, y }, 0.25f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverCircle(float x, float y) {
+std::unique_ptr<IBody> World::CreateBodyMoverCircle(float x, float y, uint8_t type, bool canBeBlocked) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircle(&m_world, { x, y }, 0.1f);
+	res->CreateCircle(&m_world, type, canBeBlocked, { x, y }, 0.1f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverRectangle(float x, float y) {
+std::unique_ptr<IBody> World::CreateBodyMoverRectangle(float x, float y, uint8_t type, bool canBeBlocked) {
 	return std::unique_ptr<IBody>();
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorCircle(float x, float y, float radius) {
+std::unique_ptr<IDetector> World::CreateDetectorCircle(uint8_t target, float x, float y, float radius) {
 	auto res = std::make_unique<DetectorIndependent>();
-	res->CreateCircle(&m_world, { x, y }, radius);
+	res->CreateCircle(&m_world, target, { x, y }, radius);
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorRows(float x, float y, Rows rows) {
+std::unique_ptr<IDetector> World::CreateDetectorRows(uint8_t target, float x, float y, Rows rows) {
 	auto res = std::make_unique<DetectorIndependent>();
-	res->CreateRows(&m_world, { x, y }, rows);
+	res->CreateRows(&m_world, target, { x, y }, rows);
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorTiles(float x, float y, size_t length, int* tiles) {
+std::unique_ptr<IDetector> World::CreateDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) {
 	return std::unique_ptr<IDetector>();
 }
 

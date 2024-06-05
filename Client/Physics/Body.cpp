@@ -23,16 +23,16 @@ const float* Body::GetPosition() const {
 	return &(m_body->GetPosition().x);
 }
 
-size_t Body::AddDetectorCircle(float x, float y, float radius) {
+size_t Body::AddDetectorCircle(uint8_t target, float x, float y, float radius) {
 	auto res = std::make_unique<Detector>();
-	res->CreateCircle(m_body, { x, y }, radius);
+	res->CreateCircle(m_body, target, { x, y }, radius);
 	m_detectors.push_back(std::move(res));
 	return m_detectors.size();
 }
 
-size_t Body::AddDetectorRows(float x, float y, Rows rows) {
+size_t Body::AddDetectorRows(uint8_t target, float x, float y, Rows rows) {
 	auto res = std::make_unique<Detector>();
-	res->CreateRows(m_body, { x, y }, rows);
+	res->CreateRows(m_body, target, { x, y }, rows);
 	m_detectors.push_back(std::move(res));
 	return m_detectors.size();
 }
@@ -41,7 +41,7 @@ IDetector* Body::GetDetector(size_t id) {
 	return m_detectors[id - 1].get();
 }
 
-void Body::CreateCircle(b2World* world, b2Vec2 pos, float radius) {
+void Body::CreateCircle(b2World* world, uint8_t type, bool canBeBlocked, b2Vec2 pos, float radius) {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position = pos;
@@ -55,8 +55,8 @@ void Body::CreateCircle(b2World* world, b2Vec2 pos, float radius) {
 	b2FixtureDef fixDef;
 	fixDef.shape = &shape;
 	fixDef.filter.groupIndex = -2;
-	fixDef.filter.maskBits = 0b0000000000000110;
-	fixDef.filter.categoryBits = 0b0000000000101001;
+	fixDef.filter.maskBits = 0x0006; //0b0000000000000110;
+	fixDef.filter.categoryBits = (0x0001 | (canBeBlocked ? 0x0008 : 0x0000) | (type << 8)); //0b0000000000101001;
 	fixDef.userData.pointer = (uintptr_t)this;
 
 	m_fixture = m_body->CreateFixture(&fixDef);

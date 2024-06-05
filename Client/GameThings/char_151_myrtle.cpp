@@ -40,7 +40,7 @@ void Units::Char_151_Myrtle::OnJoined() {
 	rows.widths = wd;
 
 	//m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
-	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(m_position[0], m_position[1], rows);
+	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], rows);
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 
@@ -104,15 +104,15 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 			if (it->first == m_id)
 				continue;
-				m_targetAd = it->second.location;
-				m_targetId = it->first;
+			m_targetAd = it->second.location;
+			m_targetId = it->first;
 			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 				continue;
-					m_attacking = true;
-					m_attacked = false;
-					m_actor->TriggerAnimation(
-						Game::IActor::AnimationEvent::Attack
-					);
+			m_attacking = true;
+			m_attacked = false;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Attack
+			);
 			break;
 		}
 	}

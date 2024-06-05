@@ -19,8 +19,8 @@ public:
 	virtual void SetPosition(float x, float y) override;
 	virtual const float* GetPosition() const override;
 
-	virtual size_t AddDetectorCircle(float x, float y, float radius) override;
-	virtual size_t AddDetectorRows(float x, float y, Rows rows) override;
+	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) override;
+	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows rows) override;
 
 	virtual IDetector* GetDetector(size_t id) override;
 
@@ -28,7 +28,7 @@ public:
 	virtual void OnEndContact(IFixture* another) {}
 
 protected:
-	void CreateCircle(b2World* world, b2Vec2 pos, float radius);
+	void CreateCircle(b2World* world, uint8_t type, bool canBeBlocked, b2Vec2 pos, float radius);
 
 protected:
 	b2Body* m_body;

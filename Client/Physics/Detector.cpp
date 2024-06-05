@@ -44,7 +44,7 @@ std::map<Game::EntityIdType, MapValue>::iterator Detector::ListEnd() {
 	return m_list.end();
 }
 
-void Detector::CreateCircle(b2Body* body, b2Vec2 pos, float radius) {
+void Detector::CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius) {
 	if (!m_fixtures.empty())
 		return;
 
@@ -55,8 +55,8 @@ void Detector::CreateCircle(b2Body* body, b2Vec2 pos, float radius) {
 	fixDef.shape = &shape;
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
-	fixDef.filter.maskBits = 0b0000000000001000;
-	fixDef.filter.categoryBits = 0b0000000000000100;
+	fixDef.filter.maskBits = (target << 8); //0b0000000000001000;
+	fixDef.filter.categoryBits = 0x0004; //0b0000000000000100;
 	fixDef.userData.pointer = (uintptr_t)this;
 	//fixDef.friction = 0.0f;
 
@@ -67,7 +67,7 @@ void Detector::CreateCircle(b2Body* body, b2Vec2 pos, float radius) {
 	return;
 }
 
-void Detector::CreateRows(b2Body* body, b2Vec2 pos, Rows tiles) {
+void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles) {
 	if (!m_fixtures.empty())
 		return;
 
@@ -76,8 +76,8 @@ void Detector::CreateRows(b2Body* body, b2Vec2 pos, Rows tiles) {
 	fixDef.shape = &shape;
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
-	fixDef.filter.maskBits = 0b0000000000001000;
-	fixDef.filter.categoryBits = 0b0000000000000100;
+	fixDef.filter.maskBits = (target << 8);// 0b0000000000001000;
+	fixDef.filter.categoryBits = 0x0004;// 0b0000000000000100;
 	fixDef.userData.pointer = (uintptr_t)this;
 	//fixDef.friction = 0.0f;
 
@@ -122,7 +122,7 @@ void DetectorIndependent::SetPosition(float x, float y) {
 	return;
 }
 
-void DetectorIndependent::CreateCircle(b2World* world, b2Vec2 pos, float radius) {
+void DetectorIndependent::CreateCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius) {
 	if (m_body)
 		return;
 
@@ -131,10 +131,10 @@ void DetectorIndependent::CreateCircle(b2World* world, b2Vec2 pos, float radius)
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
 	m_body = world->CreateBody(&bodyDef);
-	return Detector::CreateCircle(m_body, pos, radius);
+	return Detector::CreateCircle(m_body, target, pos, radius);
 }
 
-void DetectorIndependent::CreateRows(b2World* world, b2Vec2 pos, Rows rows) {
+void DetectorIndependent::CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows rows) {
 	if (m_body)
 		return;
 
@@ -143,10 +143,10 @@ void DetectorIndependent::CreateRows(b2World* world, b2Vec2 pos, Rows rows) {
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
 	m_body = world->CreateBody(&bodyDef);
-	return Detector::CreateRows(m_body, pos, rows);
+	return Detector::CreateRows(m_body, target, pos, rows);
 }
 
-void DetectorIndependent::CreateTiles(b2World* world, b2Vec2 pos, size_t length, int* tiles) {
+void DetectorIndependent::CreateTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles) {
 	if (m_body)
 		return;
 
@@ -161,8 +161,8 @@ void DetectorIndependent::CreateTiles(b2World* world, b2Vec2 pos, size_t length,
 	fixDef.shape = &shape;
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
-	fixDef.filter.maskBits = 0b0000000000001000;
-	fixDef.filter.categoryBits = 0b0000000000000100;
+	fixDef.filter.maskBits = (target << 8); // 0b0000000000001000;
+	fixDef.filter.categoryBits = 0x0004;// 0b0000000000000100;
 	fixDef.userData.pointer = (uintptr_t)this;
 	//fixDef.friction = 0.0f;
 

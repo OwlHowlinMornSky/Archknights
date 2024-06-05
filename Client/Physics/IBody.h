@@ -16,8 +16,8 @@ public:
 	virtual void SetPosition(float x, float y) = 0;
 	virtual const float* GetPosition() const = 0;
 
-	virtual size_t AddDetectorCircle(float x, float y, float radius) = 0;
-	virtual size_t AddDetectorRows(float x, float y, Rows rows) = 0;
+	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
+	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows rows) = 0;
 
 	virtual IDetector* GetDetector(size_t id) = 0;
 };
