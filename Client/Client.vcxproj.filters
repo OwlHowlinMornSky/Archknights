@@ -202,6 +202,9 @@
     <ClInclude Include="Game\BasicMsgId.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game\AtkDmgHeal.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

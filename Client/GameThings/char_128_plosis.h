@@ -41,6 +41,9 @@ public:
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 public:
+	Game::ModifySwitch m_m;
+	Game::ModifySwitch m_addDef;
+	Game::ModifySwitch m_addMsgDef;
 };
 
 }

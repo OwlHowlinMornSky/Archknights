@@ -25,6 +25,7 @@
 #include "MsgId.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
+#include "../Game/AtkDmgHeal.h"
 
 Units::Char_151_Myrtle::Char_151_Myrtle() {}
 
@@ -81,24 +82,38 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 		else {
 			int cnt = m_actor->AnimEventCnt_OnAttack();
 			while (cnt--) {
-				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 52, 0);
+				Game::AttackData data;
+				data.sourceAd = m_location;
+				data.sourceId = m_id;
+				data.distType = data.Near;
+				data.damage.type = data.damage.Normal;
+				data.damage.dmgValue = 52.0f;
+				data.damage.minValue = 0.05f;
+
+				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
+				
+				//Game::HealData hdata;
+				//hdata.healValue = 74.0f;
+				//Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&hdata);
+				
 				m_attacked = true;
 			}
 		}
 	}
 	if (!m_attacking) {
 		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-			if (it->first != m_id) {
+			if (it->first == m_id)
+				continue;
 				m_targetAd = it->second.location;
 				m_targetId = it->first;
-				if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK) {
+			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+				continue;
 					m_attacking = true;
 					m_attacked = false;
 					m_actor->TriggerAnimation(
 						Game::IActor::AnimationEvent::Attack
 					);
-				}
-			}
+			break;
 		}
 	}
 }

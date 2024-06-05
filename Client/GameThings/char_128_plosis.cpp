@@ -30,10 +30,30 @@ Units::Char_128_Plosis::~Char_128_Plosis() {}
 
 void Units::Char_128_Plosis::OnJoined() {
 	Parent::OnJoined();
+
+	m_m.SetTarget(m_location, m_id, AttributeType::MaxHp);
+	m_m.SetValue(123.0f, 1.0f, 321.0f, 0.5f);
+	m_m.SetEnabled(true);
+
+	m_addDef.SetTarget(m_location, m_id, AttributeType::Def);
+	m_addDef.SetValue(320.0f, 0.0f, 0.0f, 0.0f);
+	m_addDef.SetEnabled(true);
+
+	m_addMsgDef.SetTarget(m_location, m_id, AttributeType::MagDef);
+	m_addMsgDef.SetValue(1.0f, 0.0f, 0.0f, 0.0f);
+	m_addMsgDef.SetEnabled(true);
+
 	printf_s("HP: %f\n", m_hp);
+	printf_s("MaxHP: %f\n", attributes[AttributeType::MaxHp].effective);
+	printf_s("Def: %f\n", attributes[AttributeType::Def].effective);
+	printf_s("MDef: %f\n", attributes[AttributeType::MagDef].effective);
 }
 
 void Units::Char_128_Plosis::OnKicking() {
+	m_addMsgDef.SetEnabled(false);
+	m_addDef.SetEnabled(false);
+	m_m.SetEnabled(false);
+
 	Parent::OnKicking();
 }
 

@@ -27,18 +27,19 @@ namespace Game {
 namespace MsgId {
 enum Basic : MsgIdType {
 	Null = 0,
-	GuiEvent,
-	Summon,
+	GuiEvent,  // GUI消息。 wparam：未使用； lparam：指向 sf::Event 的指针。
+	Summon,    // 召唤实体。 wparam：实体编号； lparam：float 指针，指向 float[2]。
 
 	//ENTITY_CHANGES = 0x00010000,
-	OnHpChanged,
-	OnHpDropToZero,
+	OnHpChanging,   // 生命值改变（尚未限制）。 wparam：未使用； lparam：未使用。
+	OnHpChanged,    // 生命值已改变（已限制）。 wparam：未使用； lparam：未使用。
+	OnHpDropToZero, // 生命值降至零。 wparam：未使用； lparam：未使用。
 
 	OnAttackBegin,
 	OnAttackEnd,
-	OnGetAttack,
-	OnGetHeal,
-	OnGetDamage,
+	OnGetAttack, // 受到攻击。 wparam：未使用； lparam：指向 AttackData 结构体的指针。
+	OnGetHeal,   // 受到治疗。 wparam：未使用； lparam：指向 HealData 结构体的指针。
+	OnGetDamage, // 受到伤害。 wparam：未使用； lparam：指向 DamageData 结构体的指针。
 
 	EXTERN_START,// = 0x01000000
 };

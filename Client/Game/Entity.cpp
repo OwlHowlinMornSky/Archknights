@@ -25,6 +25,7 @@
 #include "MsgResult.h"
 
 #include "BasicMsgId.h"
+#include "AtkDmgHeal.h"
 
 #include <iostream>
 
@@ -159,20 +160,59 @@ void Entity::KickSelf() const {
 MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::OnGetAttack:
-		ReceiveMessage(Game::MsgId::OnGetDamage, wparam, 0);
+		ReceiveMessage(Game::MsgId::OnGetDamage, 0, (intptr_t)(&(((AttackData*)lparam)->damage)));
 		break;
+	case Game::MsgId::OnGetHeal:
+	{
+		HealData* data = (HealData*)lparam;
+		if (!data)
+			break;
+		if (data->healValue < 0.0f)
+			data->healValue = 0.0f;
+		m_hp += data->healValue;
+		ReceiveMessage(Game::MsgId::OnHpChanging, 0, 0);
+		break;
+	}
 	case Game::MsgId::OnGetDamage:
-		m_hp -= wparam;
-		ReceiveMessage(Game::MsgId::OnHpChanged, wparam, 0);
+	{
+		DamageData* data = (DamageData*)lparam;
+		if (!data)
+			break;
+		Attribute::ValueType dmg = 0.0f;
+		switch (data->type) {
+		case DamageData::Normal:
+			dmg = data->dmgValue - attributes[AttributeType::Def].effective;
+			break;
+		case DamageData::Magical:
+			dmg = data->dmgValue * (1.0f - attributes[AttributeType::MagDef].effective);
+			break;
+		case DamageData::Direct:
+		default:
+			dmg = data->dmgValue;
+			break;
+		}
+		if (data->minValue < 0.0f)
+			data->minValue = 0.0f;
+		else if (data->minValue > 1.0f)
+			data->minValue = 1.0f;
+		if (dmg < data->dmgValue * data->minValue)
+			dmg = data->dmgValue * data->minValue;
+		if (dmg < 0.0f)
+			dmg = 0.0f;
+		m_hp -= dmg;
+		ReceiveMessage(Game::MsgId::OnHpChanging, 0, 0);
+		break;
+	}
+	case Game::MsgId::OnHpChanging:
+		if (m_hp <= 0.0f)
+			m_hp = 0.0f;
+		else if (m_hp > attributes[AttributeType::MaxHp].effective)
+			m_hp = attributes[AttributeType::MaxHp].effective;
+		ReceiveMessage(Game::MsgId::OnHpChanged, 0, 0);
 		break;
 	case Game::MsgId::OnHpChanged:
-		if (m_hp <= 0.0f) {
-			m_hp = 0;
-			ReceiveMessage(Game::MsgId::OnHpDropToZero, wparam, 0);
-		}
-		else if (m_hp > attributes[AttributeType::MaxHp].effective) {
-			m_hp = attributes[AttributeType::MaxHp].effective;
-		}
+		if (m_hp <= 0.0f)
+			ReceiveMessage(Game::MsgId::OnHpDropToZero, 0, 0);
 		break;
 	case Game::MsgId::OnHpDropToZero:
 		KickSelf();
