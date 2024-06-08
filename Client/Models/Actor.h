@@ -34,6 +34,22 @@ using CurrentAnimationClass = Game::AnimationFrames;
 
 namespace Game {
 
+struct AnimationInfo {
+#ifdef ARCHKNIGHTS_LIMITED
+	using InfoType = spine::Animation*;
+#endif // ARCHKNIGHTS_LIMITED
+	InfoType Default;
+	InfoType Begin;
+	InfoType Idle;
+	InfoType AttackIn;
+	InfoType AttackLoop;
+	InfoType AttackOut;
+	InfoType StunIn;
+	InfoType StunLoop;
+	InfoType StunOut;
+	InfoType Die;
+};
+
 class Actor :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
@@ -50,6 +66,9 @@ public:
 	virtual void InitDirection(Direction direction) override;
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
+	virtual void TriggerAnimationEx(int excode, void* data) override;
+
+	virtual void ChangeStatus(AnimationStatus status) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
 	virtual void SetOutline(bool enabled) override;
@@ -82,6 +101,8 @@ protected:
 	float m_currentRLDirection; // 当前实际方位（-1.0: 左, 1.0: 右）
 	CurrentAnimationClass* m_current; // 当前渲染的动画
 	std::shared_ptr<ME::IModel> m_holdPTR;
+
+	AnimationInfo m_info;
 };
 
 
@@ -101,6 +122,9 @@ public:
 	virtual void InitDirection(Direction direction) override;
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
+	virtual void TriggerAnimationEx(int excode, void* data) override;
+
+	virtual void ChangeStatus(AnimationStatus status) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
 	virtual void SetOutline(bool enabled) override;
@@ -120,6 +144,7 @@ public:
 
 protected:
 	CurrentAnimationClass* GetAnimation(bool back);
+	AnimationInfo* GetInfo(bool back);
 
 	void SetDirection(bool RL, bool FB);
 
@@ -137,6 +162,9 @@ protected:
 	CurrentAnimationClass* m_current; // 当前渲染的动画
 	CurrentAnimationClass* m_target; // 翻面的目标动画（若翻转还未通过关键点）
 	std::shared_ptr<ME::IModel> m_holdPTR[2]; // 0: Front, 1: Back
+
+	AnimationEvent m_lastEvent;
+	AnimationInfo m_info[2];
 };
 
 }

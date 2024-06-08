@@ -46,35 +46,46 @@ void Units::Char_151_Myrtle::OnJoined() {
 
 	m_active = false;
 	m_died = false;
-	m_attacking = false;
+	//m_attacking = false;
+
+	m_status = Status::Begin;
+
+	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
+	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+
 	Parent::OnKicking();
 }
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
-	if (!m_active) {
-		if (m_actor->AnimEvent_StartOver()) {
-			m_active = true;
+	switch (m_status) {
+	case Status::Normal:
+		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+			if (it->first == m_id)
+				continue;
+			m_targetAd = it->second.location;
+			m_targetId = it->first;
+			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+				continue;
+			m_attacked = false;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Attack
+			);
+			m_status = Status::Attaking;
+			break;
 		}
-		return;
-	}
-	if (m_died) {
-		if (m_actor->AnimEvent_DieOver()) {
-			KickSelf();
-		}
-		return;
-	}
-	if (m_attacking) {
+		break;
+	case Status::Attaking:
 		if (m_actor->AnimEvent_AttackOver()) {
-			m_attacking = false;
+			m_status = Status::Normal;
 			m_actor->TriggerAnimation(
 				Game::IActor::AnimationEvent::Idle
 			);
 		}
 		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
-			m_attacking = false;
+			m_status = Status::Normal;
 			m_actor->TriggerAnimation(
 				Game::IActor::AnimationEvent::Idle
 			);
@@ -91,35 +102,46 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 				data.damage.minValue = 0.05f;
 
 				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
-				
+
 				//Game::HealData hdata;
 				//hdata.healValue = 74.0f;
 				//Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&hdata);
-				
+
 				m_attacked = true;
 			}
 		}
-	}
-	if (!m_attacking) {
-		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-			if (it->first == m_id)
-				continue;
-			m_targetAd = it->second.location;
-			m_targetId = it->first;
-			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
-				continue;
-			m_attacking = true;
-			m_attacked = false;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Attack
-			);
-			break;
-		}
+		break;
+	case Status::Stun:
+		break;
+	default:
+		return Parent::FixedUpdate(dt);
 	}
 }
 
+#include <SFML/Window/Event.hpp>
+
 Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
+	case Game::MsgId::GuiEvent:
+	{
+		sf::Event& evt = *(sf::Event*)lparam;
+		switch (evt.type) {
+		case sf::Event::KeyReleased:
+			switch (evt.key.code) {
+			case sf::Keyboard::A:
+				m_actor->ChangeStatus(Game::IActor::AnimationStatus::Skill0);
+				m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin, Game::IActor::Direction::BR);
+				m_status = Status::Begin;
+				break;
+			case sf::Keyboard::Q:
+				m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die, Game::IActor::Direction::FL);
+				m_status = Status::Returning;
+				break;
+			}
+			break;
+		}
+		break;
+	}
 	default:
 		return DefTowerProc(msg, wparam, lparam);
 	}

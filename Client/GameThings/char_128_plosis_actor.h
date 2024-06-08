@@ -44,6 +44,7 @@ public:
 
 public:
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
+	virtual void ChangeStatus(AnimationStatus status) override;
 };
 #else
 using Char_128_Plosis_Actor_Vanilla = Actor2;

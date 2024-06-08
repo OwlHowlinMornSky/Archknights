@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "stdio.h"
+
 namespace Game {
 
 class IActor {
@@ -30,9 +32,13 @@ public:
 		Begin,
 		Idle,
 		Attack,
-		AttackDown,
 		Stun,
-		Die,
+		Die
+	};
+
+	enum class AnimationStatus : char {
+		Normal = 0,
+		AttackDown,
 		Skill0,
 		Skill1,
 		Skill2,
@@ -54,13 +60,15 @@ public:
 public:
 	IActor() = default;
 	virtual ~IActor() = default;
-	
+
 	virtual void Exit() = 0;
 
 	virtual void InitDirection(Direction direction) = 0;
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
-	virtual void TriggerAnimationEx(int excode, void* data) {}
+	virtual void TriggerAnimationEx(int excode, void* data) = 0;
+
+	virtual void ChangeStatus(AnimationStatus status) = 0;
 
 	virtual void SetPosition(float x, float y, float z) = 0;
 	virtual void SetOutline(bool enabled) {}

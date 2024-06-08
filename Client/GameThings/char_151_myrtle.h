@@ -41,7 +41,7 @@ public:
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 public:
-	bool m_attacking, m_attacked;
+	bool m_attacked;
 	Game::EntityLocationType m_targetAd;
 	Game::EntityIdType m_targetId;
 };

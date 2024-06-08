@@ -58,17 +58,15 @@ void Units::Char_128_Plosis::OnKicking() {
 }
 
 void Units::Char_128_Plosis::FixedUpdate(float dt) {
-	if (!m_active) {
-		if (m_actor->AnimEvent_StartOver()) {
-			m_active = true;
-		}
-		return;
-	}
-	if (m_died) {
-		if (m_actor->AnimEvent_DieOver()) {
-			KickSelf();
-		}
-		return;
+	switch (m_status) {
+	case Status::Normal:
+		break;
+	case Status::Attaking:
+		break;
+	case Status::Stun:
+		break;
+	default:
+		return Parent::FixedUpdate(dt);
 	}
 }
 

@@ -103,4 +103,55 @@ void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, D
 	}
 }
 
+void Game::Char_128_Plosis_Actor_Epoque::ChangeStatus(AnimationStatus status) {
+	AnimationInfo* face = GetInfo(false);
+	AnimationInfo* back = GetInfo(true);
+	auto animf = GetAnimation(false);
+	auto animb = GetAnimation(true);
+
+	AnimationInfo* c = face;
+	auto a = animf;
+
+	switch (status) {
+	default:
+	case AnimationStatus::Normal:
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		c = back;
+		a = animb;
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		break;
+	case AnimationStatus::Skill0:
+		c->Begin = a->findAnimation("Skill_Start");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
+
+		c = back;
+		a = animb;
+		c->Begin = a->findAnimation("Skill_Start");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
+		break;
+	}
+}
+
 #endif // ARCHKNIGHTS_LIMITED

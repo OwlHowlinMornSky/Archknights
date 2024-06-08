@@ -31,7 +31,68 @@ Game::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
 	_b->setScale(0.575f);
 }
 
-void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
+void Game::Char_151_Mytle_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+	AnimationInfo* face = GetInfo(false);
+	AnimationInfo* back = GetInfo(true);
+	auto animf = GetAnimation(false);
+	auto animb = GetAnimation(true);
+
+	AnimationInfo* c = face;
+	auto a = animf;
+
+	switch (status) {
+	default:
+	case AnimationStatus::Normal:
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		c = back;
+		a = animb;
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		break;
+	case AnimationStatus::Skill0:
+		c->Begin = a->findAnimation("Skill_Begin");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
+
+		c = back;
+		a = animb;
+		c->Begin = a->findAnimation("Skill_Begin");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
+		break;
+	}
+	/*face->Default;
+	face->Begin;
+	face->Idle;
+	face->AttackIn;
+	face->AttackLoop;
+	face->AttackOut;
+	face->StunIn;
+	face->StunLoop;
+	face->StunOut;
+	face->Die;*/
+}
+
+/*void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
 	CurrentAnimationClass* modify = m_current;
 	switch (type) {
 	case AnimationEvent::Begin:
@@ -85,6 +146,6 @@ void Game::Char_151_Mytle_Actor_Vanilla::TriggerAnimation(AnimationEvent type, D
 	default:
 		modify->setAnimation(0, "Default", false);
 	}
-}
+}*/
 
 #endif // ARCHKNIGHTS_LIMITED

@@ -11,8 +11,15 @@ namespace Physics {
 enum FilterType : uint8_t {
 	ArmyStand  = 0x01,
 	ArmyFly    = 0x02,
-	EnemyStand = 0x04,
-	EnemyFly   = 0x08,
+	ArmyWall   = 0x04,
+
+	RESERVED0  = 0x08,
+
+	EnemyStand = 0x10,
+	EnemyFly   = 0x20,
+
+	RESERVED1  = 0x40,
+	RESERVED2  = 0x80,
 };
 
 class IWorld {
