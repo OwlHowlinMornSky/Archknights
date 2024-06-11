@@ -58,8 +58,75 @@ void Actor::InitDirection(Direction direction) {
 }
 
 void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
-#ifndef ARCHKNIGHTS_LIMITED
+#ifdef ARCHKNIGHTS_LIMITED
+	bool wantToChangeLR = false;
+	bool tryToPlayBackFailed = false;
 
+	if (direction != Direction::NotCare && direction != m_direction) {
+		// 需求的前后面不同。
+		if (direction == Direction::BL)
+			direction = Direction::FL;
+		else if (direction == Direction::BR)
+			direction = Direction::FR;
+		// 需求的左右面不同。
+		if (((static_cast<char>(m_direction) ^ static_cast<char>(direction)) & 0x01) != 0)
+			wantToChangeLR = true;
+	}
+	// 播放正面
+	CurrentAnimationClass* modify = m_current;
+	AnimationInfo* info = &m_info;
+	switch (type) {
+	case AnimationEvent::Begin:
+		cnt_OnStart = 0;
+		cnt_StartOver = 0;
+		modify->setAnimation(0, info->Begin, false);
+		break;
+	case AnimationEvent::Idle:
+		if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
+			modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.02f);
+			modify->addAnimation(0, info->Idle, true, 0.0f);
+		}
+		else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
+			modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.02f);
+			modify->addAnimation(0, info->Idle, true, 0.0f);
+		}
+		else
+			modify->setAnimation(0, info->Idle, true)->setMixDuration(0.02f);
+		break;
+	case AnimationEvent::Attack:
+		cnt_OnAttack = 0;
+		cnt_AttackOver = 0;
+		if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
+			modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.02f);
+			modify->addAnimation(0, info->AttackLoop, false, 0.0f);
+		}
+		else
+			modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.02f);
+		break;
+	case AnimationEvent::Stun:
+		if (info->StunIn != nullptr && info->StunLoop != nullptr) {
+			modify->setAnimation(0, info->StunIn, false);
+			modify->addAnimation(0, info->StunLoop, true, 0.0f);
+		}
+		else if (info->StunLoop != nullptr)
+			modify->setAnimation(0, info->StunLoop, true);
+		else if (info->StunIn != nullptr)
+			modify->setAnimation(0, info->StunIn, false);
+		else
+			modify->setAnimation(0, info->Die, false);
+		break;
+	case AnimationEvent::Die:
+		cnt_DieOver = 0;
+		modify->setAnimation(0, info->Die, false)->setMixDuration(0.2f);
+		break;
+	default:
+		modify->setAnimation(0, info->Default, false);
+	}
+	if (wantToChangeLR) {
+		m_isRolling = true;
+		m_targetDirection = direction;
+	}
+	m_lastEvent = type;
 #endif // !ARCHKNIGHTS_LIMITED
 }
 
@@ -110,14 +177,14 @@ void Actor::callback(spine::AnimationState* state, spine::EventType type, spine:
 	switch (type) {
 	case spine::EventType_Complete:
 		if (entry && entry->getAnimation()) {
-			const spine::String& animationName = entry->getAnimation()->getName();
-			if (animationName == "Die") {
+			spine::Animation* anim = entry->getAnimation();
+			if (anim == m_info.Die) {
 				cnt_DieOver++;
 			}
-			else if (animationName == "Start") {
+			else if (anim == m_info.Begin) {
 				cnt_StartOver++;
 			}
-			else if (animationName == "Attack") {
+			else if (anim == m_info.AttackLoop) {
 				cnt_AttackOver++;
 			}
 		}

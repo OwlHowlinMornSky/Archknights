@@ -36,13 +36,14 @@ void Units::Char_151_Myrtle::OnJoined() {
 
 	Physics::Rows rows{};
 	rows.length = 2;
-	uint32_t wd[2] = { 0, 0 };
+	uint32_t wd[2] = { 1, 1 };
 	rows.widths = wd;
 
 	//m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
 	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], rows);
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
+	m_hp = 1.0f;
 
 	m_active = false;
 	m_died = false;
@@ -98,7 +99,7 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 				data.sourceId = m_id;
 				data.distType = data.Near;
 				data.damage.type = data.damage.Normal;
-				data.damage.dmgValue = 52.0f;
+				data.damage.dmgValue = 420.0f;
 				data.damage.minValue = 0.05f;
 
 				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);

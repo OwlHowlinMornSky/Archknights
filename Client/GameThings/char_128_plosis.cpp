@@ -23,6 +23,7 @@
 
 #include "../Game/MsgResult.h"
 #include "MsgId.h"
+#include "../Game/AtkDmgHeal.h"
 
 Units::Char_128_Plosis::Char_128_Plosis() {}
 
@@ -30,6 +31,16 @@ Units::Char_128_Plosis::~Char_128_Plosis() {}
 
 void Units::Char_128_Plosis::OnJoined() {
 	Parent::OnJoined();
+
+	Physics::Rows rows{};
+	rows.offset = -1;
+	rows.length = 4;
+	uint32_t wd[4] = { 2, 2, 2, 2 };
+	rows.widths = wd;
+
+	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], rows);
+	m_detector->SetId(m_id);
+	m_detector->SetLocation(m_location);
 
 	m_m.SetTarget(m_location, m_id, AttributeType::MaxHp);
 	m_m.SetValue(123.0f, 1.0f, 321.0f, 0.5f);
@@ -60,8 +71,48 @@ void Units::Char_128_Plosis::OnKicking() {
 void Units::Char_128_Plosis::FixedUpdate(float dt) {
 	switch (m_status) {
 	case Status::Normal:
+		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+			//if (it->first == m_id)
+			//	continue;
+			m_targetAd = it->second.location;
+			m_targetId = it->first;
+			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+				continue;
+			auto t = Game::GameGlobal::board->EntityAt(m_targetAd);
+			if (t->GetHp() >= t->GetAttribute(AttributeType::MaxHp))
+				continue;
+		//printf_s("???");
+			m_attacked = false;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Attack
+			);
+			m_status = Status::Attaking;
+			break;
+		}
 		break;
 	case Status::Attaking:
+		if (m_actor->AnimEvent_AttackOver()) {
+			m_status = Status::Normal;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Idle
+			);
+		}
+		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
+			m_status = Status::Normal;
+			m_actor->TriggerAnimation(
+				Game::IActor::AnimationEvent::Idle
+			);
+		}
+		else {
+			int cnt = m_actor->AnimEventCnt_OnAttack();
+			while (cnt--) {
+				Game::HealData data;
+				data.healValue = 120.0f;
+				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&data);
+
+				m_attacked = true;
+			}
+		}
 		break;
 	case Status::Stun:
 		break;

@@ -44,6 +44,9 @@ public:
 	Game::ModifySwitch m_m;
 	Game::ModifySwitch m_addDef;
 	Game::ModifySwitch m_addMsgDef;
+	bool m_attacked;
+	Game::EntityLocationType m_targetAd;
+	Game::EntityIdType m_targetId;
 };
 
 }

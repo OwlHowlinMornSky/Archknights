@@ -70,7 +70,7 @@ Game::Char_128_Plosis_Actor_Epoque::Char_128_Plosis_Actor_Epoque(
 	_f->setScale(0.65f);
 	_b->setScale(0.65f);
 }
-
+/*
 void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
@@ -102,7 +102,7 @@ void Game::Char_128_Plosis_Actor_Epoque::TriggerAnimation(AnimationEvent type, D
 		break;
 	}
 }
-
+*/
 void Game::Char_128_Plosis_Actor_Epoque::ChangeStatus(AnimationStatus status) {
 	AnimationInfo* face = GetInfo(false);
 	AnimationInfo* back = GetInfo(true);

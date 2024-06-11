@@ -70,6 +70,9 @@ public:
 	void ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator);
 	virtual void OnModifierChanged(AttributeType attribute);
 
+	Attribute::ValueType GetHp() const;
+	Attribute::ValueType GetAttribute(AttributeType type) const;
+
 public:
 	EntityIdType getID() const;
 	EntityLocationType getLocation() const;

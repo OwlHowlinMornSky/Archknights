@@ -108,6 +108,14 @@ void Entity::OnModifierChanged(AttributeType attribute) {
 	return;
 }
 
+Attribute::ValueType Entity::GetHp() const {
+    return m_hp;
+}
+
+Attribute::ValueType Entity::GetAttribute(AttributeType type) const {
+	return attributes[type].effective;
+}
+
 void Entity::FixedUpdate(float dt) {}
 
 EntityIdType Entity::getID() const {

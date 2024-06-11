@@ -102,6 +102,7 @@ protected:
 	CurrentAnimationClass* m_current; // 当前渲染的动画
 	std::shared_ptr<ME::IModel> m_holdPTR;
 
+	AnimationEvent m_lastEvent;
 	AnimationInfo m_info;
 };
 

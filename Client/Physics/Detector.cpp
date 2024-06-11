@@ -85,6 +85,11 @@ void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles) 
 	float offset = static_cast<float>(tiles.offset);
 	while (i < n) {
 		uint32_t w = tiles.widths[i];
+		if (w == 0) {
+			offset += 1.0f;
+			i++;
+			continue;
+		}
 
 		size_t j = i + 1;
 		while (j < n && tiles.widths[j] == w)

@@ -43,7 +43,7 @@ public:
 	virtual ~Char_128_Plosis_Actor_Epoque() = default;
 
 public:
-	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
+	//virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 	virtual void ChangeStatus(AnimationStatus status) override;
 };
 #else
