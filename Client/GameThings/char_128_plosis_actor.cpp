@@ -31,7 +31,7 @@ Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 	_b->setScale(0.65f);
 }
 
-void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
+/*void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
 		cnt_StartOver = 0;
@@ -59,6 +59,57 @@ void Game::Char_128_Plosis_Actor_Vanilla::TriggerAnimation(AnimationEvent type, 
 		cnt_DieOver = 0;
 		InitDirection((static_cast<char>(m_targetDirection) & 0x01) ? Direction::FL : Direction::FR);
 		m_current->setAnimation(0, "Die", false);
+		break;
+	}
+}*/
+
+void Game::Char_128_Plosis_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+	AnimationInfo* face = GetInfo(false);
+	AnimationInfo* back = GetInfo(true);
+	auto animf = GetAnimation(false);
+	auto animb = GetAnimation(true);
+
+	AnimationInfo* c = face;
+	auto a = animf;
+
+	switch (status) {
+	default:
+	case AnimationStatus::Normal:
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		c = back;
+		a = animb;
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+
+		break;
+	case AnimationStatus::Skill0:
+		c->Begin = a->findAnimation("Skill_Start");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
+
+		c = back;
+		a = animb;
+		c->Begin = a->findAnimation("Skill_Start");
+		c->Idle = a->findAnimation("Skill_Loop");
+		c->Die = a->findAnimation("Skill_End");
 		break;
 	}
 }

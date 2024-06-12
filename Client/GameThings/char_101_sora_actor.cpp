@@ -29,7 +29,7 @@ Game::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
 	_f->setScale(0.725f);
 }
 
-void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
+/*void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Direction direction) {
 	switch (type) {
 	case AnimationEvent::Begin:
 		cnt_StartOver = 0;
@@ -38,7 +38,7 @@ void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Di
 		m_current->addAnimation(0, "Idle", true, 0.0f);
 		break;
 	case AnimationEvent::Idle:
-		/*if (m_direction != Direction::NotCare && direction != m_direction) {
+		if (m_direction != Direction::NotCare && direction != m_direction) {
 			m_targetDirection = direction;
 			if (m_currentFBDirection != ((static_cast<char>(m_targetDirection) & 0x02) != 0)) {
 				m_target = GetAnimation(!m_currentFBDirection);
@@ -51,12 +51,36 @@ void Game::Char_101_Sora_Actor_Vanilla::TriggerAnimation(AnimationEvent type, Di
 		}
 		else {
 			m_current->setAnimation(0, "Idle", true);
-		}*/
+		}
 		break;
 	case AnimationEvent::Die:
 		cnt_DieOver = 0;
 		InitDirection((static_cast<char>(m_targetDirection) & 0x01) ? Direction::FL : Direction::FR);
 		m_current->setAnimation(0, "Die", false);
+		break;
+	}
+}*/
+
+void Game::Char_101_Sora_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+	AnimationInfo* face = &m_info;
+	auto animf = m_current;
+
+	AnimationInfo* c = face;
+	auto a = animf;
+
+	switch (status) {
+	default:
+	case AnimationStatus::Normal:
+		c->Default = a->findAnimation("Default");
+		c->Begin = a->findAnimation("Start");
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = nullptr;
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Die;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
 		break;
 	}
 }
