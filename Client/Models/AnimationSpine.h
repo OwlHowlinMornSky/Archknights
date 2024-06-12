@@ -59,6 +59,7 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
 	virtual void SetOutline(bool enabled) override;
+	virtual void SetColor(float r, float g, float b, float a) override;
 
 	spine::TrackEntry* setAnimation(size_t trackIndex, const std::string& animationName, bool loop);
 	spine::TrackEntry* setAnimation(size_t trackIndex, spine::Animation* animation, bool loop);
@@ -87,6 +88,7 @@ protected:
 	bool m_outline;
 	unsigned int m_vao;
 	unsigned int m_vertexVBO;
+	glm::vec4 m_color;
 	spine::Skeleton* m_skeleton;
 	spine::AnimationState* m_animationState;
 	spine::Vector<spine::Bone*>* m_bonesRef;

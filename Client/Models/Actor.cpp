@@ -39,7 +39,9 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_current(nullptr),
 	m_holdPTR(_f),
 
-	m_lastEvent(AnimationEvent::Default)
+	m_lastEvent(AnimationEvent::Default),
+	m_hitFlash(0.0f),
+	m_hitFlashing(false)
 
 {
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
@@ -147,6 +149,11 @@ void Actor::SetOutline(bool enabled) {
 	return m_holdPTR->SetOutline(enabled);
 }
 
+void Actor::SetHit() {
+	m_hitFlash = 1.5f;
+	m_hitFlashing = true;
+}
+
 void Actor::Update(float dt) {
 	if (m_isRolling) {
 		float Delta = dt * 30.0f;
@@ -168,6 +175,17 @@ void Actor::Update(float dt) {
 			}
 		}
 		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	}
+	if (m_hitFlashing) {
+		m_hitFlash -= (9.0f * m_hitFlash + 1.0f) * dt;
+		if (m_hitFlash >= 1.0f)
+			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+		else if (m_hitFlash > 0.0f)
+			m_current->SetColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
+		else {
+			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+			m_hitFlashing = false;
+		}
 	}
 	m_current->Update(dt);
 	return;
@@ -257,7 +275,9 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 	m_current(nullptr),
 	m_target(nullptr),
 
-	m_lastEvent(AnimationEvent::Default)
+	m_lastEvent(AnimationEvent::Default),
+	m_hitFlash(0.0f),
+	m_hitFlashing(false)
 
 {
 	m_holdPTR[0] = _f;
@@ -451,6 +471,11 @@ void Actor2::SetOutline(bool enabled) {
 	m_holdPTR[1]->SetOutline(enabled);
 }
 
+void Actor2::SetHit() {
+	m_hitFlash = 1.5f;
+	m_hitFlashing = true;
+}
+
 void Actor2::Update(float dt) {
 	if (m_isRolling) {
 		float Delta = dt * 30.0f;
@@ -484,8 +509,10 @@ void Actor2::Update(float dt) {
 				m_currentRLDirection += Delta; // 加RL以向右转
 				if (m_currentRLDirection >= 0.0f) { // 已经通过关键点
 					if (nowFB != toFB) { // 若要翻面
-						if (m_target)
+						if (m_target) {
 							m_current = m_target; // 翻面
+							m_hitFlashing = true;
+						}
 						m_target = nullptr;
 					}
 					m_currentFBDirection = toFB; // 通过关键点后正反面已达标
@@ -504,8 +531,10 @@ void Actor2::Update(float dt) {
 				m_currentRLDirection -= Delta; // 减RL以向左转
 				if (m_currentRLDirection < 0.0f) { // 已经通过关键点
 					if (nowFB != toFB) { // 若要翻面
-						if (m_target)
+						if (m_target) {
 							m_current = m_target; // 翻面
+							m_hitFlashing = true;
+						}
 						m_target = nullptr;
 					}
 					m_currentFBDirection = toFB; // 通过关键点后正反面已达标
@@ -525,6 +554,17 @@ void Actor2::Update(float dt) {
 			m_target->Update(dt);
 		//set m_current rotate by m_currentRLDirection.
 		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	}
+	if (m_hitFlashing) {
+		m_hitFlash -= (9.0f * m_hitFlash + 1.0f) * dt;
+		if (m_hitFlash >= 1.0f)
+			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+		else if (m_hitFlash > 0.0f)
+			m_current->SetColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
+		else {
+			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+			m_hitFlashing = false;
+		}
 	}
 	m_current->Update(dt);
 	return;

@@ -113,6 +113,10 @@ void Tower::OnPositionChanged() {
 
 Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
+	case Game::MsgId::OnGetAttack:
+		if (m_actor)
+			m_actor->SetHit();
+		return DefEntityProc(msg, wparam, lparam);
 	case Game::MsgId::OnSelecting:
 		if (!m_active || m_died)
 			return Game::MsgResult::MethodNotAllowed;

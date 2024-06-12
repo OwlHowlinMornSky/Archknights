@@ -111,7 +111,9 @@ namespace Game {
 // class SpineAnimation
 SpineAnimation::SpineAnimation(const Game::SpinePoseData _pose) :
 	m_pose(_pose),
-	m_outline(false)
+	m_outline(false),
+
+	m_color(1.0f)
 
 {
 	// Create the skeleton
@@ -225,10 +227,10 @@ void SpineAnimation::Draw(ME::Camera& camera, ME::Shader& shader) {
 		else continue;
 
 		spine::Color light;
-		light.r = m_skeleton->getColor().r * slot.getColor().r * attachmentColor->r;
-		light.g = m_skeleton->getColor().g * slot.getColor().g * attachmentColor->g;
-		light.b = m_skeleton->getColor().b * slot.getColor().b * attachmentColor->b;
-		light.a = m_skeleton->getColor().a * slot.getColor().a * attachmentColor->a;
+		light.r = m_skeleton->getColor().r * slot.getColor().r * attachmentColor->r * m_color.r;
+		light.g = m_skeleton->getColor().g * slot.getColor().g * attachmentColor->g * m_color.g;
+		light.b = m_skeleton->getColor().b * slot.getColor().b * attachmentColor->b * m_color.b;
+		light.a = m_skeleton->getColor().a * slot.getColor().a * attachmentColor->a * m_color.a;
 
 		spine::BlendMode blend = slot.getData().getBlendMode();
 
@@ -269,6 +271,10 @@ void SpineAnimation::Draw(ME::Camera& camera, ME::Shader& shader) {
 
 void SpineAnimation::SetOutline(bool enabled) {
 	m_outline = enabled;
+}
+
+void SpineAnimation::SetColor(float r, float g, float b, float a) {
+	m_color = { r, g, b, a };
 }
 
 spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {

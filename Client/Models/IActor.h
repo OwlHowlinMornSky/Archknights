@@ -73,6 +73,8 @@ public:
 	virtual void SetPosition(float x, float y, float z) = 0;
 	virtual void SetOutline(bool enabled) {}
 
+	virtual void SetHit() {}
+
 public:
 	virtual int AnimEventCnt_OnStart() = 0;
 	virtual int AnimEventCnt_OnAttack() = 0;
