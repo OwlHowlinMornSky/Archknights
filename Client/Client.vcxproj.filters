@@ -208,6 +208,9 @@
     <ClInclude Include="Game\Ability.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Hook.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -331,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="GameThings\Tower.cpp">
       <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Hook.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

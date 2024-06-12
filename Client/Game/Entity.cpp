@@ -67,8 +67,31 @@ void Entity::OnJoined() {}
 
 void Entity::OnKicking() {}
 
+MsgResultType Entity::EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+	EntityMsg Msg{ msg, wparam, lparam };
+	auto i = m_hooks.begin(), n = m_hooks.end();
+	while (i != n) {
+		switch ((*i)->CallHook(*this, Msg)) {
+		case 1:
+		{
+			std::list<std::shared_ptr<Hook>>::iterator j = i;
+			++i;
+			m_hooks.erase(j);
+			break;
+		}
+		case 2:
+			i = n;
+			break;
+		default:
+			++i;
+			break;
+		}
+	}
+	return ReceiveMessage(msg, wparam, lparam);
+}
+
 MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	return MsgResult::Unsubscribe;
+	return DefEntityProc(msg, wparam, lparam);
 }
 
 std::list<Modifier>::iterator Entity::Modify(AttributeType attribute, Modifier& data) {

@@ -326,6 +326,7 @@
     <ClInclude Include="Game\GameGlobal.h" />
     <ClInclude Include="Game\GameBoard.h" />
     <ClInclude Include="Game\GameHost.h" />
+    <ClInclude Include="Game\Hook.h" />
     <ClInclude Include="Game\IGameShow.h" />
     <ClInclude Include="Game\Modifier.h" />
     <ClInclude Include="Game\MsgResult.h" />
@@ -384,6 +385,7 @@
     <ClCompile Include="Game\GameGlobal.cpp" />
     <ClCompile Include="Game\GameBoard.cpp" />
     <ClCompile Include="Game\GameHost.cpp" />
+    <ClCompile Include="Game\Hook.cpp" />
     <ClCompile Include="Game\IGameShow.cpp" />
     <ClCompile Include="Game\Modifier.cpp" />
     <ClCompile Include="Models\Actor.cpp" />

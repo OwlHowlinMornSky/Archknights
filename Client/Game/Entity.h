@@ -24,8 +24,10 @@
 #include "TypeDef.h"
 #include "Attribute.h"
 #include "Ability.h"
+#include "Hook.h"
 
 #include <list>
+#include <memory>
 
 namespace Game {
 
@@ -72,6 +74,7 @@ public:
 
 	virtual void FixedUpdate();
 
+	MsgResultType EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
 	std::list<Modifier>::iterator Modify(AttributeType attribute, Modifier& data);
@@ -117,6 +120,7 @@ protected:
 	Attribute attributes[AttributeType::COUNT];
 	Ability abilities[AbilityType::ABCNT];
 	std::list<Modifier> m_modifiers[AttributeType::COUNT];
+	std::list<std::shared_ptr<Hook>> m_hooks;
 };
 
 } // namespace Game

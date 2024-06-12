@@ -142,7 +142,7 @@ MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, Msg
 	if (m_entities[location] == nullptr) {
 		return MsgResult::EmptyPlace;
 	}
-	return m_entities[location]->ReceiveMessage(msg, wparam, lparam);
+	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
 MsgResultType GameBoard::TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
@@ -154,7 +154,7 @@ MsgResultType GameBoard::TellMsg(EntityLocationType location, EntityIdType id, M
 	if (m_entities[location]->m_id != id) {
 		return MsgResult::IncorrectId;
 	}
-	return m_entities[location]->ReceiveMessage(msg, wparam, lparam);
+	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
 void GameBoard::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
@@ -170,7 +170,7 @@ void GameBoard::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lpara
 			failedLoc.insert(loc);
 			continue;
 		}
-		MsgResultType res = m_entities[loc]->ReceiveMessage(msg, wparam, lparam);
+		MsgResultType res = m_entities[loc]->EntityProc(msg, wparam, lparam);
 		if (res == MsgResult::Unsubscribe) { // 相当于消息失败。
 			failedLoc.insert(loc);
 		}
