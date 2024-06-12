@@ -308,21 +308,21 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 			cnt_OnStart = 0;
 			cnt_StartOver = 0;
 			if (info->Begin != nullptr)
-				modify->setAnimation(0, info->Begin, false)->setMixDuration(0.2f);
+				modify->setAnimation(0, info->Begin, false)->setMixDuration(0.08f);
 			else
 				noBackFace = true;
 			break;
 		case AnimationEvent::Idle:
 			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (info->Idle != nullptr)
-				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.08f);
 			else
 				noBackFace = true;
 			break;
@@ -330,11 +330,11 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 			cnt_OnAttack = 0;
 			cnt_AttackOver = 0;
 			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
 			}
 			else if (info->AttackLoop != nullptr)
-				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.08f);
 			else
 				noBackFace = true;
 			break;
@@ -355,7 +355,7 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 		case AnimationEvent::Die:
 			cnt_DieOver = 0;
 			if (info->Die != nullptr)
-				modify->setAnimation(0, info->Die, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->Die, false)->setMixDuration(0.08f);
 			else
 				noBackFace = true;
 			break;
@@ -377,25 +377,25 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 			break;
 		case AnimationEvent::Idle:
 			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else
-				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.08f);
 			break;
 		case AnimationEvent::Attack:
 			cnt_OnAttack = 0;
 			cnt_AttackOver = 0;
 			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.08f);
 				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
 			}
 			else
-				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.02f);
+				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.08f);
 			break;
 		case AnimationEvent::Stun:
 			if (info->StunIn != nullptr && info->StunLoop != nullptr) {
@@ -411,7 +411,7 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 			break;
 		case AnimationEvent::Die:
 			cnt_DieOver = 0;
-			modify->setAnimation(0, info->Die, false)->setMixDuration(0.2f);
+			modify->setAnimation(0, info->Die, false)->setMixDuration(0.08f);
 			break;
 		default:
 			modify->setAnimation(0, info->Default, false);
