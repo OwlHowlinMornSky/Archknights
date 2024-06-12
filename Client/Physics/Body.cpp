@@ -30,7 +30,7 @@ size_t Body::AddDetectorCircle(uint8_t target, float x, float y, float radius) {
 	return m_detectors.size();
 }
 
-size_t Body::AddDetectorRows(uint8_t target, float x, float y, Rows rows) {
+size_t Body::AddDetectorRows(uint8_t target, float x, float y, Rows* rows) {
 	auto res = std::make_unique<Detector>();
 	res->CreateRows(m_body, target, { x, y }, rows);
 	m_detectors.push_back(std::move(res));

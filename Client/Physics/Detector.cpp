@@ -67,7 +67,7 @@ void Detector::CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radi
 	return;
 }
 
-void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles) {
+void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles) {
 	if (!m_fixtures.empty())
 		return;
 
@@ -81,10 +81,10 @@ void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles) 
 	fixDef.userData.pointer = (uintptr_t)this;
 	//fixDef.friction = 0.0f;
 
-	size_t i = 0, n = tiles.length;
-	float offset = static_cast<float>(tiles.offset);
+	size_t i = 0, n = tiles->length;
+	float offset = static_cast<float>(tiles->offset);
 	while (i < n) {
-		uint32_t w = tiles.widths[i];
+		uint32_t w = tiles->widths[i];
 		if (w == 0) {
 			offset += 1.0f;
 			i++;
@@ -92,7 +92,7 @@ void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles) 
 		}
 
 		size_t j = i + 1;
-		while (j < n && tiles.widths[j] == w)
+		while (j < n && tiles->widths[j] == w)
 			j++;
 
 		float d = static_cast<float>(j - i);
@@ -139,7 +139,7 @@ void DetectorIndependent::CreateCircle(b2World* world, uint8_t target, b2Vec2 po
 	return Detector::CreateCircle(m_body, target, pos, radius);
 }
 
-void DetectorIndependent::CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows rows) {
+void DetectorIndependent::CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows) {
 	if (m_body)
 		return;
 

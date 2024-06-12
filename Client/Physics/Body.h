@@ -20,7 +20,7 @@ public:
 	virtual const float* GetPosition() const override;
 
 	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) override;
-	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows rows) override;
+	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
 
 	virtual IDetector* GetDetector(size_t id) override;
 

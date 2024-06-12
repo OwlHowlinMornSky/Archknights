@@ -52,7 +52,7 @@ public:
 	virtual std::unique_ptr<IBody> CreateBodyMoverRectangle(float x, float y, uint8_t type = FilterType::EnemyStand, bool canBeBlocked = true) override;
 
 	virtual std::unique_ptr<IDetector> CreateDetectorCircle(uint8_t target, float x, float y, float radius) override;
-	virtual std::unique_ptr<IDetector> CreateDetectorRows(uint8_t target, float x, float y, Rows rows) override;
+	virtual std::unique_ptr<IDetector> CreateDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
 	virtual std::unique_ptr<IDetector> CreateDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) override;
 
 protected:

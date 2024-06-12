@@ -37,7 +37,7 @@ public:
 	virtual std::unique_ptr<IBody> CreateBodyMoverRectangle(float x, float y, uint8_t type = FilterType::EnemyStand, bool canBeBlocked = true) = 0;
 
 	virtual std::unique_ptr<IDetector> CreateDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
-	virtual std::unique_ptr<IDetector> CreateDetectorRows(uint8_t target, float x, float y, Rows rows) = 0;
+	virtual std::unique_ptr<IDetector> CreateDetectorRows(uint8_t target, float x, float y, Rows* rows) = 0;
 	virtual std::unique_ptr<IDetector> CreateDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) = 0;
 
 public:

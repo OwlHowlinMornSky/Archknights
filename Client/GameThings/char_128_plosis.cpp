@@ -38,7 +38,7 @@ void Units::Char_128_Plosis::OnJoined() {
 	uint32_t wd[4] = { 2, 2, 2, 2 };
 	rows.widths = wd;
 
-	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], rows);
+	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], &rows);
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 

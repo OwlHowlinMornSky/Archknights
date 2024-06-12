@@ -24,7 +24,7 @@ public:
 
 protected:
 	void CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius);
-	void CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows tiles);
+	void CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles);
 
 protected:
 	std::vector<b2Fixture*> m_fixtures;
@@ -43,7 +43,7 @@ public:
 
 protected:
 	void CreateCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius);
-	void CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows rows);
+	void CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows);
 	void CreateTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
 
 protected:

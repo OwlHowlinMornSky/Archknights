@@ -75,7 +75,7 @@ std::unique_ptr<IDetector> World::CreateDetectorCircle(uint8_t target, float x, 
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorRows(uint8_t target, float x, float y, Rows rows) {
+std::unique_ptr<IDetector> World::CreateDetectorRows(uint8_t target, float x, float y, Rows* rows) {
 	auto res = std::make_unique<DetectorIndependent>();
 	res->CreateRows(&m_world, target, { x, y }, rows);
 	return std::move(res);
