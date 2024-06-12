@@ -53,7 +53,7 @@ void Tower::OnKicking() {
 	m_actor.reset();
 }
 
-void Tower::FixedUpdate(float dt) {
+void Tower::FixedUpdate() {
 	switch (m_status) {
 	case Status::Begin:
 		if (m_actor->AnimEvent_StartOver()) {

@@ -70,7 +70,7 @@ void Units::Char_128_Plosis::OnKicking() {
 	Parent::OnKicking();
 }
 
-void Units::Char_128_Plosis::FixedUpdate(float dt) {
+void Units::Char_128_Plosis::FixedUpdate() {
 	//switch (m_status) {
 	//default:
 	return Parent::FixedUpdate();

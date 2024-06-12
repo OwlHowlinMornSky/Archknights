@@ -68,7 +68,7 @@ void SummonMngr::OnKicking() {
 	GameGlobal::board->UnsubscribeMsg(MsgId::Summon, m_location);
 }
 
-void SummonMngr::FixedUpdate(float dt) {}
+void SummonMngr::FixedUpdate() {}
 
 MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {

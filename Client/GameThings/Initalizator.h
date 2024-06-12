@@ -31,7 +31,7 @@ public:
 	virtual void OnJoined();
 	virtual void OnKicking();
 
-	virtual void FixedUpdate(float dt) override;
+	virtual void FixedUpdate() override;
 
 	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 

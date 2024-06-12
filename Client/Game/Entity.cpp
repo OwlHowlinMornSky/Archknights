@@ -124,7 +124,7 @@ Attribute::ValueType Entity::GetAttribute(AttributeType type) const {
 	return attributes[type].effective;
 }
 
-void Entity::FixedUpdate(float dt) {}
+void Entity::FixedUpdate() {}
 
 EntityIdType Entity::getID() const {
 	return m_id;

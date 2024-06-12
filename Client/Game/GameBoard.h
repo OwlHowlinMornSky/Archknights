@@ -94,7 +94,7 @@ public:
 	 * @brief 更新游戏板。
 	 * @param dt 时间增量。
 	*/
-	void Update(float dt);
+	void Update(long long dt);
 
 	void RegistryForExit(EntityLocationType location);
 
@@ -151,6 +151,7 @@ public:
 
 protected:
 	std::map<MsgIdType, std::set<EntityLocationType>> m_msgMap; // 消息订阅表。
+	unsigned long long m_time;
 };
 
 }

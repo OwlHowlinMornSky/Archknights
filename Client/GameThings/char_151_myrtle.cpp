@@ -55,7 +55,7 @@ void Units::Char_151_Myrtle::OnKicking() {
 	Parent::OnKicking();
 }
 
-void Units::Char_151_Myrtle::FixedUpdate(float dt) {
+void Units::Char_151_Myrtle::FixedUpdate() {
 	//switch (m_status) {
 	//default:
 	return Parent::FixedUpdate();

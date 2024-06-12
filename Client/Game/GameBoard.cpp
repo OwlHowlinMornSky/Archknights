@@ -113,12 +113,18 @@ std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
 	return m_entities[location];
 }
 
-void GameBoard::Update(float dt) {
-	m_world->Update(dt);
+void GameBoard::Update(long long dt) {
+	if (dt < 33333) {
+		m_time += dt;
+		if (m_time < 33333)
+			return;
+		m_time -= 33333;
+	}
+	m_world->Update(1.0f / 30.0f);
 	for (std::shared_ptr<Entity> entity : m_entities) {
 		if (entity == nullptr)
 			continue;
-		entity->FixedUpdate(dt);
+		entity->FixedUpdate();
 	}
 	while (!m_readyForExit.empty()) {
 		KickEntity(m_readyForExit.top());

@@ -90,7 +90,7 @@ void Initalizator::OnKicking() {
 	GameGlobal::board->Broadcast(1234, 0, 0);
 }
 
-void Initalizator::FixedUpdate(float dt) {}
+void Initalizator::FixedUpdate() {}
 
 MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {

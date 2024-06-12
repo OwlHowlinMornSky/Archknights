@@ -33,11 +33,11 @@ void Units::Char_101_Sora::OnKicking() {
 	Parent::OnKicking();
 }
 
-void Units::Char_101_Sora::FixedUpdate(float dt) {
+void Units::Char_101_Sora::FixedUpdate() {
 	//switch (m_status) {
 	//default:
 	//}
-	return Parent::FixedUpdate(dt);
+	return Parent::FixedUpdate();
 }
 
 Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
