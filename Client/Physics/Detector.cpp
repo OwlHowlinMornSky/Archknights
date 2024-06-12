@@ -40,8 +40,6 @@ void Detector::OnBeginContact(IFixture* another) {
 	auto& i = m_list[another->m_id];
 	i.count++;
 	i.location = another->m_loc;
-
-	printf_s("%zd find %zd.\n", m_id, another->m_id);
 	return;
 }
 

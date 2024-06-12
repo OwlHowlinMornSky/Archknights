@@ -30,7 +30,6 @@ namespace Physics {
 void MyContactListener::BeginContact(b2Contact* contact) {
 	IFixture* fix1 = (IFixture*)contact->GetFixtureA()->GetUserData().pointer;
 	IFixture* fix2 = (IFixture*)contact->GetFixtureB()->GetUserData().pointer;
-	printf_s("%d %d: ", contact->GetFixtureA()->IsSensor(), contact->GetFixtureB()->IsSensor());
 	if (!fix1 || !fix2)
 		return;
 	if (fix1->IsMaster())

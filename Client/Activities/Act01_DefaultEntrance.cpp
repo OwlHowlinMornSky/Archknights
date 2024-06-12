@@ -96,7 +96,8 @@ void Act01_DefaultEntrance::update(sf::Time dtime) {
 	r_wnd->draw(m_sp);
 	r_wnd->display();
 #else
-	r_wnd->changeActivity(std::make_unique<Act03_Opening>());
+	r_wnd->changeActivity(std::make_unique<Activity_Debug>());
+	//r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 #endif
 	return;
 }
