@@ -96,7 +96,19 @@ bool Units::Char_128_Plosis::TryAttack() {
 }
 
 bool Units::Char_128_Plosis::StillCanAttack() {
-	return Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK;
+	if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
+		return true;
+	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+		m_targetAd = it->second.location;
+		m_targetId = it->first;
+		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		auto t = Game::GameGlobal::board->EntityAt(m_targetAd);
+		if (t->GetHp() >= t->GetAttribute(AttributeType::MaxHp))
+			continue;
+		return true;
+	}
+	return false;
 }
 void Units::Char_128_Plosis::OnAttack() {
 	Game::HealData data;

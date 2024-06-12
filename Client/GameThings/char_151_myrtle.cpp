@@ -106,7 +106,18 @@ bool Units::Char_151_Myrtle::TryAttack() {
 }
 
 bool Units::Char_151_Myrtle::StillCanAttack() {
-	return Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK;
+	if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
+		return true;
+	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+		if (it->first == m_id)
+			continue;
+		m_targetAd = it->second.location;
+		m_targetId = it->first;
+		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		return true;
+	}
+	return false;
 }
 
 void Units::Char_151_Myrtle::OnAttack() {
