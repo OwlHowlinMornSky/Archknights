@@ -14,16 +14,13 @@ Tower::~Tower() {}
 
 void Tower::OnJoined() {
 	// 触发动画
-	m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
-	if (m_actor)
-		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin);
+	ToStart(Game::IActor::Direction::FR);
 	// 创建主体
 	m_body = Game::GameGlobal::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
 	m_active = false;
 	m_died = false;
-	m_status = Status::Begin;
 }
 
 void Tower::OnKicking() {
@@ -39,8 +36,7 @@ void Tower::FixedUpdate(float dt) {
 	case Status::Begin:
 		if (m_actor->AnimEvent_StartOver()) {
 			m_active = true;
-			m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Idle);
-			m_status = Status::Normal;
+			ToIdle();
 		}
 		break;
 	case Status::Dying:
@@ -51,8 +47,7 @@ void Tower::FixedUpdate(float dt) {
 	case Status::Returning:
 		if (m_actor->AnimEvent_DieOver()) {
 			m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
-			m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Idle);
-			m_status = Status::Normal;
+			ToIdle();
 		}
 		break;
 	default:
@@ -80,10 +75,8 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 			return Game::MsgResult::MethodNotAllowed;
 		break;
 	case Game::MsgId::OnHpDropToZero:
-		m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
-		m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die);
+		ToDying(Game::IActor::Direction::FR);
 		m_died = true;
-		m_status = Status::Dying;
 		m_body.reset();
 		m_detector.reset();
 		break;
@@ -91,6 +84,66 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 		return DefEntityProc(msg, wparam, lparam);
 	}
 	return Game::MsgResult::OK;
+}
+
+void Tower::ToStart(Game::IActor::Direction d) {
+	if (m_actor)
+		m_actor->ChangeStatus(
+			Game::IActor::AnimationStatus::Normal
+		);
+	ToBegin(d);
+}
+
+void Tower::ToBegin(Game::IActor::Direction d) {
+	m_status = Status::Begin;
+	if (m_actor)
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Begin, d
+		);
+}
+
+void Tower::ToIdle(Game::IActor::Direction d) {
+	m_status = Status::Idle;
+	if (m_actor)
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Idle, d
+		);
+}
+
+void Tower::ToAttack(Game::IActor::Direction d) {
+	m_status = Status::Attaking;
+	if (m_actor)
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Attack, d
+		);
+}
+
+void Tower::ToStun(Game::IActor::Direction d) {
+	m_status = Status::Stun;
+	if (m_actor)
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Stun, d
+		);
+}
+
+void Tower::ToDying(Game::IActor::Direction d) {
+	m_status = Status::Dying;
+	if (m_actor) {
+		m_actor->ChangeStatus(
+			Game::IActor::AnimationStatus::Normal
+		);
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Die, d
+		);
+	}
+}
+
+void Tower::ToReturn(Game::IActor::Direction d) {
+	m_status = Status::Returning;
+	if (m_actor)
+		m_actor->TriggerAnimation(
+			Game::IActor::AnimationEvent::Die, d
+		);
 }
 
 }

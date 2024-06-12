@@ -49,8 +49,6 @@ void Units::Char_151_Myrtle::OnJoined() {
 	m_died = false;
 	//m_attacking = false;
 
-	m_status = Status::Begin;
-
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
 
@@ -62,7 +60,7 @@ void Units::Char_151_Myrtle::OnKicking() {
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 	switch (m_status) {
-	case Status::Normal:
+	case Status::Idle:
 		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 			if (it->first == m_id)
 				continue;
@@ -71,25 +69,16 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 				continue;
 			m_attacked = false;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Attack
-			);
-			m_status = Status::Attaking;
+			ToAttack();
 			break;
 		}
 		break;
 	case Status::Attaking:
 		if (m_actor->AnimEvent_AttackOver()) {
-			m_status = Status::Normal;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Idle
-			);
+			ToIdle();
 		}
 		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
-			m_status = Status::Normal;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Idle
-			);
+			ToIdle();
 		}
 		else {
 			int cnt = m_actor->AnimEventCnt_OnAttack();
@@ -104,15 +93,9 @@ void Units::Char_151_Myrtle::FixedUpdate(float dt) {
 
 				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
 
-				//Game::HealData hdata;
-				//hdata.healValue = 74.0f;
-				//Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&hdata);
-
 				m_attacked = true;
 			}
 		}
-		break;
-	case Status::Stun:
 		break;
 	default:
 		return Parent::FixedUpdate(dt);
@@ -131,12 +114,10 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 			switch (evt.key.code) {
 			case sf::Keyboard::A:
 				m_actor->ChangeStatus(Game::IActor::AnimationStatus::Skill0);
-				m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Begin, Game::IActor::Direction::BR);
-				m_status = Status::Begin;
+				ToBegin(Game::IActor::Direction::BR);
 				break;
 			case sf::Keyboard::Q:
-				m_actor->TriggerAnimation(Game::IActor::AnimationEvent::Die, Game::IActor::Direction::FL);
-				m_status = Status::Returning;
+				ToReturn(Game::IActor::Direction::BL);
 				break;
 			}
 			break;

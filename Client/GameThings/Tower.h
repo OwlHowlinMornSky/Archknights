@@ -35,7 +35,7 @@ public:
 	enum class Status : unsigned char {
 		Default = 0,
 		Begin,
-		Normal,
+		Idle,
 		Attaking,
 		Stun,
 		Dying,
@@ -57,6 +57,14 @@ protected:
 	virtual void OnPositionChanged();
 
 	Game::MsgResultType DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+
+	void ToStart(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToBegin(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToIdle(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToAttack(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToStun(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void ToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
 
 public:
 	bool m_active, m_died;

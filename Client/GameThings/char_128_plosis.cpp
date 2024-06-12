@@ -70,10 +70,8 @@ void Units::Char_128_Plosis::OnKicking() {
 
 void Units::Char_128_Plosis::FixedUpdate(float dt) {
 	switch (m_status) {
-	case Status::Normal:
+	case Status::Idle:
 		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-			//if (it->first == m_id)
-			//	continue;
 			m_targetAd = it->second.location;
 			m_targetId = it->first;
 			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
@@ -81,27 +79,17 @@ void Units::Char_128_Plosis::FixedUpdate(float dt) {
 			auto t = Game::GameGlobal::board->EntityAt(m_targetAd);
 			if (t->GetHp() >= t->GetAttribute(AttributeType::MaxHp))
 				continue;
-		//printf_s("???");
 			m_attacked = false;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Attack
-			);
-			m_status = Status::Attaking;
+			ToAttack();
 			break;
 		}
 		break;
 	case Status::Attaking:
 		if (m_actor->AnimEvent_AttackOver()) {
-			m_status = Status::Normal;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Idle
-			);
+			ToIdle();
 		}
 		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
-			m_status = Status::Normal;
-			m_actor->TriggerAnimation(
-				Game::IActor::AnimationEvent::Idle
-			);
+			ToIdle();
 		}
 		else {
 			int cnt = m_actor->AnimEventCnt_OnAttack();
@@ -113,8 +101,6 @@ void Units::Char_128_Plosis::FixedUpdate(float dt) {
 				m_attacked = true;
 			}
 		}
-		break;
-	case Status::Stun:
 		break;
 	default:
 		return Parent::FixedUpdate(dt);

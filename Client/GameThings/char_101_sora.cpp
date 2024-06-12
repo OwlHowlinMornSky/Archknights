@@ -34,18 +34,10 @@ void Units::Char_101_Sora::OnKicking() {
 }
 
 void Units::Char_101_Sora::FixedUpdate(float dt) {
-	if (!m_active) {
-		if (m_actor->AnimEvent_StartOver()) {
-			m_active = true;
-		}
-		return;
-	}
-	if (m_died) {
-		if (m_actor->AnimEvent_DieOver()) {
-			KickSelf();
-		}
-		return;
-	}
+	//switch (m_status) {
+	//default:
+	//}
+	return Parent::FixedUpdate(dt);
 }
 
 Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
