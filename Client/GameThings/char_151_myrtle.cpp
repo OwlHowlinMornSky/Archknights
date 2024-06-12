@@ -44,6 +44,8 @@ void Units::Char_151_Myrtle::OnJoined() {
 	m_detector->SetLocation(m_location);
 	m_hp = 1.0f;
 
+	abilities[AbilityType::Attack].SetOriginal(1);
+
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
 
@@ -54,47 +56,10 @@ void Units::Char_151_Myrtle::OnKicking() {
 }
 
 void Units::Char_151_Myrtle::FixedUpdate(float dt) {
-	switch (m_status) {
-	case Status::Idle:
-		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-			if (it->first == m_id)
-				continue;
-			m_targetAd = it->second.location;
-			m_targetId = it->first;
-			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
-				continue;
-			m_attacked = false;
-			ToAttack();
-			break;
-		}
-		break;
-	case Status::Attaking:
-		if (m_actor->AnimEvent_AttackOver()) {
-			ToIdle();
-		}
-		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
-			ToIdle();
-		}
-		else {
-			int cnt = m_actor->AnimEventCnt_OnAttack();
-			while (cnt--) {
-				Game::AttackData data;
-				data.sourceAd = m_location;
-				data.sourceId = m_id;
-				data.distType = data.Near;
-				data.damage.type = data.damage.Normal;
-				data.damage.dmgValue = 420.0f;
-				data.damage.minValue = 0.05f;
-
-				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
-
-				m_attacked = true;
-			}
-		}
-		break;
-	default:
-		return Parent::FixedUpdate(dt);
-	}
+	//switch (m_status) {
+	//default:
+	return Parent::FixedUpdate();
+	//}
 }
 
 #include <SFML/Window/Event.hpp>
@@ -123,4 +88,34 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 		return DefTowerProc(msg, wparam, lparam);
 	}
 	return Game::MsgResult::OK;
+}
+
+bool Units::Char_151_Myrtle::TryAttack() {
+	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+		if (it->first == m_id)
+			continue;
+		m_targetAd = it->second.location;
+		m_targetId = it->first;
+		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		return false;
+	}
+	return true;
+}
+
+bool Units::Char_151_Myrtle::StillCanAttack() {
+	return Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK;
+}
+
+void Units::Char_151_Myrtle::OnAttack() {
+	Game::AttackData data;
+	data.sourceAd = m_location;
+	data.sourceId = m_id;
+	data.distType = data.Near;
+	data.damage.type = data.damage.Normal;
+	data.damage.dmgValue = attributes[AttributeType::Atk].effective;
+	data.damage.minValue = 0.05f;
+
+	Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
+
 }

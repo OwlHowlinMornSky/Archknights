@@ -23,6 +23,7 @@
 
 #include "TypeDef.h"
 #include "Attribute.h"
+#include "Ability.h"
 
 #include <list>
 
@@ -43,13 +44,20 @@ public:
 		Def,       // 防御力
 		MagDef,    // 魔抗
 
-		MaxBlock,  // 最大阻挡数
 		MoveSpd,   // 移动速度
 		WightLv,   // 重量等级
 
 		MpGrowSpd, // 回蓝速度
 
 		COUNT
+	};
+	enum AbilityType : int {
+		Attack = 0,
+		StartSkill,
+
+		Block, // 最大阻挡数
+
+		ABCNT
 	};
 
 public:
@@ -69,6 +77,9 @@ public:
 	std::list<Modifier>::iterator Modify(AttributeType attribute, Modifier& data);
 	void ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator);
 	virtual void OnModifierChanged(AttributeType attribute);
+
+	void ChangeAbility(AbilityType type, Ability::ValueType val);
+	Ability::ValueType GetAbility(AbilityType type) const;
 
 	Attribute::ValueType GetHp() const;
 	Attribute::ValueType GetAttribute(AttributeType type) const;
@@ -104,6 +115,7 @@ protected:
 	EntityLocationType m_location;
 
 	Attribute attributes[AttributeType::COUNT];
+	Ability abilities[AbilityType::ABCNT];
 	std::list<Modifier> m_modifiers[AttributeType::COUNT];
 };
 

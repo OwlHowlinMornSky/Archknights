@@ -21,33 +21,34 @@
 */
 #pragma once
 
-#include "Tower.h"
+namespace Game {
 
-namespace Units {
+struct Ability {
+	using ValueType = int;
 
-class Char_151_Myrtle final :
-	public Tower {
-	using Parent = Tower;
-public:
-	Char_151_Myrtle();
-	virtual ~Char_151_Myrtle();
+	ValueType original;
+	ValueType effective;
 
-public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	Ability() :
+		original(0),
+		effective(0) {}
 
-	virtual void FixedUpdate(float dt);
+	Ability(ValueType _org) :
+		original(_org),
+		effective(0) {}
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	void SetOriginal(ValueType val) {
+		effective += val - original;
+		original = val;
+	}
 
-protected:
-	virtual bool TryAttack() override;
-	virtual bool StillCanAttack() override;
-	virtual void OnAttack() override;
-
-public:
-	Game::EntityLocationType m_targetAd;
-	Game::EntityIdType m_targetId;
+	bool IsAbled() const {
+		return effective > 0;
+	}
+	
+	ValueType GetValue() const {
+		return effective;
+	}
 };
 
 }

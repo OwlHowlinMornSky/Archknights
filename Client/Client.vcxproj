@@ -318,6 +318,7 @@
     <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
     <ClInclude Include="GameThings\Tower.h" />
+    <ClInclude Include="Game\Ability.h" />
     <ClInclude Include="Game\AtkDmgHeal.h" />
     <ClInclude Include="Game\Attribute.h" />
     <ClInclude Include="Game\BasicMsgId.h" />

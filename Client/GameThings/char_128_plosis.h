@@ -40,11 +40,15 @@ public:
 
 	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
+protected:
+	virtual bool TryAttack() override;
+	virtual bool StillCanAttack() override;
+	virtual void OnAttack() override;
+
 public:
 	Game::ModifySwitch m_m;
 	Game::ModifySwitch m_addDef;
 	Game::ModifySwitch m_addMsgDef;
-	bool m_attacked;
 	Game::EntityLocationType m_targetAd;
 	Game::EntityIdType m_targetId;
 };

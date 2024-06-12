@@ -108,8 +108,16 @@ void Entity::OnModifierChanged(AttributeType attribute) {
 	return;
 }
 
+void Entity::ChangeAbility(AbilityType type, Ability::ValueType val) {
+	abilities[type].effective += val;
+}
+
+Ability::ValueType Entity::GetAbility(AbilityType type) const {
+	return abilities[type].effective;
+}
+
 Attribute::ValueType Entity::GetHp() const {
-    return m_hp;
+	return m_hp;
 }
 
 Attribute::ValueType Entity::GetAttribute(AttributeType type) const {

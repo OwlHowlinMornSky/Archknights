@@ -66,8 +66,17 @@ protected:
 	void ToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
 	void ToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
 
+	/**
+	 * @brief 尝试攻击。
+	 * @return 可开始攻击则为 false。
+	 */
+	virtual bool TryAttack();
+	virtual bool StillCanAttack();
+	void BasicOnAttack();
+	virtual void OnAttack();
+
 public:
-	bool m_active, m_died;
+	bool m_active, m_died, m_atked;
 	Status m_status;
 	std::shared_ptr<Game::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;

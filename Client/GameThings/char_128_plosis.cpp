@@ -58,6 +58,8 @@ void Units::Char_128_Plosis::OnJoined() {
 	printf_s("MaxHP: %f\n", attributes[AttributeType::MaxHp].effective);
 	printf_s("Def: %f\n", attributes[AttributeType::Def].effective);
 	printf_s("MDef: %f\n", attributes[AttributeType::MagDef].effective);
+
+	abilities[AbilityType::Attack].SetOriginal(1);
 }
 
 void Units::Char_128_Plosis::OnKicking() {
@@ -69,42 +71,33 @@ void Units::Char_128_Plosis::OnKicking() {
 }
 
 void Units::Char_128_Plosis::FixedUpdate(float dt) {
-	switch (m_status) {
-	case Status::Idle:
-		for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
-			m_targetAd = it->second.location;
-			m_targetId = it->first;
-			if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
-				continue;
-			auto t = Game::GameGlobal::board->EntityAt(m_targetAd);
-			if (t->GetHp() >= t->GetAttribute(AttributeType::MaxHp))
-				continue;
-			m_attacked = false;
-			ToAttack();
-			break;
-		}
-		break;
-	case Status::Attaking:
-		if (m_actor->AnimEvent_AttackOver()) {
-			ToIdle();
-		}
-		else if (!m_attacked && Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK) {
-			ToIdle();
-		}
-		else {
-			int cnt = m_actor->AnimEventCnt_OnAttack();
-			while (cnt--) {
-				Game::HealData data;
-				data.healValue = 120.0f;
-				Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&data);
+	//switch (m_status) {
+	//default:
+	return Parent::FixedUpdate();
+	//}
+}
 
-				m_attacked = true;
-			}
-		}
-		break;
-	default:
-		return Parent::FixedUpdate(dt);
+bool Units::Char_128_Plosis::TryAttack() {
+	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
+		m_targetAd = it->second.location;
+		m_targetId = it->first;
+		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		auto t = Game::GameGlobal::board->EntityAt(m_targetAd);
+		if (t->GetHp() >= t->GetAttribute(AttributeType::MaxHp))
+			continue;
+		return false;
 	}
+	return true;
+}
+
+bool Units::Char_128_Plosis::StillCanAttack() {
+	return Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK;
+}
+void Units::Char_128_Plosis::OnAttack() {
+	Game::HealData data;
+	data.healValue = 120.0f;
+	Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&data);
 }
 
 Game::MsgResultType Units::Char_128_Plosis::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {

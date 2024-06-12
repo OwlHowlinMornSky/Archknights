@@ -29,6 +29,7 @@ namespace Units {
 Tower::Tower() :
 	m_active(false),
 	m_died(false),
+	m_atked(false),
 	m_status(Status::Default) {}
 
 Tower::~Tower() {}
@@ -58,6 +59,26 @@ void Tower::FixedUpdate(float dt) {
 		if (m_actor->AnimEvent_StartOver()) {
 			m_active = true;
 			ToIdle();
+		}
+		break;
+	case Status::Idle:
+		if (abilities[AbilityType::Attack].IsAbled()) {
+			if (!TryAttack()) {
+				m_atked = false;
+				ToAttack();
+			}
+		}
+		break;
+	case Status::Attaking:
+		if (m_actor->AnimEvent_AttackOver() || (!m_atked && !StillCanAttack())) {
+			ToIdle();
+		}
+		else {
+			int cnt = m_actor->AnimEventCnt_OnAttack();
+			while (cnt--) {
+				BasicOnAttack();
+				m_atked = true;
+			}
 		}
 		break;
 	case Status::Dying:
@@ -166,5 +187,21 @@ void Tower::ToReturn(Game::IActor::Direction d) {
 			Game::IActor::AnimationEvent::Die, d
 		);
 }
+
+bool Tower::TryAttack() {
+	return true;
+}
+
+bool Tower::StillCanAttack() {
+	return false;
+}
+
+void Tower::BasicOnAttack() {
+	ReceiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
+	OnAttack();
+	ReceiveMessage(Game::MsgId::OnAttackEnd, 0, 0);
+}
+
+void Tower::OnAttack() {}
 
 }
