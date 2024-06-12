@@ -262,4 +262,9 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 	return MsgResult::OK;
 }
 
+void Entity::SetAttributeOringalValue(AttributeType type, Attribute::ValueType val) {
+	attributes[type].original = val;
+	return OnModifierChanged(type);
+}
+
 } // namespace Game

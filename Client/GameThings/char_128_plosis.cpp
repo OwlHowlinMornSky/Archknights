@@ -42,6 +42,8 @@ void Units::Char_128_Plosis::OnJoined() {
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 
+	SetAttributeOringalValue(AttributeType::MaxHp, 1402.0f);
+
 	m_m.SetTarget(m_location, m_id, AttributeType::MaxHp);
 	m_m.SetValue(123.0f, 1.0f, 321.0f, 0.5f);
 	m_m.SetEnabled(true);
@@ -53,6 +55,8 @@ void Units::Char_128_Plosis::OnJoined() {
 	m_addMsgDef.SetTarget(m_location, m_id, AttributeType::MagDef);
 	m_addMsgDef.SetValue(1.0f, 0.0f, 0.0f, 0.0f);
 	m_addMsgDef.SetEnabled(true);
+
+	m_hp = attributes[AttributeType::MaxHp].effective;
 
 	printf_s("HP: %f\n", m_hp);
 	printf_s("MaxHP: %f\n", attributes[AttributeType::MaxHp].effective);

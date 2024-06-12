@@ -109,6 +109,8 @@ protected:
 
 	MsgResultType DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
+	void SetAttributeOringalValue(AttributeType type, Attribute::ValueType val);
+
 protected:
 	Attribute::ValueType m_hp;
 	float m_rotation;

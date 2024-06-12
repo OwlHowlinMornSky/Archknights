@@ -46,6 +46,8 @@ void Units::Char_151_Myrtle::OnJoined() {
 
 	abilities[AbilityType::Attack].SetOriginal(1);
 
+	SetAttributeOringalValue(AttributeType::Atk, 420.0f);
+
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }
 
