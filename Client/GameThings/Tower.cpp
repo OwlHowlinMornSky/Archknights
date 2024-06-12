@@ -30,13 +30,14 @@ Tower::Tower() :
 	m_active(false),
 	m_died(false),
 	m_atked(false),
+	m_defaultDirection(Game::IActor::Direction::FR),
 	m_status(Status::Default) {}
 
 Tower::~Tower() {}
 
 void Tower::OnJoined() {
 	// 触发动画
-	ToStart(Game::IActor::Direction::FR);
+	ToStart(m_defaultDirection);
 	// 创建主体
 	m_body = Game::GameGlobal::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
 	m_body->SetId(m_id);
@@ -117,7 +118,7 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 			return Game::MsgResult::MethodNotAllowed;
 		break;
 	case Game::MsgId::OnHpDropToZero:
-		ToDying(Game::IActor::Direction::FR);
+		ToDying(m_defaultDirection);
 		m_died = true;
 		m_body.reset();
 		m_detector.reset();

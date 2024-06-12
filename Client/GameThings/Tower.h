@@ -77,6 +77,7 @@ protected:
 
 public:
 	bool m_active, m_died, m_atked;
+	Game::IActor::Direction m_defaultDirection;
 	Status m_status;
 	std::shared_ptr<Game::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;
