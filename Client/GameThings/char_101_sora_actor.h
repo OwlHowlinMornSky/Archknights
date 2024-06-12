@@ -33,7 +33,6 @@ public:
 	virtual ~Char_101_Sora_Actor_Vanilla() = default;
 
 public:
-	//virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 	virtual void ChangeStatus(AnimationStatus status) override;
 };
 #else

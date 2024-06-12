@@ -39,15 +39,10 @@ void Units::Char_151_Myrtle::OnJoined() {
 	uint32_t wd[2] = { 1, 1 };
 	rows.widths = wd;
 
-	//m_inde = Game::GameGlobal::board->m_world->CreateDetectorCircle(m_position[0], m_position[1], 1.0f);
 	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], &rows);
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 	m_hp = 1.0f;
-
-	m_active = false;
-	m_died = false;
-	//m_attacking = false;
 
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 }

@@ -33,18 +33,6 @@ public:
 	virtual ~Char_128_Plosis_Actor_Vanilla() = default;
 
 public:
-	//virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
-	virtual void ChangeStatus(AnimationStatus status) override;
-};
-
-class Char_128_Plosis_Actor_Epoque final :
-	public Actor2 {
-public:
-	Char_128_Plosis_Actor_Epoque(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
-	virtual ~Char_128_Plosis_Actor_Epoque() = default;
-
-public:
-	//virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 	virtual void ChangeStatus(AnimationStatus status) override;
 };
 #else

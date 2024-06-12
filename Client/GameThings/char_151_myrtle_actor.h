@@ -40,5 +40,3 @@ using Char_151_Mytle_Actor_Vanilla = Actor2;
 #endif // ARCHKNIGHTS_LIMITED
 
 }
-
-	//virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;

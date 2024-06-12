@@ -37,7 +37,11 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_targetDirection(Direction::FR),
 	m_currentRLDirection(false),
 	m_current(nullptr),
-	m_holdPTR(_f) {
+	m_holdPTR(_f),
+
+	m_lastEvent(AnimationEvent::Default)
+
+{
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
 	m_current->setListener(this);
 }
@@ -251,7 +255,11 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 	m_currentFBDirection(false),
 	m_currentRLDirection(1.0f),
 	m_current(nullptr),
-	m_target(nullptr) {
+	m_target(nullptr),
+
+	m_lastEvent(AnimationEvent::Default)
+
+{
 	m_holdPTR[0] = _f;
 	m_holdPTR[1] = _b;
 	m_current = GetAnimation(m_currentFBDirection);
