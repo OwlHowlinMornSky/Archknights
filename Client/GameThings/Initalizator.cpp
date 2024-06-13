@@ -31,6 +31,7 @@
 //#include <functional>
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
+#include <MysteryEngine/G3D/Camera.Oblique.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
 #include "../Models/IGround.h"
@@ -45,12 +46,19 @@ namespace Game {
 void Initalizator::OnJoined() {
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
-	auto camera = std::make_shared<ME::PerspectiveCamera>();
-	Game::GameGlobal::show->SetCamera(camera);
+	/*auto camera = std::make_shared<ME::PerspectiveCamera>();
 	camera->setAspectRatio(16.0f / 9.0f);
 	camera->setFOV(40.0f);
 	camera->setPosition(0.0f, -5.5f, 8.66025f);
-	camera->setRotation(30.0f, 0.0f, 0.0f);
+	camera->setRotation(30.0f, 0.0f, 0.0f);*/
+	auto camera = std::make_shared<ME::ObliqueCamera>();
+	camera->setZNear(-15.0f);
+	camera->setZFar(15.0f);
+	camera->setDim(16.0f, 9.0f);
+	camera->setSheer(0.5f, 0.5f);
+	camera->setPosition(0.0f, -4.0f, 0.1f);
+	camera->setRotation(90.0f, 0.0f, 0.0f);
+	Game::GameGlobal::show->SetCamera(camera);
 
 	////////////////////
 	ME::G3dGlobal::setActive(true);

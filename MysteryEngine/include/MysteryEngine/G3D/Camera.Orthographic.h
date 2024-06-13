@@ -32,7 +32,7 @@ namespace ME {
 class ME_API OrthographicCamera final :
 	public Camera {
 public:
-	OrthographicCamera() = default;
+	OrthographicCamera();
 	virtual ~OrthographicCamera() override = default;
 
 public:

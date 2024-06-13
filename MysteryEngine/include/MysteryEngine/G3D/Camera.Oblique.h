@@ -27,29 +27,33 @@
 namespace ME {
 
 /**
- * @brief 透视相机。
+ * @brief 斜相机。
  */
-class ME_API PerspectiveCamera final :
+class ME_API ObliqueCamera final :
 	public Camera {
 public:
-	PerspectiveCamera();
-	virtual ~PerspectiveCamera() override = default;
+	ObliqueCamera();
+	virtual ~ObliqueCamera() override = default;
 
 public:
-	void setFOV(float degree);
-	void setAspectRatio(float ratio);
+	void setDim(float x, float y);
+	float getDimX() const;
+	float getDimY() const;
 
-	float getFOV() const;
-	float getAspectRatio() const;
+	void setSheer(float a, float b);
+	float getSheerX() const;
+	float getSheerY() const;
 
 	virtual Camera::Type getType() const override;
 
 protected:
 	virtual void updateMatP() override;
 
-protected:
-	float m_fov; // 纵向视场角
-	float m_aspectRatio; // 宽高比
+public:
+	float m_dimX; // 画面宽度（不是半宽）
+	float m_dimY; // 画面高度（不是半高）
+	float m_sheerX;
+	float m_sheerY;
 };
 
 } // namespace ME

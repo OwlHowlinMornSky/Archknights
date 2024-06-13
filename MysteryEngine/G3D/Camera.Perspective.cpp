@@ -25,6 +25,10 @@
 
 namespace ME {
 
+PerspectiveCamera::PerspectiveCamera() :
+	m_fov(45.0f),
+	m_aspectRatio(1.0f) {}
+
 void PerspectiveCamera::setFOV(float degree) {
 	if (degree < 1.0f) degree = 1.0f;
 	else if (degree > 179.0f) degree = 179.0f;
@@ -48,7 +52,7 @@ float PerspectiveCamera::getAspectRatio() const {
 }
 
 Camera::Type PerspectiveCamera::getType() const {
-    return Camera::Type::Perspective;
+	return Camera::Type::Perspective;
 }
 
 void ME::PerspectiveCamera::updateMatP() {

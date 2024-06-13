@@ -114,6 +114,9 @@
     <ClCompile Include="Core\TempGuard.cpp">
       <Filter>Source files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="G3D\Camera.Oblique.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MysteryEngine\Client\Activity.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\Core\RandGen.h">
       <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Camera.Oblique.h">
+      <Filter>Header files\G3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

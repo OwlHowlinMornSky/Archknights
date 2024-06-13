@@ -39,6 +39,7 @@ public:
 	enum class Type {
 		Orthographic = 1,
 		Perspective,
+		Oblique,
 
 		COUNT
 	};

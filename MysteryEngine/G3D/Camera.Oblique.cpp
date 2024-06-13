@@ -19,40 +19,59 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <MysteryEngine/G3D/Camera.Orthographic.h>
+#include <MysteryEngine/G3D/Camera.Oblique.h>
 
 #include <glm/gtx/transform.hpp>
 
 namespace ME {
 
-OrthographicCamera::OrthographicCamera() :
+ME::ObliqueCamera::ObliqueCamera() :
 	m_dimX(8.0f),
-	m_dimY(3.0f) {}
+	m_dimY(6.0f),
+	m_sheerX(0.70710678118654752440f),
+	m_sheerY(0.70710678118654752440f) {}
 
-void OrthographicCamera::setDim(float x, float y) {
+void ObliqueCamera::setDim(float x, float y) {
 	m_dimX = x;
 	m_dimY = y;
 	m_matP_needUpdate = true;
 }
 
-float OrthographicCamera::getDimX() const {
+float ObliqueCamera::getDimX() const {
 	return m_dimX;
 }
 
-float OrthographicCamera::getDimY() const {
+float ObliqueCamera::getDimY() const {
 	return m_dimY;
 }
 
-Camera::Type OrthographicCamera::getType() const {
-	return Camera::Type::Orthographic;
+void ObliqueCamera::setSheer(float a, float b) {
+	m_sheerX = a;
+	m_sheerY = b;
+	m_matP_needUpdate = true;
 }
 
-void ME::OrthographicCamera::updateMatP() {
+float ObliqueCamera::getSheerX() const {
+	return m_sheerX;
+}
+
+float ObliqueCamera::getSheerY() const {
+	return m_sheerY;
+}
+
+Camera::Type ObliqueCamera::getType() const {
+	return Camera::Type::Oblique;
+}
+
+void ObliqueCamera::updateMatP() {
 	// 计算半宽和半高
 	float x = m_dimX / 2.0f;
 	float y = m_dimY / 2.0f;
 	// 计算矩阵
-	m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar);
+	m_matP = glm::identity<glm::mat4>();
+	m_matP[2][0] = -m_sheerX;
+	m_matP[2][1] = -m_sheerY;
+	m_matP = glm::ortho(-x, x, -y, y, m_zNear, m_zFar) * m_matP;
 	// 标记
 	m_matP_needUpdate = false;
 	m_matPVChanged = true;
