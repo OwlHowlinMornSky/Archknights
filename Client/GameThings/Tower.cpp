@@ -36,6 +36,9 @@ Tower::Tower() :
 Tower::~Tower() {}
 
 void Tower::OnJoined() {
+	if (m_actor) {
+		m_actor->m_note = &m_note;
+	}
 	// 触发动画
 	ToStart(m_defaultDirection);
 	// 创建主体
@@ -57,7 +60,7 @@ void Tower::OnKicking() {
 void Tower::FixedUpdate() {
 	switch (m_status) {
 	case Status::Begin:
-		if (m_actor->AnimEvent_StartOver()) {
+		if (m_note.StartOver) {
 			m_active = true;
 			ToIdle();
 		}
@@ -71,24 +74,31 @@ void Tower::FixedUpdate() {
 		}
 		break;
 	case Status::Attaking:
-		if (m_actor->AnimEvent_AttackOver() || (!m_atked && !StillCanAttack())) {
-			ToIdle();
+		if (m_note.AttackOver) {
+			if (!TryAttack()) {
+				m_atked = false;
+				ToAttack();
+			}
+			else {
+				ToIdle();
+			}
 		}
 		else {
-			int cnt = m_actor->AnimEventCnt_OnAttack();
+			int cnt = m_note.OnAttack;
 			while (cnt--) {
 				BasicOnAttack();
 				m_atked = true;
 			}
+			m_note.OnAttack = 0;
 		}
 		break;
 	case Status::Dying:
-		if (m_actor->AnimEvent_DieOver()) {
+		if (m_note.DieOver) {
 			KickSelf();
 		}
 		break;
 	case Status::Returning:
-		if (m_actor->AnimEvent_DieOver()) {
+		if (m_note.DieOver) {
 			m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
 			ToIdle();
 		}
@@ -202,6 +212,7 @@ bool Tower::StillCanAttack() {
 }
 
 void Tower::BasicOnAttack() {
+	StillCanAttack();
 	ReceiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
 	OnAttack();
 	ReceiveMessage(Game::MsgId::OnAttackEnd, 0, 0);

@@ -82,11 +82,6 @@ public:
 #ifdef ARCHKNIGHTS_LIMITED
 	virtual void callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) override;
 #endif // ARCHKNIGHTS_LIMITED
-	virtual int AnimEventCnt_OnStart() override;
-	virtual int AnimEventCnt_OnAttack() override;
-	virtual int AnimEvent_DieOver() override;
-	virtual int AnimEvent_StartOver() override;
-	virtual int AnimEvent_AttackOver() override;
 
 protected:
 	void SetDirection(bool RL);
@@ -96,11 +91,6 @@ protected:
 	bool m_hitFlashing;
 	Direction m_direction; // 上次达成的方位
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
-	int cnt_OnStart;
-	int cnt_OnAttack;
-	int cnt_DieOver;
-	int cnt_StartOver;
-	int cnt_AttackOver;
 	float m_hitFlash;
 	float m_currentRLDirection; // 当前实际方位（-1.0: 左, 1.0: 右）
 	CurrentAnimationClass* m_current; // 当前渲染的动画
@@ -143,11 +133,6 @@ public:
 #ifdef ARCHKNIGHTS_LIMITED
 	virtual void callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) override;
 #endif // ARCHKNIGHTS_LIMITED
-	virtual int AnimEventCnt_OnStart() override;
-	virtual int AnimEventCnt_OnAttack() override;
-	virtual int AnimEvent_DieOver() override;
-	virtual int AnimEvent_StartOver() override;
-	virtual int AnimEvent_AttackOver() override;
 
 protected:
 	CurrentAnimationClass* GetAnimation(bool back);
@@ -162,11 +147,6 @@ protected:
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
 	bool m_currentFBDirection; // 当前实际方位（false: 正面, true: 反面）
 	float m_currentRLDirection; // 当前实际方位（-1.0: 左, 1.0: 右）
-	int cnt_OnStart;
-	int cnt_OnAttack;
-	int cnt_DieOver;
-	int cnt_StartOver;
-	int cnt_AttackOver;
 	float m_hitFlash;
 	CurrentAnimationClass* m_current; // 当前渲染的动画
 	CurrentAnimationClass* m_target; // 翻面的目标动画（若翻转还未通过关键点）

@@ -83,31 +83,31 @@ void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
 	AnimationInfo* info = &m_info;
 	switch (type) {
 	case AnimationEvent::Begin:
-		cnt_OnStart = 0;
-		cnt_StartOver = 0;
+		m_note->OnStart = 0;
+		m_note->StartOver = 0;
 		modify->setAnimation(0, info->Begin, false);
 		break;
 	case AnimationEvent::Idle:
 		if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-			modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.02f);
+			modify->setAnimation(0, info->AttackOut, false);
 			modify->addAnimation(0, info->Idle, true, 0.0f);
 		}
 		else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-			modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.02f);
+			modify->setAnimation(0, info->StunOut, false);
 			modify->addAnimation(0, info->Idle, true, 0.0f);
 		}
 		else
-			modify->setAnimation(0, info->Idle, true)->setMixDuration(0.02f);
+			modify->setAnimation(0, info->Idle, true);
 		break;
 	case AnimationEvent::Attack:
-		cnt_OnAttack = 0;
-		cnt_AttackOver = 0;
+		m_note->OnAttack = 0;
+		m_note->AttackOver = 0;
 		if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-			modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.02f);
+			modify->setAnimation(0, info->AttackIn, false);
 			modify->addAnimation(0, info->AttackLoop, false, 0.0f);
 		}
 		else
-			modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.02f);
+			modify->setAnimation(0, info->AttackLoop, false);
 		break;
 	case AnimationEvent::Stun:
 		if (info->StunIn != nullptr && info->StunLoop != nullptr) {
@@ -122,8 +122,8 @@ void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
 			modify->setAnimation(0, info->Die, false);
 		break;
 	case AnimationEvent::Die:
-		cnt_DieOver = 0;
-		modify->setAnimation(0, info->Die, false)->setMixDuration(0.2f);
+		m_note->DieOver = 0;
+		modify->setAnimation(0, info->Die, false);
 		break;
 	default:
 		modify->setAnimation(0, info->Default, false);
@@ -201,13 +201,13 @@ void Actor::callback(spine::AnimationState* state, spine::EventType type, spine:
 		if (entry && entry->getAnimation()) {
 			spine::Animation* anim = entry->getAnimation();
 			if (anim == m_info.Die) {
-				cnt_DieOver++;
+				m_note->DieOver++;
 			}
 			else if (anim == m_info.Begin) {
-				cnt_StartOver++;
+				m_note->StartOver++;
 			}
 			else if (anim == m_info.AttackLoop) {
-				cnt_AttackOver++;
+				m_note->AttackOver++;
 			}
 		}
 		break;
@@ -215,44 +215,14 @@ void Actor::callback(spine::AnimationState* state, spine::EventType type, spine:
 	{
 		const spine::String& eventName = event->getData().getName();
 		if (eventName == "OnAttack") {
-			cnt_OnAttack++;
+			m_note->OnAttack++;
 		}
 		else if (eventName == "OnStart") {
-			cnt_OnStart++;
+			m_note->OnStart++;
 		}
 		break;
 	}
 	}
-}
-
-int Actor::AnimEventCnt_OnStart() {
-	auto res = cnt_OnStart;
-	cnt_OnStart = 0;
-	return res;
-}
-
-int Actor::AnimEventCnt_OnAttack() {
-	auto res = cnt_OnAttack;
-	cnt_OnAttack = 0;
-	return res;
-}
-
-int Actor::AnimEvent_DieOver() {
-	auto res = cnt_DieOver;
-	cnt_DieOver = 0;
-	return res;
-}
-
-int Actor::AnimEvent_StartOver() {
-	auto res = cnt_StartOver;
-	cnt_StartOver = 0;
-	return res;
-}
-
-int Actor::AnimEvent_AttackOver() {
-	auto res = cnt_AttackOver;
-	cnt_AttackOver = 0;
-	return res;
 }
 
 void Actor::SetDirection(bool RL) {
@@ -325,36 +295,36 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 		bool noBackFace = false;
 		switch (type) {
 		case AnimationEvent::Begin:
-			cnt_OnStart = 0;
-			cnt_StartOver = 0;
+			m_note->OnStart = 0;
+			m_note->StartOver = 0;
 			if (info->Begin != nullptr)
-				modify->setAnimation(0, info->Begin, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->Begin, false);
 			else
 				noBackFace = true;
 			break;
 		case AnimationEvent::Idle:
 			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackOut, false);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->StunOut, false);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (info->Idle != nullptr)
-				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->Idle, true);
 			else
 				noBackFace = true;
 			break;
 		case AnimationEvent::Attack:
-			cnt_OnAttack = 0;
-			cnt_AttackOver = 0;
+			m_note->OnAttack = 0;
+			m_note->AttackOver = 0;
 			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackIn, false);
 				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
 			}
 			else if (info->AttackLoop != nullptr)
-				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackLoop, false);
 			else
 				noBackFace = true;
 			break;
@@ -373,9 +343,9 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 				noBackFace = true;
 			break;
 		case AnimationEvent::Die:
-			cnt_DieOver = 0;
+			m_note->DieOver = 0;
 			if (info->Die != nullptr)
-				modify->setAnimation(0, info->Die, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->Die, false);
 			else
 				noBackFace = true;
 			break;
@@ -391,31 +361,31 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 		AnimationInfo* info = GetInfo(false);
 		switch (type) {
 		case AnimationEvent::Begin:
-			cnt_OnStart = 0;
-			cnt_StartOver = 0;
+			m_note->OnStart = 0;
+			m_note->StartOver = 0;
 			modify->setAnimation(0, info->Begin, false);
 			break;
 		case AnimationEvent::Idle:
 			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackOut, false);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->StunOut, false);
 				modify->addAnimation(0, info->Idle, true, 0.0f);
 			}
 			else
-				modify->setAnimation(0, info->Idle, true)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->Idle, true);
 			break;
 		case AnimationEvent::Attack:
-			cnt_OnAttack = 0;
-			cnt_AttackOver = 0;
+			m_note->OnAttack = 0;
+			m_note->AttackOver = 0;
 			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackIn, false);
 				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
 			}
 			else
-				modify->setAnimation(0, info->AttackLoop, false)->setMixDuration(0.08f);
+				modify->setAnimation(0, info->AttackLoop, false);
 			break;
 		case AnimationEvent::Stun:
 			if (info->StunIn != nullptr && info->StunLoop != nullptr) {
@@ -430,8 +400,8 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 				modify->setAnimation(0, info->Die, false);
 			break;
 		case AnimationEvent::Die:
-			cnt_DieOver = 0;
-			modify->setAnimation(0, info->Die, false)->setMixDuration(0.08f);
+			m_note->DieOver = 0;
+			modify->setAnimation(0, info->Die, false);
 			break;
 		default:
 			modify->setAnimation(0, info->Default, false);
@@ -580,13 +550,13 @@ void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine
 		if (entry && entry->getAnimation()) {
 			spine::Animation* anim = entry->getAnimation();
 			if (anim == GetInfo(m_currentFBDirection)->Die) {
-				cnt_DieOver++;
+				m_note->DieOver++;
 			}
 			else if (anim == GetInfo(m_currentFBDirection)->Begin) {
-				cnt_StartOver++;
+				m_note->StartOver++;
 			}
 			else if (anim == GetInfo(m_currentFBDirection)->AttackLoop) {
-				cnt_AttackOver++;
+				m_note->AttackOver++;
 			}
 		}
 		break;
@@ -594,44 +564,14 @@ void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine
 	{
 		const spine::String& eventName = event->getData().getName();
 		if (eventName == "OnAttack") {
-			cnt_OnAttack++;
+			m_note->OnAttack++;
 		}
 		else if (eventName == "OnStart") {
-			cnt_OnStart++;
+			m_note->OnStart++;
 		}
 		break;
 	}
 	}
-}
-
-int Actor2::AnimEventCnt_OnStart() {
-	auto res = cnt_OnStart;
-	cnt_OnStart = 0;
-	return res;
-}
-
-int Actor2::AnimEventCnt_OnAttack() {
-	auto res = cnt_OnAttack;
-	cnt_OnAttack = 0;
-	return res;
-}
-
-int Actor2::AnimEvent_DieOver() {
-	auto res = cnt_DieOver;
-	cnt_DieOver = 0;
-	return res;
-}
-
-int Actor2::AnimEvent_StartOver() {
-	auto res = cnt_StartOver;
-	cnt_StartOver = 0;
-	return res;
-}
-
-int Actor2::AnimEvent_AttackOver() {
-	auto res = cnt_AttackOver;
-	cnt_AttackOver = 0;
-	return res;
 }
 
 CurrentAnimationClass* Actor2::GetAnimation(bool back) {

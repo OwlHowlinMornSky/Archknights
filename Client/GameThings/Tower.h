@@ -82,6 +82,7 @@ public:
 	std::shared_ptr<Game::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;
 	std::unique_ptr<Physics::IDetector> m_detector;
+	Game::AnimEventNote m_note;
 };
 
 }

@@ -25,6 +25,14 @@
 
 namespace Game {
 
+struct AnimEventNote {
+	int OnStart = 0;
+	int OnAttack = 0;
+	int DieOver = 0;
+	int StartOver = 0;
+	int AttackOver = 0;
+};
+
 class IActor {
 public:
 	enum class AnimationEvent : char {
@@ -76,11 +84,7 @@ public:
 	virtual void SetHit() {}
 
 public:
-	virtual int AnimEventCnt_OnStart() = 0;
-	virtual int AnimEventCnt_OnAttack() = 0;
-	virtual int AnimEvent_DieOver() = 0;
-	virtual int AnimEvent_StartOver() = 0;
-	virtual int AnimEvent_AttackOver() = 0;
+	AnimEventNote* m_note;
 };
 
 }
