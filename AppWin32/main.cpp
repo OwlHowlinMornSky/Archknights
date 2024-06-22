@@ -29,7 +29,7 @@
 // Use discrete gpu.
 #ifdef ARCHKNIGHTS_LIMITED
 #include <SFML/GpuPreference.hpp>
-//SFML_DEFINE_DISCRETE_GPU_PREFERENCE
+SFML_DEFINE_DISCRETE_GPU_PREFERENCE
 #endif // ARCHKNIGHTS_LIMITED
 
 namespace {
@@ -56,10 +56,12 @@ int APIENTRY wWinMain(
 		MessageBoxA(NULL, g_str_unique_inst, g_str_information, MB_ICONINFORMATION);
 		return 0;
 	}
-	// Initialize.
-	ME::EngineGlobal::setup(false);
-	ME::Carnival& carnival = ME::Carnival::instance();
 	try {
+		// Initialize.
+		ME::EngineGlobal::setup(false);
+		ClientInitGlew();
+		ME::Carnival& carnival = ME::Carnival::instance();
+
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
 

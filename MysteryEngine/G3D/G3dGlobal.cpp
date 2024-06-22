@@ -52,7 +52,7 @@ namespace ME::G3dGlobal {
 
 void setup() {
 	g_context = std::make_unique<sf::Context>(); // 创建专用Context
-	//glewExperimental = GL_TRUE;
+	glewExperimental = GL_TRUE;
 	GLenum glew_err = glewInit(); // 初始化GLEW
 	if (glew_err != GLEW_OK) {
 		throw ::exception_glew_failed(glew_err);

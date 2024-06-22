@@ -31,3 +31,4 @@
 #include <MysteryEngine/Client/Activity.h>
 
 std::unique_ptr<ME::Activity> CLIENT_API GetClientEntrance();
+void CLIENT_API ClientInitGlew();
