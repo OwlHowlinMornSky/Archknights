@@ -50,6 +50,7 @@ protected:
 
 protected:
 	ME::WndRef r;
+	bool m_paused;
 };
 
 } // namespace Activity

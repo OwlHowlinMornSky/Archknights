@@ -28,7 +28,8 @@
 
 namespace Activity {
 
-Activity_Game::Activity_Game() {}
+Activity_Game::Activity_Game() :
+	m_paused(true) {}
 
 Activity_Game::~Activity_Game() noexcept {}
 
@@ -67,6 +68,8 @@ void Activity_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r->clear(sf::Color(0x333333FF));
 #endif // _DEBUG
+	if (m_paused)
+		dtime = sf::Time::Zero;
 	Game::GameGlobal::board->Update(dtime.asMicroseconds());
 	Game::GameGlobal::show->Update(dtime.asSeconds());
 	Game::GameGlobal::show->Draw();
@@ -76,10 +79,12 @@ void Activity_Game::update(sf::Time dtime) {
 }
 
 void Activity_Game::OnEnterSysloop() noexcept {
-	Game::GameGlobal::board->SetPaused(true);
+	m_paused = true;
 }
 
-void Activity_Game::OnExitSysloop() noexcept {}
+void Activity_Game::OnExitSysloop() noexcept {
+	m_paused = false;
+}
 
 void Activity_Game::ExitGame(int code) {
 	switch (code) {
