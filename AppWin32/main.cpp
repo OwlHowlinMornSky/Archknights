@@ -65,7 +65,7 @@ int APIENTRY wWinMain(
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
 
-		std::unique_ptr<ME::Window> window = ME::Window::Create1Window(nCmdShow);;
+		std::unique_ptr<ME::Window> window = ME::Window::Create1Window(nCmdShow);
 		// Create window and run.
 		if (window) {
 			window->setTitle(g_str_windowtitle);

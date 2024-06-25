@@ -349,7 +349,7 @@ sf::Vector2u WindowWin32::getRealtimeSize() const noexcept {
 		static_cast<unsigned int>(rect.right - rect.left),
 		static_cast<unsigned int>(rect.bottom - rect.top)
 	);
-    return size;
+	return size;
 }
 
 void WindowWin32::setWindowed() noexcept {

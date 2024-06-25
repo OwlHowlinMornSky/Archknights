@@ -49,6 +49,11 @@ void Units::Char_151_Myrtle::OnJoined() {
 	SetAttributeOringalValue(AttributeType::Atk, 420.0f);
 
 	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
+
+	printf_s("HP: %f\n", m_hp);
+	printf_s("MaxHP: %f\n", attributes[AttributeType::MaxHp].effective);
+	printf_s("Def: %f\n", attributes[AttributeType::Def].effective);
+	printf_s("MDef: %f\n", attributes[AttributeType::MagDef].effective);
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
@@ -86,6 +91,10 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 		}
 		break;
 	}
+	case Game::MsgId::OnHpChanged:
+		printf_s("HP: %f\n", m_hp);
+		return DefTowerProc(msg, wparam, lparam);
+		break;
 	default:
 		return DefTowerProc(msg, wparam, lparam);
 	}
