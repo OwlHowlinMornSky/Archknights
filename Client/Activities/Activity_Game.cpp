@@ -69,6 +69,7 @@ void Activity_Game::update(sf::Time dtime) {
 #endif // _DEBUG
 	Game::GameGlobal::board->Update(dtime.asMicroseconds());
 	Game::GameGlobal::show->Update(dtime.asSeconds());
+	Game::GameGlobal::show->Draw();
 	r->draw(*Game::GameGlobal::show);
 	r->display();
 	return;

@@ -67,7 +67,9 @@ void IGameShow::Update(float dt) {
 	for (auto& i : m_anims) {
 		i->Update(dt);
 	}
+}
 
+void IGameShow::Draw() {
 	ME::G3dGlobal::setActive(true);
 	m_rtex.setActive(true);
 

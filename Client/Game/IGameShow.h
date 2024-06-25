@@ -48,6 +48,7 @@ public:
 	void AddModel(std::shared_ptr<ME::IModel> a);
 
 	void Update(float dt);
+	void Draw();
 
 protected:
 	virtual void Render() = 0;
