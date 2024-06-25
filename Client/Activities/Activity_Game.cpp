@@ -29,7 +29,7 @@
 namespace Activity {
 
 Activity_Game::Activity_Game() :
-	m_paused(true) {}
+	m_paused(false) {}
 
 Activity_Game::~Activity_Game() noexcept {}
 

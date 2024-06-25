@@ -359,13 +359,15 @@ void SpineAnimation::DrawVertices(ME::Shader& shader, sf::Texture* texture) {
 	sf::Texture::bind(texture);
 
 	if (m_outline) {
+		float sx = 1.0f / m_scale.x;
+		float sy = 1.0f / m_scale.y;
 		shader.UpdateUniform4(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
 		shader.UpdateUniformI1(Game::ActorShaderUniformId::Int1_CvrClr, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
 			shader.UpdateUniform2(
 				Game::ActorShaderUniformId::Vec2_Offset,
-				::CircleOffsetX[i],
-				::CircleOffsetY[i]
+				::CircleOffsetX[i] * sx,
+				::CircleOffsetY[i] * sy
 			);
 			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 		}
