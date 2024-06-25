@@ -29,6 +29,7 @@
 namespace Game {
 
 GameBoard::GameBoard() :
+	m_time(0),
 	m_entityIdCnt(0) {
 	m_world = Physics::IWorld::CreateWorld();
 	m_hosts.resize((size_t)HostJob::COUNT - 1);
@@ -79,10 +80,6 @@ bool GameBoard::IsEmpty() {
 	return m_entities.size() == m_emptyLocations.size();
 }
 
-void GameBoard::SetPaused(bool pause) {
-
-}
-
 void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
 	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
 	if (m_emptyLocations.empty()) { // 没有空闲位置
@@ -102,7 +99,8 @@ void GameBoard::KickEntity(size_t location) {
 	assert(m_entities[location]); // 在场。
 	m_entities[location]->BasicOnKicking(); // 通知。
 	m_entities[location].reset(); // 置空！这是保证“在场”“离场”概念的基础。
-	m_emptyLocations.push(location); // 记录空位。
+	if (location)
+		m_emptyLocations.push(location); // 记录空位。(0不复用，只作为最初initalizator占用位置，之后永远为空)。
 }
 
 void GameBoard::ExitGame(int code) {

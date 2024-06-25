@@ -29,6 +29,7 @@
 #include <functional>
 
 #include "Entity.h"
+#include "GameHost.h"
 #include "../Physics/IWorld.h"
 
 namespace Game {
@@ -54,11 +55,6 @@ public:
 	 * @return true则没有实体。
 	*/
 	bool IsEmpty();
-	/**
-	 * @brief 设置暂停状态。
-	 * @param pause 暂停或不暂停。
-	*/
-	void SetPaused(bool pause);
 
 	/**
 	 * @brief 将指定实体入场。这会让实体收到OnJoined。
