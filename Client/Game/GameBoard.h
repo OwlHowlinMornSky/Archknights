@@ -152,6 +152,13 @@ public:
 protected:
 	std::map<MsgIdType, std::set<EntityLocationType>> m_msgMap; // 消息订阅表。
 	unsigned long long m_time;
+
+public:
+	std::shared_ptr<Host> GetHost(int job);
+	void SetHost(int job, std::shared_ptr<Host> host);
+
+protected:
+	std::vector<std::shared_ptr<Host>> m_hosts;
 };
 
 }

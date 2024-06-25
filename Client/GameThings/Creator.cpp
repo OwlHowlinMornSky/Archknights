@@ -32,7 +32,6 @@
 namespace Game::Creator {
 
 int setup() {
-	Game::GameHolder::setup();
 	Scene::GameCommon::setup();
 	Game::GameBoard::setup();
 	Game::GameGlobal::board->JoinEntity(std::make_shared<Game::Initalizator>());
@@ -43,6 +42,5 @@ void drop() {
 	Game::IActorGroup::Drop(); // 清除实例
 	Game::GameBoard::drop();
 	Scene::GameCommon::drop();
-	Game::GameHolder::drop();
 }
 }

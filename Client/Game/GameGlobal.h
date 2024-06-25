@@ -22,7 +22,6 @@
 #pragma once
 
 #include <memory>
-#include "GameHost.h"
 
 namespace Game {
 
@@ -33,7 +32,6 @@ namespace GameGlobal {
 
 extern std::unique_ptr<GameBoard> board;
 extern std::unique_ptr<IGameShow> show;
-extern std::unique_ptr<GameHost> holders;
 
 }
 } // namespace Game

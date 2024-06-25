@@ -211,6 +211,12 @@
     <ClInclude Include="Game\Hook.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="GameThings\MapHost.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\HostMsgId.h">
+      <Filter>GameThings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="Game\Hook.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\MapHost.cpp">
+      <Filter>GameThings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

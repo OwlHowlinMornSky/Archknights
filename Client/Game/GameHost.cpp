@@ -25,16 +25,4 @@
 
 namespace Game::GameHolder {
 
-int setup() {
-	if (Game::GameGlobal::holders)
-		return 1;
-	Game::GameGlobal::holders = std::make_unique<GameHost>();
-	return 0;
 }
-
-void drop() {
-	Game::GameGlobal::holders.reset();
-}
-
-}
-

@@ -320,8 +320,10 @@
     <ClInclude Include="GameThings\char_151_myrtle_factory.h" />
     <ClInclude Include="GameThings\Creator.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
+    <ClInclude Include="GameThings\HostMsgId.h" />
     <ClInclude Include="GameThings\Initalizator.h" />
     <ClInclude Include="GameThings\ISummonMngr.h" />
+    <ClInclude Include="GameThings\MapHost.h" />
     <ClInclude Include="GameThings\Mover.h" />
     <ClInclude Include="GameThings\MsgId.h" />
     <ClInclude Include="GameThings\SummonMngr.h" />
@@ -387,6 +389,7 @@
     <ClCompile Include="GameThings\Creator.cpp" />
     <ClCompile Include="GameThings\EntityFactory.cpp" />
     <ClCompile Include="GameThings\Initalizator.cpp" />
+    <ClCompile Include="GameThings\MapHost.cpp" />
     <ClCompile Include="GameThings\SummonMngr.cpp" />
     <ClCompile Include="GameThings\Tower.cpp" />
     <ClCompile Include="Game\Entity.cpp" />

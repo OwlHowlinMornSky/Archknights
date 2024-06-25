@@ -31,6 +31,7 @@ namespace Game {
 GameBoard::GameBoard() :
 	m_entityIdCnt(0) {
 	m_world = Physics::IWorld::CreateWorld();
+	m_hosts.resize((size_t)HostJob::COUNT - 1);
 }
 
 GameBoard::~GameBoard() {}
@@ -206,6 +207,19 @@ void GameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	if (reg.size() == 0) { // 在没有订阅者时清除该消息的set。也许意义不大，还徒增内存碎片。
 		m_msgMap.erase(mapIt);
 	}
+}
+
+std::shared_ptr<Host> GameBoard::GetHost(int job) {
+	if (job <= 0 || job >= HostJob::COUNT - 1)
+		return std::shared_ptr<Host>();
+	return m_hosts[job];
+}
+
+void GameBoard::SetHost(int job, std::shared_ptr<Host> host) {
+	if (job <= 0 || job >= HostJob::COUNT - 1)
+		return;
+	m_hosts[job] = host;
+	return;
 }
 
 } // namespace Game

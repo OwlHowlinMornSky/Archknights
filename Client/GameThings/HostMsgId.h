@@ -21,31 +21,21 @@
 */
 #pragma once
 
-#include <array>
-#include "TypeDef.h"
+#include "../Game/TypeDef.h"
 
-namespace Game {
+namespace Game::HostMsgId {
 
-namespace HostJob {
-enum Type {
-	Unknown = 0,
-	PlayerInputHandler,
-	PlayerCardBar,
-	MoverPathManager,
-	MapPathManager,
-	COUNT
+enum Id : MsgIdType {
+	Null = 0,
+
+	MapInitCheckpointCnt, // wParam: Count.
+	MapInitCheckpointSet, // wParam: ID; lParam: int* to an int[2] array.
+	MapLeadQuery,         // wParam: Checkpoint ID; lParam: int* to an int[2] array.
+	MapStatusChanged,     // null.
+	MapIncRef,            // wParam: ID.
+	MapDecRef,            // wParam: ID.
+
+	EXTERN_START
 };
+
 }
-
-class Host {
-	friend class GameBoard;
-
-public:
-	Host() = default;
-	virtual ~Host() = default;
-
-public:
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) = 0;
-};
-
-} // namespace Game

@@ -28,7 +28,6 @@ namespace GameGlobal {
 
 std::unique_ptr<GameBoard> board;
 std::unique_ptr<IGameShow> show;
-std::unique_ptr<GameHost> holders;
 
 }
 } // namespace Game
