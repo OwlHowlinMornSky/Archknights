@@ -40,12 +40,19 @@ void SummonMngr::AddBegin() {
 	return;
 }
 
-bool SummonMngr::AddEntity(size_t id) {
+bool SummonMngr::AddEntity(size_t id, bool isEnemy) {
 	SummonData data;
 	data.id = id;
 
-	if (!EntityFactory::Create(data.factory, id)) {
-		return false;
+	if (isEnemy) {
+		if (!EntityFactory::CreateEnemy(data.factory, id)) {
+			return false;
+		}
+	}
+	else {
+		if (!EntityFactory::Create(data.factory, id)) {
+			return false;
+		}
 	}
 	if (!data.factory->Load()) {
 		return false;

@@ -319,6 +319,9 @@
     <ClInclude Include="GameThings\char_151_myrtle_actor.h" />
     <ClInclude Include="GameThings\char_151_myrtle_factory.h" />
     <ClInclude Include="GameThings\Creator.h" />
+    <ClInclude Include="GameThings\enemy_1002_nsabr.h" />
+    <ClInclude Include="GameThings\enemy_1002_nsabr_actor.h" />
+    <ClInclude Include="GameThings\enemy_1002_nsabr_factory.h" />
     <ClInclude Include="GameThings\EntityFactory.h" />
     <ClInclude Include="GameThings\HostMsgId.h" />
     <ClInclude Include="GameThings\Initalizator.h" />
@@ -388,9 +391,13 @@
     <ClCompile Include="GameThings\char_151_myrtle_actor.cpp" />
     <ClCompile Include="GameThings\char_151_myrtle_factory.cpp" />
     <ClCompile Include="GameThings\Creator.cpp" />
+    <ClCompile Include="GameThings\enemy_1002_nsabr.cpp" />
+    <ClCompile Include="GameThings\enemy_1002_nsabr_actor.cpp" />
+    <ClCompile Include="GameThings\enemy_1002_nsabr_factory.cpp" />
     <ClCompile Include="GameThings\EntityFactory.cpp" />
     <ClCompile Include="GameThings\Initalizator.cpp" />
     <ClCompile Include="GameThings\MapHost.cpp" />
+    <ClCompile Include="GameThings\Mover.cpp" />
     <ClCompile Include="GameThings\SummonMngr.cpp" />
     <ClCompile Include="GameThings\Tower.cpp" />
     <ClCompile Include="Game\Entity.cpp" />

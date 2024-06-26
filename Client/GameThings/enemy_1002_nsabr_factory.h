@@ -21,23 +21,20 @@
 */
 #pragma once
 
-#include <memory>
-#include "../Game/Entity.h"
+#include "../GameThings/EntityFactory.h"
+#include "../Models/IAnimation.h"
 
 namespace Game {
 
-class EntityFactory {
+class Enemy_1002_nsabr_Factory final :
+	public EntityFactory {
 public:
-	EntityFactory() = default;
-	virtual ~EntityFactory() = default;
+	virtual bool Load() override;
+	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) override;
 
-public:
-	virtual bool Load() = 0;
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
-
-public:
-	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
-	static bool CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
+protected:
+	bool m_double;
+	std::unique_ptr<Game::IAnimationPose> m_pose[2];
 };
 
 }

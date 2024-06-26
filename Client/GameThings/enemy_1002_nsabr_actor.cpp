@@ -19,25 +19,35 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "enemy_1002_nsabr_actor.h"
 
-#include <memory>
-#include "../Game/Entity.h"
+Game::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
+	std::shared_ptr<ME::IModel> _f
+) : Actor(_f) {
+	_f->setScale(0.65f);
+}
 
-namespace Game {
+void Game::Enemy_1002_nsabr_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+	AnimationInfo* face = &m_info;
+	auto animf = m_current;
 
-class EntityFactory {
-public:
-	EntityFactory() = default;
-	virtual ~EntityFactory() = default;
+	AnimationInfo* c = face;
+	auto a = animf;
 
-public:
-	virtual bool Load() = 0;
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
-
-public:
-	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
-	static bool CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
-};
-
+	switch (status) {
+	default:
+	case AnimationStatus::Normal:
+		c->Default = a->findAnimation("Default");
+		c->Begin = nullptr;
+		c->Idle = a->findAnimation("Idle");
+		c->AttackIn = nullptr;
+		c->AttackLoop = a->findAnimation("Attack");
+		c->AttackOut = nullptr;
+		c->Die = a->findAnimation("Die");
+		c->StunIn = c->Default;
+		c->StunLoop = nullptr;
+		c->StunOut = nullptr;
+		c->MoveLoop = a->findAnimation("Run_Loop_02");
+		break;
+	}
 }

@@ -30,7 +30,7 @@ class ISummonMngr :
 	public Entity {
 public:
 	virtual void AddBegin() = 0;
-	virtual bool AddEntity(size_t id) = 0;
+	virtual bool AddEntity(size_t id, bool isEnemy = false) = 0;
 	virtual void AddEnd() = 0;
 
 public:

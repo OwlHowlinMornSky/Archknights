@@ -19,42 +19,43 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "EntityFactory.h"
+#include "enemy_1002_nsabr_factory.h"
+
+#include "enemy_1002_nsabr_actor.h"
+#include "enemy_1002_nsabr.h"
+
+bool Game::Enemy_1002_nsabr_Factory::Load() {
+	auto fac = Game::IAnimationFactory::Instance();
+
+	bool res = fac->CreateEnemyPose(m_pose[0], "enemy_1002_nsabr");
+	if (!res)
+		return false;
+
+	return true;
+}
+
+bool Game::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
+	auto unit = std::make_shared<Units::Enemy_1002_nsabr>();
+
+	auto anim0 = m_pose[0]->CreateAnimation();
+
+	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
+
+	Game::IActorGroup::Instance()->AddActor(actor);
+
+	unit->m_actor = actor;
+
+	ptr = unit;
+
+	return true;
+}
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> Create101();
-std::unique_ptr<Game::EntityFactory> Create128();
-std::unique_ptr<Game::EntityFactory> Create151();
-
-std::unique_ptr<Game::EntityFactory> CreateEnemy1002();
-
+std::unique_ptr<Game::EntityFactory> CreateEnemy1002() {
+	std::unique_ptr<Game::EntityFactory> res;
+	res = std::make_unique<Game::Enemy_1002_nsabr_Factory>();
+	return std::move(res);
 }
 
-bool Game::EntityFactory::Create(std::unique_ptr<Game::EntityFactory>& ptr, size_t entityId) {
-	switch (entityId) {
-	case 101:
-		ptr = EntityFactoryLink::Create101();
-		break;
-	case 128:
-		ptr = EntityFactoryLink::Create128();
-		break;
-	case 151:
-		ptr = EntityFactoryLink::Create151();
-		break;
-	default:
-		return false;
-	}
-    return true;
-}
-
-bool Game::EntityFactory::CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId) {
-	switch (entityId) {
-	case 1002:
-		ptr = EntityFactoryLink::CreateEnemy1002();
-		break;
-	default:
-		return false;
-	}
-	return true;
 }

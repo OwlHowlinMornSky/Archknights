@@ -220,6 +220,15 @@
     <ClInclude Include="Physics\Wall.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="GameThings\enemy_1002_nsabr.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\enemy_1002_nsabr_actor.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="GameThings\enemy_1002_nsabr_factory.h">
+      <Filter>GameThings\Units</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -353,5 +362,15 @@
     <ClCompile Include="Physics\Wall.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="GameThings\Mover.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\enemy_1002_nsabr.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\enemy_1002_nsabr_actor.cpp">
+      <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThings\enemy_1002_nsabr_factory.cpp" />
   </ItemGroup>
 </Project>

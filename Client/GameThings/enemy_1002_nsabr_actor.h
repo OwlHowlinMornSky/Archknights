@@ -21,23 +21,22 @@
 */
 #pragma once
 
-#include <memory>
-#include "../Game/Entity.h"
+#include "../Models/Actor.h"
 
 namespace Game {
 
-class EntityFactory {
+#ifdef ARCHKNIGHTS_LIMITED
+class Enemy_1002_nsabr_Actor_Vanilla final :
+	public Actor {
 public:
-	EntityFactory() = default;
-	virtual ~EntityFactory() = default;
+	Enemy_1002_nsabr_Actor_Vanilla(std::shared_ptr<ME::IModel> _f);
+	virtual ~Enemy_1002_nsabr_Actor_Vanilla() = default;
 
 public:
-	virtual bool Load() = 0;
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
-
-public:
-	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
-	static bool CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
+	virtual void ChangeStatus(AnimationStatus status) override;
 };
+#else
+using Char_151_Mytle_Actor_Vanilla = Actor2;
+#endif // ARCHKNIGHTS_LIMITED
 
 }

@@ -41,7 +41,7 @@ public:
 
 public:
 	virtual void AddBegin() override;
-	virtual bool AddEntity(size_t id) override;
+	virtual bool AddEntity(size_t id, bool isEnemy = false) override;
 	virtual void AddEnd() override;
 
 public:

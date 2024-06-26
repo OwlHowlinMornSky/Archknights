@@ -21,23 +21,34 @@
 */
 #pragma once
 
-#include <memory>
-#include "../Game/Entity.h"
+#include "Mover.h"
 
-namespace Game {
+namespace Units {
 
-class EntityFactory {
+class Enemy_1002_nsabr final :
+	public Mover {
+	using Parent = Mover;
 public:
-	EntityFactory() = default;
-	virtual ~EntityFactory() = default;
-
-public:
-	virtual bool Load() = 0;
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) = 0;
+	Enemy_1002_nsabr();
+	virtual ~Enemy_1002_nsabr();
 
 public:
-	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
-	static bool CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId);
+	virtual void OnJoined();
+	virtual void OnKicking();
+
+	virtual void FixedUpdate();
+
+	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+
+protected:
+	virtual bool TryAttack() override;
+	virtual bool StillCanAttack() override;
+	virtual void OnAttack() override;
+
+public:
+	Game::EntityLocationType m_targetAd;
+	Game::EntityIdType m_targetId;
+	float m_t[2];
 };
 
 }
