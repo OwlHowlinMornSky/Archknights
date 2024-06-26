@@ -45,15 +45,31 @@ public:
 
 	virtual IDetector* GetDetector(size_t id) override;
 
+	virtual void SetMove(float maxv, float maxa);
+	virtual void SetMoveSpeed(float maxv);
+	virtual void SetMoveAcceleration(float maxa);
+	virtual void BeginNormalMove();
+	virtual float MoveTo(float x, float y, float* out_pos, float* out_spd);
+	virtual void BeginUnbalance();
+	virtual void Push(float ix, float iy);
+	virtual void Pull(float fx, float fy);
+	virtual bool UpdateUnbalance(float* out_pos);
+	virtual void ClearSpeed();
+
 	virtual void OnBeginContact(IFixture* another) {}
 	virtual void OnEndContact(IFixture* another) {}
 
 protected:
-	void CreateCircle(b2World* world, uint8_t type, bool canBeBlocked, b2Vec2 pos, float radius);
+	void CreateCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius);
+	void CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float radius);
 
 protected:
+	bool m_isUnbalance;
+	float m_maxV;
+	float m_maxA;
 	b2Body* m_body;
 	b2Fixture* m_fixture;
+	b2FrictionJoint* m_frictionJoint;
 	std::vector<std::unique_ptr<Detector>> m_detectors;
 };
 

@@ -24,6 +24,7 @@
 #include "IFixture.h"
 #include "Detector.h"
 #include "Body.h"
+#include "Wall.h"
 
 namespace Physics {
 
@@ -70,22 +71,24 @@ void World::Update(float dt) {
 }
 
 std::unique_ptr<IWall> World::CreateWall() {
-	return std::unique_ptr<IWall>();
+	auto res = std::make_unique<Wall>();
+	res->Create(&m_world);
+	return std::move(res);
 }
 
 std::unique_ptr<IBody> World::CreateBodyTowerCircle(float x, float y, uint8_t type) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircle(&m_world, type, false, { x, y }, 0.25f);
+	res->CreateCircle(&m_world, type, { x, y }, 0.25f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverCircle(float x, float y, uint8_t type, bool canBeBlocked) {
+std::unique_ptr<IBody> World::CreateBodyMoverCircle(float x, float y, uint8_t type) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircle(&m_world, type, canBeBlocked, { x, y }, 0.1f);
+	res->CreateCircleEnemy(&m_world, type, { x, y }, 0.1f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverRectangle(float x, float y, uint8_t type, bool canBeBlocked) {
+std::unique_ptr<IBody> World::CreateBodyMoverRectangle(float x, float y, uint8_t type) {
 	return std::unique_ptr<IBody>();
 }
 
