@@ -33,6 +33,7 @@ enum : MsgResultType {
 	IncorrectId,
 
 	Leader_OutOfMap,
+	Leader_AtInvalidBlock,
 	Leader_NoAvailablePath,
 	Leader_AlreadyReached,
 	Leader_TempRes,

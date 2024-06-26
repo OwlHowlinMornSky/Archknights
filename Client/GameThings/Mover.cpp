@@ -116,10 +116,8 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		return DefEntityProc(msg, wparam, lparam);
 	case Game::MsgId::OnSelecting:
 		if (!m_active || m_died) {
-			printf_s("2\n");
 			return Game::MsgResult::MethodNotAllowed;
 		}
-		printf_s("1\n");
 		break;
 	case Game::MsgId::OnHpDropToZero:
 		if (m_died)

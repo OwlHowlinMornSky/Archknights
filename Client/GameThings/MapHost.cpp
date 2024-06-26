@@ -90,6 +90,8 @@ MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLp
 		int newy = m_searches[wparam](oldx, oldy).sourceY;
 		if (newx == -1 || newy == -1)
 			return MsgResult::Leader_NoAvailablePath;
+		if (m_tiles(oldx, oldy).obstacleLv)
+			return MsgResult::Leader_AtInvalidBlock;
 		if (newx == oldx && newy == oldy)
 			return MsgResult::Leader_AlreadyReached;
 		((int*)lparam)[0] = newx;

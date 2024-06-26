@@ -55,6 +55,16 @@ void Enemy_1002_nsabr::FixedUpdate() {
 			m_tempMoveTarget = true;
 		else if (res == Game::MsgResult::Leader_FinalRes)
 			m_tempMoveTarget = false;
+		else if (res == Game::MsgResult::Leader_AtInvalidBlock) {
+			m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
+			OnPositionChanged();
+			break;
+		}
+		else if (res == Game::MsgResult::Leader_NoAvailablePath) {
+			m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
+			OnPositionChanged();
+			break;
+		}
 		else
 			break;
 		m_t[0] = target[0] + 0.5f;
