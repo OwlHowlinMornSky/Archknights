@@ -28,7 +28,6 @@ namespace Game {
 
 namespace HostJob {
 enum Type {
-	Unknown = 0,
 	PlayerInputHandler,
 	PlayerCardBar,
 	MoverPathManager,

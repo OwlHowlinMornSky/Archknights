@@ -28,6 +28,7 @@ namespace Game::HostMsgId {
 enum Id : MsgIdType {
 	Null = 0,
 
+	MapInitOk,            // null.
 	MapInitCheckpointCnt, // wParam: Count.
 	MapInitCheckpointSet, // wParam: ID; lParam: int* to an int[2] array.
 	MapLeadQuery,         // wParam: Checkpoint ID; lParam: int* to an int[2] array.

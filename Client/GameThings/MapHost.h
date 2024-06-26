@@ -25,6 +25,7 @@
 #include <vector>
 #include <queue>
 #include <fstream>
+#include "../Physics/IWorld.h"
 
 namespace Game {
 
@@ -177,6 +178,8 @@ protected:
 	std::vector<Map::MapData<Map::TileSearch>> m_searches; // Result of search.
 	Map::MapData<Map::Tile> m_tiles; // Map data.
 	std::queue<std::pair<short, short>> Q; // Temporary queue when searching.
+
+	std::unique_ptr<Physics::IWall> m_wall;
 };
 
 }

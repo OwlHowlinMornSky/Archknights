@@ -32,7 +32,7 @@ GameBoard::GameBoard() :
 	m_time(0),
 	m_entityIdCnt(0) {
 	m_world = Physics::IWorld::CreateWorld();
-	m_hosts.resize((size_t)HostJob::COUNT - 1);
+	m_hosts.resize((size_t)HostJob::COUNT);
 }
 
 GameBoard::~GameBoard() {}
@@ -71,6 +71,9 @@ void GameBoard::Clear() {
 	while (!m_emptyLocations.empty())
 		m_emptyLocations.pop();
 	m_entityIdCnt = 0;
+
+	m_hosts.clear();
+
 	m_world.reset();
 	m_msgMap.clear();
 }
@@ -208,13 +211,13 @@ void GameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 }
 
 std::shared_ptr<Host> GameBoard::GetHost(int job) {
-	if (job <= 0 || job >= HostJob::COUNT - 1)
+	if (job < 0 || job >= HostJob::COUNT)
 		return std::shared_ptr<Host>();
 	return m_hosts[job];
 }
 
 void GameBoard::SetHost(int job, std::shared_ptr<Host> host) {
-	if (job <= 0 || job >= HostJob::COUNT - 1)
+	if (job < 0 || job >= HostJob::COUNT)
 		return;
 	m_hosts[job] = host;
 	return;

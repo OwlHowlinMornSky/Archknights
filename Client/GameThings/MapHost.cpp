@@ -21,7 +21,10 @@
 */
 #include "MapHost.h"
 
+#include "../Game/MsgResult.h"
 #include "HostMsgId.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
 
 namespace Game {
 
@@ -32,26 +35,47 @@ MapHost::MapHost() :
 MapHost::~MapHost() {}
 
 bool MapHost::Load(std::ifstream& ifs) {
+	int m, n;
+	ifs >> m >> n;
+	m_tiles.ChangeSize(m, n);
+
+	m_wall = Game::GameGlobal::board->m_world->CreateWall();
+
+	m_wall->SetSize(m, n);
+
+	for (int j = 0; j < n; ++j) {
+		for (int i = 0; i < m; ++i) {
+			int s;
+			ifs >> s;
+			if (s & 0x01) { // 高台
+				m_tiles(i, j).obstacleLv = 1;
+				m_wall->AddWallBlock(i, j);
+			}
+		}
+	}
+
 	return false;
 }
 
 MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {
+	case HostMsgId::MapInitOk:
+		for (size_t i = 0, n = m_checkpointCnt; i < n; ++i) {
+			Search(i);
+			m_checkppointLastChange[i] = m_statusChangeCnt;
+		}
+		break;
 	case HostMsgId::MapInitCheckpointCnt:
-	{
 		m_checkpointCnt = wparam;
 		m_checkppointLastChange.resize(m_checkpointCnt);
 		m_checkpoints.resize(m_checkpointCnt);
 		m_mapRefCnt.resize(m_checkpointCnt);
 		m_searches.resize(m_checkpointCnt);
 		break;
-	}
 	case HostMsgId::MapInitCheckpointSet:
-	{
 		m_checkpoints[wparam].first = ((int*)lparam)[0];
 		m_checkpoints[wparam].second = ((int*)lparam)[1];
 		break;
-	}
 	case HostMsgId::MapLeadQuery:
 	{
 		if (m_checkppointLastChange[wparam] < m_statusChangeCnt) {
@@ -60,11 +84,19 @@ MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLp
 		}
 		int oldx = ((int*)lparam)[0];
 		int oldy = ((int*)lparam)[1];
+		if (oldx < 0 || oldx >= m_searches[wparam].m || oldy < 0 || oldy > m_searches[wparam].n)
+			return MsgResult::Leader_OutOfMap;
 		int newx = m_searches[wparam](oldx, oldy).sourceX;
 		int newy = m_searches[wparam](oldx, oldy).sourceY;
+		if (newx == -1 || newy == -1)
+			return MsgResult::Leader_NoAvailablePath;
+		if (newx == oldx && newy == oldy)
+			return MsgResult::Leader_AlreadyReached;
 		((int*)lparam)[0] = newx;
 		((int*)lparam)[1] = newy;
-		break;
+		if (newx == m_checkpoints[wparam].first && newy == m_checkpoints[wparam].second)
+			return MsgResult::Leader_FinalRes;
+		return MsgResult::Leader_TempRes;
 	}
 	case HostMsgId::MapStatusChanged:
 		m_statusChangeCnt++;
@@ -77,7 +109,7 @@ MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLp
 		m_mapRefCnt[wparam]--;
 		break;
 	}
-	return MsgResultType();
+	return MsgResult::OK;
 }
 
 void MapHost::ImmediatelyUpdate() {
@@ -97,7 +129,10 @@ void MapHost::Search(const size_t id, short x, short y) {
 	Map::MapData<Map::TileSearch>& searches = m_searches[id];
 
 	// 初始化数值;
-	searches.Reset();
+	if (searches.m != m_tiles.m || searches.n != m_tiles.n)
+		searches.ChangeSize(m_tiles.m, m_tiles.n);
+	else
+		searches.Reset();
 
 	// 写入终点;
 	searches(x, y).Set(x, y, 0, 0);

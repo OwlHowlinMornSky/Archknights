@@ -31,6 +31,13 @@ enum : MsgResultType {
 	MethodNotAllowed,
 	EmptyPlace,
 	IncorrectId,
+
+	Leader_OutOfMap,
+	Leader_NoAvailablePath,
+	Leader_AlreadyReached,
+	Leader_TempRes,
+	Leader_FinalRes,
+
 	COUNT
 };
 
