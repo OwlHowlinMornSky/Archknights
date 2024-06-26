@@ -41,6 +41,9 @@
 #include <SFML/Window/Event.hpp>
 #include "MsgId.h"
 
+#include "MapHost.h"
+#include "HostMsgId.h"
+
 namespace Game {
 
 void Initalizator::OnJoined() {
@@ -49,7 +52,7 @@ void Initalizator::OnJoined() {
 	auto camera = std::make_shared<ME::PerspectiveCamera>();
 	camera->setAspectRatio(16.0f / 9.0f);
 	camera->setFOV(40.0f);
-	camera->setPosition(0.0f, -5.5f, 8.66025f);
+	camera->setPosition(0.0f + 5.5f, -5.5f + 3.5f, 8.66025f);
 	camera->setRotation(30.0f, 0.0f, 0.0f);
 	/*auto camera = std::make_shared<ME::ObliqueCamera>();
 	camera->setZNear(-15.0f);
@@ -67,6 +70,7 @@ void Initalizator::OnJoined() {
 	ground->LoadModelData("res/main_7-3/main.obj");
 	//ground->setRotation(0.0f, 180.0f, 0.0f);
 	ground->setScale(-1.0f, 1.0f, -1.0f);
+	ground->setPosition(5.5f, 3.5f, 0.0f);
 
 	auto actorGroup = Game::IActorGroup::Instance();
 
@@ -83,13 +87,30 @@ void Initalizator::OnJoined() {
 	summonmngr->AddEntity(151);
 	summonmngr->AddEntity(101);
 	summonmngr->AddEntity(128);
+	summonmngr->AddEntity(1002, true);
 	summonmngr->AddEnd();
 
 	///////////////////
 
-	pos[0] = 0.0f;
-	pos[1] = 0.0f;
+	pos[0] = 5.5f;
+	pos[1] = 3.5f;
 	Game::GameGlobal::board->SubscribeMsg(MsgId::GuiEvent, m_location);
+
+	auto maphost = std::make_shared<MapHost>();
+	std::ifstream ifs;
+	ifs.open("res/main_7-3/map.txt");
+	maphost->Load(ifs);
+
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 1, 0);
+	int testp[2] = { 0, 4 };
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t)&(testp[0]));
+
+	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
+
+	Game::GameGlobal::board->SetHost(
+		HostJob::MapPathManager,
+		maphost
+	);
 }
 
 void Initalizator::OnKicking() {
@@ -116,6 +137,9 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 				break;
 			case sf::Keyboard::Num3:
 				GameGlobal::board->PostMsg(2, 2, (intptr_t)this->pos);
+				break;
+			case sf::Keyboard::Num4:
+				GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Left:
 				pos[0] -= 1.0f;
