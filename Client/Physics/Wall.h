@@ -21,16 +21,30 @@
 */
 #pragma once
 
+#include "IWall.h"
+#include <box2d/box2d.h>
+
+#include <vector>
+
 namespace Physics {
 
-class IWall {
-protected:
-	IWall() = default;
+class Wall :
+	public IWall {
 public:
-	virtual ~IWall() = default;
+	Wall();
+	virtual ~Wall();
 
-	virtual void SetSize(int m, int n) = 0;
-	virtual void AddWallBlock(int posx, int posy) = 0;
+	static b2Body* GetWallInstance();
+
+	virtual void SetSize(int m, int n) override;
+	virtual void AddWallBlock(int posx, int posy) override;
+
+	void Create(b2World* world);
+
+protected:
+	b2Body* m_body;
+	b2Fixture* m_bound;
+	std::vector<b2Fixture*> m_fixtures;
 };
 
 }

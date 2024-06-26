@@ -217,6 +217,9 @@
     <ClInclude Include="GameThings\HostMsgId.h">
       <Filter>GameThings</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\Wall.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="GameThings\MapHost.cpp">
       <Filter>GameThings</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Wall.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
