@@ -65,6 +65,17 @@ public:
 		std::unique_ptr<IAnimationPose>& ptr1,
 		std::string_view name
 	) = 0;
+	/**
+	 * @brief
+	 * @param ptr
+	 * @param name 角色名称（非文件名称，例如基建动画文件名多一个‘build_’，但传参不应包含）。
+	 * @param type 0: 战斗正面, 1: 战斗背面, 2: 基建.
+	 * @return true 则加载成功。
+	 */
+	virtual bool CreateEnemyPose(
+		std::unique_ptr<IAnimationPose>& ptr,
+		std::string_view name
+	) = 0;
 
 public:
 	static IAnimationFactory* Instance();

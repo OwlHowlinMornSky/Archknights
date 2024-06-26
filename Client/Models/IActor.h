@@ -41,7 +41,8 @@ public:
 		Idle,
 		Attack,
 		Stun,
-		Die
+		Die,
+		Move
 	};
 
 	enum class AnimationStatus : char {
@@ -75,6 +76,7 @@ public:
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
 	virtual void TriggerAnimationEx(int excode, void* data) = 0;
+	virtual void TurnDirection(bool isLeft) = 0;
 
 	virtual void ChangeStatus(AnimationStatus status) = 0;
 

@@ -126,6 +126,7 @@ public:
 		std::unique_ptr<IAnimationPose>& ptr1,
 		std::string_view name
 	) override;
+	virtual bool CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) override;
 
 private:
 	Game::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);

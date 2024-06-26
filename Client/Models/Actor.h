@@ -48,6 +48,24 @@ struct AnimationInfo {
 	InfoType StunLoop;
 	InfoType StunOut;
 	InfoType Die;
+	InfoType MoveIn;
+	InfoType MoveLoop;
+	InfoType MoveOut;
+
+	AnimationInfo() :
+		Default(nullptr),
+		Begin(nullptr),
+		Idle(nullptr),
+		AttackIn(nullptr),
+		AttackLoop(nullptr),
+		AttackOut(nullptr),
+		StunIn(nullptr),
+		StunLoop(nullptr),
+		StunOut(nullptr),
+		Die(nullptr),
+		MoveIn(nullptr),
+		MoveLoop(nullptr),
+		MoveOut(nullptr) {}
 };
 
 class Actor :
@@ -67,6 +85,7 @@ public:
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 	virtual void TriggerAnimationEx(int excode, void* data) override;
+	virtual void TurnDirection(bool isLeft) override;
 
 	virtual void ChangeStatus(AnimationStatus status) override;
 
@@ -118,6 +137,7 @@ public:
 
 	virtual void TriggerAnimation(AnimationEvent type, Direction direction) override;
 	virtual void TriggerAnimationEx(int excode, void* data) override;
+	virtual void TurnDirection(bool isLeft) override;
 
 	virtual void ChangeStatus(AnimationStatus status) override;
 

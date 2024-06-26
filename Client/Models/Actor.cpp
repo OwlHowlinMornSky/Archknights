@@ -35,7 +35,7 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_isRolling(false),
 	m_direction(Direction::FR),
 	m_targetDirection(Direction::FR),
-	m_currentRLDirection(false),
+	m_currentRLDirection(1.0f),
 	m_current(nullptr),
 	m_holdPTR(_f),
 
@@ -125,6 +125,16 @@ void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
 		m_note->DieOver = 0;
 		modify->setAnimation(0, info->Die, false);
 		break;
+	case AnimationEvent::Move:
+		if (info->MoveIn != nullptr && info->MoveLoop != nullptr) {
+			modify->setAnimation(0, info->MoveIn, false);
+			modify->addAnimation(0, info->MoveLoop, true, 0.0f);
+		}
+		else if (info->MoveLoop != nullptr)
+			modify->setAnimation(0, info->MoveLoop, true);
+		else if (info->MoveIn != nullptr)
+			modify->setAnimation(0, info->MoveIn, false);
+		break;
 	default:
 		modify->setAnimation(0, info->Default, false);
 	}
@@ -137,6 +147,42 @@ void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
 }
 
 void Actor::TriggerAnimationEx(int excode, void* data) {}
+
+void Actor::TurnDirection(bool isLeft) {
+	if (m_isRolling) {
+		switch (m_targetDirection) {
+		case Direction::FL:
+			m_targetDirection = Direction::FR;
+			break;
+		case Direction::FR:
+			m_targetDirection = Direction::FL;
+			break;
+		case Direction::BL:
+			m_targetDirection = Direction::BR;
+			break;
+		case Direction::BR:
+			m_targetDirection = Direction::BL;
+			break;
+		}
+	}
+	else if (isLeft != (m_direction == Direction::FL)) {
+		m_isRolling = true;
+		switch (m_direction) {
+		case Direction::FL:
+			m_targetDirection = Direction::FR;
+			break;
+		case Direction::FR:
+			m_targetDirection = Direction::FL;
+			break;
+		case Direction::BL:
+			m_targetDirection = Direction::BR;
+			break;
+		case Direction::BR:
+			m_targetDirection = Direction::BL;
+			break;
+		}
+	}
+}
 
 void Actor::ChangeStatus(AnimationStatus status) {}
 
@@ -427,6 +473,8 @@ void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 }
 
 void Actor2::TriggerAnimationEx(int excode, void* data) {}
+
+void Actor2::TurnDirection(bool isLeft) {}
 
 void Actor2::ChangeStatus(AnimationStatus status) {}
 

@@ -455,6 +455,16 @@ char SpineFactory::CreatePose2(
 	return res;
 }
 
+bool SpineFactory::CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) {
+	Game::IAnimationPose* res = nullptr;
+	std::string path("res/battle/enemy/");
+	path += name;
+	res = createPoseBinary(path + ".skel", path + ".atlas");
+	if (res != nullptr)
+		ptr = std::unique_ptr<IAnimationPose>(res);
+	return res != nullptr;
+}
+
 Game::SpinePose* SpineFactory::createPoseBinary(
 	std::string_view binaryPath,
 	std::string_view atlasPath
