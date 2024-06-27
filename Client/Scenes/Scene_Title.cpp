@@ -219,7 +219,9 @@ constexpr int Indices[] = {
 namespace Scene {
 
 Title::Title() :
-	m_rotSpeed() {}
+	m_rotSpeed() {
+	m_camera.setType(ME::Camera::Type::Perspective);
+}
 
 Title::~Title() {}
 

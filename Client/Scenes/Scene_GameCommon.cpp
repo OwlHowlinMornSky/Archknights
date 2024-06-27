@@ -54,7 +54,7 @@ void GameCommon::Render() {
 	ME::Shader::Bind(m_ds);
 
 	for (auto& i : m_anims) {
-		i->Draw(*m_camera, *m_ds);
+		i->Draw(m_camera, *m_ds);
 	}
 
 	ME::Shader::Bind(nullptr);

@@ -30,23 +30,43 @@
 namespace ME {
 
 /**
- * @brief Camera 接口，具体实现有 透视相机 和 正交相机。
+ * @brief Camera，具体实现有 透视相机、正交相机 和 斜轴相机。
 */
-class ME_API Camera :
+class ME_API Camera final :
 	public ITransformR,
 	public ITransformT {
 public:
-	enum class Type {
-		Orthographic = 1,
+	enum class Type : unsigned char {
+		Orthographic = 0,
 		Perspective,
 		Oblique,
 
 		COUNT
 	};
+	struct CameraData {
+		union {
+			struct PerspectiveData {
+				float fov; // 纵向视场角
+				float aspectRatio; // 宽高比
+			} persp;
+			struct OrthographicData {
+				float dimX; // 画面宽度（不是半宽）
+				float dimY; // 画面高度（不是半高）
+			} ortho;
+			struct ObliqueData {
+				float dimX; // 画面宽度（不是半宽）
+				float dimY; // 画面高度（不是半高）
+				float sheerX;
+				float sheerY;
+			} obliq;
+		};
+		float zNear; // z of near plane
+		float zFar;  // z of far plane
+	};
 
 public:
 	Camera();
-	virtual ~Camera() = default;
+	~Camera() = default;
 
 public:
 	void setZFar(float z);
@@ -54,22 +74,39 @@ public:
 	void setZNear(float z);
 	float getZNear() const;
 
+	// 不使用 const & 的原因：update shader时传参为 非const 指针。
+	// 不使用 const 函数的原因：内部调用更新不为 const。
+
 	glm::mat4& getMatP();
 	glm::mat4& getMatV();
 	glm::mat4& getMatPV();
 
-	virtual Camera::Type getType() const = 0;
+	void setType(Camera::Type type);
+	Camera::Type getType() const;
+
+	void setFOV(float degree);
+	float getFOV() const;
+	void setAspectRatio(float ratio);
+	float getAspectRatio() const;
+
+	void setDim(float x, float y);
+	float getDimX() const;
+	float getDimY() const;
+
+	void setSheer(float a, float b);
+	float getSheerX() const;
+	float getSheerY() const;
 
 protected:
 	void ensureMatPVUpdated();
 	void updateMatV();
-	virtual void updateMatP() = 0;
+	void updateMatP();
 
 protected:
+	Type m_type;
 	bool m_matPVChanged;
 	bool m_matP_needUpdate;
-	float m_zNear; // z of near plane
-	float m_zFar;  // z of far plane
+	CameraData m_data;
 	glm::mat4 m_matP;
 	glm::mat4 m_matV;
 	glm::mat4 m_matPV;

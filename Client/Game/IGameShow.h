@@ -42,8 +42,8 @@ public:
 public:
 	void SetSize(sf::Vector2u size);
 
-	void SetCamera(std::shared_ptr<ME::Camera> cam);
-	std::shared_ptr<ME::Camera> GetCamera() const;
+	//void SetCamera(std::shared_ptr<ME::Camera> cam);
+	ME::Camera& GetCamera();
 
 	void AddModel(std::shared_ptr<ME::IModel> a);
 
@@ -60,7 +60,7 @@ protected:
 
 protected:
 	std::list<std::shared_ptr<ME::IModel>> m_anims;
-	std::shared_ptr<ME::Camera> m_camera;
+	ME::Camera m_camera;
 	sf::Sprite m_sp;
 	sf::RenderTexture m_rtex;
 };

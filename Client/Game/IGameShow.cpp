@@ -25,8 +25,6 @@
 
 #include "IGameShow.h"
 
-#include <MysteryEngine/G3D/Camera.Perspective.h>
-
 namespace Game {
 
 IGameShow::IGameShow() {
@@ -42,20 +40,20 @@ void IGameShow::SetSize(sf::Vector2u size) {
 	m_rtex.create(size.x, size.y, sf::ContextSettings(24u));
 	m_sp.setTexture(m_rtex.getTexture(), true);
 
-	switch (m_camera->getType()) {
+	switch (m_camera.getType()) {
 	case ME::Camera::Type::Perspective:
-		((ME::PerspectiveCamera*)m_camera.get())->setAspectRatio(1.0f * size.x / size.y);
+		m_camera.setAspectRatio(1.0f * size.x / size.y);
 		break;
 	default:
 		break;
 	}
 }
 
-void IGameShow::SetCamera(std::shared_ptr<ME::Camera> cam) {
-	m_camera = cam;
-}
+//void IGameShow::SetCamera(std::shared_ptr<ME::Camera> cam) {
+//	m_camera = cam;
+//}
 
-std::shared_ptr<ME::Camera> IGameShow::GetCamera() const {
+ME::Camera& IGameShow::GetCamera() {
 	return m_camera;
 }
 
@@ -117,7 +115,7 @@ void IGameShow::TestPoint(sf::Vector2i pt, glm::vec3* outpt) {
 
 	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, d * 2.0f - 1.0f, 1.0f);
 
-	glm::vec4 res = glm::inverse(m_camera->getMatPV()) * ndc;
+	glm::vec4 res = glm::inverse(m_camera.getMatPV()) * ndc;
 
 	if (outpt) {
 		outpt[0].x = res.x / res.w;

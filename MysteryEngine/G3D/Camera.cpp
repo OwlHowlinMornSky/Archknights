@@ -26,47 +26,43 @@
 namespace ME {
 
 Camera::Camera() :
+	m_type(Type::COUNT),
 	m_matPVChanged(false),
 	m_matP_needUpdate(false),
-	m_zNear(0.5f),
-	m_zFar(128.0f),
+	m_data{ 0 },
 	m_matP(),
 	m_matV(),
 	m_matPV() {}
 
 void Camera::setZFar(float z) {
-	if (z > m_zNear && z <= 65536.0f) {
-		m_zFar = z;
-		m_matP_needUpdate = true;
-	}
+	m_data.zFar = z;
+	m_matP_needUpdate = true;
 	return;
 }
 
 float Camera::getZFar() const {
-	return m_zFar;
+	return m_data.zFar;
 }
 
 void Camera::setZNear(float z) {
-	m_zNear = z;
+	m_data.zNear = z;
 	m_matP_needUpdate = true;
 	return;
 }
 
 float Camera::getZNear() const {
-	return m_zNear;
+	return m_data.zNear;
 }
 
 glm::mat4& Camera::getMatP() {
-	if (m_matP_needUpdate) {
+	if (m_matP_needUpdate)
 		updateMatP();
-	}
 	return m_matP;
 }
 
 glm::mat4& Camera::getMatV() {
-	if (m_positionChanged || m_rotationChanged) {
+	if (m_positionChanged || m_rotationChanged)
 		updateMatV();
-	}
 	return m_matV;
 }
 
@@ -75,13 +71,90 @@ glm::mat4& Camera::getMatPV() {
 	return m_matPV;
 }
 
+void Camera::setType(Camera::Type type) {
+	switch (type) {
+	case Type::Orthographic:
+		m_data.ortho.dimX = 8.0f;
+		m_data.ortho.dimY = 3.0f;
+		break;
+	case Type::Perspective:
+		m_data.persp.fov = 45.0f;
+		m_data.persp.aspectRatio = 1.0f;
+		break;
+	case Type::Oblique:
+		m_data.obliq.dimX = 8.0f;
+		m_data.obliq.dimY = 6.0f;
+		m_data.obliq.sheerX = 0.70710678118654752440f;
+		m_data.obliq.sheerY = 0.70710678118654752440f;
+		break;
+	default:
+		return;
+	}
+	m_data.zFar = 128.0f;
+	m_data.zNear = 0.25f;
+	m_type = type;
+	m_matP_needUpdate = true;
+	return;
+}
+
+Camera::Type Camera::getType() const {
+	return m_type;
+}
+
+void Camera::setFOV(float degree) {
+	if (degree < 1.0f) degree = 1.0f;
+	else if (degree > 179.0f) degree = 179.0f;
+	m_data.persp.fov = degree;
+	m_matP_needUpdate = true;
+	return;
+}
+
+float Camera::getFOV() const {
+	return m_data.persp.fov;
+}
+
+void Camera::setAspectRatio(float ratio) {
+	m_data.persp.aspectRatio = ratio;
+	m_matP_needUpdate = true;
+}
+
+float Camera::getAspectRatio() const {
+	return m_data.persp.aspectRatio;
+}
+
+void Camera::setDim(float x, float y) {
+	m_data.ortho.dimX = x;
+	m_data.ortho.dimY = y;
+	m_matP_needUpdate = true;
+}
+
+float Camera::getDimX() const {
+	return m_data.ortho.dimX;
+}
+
+float Camera::getDimY() const {
+	return m_data.ortho.dimY;
+}
+
+void Camera::setSheer(float a, float b) {
+	m_data.obliq.sheerX = a;
+	m_data.obliq.sheerY = b;
+	m_matP_needUpdate = true;
+}
+
+float Camera::getSheerX() const {
+	return m_data.obliq.sheerX;
+}
+
+float Camera::getSheerY() const {
+	return m_data.obliq.sheerY;
+}
+
 void Camera::ensureMatPVUpdated() {
-	if (m_matP_needUpdate) {
+	if (m_matP_needUpdate)
 		updateMatP();
-	}
-	if (m_positionChanged || m_rotationChanged) {
+	if (m_positionChanged || m_rotationChanged)
 		updateMatV();
-	}
 	if (m_matPVChanged) {
 		m_matPV = m_matP * m_matV;
 		m_matPVChanged = false;
@@ -104,6 +177,47 @@ void Camera::updateMatV() {
 	// 标记
 	m_positionChanged = false;
 	m_rotationChanged = false;
+	m_matPVChanged = true;
+	return;
+}
+
+void Camera::updateMatP() {
+	// 计算矩阵
+	switch (m_type) {
+	case Type::Orthographic:
+	{
+		// 计算半宽和半高
+		float x = m_data.ortho.dimX * 0.5f;
+		float y = m_data.ortho.dimY * 0.5f;
+		// 计算矩阵
+		m_matP = glm::ortho(-x, x, -y, y, m_data.zNear, m_data.zFar);
+		break;
+	}
+	case Type::Perspective:
+	{
+		m_matP = glm::perspective(
+			glm::radians(m_data.persp.fov),
+			m_data.persp.aspectRatio,
+			m_data.zNear,
+			m_data.zFar
+		);
+		break;
+	}
+	case Type::Oblique:
+	{
+		// 计算半宽和半高
+		float x = m_data.obliq.dimX * 0.5f;
+		float y = m_data.obliq.dimY * 0.5f;
+		// 计算矩阵
+		m_matP = glm::identity<glm::mat4>();
+		m_matP[2][0] = -m_data.obliq.sheerX;
+		m_matP[2][1] = -m_data.obliq.sheerY;
+		m_matP = glm::ortho(-x, x, -y, y, m_data.zNear, m_data.zFar) * m_matP;
+		break;
+	}
+	}
+	// 标记
+	m_matP_needUpdate = false;
 	m_matPVChanged = true;
 	return;
 }

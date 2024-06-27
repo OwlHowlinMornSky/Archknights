@@ -25,7 +25,6 @@
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/Vertex.h>
-#include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/ITransformS.h>
 
 #include "Scene_ITitle.h"
@@ -100,7 +99,7 @@ protected:
 
 protected:
 	::Shader_Title_Sphere m_shader;
-	ME::PerspectiveCamera m_camera;
+	ME::Camera m_camera;
 	::LineModel m_llm;
 	sf::RenderTexture m_rtex;
 	sf::Sprite m_sp;

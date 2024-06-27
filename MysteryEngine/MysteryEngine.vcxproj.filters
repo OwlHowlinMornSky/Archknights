@@ -57,12 +57,6 @@
     <ClCompile Include="G3D\Camera.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
-    <ClCompile Include="G3D\Camera.Orthographic.cpp">
-      <Filter>Source files\G3D</Filter>
-    </ClCompile>
-    <ClCompile Include="G3D\Camera.Perspective.cpp">
-      <Filter>Source files\G3D</Filter>
-    </ClCompile>
     <ClCompile Include="G3D\GlCheck.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
@@ -114,7 +108,7 @@
     <ClCompile Include="Core\TempGuard.cpp">
       <Filter>Source files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="G3D\Camera.Oblique.cpp">
+    <ClCompile Include="G3D\Scene.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -153,12 +147,6 @@
       <Filter>Header files\G3D</Filter>
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\G3D\Camera.h">
-      <Filter>Header files\G3D</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\G3D\Camera.Orthographic.h">
-      <Filter>Header files\G3D</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MysteryEngine\G3D\Camera.Perspective.h">
       <Filter>Header files\G3D</Filter>
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\G3D\GlCheck.h">
@@ -209,7 +197,7 @@
     <ClInclude Include="include\MysteryEngine\Core\RandGen.h">
       <Filter>Header files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\MysteryEngine\G3D\Camera.Oblique.h">
+    <ClInclude Include="include\MysteryEngine\G3D\Scene.h">
       <Filter>Header files\G3D</Filter>
     </ClInclude>
   </ItemGroup>
