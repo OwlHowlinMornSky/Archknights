@@ -25,44 +25,28 @@
 #include <list>
 
 #include <MysteryEngine/G3D/IModel.h>
-#include <MysteryEngine/G3D/Camera.h>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RenderTexture.hpp>
+#include <MysteryEngine/G3D/Scene.h>
 
 namespace Game {
 
 class IGameShow :
-	public sf::Drawable {
+	public ME::Scene {
 protected:
 	IGameShow();
 public:
 	virtual ~IGameShow() = default;
 
 public:
-	void SetSize(sf::Vector2u size);
-
-	//void SetCamera(std::shared_ptr<ME::Camera> cam);
-	ME::Camera& GetCamera();
-
 	void AddModel(std::shared_ptr<ME::IModel> a);
 
-	void Update(float dt);
-	void Draw();
-
-	void TestPoint(sf::Vector2i pt, glm::vec3* outpt);
+public:
+	virtual void update(float dt) override;
 
 protected:
-	virtual void Render() = 0;
-
-protected:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual void onSizeChanged(sf::Vector2u newsize);
 
 protected:
 	std::list<std::shared_ptr<ME::IModel>> m_anims;
-	ME::Camera m_camera;
-	sf::Sprite m_sp;
-	sf::RenderTexture m_rtex;
 };
 
 } // namespace Game

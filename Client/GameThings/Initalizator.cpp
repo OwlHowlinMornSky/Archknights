@@ -48,7 +48,7 @@ namespace Game {
 void Initalizator::OnJoined() {
 	GameGlobal::board->SubscribeMsg(5678, m_location);
 
-	auto& camera = Game::GameGlobal::show->GetCamera();
+	auto& camera = Game::GameGlobal::show->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
 	camera.setFOV(40.0f);
@@ -163,7 +163,7 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 		case sf::Event::MouseButtonPressed:
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
-				Game::GameGlobal::show->TestPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				Game::GameGlobal::show->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
 				GameGlobal::board->PostMsg(2, 3, (intptr_t)&(pos.x));
 			}
 			break;

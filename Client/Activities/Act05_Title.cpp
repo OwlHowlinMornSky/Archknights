@@ -53,7 +53,8 @@ bool Act05_Title::prepare(ME::Window& wnd) noexcept {
 
 void Act05_Title::start() noexcept {
 	m_scene = Scene::Factory::GetTitle();
-	m_scene->setup(r_wnd->getSize());
+	m_scene->resize(r_wnd->getSize());
+	m_scene->setup();
 
 	m_titleSp.setTexture(m_titleTex, true);
 	m_titleSp.setOrigin(m_titleTex.getSize().x / 2.0f, m_titleTex.getSize().y / 2.0f);
@@ -102,7 +103,7 @@ void Act05_Title::update(sf::Time dtime) {
 		else {
 			m_screen.setFillColor(sf::Color(0, 0, 0, 255 - m_timer.asMilliseconds()));
 			r_wnd->setActive(false);
-			m_scene->update(dtime);
+			m_scene->update(dtime.asSeconds());
 			m_scene->render();
 			r_wnd->setActive(true);
 			r_wnd->clear();
@@ -115,7 +116,7 @@ void Act05_Title::update(sf::Time dtime) {
 		[[fallthrough]];
 	case ST_NORMAL:
 		r_wnd->setActive(false);
-		m_scene->update(dtime);
+		m_scene->update(dtime.asSeconds());
 		m_scene->render();
 		r_wnd->setActive(true);
 		r_wnd->clear();
@@ -132,7 +133,7 @@ void Act05_Title::update(sf::Time dtime) {
 			m_scene->SetOffset(-0.5f);
 
 			r_wnd->setActive(false);
-			m_scene->update(dtime);
+			m_scene->update(dtime.asSeconds());
 			m_scene->render();
 			r_wnd->setActive(true);
 			r_wnd->clear();

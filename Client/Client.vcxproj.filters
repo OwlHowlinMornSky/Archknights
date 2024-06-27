@@ -88,9 +88,6 @@
     <ClInclude Include="GameThings\Creator.h">
       <Filter>GameThings</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Models\ActorGroup.h">
       <Filter>Models</Filter>
     </ClInclude>

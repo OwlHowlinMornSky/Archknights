@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,22 +21,45 @@
 */
 #pragma once
 
+#include <MysteryEngine/Core/MEAPI.h>
+#include <MysteryEngine/G3D/Camera.h>
+#include <memory>
+
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Window/Context.hpp>
 
-namespace Scene {
+namespace ME {
 
-class Scene :
+class ME_API Scene :
 	public sf::Drawable {
 public:
 	Scene() = default;
 	virtual ~Scene() = default;
 
-	virtual void setup(sf::Vector2u size) = 0;
-	virtual void update(sf::Time dt) = 0;
-	virtual void render() = 0;
+public:
+	void resize(sf::Vector2u size);
 
-	virtual void resize(sf::Vector2u size) = 0;
+	Camera& getCamera();
+	const Camera& getCamera() const;
+
+	virtual void setup(int code = 0, void* data = nullptr);
+	virtual void update(float dt);
+	void render();
+
+	bool testPoint(sf::Vector2i pt, glm::vec3* outpt);
+
+protected:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
+
+	virtual void onRender();
+	virtual void onSizeChanged(sf::Vector2u newsize);
+
+protected:
+	ME::Camera m_camera;
+	sf::Sprite m_sprite;
+	sf::RenderTexture m_renderTexture;
 };
 
 }

@@ -22,12 +22,12 @@
 #pragma once
 
 #include <memory>
-#include "Scene.h"
+#include <MysteryEngine/G3D/Scene.h>
 
 namespace Scene {
 
 class Scene_ITitle :
-	public Scene {
+	public ME::Scene {
 public:
 	virtual void SetScale(float r) = 0;
 	virtual void SetOffset(float r) = 0;

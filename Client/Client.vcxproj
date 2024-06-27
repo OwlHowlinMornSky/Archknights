@@ -364,7 +364,6 @@
     <ClInclude Include="Physics\Wall.h" />
     <ClInclude Include="Physics\World.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Scene_GameCommon.h" />
     <ClInclude Include="Scenes\Scene_ITitle.h" />
     <ClInclude Include="Scenes\Scene_Title.h" />

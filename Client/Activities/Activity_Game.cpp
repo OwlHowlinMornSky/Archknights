@@ -71,8 +71,8 @@ void Activity_Game::update(sf::Time dtime) {
 	if (m_paused)
 		dtime = sf::Time::Zero;
 	Game::GameGlobal::board->Update(dtime.asMicroseconds());
-	Game::GameGlobal::show->Update(dtime.asSeconds());
-	Game::GameGlobal::show->Draw();
+	Game::GameGlobal::show->update(dtime.asSeconds());
+	Game::GameGlobal::show->render();
 	r->draw(*Game::GameGlobal::show);
 	r->display();
 	return;
@@ -96,7 +96,7 @@ void Activity_Game::ExitGame(int code) {
 }
 
 void Activity_Game::UpdateSize(sf::Vector2u size) {
-	Game::GameGlobal::show->SetSize(size);
+	Game::GameGlobal::show->resize(size);
 	//auto& view = r->getView();
 	//sf::Vector2f size = view.getSize();
 }

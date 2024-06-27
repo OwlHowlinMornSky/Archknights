@@ -88,21 +88,16 @@ public:
 	virtual void SetOffset(float r) override;
 
 public:
-	virtual void setup(sf::Vector2u size) override;
-	virtual void update(sf::Time dt) override;
-	virtual void render() override;
-
-	virtual void resize(sf::Vector2u size) override;
+	virtual void setup(int code = 0, void* data = nullptr) override;
+	virtual void update(float dt) override;
 
 protected:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual void onRender();
+	virtual void onSizeChanged(sf::Vector2u newsize);
 
 protected:
 	::Shader_Title_Sphere m_shader;
-	ME::Camera m_camera;
 	::LineModel m_llm;
-	sf::RenderTexture m_rtex;
-	sf::Sprite m_sp;
 	float m_rotSpeed[3];
 };
 

@@ -36,7 +36,7 @@ public:
 	static void drop();
 
 protected:
-	virtual void Render() override;
+	virtual void onRender() override;
 
 protected:
 	ME::Shader* m_ds;

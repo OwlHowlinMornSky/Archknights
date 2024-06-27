@@ -22,6 +22,8 @@
 //#include <GL/glew.h>
 //#include <MysteryEngine/G3D/GlCheck.h>
 
+#include <GL/glew.h>
+#include <MysteryEngine/G3D/GlCheck.h>
 #include <MysteryEngine/G3D/Shader.Default.h>
 
 #include "Scene_GameCommon.h"
@@ -50,7 +52,21 @@ void GameCommon::drop() {
 	Game::GameGlobal::show.reset();
 }
 
-void GameCommon::Render() {
+void GameCommon::onRender() {
+	//glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+
+	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	glCheck(glViewport(0, 0, m_renderTexture.getSize().x, m_renderTexture.getSize().y));
+
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
+	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	glCheck(glEnable(GL_DEPTH_TEST));
+	glCheck(glDepthMask(GL_TRUE));
+
+	glCheck(glEnable(GL_CULL_FACE));
+	glCheck(glCullFace(GL_BACK));
+
 	ME::Shader::Bind(m_ds);
 
 	for (auto& i : m_anims) {

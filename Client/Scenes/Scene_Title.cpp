@@ -226,7 +226,7 @@ Title::Title() :
 Title::~Title() {}
 
 void Title::SetScale(float r) {
-	sf::Vector2u size = m_rtex.getSize();
+	sf::Vector2u size = m_renderTexture.getSize();
 	m_camera.setAspectRatio(1.0f * size.x / size.y);
 	return;
 }
@@ -235,11 +235,7 @@ void Title::SetOffset(float r) {
 	m_llm.setPosition(0.0f, 0.0f, 0.0f - r);
 }
 
-void Title::setup(sf::Vector2u size) {
-	m_rtex.create(size.x, size.y);
-	m_sp.setTexture(m_rtex.getTexture(), true);
-
-	m_camera.setAspectRatio(1.0f * size.x / size.y);
+void Title::setup(int code, void* data) {
 	m_camera.setPosition(0.0f, 0.0f, 12.0f);
 	m_camera.setFOV(9.0f);
 
@@ -294,17 +290,14 @@ void Title::setup(sf::Vector2u size) {
 	ME::G3dGlobal::setActive(false);
 }
 
-void Title::update(sf::Time dt) {
-	float ddt = dt.asSeconds();
-	m_llm.rotate(m_rotSpeed[0] * ddt, m_rotSpeed[1] * ddt, m_rotSpeed[2] * ddt);
+void Title::update(float dt) {
+	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
 	m_llm.normalizeRotation();
 }
 
-void Title::render() {
-	ME::G3dGlobal::setActive(true);
-	m_rtex.setActive(true);
+void Title::onRender() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
-	glCheck(glViewport(0, 0, m_rtex.getSize().x, m_rtex.getSize().y));
+	glCheck(glViewport(0, 0, m_renderTexture.getSize().x, m_renderTexture.getSize().y));
 
 	m_llm.update();
 	m_shader.update(m_camera);
@@ -315,21 +308,10 @@ void Title::render() {
 	m_llm.Draw();
 
 	ME::Shader::Bind(nullptr);
-
-	m_rtex.display();
-
-	//m_rtex.setActive(false);
-	ME::G3dGlobal::setActive(false);
 }
 
-void Title::resize(sf::Vector2u size) {
-	m_rtex.create(size.x, size.y);
-	m_sp.setTexture(m_rtex.getTexture(), true);
-	m_camera.setAspectRatio(1.0f * size.x / size.y);
-}
-
-void Title::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	return target.draw(m_sp, states);
+void Title::onSizeChanged(sf::Vector2u newsize) {
+	m_camera.setAspectRatio(1.0f * newsize.x / newsize.y);
 }
 
 } // namespace Scene
