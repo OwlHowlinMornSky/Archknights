@@ -32,6 +32,7 @@
 
 #include <MysteryEngine/G3D/Camera.Perspective.h>
 #include <MysteryEngine/G3D/Camera.Oblique.h>
+#include <MysteryEngine/G3D/Camera.Orthographic.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
 #include "../Models/IGround.h"
@@ -59,8 +60,13 @@ void Initalizator::OnJoined() {
 	camera->setZFar(15.0f);
 	camera->setDim(16.0f, 9.0f);
 	camera->setSheer(0.5f, 0.5f);
-	camera->setPosition(0.0f, -4.0f, 0.1f);
-	camera->setRotation(90.0f, 0.0f, 0.0f);*/
+	camera->setPosition(5.5f, -0.5f, 0.1f);
+	camera->setRotation(90.0f, 0.0f, 0.0f);
+	Game::GameGlobal::show->SetCamera(camera);*/
+	/*auto camera = std::make_shared<ME::OrthographicCamera>();
+	camera->setDim(16.0f, 9.0f);
+	camera->setPosition(5.5f, -5.5f + 3.5f, 8.66025f);
+	camera->setRotation(30.0f, 0.0f, 0.0f);*/
 	Game::GameGlobal::show->SetCamera(camera);
 
 	////////////////////
@@ -103,7 +109,7 @@ void Initalizator::OnJoined() {
 
 	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 1, 0);
 	int testp[2] = { 0, 4 };
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t)&(testp[0]));
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t) & (testp[0]));
 
 	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
 
@@ -139,7 +145,7 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 				GameGlobal::board->PostMsg(2, 2, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num4:
-				GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
+				//GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Left:
 				pos[0] -= 1.0f;
@@ -153,6 +159,15 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 			case sf::Keyboard::Up:
 				pos[1] += 1.0f;
 				break;
+			}
+			break;
+		case sf::Event::MouseMoved:
+			break;
+		case sf::Event::MouseButtonPressed:
+			if (e->mouseButton.button == sf::Mouse::Left) {
+				glm::vec3 pos;
+				Game::GameGlobal::show->TestPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				GameGlobal::board->PostMsg(2, 3, (intptr_t)&(pos.x));
 			}
 			break;
 		}

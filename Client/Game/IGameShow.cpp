@@ -30,12 +30,12 @@
 namespace Game {
 
 IGameShow::IGameShow() {
-	auto cam = std::make_shared<ME::PerspectiveCamera>();
+	/*auto cam = std::make_shared<ME::PerspectiveCamera>();
 	cam->setFOV(45.0f);
 	cam->setAspectRatio(16.0f / 9.0f);
 	cam->setZNear(0.25f);
 	cam->setZFar(128.0f);
-	SetCamera(cam);
+	SetCamera(cam);*/
 }
 
 void IGameShow::SetSize(sf::Vector2u size) {
@@ -93,6 +93,40 @@ void IGameShow::Draw() {
 
 	m_rtex.setActive(false);
 	ME::G3dGlobal::setActive(false);
+}
+
+void IGameShow::TestPoint(sf::Vector2i pt, glm::vec3* outpt) {
+	sf::Vector2u sz = m_rtex.getSize();
+
+	if (pt.x < 0)
+		pt.x = 0;
+	else if (pt.x >= (int)sz.x)
+		pt.x = sz.x - 1;
+	pt.y = sz.y - pt.y;
+	if (pt.y < 0)
+		pt.y = 0;
+	else if (pt.y >= (int)sz.y)
+		pt.y = sz.y - 1;
+
+	float d = 0.0f;
+	//ME::G3dGlobal::setActive(true);
+	m_rtex.setActive(true);
+	glCheck(glReadPixels(pt.x, pt.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &d));
+	m_rtex.setActive(false);
+	//ME::G3dGlobal::setActive(false);
+
+	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, d * 2.0f - 1.0f, 1.0f);
+
+	glm::vec4 res = glm::inverse(m_camera->getMatPV()) * ndc;
+
+	if (outpt) {
+		outpt[0].x = res.x / res.w;
+		outpt[0].y = res.y / res.w;
+		outpt[0].z = res.z / res.w;
+	}
+
+	printf_s("%10.6f, %10.6f, %10.6f\n", res.x / res.w, res.y / res.w, res.z / res.w);
+	return;
 }
 
 void IGameShow::draw(sf::RenderTarget& target, sf::RenderStates states) const {

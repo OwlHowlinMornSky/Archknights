@@ -50,6 +50,8 @@ public:
 	void Update(float dt);
 	void Draw();
 
+	void TestPoint(sf::Vector2i pt, glm::vec3* outpt);
+
 protected:
 	virtual void Render() = 0;
 
