@@ -2,6 +2,9 @@
 
 #include "MsgId.h"
 #include "../Game/MsgResult.h"
+#include "../Game/GameGlobal.h"
+#include "../Game/GameBoard.h"
+#include "HostMsgId.h"
 
 namespace Units {
 
@@ -17,12 +20,12 @@ void Mover::OnJoined() {
 	if (m_actor) {
 		m_actor->m_note = &m_note;
 	}
-	// 触发动画
-	ToStart();
 	// 创建主体
 	m_body = Game::GameGlobal::board->m_world->CreateBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
+	// 触发动画
+	ToStart();
 	m_active = true;
 	m_died = false;
 }
@@ -83,7 +86,27 @@ void Mover::FixedUpdate() {
 		}
 		break;
 	case Status::Moving:
+	{
+		float spd;
+		if (m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1], m_position, &spd) < (m_tempMoveTarget ? 0.5f : 0.1f)) {
+			OnPositionChanged();
+			if (!TryMove()) {
+				m_body->ClearSpeed();
+				ToIdle();
+				break;
+			}
+			m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+		}
+		else {
+			OnPositionChanged();
+
+			if (spd < 0.01f) {
+				TryMove();
+				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+			}
+		}
 		break;
+	}
 	case Status::Unbalance:
 		if (!m_body->UpdateUnbalance(m_position)) {
 			OnPositionChanged();
@@ -138,7 +161,15 @@ void Mover::ToStart(Game::IActor::Direction d) {
 		m_actor->ChangeStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
-	ToIdle(d);
+	if (TryMove()) {
+		m_actor->InitDirection(
+			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
+		);
+		ToMoving(Game::IActor::Direction::NotCare);
+	}
+	else {
+		ToIdle(d);
+	}
 }
 
 void Mover::ToBegin(Game::IActor::Direction d) {
@@ -150,6 +181,12 @@ void Mover::ToBegin(Game::IActor::Direction d) {
 }
 
 void Mover::ToIdle(Game::IActor::Direction d) {
+	if (TryMove()) {
+		ToMoving(
+			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
+		);
+		return;
+	}
 	m_status = Status::Idle;
 	if (m_actor)
 		m_actor->TriggerAnimation(
@@ -225,5 +262,35 @@ void Mover::BasicOnAttack() {
 }
 
 void Mover::OnAttack() {}
+
+bool Mover::TryMove() {
+	int target[2] = { (int)m_position[0], (int)m_position[1] };
+	Game::MsgResultType res =
+		Game::GameGlobal::board->
+		GetHost(Game::HostJob::MapPathManager)->
+		ReceiveMessage(Game::HostMsgId::MapLeadQuery, 0, (intptr_t)target);
+	switch (res) {
+	case Game::MsgResult::Leader_TempRes:
+		m_tempMoveTarget = true;
+		break;
+	case Game::MsgResult::Leader_FinalRes:
+		m_tempMoveTarget = false;
+		break;
+	case Game::MsgResult::Leader_AtInvalidBlock:
+		m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
+		OnPositionChanged();
+		return false;
+	case Game::MsgResult::Leader_NoAvailablePath:
+		m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
+		OnPositionChanged();
+		return false;
+	default:
+		return false;
+	}
+	m_moveTargetPos[0] = target[0] + 0.5f;
+	m_moveTargetPos[1] = target[1] + 0.5f;
+	m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1], m_position, nullptr);
+	return true;
+}
 
 }

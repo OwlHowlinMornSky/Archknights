@@ -79,9 +79,12 @@ protected:
 	void BasicOnAttack();
 	virtual void OnAttack();
 
+	bool TryMove();
+
 public:
 	bool m_active, m_died, m_atked;
 	bool m_tempMoveTarget;
+	float m_moveTargetPos[2];
 	Status m_status;
 	std::shared_ptr<Game::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;

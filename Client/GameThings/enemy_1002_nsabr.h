@@ -48,7 +48,6 @@ protected:
 public:
 	Game::EntityLocationType m_targetAd;
 	Game::EntityIdType m_targetId;
-	float m_t[2];
 };
 
 }

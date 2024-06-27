@@ -21,10 +21,6 @@
 */
 #include "enemy_1002_nsabr.h"
 
-#include "../Game/MsgResult.h"
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
-#include "HostMsgId.h"
 
 namespace Units {
 
@@ -35,7 +31,7 @@ Enemy_1002_nsabr::~Enemy_1002_nsabr() {}
 void Enemy_1002_nsabr::OnJoined() {
 	Parent::OnJoined();
 
-	m_body->SetMove(10.0f, 15.0f);
+	m_body->SetMove(1.0f, 5.0f);
 }
 
 void Enemy_1002_nsabr::OnKicking() {
@@ -43,90 +39,7 @@ void Enemy_1002_nsabr::OnKicking() {
 }
 
 void Enemy_1002_nsabr::FixedUpdate() {
-	switch (m_status) {
-	case Status::Idle:
-	{
-		int target[2] = { (int)m_position[0], (int)m_position[1] };
-		auto res =
-			Game::GameGlobal::board->
-			GetHost(Game::HostJob::MapPathManager)->
-			ReceiveMessage(Game::HostMsgId::MapLeadQuery, 0, (intptr_t)target);
-		if (res == Game::MsgResult::Leader_TempRes)
-			m_tempMoveTarget = true;
-		else if (res == Game::MsgResult::Leader_FinalRes)
-			m_tempMoveTarget = false;
-		else if (res == Game::MsgResult::Leader_AtInvalidBlock) {
-			m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
-			OnPositionChanged();
-			break;
-		}
-		else if (res == Game::MsgResult::Leader_NoAvailablePath) {
-			m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
-			OnPositionChanged();
-			break;
-		}
-		else
-			break;
-		m_t[0] = target[0] + 0.5f;
-		m_t[1] = target[1] + 0.5f;
-		m_body->MoveTo(m_t[0], m_t[1], m_position, nullptr);
-		ToMoving(m_t[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR);
-		break;
-	}
-	case Status::Moving:
-	{
-		float spd;
-		if (m_body->MoveTo(m_t[0], m_t[1], m_position, &spd) < (m_tempMoveTarget ? 0.5f : 0.1f)) {
-			OnPositionChanged();
-			int target[2] = { (int)m_position[0], (int)m_position[1] };
-			auto res =
-				Game::GameGlobal::board->
-				GetHost(Game::HostJob::MapPathManager)->
-				ReceiveMessage(Game::HostMsgId::MapLeadQuery, 0, (intptr_t)target);
-			if (res == Game::MsgResult::Leader_TempRes)
-				m_tempMoveTarget = true;
-			else if (res == Game::MsgResult::Leader_FinalRes)
-				m_tempMoveTarget = false;
-			else {
-				m_body->ClearSpeed();
-				ToIdle();
-				break;
-			}
-			m_t[0] = target[0] + 0.5f;
-			m_t[1] = target[1] + 0.5f;
-			m_body->MoveTo(m_t[0], m_t[1], m_position, nullptr);
-			m_actor->TurnDirection(m_t[0] < m_position[0]);
-		}
-		else {
-			OnPositionChanged();
-
-			if (spd < 0.01f) {
-				int target[2] = { (int)m_position[0], (int)m_position[1] };
-				auto res =
-					Game::GameGlobal::board->
-					GetHost(Game::HostJob::MapPathManager)->
-					ReceiveMessage(Game::HostMsgId::MapLeadQuery, 0, (intptr_t)target);
-				if (res == Game::MsgResult::Leader_TempRes)
-					m_tempMoveTarget = true;
-				else if (res == Game::MsgResult::Leader_FinalRes)
-					m_tempMoveTarget = false;
-				else {
-					m_body->ClearSpeed();
-					ToIdle();
-					break;
-				}
-				m_t[0] = target[0] + 0.5f;
-				m_t[1] = target[1] + 0.5f;
-				m_body->MoveTo(m_t[0], m_t[1], m_position, nullptr);
-				m_actor->TurnDirection(m_t[0] < m_position[0]);
-			}
-		}
-		break;
-	}
-	default:
-		return Parent::FixedUpdate();
-	}
-	return;
+	return Parent::FixedUpdate();
 }
 
 Game::MsgResultType Enemy_1002_nsabr::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
