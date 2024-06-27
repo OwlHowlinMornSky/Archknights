@@ -216,8 +216,6 @@ bool MyRegisterClass() noexcept {
 	WNDCLASSEX wcex{ 0 };
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-	// 没必要重绘。
-	wcex.style = CS_OWNDC | CS_DBLCLKS;
 	wcex.lpfnWndProc = ::MyWndProc;
 	wcex.hInstance = GetModuleHandleW(NULL);
 	wcex.hIconSm = wcex.hIcon;
