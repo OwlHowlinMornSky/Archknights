@@ -24,9 +24,21 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 #include <list>
-#include "IActorGroup.h"
 
 namespace Game {
+
+namespace ActorShaderUniformId {
+enum : int {
+	Mat4_PV = 0,
+	Mat4_M,
+	Vec3_CamPos,
+	Vec2_Offset,
+	Int1_CvrClr,
+	Vec4_CvrClr,
+
+	COUNT
+};
+}
 
 namespace ActorVertexAttribute {
 enum : unsigned int {
@@ -69,7 +81,7 @@ struct ActorVertex {
 };
 
 class ActorGroup final:
-	public IActorGroup {
+	public ME::IModel {
 public:
 	ActorGroup();
 

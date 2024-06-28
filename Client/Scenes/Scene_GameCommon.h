@@ -23,6 +23,8 @@
 
 #include "../Game/IGameShow.h"
 
+#include "../Models/ActorGroup.h"
+
 namespace Scene {
 
 class GameCommon final :
@@ -35,11 +37,21 @@ public:
 	static int setup();
 	static void drop();
 
+public:
+	virtual void update(float dt) override;
+
+	virtual void AddGround(std::shared_ptr<ME::IModel> ground) override;
+	virtual void AddActor(std::shared_ptr<ME::IModel> actor) override;
+
 protected:
 	virtual void onRender() override;
+	virtual void onSizeChanged(sf::Vector2u newsize) override;
 
 protected:
 	ME::Shader* m_ds;
+	sf::RenderTexture m_shadowTex;
+	std::shared_ptr<ME::IModel> m_ground;
+	Game::ActorGroup m_actors;
 };
 
 } // namespace Scene

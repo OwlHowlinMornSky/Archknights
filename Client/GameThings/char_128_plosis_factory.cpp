@@ -23,6 +23,7 @@
 
 #include "char_128_plosis.h"
 #include "char_128_plosis_actor.h"
+#include "../Game/IGameShow.h"
 
 bool Game::Char_128_Plosis_Factory::Load() {
 	auto fac = Game::IAnimationFactory::Instance();
@@ -50,11 +51,11 @@ bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 #ifdef ARCHKNIGHTS_LIMITED
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::IActorGroup::Instance()->AddActor(actor);
+	Game::GameGlobal::show->AddActor(actor);
 	unit->m_actor = actor;
 #else
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::IActorGroup::Instance()->AddActor(actor);
+	Game::GameGlobal::show->AddActor(actor);
 	unit->m_actor = actor;
 #endif // ARCHKNIGHTS_LIMITED
 

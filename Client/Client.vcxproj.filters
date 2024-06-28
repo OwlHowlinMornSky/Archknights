@@ -109,9 +109,6 @@
     <ClInclude Include="Models\IGround.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\IActorGroup.h">
-      <Filter>Models</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Actor.h">
       <Filter>Models</Filter>
     </ClInclude>

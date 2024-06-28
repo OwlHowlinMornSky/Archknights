@@ -28,7 +28,7 @@
 
 #include "Scene_GameCommon.h"
 #include "../Game/GameGlobal.h"
-//#include <MysteryEngine/G3D/G3dGlobal.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
 
 
@@ -52,28 +52,66 @@ void GameCommon::drop() {
 	Game::GameGlobal::show.reset();
 }
 
+void GameCommon::update(float dt) {
+	m_actors.Update(dt);
+}
+
+void GameCommon::AddGround(std::shared_ptr<ME::IModel> ground) {
+	m_ground = ground;
+}
+
+void GameCommon::AddActor(std::shared_ptr<ME::IModel> actor) {
+	return m_actors.AddActor(actor);
+}
+
 void GameCommon::onRender() {
-	//glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	m_shadowTex.setActive(true);
+
+	glCheck(glClear(GL_COLOR_BUFFER_BIT));
+	glCheck(glDisable(GL_DEPTH_TEST));
+
+
+	m_renderTexture.setActive(true);
 
 	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	glCheck(glViewport(0, 0, m_renderTexture.getSize().x, m_renderTexture.getSize().y));
-
-	glCheck(glEnable(GL_BLEND));
-	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
-	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	glCheck(glEnable(GL_DEPTH_TEST));
 	glCheck(glDepthMask(GL_TRUE));
 
-	glCheck(glEnable(GL_CULL_FACE));
-	glCheck(glCullFace(GL_BACK));
-
 	ME::Shader::Bind(m_ds);
 
-	for (auto& i : m_anims) {
-		i->Draw(m_camera, *m_ds);
-	}
+	m_ground->Draw(m_camera, *m_ds); // DRAW
+
+	glCheck(glDisable(GL_CULL_FACE));
+	glCheck(glDepthMask(GL_FALSE));
+
+	m_actors.Draw(m_camera, *m_ds); // DRAW
+
+	glCheck(glEnable(GL_CULL_FACE));
+	glCheck(glDepthMask(GL_TRUE));
 
 	ME::Shader::Bind(nullptr);
+}
+
+void GameCommon::onSizeChanged(sf::Vector2u newsize) {
+	m_shadowTex.create(newsize.x, newsize.y);
+
+	ME::G3dGlobal::setActive(true);
+	glCheck(glViewport(0, 0, newsize.x, newsize.y));
+	glCheck(glEnable(GL_CULL_FACE));
+	glCheck(glCullFace(GL_BACK));
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
+	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	//glCheck(glClearColor(1.0f, 0.0f, 0.0f, 1.0f));
+	ME::G3dGlobal::setActive(false);
+
+	switch (m_camera.getType()) {
+	case ME::Camera::Type::Perspective:
+		m_camera.setAspectRatio(1.0f * newsize.x / newsize.y);
+		break;
+	default:
+		break;
+	}
 }
 
 } // namespace Scene

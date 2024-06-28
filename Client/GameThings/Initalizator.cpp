@@ -22,26 +22,21 @@
 #include "Initalizator.h"
 
 #include "../Game/GameGlobal.h"
-#include "../Scenes/Scene_GameCommon.h"
 #include "../Game/GameBoard.h"
-#include "../Game/GameHost.h"
-#include "../Game/MsgResult.h"
 
-//#include <thread>
-//#include <functional>
-
+#include "../Game/IGameShow.h"
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
-
 #include "../Models/IGround.h"
-#include "../Models/IActorGroup.h"
 
-#include "ISummonMngr.h"
-#include <SFML/Window/Event.hpp>
-#include "MsgId.h"
-
+#include "../Game/GameHost.h"
 #include "MapHost.h"
 #include "HostMsgId.h"
+
+#include "ISummonMngr.h"
+#include "../Game/MsgResult.h"
+#include <SFML/Window/Event.hpp>
+#include "MsgId.h"
 
 namespace Game {
 
@@ -75,12 +70,9 @@ void Initalizator::OnJoined() {
 	ground->setScale(-1.0f, 1.0f, -1.0f);
 	ground->setPosition(5.5f, 3.5f, 0.0f);
 
-	auto actorGroup = Game::IActorGroup::Instance();
-
 	ME::G3dGlobal::setActive(false);
 
-	Game::GameGlobal::show->AddModel(ground);
-	Game::GameGlobal::show->AddModel(actorGroup);
+	Game::GameGlobal::show->AddGround(ground);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();

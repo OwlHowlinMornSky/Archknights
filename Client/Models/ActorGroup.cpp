@@ -227,12 +227,6 @@ void ActorGroup::Update(float dt) {
 }
 
 void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
-	//glCheck(glEnable(GL_BLEND));
-	glCheck(glDisable(GL_CULL_FACE));
-	glCheck(glDepthMask(GL_FALSE));
-
-	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
-
 	ME::Shader::Bind(m_shader.get());
 
 	m_shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PV, &(camera.getMatPV()[0][0]));
@@ -242,29 +236,6 @@ void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
 		i->Draw(camera, *m_shader);
 	}
 	ME::Shader::Bind(&shader);
-
-	//glCheck(glEnable(GL_BLEND));
-	glCheck(glEnable(GL_CULL_FACE));
-	glCheck(glDepthMask(GL_TRUE));
-
-	//glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 }
 
-}
-
-namespace {
-
-std::shared_ptr<Game::ActorGroup> g_group;
-
-}
-
-std::shared_ptr<Game::IActorGroup> Game::IActorGroup::Instance() {
-	if(g_group == nullptr)
-		g_group = std::make_shared<Game::ActorGroup>();
-	return g_group;
-}
-
-void Game::IActorGroup::Drop() {
-	g_group.reset();
-	return;
 }

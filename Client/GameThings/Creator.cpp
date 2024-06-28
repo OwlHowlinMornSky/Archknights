@@ -23,10 +23,8 @@
 
 #include "../Scenes/Scene_GameCommon.h"
 #include "../Game/GameBoard.h"
-#include "../Game/GameHost.h"
 #include "../Game/GameGlobal.h"
 
-#include "../Models/IActorGroup.h"
 #include "Initalizator.h"
 
 namespace Game::Creator {
@@ -39,7 +37,6 @@ int setup() {
 }
 
 void drop() {
-	Game::IActorGroup::Drop(); // 清除实例
 	Game::GameBoard::drop();
 	Scene::GameCommon::drop();
 }

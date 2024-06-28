@@ -349,7 +349,6 @@
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IActor.h" />
-    <ClInclude Include="Models\IActorGroup.h" />
     <ClInclude Include="Models\IAnimation.h" />
     <ClInclude Include="Models\IGround.h" />
     <ClInclude Include="Models\AnimationSpine.h" />

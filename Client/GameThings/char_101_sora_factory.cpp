@@ -23,6 +23,7 @@
 
 #include "char_101_sora.h"
 #include "char_101_sora_actor.h"
+#include "../Game/IGameShow.h"
 
 bool Game::Char_101_Sora_Factory::Load() {
 	auto fac = Game::IAnimationFactory::Instance();
@@ -41,7 +42,7 @@ bool Game::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 	auto actor = std::make_shared<Char_101_Sora_Actor_Vanilla>(anim0);
 
-	Game::IActorGroup::Instance()->AddActor(actor);
+	Game::GameGlobal::show->AddActor(actor);
 
 	unit->m_actor = actor;
 

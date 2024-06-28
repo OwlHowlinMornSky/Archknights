@@ -21,8 +21,6 @@
 */
 #include "Actor.h"
 
-#include "IActorGroup.h"
-
 #ifdef ARCHKNIGHTS_LIMITED
 #include <spine/Event.h>
 #include <spine/Animation.h>

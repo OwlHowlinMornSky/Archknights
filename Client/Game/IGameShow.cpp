@@ -34,24 +34,4 @@ IGameShow::IGameShow() {
 	m_camera.setZFar(128.0f);
 }
 
-void IGameShow::AddModel(std::shared_ptr<ME::IModel> a) {
-	m_anims.push_back(a);
-}
-
-void IGameShow::update(float dt) {
-	for (auto& i : m_anims) {
-		i->Update(dt);
-	}
-}
-
-void IGameShow::onSizeChanged(sf::Vector2u newsize) {
-	switch (m_camera.getType()) {
-	case ME::Camera::Type::Perspective:
-		m_camera.setAspectRatio(1.0f * newsize.x / newsize.y);
-		break;
-	default:
-		break;
-	}
-}
-
 } // namespace Game

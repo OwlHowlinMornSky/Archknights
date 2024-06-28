@@ -37,16 +37,8 @@ public:
 	virtual ~IGameShow() = default;
 
 public:
-	void AddModel(std::shared_ptr<ME::IModel> a);
-
-public:
-	virtual void update(float dt) override;
-
-protected:
-	virtual void onSizeChanged(sf::Vector2u newsize);
-
-protected:
-	std::list<std::shared_ptr<ME::IModel>> m_anims;
+	virtual void AddGround(std::shared_ptr<ME::IModel> ground) = 0;
+	virtual void AddActor(std::shared_ptr<ME::IModel> actor) = 0;
 };
 
 } // namespace Game
