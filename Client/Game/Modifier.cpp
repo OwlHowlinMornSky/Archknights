@@ -28,6 +28,7 @@
 
 Game::ModifySwitch::ModifySwitch() :
 	m_enabled(false),
+	m_attribute(Game::Entity::AttributeType::COUNT),
 	m_targetAd(0),
 	m_targetId(0) {}
 
