@@ -27,6 +27,15 @@
 #include <spine/EventData.h>
 #endif // ARCHKNIGHTS_LIMITED
 
+namespace {
+
+static constexpr float g_RotationRatio = 24.0f;
+static constexpr float g_InOutRatio = 9.0f;
+static constexpr float g_HitFadeRatio = 7.0f;
+static constexpr float g_HitFadeSpeed = 1.0f;
+
+}
+
 namespace Game {
 
 Actor::Actor(std::shared_ptr<ME::IModel> _f) :
@@ -39,7 +48,10 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 
 	m_lastEvent(AnimationEvent::Default),
 	m_hitFlash(0.0f),
-	m_hitFlashing(false)
+	m_hitFlashing(false),
+
+	m_isInOut(0),
+	m_currentInout(0.0f)
 
 {
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
@@ -52,7 +64,7 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 Actor::~Actor() {}
 
 bool Actor::Setup() {
-    return true;
+	return true;
 }
 
 void Actor::Clear() {}
@@ -207,9 +219,23 @@ void Actor::SetHit() {
 	m_hitFlashing = true;
 }
 
+void Actor::SetInOut(bool in) {
+	m_isInOut = in ? 1 : 2;
+	m_currentInout = in ? 0.0f : 1.0f;
+	if (m_currentInout < 0.5f) {
+		m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+	}
+	else {
+		float r = 2.0f * (m_currentInout - 0.5f);
+		m_current->SetColor(r, r, r, 1.0f);
+	}
+	m_shadowAlpha = m_currentInout;
+	return;
+}
+
 void Actor::Update(float dt) {
-	if (m_isRolling) {
-		float Delta = dt * 30.0f;
+	[[unlikely]] if (m_isRolling) {
+		float Delta = dt * g_RotationRatio;
 		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
 		if (toRL) { // 朝左转
 			m_currentRLDirection -= Delta;
@@ -229,8 +255,8 @@ void Actor::Update(float dt) {
 		}
 		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
 	}
-	if (m_hitFlashing) {
-		m_hitFlash -= (9.0f * m_hitFlash + 1.0f) * dt;
+	[[unlikely]] if (m_hitFlashing) {
+		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
 		if (m_hitFlash >= 1.0f)
 			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
 		else if (m_hitFlash > 0.0f)
@@ -239,6 +265,39 @@ void Actor::Update(float dt) {
 			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 			m_hitFlashing = false;
 		}
+	}
+	[[unlikely]] if (m_isInOut) {
+		float Delta = dt * g_InOutRatio;
+		if (m_isInOut == 1) {
+			m_currentInout += Delta;
+			if (m_currentInout >= 1.0f) {
+				m_currentInout = 1.0f;
+				m_isInOut = 0;
+			}
+			if (m_currentInout < 0.5f) {
+				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			}
+			else {
+				float r = 2.0f * (m_currentInout - 0.5f);
+				m_current->SetColor(r, r, r, 1.0f);
+			}
+		}
+		else {
+			m_currentInout -= Delta;
+			if (m_currentInout <= 0.0f) {
+				m_currentInout = 0.0f;
+				m_isInOut = 0;
+				m_waitingForQuit = true;
+			}
+			if (m_currentInout < 0.5f) {
+				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			}
+			else {
+				float r = 2.0f * (m_currentInout - 0.5f);
+				m_current->SetColor(r, r, r, 1.0f);
+			}
+		}
+		m_shadowAlpha = m_currentInout;
 	}
 	m_current->Update(dt);
 	return;
@@ -300,7 +359,10 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 
 	m_lastEvent(AnimationEvent::Default),
 	m_hitFlash(0.0f),
-	m_hitFlashing(false)
+	m_hitFlashing(false),
+
+	m_isInOut(0),
+	m_currentInout(0.0f)
 
 {
 	m_holdPTR[0] = _f;
@@ -510,9 +572,23 @@ void Actor2::SetHit() {
 	m_hitFlashing = true;
 }
 
+void Actor2::SetInOut(bool in) {
+	m_isInOut = in ? 1 : 2;
+	m_currentInout = in ? 0.0f : 1.0f;
+	if (m_currentInout < 0.5f) {
+		m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+	}
+	else {
+		float r = 2.0f * (m_currentInout - 0.5f);
+		m_current->SetColor(r, r, r, 1.0f);
+	}
+	m_shadowAlpha = m_currentInout;
+	return;
+}
+
 void Actor2::Update(float dt) {
-	if (m_isRolling) {
-		float Delta = dt * 30.0f;
+	[[unlikely]] if (m_isRolling) {
+		float Delta = dt * g_RotationRatio;
 		bool nowRL = (m_currentRLDirection < 0.0f);
 		bool nowFB = m_currentFBDirection;
 		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
@@ -589,8 +665,8 @@ void Actor2::Update(float dt) {
 		//set m_current rotate by m_currentRLDirection.
 		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
 	}
-	if (m_hitFlashing) {
-		m_hitFlash -= (9.0f * m_hitFlash + 1.0f) * dt;
+	[[unlikely]] if (m_hitFlashing) {
+		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
 		if (m_hitFlash >= 1.0f)
 			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
 		else if (m_hitFlash > 0.0f)
@@ -599,6 +675,39 @@ void Actor2::Update(float dt) {
 			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 			m_hitFlashing = false;
 		}
+	}
+	[[unlikely]] if (m_isInOut) {
+		float Delta = dt * g_InOutRatio;
+		if (m_isInOut == 1) {
+			m_currentInout += Delta;
+			if (m_currentInout >= 1.0f) {
+				m_currentInout = 1.0f;
+				m_isInOut = 0;
+			}
+			if (m_currentInout < 0.5f) {
+				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			}
+			else {
+				float r = 2.0f * (m_currentInout - 0.5f);
+				m_current->SetColor(r, r, r, 1.0f);
+			}
+		}
+		else {
+			m_currentInout -= Delta;
+			if (m_currentInout <= 0.0f) {
+				m_currentInout = 0.0f;
+				m_isInOut = 0;
+				m_waitingForQuit = true;
+			}
+			if (m_currentInout < 0.5f) {
+				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			}
+			else {
+				float r = 2.0f * (m_currentInout - 0.5f);
+				m_current->SetColor(r, r, r, 1.0f);
+			}
+		}
+		m_shadowAlpha = m_currentInout;
 	}
 	m_current->Update(dt);
 	return;

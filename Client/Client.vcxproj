@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -150,7 +150,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -172,7 +172,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -196,7 +196,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -218,7 +218,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -238,7 +238,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;ARCHKNIGHTS_LIMITED;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -260,7 +260,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -284,7 +284,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CLIENT_OUTPUT;GLEW_STATIC;ARCHKNIGHTS_LIMITED;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(OHMS_LIB_DIR)\sfml\2.6.1\vc17-$(Platform)\include;$(OHMS_LIB_DIR)\opengl\glm-0.9.9.8\include;$(OHMS_LIB_DIR)\opengl\glew-2.2.0\include;$(SolutionDir)MysteryEngine\include;$(OHMS_LIB_DIR)\box2d\2.4.1\vc17-$(platform)\include;$(OHMS_LIB_DIR)\spine2d\3.8\include</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -357,6 +357,7 @@
     <ClInclude Include="Models\tiny_obj_loader.h" />
     <ClInclude Include="Physics\Body.h" />
     <ClInclude Include="Physics\Detector.h" />
+    <ClInclude Include="Physics\FrictionBody.h" />
     <ClInclude Include="Physics\IBody.h" />
     <ClInclude Include="Physics\IDetector.h" />
     <ClInclude Include="Physics\IFixture.h" />
@@ -415,6 +416,7 @@
     <ClCompile Include="Models\Shadow.cpp" />
     <ClCompile Include="Physics\Body.cpp" />
     <ClCompile Include="Physics\Detector.cpp" />
+    <ClCompile Include="Physics\FrictionBody.cpp" />
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
     <ClCompile Include="Scenes\Scene_GameCommon.cpp" />

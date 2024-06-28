@@ -34,7 +34,7 @@ void Mover::OnKicking() {
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
-		m_actor->Exit();
+		m_actor->SetInOut(false);
 	m_actor.reset();
 }
 
@@ -75,6 +75,9 @@ void Mover::FixedUpdate() {
 		}
 		break;
 	case Status::Dying:
+		float velocity[2];
+		m_body->GetPositionVelocity(m_position, velocity);
+		OnPositionChanged();
 		if (m_note.DieOver) {
 			KickSelf();
 		}
@@ -89,7 +92,7 @@ void Mover::FixedUpdate() {
 	{
 		float velocity[2];
 		m_body->GetPositionVelocity(m_position, velocity);
-			OnPositionChanged();
+		OnPositionChanged();
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
 		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
@@ -107,14 +110,14 @@ void Mover::FixedUpdate() {
 		}
 		else {
 			m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-			}
+		}
 		break;
 	}
 	case Status::Unbalance:
 	{
 		float velocity[2];
 		m_body->GetPositionVelocity(m_position, velocity);
-			OnPositionChanged();
+		OnPositionChanged();
 		if (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.01f) {
 			if (TryMove()) {
 				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
@@ -122,8 +125,8 @@ void Mover::FixedUpdate() {
 			}
 			else { // 不再继续
 				m_body->ClearSpeed();
-			ToIdle();
-		}
+				ToIdle();
+			}
 		}
 		break;
 	}
@@ -161,7 +164,8 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 	case Game::MsgId::OnHpDropToZero:
 		ToDying();
 		m_died = true;
-		m_body.reset();
+		m_body->BeginUnbalance();
+		//m_body->SetMove(1.0f, 0.0f);
 		m_detector.reset();
 		break;
 	default:
@@ -175,6 +179,7 @@ void Mover::ToStart(Game::IActor::Direction d) {
 		m_actor->ChangeStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
+		m_actor->SetInOut(true);
 	}
 	if (TryMove()) {
 		m_actor->InitDirection(

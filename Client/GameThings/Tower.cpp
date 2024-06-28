@@ -53,7 +53,7 @@ void Tower::OnKicking() {
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
-		m_actor->Exit();
+		m_actor->SetInOut(false);
 	m_actor.reset();
 }
 

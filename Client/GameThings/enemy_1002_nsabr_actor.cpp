@@ -25,6 +25,9 @@ Game::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
 	std::shared_ptr<ME::IModel> _f
 ) : Actor(_f) {
 	_f->setScale(0.65f);
+
+	m_shadowAlpha = 0.8f;
+	m_shadowRadius = 0.4f;
 }
 
 void Game::Enemy_1002_nsabr_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
