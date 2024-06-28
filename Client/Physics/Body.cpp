@@ -76,10 +76,7 @@ void Body::SetMove(float maxv, float maxa) {
 	}
 	else {
 		m_body->SetLinearDamping(maxa / maxv);
-		if (maxv > maxa)
-			m_frictionJoint->SetMaxForce(m_maxA * 0.5f);
-		else
-			m_frictionJoint->SetMaxForce(0.0f);
+		m_frictionJoint->SetMaxForce(0.0f);
 	}
 }
 
@@ -99,10 +96,7 @@ void Body::SetMoveAcceleration(float maxa) {
 
 void Body::BeginNormal() {
 	if (m_isUnbalance) {
-		if (m_maxV > m_maxA)
-			m_frictionJoint->SetMaxForce(m_maxA * 0.5f);
-		else
-			m_frictionJoint->SetMaxForce(0.0f);
+		m_frictionJoint->SetMaxForce(0.0f);
 		m_body->SetLinearDamping(m_maxA / m_maxV);
 	}
 	m_isUnbalance = false;
@@ -119,7 +113,7 @@ void Body::MoveTo(float x, float y) {
 void Body::BeginUnbalance() {
 	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(0.0f);
-		m_frictionJoint->SetMaxForce(m_maxA);
+		m_frictionJoint->SetMaxForce(9.8f);
 	}
 	m_isUnbalance = true;
 }
@@ -192,6 +186,7 @@ void Body::CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float rad
 	fixDef.filter.groupIndex = -2;
 	fixDef.filter.maskBits = 0x0006;
 	fixDef.filter.categoryBits = (0x0019 | (type << 8));
+	fixDef.friction = 0.0f;
 	fixDef.userData.pointer = (uintptr_t)this;
 
 	m_fixture = m_body->CreateFixture(&fixDef);

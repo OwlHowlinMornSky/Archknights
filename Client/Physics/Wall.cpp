@@ -66,6 +66,7 @@ void Physics::Wall::AddWallBlock(int posx, int posy) {
 	fixDef.filter.groupIndex = -3;
 	fixDef.filter.maskBits = 0x0001;
 	fixDef.filter.categoryBits = 0x0002;
+	fixDef.friction = 0.0f;
 	//fixDef.userData.pointer = (uintptr_t)this;
 
 	m_fixtures.push_back(m_body->CreateFixture(&fixDef));
