@@ -62,9 +62,14 @@ World::World() :
 	m_world.SetAllowSleeping(true);
 	//m_world.SetContactFilter();
 	m_world.SetContactListener(&m_contactListener);
+
+	m_frictionBody = std::make_unique<FrictionBody>();
+	m_frictionBody->Create(&m_world);
 }
 
-World::~World() {}
+World::~World() {
+	m_frictionBody.reset();
+}
 
 void World::Update(float dt) {
 	m_world.Step(dt, 4, 2);

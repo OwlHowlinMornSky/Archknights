@@ -29,9 +29,6 @@ Game::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
 ) : Actor2(_f, _b) {
 	_f->setScale(0.575f);
 	_b->setScale(0.575f);
-
-	m_shadowAlpha = 0.8f;
-	m_shadowRadius = 0.5f;
 }
 
 void Game::Char_151_Mytle_Actor_Vanilla::ChangeStatus(AnimationStatus status) {

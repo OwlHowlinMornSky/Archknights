@@ -19,30 +19,42 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "FrictionBody.h"
 
-#include "IWall.h"
-#include <box2d/box2d.h>
+namespace {
 
-#include <vector>
+b2Body* g_instance = nullptr;
 
-namespace Physics {
+}
 
-class Wall :
-	public IWall {
-public:
-	Wall();
-	virtual ~Wall();
+Physics::FrictionBody::FrictionBody() :
+	m_body(nullptr),
+	m_bound(nullptr)
+{}
 
-	virtual void SetSize(int m, int n) override;
-	virtual void AddWallBlock(int posx, int posy) override;
+Physics::FrictionBody::~FrictionBody() {
+	if (m_body) {
+		m_body->GetWorld()->DestroyBody(m_body);
+		m_body = nullptr;
+		m_bound = nullptr;
+	}
+	g_instance = nullptr;
+}
 
-	void Create(b2World* world);
+b2Body* Physics::FrictionBody::GetFrictionBodyInstance() {
+	return g_instance;
+}
 
-protected:
-	b2Body* m_body;
-	b2Fixture* m_bound;
-	std::vector<b2Fixture*> m_fixtures;
-};
+void Physics::FrictionBody::SetSize(int m, int n) {}
 
+void Physics::FrictionBody::AddWallBlock(int posx, int posy) {}
+
+void Physics::FrictionBody::Create(b2World* world) {
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.fixedRotation = true;
+	bodyDef.allowSleep = false;
+	m_body = world->CreateBody(&bodyDef);
+
+	g_instance = m_body;
 }

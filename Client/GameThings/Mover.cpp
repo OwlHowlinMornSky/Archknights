@@ -87,32 +87,46 @@ void Mover::FixedUpdate() {
 		break;
 	case Status::Moving:
 	{
-		float spd;
-		if (m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1], m_position, &spd) < (m_tempMoveTarget ? 0.5f : 0.1f)) {
+		float velocity[2];
+		m_body->GetPositionVelocity(m_position, velocity);
 			OnPositionChanged();
-			if (!TryMove()) {
-				m_body->ClearSpeed();
-				ToIdle();
-				break;
-			}
-			m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
-		}
-		else {
-			OnPositionChanged();
-
-			if (spd < 0.01f) {
-				TryMove();
+		float mx = m_position[0] - m_moveTargetPos[0];
+		float my = m_position[1] - m_moveTargetPos[1];
+		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
+			|| (mx * mx + my * my < 0.0225f) // 到达非临时目标
+			|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
+			) {
+			if (TryMove()) {
+				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
 			}
+			else { // 不再继续
+				m_body->ClearSpeed();
+				ToIdle();
+			}
 		}
+		else {
+			m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+			}
 		break;
 	}
 	case Status::Unbalance:
-		if (!m_body->UpdateUnbalance(m_position)) {
+	{
+		float velocity[2];
+		m_body->GetPositionVelocity(m_position, velocity);
 			OnPositionChanged();
+		if (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.01f) {
+			if (TryMove()) {
+				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+			}
+			else { // 不再继续
+				m_body->ClearSpeed();
 			ToIdle();
 		}
+		}
 		break;
+	}
 	default:
 		break;
 	}
@@ -134,6 +148,8 @@ void Mover::OnPositionChanged() {
 Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::OnGetAttack:
+		if (m_died)
+			break;
 		if (m_actor)
 			m_actor->SetHit();
 		return DefEntityProc(msg, wparam, lparam);
@@ -143,8 +159,6 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		}
 		break;
 	case Game::MsgId::OnHpDropToZero:
-		if (m_died)
-			break;
 		ToDying();
 		m_died = true;
 		m_body.reset();
@@ -157,14 +171,16 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 }
 
 void Mover::ToStart(Game::IActor::Direction d) {
-	if (m_actor)
+	if (m_actor) {
 		m_actor->ChangeStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
+	}
 	if (TryMove()) {
 		m_actor->InitDirection(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
+		m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		ToMoving(Game::IActor::Direction::NotCare);
 	}
 	else {
@@ -182,6 +198,7 @@ void Mover::ToBegin(Game::IActor::Direction d) {
 
 void Mover::ToIdle(Game::IActor::Direction d) {
 	if (TryMove()) {
+		m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		ToMoving(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
@@ -276,20 +293,23 @@ bool Mover::TryMove() {
 	case Game::MsgResult::Leader_FinalRes:
 		m_tempMoveTarget = false;
 		break;
+	case Game::MsgResult::Leader_AlreadyReached:
+	{
+		float mx = m_position[0] - m_moveTargetPos[0];
+		float my = m_position[1] - m_moveTargetPos[1];
+		if (mx * mx + my * my < 0.0225f)
+			return false;
+		break;
+	}
 	case Game::MsgResult::Leader_AtInvalidBlock:
-		m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
-		OnPositionChanged();
 		return false;
 	case Game::MsgResult::Leader_NoAvailablePath:
-		m_body->MoveTo(target[0] + 0.5f, target[1] + 0.5f, m_position, nullptr);
-		OnPositionChanged();
 		return false;
 	default:
 		return false;
 	}
 	m_moveTargetPos[0] = target[0] + 0.5f;
 	m_moveTargetPos[1] = target[1] + 0.5f;
-	m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1], m_position, nullptr);
 	return true;
 }
 

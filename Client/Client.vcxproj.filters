@@ -229,6 +229,9 @@
     <ClInclude Include="Models\ActorVertex.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\FrictionBody.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -376,6 +379,9 @@
     </ClCompile>
     <ClCompile Include="Models\Shadow.cpp">
       <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\FrictionBody.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

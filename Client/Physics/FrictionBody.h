@@ -28,11 +28,13 @@
 
 namespace Physics {
 
-class Wall :
+class FrictionBody :
 	public IWall {
 public:
-	Wall();
-	virtual ~Wall();
+	FrictionBody();
+	virtual ~FrictionBody();
+
+	static b2Body* GetFrictionBodyInstance();
 
 	virtual void SetSize(int m, int n) override;
 	virtual void AddWallBlock(int posx, int posy) override;
@@ -42,7 +44,6 @@ public:
 protected:
 	b2Body* m_body;
 	b2Fixture* m_bound;
-	std::vector<b2Fixture*> m_fixtures;
 };
 
 }

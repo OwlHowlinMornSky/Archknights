@@ -21,7 +21,7 @@
 */
 #include "Body.h"
 
-#include "Wall.h"
+#include "FrictionBody.h"
 
 namespace Physics {
 
@@ -69,14 +69,18 @@ IDetector* Body::GetDetector(size_t id) {
 }
 
 void Body::SetMove(float maxv, float maxa) {
+	m_maxV = maxv;
+	m_maxA = maxa;
 	if (m_isUnbalance) {
 		m_frictionJoint->SetMaxForce(maxa);
 	}
 	else {
 		m_body->SetLinearDamping(maxa / maxv);
+		if (maxv > maxa)
+			m_frictionJoint->SetMaxForce(m_maxA * 0.5f);
+		else
+			m_frictionJoint->SetMaxForce(0.0f);
 	}
-	m_maxV = maxv;
-	m_maxA = maxa;
 }
 
 void Body::SetMoveSpeed(float maxv) {
@@ -93,41 +97,29 @@ void Body::SetMoveAcceleration(float maxa) {
 	m_maxA = maxa;
 }
 
-void Body::BeginNormalMove() {
+void Body::BeginNormal() {
 	if (m_isUnbalance) {
-		m_body->GetWorld()->DestroyJoint(m_frictionJoint);
-		m_frictionJoint = nullptr;
-
+		if (m_maxV > m_maxA)
+			m_frictionJoint->SetMaxForce(m_maxA * 0.5f);
+		else
+			m_frictionJoint->SetMaxForce(0.0f);
 		m_body->SetLinearDamping(m_maxA / m_maxV);
 	}
 	m_isUnbalance = false;
 }
 
-float Body::MoveTo(float x, float y, float* out_pos, float* out_spd) {
+void Body::MoveTo(float x, float y) {
 	b2Vec2 f = { x, y };
-	b2Vec2 p = m_body->GetPosition();
-	f -= p;
-	float length = f.Length();
-	f *= m_maxA / length;
+	f -= m_body->GetPosition();
+	f *= m_maxA / f.Length();
 	m_body->ApplyForceToCenter(f, true);
-	if (out_pos) {
-		out_pos[0] = p.x;
-		out_pos[1] = p.y;
-	}
-	if (out_spd)
-		out_spd[0] = m_body->GetLinearVelocity().Length();
-	return length;
+	return;
 }
 
 void Body::BeginUnbalance() {
 	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(0.0f);
-
-		b2FrictionJointDef joint;
-		joint.maxForce = m_maxA;
-		joint.bodyA = m_body;
-		joint.bodyB = Wall::GetWallInstance();
-		m_frictionJoint = (b2FrictionJoint*)m_body->GetWorld()->CreateJoint(&joint);
+		m_frictionJoint->SetMaxForce(m_maxA);
 	}
 	m_isUnbalance = true;
 }
@@ -140,16 +132,17 @@ void Body::Pull(float fx, float fy) {
 	m_body->ApplyForceToCenter({ fx, fy }, true);
 }
 
-bool Body::UpdateUnbalance(float* out_pos) {
-	b2Vec2 v = m_body->GetLinearVelocity();
-	b2Vec2 p = m_body->GetPosition();
-	out_pos[0] = p.x;
-	out_pos[1] = p.y;
-	return v.LengthSquared() >= 0.1f;
-}
-
 void Body::ClearSpeed() {
 	m_body->SetLinearVelocity({ 0.0f, 0.0f });
+}
+
+void Body::GetPositionVelocity(float* out_position, float* out_velocity) {
+	b2Vec2 v = m_body->GetLinearVelocity();
+	b2Vec2 p = m_body->GetPosition();
+	out_position[0] = p.x;
+	out_position[1] = p.y;
+	out_velocity[0] = v.x;
+	out_velocity[1] = v.y;
 }
 
 void Body::CreateCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius) {
@@ -207,6 +200,12 @@ void Body::CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float rad
 	m_body->GetMassData(&mass);
 	mass.mass = 1.0f;
 	m_body->SetMassData(&mass);
+
+	b2FrictionJointDef joint;
+	joint.maxForce = 0.0f;
+	joint.bodyA = m_body;
+	joint.bodyB = FrictionBody::GetFrictionBodyInstance();
+	m_frictionJoint = (b2FrictionJoint*)m_body->GetWorld()->CreateJoint(&joint);
 
 	m_master = false;
 	return;

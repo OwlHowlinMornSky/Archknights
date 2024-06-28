@@ -45,16 +45,16 @@ public:
 
 	virtual IDetector* GetDetector(size_t id) override;
 
-	virtual void SetMove(float maxv, float maxa);
-	virtual void SetMoveSpeed(float maxv);
-	virtual void SetMoveAcceleration(float maxa);
-	virtual void BeginNormalMove();
-	virtual float MoveTo(float x, float y, float* out_pos, float* out_spd);
-	virtual void BeginUnbalance();
-	virtual void Push(float ix, float iy);
-	virtual void Pull(float fx, float fy);
-	virtual bool UpdateUnbalance(float* out_pos);
-	virtual void ClearSpeed();
+	virtual void SetMove(float maxv, float maxa) override;
+	virtual void SetMoveSpeed(float maxv) override;
+	virtual void SetMoveAcceleration(float maxa) override;
+	virtual void BeginNormal() override;
+	virtual void MoveTo(float x, float y) override;
+	virtual void BeginUnbalance() override;
+	virtual void Push(float ix, float iy) override;
+	virtual void Pull(float fx, float fy) override;
+	virtual void ClearSpeed() override;
+	virtual void GetPositionVelocity(float* out_position, float* out_velocity) override;
 
 	virtual void OnBeginContact(IFixture* another) {}
 	virtual void OnEndContact(IFixture* another) {}

@@ -21,12 +21,6 @@
 */
 #include "Wall.h"
 
-namespace {
-
-b2Body* g_instance = nullptr;
-
-}
-
 Physics::Wall::Wall() :
 	m_body(nullptr),
 	m_bound(nullptr) {}
@@ -37,12 +31,8 @@ Physics::Wall::~Wall() {
 		m_body = nullptr;
 		m_bound = nullptr;
 	}
-	g_instance = nullptr;
 }
 
-b2Body* Physics::Wall::GetWallInstance() {
-	return g_instance;
-}
 
 void Physics::Wall::SetSize(int m, int n) {
 	if (m_bound) {
@@ -87,8 +77,5 @@ void Physics::Wall::Create(b2World* world) {
 	bodyDef.fixedRotation = true;
 	bodyDef.allowSleep = false;
 	m_body = world->CreateBody(&bodyDef);
-
-	g_instance = m_body;
-
 	return;
 }

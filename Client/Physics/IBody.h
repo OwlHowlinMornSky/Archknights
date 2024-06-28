@@ -45,13 +45,13 @@ public:
 	virtual void SetMove(float maxv, float maxa) = 0;
 	virtual void SetMoveSpeed(float maxv) = 0;
 	virtual void SetMoveAcceleration(float maxa) = 0;
-	virtual void BeginNormalMove() = 0;
-	virtual float MoveTo(float x, float y, float* out_pos, float* out_spd) = 0; // true 表示到达目标.
+	virtual void BeginNormal() = 0;
+	virtual void MoveTo(float x, float y) = 0;
 	virtual void BeginUnbalance() = 0;
 	virtual void Push(float ix, float iy) = 0;
 	virtual void Pull(float fx, float fy) = 0;
-	virtual bool UpdateUnbalance(float* out_pos) = 0; // true 表示失衡继续; false 表示失衡结束.
 	virtual void ClearSpeed() = 0;
+	virtual void GetPositionVelocity(float* out_position, float* out_velocity) = 0;
 };
 
 }

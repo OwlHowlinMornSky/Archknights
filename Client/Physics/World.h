@@ -22,6 +22,7 @@
 #pragma once
 
 #include "IWorld.h"
+#include "FrictionBody.h"
 
 #include <box2d/box2d.h>
 
@@ -79,6 +80,7 @@ public:
 protected:
 	b2World m_world;
 	MyContactListener m_contactListener;
+	std::unique_ptr<FrictionBody> m_frictionBody;
 };
 
 }
