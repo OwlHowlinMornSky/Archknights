@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "IActor.h"
+#include "../Game/IActor.h"
 #include <MysteryEngine/G3D/IModel.h>
 
 #ifdef ARCHKNIGHTS_LIMITED
@@ -72,11 +72,13 @@ class Actor :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
-	public ME::IModel,
 	public IActor {
 public:
 	Actor(std::shared_ptr<ME::IModel> _f);
 	virtual ~Actor();
+
+	virtual bool Setup() override;
+	virtual void Clear() override;
 
 public:
 	virtual void Exit() override;
@@ -95,7 +97,7 @@ public:
 	virtual void SetHit() override;
 
 	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
 
 public:
 #ifdef ARCHKNIGHTS_LIMITED
@@ -124,11 +126,13 @@ class Actor2 :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
-	public ME::IModel,
 	public IActor {
 public:
 	Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Actor2();
+
+	virtual bool Setup() override;
+	virtual void Clear() override;
 
 public:
 	virtual void Exit() override;
@@ -147,7 +151,7 @@ public:
 	virtual void SetHit() override;
 
 	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
 
 public:
 #ifdef ARCHKNIGHTS_LIMITED

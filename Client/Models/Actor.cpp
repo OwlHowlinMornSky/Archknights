@@ -44,9 +44,18 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 {
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
 	m_current->setListener(this);
+
+	m_shadowRadius = 1.0f;
+	m_shadowAlpha = 1.0f;
 }
 
 Actor::~Actor() {}
+
+bool Actor::Setup() {
+    return true;
+}
+
+void Actor::Clear() {}
 
 void Actor::Exit() {
 	SetWaitingForQuit();
@@ -235,7 +244,7 @@ void Actor::Update(float dt) {
 	return;
 }
 
-void Actor::Draw(ME::Camera& camera, ME::Shader& shader) {
+void Actor::Draw(ME::Camera* camera, ME::Shader* shader) {
 	return m_current->Draw(camera, shader);
 }
 
@@ -299,9 +308,18 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 	m_current = GetAnimation(m_currentFBDirection);
 	GetAnimation(false)->setListener(this);
 	GetAnimation(true)->setListener(this);
+
+	m_shadowRadius = 1.0f;
+	m_shadowAlpha = 1.0f;
 }
 
 Actor2::~Actor2() {}
+
+bool Actor2::Setup() {
+	return true;
+}
+
+void Actor2::Clear() {}
 
 void Actor2::Exit() {
 	SetWaitingForQuit();
@@ -586,7 +604,7 @@ void Actor2::Update(float dt) {
 	return;
 }
 
-void Actor2::Draw(ME::Camera& camera, ME::Shader& shader) {
+void Actor2::Draw(ME::Camera* camera, ME::Shader* shader) {
 	return m_current->Draw(camera, shader);
 }
 

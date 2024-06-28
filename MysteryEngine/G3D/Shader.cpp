@@ -189,6 +189,8 @@ void Shader::updateUniformMat4fvName(const char* name, GLfloat* pvm) const {
 
 void Shader::UpdateUniform(int id, GLfloat* data) const {}
 
+void Shader::UpdateUniformV(int id, GLsizei count, GLfloat* data) const {}
+
 void Shader::UpdateUniform1(int id, GLfloat val0) const {}
 
 void Shader::UpdateUniform2(int id, GLfloat val0, GLfloat val1) const {}

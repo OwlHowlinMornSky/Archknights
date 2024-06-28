@@ -65,6 +65,8 @@ void Initalizator::OnJoined() {
 	ME::G3dGlobal::setActive(true);
 
 	auto ground = IObjModel::Create();
+	ground->Setup();
+
 	ground->LoadModelData("res/main_7-3/main.obj");
 	//ground->setRotation(0.0f, 180.0f, 0.0f);
 	ground->setScale(-1.0f, 1.0f, -1.0f);
@@ -73,6 +75,9 @@ void Initalizator::OnJoined() {
 	ME::G3dGlobal::setActive(false);
 
 	Game::GameGlobal::show->AddGround(ground);
+
+	ground->SetSize(11.0f, 7.0f);
+	Game::GameGlobal::show->SetGroundSize(11.0f, 7.0f);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
@@ -147,6 +152,9 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 				break;
 			case sf::Keyboard::Up:
 				pos[1] += 1.0f;
+				break;
+			case sf::Keyboard::S:
+				GameGlobal::show->getCamera().translate(0.0f, -0.1f, 0.0f);
 				break;
 			}
 			break;

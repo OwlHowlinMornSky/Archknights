@@ -33,7 +33,17 @@ IModel::IModel() :
 	m_waitingForQuit(false),
 	m_matM() {}
 
-IModel::~IModel() {}
+IModel::~IModel() {
+	Clear();
+}
+
+bool IModel::Setup() {
+	return true;
+}
+
+void IModel::Clear() {}
+
+void IModel::Update(float dt) {}
 
 void IModel::SetOutline(bool enabled) {}
 

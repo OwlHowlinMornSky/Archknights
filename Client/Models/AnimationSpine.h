@@ -36,8 +36,8 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <MysteryEngine/G3D/Vertex.h>
 
-#include "ActorGroup.h"
 #include "IAnimation.h"
+#include "ActorVertex.h"
 
 namespace Game {
 
@@ -56,8 +56,11 @@ public:
 	~SpineAnimation();
 
 public:
+	virtual bool Setup() override;
+	virtual void Clear() override;
+
 	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
 	virtual void SetOutline(bool enabled) override;
 	virtual void SetColor(float r, float g, float b, float a) override;
 
@@ -80,9 +83,9 @@ public:
 	void setListener(spine::AnimationStateListenerObject* listener);
 
 protected:
-	void UpdateShader(ME::Shader& shader, ME::Camera& camera);
+	void UpdateShader(ME::Shader* shader, ME::Camera* camera);
 
-	void DrawVertices(ME::Shader& shader, sf::Texture* texture);
+	void DrawVertices(ME::Shader* shader, sf::Texture* texture);
 
 protected:
 	bool m_outline;

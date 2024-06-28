@@ -154,9 +154,6 @@
     <ClInclude Include="GameThings\Initalizator.h">
       <Filter>GameThings</Filter>
     </ClInclude>
-    <ClInclude Include="Models\IActor.h">
-      <Filter>Models</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\IWorld.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -222,6 +219,15 @@
     </ClInclude>
     <ClInclude Include="GameThings\enemy_1002_nsabr_factory.h">
       <Filter>GameThings\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\IActor.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Shadow.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ActorVertex.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="GameThings\enemy_1002_nsabr_factory.cpp">
       <Filter>GameThings\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Shadow.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -67,7 +67,7 @@ protected:
 	///List of textures.
 	std::map<sf::String, sf::Texture> textures;
 	///Model Matrix.
-	glm::mat4 transform;
+	//glm::mat4 transform;
 	///Material Data for rendering.
 	//V3DMaterial* material;
 
@@ -76,15 +76,21 @@ public:
 
 	~ObjModel();
 
+	virtual bool Setup();
+	virtual void Clear();
 	/**
 	Loads Object Model from filepath.
 	Any material and texture files should be placed relative to the .obj file.
 	*/
-	bool LoadModelData(const char* filename);
+	virtual bool LoadModelData(const char* filename) override;
+	virtual void SetSize(float x, float y) override;
 
 	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
 
 protected:
-	void UpdateShader(ME::Camera& camera, ME::Shader& shader);
+	void UpdateShader(ME::Camera* camera, ME::Shader* shader);
+
+	std::unique_ptr<ME::Shader> m_shader;
+	float m_groundSz[2];
 };

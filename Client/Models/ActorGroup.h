@@ -21,64 +21,14 @@
 */
 #pragma once
 
-#include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 #include <list>
+#include "../Game/IActor.h"
+#include "ActorVertex.h"
+
+#include "Shadow.h"
 
 namespace Game {
-
-namespace ActorShaderUniformId {
-enum : int {
-	Mat4_PV = 0,
-	Mat4_M,
-	Vec3_CamPos,
-	Vec2_Offset,
-	Int1_CvrClr,
-	Vec4_CvrClr,
-
-	COUNT
-};
-}
-
-namespace ActorVertexAttribute {
-enum : unsigned int {
-	Position = 0, // 顶点坐标。
-	TexCoord,     // 纹理坐标。
-	Color,        // 颜色。
-	COUNT         // [计数]
-};
-} // namespace ActorVertexAttribute
-
-struct ActorVertex {
-	ActorVertex() :
-		position({ 0 }),
-		color({ 0 }),
-		texCoord({ 0 }) {}
-
-	ActorVertex(const glm::vec2& pos) :
-		position(pos),
-		color(1, 1, 1, 1),
-		texCoord({ 0 }) {}
-
-	ActorVertex(const glm::vec2& pos, const glm::vec2& tex) :
-		position(pos),
-		color(1, 1, 1, 1),
-		texCoord(tex) {}
-
-	ActorVertex(const glm::vec2& pos, const glm::vec4& tint) :
-		position(pos),
-		color(tint),
-		texCoord({ 0 }) {}
-
-	ActorVertex(const glm::vec2& pos, const glm::vec2& tex, const glm::vec4& tint) :
-		position(pos),
-		color(tint),
-		texCoord(tex) {}
-
-	glm::vec2 position; // 顶点坐标。
-	glm::vec2 texCoord; // 纹理坐标。
-	glm::vec4 color;    // 颜色。
-};
 
 class ActorGroup final:
 	public ME::IModel {
@@ -86,15 +36,22 @@ public:
 	ActorGroup();
 
 public:
-	void AddActor(std::shared_ptr<IModel> actor);
+	void AddActor(std::shared_ptr<Game::IActor> actor);
 
 public:
+	virtual bool Setup();
+	virtual void Clear();
+
 	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+
+	void DrawShadow(ME::Camera* camera, ME::Shader* shader);
 
 protected:
-	std::list<std::shared_ptr<IModel>> m_actors;
+	std::list<std::shared_ptr<Game::IActor>> m_actors;
 	std::unique_ptr<ME::Shader> m_shader;
+	std::unique_ptr<ME::Shader> m_shadowShader;
+	Game::Shadow m_shadow;
 };
 
 }

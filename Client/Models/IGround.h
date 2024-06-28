@@ -29,6 +29,8 @@ class IObjModel :
 public:
 	virtual bool LoadModelData(const char* filename) = 0;
 
+	virtual void SetSize(float x, float y) = 0;
+
 public:
 	static std::shared_ptr<IObjModel> Create();
 };

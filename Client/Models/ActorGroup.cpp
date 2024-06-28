@@ -27,17 +27,17 @@
 namespace {
 
 const std::string fragment_spine =
-"#version 330\n"\
+"#version 330\n"
 
-"uniform sampler2D uTexture;"\
-"uniform bool uEnableCvrClr;"\
+"uniform sampler2D uTexture;"
+"uniform bool uEnableCvrClr;"
 
-"varying vec4 vTint;"\
-"varying vec2 vUv;"\
+"varying vec4 vTint;"
+"varying vec2 vUv;"
 
-"void main() {"\
-" vec4 texColor = texture2D(uTexture, vUv);"\
-" gl_FragColor = (uEnableCvrClr ? vec4(texColor.w) : texColor) * vTint;"\
+"void main() {"
+" vec4 texColor = texture2D(uTexture, vUv);"
+" gl_FragColor = (uEnableCvrClr ? vec4(texColor.w) : texColor) * vTint;"
 "}";
 
 /// <summary>
@@ -45,78 +45,78 @@ const std::string fragment_spine =
 /// </summary>
 const std::string vertex_projection =
 #ifndef _DEBUG
-"#version 330\n"\
+"#version 330\n"
 
-"attribute vec2 aPosition; "\
-"attribute vec4 aColor; "\
-"attribute vec2 aTexCoord;"\
+"attribute vec2 aPosition; "
+"attribute vec4 aColor; "
+"attribute vec2 aTexCoord;"
 
-"uniform mat4 uMatPV;"\
-"uniform mat4 uMatM;"\
-"uniform vec3 uVecCamPos;"\
-"uniform vec2 uVecOffset;"\
-"uniform bool uEnableCvrClr;"\
-"uniform vec4 uVecCvrClr;"\
+"uniform mat4 uMatPV;"
+"uniform mat4 uMatM;"
+"uniform vec3 uVecCamPos;"
+"uniform vec2 uVecOffset;"
+"uniform bool uEnableCvrClr;"
+"uniform vec4 uVecCvrClr;"
 
-"varying vec4 vTint;"\
-"varying vec2 vUv;"\
+"varying vec4 vTint;"
+"varying vec2 vUv;"
 
-"void main() {"\
-" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"\
-" vUv = aTexCoord;"\
+"void main() {"
+" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"
+" vUv = aTexCoord;"
 
-" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"\
-" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"\
-" vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"\
+" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"
+" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
+" vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 
-" gl_Position = uMatPV * VertexPosInGlobal;"\
+" gl_Position = uMatPV * VertexPosInGlobal;"
 
-" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"\
-" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"\
+" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"
+" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"
 
-" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"\
+" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"
 
-" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"\
-" vec4 FakeProjection = uMatPV * FakePosInGlobal;"\
+" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"
+" vec4 FakeProjection = uMatPV * FakePosInGlobal;"
 
-" gl_Position.z = gl_Position.w * FakeProjection.z / FakeProjection.w;"\
+" gl_Position.z = gl_Position.w * FakeProjection.z / FakeProjection.w;"
 "}";
 #else
-"#version 330\n"\
+"#version 330\n"
 
-"attribute vec2 aPosition; "\
-"attribute vec4 aColor; "\
-"attribute vec2 aTexCoord;"\
+"attribute vec2 aPosition; "
+"attribute vec4 aColor; "
+"attribute vec2 aTexCoord;"
 
-"uniform mat4 uMatPV;"\
-"uniform mat4 uMatM;"\
-"uniform vec3 uVecCamPos;"\
-"uniform vec2 uVecOffset;"\
-"uniform bool uEnableCvrClr;"\
-"uniform vec4 uVecCvrClr;"\
+"uniform mat4 uMatPV;"
+"uniform mat4 uMatM;"
+"uniform vec3 uVecCamPos;"
+"uniform vec2 uVecOffset;"
+"uniform bool uEnableCvrClr;"
+"uniform vec4 uVecCvrClr;"
 
-"varying vec4 vTint;"\
-"varying vec2 vUv;"\
+"varying vec4 vTint;"
+"varying vec2 vUv;"
 
-"void main() {"\
-" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"\
-" vUv = aTexCoord;"\
+"void main() {"
+" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"
+" vUv = aTexCoord;"
 
-" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"\
-" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"\
-" vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"\
+" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"
+" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
+" vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 
-" gl_Position = uMatPV * VertexPosInGlobal;"\
+" gl_Position = uMatPV * VertexPosInGlobal;"
 
-" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"\
-" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"\
+" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"
+" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"
 
-" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"\
+" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"
 
-" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"\
-" vec4 FakeProjection = uMatPV * FakePosInGlobal;"\
+" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"
+" vec4 FakeProjection = uMatPV * FakePosInGlobal;"
 
-" gl_Position.z = mix(gl_Position.w * FakeProjection.z / FakeProjection.w, gl_Position.z, step(0.0, min(OrgPosInGlobal.z, (uVecCamPos.y + 0.1))));"\
+" gl_Position.z = mix(gl_Position.w * FakeProjection.z / FakeProjection.w, gl_Position.z, step(0.0, min(OrgPosInGlobal.z, (uVecCamPos.y + 0.1))));"
 "}";
 #endif
 
@@ -193,21 +193,109 @@ public:
 	}
 };
 
+
+const std::string fragment_shadow =
+"#version 330\n"
+
+"uniform sampler2D uTexture;"
+
+"varying vec4 vTint;"
+"varying vec2 vUv;"
+
+"void main() {"
+" vec4 texColor = texture2D(uTexture, vUv);"
+" gl_FragColor = vTint;"
+"}";
+
+const std::string vertex_shadow =
+"#version 330\n"
+
+"attribute vec2 aPosition;"
+"attribute vec4 aColor;"
+"attribute vec2 aTexCoord;"
+
+"uniform vec2 uGroundSz;"
+"uniform vec4 uVecOffset[256];"
+
+"varying vec4 vTint;"
+"varying vec2 vUv;"
+
+"void main() {"
+" vTint = aColor * uVecOffset[gl_InstanceID].w;"
+" vUv = aTexCoord;"
+
+" gl_Position = vec4((aPosition * uVecOffset[gl_InstanceID].z + uVecOffset[gl_InstanceID].xy) / uGroundSz * 2.0 - 1.0, 0.0, 1.0);"
+
+"}";
+
+class ShadowShader final :
+	public ME::Shader {
+protected:
+	int m_uniforms[2];
+
+public:
+	ShadowShader() :
+		m_uniforms() {}
+	virtual ~ShadowShader() = default;
+
+public:
+	virtual void setup() override {
+		clear();
+		loadFromMemory(vertex_shadow, ME::ShaderType::Vertex);
+		loadFromMemory(fragment_shadow, ME::ShaderType::Fragment);
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "aPosition"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "aTexCoord"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "aColor"));
+		linkShader();
+		Bind(this);
+
+		m_uniforms[0] = getUniformLocation("uVecOffset");
+		m_uniforms[1] = getUniformLocation("uGroundSz");
+
+		updateUniform1iName("uTexture", 0);
+
+		Bind(nullptr);
+	}
+
+	virtual void UpdateUniform(int id, GLfloat* data) const override {
+		updateUniform2f(m_uniforms[id], data[0], data[1]);
+	}
+
+	virtual void UpdateUniformV(int id, GLsizei count, GLfloat* data) const override {
+		glCheck(glUniform4fv(m_uniforms[0], count, data));
+	}
+};
+
 }
+
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Game {
 
-ActorGroup::ActorGroup() {
-	m_shader = std::make_unique<ActorShader>();
-	m_shader->setup();
-}
+ActorGroup::ActorGroup() {}
 
-void ActorGroup::AddActor(std::shared_ptr<IModel> actor) {
+void ActorGroup::AddActor(std::shared_ptr<Game::IActor> actor) {
 	m_actors.push_back(actor);
 }
 
+bool ActorGroup::Setup() {
+	m_shader = std::make_unique<ActorShader>();
+	m_shader->setup();
+	m_shadowShader = std::make_unique<ShadowShader>();
+	m_shadowShader->setup();
+	m_shadow.Setup();
+	return true;
+}
+
+void ActorGroup::Clear() {
+	m_shadow.Clear();
+	m_shadowShader.reset();
+	m_shader.reset();
+}
+
 void ActorGroup::Update(float dt) {
-	std::list<std::shared_ptr<IModel>>::iterator i, n;
+	std::list<std::shared_ptr<Game::IActor>>::iterator i, n;
 	i = m_actors.begin();
 	n = m_actors.end();
 	for (; i != n;) {
@@ -220,22 +308,49 @@ void ActorGroup::Update(float dt) {
 		}
 	}
 	m_actors.sort(
-		[](std::shared_ptr<IModel>& l, std::shared_ptr<IModel>& r) {
+		[](std::shared_ptr<Game::IActor>& l, std::shared_ptr<Game::IActor>& r) {
 			return l->getPos().y > r->getPos().y;
 		}
 	);
 }
 
-void ActorGroup::Draw(ME::Camera& camera, ME::Shader& shader) {
+void ActorGroup::Draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(m_shader.get());
 
-	m_shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PV, &(camera.getMatPV()[0][0]));
-	m_shader->UpdateUniform3(Game::ActorShaderUniformId::Vec3_CamPos, camera.getPos()[0], camera.getPos()[1], camera.getPos()[2]);
+	m_shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PV, &(camera->getMatPV()[0][0]));
+	m_shader->UpdateUniform3(Game::ActorShaderUniformId::Vec3_CamPos, camera->getPos()[0], camera->getPos()[1], camera->getPos()[2]);
 
-	for (std::shared_ptr<IModel>& i : m_actors) {
-		i->Draw(camera, *m_shader);
+	for (std::shared_ptr<Game::IActor>& i : m_actors) {
+		i->Draw(camera, m_shader.get());
 	}
-	ME::Shader::Bind(&shader);
+
+	ME::Shader::Bind(shader);
+}
+
+void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
+	if (m_actors.empty())
+		return;
+	ME::Shader::Bind(m_shadowShader.get());
+
+	m_shadowShader->UpdateUniform(1, &(m_scale[0]));
+
+	std::vector<glm::vec4> u(256);
+	int i = 0;
+	for (auto it = m_actors.begin(), ed = m_actors.end(); it != ed; ++it, ++i) {
+		if (i >= 256) {
+			m_shadowShader->UpdateUniformV(0, 256, &(u[0][0]));
+			m_shadow.DrawInstance(256);
+			i = 0;
+		}
+		IActor& a = **it;
+		auto& p = a.getPos();
+		u[i] = { p.x, p.y, a.m_shadowRadius, a.m_shadowAlpha };
+	}
+	m_shadowShader->UpdateUniformV(0, i, &(u[0][0]));
+	m_shadow.DrawInstance(i);
+	i = 0;
+
+	ME::Shader::Bind(shader);
 }
 
 }

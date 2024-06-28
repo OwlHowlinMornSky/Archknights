@@ -35,8 +35,11 @@
 namespace Scene {
 
 GameCommon::GameCommon() {
+	ME::G3dGlobal::setActive(true);
 	m_ds = new ME::DefaultShader();
 	m_ds->setup();
+	m_actors.Setup();
+	ME::G3dGlobal::setActive(false);
 }
 
 GameCommon::~GameCommon() {}
@@ -60,8 +63,12 @@ void GameCommon::AddGround(std::shared_ptr<ME::IModel> ground) {
 	m_ground = ground;
 }
 
-void GameCommon::AddActor(std::shared_ptr<ME::IModel> actor) {
+void GameCommon::AddActor(std::shared_ptr<Game::IActor> actor) {
 	return m_actors.AddActor(actor);
+}
+
+void GameCommon::SetGroundSize(float x, float y) {
+	m_actors.setScale(x, y, 0.0f);
 }
 
 void GameCommon::onRender() {
@@ -70,21 +77,29 @@ void GameCommon::onRender() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 	glCheck(glDisable(GL_DEPTH_TEST));
 
+	m_actors.DrawShadow(&m_camera, m_ds); // DRAW
+
+	m_shadowTex.display();
+
+	glCheck(glActiveTexture(GL_TEXTURE0));
+	sf::Texture::bind(&m_shadowTex.getTexture());
 
 	m_renderTexture.setActive(true);
 
 	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	glCheck(glEnable(GL_DEPTH_TEST));
 	glCheck(glDepthMask(GL_TRUE));
+	glCheck(glActiveTexture(GL_TEXTURE1));
 
-	ME::Shader::Bind(m_ds);
+	//ME::Shader::Bind(m_ds);
 
-	m_ground->Draw(m_camera, *m_ds); // DRAW
+	m_ground->Draw(&m_camera, m_ds); // DRAW
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDepthMask(GL_FALSE));
+	glCheck(glActiveTexture(GL_TEXTURE0));
 
-	m_actors.Draw(m_camera, *m_ds); // DRAW
+	m_actors.Draw(&m_camera, m_ds); // DRAW
 
 	glCheck(glEnable(GL_CULL_FACE));
 	glCheck(glDepthMask(GL_TRUE));
@@ -103,6 +118,15 @@ void GameCommon::onSizeChanged(sf::Vector2u newsize) {
 	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	//glCheck(glClearColor(1.0f, 0.0f, 0.0f, 1.0f));
+	glCheck(glActiveTexture(GL_TEXTURE0));
+
+	sf::Texture::bind(&m_shadowTex.getTexture());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 0.0f, 0.0, 0.0f, 0.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	sf::Texture::bind(nullptr);
+
 	ME::G3dGlobal::setActive(false);
 
 	switch (m_camera.getType()) {

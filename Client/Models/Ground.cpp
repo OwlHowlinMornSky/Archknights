@@ -31,14 +31,128 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 
+namespace {
+
+const std::string fragment_ground =
+"#version 330\n"
+
+"uniform sampler2D uShadowTex;"
+"uniform sampler2D uTexture;"
+
+"varying vec4 vTint;"
+"varying vec2 vUv;"
+"varying vec3 vShadowPos;"
+
+"void main() {"
+" vec4 shadowClr = texture2D(uShadowTex, vShadowPos.xy);"
+" vec4 texColor = texture2D(uTexture, vUv);"
+" gl_FragColor = mix(texColor * vTint, vec4(shadowClr.rgb, 1.0), (vShadowPos.z < 0.5 ? shadowClr.a : 0.0));"
+"}";
+
+const std::string vertex_ground =
+"#version 330\n"
+
+"attribute vec3 aVertexPos;"
+"attribute vec2 aVertexTexCoord;"
+"attribute vec4 aVertexColor;"
+
+"uniform mat4 uMatPV;"
+"uniform mat4 uMatM;"
+"uniform vec2 uGroundSz;"
+
+"varying vec4 vTint;"
+"varying vec2 vUv;"
+"varying vec3 vShadowPos;"
+
+"void main() {"
+" vTint = aVertexColor;"
+" vUv = aVertexTexCoord;"
+
+" vec4 vWorldPos = uMatM * vec4(aVertexPos, 1.0);"
+" vShadowPos = vWorldPos.xyz / vec3(uGroundSz, 1.0);"
+" gl_Position = uMatPV * vWorldPos;"
+
+"}";
+
+class GroundShader final :
+	public ME::Shader {
+protected:
+	int m_uniforms[3];
+
+public:
+	GroundShader() :
+		m_uniforms() {}
+	virtual ~GroundShader() = default;
+
+public:
+	virtual void setup() override {
+		clear();
+		loadFromMemory(vertex_ground, ME::ShaderType::Vertex);
+		loadFromMemory(fragment_ground, ME::ShaderType::Fragment);
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(ME::VertexAttribute::Position), "aVertexPos"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(ME::VertexAttribute::TexCoord), "aVertexTexCoord"));
+		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(ME::VertexAttribute::Color), "aVertexColor"));
+		linkShader();
+		Bind(this);
+
+		m_uniforms[0] = getUniformLocation("uMatPV");
+		m_uniforms[1] = getUniformLocation("uMatM");
+		m_uniforms[2] = getUniformLocation("uGroundSz");
+
+		updateUniform1iName("uShadowTex", 0);
+		updateUniform1iName("uTexture", 1);
+
+		Bind(nullptr);
+	}
+
+	virtual void UpdateUniform(int id, GLfloat* data) const override {
+		switch (id) {
+		case 0:
+			updateUniformMat4fv(m_uniforms[0], data);
+			break;
+		case 1:
+			updateUniformMat4fv(m_uniforms[1], data);
+			break;
+		case 2:
+			updateUniform2f(m_uniforms[2], data[0], data[1]);
+			break;
+		}
+	}
+
+	virtual void UpdateUniform1(int id, GLfloat val0) const override {}
+	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const override {
+		updateUniform2f(m_uniforms[id], val0, val1);
+	}
+	virtual void UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
+		updateUniform3f(m_uniforms[id], val0, val1, val2);
+	}
+	virtual void UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
+		updateUniform4f(m_uniforms[id], val0, val1, val2, val3);
+	}
+
+	virtual void UpdateUniformI1(int id, GLint val) const override {
+		updateUniform1i(m_uniforms[id], val);
+	}
+};
+
+}
+
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-ObjModel::ObjModel() {
+ObjModel::ObjModel() :
+	m_groundSz{ 1.0f, 1.0f } {}
+
+ObjModel::~ObjModel() {}
+
+bool ObjModel::Setup() {
+	m_shader = std::make_unique<::GroundShader>();
+	m_shader->setup();
 	//material = new V3DMaterial();
+	return true;
 }
 
-ObjModel::~ObjModel() {
+void ObjModel::Clear() {
 	for (unsigned int i = 0; i < modelData.size(); i++) {
 		glCheck(glDeleteBuffers(1, &modelData[i].vb));
 		glCheck(glDeleteVertexArrays(1, &modelData[i].vao));
@@ -242,6 +356,11 @@ bool ObjModel::LoadModelData(const char* filename) {
 	return r;
 }
 
+void ObjModel::SetSize(float x, float y) {
+	m_groundSz[0] = x;
+	m_groundSz[1] = y;
+}
+
 std::string ObjModel::GetBaseDir(const std::string& filepath) {
 	if (filepath.find_last_of("/\\") != std::string::npos)
 		return filepath.substr(0, filepath.find_last_of("/\\"));
@@ -275,8 +394,10 @@ void ObjModel::CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]) {
 
 void ObjModel::Update(float dt) {}
 
-void ObjModel::Draw(ME::Camera& camera, ME::Shader& shader) {
-	UpdateShader(camera, shader);
+void ObjModel::Draw(ME::Camera* camera, ME::Shader* shader) {
+	ME::Shader::Bind(m_shader.get());
+
+	UpdateShader(camera, m_shader.get());
 
 	for (unsigned int i = 0; i < modelData.size(); i++) {
 		ModelData& md = modelData[i];
@@ -326,16 +447,21 @@ void ObjModel::Draw(ME::Camera& camera, ME::Shader& shader) {
 		glCheck(glBindVertexArray(0));
 		glCheck(glBindTexture(GL_TEXTURE_2D, 0));
 	}
+	ME::Shader::Bind(shader);
 }
 
-void ObjModel::UpdateShader(ME::Camera& camera, ME::Shader& shader) {
+void ObjModel::UpdateShader(ME::Camera* camera, ME::Shader* shader) {
 	//if (textures.size() == 0)
 	//	V3DModel::GenerateDefaultTexture();
 
 	ComputeMatrix();
 
-	glm::mat4 viewProj = camera.getMatPV() * m_matM;// transform;
-	shader.updateUniformMat4fvName("uMatPVM", &viewProj[0][0]);
+	//glm::mat4 viewProj = camera.getMatPV() * m_matM;// transform;
+	//shader.updateUniformMat4fvName("uMatPVM", &viewProj[0][0]);
+	shader->UpdateUniform(0, &camera->getMatPV()[0][0]);
+	shader->UpdateUniform(1, &m_matM[0][0]);
+	shader->UpdateUniform(2, &m_groundSz[0]);
+
 }
 
 std::shared_ptr<IObjModel> IObjModel::Create() {

@@ -47,7 +47,9 @@ bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 	auto unit = std::make_shared<Units::Char_128_Plosis>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
+	anim0->Setup();
 	auto anim1 = m_pose[1]->CreateAnimation();
+	anim1->Setup();
 
 #ifdef ARCHKNIGHTS_LIMITED
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);

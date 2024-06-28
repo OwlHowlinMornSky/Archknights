@@ -39,6 +39,7 @@ bool Game::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) 
 	auto unit = std::make_shared<Units::Enemy_1002_nsabr>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
+	anim0->Setup();
 
 	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
 

@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../Game/Entity.h"
-#include "../Models/IActor.h"
+#include "../Game/IActor.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
 #include <memory>

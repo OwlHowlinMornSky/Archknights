@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "stdio.h"
+#include <MysteryEngine/G3D/IModel.h>
 
 namespace Game {
 
@@ -33,7 +33,8 @@ struct AnimEventNote {
 	int AttackOver = 0;
 };
 
-class IActor {
+class IActor :
+	public ME::IModel {
 public:
 	enum class AnimationEvent : char {
 		Default = 0,
@@ -87,6 +88,8 @@ public:
 
 public:
 	AnimEventNote* m_note;
+	float m_shadowRadius;
+	float m_shadowAlpha;
 };
 
 }

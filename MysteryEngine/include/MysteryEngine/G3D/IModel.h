@@ -46,8 +46,11 @@ public:
 	virtual ~IModel();
 
 public:
-	virtual void Update(float dt) = 0;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) = 0;
+	virtual bool Setup();
+	virtual void Clear();
+
+	virtual void Update(float dt);
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) = 0;
 
 	virtual void SetOutline(bool enabled);
 	virtual void SetColor(float r, float g, float b, float a);

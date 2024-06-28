@@ -71,6 +71,7 @@ public:
 	void updateUniformMat4fvName(const char* name, GLfloat* pvm) const;
 
 	virtual void UpdateUniform(int id, GLfloat* data) const;
+	virtual void UpdateUniformV(int id, GLsizei count, GLfloat* data) const;
 
 	virtual void UpdateUniform1(int id, GLfloat val0) const;
 	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const;

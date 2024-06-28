@@ -21,39 +21,34 @@
 */
 #pragma once
 
-#include "../Game/IGameShow.h"
+#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/G3D/Vertex.h>
+#include "ActorVertex.h"
 
-#include "../Models/ActorGroup.h"
+namespace Game {
 
-namespace Scene {
-
-class GameCommon final :
-	public Game::IGameShow {
+class Shadow final :
+	public ME::IModel {
+	typedef ME::IModel Parent;
 public:
-	GameCommon();
-	virtual ~GameCommon() override;
-
-public:
-	static int setup();
-	static void drop();
+	Shadow();
+	~Shadow();
 
 public:
-	virtual void update(float dt) override;
+	virtual bool Setup() override;
+	virtual void Clear() override;
 
-	virtual void AddGround(std::shared_ptr<ME::IModel> ground) override;
-	virtual void AddActor(std::shared_ptr<Game::IActor> actor) override;
-
-	virtual void SetGroundSize(float x, float y) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	void DrawInstance(int count);
+	virtual void SetColor(float r, float g, float b, float a) override;
 
 protected:
-	virtual void onRender() override;
-	virtual void onSizeChanged(sf::Vector2u newsize) override;
+	void UpdateShader(ME::Shader* shader, ME::Camera* camera);
 
 protected:
-	ME::Shader* m_ds;
-	sf::RenderTexture m_shadowTex;
-	std::shared_ptr<ME::IModel> m_ground;
-	Game::ActorGroup m_actors;
+	unsigned int m_vao;
+	unsigned int m_vertexVBO;
+	ActorVertex m_vertex[4];
 };
 
-} // namespace Scene
+}
