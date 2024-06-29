@@ -34,10 +34,13 @@ public:
 	virtual ~GameCommon() override;
 
 public:
-	static int setup();
+	static int init();
 	static void drop();
 
 public:
+	virtual void setup(int code = 0, void* data = nullptr) override;
+	virtual void clear() override;
+
 	virtual void update(float dt) override;
 
 	virtual void AddGround(std::shared_ptr<ME::IModel> ground) override;

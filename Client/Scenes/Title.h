@@ -22,13 +22,10 @@
 #pragma once
 
 #include <MysteryEngine/G3D/GlCheck.h>
-#include <MysteryEngine/G3D/Shader.h>
-#include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/Vertex.h>
-#include <MysteryEngine/G3D/ITransformS.h>
+#include <MysteryEngine/G3D/IModel.h>
 
 #include "ITitle.h"
-#include <SFML/Graphics.hpp>
 
 namespace {
 
@@ -45,32 +42,33 @@ struct Vertex {
 		texCoord() {}
 };
 
-class Shader_Title_Sphere final :
+class TitleSphereShader final :
 	public ME::Shader {
 public:
-	virtual void setup();
-	void update(ME::Camera& camera);
+	virtual void setup() override;
+
+	virtual void UpdateUniform(int id, GLfloat* data) const override;
+
 protected:
 	GLint m_ul_matp;
 	GLint m_ul_matv;
-public:
 	GLint m_ul_matm;
 };
 
 class LineModel final :
-	public ME::ITransformR,
-	public ME::ITransformT,
-	public ME::ITransformS {
+	public ME::IModel {
 public:
-	void update();
 	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
-	void Draw();
+
+	virtual void Clear() override;
+
+	virtual void Update(float dt) override;
+	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+
 protected:
 	unsigned int vao;
 	unsigned int vertexVBO;
 	unsigned int drawCount;
-public:
-	glm::mat4 m_matM;
 };
 
 } // namespace
@@ -89,6 +87,7 @@ public:
 
 public:
 	virtual void setup(int code = 0, void* data = nullptr) override;
+	virtual void clear() override;
 	virtual void update(float dt) override;
 
 protected:
@@ -96,7 +95,7 @@ protected:
 	virtual void onSizeChanged(sf::Vector2u newsize);
 
 protected:
-	::Shader_Title_Sphere m_shader;
+	::TitleSphereShader m_shader;
 	::LineModel m_llm;
 	float m_rotSpeed[3];
 };

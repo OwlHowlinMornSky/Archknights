@@ -43,8 +43,6 @@ bool Shadow::Setup() {
 	m_vertex[2].position = { 0.25f, 0.25f };
 	m_vertex[3].position = { -0.25f, 0.25f };
 
-	ME::G3dGlobal::setActive(true);
-
 	glCheck(glGenVertexArrays(1, &m_vao));
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glGenBuffers(1, &m_vertexVBO));
@@ -68,24 +66,18 @@ bool Shadow::Setup() {
 	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
 
 	glCheck(glBindVertexArray(0));
-
-	ME::G3dGlobal::setActive(false);
 	return true;
 }
 
 void Shadow::Clear() {
-	ME::G3dGlobal::setActive(true);
-
 	if (m_vertexVBO) {
-		glCheck(glBindVertexArray(m_vao));
 		glCheck(glDeleteBuffers(1, &m_vertexVBO));
+		m_vertexVBO = 0;
 	}
 	if (m_vao) {
 		glCheck(glDeleteVertexArrays(1, &m_vao));
+		m_vao = 0;
 	}
-	glCheck(glBindVertexArray(0));
-
-	ME::G3dGlobal::setActive(false);
 }
 
 void Shadow::Draw(ME::Camera* camera, ME::Shader* shader) {

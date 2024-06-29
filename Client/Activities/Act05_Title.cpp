@@ -21,7 +21,6 @@
 */
 #include "Act05_Title.h"
 
-#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/Client/GlobalBGM.h>
 
 #define ST_IN     (1)
@@ -58,8 +57,6 @@ void Act05_Title::start() noexcept {
 	m_titleSp.setTexture(m_titleTex, true);
 	m_titleSp.setOrigin(m_titleTex.getSize().x / 2.0f, m_titleTex.getSize().y / 2.0f);
 
-	//r_wnd->setActive(true);
-
 	updateSize();
 
 	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
@@ -67,10 +64,8 @@ void Act05_Title::start() noexcept {
 }
 
 void Act05_Title::stop() noexcept {
-	//ME::G3dGlobal::setActive(true);
+	m_scene->clear();
 	m_scene.reset();
-	//ME::G3dGlobal::setActive(false);
-	//r_wnd->setActive(true);
 	r_wnd();
 }
 

@@ -25,10 +25,10 @@
 #include <MysteryEngine/Core/NonCopyable.h>
 #include <MysteryEngine/Core/GLM.h>
 
-#include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/ITransformT.h>
 #include <MysteryEngine/G3D/ITransformR.h>
 #include <MysteryEngine/G3D/ITransformS.h>
+#include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/Shader.h>
 
 namespace ME {

@@ -134,6 +134,7 @@ SpineAnimation::SpineAnimation(const Model::SpinePoseData _pose) :
 }
 
 SpineAnimation::~SpineAnimation() {
+	Clear();
 	delete m_animationState;
 	delete m_skeleton;
 	return;
@@ -152,18 +153,14 @@ bool SpineAnimation::Setup() {
 }
 
 void SpineAnimation::Clear() {
-	ME::G3dGlobal::setActive(true);
-
 	if (m_vertexVBO) {
-		glCheck(glBindVertexArray(m_vao));
 		glCheck(glDeleteBuffers(1, &m_vertexVBO));
+		m_vertexVBO = 0;
 	}
 	if (m_vao) {
 		glCheck(glDeleteVertexArrays(1, &m_vao));
+		m_vao = 0;
 	}
-	glCheck(glBindVertexArray(0));
-
-	ME::G3dGlobal::setActive(false);
 	return;
 }
 

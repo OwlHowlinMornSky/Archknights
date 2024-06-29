@@ -78,11 +78,7 @@ void Shader::Bind(Shader* shader) {
 	if (shader) {
 		if (!shader->m_program) {
 #ifdef _DEBUG
-			std::wcerr
-				<< L"Error Using Empty Shader!" << std::endl
-				<< L"\tFile: " << __FILEW__ << std::endl
-				<< L"\tLine: " << __LINE__ << std::endl
-				<< std::endl;
+			std::cerr<< "Error Using Empty Shader!" << std::endl;
 #endif // _DEBUG
 		}
 		glCheck(glUseProgram(shader->m_program));
@@ -121,11 +117,7 @@ void Shader::loadFromMemory(std::string_view shader, ShaderType type) {
 		break;
 	default:
 #ifdef _DEBUG
-		std::wcerr
-			<< L"Invalid Shader Type." << std::endl
-			<< L"\tFile: " << __FILEW__ << std::endl
-			<< L"\tLine: " << __LINE__ << std::endl
-			<< std::endl;
+		std::cerr << "Invalid Shader Type." << std::endl;
 #endif
 		return;
 	}

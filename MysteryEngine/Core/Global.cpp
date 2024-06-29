@@ -21,6 +21,7 @@
 */
 #include <MysteryEngine/Core/Global.h>
 
+#include <MysteryEngine/Client/Carnival.h>
 #include <MysteryEngine/Client/GlobalBGM.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 

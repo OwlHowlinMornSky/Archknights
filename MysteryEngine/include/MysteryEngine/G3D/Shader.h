@@ -24,7 +24,7 @@
 #include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/Core/NonCopyable.h>
 
-#include <string>
+#include <string_view>
 #include <SFML/OpenGL.hpp>
 
 namespace ME {

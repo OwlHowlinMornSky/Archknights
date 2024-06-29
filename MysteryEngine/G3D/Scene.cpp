@@ -45,6 +45,10 @@ void Scene::setup(int code, void* data) {
 	return;
 }
 
+void Scene::clear() {
+	return;
+}
+
 void Scene::update(float dt) {
 	return;
 }

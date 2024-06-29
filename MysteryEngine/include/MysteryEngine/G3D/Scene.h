@@ -23,12 +23,10 @@
 
 #include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/G3D/Camera.h>
-#include <memory>
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Window/Context.hpp>
 
 namespace ME {
 
@@ -45,6 +43,7 @@ public:
 	const Camera& getCamera() const;
 
 	virtual void setup(int code = 0, void* data = nullptr);
+	virtual void clear();
 	virtual void update(float dt);
 	void render();
 

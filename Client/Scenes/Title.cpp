@@ -83,7 +83,7 @@ const char g_fs[] =
 "  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
 "}";
 
-void Shader_Title_Sphere::setup() {
+void TitleSphereShader::setup() {
 	clear();
 	loadFromMemory(g_vs2, ME::ShaderType::Vertex);
 	loadFromMemory(g_fs, ME::ShaderType::Fragment);
@@ -101,20 +101,17 @@ void Shader_Title_Sphere::setup() {
 	return;
 }
 
-void Shader_Title_Sphere::update(ME::Camera& camera) {
-	Bind(this);
-	this->updateUniformMat4fv(m_ul_matp, &(camera.getMatP()[0][0]));
-	this->updateUniformMat4fv(m_ul_matv, &(camera.getMatV()[0][0]));
-}
-
-void LineModel::update() {
-	if (m_rotationChanged) {
-		m_matM = glm::translate(m_position);
-		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_matM *= glm::scale(m_scale);
-		m_rotationChanged = false;
+void TitleSphereShader::UpdateUniform(int id, GLfloat* data) const {
+	switch (id) {
+	case 0:
+		updateUniformMat4fv(m_ul_matp, data);
+		break;
+	case 1:
+		updateUniformMat4fv(m_ul_matv, data);
+		break;
+	case 2:
+		updateUniformMat4fv(m_ul_matm, data);
+		break;
 	}
 }
 
@@ -125,6 +122,8 @@ bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 	unsigned long long offset1 = sizeof(vertexArray[0].vertex0);
 	unsigned long long offset2 = offset1 + sizeof(vertexArray[0].vertex1);
 	unsigned long long offset3 = offset2 + sizeof(vertexArray[0].offset);
+
+	ME::G3dGlobal::setActive(true);
 
 	if (this->vertexVBO) {
 		glCheck(glDeleteBuffers(1, &this->vertexVBO));
@@ -146,10 +145,42 @@ bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 	glCheck(glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, stride, (void*)offset3));
 
 	glCheck(glBindVertexArray(0));
+
+	ME::G3dGlobal::setActive(false);
 	return true;
 }
 
-void LineModel::Draw() {
+void LineModel::Clear() {
+	ME::G3dGlobal::setActive(true);
+
+	if (vertexVBO) {
+		glCheck(glDeleteBuffers(1, &vertexVBO));
+		vertexVBO = 0;
+	}
+	if (vao) {
+		glCheck(glDeleteVertexArrays(1, &vao));
+		vao = 0;
+	}
+
+	ME::G3dGlobal::setActive(false);
+}
+
+void LineModel::Update(float dt) {}
+
+void LineModel::Draw(ME::Camera* camera, ME::Shader* shader) {
+	if (m_rotationChanged) {
+		m_matM = glm::translate(m_position);
+		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_matM *= glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_matM *= glm::rotate(glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_matM *= glm::scale(m_scale);
+		m_rotationChanged = false;
+	}
+
+	shader->UpdateUniform(0, &(camera->getMatP()[0][0]));
+	shader->UpdateUniform(1, &(camera->getMatV()[0][0]));
+	shader->UpdateUniform(2, &(m_matM[0][0]));
+
 	glCheck(glBindVertexArray(this->vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, this->drawCount));
 	glCheck(glBindVertexArray(0));
@@ -285,27 +316,32 @@ void Title::setup(int code, void* data) {
 
 	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 
-	m_llm.LoadModelData(va);
+	ME::G3dGlobal::setActive(false);
 
+	m_llm.LoadModelData(va);
+}
+
+void Title::clear() {
+	m_llm.Clear();
+	ME::G3dGlobal::setActive(true);
+	m_shader.clear();
 	ME::G3dGlobal::setActive(false);
 }
 
 void Title::update(float dt) {
 	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
 	m_llm.normalizeRotation();
+
+	//m_llm.Update(0.0f);
 }
 
 void Title::onRender() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 	glCheck(glViewport(0, 0, m_renderTexture.getSize().x, m_renderTexture.getSize().y));
 
-	m_llm.update();
-	m_shader.update(m_camera);
-
 	ME::Shader::Bind(&m_shader);
-	m_shader.updateUniformMat4fv(m_shader.m_ul_matm, &(m_llm.m_matM[0][0]));
 
-	m_llm.Draw();
+	m_llm.Draw(&m_camera, &m_shader);
 
 	ME::Shader::Bind(nullptr);
 }

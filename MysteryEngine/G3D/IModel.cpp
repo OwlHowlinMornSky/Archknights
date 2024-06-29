@@ -23,8 +23,8 @@
 
 #include <MysteryEngine/G3D/IModel.h>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/glm.hpp>
+//#define GLM_ENABLE_EXPERIMENTAL
+//#include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 
 namespace ME {

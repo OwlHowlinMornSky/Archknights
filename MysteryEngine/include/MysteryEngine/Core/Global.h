@@ -22,7 +22,6 @@
 #pragma once
 
 #include <MysteryEngine/Core/MEAPI.h>
-#include <MysteryEngine/Client/Carnival.h>
 
 namespace ME::EngineGlobal {
 

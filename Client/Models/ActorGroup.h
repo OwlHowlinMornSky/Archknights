@@ -34,6 +34,7 @@ class ActorGroup final:
 	public ME::IModel {
 public:
 	ActorGroup();
+	virtual ~ActorGroup();
 
 public:
 	void AddActor(std::shared_ptr<Game::IActor> actor);

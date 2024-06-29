@@ -23,7 +23,6 @@
 
 #ifdef SFML_SYSTEM_WINDOWS
 
-#include <functional>
 #include <cassert>
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN

@@ -30,7 +30,7 @@
 namespace Main::Creator {
 
 int setup() {
-	Scene::GameCommon::setup();
+	Scene::GameCommon::init();
 	Game::Board::setup();
 	Game::Global::board->JoinEntity(std::make_shared<Main::Initalizator>());
 	return 0;

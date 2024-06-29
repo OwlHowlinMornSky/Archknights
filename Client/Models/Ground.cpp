@@ -155,6 +155,8 @@ bool ObjModel::Setup() {
 }
 
 void ObjModel::Clear() {
+	m_shader->clear();
+
 	for (unsigned int i = 0; i < modelData.size(); i++) {
 		glCheck(glDeleteBuffers(1, &modelData[i].vb));
 		glCheck(glDeleteVertexArrays(1, &modelData[i].vao));

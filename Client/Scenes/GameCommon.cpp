@@ -34,7 +34,25 @@
 
 namespace Scene {
 
-GameCommon::GameCommon() {
+GameCommon::GameCommon() :
+	m_ds(nullptr) {}
+
+GameCommon::~GameCommon() {}
+
+int GameCommon::init() {
+	if (Game::Global::stage)
+		return 1;
+	Game::Global::stage = std::make_unique<GameCommon>();
+	Game::Global::stage->setup();
+	return 0;
+}
+
+void GameCommon::drop() {
+	Game::Global::stage->clear();
+	Game::Global::stage.reset();
+}
+
+void GameCommon::setup(int code, void* data) {
 	ME::G3dGlobal::setActive(true);
 	m_ds = new ME::DefaultShader();
 	m_ds->setup();
@@ -42,17 +60,14 @@ GameCommon::GameCommon() {
 	ME::G3dGlobal::setActive(false);
 }
 
-GameCommon::~GameCommon() {}
-
-int GameCommon::setup() {
-	if (Game::Global::stage)
-		return 1;
-	Game::Global::stage = std::make_unique<GameCommon>();
-	return 0;
-}
-
-void GameCommon::drop() {
-	Game::Global::stage.reset();
+void GameCommon::clear() {
+	ME::G3dGlobal::setActive(true);
+	m_ground->Clear();
+	m_ground.reset();
+	m_actors.Clear();
+	m_ds->clear();
+	delete m_ds;
+	ME::G3dGlobal::setActive(false);
 }
 
 void GameCommon::update(float dt) {

@@ -275,6 +275,10 @@ namespace Model {
 
 ActorGroup::ActorGroup() {}
 
+ActorGroup::~ActorGroup() {
+	Clear();
+}
+
 void ActorGroup::AddActor(std::shared_ptr<Game::IActor> actor) {
 	m_actors.push_back(actor);
 }
@@ -289,6 +293,9 @@ bool ActorGroup::Setup() {
 }
 
 void ActorGroup::Clear() {
+	for (auto& i : m_actors)
+		i->Clear();
+	m_actors.clear();
 	m_shadow.Clear();
 	m_shadowShader.reset();
 	m_shader.reset();

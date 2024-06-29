@@ -22,6 +22,7 @@
 #include <locale>
 
 #include <MysteryEngine/Core/Global.h>
+#include <MysteryEngine/Client/Carnival.h>
 #include "../Client/API.h"
 
 #include "UniqueInstance.h"

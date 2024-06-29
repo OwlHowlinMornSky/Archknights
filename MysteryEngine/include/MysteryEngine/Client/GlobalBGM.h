@@ -22,6 +22,7 @@
 #pragma once
 
 #include <MysteryEngine/Core/MEAPI.h>
+#include <string_view>
 
 namespace ME::GlobalBGM {
 
