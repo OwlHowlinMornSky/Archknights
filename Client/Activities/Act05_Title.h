@@ -24,7 +24,7 @@
 #include <MysteryEngine/Client/Window.h>
 
 #include <SFML/Graphics.hpp>
-#include "../Scenes/Scene_ITitle.h"
+#include "../Scenes/ITitle.h"
 
 namespace Activity {
 
@@ -51,7 +51,7 @@ protected:
 
 protected:
 	ME::WndRef r_wnd;
-	std::unique_ptr<Scene::Scene_ITitle> m_scene;
+	std::unique_ptr<Scene::ITitle> m_scene;
 
 	sf::Texture m_titleTex;
 	sf::Sprite m_titleSp;

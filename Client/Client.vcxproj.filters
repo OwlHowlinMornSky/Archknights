@@ -49,19 +49,19 @@
     <ClInclude Include="Activities\Act05_Title.h">
       <Filter>Activities</Filter>
     </ClInclude>
-    <ClInclude Include="Activities\Activity_Debug.h">
+    <ClInclude Include="Activities\Act00_Debug.h">
       <Filter>Activities</Filter>
     </ClInclude>
-    <ClInclude Include="Activities\Activity_Game.h">
+    <ClInclude Include="Activities\Act06_Game.h">
       <Filter>Activities</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\Scene_GameCommon.h">
+    <ClInclude Include="Scenes\GameCommon.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\Scene_ITitle.h">
+    <ClInclude Include="Scenes\ITitle.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\Scene_Title.h">
+    <ClInclude Include="Scenes\Title.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Game\TypeDef.h">
@@ -254,19 +254,19 @@
     <ClCompile Include="Activities\Act05_Title.cpp">
       <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Activities\Activity_Debug.cpp">
+    <ClCompile Include="Activities\Act00_Debug.cpp">
       <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Activities\Activity_Game.cpp">
+    <ClCompile Include="Activities\Act06_Game.cpp">
       <Filter>Activities</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\Scene_GameCommon.cpp">
+    <ClCompile Include="Scenes\GameCommon.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\Scene_ITitle.cpp">
+    <ClCompile Include="Scenes\ITitle.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\Scene_Title.cpp">
+    <ClCompile Include="Scenes\Title.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="API.cpp">

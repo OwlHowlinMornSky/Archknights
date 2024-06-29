@@ -53,7 +53,7 @@ bool Unit::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Game::Entity>& 
 
 #ifdef ARCHKNIGHTS_LIMITED
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::Global::show->AddActor(actor);
+	Game::Global::stage->AddActor(actor);
 	unit->m_actor = actor;
 #else
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);

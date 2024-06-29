@@ -21,7 +21,7 @@
 */
 #include <GL/glew.h>
 
-#include "Scene_Title.h"
+#include "Title.h"
 
 #include <glm/gtx/transform.hpp>
 #include <MysteryEngine/G3D/G3dGlobal.h>

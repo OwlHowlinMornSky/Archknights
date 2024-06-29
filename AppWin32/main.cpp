@@ -20,9 +20,10 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <locale>
-#include <MysteryEngine/Core/Global.h>
 
+#include <MysteryEngine/Core/Global.h>
 #include "../Client/API.h"
+
 #include "UniqueInstance.h"
 #include "framework.h"
 

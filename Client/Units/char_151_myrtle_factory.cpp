@@ -48,7 +48,7 @@ bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
 
 	auto actor = std::make_shared<Char_151_Mytle_Actor_Vanilla>(anim0, anim1);
 
-	Game::Global::show->AddActor(actor);
+	Game::Global::stage->AddActor(actor);
 
 	unit->m_actor = actor;
 

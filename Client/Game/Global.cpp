@@ -27,7 +27,7 @@ namespace Game {
 namespace Global {
 
 std::unique_ptr<Board> board;
-std::unique_ptr<Stage> show;
+std::unique_ptr<Stage> stage;
 
 }
 } // namespace Game

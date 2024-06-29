@@ -19,38 +19,38 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Activity_Game.h"
+#include "Act06_Game.h"
 #include "../Game/Global.h"
 #include "../Game/Board.h"
-#include "../Scenes/Scene_GameCommon.h"
+#include "../Game/Stage.h"
 #include "../Main/Creator.h"
 #include "../Activities/Act01_DefaultEntrance.h"
 
 namespace Activity {
 
-Activity_Game::Activity_Game() :
+Act06_Game::Act06_Game() :
 	m_paused(false) {}
 
-Activity_Game::~Activity_Game() noexcept {}
+Act06_Game::~Act06_Game() noexcept {}
 
-bool Activity_Game::prepare(ME::Window& wnd) noexcept {
+bool Act06_Game::prepare(ME::Window& wnd) noexcept {
 	r(wnd);
 	int res = Main::Creator::setup();
 	return res == 0;
 }
 
-void Activity_Game::start() noexcept {
-	Game::Global::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
+void Act06_Game::start() noexcept {
+	Game::Global::board->SetExitCallback(std::bind(&Act06_Game::ExitGame, this, std::placeholders::_1));
 	UpdateSize(r->getRealtimeSize());
 }
 
-void Activity_Game::stop() noexcept {
+void Act06_Game::stop() noexcept {
 	Main::Creator::drop();
 	r();
 	return;
 }
 
-bool Activity_Game::handleEvent(const sf::Event& evt) {
+bool Act06_Game::handleEvent(const sf::Event& evt) {
 	switch (evt.type) {
 	case sf::Event::Closed:
 		r->setWaitingForStop();
@@ -64,29 +64,29 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 	return false;
 }
 
-void Activity_Game::update(sf::Time dtime) {
+void Act06_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r->clear(sf::Color(0x333333FF));
 #endif // _DEBUG
 	if (m_paused)
 		dtime = sf::Time::Zero;
 	Game::Global::board->Update(dtime.asMicroseconds());
-	Game::Global::show->update(dtime.asSeconds());
-	Game::Global::show->render();
-	r->draw(*Game::Global::show);
+	Game::Global::stage->update(dtime.asSeconds());
+	Game::Global::stage->render();
+	r->draw(*Game::Global::stage);
 	r->display();
 	return;
 }
 
-void Activity_Game::OnEnterSysloop() noexcept {
+void Act06_Game::OnEnterSysloop() noexcept {
 	m_paused = true;
 }
 
-void Activity_Game::OnExitSysloop() noexcept {
+void Act06_Game::OnExitSysloop() noexcept {
 	m_paused = false;
 }
 
-void Activity_Game::ExitGame(int code) {
+void Act06_Game::ExitGame(int code) {
 	switch (code) {
 	case 4321:
 		r->changeActivity(std::make_unique<Act01_DefaultEntrance>());
@@ -95,10 +95,8 @@ void Activity_Game::ExitGame(int code) {
 	return;
 }
 
-void Activity_Game::UpdateSize(sf::Vector2u size) {
-	Game::Global::show->resize(size);
-	//auto& view = r->getView();
-	//sf::Vector2f size = view.getSize();
+void Act06_Game::UpdateSize(sf::Vector2u size) {
+	Game::Global::stage->resize(size);
 }
 
 } // namespace Activity

@@ -54,7 +54,6 @@ protected:
 	sf::Texture m_tex;
 	sf::Sprite m_sp;
 	sf::RectangleShape m_blackBar[2];
-	//sf::Text m_text;
 };
 
 } // namespace Activity

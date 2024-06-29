@@ -19,51 +19,32 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Activity_Debug.h"
-#include "Activity_Game.h"
+#pragma once
+
+#include <MysteryEngine/Client/Window.h>
 
 namespace Activity {
 
-Activity_Debug::Activity_Debug() {}
+class Act00_Debug final :
+	public ME::Activity {
+public:
+	Act00_Debug();
+	virtual ~Act00_Debug() noexcept override;
 
-Activity_Debug::~Activity_Debug() noexcept {}
+protected:
+	virtual bool prepare(ME::Window& wnd) noexcept override;
+	virtual void start() noexcept override;
+	virtual void stop() noexcept override;
 
-bool Activity_Debug::prepare(ME::Window& wnd) noexcept {
-	r(wnd);
-	return true;
-}
+public:
+	virtual bool handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
 
-void Activity_Debug::start() noexcept {
-	return;
-}
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
 
-void Activity_Debug::stop() noexcept {
-	r();
-}
-
-bool Activity_Debug::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r->setWaitingForStop();
-		return true;
-	case sf::Event::KeyPressed:
-		switch (evt.key.code) {
-		case sf::Keyboard::Num1:
-			r->changeActivity(std::make_unique<Activity_Game>());
-			return true;
-		}
-		break;
-	}
-	return false;
-}
-
-void Activity_Debug::update(sf::Time dtime) {
-	r->clear(sf::Color::Cyan);
-	r->display();
-}
-
-void Activity_Debug::OnEnterSysloop() noexcept {}
-
-void Activity_Debug::OnExitSysloop() noexcept {}
+protected:
+	ME::WndRef r;
+};
 
 } // namespace Activity

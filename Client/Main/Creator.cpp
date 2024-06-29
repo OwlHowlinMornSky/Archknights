@@ -21,7 +21,7 @@
 */
 #include "Creator.h"
 
-#include "../Scenes/Scene_GameCommon.h"
+#include "../Scenes/GameCommon.h"
 #include "../Game/Board.h"
 #include "../Game/Global.h"
 

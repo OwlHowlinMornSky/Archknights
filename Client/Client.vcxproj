@@ -306,8 +306,8 @@
     <ClInclude Include="Activities\Act03_Opening.h" />
     <ClInclude Include="Activities\Act04_Load.h" />
     <ClInclude Include="Activities\Act05_Title.h" />
-    <ClInclude Include="Activities\Activity_Debug.h" />
-    <ClInclude Include="Activities\Activity_Game.h" />
+    <ClInclude Include="Activities\Act00_Debug.h" />
+    <ClInclude Include="Activities\Act06_Game.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="Game\Ability.h" />
     <ClInclude Include="Game\ActorVertex.h" />
@@ -354,9 +354,9 @@
     <ClInclude Include="Physics\Wall.h" />
     <ClInclude Include="Physics\World.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scenes\Scene_GameCommon.h" />
-    <ClInclude Include="Scenes\Scene_ITitle.h" />
-    <ClInclude Include="Scenes\Scene_Title.h" />
+    <ClInclude Include="Scenes\GameCommon.h" />
+    <ClInclude Include="Scenes\ITitle.h" />
+    <ClInclude Include="Scenes\Title.h" />
     <ClInclude Include="Units\char_101_sora.h" />
     <ClInclude Include="Units\char_101_sora_actor.h" />
     <ClInclude Include="Units\char_101_sora_factory.h" />
@@ -379,8 +379,8 @@
     <ClCompile Include="Activities\Act03_Opening.cpp" />
     <ClCompile Include="Activities\Act04_Load.cpp" />
     <ClCompile Include="Activities\Act05_Title.cpp" />
-    <ClCompile Include="Activities\Activity_Debug.cpp" />
-    <ClCompile Include="Activities\Activity_Game.cpp" />
+    <ClCompile Include="Activities\Act00_Debug.cpp" />
+    <ClCompile Include="Activities\Act06_Game.cpp" />
     <ClCompile Include="API.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\Global.cpp" />
@@ -407,9 +407,9 @@
     <ClCompile Include="Physics\FrictionBody.cpp" />
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
-    <ClCompile Include="Scenes\Scene_GameCommon.cpp" />
-    <ClCompile Include="Scenes\Scene_ITitle.cpp" />
-    <ClCompile Include="Scenes\Scene_Title.cpp" />
+    <ClCompile Include="Scenes\GameCommon.cpp" />
+    <ClCompile Include="Scenes\ITitle.cpp" />
+    <ClCompile Include="Scenes\Title.cpp" />
     <ClCompile Include="Units\char_101_sora.cpp" />
     <ClCompile Include="Units\char_101_sora_actor.cpp" />
     <ClCompile Include="Units\char_101_sora_factory.cpp" />

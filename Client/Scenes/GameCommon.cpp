@@ -26,7 +26,7 @@
 #include <MysteryEngine/G3D/GlCheck.h>
 #include <MysteryEngine/G3D/Shader.Default.h>
 
-#include "Scene_GameCommon.h"
+#include "GameCommon.h"
 #include "../Game/Global.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
@@ -45,14 +45,14 @@ GameCommon::GameCommon() {
 GameCommon::~GameCommon() {}
 
 int GameCommon::setup() {
-	if (Game::Global::show)
+	if (Game::Global::stage)
 		return 1;
-	Game::Global::show = std::make_unique<GameCommon>();
+	Game::Global::stage = std::make_unique<GameCommon>();
 	return 0;
 }
 
 void GameCommon::drop() {
-	Game::Global::show.reset();
+	Game::Global::stage.reset();
 }
 
 void GameCommon::update(float dt) {

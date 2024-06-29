@@ -43,7 +43,7 @@ bool Unit::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Game::Entity>&
 
 	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
 
-	Game::Global::show->AddActor(actor);
+	Game::Global::stage->AddActor(actor);
 
 	unit->m_actor = actor;
 

@@ -43,7 +43,7 @@ bool Unit::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Game::Entity>& pt
 
 	auto actor = std::make_shared<Char_101_Sora_Actor_Vanilla>(anim0);
 
-	Game::Global::show->AddActor(actor);
+	Game::Global::stage->AddActor(actor);
 
 	unit->m_actor = actor;
 

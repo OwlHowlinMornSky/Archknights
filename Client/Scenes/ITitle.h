@@ -21,30 +21,19 @@
 */
 #pragma once
 
-#include <MysteryEngine/Client/Window.h>
+#include <memory>
+#include <MysteryEngine/G3D/Scene.h>
 
-namespace Activity {
+namespace Scene {
 
-class Activity_Debug final :
-	public ME::Activity {
+class ITitle :
+	public ME::Scene {
 public:
-	Activity_Debug();
-	virtual ~Activity_Debug() noexcept override;
-
-protected:
-	virtual bool prepare(ME::Window& wnd) noexcept override;
-	virtual void start() noexcept override;
-	virtual void stop() noexcept override;
-
-public:
-	virtual bool handleEvent(const sf::Event& evt) override;
-	virtual void update(sf::Time dtime) override;
-
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
-
-protected:
-	ME::WndRef r;
+	virtual void SetScale(float r) = 0;
+	virtual void SetOffset(float r) = 0;
 };
 
-} // namespace Activity
+namespace Factory {
+std::unique_ptr<ITitle> GetTitle();
+}
+} // namespace Scene

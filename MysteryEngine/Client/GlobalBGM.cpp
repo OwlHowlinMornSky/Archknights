@@ -20,6 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <MysteryEngine/Client/GlobalBGM.h>
+#include <MysteryEngine/Client/Bgm.h>
 
 #ifdef USE_ASYNC_MUSIC
 

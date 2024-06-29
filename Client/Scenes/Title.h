@@ -27,7 +27,7 @@
 #include <MysteryEngine/G3D/Vertex.h>
 #include <MysteryEngine/G3D/ITransformS.h>
 
-#include "Scene_ITitle.h"
+#include "ITitle.h"
 #include <SFML/Graphics.hpp>
 
 namespace {
@@ -78,7 +78,7 @@ public:
 namespace Scene {
 
 class Title final :
-	public Scene_ITitle {
+	public ITitle {
 public:
 	Title();
 	~Title();

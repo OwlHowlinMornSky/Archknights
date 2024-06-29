@@ -24,7 +24,7 @@
 #ifdef _DEBUG
 #include "Act02_TestActivity.h"
 #endif // _DEBUG
-#include "Activity_Debug.h"
+#include "Act00_Debug.h"
 
 namespace Activity {
 
@@ -77,7 +77,7 @@ bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			return 1;
 		case sf::Keyboard::T: // 进入GameDebug
-			r_wnd->changeActivity(std::make_unique<Activity_Debug>());
+			r_wnd->changeActivity(std::make_unique<Act00_Debug>());
 			return 1;
 		default:
 			break;

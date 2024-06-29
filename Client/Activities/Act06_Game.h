@@ -19,13 +19,38 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Scene_ITitle.h"
-#include "Scene_Title.h"
+#pragma once
 
-namespace Scene::Factory {
+#include <MysteryEngine/Client/Window.h>
 
-std::unique_ptr<Scene_ITitle> GetTitle() {
-    return std::make_unique<Title>();
-}
+namespace Activity {
 
-} // namespace Scene
+class Act06_Game final :
+	public ME::Activity {
+public:
+	Act06_Game();
+	virtual ~Act06_Game() noexcept override;
+
+protected:
+	virtual bool prepare(ME::Window& wnd) noexcept override;
+	virtual void start() noexcept override;
+	virtual void stop() noexcept override;
+
+public:
+	virtual bool handleEvent(const sf::Event& evt) override;
+	virtual void update(sf::Time dtime) override;
+
+	virtual void OnEnterSysloop() noexcept override;
+	virtual void OnExitSysloop() noexcept override;
+
+protected:
+	void ExitGame(int code);
+
+	void UpdateSize(sf::Vector2u size);
+
+protected:
+	ME::WndRef r;
+	bool m_paused;
+};
+
+} // namespace Activity

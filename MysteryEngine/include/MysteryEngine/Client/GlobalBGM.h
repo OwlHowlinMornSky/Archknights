@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include <MysteryEngine/Client/Bgm.h>
 #include <MysteryEngine/Core/MEAPI.h>
 
 namespace ME::GlobalBGM {

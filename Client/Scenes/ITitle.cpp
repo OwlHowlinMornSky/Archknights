@@ -19,21 +19,13 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#pragma once
+#include "ITitle.h"
+#include "Title.h"
 
-#include <memory>
-#include <MysteryEngine/G3D/Scene.h>
+namespace Scene::Factory {
 
-namespace Scene {
-
-class Scene_ITitle :
-	public ME::Scene {
-public:
-	virtual void SetScale(float r) = 0;
-	virtual void SetOffset(float r) = 0;
-};
-
-namespace Factory {
-std::unique_ptr<Scene_ITitle> GetTitle();
+std::unique_ptr<ITitle> GetTitle() {
+    return std::make_unique<Title>();
 }
+
 } // namespace Scene

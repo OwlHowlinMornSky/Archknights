@@ -66,11 +66,6 @@ void Act04_Load::start() noexcept {
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
 	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
-
-	//m_text.setString(L"test测试あいうえお😅");
-	//m_text.setFont(r_wnd->getFontMgr().getFont(GUI::FontType::CommonContext));
-	//m_text.setFillColor(sf::Color::White);
-	//m_text.setCharacterSize(36);
 	return;
 }
 
@@ -151,7 +146,6 @@ void Act04_Load::update(sf::Time deltaTime) {
 	r_wnd->draw(m_sp);
 	r_wnd->draw(m_blackBar[0]);
 	r_wnd->draw(m_blackBar[1]);
-	//r_wnd->draw(m_text);
 	r_wnd->display();
 	return;
 }
@@ -182,10 +176,6 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	m_blackBar[0].setOrigin(wx * 0.05f, wy * (-0.9f));
 	m_blackBar[1].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
 	m_blackBar[1].setOrigin(wx * 0.05f, wy * 0.05f);
-
-	//float fontSizef = wy * 0.08f;
-	//float fontRate = fontSizef / 36;
-	//m_text.setScale(fontRate, fontRate);
 	return;
 }
 

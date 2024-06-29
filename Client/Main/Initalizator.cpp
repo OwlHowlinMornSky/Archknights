@@ -43,7 +43,7 @@ namespace Main {
 void Initalizator::OnJoined() {
 	Game::Global::board->SubscribeMsg(5678, m_location);
 
-	auto& camera = Game::Global::show->getCamera();
+	auto& camera = Game::Global::stage->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
 	camera.setFOV(40.0f);
@@ -74,10 +74,10 @@ void Initalizator::OnJoined() {
 
 	ME::G3dGlobal::setActive(false);
 
-	Game::Global::show->AddGround(ground);
+	Game::Global::stage->AddGround(ground);
 
 	ground->SetSize(11.0f, 7.0f);
-	Game::Global::show->SetGroundSize(11.0f, 7.0f);
+	Game::Global::stage->SetGroundSize(11.0f, 7.0f);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
@@ -156,7 +156,7 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 				pos[1] += 1.0f;
 				break;
 			case sf::Keyboard::S:
-				Game::Global::show->getCamera().translate(0.0f, -0.1f, 0.0f);
+				Game::Global::stage->getCamera().translate(0.0f, -0.1f, 0.0f);
 				break;
 			}
 			break;
@@ -165,7 +165,7 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 		case sf::Event::MouseButtonPressed:
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
-				Game::Global::show->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
 				Game::Global::board->PostMsg(2, 3, (intptr_t)&(pos.x));
 			}
 			break;

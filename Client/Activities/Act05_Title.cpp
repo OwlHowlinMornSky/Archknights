@@ -21,7 +21,6 @@
 */
 #include "Act05_Title.h"
 
-#include "../Scenes/Scene_ITitle.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/Client/GlobalBGM.h>
 
