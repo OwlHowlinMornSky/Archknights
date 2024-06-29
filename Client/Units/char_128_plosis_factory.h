@@ -21,24 +21,21 @@
 */
 #pragma once
 
-#include "Tower.h"
+#include "../Main/EntityFactory.h"
+#include "../Models/IAnimation.h"
 
-namespace Units {
+namespace Game {
 
-class Char_101_Sora final :
-	public Tower {
-	using Parent = Tower;
+class Char_128_Plosis_Factory final :
+	public EntityFactory {
 public:
-	Char_101_Sora();
-	virtual ~Char_101_Sora();
+	virtual bool Load() override;
+	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) override;
 
-public:
-	virtual void OnJoined();
-	virtual void OnKicking();
-
-	virtual void FixedUpdate();
-
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+protected:
+	bool m_double;
+	std::unique_ptr<Model::IAnimationPose> m_pose[2];
+	bool test;
 };
 
 }

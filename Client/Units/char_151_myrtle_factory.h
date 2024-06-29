@@ -21,12 +21,12 @@
 */
 #pragma once
 
-#include "../GameThings/EntityFactory.h"
+#include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
 
 namespace Game {
 
-class Enemy_1002_nsabr_Factory final :
+class Char_151_Mytle_Factory final :
 	public EntityFactory {
 public:
 	virtual bool Load() override;

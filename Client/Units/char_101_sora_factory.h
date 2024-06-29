@@ -21,33 +21,20 @@
 */
 #pragma once
 
-#include "Mover.h"
+#include "../Main/EntityFactory.h"
+#include "../Models/IAnimation.h"
 
-namespace Units {
+namespace Game {
 
-class Enemy_1002_nsabr final :
-	public Mover {
-	using Parent = Mover;
+class Char_101_Sora_Factory final :
+	public EntityFactory {
 public:
-	Enemy_1002_nsabr();
-	virtual ~Enemy_1002_nsabr();
-
-public:
-	virtual void OnJoined();
-	virtual void OnKicking();
-
-	virtual void FixedUpdate();
-
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual bool Load() override;
+	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) override;
 
 protected:
-	virtual bool TryAttack() override;
-	virtual bool StillCanAttack() override;
-	virtual void OnAttack() override;
-
-public:
-	Game::EntityLocationType m_targetAd;
-	Game::EntityIdType m_targetId;
+	bool m_double;
+	std::unique_ptr<Model::IAnimationPose> m_pose[2];
 };
 
 }

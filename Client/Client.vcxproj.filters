@@ -11,20 +11,20 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameThings">
-      <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{787e72d9-9430-4ee7-870c-62d9206b208c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Models">
       <UniqueIdentifier>{63fea06b-7ddb-4159-8590-e975d4627293}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameThings\Units">
-      <UniqueIdentifier>{d23d45d5-047b-4b4c-9cca-4432e6c78157}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{cc47649d-1e17-4765-b218-c1958fb0fd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units">
+      <UniqueIdentifier>{d23d45d5-047b-4b4c-9cca-4432e6c78157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +85,6 @@
     <ClInclude Include="Game\GameHost.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\Creator.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
     <ClInclude Include="Models\ActorGroup.h">
       <Filter>Models</Filter>
     </ClInclude>
@@ -111,48 +108,6 @@
     </ClInclude>
     <ClInclude Include="Models\Actor.h">
       <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\SummonMngr.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\ISummonMngr.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\EntityFactory.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\MsgId.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_101_sora.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_151_myrtle.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_101_sora_factory.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_101_sora_actor.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_151_myrtle_actor.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_151_myrtle_factory.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_128_plosis.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_128_plosis_actor.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\char_128_plosis_factory.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\Initalizator.h">
-      <Filter>GameThings</Filter>
     </ClInclude>
     <ClInclude Include="Physics\IWorld.h">
       <Filter>Physics</Filter>
@@ -178,12 +133,6 @@
     <ClInclude Include="Physics\Body.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\Tower.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\Mover.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Attribute.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -202,23 +151,8 @@
     <ClInclude Include="Game\Hook.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="GameThings\MapHost.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\HostMsgId.h">
-      <Filter>GameThings</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\Wall.h">
       <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\enemy_1002_nsabr.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\enemy_1002_nsabr_actor.h">
-      <Filter>GameThings\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="GameThings\enemy_1002_nsabr_factory.h">
-      <Filter>GameThings\Units</Filter>
     </ClInclude>
     <ClInclude Include="Game\IActor.h">
       <Filter>Game</Filter>
@@ -231,6 +165,72 @@
     </ClInclude>
     <ClInclude Include="Game\ActorVertex.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Creator.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\EntityFactory.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\HostMsgId.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Initalizator.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\ISummonMngr.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\MapHost.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Mover.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\MsgId.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\SummonMngr.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Tower.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_101_sora.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_101_sora_actor.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_101_sora_factory.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_128_plosis.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_128_plosis_actor.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_128_plosis_factory.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_151_myrtle.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_151_myrtle_actor.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\char_151_myrtle_factory.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\enemy_1002_nsabr.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\enemy_1002_nsabr_actor.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Units\enemy_1002_nsabr_factory.h">
+      <Filter>Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,9 +287,6 @@
     <ClCompile Include="Game\GameHost.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\Creator.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
     <ClCompile Include="Models\ActorGroup.cpp">
       <Filter>Models</Filter>
     </ClCompile>
@@ -305,42 +302,6 @@
     <ClCompile Include="Models\Actor.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\SummonMngr.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\EntityFactory.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_101_sora.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_151_myrtle.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_101_sora_factory.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_101_sora_actor.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_151_myrtle_actor.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_151_myrtle_factory.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_128_plosis.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_128_plosis_actor.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\char_128_plosis_factory.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\Initalizator.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Detector.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -353,35 +314,74 @@
     <ClCompile Include="Game\Modifier.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\Tower.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Hook.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameThings\MapHost.cpp">
-      <Filter>GameThings</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Wall.cpp">
       <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\Mover.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\enemy_1002_nsabr.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\enemy_1002_nsabr_actor.cpp">
-      <Filter>GameThings\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="GameThings\enemy_1002_nsabr_factory.cpp">
-      <Filter>GameThings\Units</Filter>
     </ClCompile>
     <ClCompile Include="Models\Shadow.cpp">
       <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Physics\FrictionBody.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Creator.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\EntityFactory.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Initalizator.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\MapHost.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Mover.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\SummonMngr.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Tower.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_101_sora.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_101_sora_actor.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_101_sora_factory.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_128_plosis.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_128_plosis_actor.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_128_plosis_factory.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_151_myrtle.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_151_myrtle_actor.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\char_151_myrtle_factory.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\enemy_1002_nsabr.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\enemy_1002_nsabr_actor.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp">
+      <Filter>Units</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@
 #include "char_151_myrtle.h"
 
 #include "../Game/MsgResult.h"
-#include "MsgId.h"
+#include "../Main/MsgId.h"
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
 #include "../Game/AtkDmgHeal.h"

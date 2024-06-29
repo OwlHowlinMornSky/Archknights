@@ -22,7 +22,7 @@
 #include "char_128_plosis.h"
 
 #include "../Game/MsgResult.h"
-#include "MsgId.h"
+#include "../Main/MsgId.h"
 #include "../Game/AtkDmgHeal.h"
 
 Units::Char_128_Plosis::Char_128_Plosis() {}

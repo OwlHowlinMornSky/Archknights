@@ -23,7 +23,7 @@
 #include "../Game/GameGlobal.h"
 #include "../Game/GameBoard.h"
 #include "../Scenes/Scene_GameCommon.h"
-#include "../GameThings/Creator.h"
+#include "../Main/Creator.h"
 #include "../Activities/Act01_DefaultEntrance.h"
 
 namespace Activity {

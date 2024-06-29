@@ -21,16 +21,16 @@
 */
 #pragma once
 
-#include "Tower.h"
+#include "../Main/Mover.h"
 
 namespace Units {
 
-class Char_151_Myrtle final :
-	public Tower {
-	using Parent = Tower;
+class Enemy_1002_nsabr final :
+	public Mover {
+	using Parent = Mover;
 public:
-	Char_151_Myrtle();
-	virtual ~Char_151_Myrtle();
+	Enemy_1002_nsabr();
+	virtual ~Enemy_1002_nsabr();
 
 public:
 	virtual void OnJoined();
