@@ -20,6 +20,7 @@ void Mover::OnJoined() {
 	if (m_actor) {
 		m_actor->m_note = &m_note;
 	}
+	m_checkpointTarget = 0;
 	// 创建主体
 	m_body = Game::GameGlobal::board->m_world->CreateBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
 	m_body->SetId(m_id);
@@ -96,7 +97,6 @@ void Mover::FixedUpdate() {
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
 		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
-			|| (mx * mx + my * my < 0.0225f) // 到达非临时目标
 			|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
 			) {
 			if (TryMove()) {
@@ -108,8 +108,19 @@ void Mover::FixedUpdate() {
 				ToIdle();
 			}
 		}
+		else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
+			if (TryTakeNextMoveCmd() && TryMove()) {
+				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+			}
+			else {
+				m_body->ClearSpeed();
+				ToIdle();
+			}
+		}
 		else {
 			m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+			m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
 		}
 		break;
 	}
@@ -121,7 +132,7 @@ void Mover::FixedUpdate() {
 		if (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.01f) {
 			if (TryMove()) {
 				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+				//m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
 			}
 			else { // 不再继续
 				m_body->ClearSpeed();
@@ -165,7 +176,6 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		ToDying();
 		m_died = true;
 		m_body->BeginUnbalance();
-		//m_body->SetMove(1.0f, 0.0f);
 		m_detector.reset();
 		break;
 	default:
@@ -290,7 +300,7 @@ bool Mover::TryMove() {
 	Game::MsgResultType res =
 		Game::GameGlobal::board->
 		GetHost(Game::HostJob::MapPathManager)->
-		ReceiveMessage(Game::HostMsgId::MapLeadQuery, 0, (intptr_t)target);
+		ReceiveMessage(Game::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
 	switch (res) {
 	case Game::MsgResult::Leader_TempRes:
 		m_tempMoveTarget = true;
@@ -302,8 +312,9 @@ bool Mover::TryMove() {
 	{
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
-		if (mx * mx + my * my < 0.0225f)
-			return false;
+		if (mx * mx + my * my < 0.0225f) {
+			return TryTakeNextMoveCmd();
+		}
 		break;
 	}
 	case Game::MsgResult::Leader_AtInvalidBlock:
@@ -315,6 +326,13 @@ bool Mover::TryMove() {
 	}
 	m_moveTargetPos[0] = target[0] + 0.5f;
 	m_moveTargetPos[1] = target[1] + 0.5f;
+	return true;
+}
+
+bool Mover::TryTakeNextMoveCmd() {
+	if (m_checkpointTarget > 0)
+		return false;
+	m_checkpointTarget++;
 	return true;
 }
 

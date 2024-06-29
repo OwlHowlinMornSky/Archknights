@@ -71,26 +71,19 @@ IDetector* Body::GetDetector(size_t id) {
 void Body::SetMove(float maxv, float maxa) {
 	m_maxV = maxv;
 	m_maxA = maxa;
-	if (m_isUnbalance) {
-		m_frictionJoint->SetMaxForce(maxa);
-	}
-	else {
+	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(maxa / maxv);
-		m_frictionJoint->SetMaxForce(0.0f);
 	}
 }
 
 void Body::SetMoveSpeed(float maxv) {
+	m_maxV = maxv;
 	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(m_maxA / maxv);
 	}
-	m_maxV = maxv;
 }
 
 void Body::SetMoveAcceleration(float maxa) {
-	if (m_isUnbalance) {
-		m_frictionJoint->SetMaxForce(maxa);
-	}
 	m_maxA = maxa;
 }
 

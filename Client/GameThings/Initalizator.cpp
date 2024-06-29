@@ -101,9 +101,11 @@ void Initalizator::OnJoined() {
 	ifs.open("res/main_7-3/map.txt");
 	maphost->Load(ifs);
 
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 1, 0);
-	int testp[2] = { 0, 4 };
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 2, 0);
+	int testp[2] = { 9, 1 };
 	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t) & (testp[0]));
+	int testp1[2] = { 0, 3 };
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 1, (intptr_t) & (testp1[0]));
 
 	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
 

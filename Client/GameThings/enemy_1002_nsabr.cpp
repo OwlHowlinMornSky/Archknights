@@ -31,7 +31,7 @@ Enemy_1002_nsabr::~Enemy_1002_nsabr() {}
 void Enemy_1002_nsabr::OnJoined() {
 	Parent::OnJoined();
 
-	m_body->SetMove(1.0f, 5.0f);
+	m_body->SetMove(100.0f, 50.0f);
 }
 
 void Enemy_1002_nsabr::OnKicking() {

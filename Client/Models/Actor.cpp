@@ -171,16 +171,20 @@ void Actor::TurnDirection(bool isLeft) {
 	if (m_isRolling) {
 		switch (m_targetDirection) {
 		case Direction::FL:
-			m_targetDirection = Direction::FR;
+			if (!isLeft)
+				m_targetDirection = Direction::FR;
 			break;
 		case Direction::FR:
-			m_targetDirection = Direction::FL;
+			if (isLeft)
+				m_targetDirection = Direction::FL;
 			break;
 		case Direction::BL:
-			m_targetDirection = Direction::BR;
+			if (!isLeft)
+				m_targetDirection = Direction::BR;
 			break;
 		case Direction::BR:
-			m_targetDirection = Direction::BL;
+			if (isLeft)
+				m_targetDirection = Direction::BL;
 			break;
 		}
 	}

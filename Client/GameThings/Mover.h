@@ -80,6 +80,7 @@ protected:
 	virtual void OnAttack();
 
 	bool TryMove();
+	bool TryTakeNextMoveCmd();
 
 public:
 	bool m_active, m_died, m_atked;
@@ -90,6 +91,7 @@ public:
 	std::unique_ptr<Physics::IBody> m_body;
 	std::unique_ptr<Physics::IDetector> m_detector;
 	Game::AnimEventNote m_note;
+	int m_checkpointTarget;
 };
 
 }
