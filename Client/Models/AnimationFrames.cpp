@@ -36,7 +36,7 @@ size_t g_test;
 
 }
 
-namespace Game {
+namespace Model {
 
 int AnimationFrames::Load(std::string_view file) {
 	this->drawCount = (unsigned int)vertexArray.size();
@@ -121,18 +121,18 @@ char FramesFactory::CreatePose2(
 
 namespace {
 
-std::unique_ptr<Game::FramesFactory> g_frameFactoryInstance;
+std::unique_ptr<Model::FramesFactory> g_frameFactoryInstance;
 
 }
 
-Game::IAnimationFactory* Game::IAnimationFactory::Instance() {
+Model::IAnimationFactory* Model::IAnimationFactory::Instance() {
 	if (g_frameFactoryInstance == nullptr) {
-		g_frameFactoryInstance = std::make_unique<Game::FramesFactory>();
+		g_frameFactoryInstance = std::make_unique<Model::FramesFactory>();
 	}
 	return g_frameFactoryInstance.get();
 }
 
-void Game::IAnimationFactory::Drop() {
+void Model::IAnimationFactory::Drop() {
 	g_frameFactoryInstance.reset();
 }
 

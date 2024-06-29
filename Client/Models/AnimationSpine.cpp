@@ -106,10 +106,10 @@ SFMLTextureLoader SFMLTextureLoader::instance;
 
 } // end namespace
 
-namespace Game {
+namespace Model {
 
 // class SpineAnimation
-SpineAnimation::SpineAnimation(const Game::SpinePoseData _pose) :
+SpineAnimation::SpineAnimation(const Model::SpinePoseData _pose) :
 	m_pose(_pose),
 	m_outline(false),
 
@@ -407,7 +407,7 @@ void SpineAnimation::DrawVertices(ME::Shader* shader, sf::Texture* texture) {
 // end class SpineAnimation
 
 // class SpinePose
-SpinePose::SpinePose(Game::SpinePoseData _pose) :
+SpinePose::SpinePose(Model::SpinePoseData _pose) :
 	m_pose(_pose) {}
 
 SpinePose::~SpinePose() {
@@ -439,7 +439,7 @@ SpineFactory::~SpineFactory() {
 }
 
 bool SpineFactory::CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) {
-	Game::IAnimationPose* res = nullptr;
+	Model::IAnimationPose* res = nullptr;
 	std::string path("res/chararts/");
 	switch (type) {
 	case 0: path += "bat0/"; break;
@@ -464,8 +464,8 @@ char SpineFactory::CreatePose2(
 	std::string path1("res/chararts/bat1/");
 	path0 += name;
 	path1 += name;
-	Game::IAnimationPose* res0 = createPoseBinary(path0 + ".skel", path0 + ".atlas");
-	Game::IAnimationPose* res1 = createPoseBinary(path1 + ".skel", path1 + ".atlas");
+	Model::IAnimationPose* res0 = createPoseBinary(path0 + ".skel", path0 + ".atlas");
+	Model::IAnimationPose* res1 = createPoseBinary(path1 + ".skel", path1 + ".atlas");
 	if (res0 != nullptr) {
 		ptr0 = std::unique_ptr<IAnimationPose>(res0);
 		res |= 0x01;
@@ -478,7 +478,7 @@ char SpineFactory::CreatePose2(
 }
 
 bool SpineFactory::CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) {
-	Game::IAnimationPose* res = nullptr;
+	Model::IAnimationPose* res = nullptr;
 	std::string path("res/battle/enemy/");
 	path += name;
 	res = createPoseBinary(path + ".skel", path + ".atlas");
@@ -487,11 +487,11 @@ bool SpineFactory::CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::st
 	return res != nullptr;
 }
 
-Game::SpinePose* SpineFactory::createPoseBinary(
+Model::SpinePose* SpineFactory::createPoseBinary(
 	std::string_view binaryPath,
 	std::string_view atlasPath
 ) {
-	Game::SpinePoseData pose{};
+	Model::SpinePoseData pose{};
 
 	// Load the texture atlas
 	pose.atlas = new spine::Atlas(atlasPath.data(), &::SFMLTextureLoader::instance);
@@ -512,27 +512,31 @@ Game::SpinePose* SpineFactory::createPoseBinary(
 	// Setup
 	pose.animationStateData = new spine::AnimationStateData(pose.skeletonData);
 
-	return new Game::SpinePose(pose);
+	return new Model::SpinePose(pose);
 }
 
 // end class SpineFactory
-} // end namespace ohms
+} // end namespace Model
 
 namespace {
 
-std::unique_ptr<Game::SpineFactory> g_spineFactoryInstance;
+std::unique_ptr<Model::SpineFactory> g_spineFactoryInstance;
 
 }
 
-Game::IAnimationFactory* Game::IAnimationFactory::Instance() {
+namespace Model {
+
+Model::IAnimationFactory* IAnimationFactory::Instance() {
 	if (g_spineFactoryInstance == nullptr) {
-		g_spineFactoryInstance = std::make_unique<Game::SpineFactory>();
+		g_spineFactoryInstance = std::make_unique<Model::SpineFactory>();
 	}
 	return g_spineFactoryInstance.get();
 }
 
-void Game::IAnimationFactory::Drop() {
+void IAnimationFactory::Drop() {
 	g_spineFactoryInstance.reset();
+}
+
 }
 
 #endif // ARCHKNIGHTS_LIMITED

@@ -24,6 +24,8 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 
+namespace Model {
+
 class IObjModel :
 	public ME::IModel {
 public:
@@ -34,3 +36,5 @@ public:
 public:
 	static std::shared_ptr<IObjModel> Create();
 };
+
+}

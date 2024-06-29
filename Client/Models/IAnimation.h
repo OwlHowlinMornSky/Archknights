@@ -24,7 +24,7 @@
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
 
-namespace Game {
+namespace Model {
 
 class IAnimationPose {
 public:

@@ -37,9 +37,9 @@
 #include <MysteryEngine/G3D/Vertex.h>
 
 #include "IAnimation.h"
-#include "ActorVertex.h"
+#include "../Game/ActorVertex.h"
 
-namespace Game {
+namespace Model {
 
 struct SpinePoseData {
 	spine::Atlas* atlas;
@@ -52,7 +52,7 @@ class SpineAnimation final :
 	public ME::IModel {
 	typedef ME::IModel Parent;
 public:
-	SpineAnimation(const Game::SpinePoseData _pose);
+	SpineAnimation(const Model::SpinePoseData _pose);
 	~SpineAnimation();
 
 public:
@@ -95,7 +95,7 @@ protected:
 	spine::Skeleton* m_skeleton;
 	spine::AnimationState* m_animationState;
 	spine::Vector<spine::Bone*>* m_bonesRef;
-	const Game::SpinePoseData m_pose;
+	const Model::SpinePoseData m_pose;
 	std::vector<Game::ActorVertex> vertexArray;
 	mutable spine::Vector<float> worldVertices;
 	mutable spine::SkeletonClipping m_clipper;
@@ -105,14 +105,14 @@ protected:
 class SpinePose final :
 	public IAnimationPose {
 public:
-	SpinePose(Game::SpinePoseData _pose);
+	SpinePose(Model::SpinePoseData _pose);
 	~SpinePose();
 
 public:
 	virtual std::shared_ptr<ME::IModel> CreateAnimation() override;
 
 protected:
-	Game::SpinePoseData m_pose;
+	Model::SpinePoseData m_pose;
 };
 
 
@@ -132,9 +132,8 @@ public:
 	virtual bool CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) override;
 
 private:
-	Game::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);
+	Model::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);
 };
-
 
 }
 

@@ -30,7 +30,7 @@
 #include "IAnimation.h"
 #include "ActorGroup.h"
 
-namespace Game {
+namespace Model {
 
 class AnimationFrames final :
 	public ME::IModel {

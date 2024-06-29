@@ -53,7 +53,7 @@ protected:
 	ME::Shader* m_ds;
 	sf::RenderTexture m_shadowTex;
 	std::shared_ptr<ME::IModel> m_ground;
-	Game::ActorGroup m_actors;
+	Model::ActorGroup m_actors;
 };
 
 } // namespace Scene

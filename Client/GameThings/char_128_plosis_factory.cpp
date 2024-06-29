@@ -26,7 +26,7 @@
 #include "../Game/IGameShow.h"
 
 bool Game::Char_128_Plosis_Factory::Load() {
-	auto fac = Game::IAnimationFactory::Instance();
+	auto fac = Model::IAnimationFactory::Instance();
 
 #ifdef ARCHKNIGHTS_LIMITED
 	test = true;

@@ -26,7 +26,7 @@
 #include "../Game/IGameShow.h"
 
 bool Game::Char_101_Sora_Factory::Load() {
-	auto fac = Game::IAnimationFactory::Instance();
+	auto fac = Model::IAnimationFactory::Instance();
 
 	bool res = fac->CreatePose(m_pose[0], "char_101_sora", 0);
 	if (!res)

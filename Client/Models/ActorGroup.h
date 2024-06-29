@@ -24,11 +24,11 @@
 #include <memory>
 #include <list>
 #include "../Game/IActor.h"
-#include "ActorVertex.h"
+#include "../Game/ActorVertex.h"
 
 #include "Shadow.h"
 
-namespace Game {
+namespace Model {
 
 class ActorGroup final:
 	public ME::IModel {
@@ -51,7 +51,7 @@ protected:
 	std::list<std::shared_ptr<Game::IActor>> m_actors;
 	std::unique_ptr<ME::Shader> m_shader;
 	std::unique_ptr<ME::Shader> m_shadowShader;
-	Game::Shadow m_shadow;
+	Model::Shadow m_shadow;
 };
 
 }

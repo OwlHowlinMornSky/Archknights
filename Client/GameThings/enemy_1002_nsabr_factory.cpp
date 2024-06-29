@@ -26,7 +26,7 @@
 #include "../Game/IGameShow.h"
 
 bool Game::Enemy_1002_nsabr_Factory::Load() {
-	auto fac = Game::IAnimationFactory::Instance();
+	auto fac = Model::IAnimationFactory::Instance();
 
 	bool res = fac->CreateEnemyPose(m_pose[0], "enemy_1002_nsabr");
 	if (!res)

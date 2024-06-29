@@ -140,6 +140,8 @@ public:
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
+namespace Model {
+
 ObjModel::ObjModel() :
 	m_groundSz{ 1.0f, 1.0f } {}
 
@@ -466,4 +468,6 @@ void ObjModel::UpdateShader(ME::Camera* camera, ME::Shader* shader) {
 
 std::shared_ptr<IObjModel> IObjModel::Create() {
 	return std::make_shared<ObjModel>();
+}
+
 }

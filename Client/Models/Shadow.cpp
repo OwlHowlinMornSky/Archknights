@@ -25,13 +25,15 @@
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/G3D/GlCheck.h>
 
-Game::Shadow::Shadow() :
+namespace Model {
+
+Shadow::Shadow() :
 	m_vertexVBO(0),
 	m_vao(0) {}
 
-Game::Shadow::~Shadow() {}
+Shadow::~Shadow() {}
 
-bool Game::Shadow::Setup() {
+bool Shadow::Setup() {
 	for (int i = 0; i < 4; ++i) {
 		m_vertex[i].color = { 0.0f, 1.0f, 0.0f, 1.0f };
 		m_vertex[i].texCoord = { 0.0f, 0.0f };
@@ -71,7 +73,7 @@ bool Game::Shadow::Setup() {
 	return true;
 }
 
-void Game::Shadow::Clear() {
+void Shadow::Clear() {
 	ME::G3dGlobal::setActive(true);
 
 	if (m_vertexVBO) {
@@ -86,20 +88,22 @@ void Game::Shadow::Clear() {
 	ME::G3dGlobal::setActive(false);
 }
 
-void Game::Shadow::Draw(ME::Camera* camera, ME::Shader* shader) {
+void Shadow::Draw(ME::Camera* camera, ME::Shader* shader) {
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, 4));
 	glCheck(glBindVertexArray(0));
 }
 
-void Game::Shadow::DrawInstance(int count) {
+void Shadow::DrawInstance(int count) {
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glDrawArraysInstanced(GL_QUADS, 0, 4, count));
 	glCheck(glBindVertexArray(0));
 }
 
-void Game::Shadow::SetColor(float r, float g, float b, float a) {
+void Shadow::SetColor(float r, float g, float b, float a) {
 
 }
 
-void Game::Shadow::UpdateShader(ME::Shader* shader, ME::Camera* camera) {}
+void Shadow::UpdateShader(ME::Shader* shader, ME::Camera* camera) {}
+
+}

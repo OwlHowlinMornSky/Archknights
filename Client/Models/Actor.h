@@ -26,13 +26,13 @@
 
 #ifdef ARCHKNIGHTS_LIMITED
 #include "AnimationSpine.h"
-using CurrentAnimationClass = Game::SpineAnimation;
+using CurrentAnimationClass = Model::SpineAnimation;
 #else
 #include "AnimationFrames.h"
-using CurrentAnimationClass = Game::AnimationFrames;
+using CurrentAnimationClass = Model::AnimationFrames;
 #endif // ARCHKNIGHTS_LIMITED
 
-namespace Game {
+namespace Model {
 
 struct AnimationInfo {
 #ifdef ARCHKNIGHTS_LIMITED
@@ -72,7 +72,7 @@ class Actor :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
-	public IActor {
+	public Game::IActor {
 public:
 	Actor(std::shared_ptr<ME::IModel> _f);
 	virtual ~Actor();
@@ -129,7 +129,7 @@ class Actor2 :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
-	public IActor {
+	public Game::IActor {
 public:
 	Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Actor2();

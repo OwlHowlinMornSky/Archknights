@@ -34,7 +34,7 @@ public:
 
 protected:
 	bool m_double;
-	std::unique_ptr<Game::IAnimationPose> m_pose[2];
+	std::unique_ptr<Model::IAnimationPose> m_pose[2];
 };
 
 }

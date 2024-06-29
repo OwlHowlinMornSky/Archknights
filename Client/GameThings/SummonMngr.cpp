@@ -36,7 +36,7 @@ SummonMngr::SummonMngr() {}
 SummonMngr::~SummonMngr() {}
 
 void SummonMngr::AddBegin() {
-	Game::IAnimationFactory::Instance();
+	Model::IAnimationFactory::Instance();
 	return;
 }
 
@@ -63,7 +63,7 @@ bool SummonMngr::AddEntity(size_t id, bool isEnemy) {
 }
 
 void SummonMngr::AddEnd() {
-	Game::IAnimationFactory::Drop();
+	Model::IAnimationFactory::Drop();
 	return;
 }
 

@@ -64,7 +64,7 @@ void Initalizator::OnJoined() {
 	////////////////////
 	ME::G3dGlobal::setActive(true);
 
-	auto ground = IObjModel::Create();
+	auto ground = Model::IObjModel::Create();
 	ground->Setup();
 
 	ground->LoadModelData("res/main_7-3/main.obj");

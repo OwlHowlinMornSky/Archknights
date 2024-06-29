@@ -27,7 +27,7 @@ namespace Game {
 
 #ifdef ARCHKNIGHTS_LIMITED
 class Enemy_1002_nsabr_Actor_Vanilla final :
-	public Actor {
+	public Model::Actor {
 public:
 	Enemy_1002_nsabr_Actor_Vanilla(std::shared_ptr<ME::IModel> _f);
 	virtual ~Enemy_1002_nsabr_Actor_Vanilla() = default;

@@ -27,7 +27,7 @@ namespace Game {
 
 #ifdef ARCHKNIGHTS_LIMITED
 class Char_151_Mytle_Actor_Vanilla final :
-	public Actor2 {
+	public Model::Actor2 {
 public:
 	Char_151_Mytle_Actor_Vanilla(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Char_151_Mytle_Actor_Vanilla() = default;

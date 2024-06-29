@@ -332,6 +332,7 @@
     <ClInclude Include="GameThings\SummonMngr.h" />
     <ClInclude Include="GameThings\Tower.h" />
     <ClInclude Include="Game\Ability.h" />
+    <ClInclude Include="Game\ActorVertex.h" />
     <ClInclude Include="Game\AtkDmgHeal.h" />
     <ClInclude Include="Game\Attribute.h" />
     <ClInclude Include="Game\BasicMsgId.h" />
@@ -347,7 +348,6 @@
     <ClInclude Include="Game\TypeDef.h" />
     <ClInclude Include="Models\Actor.h" />
     <ClInclude Include="Models\ActorGroup.h" />
-    <ClInclude Include="Models\ActorVertex.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IAnimation.h" />

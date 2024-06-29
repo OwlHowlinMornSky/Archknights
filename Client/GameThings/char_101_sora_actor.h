@@ -27,7 +27,7 @@ namespace Game {
 
 #ifdef ARCHKNIGHTS_LIMITED
 class Char_101_Sora_Actor_Vanilla final :
-	public Actor {
+	public Model::Actor {
 public:
 	Char_101_Sora_Actor_Vanilla(std::shared_ptr<ME::IModel> _a);
 	virtual ~Char_101_Sora_Actor_Vanilla() = default;

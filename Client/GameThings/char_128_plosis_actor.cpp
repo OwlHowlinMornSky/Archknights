@@ -32,12 +32,12 @@ Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 }
 
 void Game::Char_128_Plosis_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
-	AnimationInfo* face = GetInfo(false);
-	AnimationInfo* back = GetInfo(true);
+	Model::AnimationInfo* face = GetInfo(false);
+	Model::AnimationInfo* back = GetInfo(true);
 	auto animf = GetAnimation(false);
 	auto animb = GetAnimation(true);
 
-	AnimationInfo* c = face;
+	Model::AnimationInfo* c = face;
 	auto a = animf;
 
 	switch (status) {

@@ -30,10 +30,10 @@ Game::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
 }
 
 void Game::Char_101_Sora_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
-	AnimationInfo* face = &m_info;
+	Model::AnimationInfo* face = &m_info;
 	auto animf = m_current;
 
-	AnimationInfo* c = face;
+	Model::AnimationInfo* c = face;
 	auto a = animf;
 
 	switch (status) {

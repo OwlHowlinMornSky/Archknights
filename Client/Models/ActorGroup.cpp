@@ -271,7 +271,7 @@ public:
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace Game {
+namespace Model {
 
 ActorGroup::ActorGroup() {}
 
@@ -342,7 +342,7 @@ void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
 			m_shadow.DrawInstance(256);
 			i = 0;
 		}
-		IActor& a = **it;
+		Game::IActor& a = **it;
 		auto& p = a.getPos();
 		u[i] = { p.x, p.y, a.m_shadowRadius, a.m_shadowAlpha };
 	}

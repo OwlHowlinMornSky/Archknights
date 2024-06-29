@@ -23,9 +23,9 @@
 
 #include <MysteryEngine/G3D/IModel.h>
 #include <MysteryEngine/G3D/Vertex.h>
-#include "ActorVertex.h"
+#include "../Game/ActorVertex.h"
 
-namespace Game {
+namespace Model {
 
 class Shadow final :
 	public ME::IModel {
@@ -48,7 +48,7 @@ protected:
 protected:
 	unsigned int m_vao;
 	unsigned int m_vertexVBO;
-	ActorVertex m_vertex[4];
+	Game::ActorVertex m_vertex[4];
 };
 
 }

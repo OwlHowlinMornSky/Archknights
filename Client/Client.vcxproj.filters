@@ -226,11 +226,11 @@
     <ClInclude Include="Models\Shadow.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\ActorVertex.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\FrictionBody.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ActorVertex.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

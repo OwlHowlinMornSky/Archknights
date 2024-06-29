@@ -38,6 +38,8 @@
 #include "IGround.h"
 //#include "V3DLight.h"
 
+namespace Model {
+
 ///3D Model Class for Loading and Rendering models in the .OBJ file format using TinyOBJLoader.
 class ObjModel :
 	public IObjModel {
@@ -94,3 +96,5 @@ protected:
 	std::unique_ptr<ME::Shader> m_shader;
 	float m_groundSz[2];
 };
+
+}

@@ -36,7 +36,7 @@ static constexpr float g_HitFadeSpeed = 0.5f;
 
 }
 
-namespace Game {
+namespace Model {
 
 Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_isRolling(false),
@@ -403,7 +403,7 @@ void Actor2::InitDirection(Direction direction) {
 	return;
 }
 
-void Game::Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
+void Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
 #ifdef ARCHKNIGHTS_LIMITED
 	bool wantToChangeFace = false;
 	bool wantToChangeLR = false;
