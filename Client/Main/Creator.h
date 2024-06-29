@@ -21,7 +21,7 @@
 */
 #pragma once
 
-namespace Game::Creator {
+namespace Main::Creator {
 
 int setup();
 void drop();

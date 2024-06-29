@@ -25,7 +25,7 @@
 #include "char_151_myrtle_actor.h"
 #include "../Game/Stage.h"
 
-namespace Game {
+namespace Unit {
 
 bool Char_151_Mytle_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
@@ -37,8 +37,8 @@ bool Char_151_Mytle_Factory::Load() {
 	return true;
 }
 
-bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
-	auto unit = std::make_shared<Units::Char_151_Myrtle>();
+bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+	auto unit = std::make_shared<Unit::Char_151_Myrtle>();
 
 
 	auto anim0 = m_pose[0]->CreateAnimation();
@@ -61,9 +61,9 @@ bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> Create151() {
-	std::unique_ptr<Game::EntityFactory> res;
-	res = std::make_unique<Game::Char_151_Mytle_Factory>();
+std::unique_ptr<Main::EntityFactory> Create151() {
+	std::unique_ptr<Main::EntityFactory> res;
+	res = std::make_unique<Unit::Char_151_Mytle_Factory>();
 	return std::move(res);
 }
 

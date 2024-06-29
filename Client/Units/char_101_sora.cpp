@@ -21,25 +21,25 @@
 */
 #include "char_101_sora.h"
 
-Units::Char_101_Sora::Char_101_Sora() {}
+Unit::Char_101_Sora::Char_101_Sora() {}
 
-Units::Char_101_Sora::~Char_101_Sora() {}
+Unit::Char_101_Sora::~Char_101_Sora() {}
 
-void Units::Char_101_Sora::OnJoined() {
+void Unit::Char_101_Sora::OnJoined() {
 	Parent::OnJoined();
 }
 
-void Units::Char_101_Sora::OnKicking() {
+void Unit::Char_101_Sora::OnKicking() {
 	Parent::OnKicking();
 }
 
-void Units::Char_101_Sora::FixedUpdate() {
+void Unit::Char_101_Sora::FixedUpdate() {
 	//switch (m_status) {
 	//default:
 	//}
 	return Parent::FixedUpdate();
 }
 
-Game::MsgResultType Units::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Unit::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	return DefTowerProc(msg, wparam, lparam);
 }

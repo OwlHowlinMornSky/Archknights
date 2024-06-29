@@ -6,7 +6,7 @@
 #include "../Game/Board.h"
 #include "HostMsgId.h"
 
-namespace Units {
+namespace Main {
 
 Mover::Mover() :
 	m_active(false),
@@ -224,17 +224,6 @@ void Mover::OnPositionChanged() {
 
 Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case Game::MsgId::OnGetAttack:
-		if (m_died)
-			break;
-		if (m_actor)
-			m_actor->SetHit();
-		return DefEntityProc(msg, wparam, lparam);
-	case Game::MsgId::OnSelecting:
-		if (!m_active || m_died) {
-			return Game::MsgResult::MethodNotAllowed;
-		}
-		break;
 	case Game::MsgId::OnHpDropToZero:
 		if (m_status == Status::Moving || m_status == Status::Unbalance) {
 			m_body->BeginUnbalance();
@@ -247,6 +236,17 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		ToDying();
 		m_died = true;
 		m_detector.reset();
+		break;
+	case Game::MsgId::OnGetAttack:
+		if (m_died)
+			break;
+		if (m_actor)
+			m_actor->SetHit();
+		return DefEntityProc(msg, wparam, lparam);
+	case Main::MsgId::OnSelecting:
+		if (!m_active || m_died) {
+			return Game::MsgResult::MethodNotAllowed;
+		}
 		break;
 	default:
 		return DefEntityProc(msg, wparam, lparam);
@@ -372,7 +372,7 @@ bool Mover::TryMove() {
 	Game::MsgResultType res =
 		Game::Global::board->
 		GetHost(Game::HostJob::MapPathManager)->
-		ReceiveMessage(Game::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
+		ReceiveMessage(Main::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
 	switch (res) {
 	case Game::MsgResult::Leader_TempRes:
 		m_tempMoveTarget = true;

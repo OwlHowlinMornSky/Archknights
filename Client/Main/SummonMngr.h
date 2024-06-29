@@ -26,7 +26,7 @@
 #include "EntityFactory.h"
 #include <vector>
 
-namespace Game {
+namespace Main {
 
 struct SummonData {
 	size_t id;
@@ -50,7 +50,7 @@ public:
 
 	virtual void FixedUpdate();
 
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
 	std::vector<SummonData> m_data;

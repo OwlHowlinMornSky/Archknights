@@ -25,7 +25,7 @@
 #include "char_101_sora_actor.h"
 #include "../Game/Stage.h"
 
-bool Game::Char_101_Sora_Factory::Load() {
+bool Unit::Char_101_Sora_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
 	bool res = fac->CreatePose(m_pose[0], "char_101_sora", 0);
@@ -35,8 +35,8 @@ bool Game::Char_101_Sora_Factory::Load() {
 	return true;
 }
 
-bool Game::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
-	auto unit = std::make_shared<Units::Char_101_Sora>();
+bool Unit::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+	auto unit = std::make_shared<Unit::Char_101_Sora>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
 	anim0->Setup();
@@ -55,9 +55,9 @@ bool Game::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> Create101() {
-	std::unique_ptr<Game::EntityFactory> res;
-	res = std::make_unique<Game::Char_101_Sora_Factory>();
+std::unique_ptr<Main::EntityFactory> Create101() {
+	std::unique_ptr<Main::EntityFactory> res;
+	res = std::make_unique<Unit::Char_101_Sora_Factory>();
 	return std::move(res);
 }
 

@@ -23,9 +23,9 @@
 
 #include "../Game/TypeDef.h"
 
-namespace Game::HostMsgId {
+namespace Main::HostMsgId {
 
-enum Id : MsgIdType {
+enum Id : Game::MsgIdType {
 	Null = 0,
 
 	MapInitOk,            // null.

@@ -23,7 +23,7 @@
 
 #include "../Game/Entity.h"
 
-namespace Game {
+namespace Main {
 
 class Initalizator final :
 	public Game::Entity {
@@ -33,7 +33,7 @@ public:
 
 	virtual void FixedUpdate() override;
 
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
 	void LoadThread();

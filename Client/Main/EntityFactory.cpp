@@ -23,15 +23,15 @@
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> Create101();
-std::unique_ptr<Game::EntityFactory> Create128();
-std::unique_ptr<Game::EntityFactory> Create151();
+std::unique_ptr<Main::EntityFactory> Create101();
+std::unique_ptr<Main::EntityFactory> Create128();
+std::unique_ptr<Main::EntityFactory> Create151();
 
-std::unique_ptr<Game::EntityFactory> CreateEnemy1002();
+std::unique_ptr<Main::EntityFactory> CreateEnemy1002();
 
 }
 
-bool Game::EntityFactory::Create(std::unique_ptr<Game::EntityFactory>& ptr, size_t entityId) {
+bool Main::EntityFactory::Create(std::unique_ptr<Main::EntityFactory>& ptr, size_t entityId) {
 	switch (entityId) {
 	case 101:
 		ptr = EntityFactoryLink::Create101();
@@ -48,7 +48,7 @@ bool Game::EntityFactory::Create(std::unique_ptr<Game::EntityFactory>& ptr, size
     return true;
 }
 
-bool Game::EntityFactory::CreateEnemy(std::unique_ptr<EntityFactory>& ptr, size_t entityId) {
+bool Main::EntityFactory::CreateEnemy(std::unique_ptr<Main::EntityFactory>& ptr, size_t entityId) {
 	switch (entityId) {
 	case 1002:
 		ptr = EntityFactoryLink::CreateEnemy1002();

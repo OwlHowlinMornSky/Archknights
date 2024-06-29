@@ -23,14 +23,12 @@
 
 #include "../Game/BasicMsgId.h"
 
-namespace Game {
-namespace MsgId {
-enum Extern : MsgIdType {
-	START = Basic::EXTERN_START,
+namespace Main::MsgId {
+enum Extern : Game::MsgIdType {
+	START = Game::MsgId::Basic::EXTERN_START,
 
 	OnSelecting,
 
 
 };
-}
 }

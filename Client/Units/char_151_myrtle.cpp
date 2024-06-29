@@ -27,11 +27,11 @@
 #include "../Game/Board.h"
 #include "../Game/AtkDmgHeal.h"
 
-Units::Char_151_Myrtle::Char_151_Myrtle() {}
+Unit::Char_151_Myrtle::Char_151_Myrtle() {}
 
-Units::Char_151_Myrtle::~Char_151_Myrtle() {}
+Unit::Char_151_Myrtle::~Char_151_Myrtle() {}
 
-void Units::Char_151_Myrtle::OnJoined() {
+void Unit::Char_151_Myrtle::OnJoined() {
 	Parent::OnJoined();
 
 	Physics::Rows rows{};
@@ -56,13 +56,13 @@ void Units::Char_151_Myrtle::OnJoined() {
 	printf_s("MDef: %f\n", attributes[AttributeType::MagDef].effective);
 }
 
-void Units::Char_151_Myrtle::OnKicking() {
+void Unit::Char_151_Myrtle::OnKicking() {
 	Game::Global::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Parent::OnKicking();
 }
 
-void Units::Char_151_Myrtle::FixedUpdate() {
+void Unit::Char_151_Myrtle::FixedUpdate() {
 	//switch (m_status) {
 	//default:
 	return Parent::FixedUpdate();
@@ -71,7 +71,7 @@ void Units::Char_151_Myrtle::FixedUpdate() {
 
 #include <SFML/Window/Event.hpp>
 
-Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Unit::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::GuiEvent:
 	{
@@ -101,11 +101,11 @@ Game::MsgResultType Units::Char_151_Myrtle::ReceiveMessage(Game::MsgIdType msg, 
 	return Game::MsgResult::OK;
 }
 
-bool Units::Char_151_Myrtle::TryAttack() {
+bool Unit::Char_151_Myrtle::TryAttack() {
 	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;
-		if (Game::Global::board->TellMsg(it->second.location, it->first, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		if (Game::Global::board->TellMsg(it->second.location, it->first, Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
 		return false;
 	}
@@ -114,7 +114,7 @@ bool Units::Char_151_Myrtle::TryAttack() {
 	return true;
 }
 
-bool Units::Char_151_Myrtle::StillCanAttack() {
+bool Unit::Char_151_Myrtle::StillCanAttack() {
 	//if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
 	//	return true;
 	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
@@ -122,7 +122,7 @@ bool Units::Char_151_Myrtle::StillCanAttack() {
 			continue;
 		m_targetAd = it->second.location;
 		m_targetId = it->first;
-		if (Game::Global::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		if (Game::Global::board->TellMsg(m_targetAd, m_targetId, Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
 		return true;
 	}
@@ -131,7 +131,7 @@ bool Units::Char_151_Myrtle::StillCanAttack() {
 	return false;
 }
 
-void Units::Char_151_Myrtle::OnAttack() {
+void Unit::Char_151_Myrtle::OnAttack() {
 	if (m_targetId == 0)
 		return;
 	Game::AttackData data;

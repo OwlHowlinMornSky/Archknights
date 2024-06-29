@@ -27,12 +27,12 @@
 
 #include "Initalizator.h"
 
-namespace Game::Creator {
+namespace Main::Creator {
 
 int setup() {
 	Scene::GameCommon::setup();
 	Game::Board::setup();
-	Game::Global::board->JoinEntity(std::make_shared<Game::Initalizator>());
+	Game::Global::board->JoinEntity(std::make_shared<Main::Initalizator>());
 	return 0;
 }
 

@@ -22,9 +22,9 @@
 #include "enemy_1002_nsabr.h"
 
 
-namespace Units {
+namespace Unit {
 
-Units::Enemy_1002_nsabr::Enemy_1002_nsabr() {}
+Unit::Enemy_1002_nsabr::Enemy_1002_nsabr() {}
 
 Enemy_1002_nsabr::~Enemy_1002_nsabr() {}
 

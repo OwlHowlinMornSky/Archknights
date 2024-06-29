@@ -25,7 +25,7 @@
 #include "enemy_1002_nsabr.h"
 #include "../Game/Stage.h"
 
-bool Game::Enemy_1002_nsabr_Factory::Load() {
+bool Unit::Enemy_1002_nsabr_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
 	bool res = fac->CreateEnemyPose(m_pose[0], "enemy_1002_nsabr");
@@ -35,8 +35,8 @@ bool Game::Enemy_1002_nsabr_Factory::Load() {
 	return true;
 }
 
-bool Game::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
-	auto unit = std::make_shared<Units::Enemy_1002_nsabr>();
+bool Unit::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+	auto unit = std::make_shared<Unit::Enemy_1002_nsabr>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
 	anim0->Setup();
@@ -54,9 +54,9 @@ bool Game::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) 
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> CreateEnemy1002() {
-	std::unique_ptr<Game::EntityFactory> res;
-	res = std::make_unique<Game::Enemy_1002_nsabr_Factory>();
+std::unique_ptr<Main::EntityFactory> CreateEnemy1002() {
+	std::unique_ptr<Main::EntityFactory> res;
+	res = std::make_unique<Unit::Enemy_1002_nsabr_Factory>();
 	return std::move(res);
 }
 

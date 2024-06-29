@@ -23,13 +23,13 @@
 
 #ifdef ARCHKNIGHTS_LIMITED
 
-Game::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
+Unit::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
 	std::shared_ptr<ME::IModel> _f
 ) : Actor(_f) {
 	_f->setScale(0.725f);
 }
 
-void Game::Char_101_Sora_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_101_Sora_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = &m_info;
 	auto animf = m_current;
 

@@ -38,10 +38,10 @@
 #include <SFML/Window/Event.hpp>
 #include "MsgId.h"
 
-namespace Game {
+namespace Main {
 
 void Initalizator::OnJoined() {
-	Global::board->SubscribeMsg(5678, m_location);
+	Game::Global::board->SubscribeMsg(5678, m_location);
 
 	auto& camera = Game::Global::show->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
@@ -94,7 +94,7 @@ void Initalizator::OnJoined() {
 
 	pos[0] = 5.5f;
 	pos[1] = 3.5f;
-	Game::Global::board->SubscribeMsg(MsgId::GuiEvent, m_location);
+	Game::Global::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	auto maphost = std::make_shared<MapHost>();
 	std::ifstream ifs;
@@ -110,22 +110,22 @@ void Initalizator::OnJoined() {
 	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
 
 	Game::Global::board->SetHost(
-		HostJob::MapPathManager,
+		Game::HostJob::MapPathManager,
 		maphost
 	);
 }
 
 void Initalizator::OnKicking() {
-	Game::Global::board->UnsubscribeMsg(MsgId::GuiEvent, m_location);
+	Game::Global::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Game::Global::board->Broadcast(1234, 0, 0);
 }
 
 void Initalizator::FixedUpdate() {}
 
-MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case MsgId::GuiEvent:
+	case Game::MsgId::GuiEvent:
 	{
 		auto e = (sf::Event*)lparam;
 		switch (e->type) {
@@ -180,7 +180,7 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 		Game::Global::board->ExitGame(4321);
 		break;
 	}
-	return MsgResult::OK;
+	return Game::MsgResult::OK;
 }
 
 void Initalizator::LoadThread() {}

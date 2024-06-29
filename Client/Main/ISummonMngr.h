@@ -24,10 +24,10 @@
 #include "../Game/Entity.h"
 #include <memory>
 
-namespace Game {
+namespace Main {
 
 class ISummonMngr :
-	public Entity {
+	public Game::Entity {
 public:
 	virtual void AddBegin() = 0;
 	virtual bool AddEntity(size_t id, bool isEnemy = false) = 0;

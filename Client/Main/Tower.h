@@ -27,7 +27,7 @@
 #include "../Game/Board.h"
 #include <memory>
 
-namespace Units {
+namespace Main {
 
 class Tower :
 	public Game::Entity {

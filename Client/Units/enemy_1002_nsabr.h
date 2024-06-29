@@ -23,10 +23,10 @@
 
 #include "../Main/Mover.h"
 
-namespace Units {
+namespace Unit {
 
 class Enemy_1002_nsabr final :
-	public Mover {
+	public Main::Mover {
 	using Parent = Mover;
 public:
 	Enemy_1002_nsabr();

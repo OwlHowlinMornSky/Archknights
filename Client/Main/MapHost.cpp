@@ -26,7 +26,7 @@
 #include "../Game/Global.h"
 #include "../Game/Board.h"
 
-namespace Game {
+namespace Main {
 
 MapHost::MapHost() :
 	m_statusChangeCnt(1),
@@ -57,7 +57,7 @@ bool MapHost::Load(std::ifstream& ifs) {
 	return false;
 }
 
-MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+Game::MsgResultType MapHost::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case HostMsgId::MapInitOk:
 		for (size_t i = 0, n = m_checkpointCnt; i < n; ++i) {
@@ -85,20 +85,20 @@ MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLp
 		int oldx = ((int*)lparam)[0];
 		int oldy = ((int*)lparam)[1];
 		if (oldx < 0 || oldx >= m_searches[wparam].m || oldy < 0 || oldy > m_searches[wparam].n)
-			return MsgResult::Leader_OutOfMap;
+			return Game::MsgResult::Leader_OutOfMap;
 		int newx = m_searches[wparam](oldx, oldy).sourceX;
 		int newy = m_searches[wparam](oldx, oldy).sourceY;
 		if (newx == -1 || newy == -1)
-			return MsgResult::Leader_NoAvailablePath;
+			return Game::MsgResult::Leader_NoAvailablePath;
 		if (m_tiles(oldx, oldy).obstacleLv)
-			return MsgResult::Leader_AtInvalidBlock;
+			return Game::MsgResult::Leader_AtInvalidBlock;
 		if (newx == oldx && newy == oldy)
-			return MsgResult::Leader_AlreadyReached;
+			return Game::MsgResult::Leader_AlreadyReached;
 		((int*)lparam)[0] = newx;
 		((int*)lparam)[1] = newy;
 		if (newx == m_checkpoints[wparam].first && newy == m_checkpoints[wparam].second)
-			return MsgResult::Leader_FinalRes;
-		return MsgResult::Leader_TempRes;
+			return Game::MsgResult::Leader_FinalRes;
+		return Game::MsgResult::Leader_TempRes;
 	}
 	case HostMsgId::MapStatusChanged:
 		m_statusChangeCnt++;
@@ -111,7 +111,7 @@ MsgResultType MapHost::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLp
 		m_mapRefCnt[wparam]--;
 		break;
 	}
-	return MsgResult::OK;
+	return Game::MsgResult::OK;
 }
 
 void MapHost::ImmediatelyUpdate() {

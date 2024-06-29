@@ -23,7 +23,7 @@
 
 #include "../Models/Actor.h"
 
-namespace Game {
+namespace Unit {
 
 #ifdef ARCHKNIGHTS_LIMITED
 class Char_128_Plosis_Actor_Vanilla final :

@@ -23,7 +23,7 @@
 
 #include "../Models/Actor.h"
 
-namespace Game {
+namespace Unit {
 
 #ifdef ARCHKNIGHTS_LIMITED
 class Enemy_1002_nsabr_Actor_Vanilla final :

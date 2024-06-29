@@ -21,7 +21,7 @@
 */
 #include "enemy_1002_nsabr_actor.h"
 
-Game::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
+Unit::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
 	std::shared_ptr<ME::IModel> _f
 ) : Actor(_f) {
 	_f->setScale(0.65f);
@@ -30,7 +30,7 @@ Game::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
 	m_shadowRadius = 0.4f;
 }
 
-void Game::Enemy_1002_nsabr_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Enemy_1002_nsabr_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = &m_info;
 	auto animf = m_current;
 

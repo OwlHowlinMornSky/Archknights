@@ -23,7 +23,7 @@
 
 #ifdef ARCHKNIGHTS_LIMITED
 
-Game::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
+Unit::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
 	std::shared_ptr<ME::IModel> _f,
 	std::shared_ptr<ME::IModel> _b
 ) : Actor2(_f, _b) {
@@ -31,7 +31,7 @@ Game::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
 	_b->setScale(0.575f);
 }
 
-void Game::Char_151_Mytle_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_151_Mytle_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = GetInfo(false);
 	Model::AnimationInfo* back = GetInfo(true);
 	auto animf = GetAnimation(false);

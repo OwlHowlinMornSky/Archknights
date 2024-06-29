@@ -25,7 +25,7 @@
 #include "char_128_plosis_actor.h"
 #include "../Game/Stage.h"
 
-bool Game::Char_128_Plosis_Factory::Load() {
+bool Unit::Char_128_Plosis_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
 #ifdef ARCHKNIGHTS_LIMITED
@@ -43,8 +43,8 @@ bool Game::Char_128_Plosis_Factory::Load() {
 	return true;
 }
 
-bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
-	auto unit = std::make_shared<Units::Char_128_Plosis>();
+bool Unit::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+	auto unit = std::make_shared<Unit::Char_128_Plosis>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
 	anim0->Setup();
@@ -68,9 +68,9 @@ bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 namespace EntityFactoryLink {
 
-std::unique_ptr<Game::EntityFactory> Create128() {
-	std::unique_ptr<Game::EntityFactory> res;
-	res = std::make_unique<Game::Char_128_Plosis_Factory>();
+std::unique_ptr<Main::EntityFactory> Create128() {
+	std::unique_ptr<Main::EntityFactory> res;
+	res = std::make_unique<Unit::Char_128_Plosis_Factory>();
 	return std::move(res);
 }
 

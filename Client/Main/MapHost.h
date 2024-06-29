@@ -27,7 +27,7 @@
 #include <fstream>
 #include "../Physics/IWorld.h"
 
-namespace Game {
+namespace Main {
 
 namespace Map {
 
@@ -125,7 +125,7 @@ struct MapData {
 }
 
 class MapHost final :
-	public Host {
+	public Game::Host {
 
 public:
 	MapHost();
@@ -134,7 +134,7 @@ public:
 public:
 	bool Load(std::ifstream& ifs);
 
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
 	void ImmediatelyUpdate();
@@ -194,9 +194,9 @@ namespace {
  * @return 若 更优 则 为 true.
  */
 static inline bool TileBetter(
-	const Game::Map::TileSearch& t,
-	const Game::Map::CostCntType cost,
-	const Game::Map::DistanceType dist
+	const Main::Map::TileSearch& t,
+	const Main::Map::CostCntType cost,
+	const Main::Map::DistanceType dist
 ) {
 	//        点不可达       <通行代价>更小         <通行代价>相同时，<通行距离>更短。
 	return t.sourceX < 0 || cost < t.cost || (cost == t.cost && dist < t.distance);
@@ -204,7 +204,7 @@ static inline bool TileBetter(
 
 }
 
-namespace Game {
+namespace Main {
 
 template<Map::CoordType dx, Map::CoordType dy, int px, int py>
 inline void MapHost::SpreadQuadrant(const size_t id, const Map::CoordType x, const Map::CoordType y, Map::CoordType maxX, const Map::CoordType maxY) {

@@ -23,7 +23,7 @@
 
 #ifdef ARCHKNIGHTS_LIMITED
 
-Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
+Unit::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 	std::shared_ptr<ME::IModel> _f,
 	std::shared_ptr<ME::IModel> _b
 ) : Actor2(_f, _b) {
@@ -31,7 +31,7 @@ Game::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 	_b->setScale(0.65f);
 }
 
-void Game::Char_128_Plosis_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_128_Plosis_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = GetInfo(false);
 	Model::AnimationInfo* back = GetInfo(true);
 	auto animf = GetAnimation(false);

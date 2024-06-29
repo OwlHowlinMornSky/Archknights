@@ -23,10 +23,10 @@
 
 #include "../Main/Tower.h"
 
-namespace Units {
+namespace Unit {
 
 class Char_128_Plosis final :
-	public Tower {
+	public Main::Tower {
 	using Parent = Tower;
 public:
 	Char_128_Plosis();

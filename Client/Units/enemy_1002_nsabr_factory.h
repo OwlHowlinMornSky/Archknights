@@ -24,13 +24,13 @@
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
 
-namespace Game {
+namespace Unit {
 
 class Enemy_1002_nsabr_Factory final :
-	public EntityFactory {
+	public Main::EntityFactory {
 public:
 	virtual bool Load() override;
-	virtual bool CreateEntity(std::shared_ptr<Entity>& ptr) override;
+	virtual bool CreateEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
 	bool m_double;

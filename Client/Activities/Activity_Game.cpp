@@ -35,7 +35,7 @@ Activity_Game::~Activity_Game() noexcept {}
 
 bool Activity_Game::prepare(ME::Window& wnd) noexcept {
 	r(wnd);
-	int res = Game::Creator::setup();
+	int res = Main::Creator::setup();
 	return res == 0;
 }
 
@@ -45,7 +45,7 @@ void Activity_Game::start() noexcept {
 }
 
 void Activity_Game::stop() noexcept {
-	Game::Creator::drop();
+	Main::Creator::drop();
 	r();
 	return;
 }

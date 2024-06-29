@@ -29,7 +29,7 @@
 
 #include "MsgId.h"
 
-namespace Game {
+namespace Main {
 
 SummonMngr::SummonMngr() {}
 
@@ -68,18 +68,18 @@ void SummonMngr::AddEnd() {
 }
 
 void SummonMngr::OnJoined() {
-	Global::board->SubscribeMsg(MsgId::Summon, m_location);
+	Game::Global::board->SubscribeMsg(Game::MsgId::Summon, m_location);
 }
 
 void SummonMngr::OnKicking() {
-	Global::board->UnsubscribeMsg(MsgId::Summon, m_location);
+	Game::Global::board->UnsubscribeMsg(Game::MsgId::Summon, m_location);
 }
 
 void SummonMngr::FixedUpdate() {}
 
-MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+Game::MsgResultType SummonMngr::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case MsgId::Summon:
+	case Game::MsgId::Summon:
 		if (wparam < m_data.size()) {
 			SummonData& data = m_data[wparam];
 
@@ -90,17 +90,17 @@ MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, Ms
 
 			entity->setPosition(pos[0], pos[1]); // test
 
-			Global::board->JoinEntity(entity);
+			Game::Global::board->JoinEntity(entity);
 		}
 		break;
 	default:
-		return MsgResult::Unsubscribe;
+		return Game::MsgResult::Unsubscribe;
 	}
-	return MsgResult::OK;
+	return Game::MsgResult::OK;
 }
 
 }
 
-std::shared_ptr<Game::ISummonMngr> Game::ISummonMngr::Create() {
-	return std::make_shared<Game::SummonMngr>();
+std::shared_ptr<Main::ISummonMngr> Main::ISummonMngr::Create() {
+	return std::make_shared<Main::SummonMngr>();
 }
