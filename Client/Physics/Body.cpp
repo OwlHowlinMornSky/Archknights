@@ -50,6 +50,10 @@ const float* Body::GetPosition() const {
 	return &(m_body->GetPosition().x);
 }
 
+void Body::SetVelocity(float x, float y) {
+	return m_body->SetLinearVelocity({ x, y });
+}
+
 size_t Body::AddDetectorCircle(uint8_t target, float x, float y, float radius) {
 	auto res = std::make_unique<Detector>();
 	res->CreateCircle(m_body, target, { x, y }, radius);
@@ -89,6 +93,9 @@ void Body::SetMoveAcceleration(float maxa) {
 
 void Body::BeginNormal() {
 	if (m_isUnbalance) {
+		b2Filter filter = m_fixture->GetFilterData();
+		filter.maskBits = 0x0004;
+		m_fixture->SetFilterData(filter);
 		m_frictionJoint->SetMaxForce(0.0f);
 		m_body->SetLinearDamping(m_maxA / m_maxV);
 	}
@@ -103,7 +110,10 @@ void Body::MoveTo(float x, float y) {
 	return;
 }
 
-void Body::BeginUnbalance() {
+void Body::BeginUnbalance(bool dontHitWall) {
+	b2Filter filter = m_fixture->GetFilterData();
+	filter.maskBits = dontHitWall ? 0x0004 : 0x0006;
+	m_fixture->SetFilterData(filter);
 	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(0.0f);
 		m_frictionJoint->SetMaxForce(9.8f);
@@ -177,7 +187,7 @@ void Body::CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float rad
 	b2FixtureDef fixDef;
 	fixDef.shape = &shape;
 	fixDef.filter.groupIndex = -2;
-	fixDef.filter.maskBits = 0x0006;
+	fixDef.filter.maskBits = 0x0004;
 	fixDef.filter.categoryBits = (0x0019 | (type << 8));
 	fixDef.friction = 0.0f;
 	fixDef.userData.pointer = (uintptr_t)this;

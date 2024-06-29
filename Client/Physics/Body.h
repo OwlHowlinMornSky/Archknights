@@ -39,6 +39,7 @@ public:
 public:
 	virtual void SetPosition(float x, float y) override;
 	virtual const float* GetPosition() const override;
+	virtual void SetVelocity(float x, float y) override;
 
 	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) override;
 	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
@@ -50,7 +51,7 @@ public:
 	virtual void SetMoveAcceleration(float maxa) override;
 	virtual void BeginNormal() override;
 	virtual void MoveTo(float x, float y) override;
-	virtual void BeginUnbalance() override;
+	virtual void BeginUnbalance(bool dontHitWall = false) override;
 	virtual void Push(float ix, float iy) override;
 	virtual void Pull(float fx, float fy) override;
 	virtual void ClearSpeed() override;

@@ -29,10 +29,10 @@
 
 namespace {
 
-static constexpr float g_RotationRatio = 24.0f;
-static constexpr float g_InOutRatio = 9.0f;
-static constexpr float g_HitFadeRatio = 7.0f;
-static constexpr float g_HitFadeSpeed = 1.0f;
+static constexpr float g_RotationRatio = 9.0f;
+static constexpr float g_InOutRatio = 7.0f;
+static constexpr float g_HitFadeRatio = 4.5f;
+static constexpr float g_HitFadeSpeed = 0.5f;
 
 }
 

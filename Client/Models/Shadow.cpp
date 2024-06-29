@@ -33,7 +33,7 @@ Game::Shadow::~Shadow() {}
 
 bool Game::Shadow::Setup() {
 	for (int i = 0; i < 4; ++i) {
-		m_vertex[i].color = { 1.0f, 0.0f, 0.0f, 1.0f };
+		m_vertex[i].color = { 0.0f, 1.0f, 0.0f, 1.0f };
 		m_vertex[i].texCoord = { 0.0f, 0.0f };
 	}
 	m_vertex[0].position = { -0.25f, -0.25f };

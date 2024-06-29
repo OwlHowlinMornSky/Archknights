@@ -36,7 +36,7 @@ void Units::Char_151_Myrtle::OnJoined() {
 
 	Physics::Rows rows{};
 	rows.length = 2;
-	uint32_t wd[2] = { 1, 1 };
+	uint32_t wd[2] = { 2, 1 };
 	rows.widths = wd;
 
 	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::EnemyStand, m_position[0], m_position[1], &rows);
@@ -105,18 +105,18 @@ bool Units::Char_151_Myrtle::TryAttack() {
 	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;
-		m_targetAd = it->second.location;
-		m_targetId = it->first;
-		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		if (Game::GameGlobal::board->TellMsg(it->second.location, it->first, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
 		return false;
 	}
+	m_targetAd = 0;
+	m_targetId = 0;
 	return true;
 }
 
 bool Units::Char_151_Myrtle::StillCanAttack() {
-	if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
-		return true;
+	//if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
+	//	return true;
 	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;
@@ -126,10 +126,14 @@ bool Units::Char_151_Myrtle::StillCanAttack() {
 			continue;
 		return true;
 	}
+	m_targetAd = 0;
+	m_targetId = 0;
 	return false;
 }
 
 void Units::Char_151_Myrtle::OnAttack() {
+	if (m_targetId == 0)
+		return;
 	Game::AttackData data;
 	data.sourceAd = m_location;
 	data.sourceId = m_id;

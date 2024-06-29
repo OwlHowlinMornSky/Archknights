@@ -36,6 +36,7 @@ public:
 public:
 	virtual void SetPosition(float x, float y) = 0;
 	virtual const float* GetPosition() const = 0;
+	virtual void SetVelocity(float x, float y) = 0;
 
 	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
 	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows* rows) = 0;
@@ -47,7 +48,7 @@ public:
 	virtual void SetMoveAcceleration(float maxa) = 0;
 	virtual void BeginNormal() = 0;
 	virtual void MoveTo(float x, float y) = 0;
-	virtual void BeginUnbalance() = 0;
+	virtual void BeginUnbalance(bool dontHitWall = false) = 0;
 	virtual void Push(float ix, float iy) = 0;
 	virtual void Pull(float fx, float fy) = 0;
 	virtual void ClearSpeed() = 0;

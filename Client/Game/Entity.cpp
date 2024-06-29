@@ -110,6 +110,8 @@ void Entity::ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator
 
 void Entity::OnModifierChanged(AttributeType attribute) {
 	Attribute::ValueType grow = 0, percent = 1, add = 0, times = 1;
+	if (attribute == AttributeType::MoveSpd)
+		times *= 1.0f / 30.0f;
 	for (auto& it : m_modifiers[attribute]) {
 		grow += it.value[Modifier::ModifyType::Grow];
 		percent += it.value[Modifier::ModifyType::Percent];
