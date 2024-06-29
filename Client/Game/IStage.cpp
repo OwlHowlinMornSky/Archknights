@@ -19,15 +19,19 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameGlobal.h"
-#include "GameBoard.h"
-#include "IGameShow.h"
+#include <GL/glew.h>
+#include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
+
+#include "IStage.h"
 
 namespace Game {
-namespace GameGlobal {
 
-std::unique_ptr<GameBoard> board;
-std::unique_ptr<IGameShow> show;
-
+IGameShow::IGameShow() {
+	m_camera.setFOV(45.0f);
+	m_camera.setAspectRatio(16.0f / 9.0f);
+	m_camera.setZNear(0.25f);
+	m_camera.setZFar(128.0f);
 }
+
 } // namespace Game

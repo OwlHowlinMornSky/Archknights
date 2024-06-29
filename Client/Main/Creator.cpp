@@ -22,8 +22,8 @@
 #include "Creator.h"
 
 #include "../Scenes/Scene_GameCommon.h"
-#include "../Game/GameBoard.h"
-#include "../Game/GameGlobal.h"
+#include "../Game/Board.h"
+#include "../Game/Global.h"
 
 #include "Initalizator.h"
 

@@ -29,7 +29,7 @@
 #include <functional>
 
 #include "Entity.h"
-#include "GameHost.h"
+#include "Host.h"
 #include "../Physics/IWorld.h"
 
 namespace Game {

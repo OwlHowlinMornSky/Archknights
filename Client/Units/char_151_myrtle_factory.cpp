@@ -23,7 +23,7 @@
 
 #include "char_151_myrtle.h"
 #include "char_151_myrtle_actor.h"
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 
 namespace Game {
 

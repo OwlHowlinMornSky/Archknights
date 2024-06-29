@@ -23,7 +23,7 @@
 
 #include "enemy_1002_nsabr_actor.h"
 #include "enemy_1002_nsabr.h"
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 
 bool Game::Enemy_1002_nsabr_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();

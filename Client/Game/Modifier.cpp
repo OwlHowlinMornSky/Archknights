@@ -21,8 +21,8 @@
 */
 #include "Modifier.h"
 
-#include "GameGlobal.h"
-#include "GameBoard.h"
+#include "Global.h"
+#include "Board.h"
 
 #include <cassert>
 

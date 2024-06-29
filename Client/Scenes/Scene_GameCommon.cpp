@@ -27,7 +27,7 @@
 #include <MysteryEngine/G3D/Shader.Default.h>
 
 #include "Scene_GameCommon.h"
-#include "../Game/GameGlobal.h"
+#include "../Game/Global.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <assert.h>
 

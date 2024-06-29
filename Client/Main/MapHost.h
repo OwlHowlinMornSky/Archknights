@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../Game/GameHost.h"
+#include "../Game/Host.h"
 #include <vector>
 #include <queue>
 #include <fstream>

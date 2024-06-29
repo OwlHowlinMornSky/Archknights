@@ -23,7 +23,7 @@
 
 #include "char_128_plosis.h"
 #include "char_128_plosis_actor.h"
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 
 bool Game::Char_128_Plosis_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();

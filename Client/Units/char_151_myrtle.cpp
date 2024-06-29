@@ -23,8 +23,8 @@
 
 #include "../Game/MsgResult.h"
 #include "../Main/MsgId.h"
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
+#include "../Game/Global.h"
+#include "../Game/Board.h"
 #include "../Game/AtkDmgHeal.h"
 
 Units::Char_151_Myrtle::Char_151_Myrtle() {}

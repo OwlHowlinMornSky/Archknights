@@ -19,10 +19,15 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameHost.h"
+#include "Global.h"
+#include "Board.h"
+#include "IStage.h"
 
-#include "GameGlobal.h"
+namespace Game {
+namespace GameGlobal {
 
-namespace Game::GameHolder {
+std::unique_ptr<GameBoard> board;
+std::unique_ptr<IGameShow> show;
 
 }
+} // namespace Game

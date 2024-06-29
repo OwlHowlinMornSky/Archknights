@@ -20,8 +20,8 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Entity.h"
-#include "GameGlobal.h"
-#include "GameBoard.h"
+#include "Global.h"
+#include "Board.h"
 #include "MsgResult.h"
 
 #include "BasicMsgId.h"

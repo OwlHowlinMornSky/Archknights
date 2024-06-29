@@ -21,15 +21,15 @@
 */
 #include "Initalizator.h"
 
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
+#include "../Game/Global.h"
+#include "../Game/Board.h"
 
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include "../Models/IGround.h"
 
-#include "../Game/GameHost.h"
+#include "../Game/Host.h"
 #include "MapHost.h"
 #include "HostMsgId.h"
 

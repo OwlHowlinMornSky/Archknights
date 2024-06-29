@@ -23,7 +23,7 @@
 
 #include "char_101_sora.h"
 #include "char_101_sora_actor.h"
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 
 bool Game::Char_101_Sora_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();

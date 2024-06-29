@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../Game/IActor.h"
+#include "IActor.h"
 
 namespace Game {
 

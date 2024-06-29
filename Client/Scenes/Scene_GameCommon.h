@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../Game/IGameShow.h"
+#include "../Game/IStage.h"
 
 #include "../Models/ActorGroup.h"
 

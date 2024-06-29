@@ -23,8 +23,8 @@
 
 #include "../Game/MsgResult.h"
 #include "HostMsgId.h"
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
+#include "../Game/Global.h"
+#include "../Game/Board.h"
 
 namespace Game {
 

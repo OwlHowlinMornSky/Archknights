@@ -70,19 +70,19 @@
     <ClInclude Include="Game\Entity.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameGlobal.h">
+    <ClInclude Include="Game\Global.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameBoard.h">
+    <ClInclude Include="Game\Board.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\IGameShow.h">
+    <ClInclude Include="Game\IStage.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\MsgResult.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameHost.h">
+    <ClInclude Include="Game\Host.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Models\ActorGroup.h">
@@ -275,16 +275,16 @@
     <ClCompile Include="Game\Entity.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameGlobal.cpp">
+    <ClCompile Include="Game\Global.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameBoard.cpp">
+    <ClCompile Include="Game\Board.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\IGameShow.cpp">
+    <ClCompile Include="Game\IStage.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameHost.cpp">
+    <ClCompile Include="Game\Host.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Models\ActorGroup.cpp">

@@ -22,8 +22,8 @@
 #include "SummonMngr.h"
 
 #include "../Game/MsgResult.h"
-#include "../Game/GameGlobal.h"
-#include "../Game/GameBoard.h"
+#include "../Game/Global.h"
+#include "../Game/Board.h"
 
 #include "../Models/IAnimation.h"
 

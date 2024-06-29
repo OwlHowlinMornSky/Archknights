@@ -19,10 +19,10 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "GameBoard.h"
+#include "Board.h"
 
 #include "MsgResult.h"
-#include "GameGlobal.h"
+#include "Global.h"
 
 #include <cassert>
 
