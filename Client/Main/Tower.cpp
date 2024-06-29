@@ -150,6 +150,7 @@ void Tower::ToStart(Game::IActor::Direction d) {
 		m_actor->ChangeStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
+	m_actor->SetInOut(true, true);
 	ToBegin(d);
 }
 

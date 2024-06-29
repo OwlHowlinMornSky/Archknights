@@ -85,7 +85,7 @@ public:
 	virtual void SetOutline(bool enabled) {}
 
 	virtual void SetHit() {}
-	virtual void SetInOut(bool in) {}
+	virtual void SetInOut(bool in, bool onlyShadow = false) {}
 
 public:
 	AnimEventNote* m_note;

@@ -36,7 +36,7 @@ void Unit::Char_151_Myrtle::OnJoined() {
 
 	Physics::Rows rows{};
 	rows.length = 2;
-	uint32_t wd[2] = { 2, 1 };
+	uint32_t wd[2] = { 1, 1 };
 	rows.widths = wd;
 
 	m_detector = Game::Global::board->m_world->CreateDetectorRows(Physics::EnemyStand, m_position[0], m_position[1], &rows);

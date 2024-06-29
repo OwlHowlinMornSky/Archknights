@@ -95,7 +95,7 @@ public:
 	virtual void SetOutline(bool enabled) override;
 
 	virtual void SetHit() override;
-	virtual void SetInOut(bool in) override;
+	virtual void SetInOut(bool in, bool onlyShadow = false) override;
 
 	virtual void Update(float dt) override;
 	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
@@ -112,6 +112,7 @@ protected:
 	bool m_isRolling; // 是否正在翻转
 	bool m_hitFlashing;
 	char m_isInOut;
+	bool m_inOutOnlyShadow;
 	Direction m_direction; // 上次达成的方位
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
 	float m_hitFlash;
@@ -152,7 +153,7 @@ public:
 	virtual void SetOutline(bool enabled) override;
 
 	virtual void SetHit() override;
-	virtual void SetInOut(bool in) override;
+	virtual void SetInOut(bool in, bool onlyShadow = false) override;
 
 	virtual void Update(float dt) override;
 	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
@@ -172,6 +173,7 @@ protected:
 	bool m_isRolling; // 是否正在翻转
 	bool m_hitFlashing;
 	char m_isInOut;
+	bool m_inOutOnlyShadow;
 	Direction m_direction; // 上次达成的方位
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
 	bool m_currentFBDirection; // 当前实际方位（false: 正面, true: 反面）

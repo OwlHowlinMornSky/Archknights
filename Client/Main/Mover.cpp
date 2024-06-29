@@ -145,7 +145,7 @@ void Mover::FixedUpdate() {
 		}*/
 		float dx = m_moveTargetPos[0] - m_position[0];
 		float dy = m_moveTargetPos[1] - m_position[1];
-		if (m_tempMoveTarget && std::abs(dx) < 0.3f && std::abs(dy) < 0.3f) { // 到达临时目标
+		if (m_tempMoveTarget && std::abs(dx) < 0.4f && std::abs(dy) < 0.4f) { // 到达临时目标
 			if (TryMove()) {
 				dx = m_moveTargetPos[0] - m_position[0];
 				dy = m_moveTargetPos[1] - m_position[1];

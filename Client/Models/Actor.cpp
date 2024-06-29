@@ -223,16 +223,18 @@ void Actor::SetHit() {
 	m_hitFlashing = true;
 }
 
-void Actor::SetInOut(bool in) {
+void Actor::SetInOut(bool in, bool onlyShadow) {
 	m_isInOut = in ? 1 : 2;
 	m_currentInout = in ? 0.0f : 1.0f;
-	if (m_currentInout < 0.5f) {
-		m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-	}
-	else {
-		float r = 2.0f * (m_currentInout - 0.5f);
-		m_current->SetColor(r, r, r, 1.0f);
-	}
+	m_inOutOnlyShadow = onlyShadow;
+	if (!m_inOutOnlyShadow)
+		if (m_currentInout < 0.5f) {
+			m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+		}
+		else {
+			float r = 2.0f * (m_currentInout - 0.5f);
+			m_current->SetColor(r, r, r, 1.0f);
+		}
 	m_shadowAlpha = m_currentInout;
 	return;
 }
@@ -278,13 +280,6 @@ void Actor::Update(float dt) {
 				m_currentInout = 1.0f;
 				m_isInOut = 0;
 			}
-			if (m_currentInout < 0.5f) {
-				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-			}
-			else {
-				float r = 2.0f * (m_currentInout - 0.5f);
-				m_current->SetColor(r, r, r, 1.0f);
-			}
 		}
 		else {
 			m_currentInout -= Delta;
@@ -293,6 +288,8 @@ void Actor::Update(float dt) {
 				m_isInOut = 0;
 				m_waitingForQuit = true;
 			}
+		}
+		if (!m_inOutOnlyShadow)
 			if (m_currentInout < 0.5f) {
 				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 			}
@@ -300,7 +297,6 @@ void Actor::Update(float dt) {
 				float r = 2.0f * (m_currentInout - 0.5f);
 				m_current->SetColor(r, r, r, 1.0f);
 			}
-		}
 		m_shadowAlpha = m_currentInout;
 	}
 	m_current->Update(dt);
@@ -576,16 +572,18 @@ void Actor2::SetHit() {
 	m_hitFlashing = true;
 }
 
-void Actor2::SetInOut(bool in) {
+void Actor2::SetInOut(bool in, bool onlyShadow) {
 	m_isInOut = in ? 1 : 2;
 	m_currentInout = in ? 0.0f : 1.0f;
-	if (m_currentInout < 0.5f) {
-		m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-	}
-	else {
-		float r = 2.0f * (m_currentInout - 0.5f);
-		m_current->SetColor(r, r, r, 1.0f);
-	}
+	m_inOutOnlyShadow = onlyShadow;
+	if (!m_inOutOnlyShadow)
+		if (m_currentInout < 0.5f) {
+			m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+		}
+		else {
+			float r = 2.0f * (m_currentInout - 0.5f);
+			m_current->SetColor(r, r, r, 1.0f);
+		}
 	m_shadowAlpha = m_currentInout;
 	return;
 }
@@ -688,13 +686,6 @@ void Actor2::Update(float dt) {
 				m_currentInout = 1.0f;
 				m_isInOut = 0;
 			}
-			if (m_currentInout < 0.5f) {
-				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-			}
-			else {
-				float r = 2.0f * (m_currentInout - 0.5f);
-				m_current->SetColor(r, r, r, 1.0f);
-			}
 		}
 		else {
 			m_currentInout -= Delta;
@@ -703,6 +694,8 @@ void Actor2::Update(float dt) {
 				m_isInOut = 0;
 				m_waitingForQuit = true;
 			}
+		}
+		if (!m_inOutOnlyShadow)
 			if (m_currentInout < 0.5f) {
 				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 			}
@@ -710,7 +703,6 @@ void Actor2::Update(float dt) {
 				float r = 2.0f * (m_currentInout - 0.5f);
 				m_current->SetColor(r, r, r, 1.0f);
 			}
-		}
 		m_shadowAlpha = m_currentInout;
 	}
 	m_current->Update(dt);
