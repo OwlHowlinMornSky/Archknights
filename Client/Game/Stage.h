@@ -30,12 +30,12 @@
 
 namespace Game {
 
-class IGameShow :
+class Stage :
 	public ME::Scene {
 protected:
-	IGameShow();
+	Stage();
 public:
-	virtual ~IGameShow() = default;
+	virtual ~Stage() = default;
 
 public:
 	virtual void AddGround(std::shared_ptr<ME::IModel> ground) = 0;

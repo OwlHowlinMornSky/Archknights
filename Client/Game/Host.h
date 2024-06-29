@@ -37,7 +37,7 @@ enum Type {
 }
 
 class Host {
-	friend class GameBoard;
+	friend class Board;
 
 public:
 	Host() = default;

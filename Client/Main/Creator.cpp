@@ -31,13 +31,13 @@ namespace Game::Creator {
 
 int setup() {
 	Scene::GameCommon::setup();
-	Game::GameBoard::setup();
-	Game::GameGlobal::board->JoinEntity(std::make_shared<Game::Initalizator>());
+	Game::Board::setup();
+	Game::Global::board->JoinEntity(std::make_shared<Game::Initalizator>());
 	return 0;
 }
 
 void drop() {
-	Game::GameBoard::drop();
+	Game::Board::drop();
 	Scene::GameCommon::drop();
 }
 }

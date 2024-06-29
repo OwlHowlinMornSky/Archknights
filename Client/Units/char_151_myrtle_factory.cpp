@@ -23,7 +23,7 @@
 
 #include "char_151_myrtle.h"
 #include "char_151_myrtle_actor.h"
-#include "../Game/IStage.h"
+#include "../Game/Stage.h"
 
 namespace Game {
 
@@ -48,7 +48,7 @@ bool Char_151_Mytle_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 	auto actor = std::make_shared<Char_151_Mytle_Actor_Vanilla>(anim0, anim1);
 
-	Game::GameGlobal::show->AddActor(actor);
+	Game::Global::show->AddActor(actor);
 
 	unit->m_actor = actor;
 

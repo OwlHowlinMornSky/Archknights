@@ -21,13 +21,13 @@
 */
 #include "Global.h"
 #include "Board.h"
-#include "IStage.h"
+#include "Stage.h"
 
 namespace Game {
-namespace GameGlobal {
+namespace Global {
 
-std::unique_ptr<GameBoard> board;
-std::unique_ptr<IGameShow> show;
+std::unique_ptr<Board> board;
+std::unique_ptr<Stage> show;
 
 }
 } // namespace Game

@@ -39,7 +39,7 @@ void Units::Char_151_Myrtle::OnJoined() {
 	uint32_t wd[2] = { 2, 1 };
 	rows.widths = wd;
 
-	m_detector = Game::GameGlobal::board->m_world->CreateDetectorRows(Physics::EnemyStand, m_position[0], m_position[1], &rows);
+	m_detector = Game::Global::board->m_world->CreateDetectorRows(Physics::EnemyStand, m_position[0], m_position[1], &rows);
 	m_detector->SetId(m_id);
 	m_detector->SetLocation(m_location);
 	m_hp = 1.0f;
@@ -48,7 +48,7 @@ void Units::Char_151_Myrtle::OnJoined() {
 
 	SetAttributeOringalValue(AttributeType::Atk, 420.0f);
 
-	Game::GameGlobal::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	Game::Global::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	printf_s("HP: %f\n", m_hp);
 	printf_s("MaxHP: %f\n", attributes[AttributeType::MaxHp].effective);
@@ -57,7 +57,7 @@ void Units::Char_151_Myrtle::OnJoined() {
 }
 
 void Units::Char_151_Myrtle::OnKicking() {
-	Game::GameGlobal::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	Game::Global::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Parent::OnKicking();
 }
@@ -105,7 +105,7 @@ bool Units::Char_151_Myrtle::TryAttack() {
 	for (auto it = m_detector->ListBegin(), n = m_detector->ListEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;
-		if (Game::GameGlobal::board->TellMsg(it->second.location, it->first, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		if (Game::Global::board->TellMsg(it->second.location, it->first, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
 		return false;
 	}
@@ -122,7 +122,7 @@ bool Units::Char_151_Myrtle::StillCanAttack() {
 			continue;
 		m_targetAd = it->second.location;
 		m_targetId = it->first;
-		if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		if (Game::Global::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
 		return true;
 	}
@@ -142,6 +142,6 @@ void Units::Char_151_Myrtle::OnAttack() {
 	data.damage.dmgValue = attributes[AttributeType::Atk].effective;
 	data.damage.minValue = 0.05f;
 
-	Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
+	Game::Global::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetAttack, 0, (intptr_t)&data);
 
 }

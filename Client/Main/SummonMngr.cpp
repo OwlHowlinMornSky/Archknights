@@ -68,11 +68,11 @@ void SummonMngr::AddEnd() {
 }
 
 void SummonMngr::OnJoined() {
-	GameGlobal::board->SubscribeMsg(MsgId::Summon, m_location);
+	Global::board->SubscribeMsg(MsgId::Summon, m_location);
 }
 
 void SummonMngr::OnKicking() {
-	GameGlobal::board->UnsubscribeMsg(MsgId::Summon, m_location);
+	Global::board->UnsubscribeMsg(MsgId::Summon, m_location);
 }
 
 void SummonMngr::FixedUpdate() {}
@@ -90,7 +90,7 @@ MsgResultType SummonMngr::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, Ms
 
 			entity->setPosition(pos[0], pos[1]); // test
 
-			GameGlobal::board->JoinEntity(entity);
+			Global::board->JoinEntity(entity);
 		}
 		break;
 	default:

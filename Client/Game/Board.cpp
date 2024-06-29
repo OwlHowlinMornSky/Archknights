@@ -28,33 +28,33 @@
 
 namespace Game {
 
-GameBoard::GameBoard() :
+Board::Board() :
 	m_time(0),
 	m_entityIdCnt(0) {
 	m_world = Physics::IWorld::CreateWorld();
 	m_hosts.resize((size_t)HostJob::COUNT);
 }
 
-GameBoard::~GameBoard() {}
+Board::~Board() {}
 
-int GameBoard::setup() {
-	if (Game::GameGlobal::board)
+int Board::setup() {
+	if (Game::Global::board)
 		return 1;
-	Game::GameGlobal::board = std::make_unique<GameBoard>();
+	Game::Global::board = std::make_unique<Board>();
 	return 0;
 }
 
-void GameBoard::drop() {
-	if (Game::GameGlobal::board != nullptr)
-		Game::GameGlobal::board->Clear();
-	Game::GameGlobal::board.reset();
+void Board::drop() {
+	if (Game::Global::board != nullptr)
+		Game::Global::board->Clear();
+	Game::Global::board.reset();
 }
 
-void GameBoard::SetExitCallback(std::function<void(int)> cb) {
+void Board::SetExitCallback(std::function<void(int)> cb) {
 	m_exitCallback = cb;
 }
 
-void GameBoard::Clear() {
+void Board::Clear() {
 	for (size_t n = m_entities.size(), i = n - 1; i != 0; --i) {
 		if (m_entities[i] == nullptr)
 			continue;
@@ -78,12 +78,12 @@ void GameBoard::Clear() {
 	m_msgMap.clear();
 }
 
-bool GameBoard::IsEmpty() {
+bool Board::IsEmpty() {
 	// 空闲位置数量等于实体位置数量说明没有实体。
 	return m_entities.size() == m_emptyLocations.size();
 }
 
-void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
+void Board::JoinEntity(std::shared_ptr<Entity> entity) {
 	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
 	if (m_emptyLocations.empty()) { // 没有空闲位置
 		m_entities.push_back(entity); // 直接放在末尾。
@@ -97,7 +97,7 @@ void GameBoard::JoinEntity(std::shared_ptr<Entity> entity) {
 	}
 }
 
-void GameBoard::KickEntity(size_t location) {
+void Board::KickEntity(size_t location) {
 	assert(location < m_entities.size());
 	assert(m_entities[location]); // 在场。
 	m_entities[location]->BasicOnKicking(); // 通知。
@@ -106,16 +106,16 @@ void GameBoard::KickEntity(size_t location) {
 		m_emptyLocations.push(location); // 记录空位。(0不复用，只作为最初initalizator占用位置，之后永远为空)。
 }
 
-void GameBoard::ExitGame(int code) {
+void Board::ExitGame(int code) {
 	m_exitCallback(code);
 }
 
-std::shared_ptr<Entity> GameBoard::EntityAt(size_t location) {
+std::shared_ptr<Entity> Board::EntityAt(size_t location) {
 	assert(location < m_entities.size());
 	return m_entities[location];
 }
 
-void GameBoard::Update(long long dt) {
+void Board::Update(long long dt) {
 	if (dt < 33333) {
 		m_time += dt;
 		if (m_time < 33333)
@@ -134,11 +134,11 @@ void GameBoard::Update(long long dt) {
 	}
 }
 
-void GameBoard::RegistryForExit(EntityLocationType location) {
+void Board::RegistryForExit(EntityLocationType location) {
 	m_readyForExit.push(location);
 }
 
-MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType Board::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
 	//assert(m_entities[location]); // 在场。
 	if (m_entities[location] == nullptr) {
@@ -147,7 +147,7 @@ MsgResultType GameBoard::SendMsg(EntityLocationType location, MsgIdType msg, Msg
 	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
-MsgResultType GameBoard::TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType Board::TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
 	//assert(m_entities[location]); // 在场。
 	if (m_entities[location] == nullptr) {
@@ -159,7 +159,7 @@ MsgResultType GameBoard::TellMsg(EntityLocationType location, EntityIdType id, M
 	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
-void GameBoard::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void Board::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	// failedLoc相关的是自动退订逻辑，算是一种保险。
 	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
@@ -187,7 +187,7 @@ void GameBoard::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lpara
 	}
 }
 
-void GameBoard::Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void Board::Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	for (auto& entity : m_entities) {
 		if (entity == nullptr) // 跳过离场位置。
 			continue;
@@ -195,11 +195,11 @@ void GameBoard::Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lpa
 	}
 }
 
-void GameBoard::SubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void Board::SubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	m_msgMap[msg].insert(location);
 }
 
-void GameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void Board::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
@@ -210,13 +210,13 @@ void GameBoard::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	}
 }
 
-std::shared_ptr<Host> GameBoard::GetHost(int job) {
+std::shared_ptr<Host> Board::GetHost(int job) {
 	if (job < 0 || job >= HostJob::COUNT)
 		return std::shared_ptr<Host>();
 	return m_hosts[job];
 }
 
-void GameBoard::SetHost(int job, std::shared_ptr<Host> host) {
+void Board::SetHost(int job, std::shared_ptr<Host> host) {
 	if (job < 0 || job >= HostJob::COUNT)
 		return;
 	m_hosts[job] = host;

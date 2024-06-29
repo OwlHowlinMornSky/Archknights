@@ -24,7 +24,7 @@
 #include "../Game/Global.h"
 #include "../Game/Board.h"
 
-#include "../Game/IStage.h"
+#include "../Game/Stage.h"
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include "../Models/IGround.h"
@@ -41,9 +41,9 @@
 namespace Game {
 
 void Initalizator::OnJoined() {
-	GameGlobal::board->SubscribeMsg(5678, m_location);
+	Global::board->SubscribeMsg(5678, m_location);
 
-	auto& camera = Game::GameGlobal::show->getCamera();
+	auto& camera = Game::Global::show->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
 	camera.setFOV(40.0f);
@@ -74,14 +74,14 @@ void Initalizator::OnJoined() {
 
 	ME::G3dGlobal::setActive(false);
 
-	Game::GameGlobal::show->AddGround(ground);
+	Game::Global::show->AddGround(ground);
 
 	ground->SetSize(11.0f, 7.0f);
-	Game::GameGlobal::show->SetGroundSize(11.0f, 7.0f);
+	Game::Global::show->SetGroundSize(11.0f, 7.0f);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
-	GameGlobal::board->JoinEntity(summonmngr);
+	Game::Global::board->JoinEntity(summonmngr);
 
 	summonmngr->AddBegin();
 	summonmngr->AddEntity(151);
@@ -94,7 +94,7 @@ void Initalizator::OnJoined() {
 
 	pos[0] = 5.5f;
 	pos[1] = 3.5f;
-	Game::GameGlobal::board->SubscribeMsg(MsgId::GuiEvent, m_location);
+	Game::Global::board->SubscribeMsg(MsgId::GuiEvent, m_location);
 
 	auto maphost = std::make_shared<MapHost>();
 	std::ifstream ifs;
@@ -109,16 +109,16 @@ void Initalizator::OnJoined() {
 
 	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
 
-	Game::GameGlobal::board->SetHost(
+	Game::Global::board->SetHost(
 		HostJob::MapPathManager,
 		maphost
 	);
 }
 
 void Initalizator::OnKicking() {
-	Game::GameGlobal::board->UnsubscribeMsg(MsgId::GuiEvent, m_location);
+	Game::Global::board->UnsubscribeMsg(MsgId::GuiEvent, m_location);
 
-	GameGlobal::board->Broadcast(1234, 0, 0);
+	Game::Global::board->Broadcast(1234, 0, 0);
 }
 
 void Initalizator::FixedUpdate() {}
@@ -132,13 +132,13 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
 			case sf::Keyboard::Num1:
-				GameGlobal::board->PostMsg(2, 0, (intptr_t)this->pos);
+				Game::Global::board->PostMsg(2, 0, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num2:
-				GameGlobal::board->PostMsg(2, 1, (intptr_t)this->pos);
+				Game::Global::board->PostMsg(2, 1, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num3:
-				GameGlobal::board->PostMsg(2, 2, (intptr_t)this->pos);
+				Game::Global::board->PostMsg(2, 2, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num4:
 				//GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
@@ -156,7 +156,7 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 				pos[1] += 1.0f;
 				break;
 			case sf::Keyboard::S:
-				GameGlobal::show->getCamera().translate(0.0f, -0.1f, 0.0f);
+				Game::Global::show->getCamera().translate(0.0f, -0.1f, 0.0f);
 				break;
 			}
 			break;
@@ -165,19 +165,19 @@ MsgResultType Initalizator::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, 
 		case sf::Event::MouseButtonPressed:
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
-				Game::GameGlobal::show->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
-				GameGlobal::board->PostMsg(2, 3, (intptr_t)&(pos.x));
+				Game::Global::show->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				Game::Global::board->PostMsg(2, 3, (intptr_t)&(pos.x));
 			}
 			break;
 		}
 		break;
 	}
 	case 9876:
-		GameGlobal::board->UnsubscribeMsg(5678, m_location);
+		Game::Global::board->UnsubscribeMsg(5678, m_location);
 		KickSelf();
 		break;
 	case 1234:
-		GameGlobal::board->ExitGame(4321);
+		Game::Global::board->ExitGame(4321);
 		break;
 	}
 	return MsgResult::OK;

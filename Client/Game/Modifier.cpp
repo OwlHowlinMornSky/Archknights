@@ -42,7 +42,7 @@ void Game::ModifySwitch::SetSource(EntityLocationType _ad, EntityIdType _id, Mod
 	m_modifier.source.func = _f;
 	if (m_enabled) {
 		(*m_handle) = m_modifier;
-		auto target = GameGlobal::board->EntityAt(m_targetAd);
+		auto target = Global::board->EntityAt(m_targetAd);
 		assert(target != nullptr);
 		assert(target->getID() == m_targetId);
 		target->OnModifierChanged(m_attribute);
@@ -63,7 +63,7 @@ void Game::ModifySwitch::SetValue(Attribute::ValueType grow, Attribute::ValueTyp
 	m_modifier.value[Modifier::ModifyType::Times] = times;
 	if (m_enabled) {
 		(*m_handle) = m_modifier;
-		auto target = GameGlobal::board->EntityAt(m_targetAd);
+		auto target = Global::board->EntityAt(m_targetAd);
 		assert(target != nullptr);
 		assert(target->getID() == m_targetId);
 		target->OnModifierChanged(m_attribute);
@@ -79,14 +79,14 @@ bool Game::ModifySwitch::SetEnabled(bool enabled) {
 			m_enabled = false;
 			return false;
 		}
-		auto target = GameGlobal::board->EntityAt(m_targetAd);
+		auto target = Global::board->EntityAt(m_targetAd);
 		assert(target != nullptr);
 		assert(target->getID() == m_targetId);
 		m_handle = target->Modify(m_attribute, m_modifier);
 		m_enabled = true;
 	}
 	else {
-		auto target = GameGlobal::board->EntityAt(m_targetAd);
+		auto target = Global::board->EntityAt(m_targetAd);
 		assert(target != nullptr);
 		assert(target->getID() == m_targetId);
 		target->ModifyRemove(m_attribute, m_handle);

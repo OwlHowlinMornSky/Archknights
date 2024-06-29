@@ -40,7 +40,7 @@ bool Activity_Game::prepare(ME::Window& wnd) noexcept {
 }
 
 void Activity_Game::start() noexcept {
-	Game::GameGlobal::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
+	Game::Global::board->SetExitCallback(std::bind(&Activity_Game::ExitGame, this, std::placeholders::_1));
 	UpdateSize(r->getRealtimeSize());
 }
 
@@ -60,7 +60,7 @@ bool Activity_Game::handleEvent(const sf::Event& evt) {
 		break;
 	}
 	sf::Event e = evt;
-	Game::GameGlobal::board->PostMsg(1, 0, (intptr_t)&e);
+	Game::Global::board->PostMsg(1, 0, (intptr_t)&e);
 	return false;
 }
 
@@ -70,10 +70,10 @@ void Activity_Game::update(sf::Time dtime) {
 #endif // _DEBUG
 	if (m_paused)
 		dtime = sf::Time::Zero;
-	Game::GameGlobal::board->Update(dtime.asMicroseconds());
-	Game::GameGlobal::show->update(dtime.asSeconds());
-	Game::GameGlobal::show->render();
-	r->draw(*Game::GameGlobal::show);
+	Game::Global::board->Update(dtime.asMicroseconds());
+	Game::Global::show->update(dtime.asSeconds());
+	Game::Global::show->render();
+	r->draw(*Game::Global::show);
 	r->display();
 	return;
 }
@@ -96,7 +96,7 @@ void Activity_Game::ExitGame(int code) {
 }
 
 void Activity_Game::UpdateSize(sf::Vector2u size) {
-	Game::GameGlobal::show->resize(size);
+	Game::Global::show->resize(size);
 	//auto& view = r->getView();
 	//sf::Vector2f size = view.getSize();
 }

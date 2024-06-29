@@ -23,11 +23,11 @@
 #include <MysteryEngine/G3D/GlCheck.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
-#include "IStage.h"
+#include "Stage.h"
 
 namespace Game {
 
-IGameShow::IGameShow() {
+Stage::Stage() {
 	m_camera.setFOV(45.0f);
 	m_camera.setAspectRatio(16.0f / 9.0f);
 	m_camera.setZNear(0.25f);

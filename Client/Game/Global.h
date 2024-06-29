@@ -25,13 +25,13 @@
 
 namespace Game {
 
-class GameBoard;
-class IGameShow;
+class Board;
+class Stage;
 
-namespace GameGlobal {
+namespace Global {
 
-extern std::unique_ptr<GameBoard> board;
-extern std::unique_ptr<IGameShow> show;
+extern std::unique_ptr<Board> board;
+extern std::unique_ptr<Stage> show;
 
 }
 } // namespace Game

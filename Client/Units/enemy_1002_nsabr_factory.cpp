@@ -23,7 +23,7 @@
 
 #include "enemy_1002_nsabr_actor.h"
 #include "enemy_1002_nsabr.h"
-#include "../Game/IStage.h"
+#include "../Game/Stage.h"
 
 bool Game::Enemy_1002_nsabr_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
@@ -43,7 +43,7 @@ bool Game::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) 
 
 	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
 
-	Game::GameGlobal::show->AddActor(actor);
+	Game::Global::show->AddActor(actor);
 
 	unit->m_actor = actor;
 

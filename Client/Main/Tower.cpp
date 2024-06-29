@@ -42,7 +42,7 @@ void Tower::OnJoined() {
 	// 触发动画
 	ToStart(m_defaultDirection);
 	// 创建主体
-	m_body = Game::GameGlobal::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
+	m_body = Game::Global::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
 	m_active = false;

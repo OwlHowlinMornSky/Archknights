@@ -45,14 +45,14 @@ GameCommon::GameCommon() {
 GameCommon::~GameCommon() {}
 
 int GameCommon::setup() {
-	if (Game::GameGlobal::show)
+	if (Game::Global::show)
 		return 1;
-	Game::GameGlobal::show = std::make_unique<GameCommon>();
+	Game::Global::show = std::make_unique<GameCommon>();
 	return 0;
 }
 
 void GameCommon::drop() {
-	Game::GameGlobal::show.reset();
+	Game::Global::show.reset();
 }
 
 void GameCommon::update(float dt) {

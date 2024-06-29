@@ -23,8 +23,7 @@
 
 #include "TypeDef.h"
 
-namespace Game {
-namespace MsgId {
+namespace Game::MsgId {
 enum Basic : MsgIdType {
 	Null = 0,
 	GuiEvent,  // GUI消息。 wparam：未使用； lparam：指向 sf::Event 的指针。
@@ -43,5 +42,4 @@ enum Basic : MsgIdType {
 
 	EXTERN_START,// = 0x01000000
 };
-}
 }

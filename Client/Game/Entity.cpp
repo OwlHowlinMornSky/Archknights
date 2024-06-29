@@ -195,7 +195,7 @@ void Entity::OnRotationChanged() {}
 void Entity::OnScaleChanged() {}
 
 void Entity::KickSelf() const {
-	GameGlobal::board->RegistryForExit(m_location);
+	Global::board->RegistryForExit(m_location);
 }
 
 MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {

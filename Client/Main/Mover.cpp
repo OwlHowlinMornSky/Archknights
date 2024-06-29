@@ -22,7 +22,7 @@ void Mover::OnJoined() {
 	}
 	m_checkpointTarget = 0;
 	// 创建主体
-	m_body = Game::GameGlobal::board->m_world->CreateBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
+	m_body = Game::Global::board->m_world->CreateBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
 	// 触发动画
@@ -370,7 +370,7 @@ bool Mover::TryMove() {
 		return false;
 	int target[2] = { (int)m_position[0], (int)m_position[1] };
 	Game::MsgResultType res =
-		Game::GameGlobal::board->
+		Game::Global::board->
 		GetHost(Game::HostJob::MapPathManager)->
 		ReceiveMessage(Game::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
 	switch (res) {

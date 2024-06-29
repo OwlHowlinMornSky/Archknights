@@ -34,7 +34,7 @@ namespace Game {
 struct Modifier;
 
 class Entity {
-	friend class GameBoard;
+	friend class Board;
 
 public:
 	enum AttributeType : int {

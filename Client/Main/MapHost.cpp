@@ -39,7 +39,7 @@ bool MapHost::Load(std::ifstream& ifs) {
 	ifs >> m >> n;
 	m_tiles.ChangeSize(m, n);
 
-	m_wall = Game::GameGlobal::board->m_world->CreateWall();
+	m_wall = Game::Global::board->m_world->CreateWall();
 
 	m_wall->SetSize(m, n);
 

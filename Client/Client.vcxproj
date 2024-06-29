@@ -320,7 +320,7 @@
     <ClInclude Include="Game\Host.h" />
     <ClInclude Include="Game\Hook.h" />
     <ClInclude Include="Game\IActor.h" />
-    <ClInclude Include="Game\IStage.h" />
+    <ClInclude Include="Game\Stage.h" />
     <ClInclude Include="Game\Modifier.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
@@ -387,7 +387,7 @@
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\Host.cpp" />
     <ClCompile Include="Game\Hook.cpp" />
-    <ClCompile Include="Game\IStage.cpp" />
+    <ClCompile Include="Game\Stage.cpp" />
     <ClCompile Include="Game\Modifier.cpp" />
     <ClCompile Include="Main\Creator.cpp" />
     <ClCompile Include="Main\EntityFactory.cpp" />

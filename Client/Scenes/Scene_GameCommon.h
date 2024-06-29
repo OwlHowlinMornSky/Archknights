@@ -21,14 +21,14 @@
 */
 #pragma once
 
-#include "../Game/IStage.h"
+#include "../Game/Stage.h"
 
 #include "../Models/ActorGroup.h"
 
 namespace Scene {
 
 class GameCommon final :
-	public Game::IGameShow {
+	public Game::Stage {
 public:
 	GameCommon();
 	virtual ~GameCommon() override;

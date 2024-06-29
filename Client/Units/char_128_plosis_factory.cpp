@@ -23,7 +23,7 @@
 
 #include "char_128_plosis.h"
 #include "char_128_plosis_actor.h"
-#include "../Game/IStage.h"
+#include "../Game/Stage.h"
 
 bool Game::Char_128_Plosis_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
@@ -53,7 +53,7 @@ bool Game::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Entity>& ptr) {
 
 #ifdef ARCHKNIGHTS_LIMITED
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::GameGlobal::show->AddActor(actor);
+	Game::Global::show->AddActor(actor);
 	unit->m_actor = actor;
 #else
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);

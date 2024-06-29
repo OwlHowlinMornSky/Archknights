@@ -37,10 +37,10 @@ namespace Game {
 /**
  * @brief 游戏板：定义了游戏场地基本功能。
 */
-class GameBoard {
+class Board {
 public:
-	GameBoard();
-	virtual ~GameBoard();
+	Board();
+	virtual ~Board();
 
 	static int setup();
 	static void drop();
