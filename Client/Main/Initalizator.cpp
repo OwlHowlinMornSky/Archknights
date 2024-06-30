@@ -46,7 +46,7 @@ void Initalizator::OnJoined() {
 	auto& camera = Game::Global::stage->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
-	camera.setFOV(40.0f);
+	camera.setFOV(36.0f);
 	camera.setPosition(0.0f + 5.5f, -5.5f + 3.5f, 8.66025f);
 	camera.setRotation(30.0f, 0.0f, 0.0f);
 	/*camera.setType(ME::Camera::Type::Oblique);
@@ -101,11 +101,26 @@ void Initalizator::OnJoined() {
 	ifs.open("res/main_7-3/map.txt");
 	maphost->Load(ifs);
 
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 2, 0);
-	int testp[2] = { 9, 1 };
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t) & (testp[0]));
-	int testp1[2] = { 0, 3 };
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 1, (intptr_t) & (testp1[0]));
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 6, 0);
+	int testp[2];
+	testp[0] = 10;
+	testp[1] = 3;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t)testp);
+	testp[0] = 10;
+	testp[1] = 1;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 1, (intptr_t)testp);
+	testp[0] = 1;
+	testp[1] = 1;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 2, (intptr_t)testp);
+	testp[0] = 1;
+	testp[1] = 5;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 3, (intptr_t)testp);
+	testp[0] = 10;
+	testp[1] = 5;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 4, (intptr_t)testp);
+	testp[0] = 0;
+	testp[1] = 3;
+	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 5, (intptr_t)testp);
 
 	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
 
@@ -166,7 +181,7 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
 				Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
-				Game::Global::board->PostMsg(2, 3, (intptr_t)&(pos.x));
+				Game::Global::board->PostMsg(2, 3, (intptr_t) & (pos.x));
 			}
 			break;
 		}

@@ -423,7 +423,7 @@ bool Mover::TryMove() {
 }
 
 bool Mover::TryTakeNextMoveCmd() {
-	if (m_checkpointTarget > 0)
+	if (m_checkpointTarget > 4)
 		return false;
 	m_checkpointTarget++;
 	return true;

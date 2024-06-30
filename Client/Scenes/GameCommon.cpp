@@ -133,13 +133,13 @@ void GameCommon::onSizeChanged(sf::Vector2u newsize) {
 	glCheck(glEnable(GL_BLEND));
 	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
 	//glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-	glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f));
+	//glCheck(glClearColor(1.0f, 0.0f, 0.0f, 0.5f));
 	glCheck(glActiveTexture(GL_TEXTURE0));
 
 	sf::Texture::bind(&m_shadowTex.getTexture());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	float borderColor[] = { 0.0f, 0.0, 1.0f, 0.5f };
+	float borderColor[] = { 0.0f, 0.0, 0.0f, 0.0f };
 	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 	sf::Texture::bind(nullptr);
 
