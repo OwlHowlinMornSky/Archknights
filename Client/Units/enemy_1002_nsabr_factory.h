@@ -24,17 +24,24 @@
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
 
+#include <memory>
+#include <memory_resource>
+
 namespace Unit {
 
 class Enemy_1002_nsabr_Factory final :
 	public Main::EntityFactory {
 public:
+	Enemy_1002_nsabr_Factory();
+	virtual ~Enemy_1002_nsabr_Factory() override;
+
 	virtual bool Load() override;
 	virtual bool CreateEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
-	bool m_double;
 	std::unique_ptr<Model::IAnimationPose> m_pose[2];
+	std::pmr::unsynchronized_pool_resource m_pool;
+	std::pmr::polymorphic_allocator<Enemy_1002_nsabr_Factory> m_alloc;
 };
 
 }

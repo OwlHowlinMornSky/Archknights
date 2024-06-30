@@ -25,6 +25,12 @@
 #include "enemy_1002_nsabr.h"
 #include "../Game/Stage.h"
 
+Unit::Enemy_1002_nsabr_Factory::Enemy_1002_nsabr_Factory() :
+	m_pool(),
+	m_alloc(&m_pool) {}
+
+Unit::Enemy_1002_nsabr_Factory::~Enemy_1002_nsabr_Factory() {}
+
 bool Unit::Enemy_1002_nsabr_Factory::Load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
@@ -36,7 +42,7 @@ bool Unit::Enemy_1002_nsabr_Factory::Load() {
 }
 
 bool Unit::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
-	auto unit = std::make_shared<Unit::Enemy_1002_nsabr>();
+	auto unit = std::allocate_shared<Unit::Enemy_1002_nsabr>(m_alloc);
 
 	auto anim0 = m_pose[0]->CreateAnimation();
 	anim0->Setup();
