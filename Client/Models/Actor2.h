@@ -77,10 +77,11 @@ protected:
 protected:
 	bool m_isRolling; // 是否正在翻转
 	bool m_hitFlashing;
-	char m_isInOut;
 	bool m_inOutOnlyShadow;
+	char m_isInOut;
 	Direction m_direction; // 上次达成的方位
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
+	AnimationEvent m_lastEvent;
 	bool m_currentFBDirection; // 当前实际方位（false: 正面, true: 反面）
 	float m_currentRLDirection; // 当前实际方位（-1.0: 左, 1.0: 右）
 	float m_hitFlash;
@@ -89,7 +90,6 @@ protected:
 	CurrentAnimationClass* m_target; // 翻面的目标动画（若翻转还未通过关键点）
 	std::shared_ptr<ME::IModel> m_holdPTR[2]; // 0: Front, 1: Back
 
-	AnimationEvent m_lastEvent;
 	AnimationInfo m_info[2];
 	AnimationInfo* m_infoStorage[2];
 };

@@ -46,7 +46,7 @@ public:
 		Move
 	};
 
-	enum class AnimationStatus : char {
+	enum AnimationStatus : char {
 		Normal = 0,
 		AttackDown,
 		Skill0,
@@ -61,12 +61,15 @@ public:
 		COUNT
 	};
 
-	enum class Direction : char {
+	enum Direction : char {
 		FR = 0,
 		FL,
 		BR,
 		BL,
-		NotCare
+		NotCare,
+
+		BackBit = 0x02,
+		LeftBit = 0x01
 	};
 
 public:

@@ -81,10 +81,10 @@ Game::MsgResultType Unit::Char_151_Myrtle::receiveMessage(Game::MsgIdType msg, G
 			switch (evt.key.code) {
 			case sf::Keyboard::A:
 				m_actor->setStatus(Game::IActor::AnimationStatus::Skill0);
-				setStatusToBegin(Game::IActor::Direction::BR);
+				setStatusToBegin();
 				break;
 			case sf::Keyboard::Q:
-				setStatusToReturn(Game::IActor::Direction::BL);
+				setStatusToReturn();
 				break;
 			}
 			break;

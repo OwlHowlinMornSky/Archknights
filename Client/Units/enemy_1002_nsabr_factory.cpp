@@ -68,7 +68,7 @@ void Unit::Enemy_1002_nsabr_Factory::setAnimationInfoStorage() {
 	Model::AnimationInfo* info;
 	Model::IAnimationPose* pose;
 
-	info = m_info + (size_t)Game::IActor::AnimationStatus::Normal;
+	info = m_info + Game::IActor::AnimationStatus::Normal;
 	pose = m_pose.get();
 
 	info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");

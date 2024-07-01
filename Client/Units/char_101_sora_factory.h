@@ -37,7 +37,7 @@ protected:
 	void setAnimationInfoStorage();
 
 	std::unique_ptr<Model::IAnimationPose> m_pose;
-	Model::AnimationInfo m_info[static_cast<size_t>(Game::IActor::AnimationStatus::COUNT)];
+	Model::AnimationInfo m_info[Game::IActor::AnimationStatus::COUNT];
 };
 
 }

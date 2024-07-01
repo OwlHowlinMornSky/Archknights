@@ -51,7 +51,10 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 	m_hitFlashing(false),
 
 	m_isInOut(0),
-	m_currentInout(0.0f)
+	m_currentInout(0.0f),
+
+	m_inOutOnlyShadow(false),
+	m_infoStorage(nullptr)
 
 {
 	m_current = (CurrentAnimationClass*)m_holdPTR.get();
@@ -208,7 +211,7 @@ void Actor::turnLeftRight(bool isLeft) {
 }
 
 void Actor::setStatus(AnimationStatus status) {
-	m_info = m_infoStorage[static_cast<size_t>(status)];
+	m_info = m_infoStorage[status];
 }
 
 void Actor::setPosition(float x, float y, float z) {
@@ -340,12 +343,7 @@ void Actor::callback(spine::AnimationState* state, spine::EventType type, spine:
 }
 
 void Actor::changeDirection(bool RL) {
-	if (RL) {
-		m_direction = Direction::FL;
-	}
-	else {
-		m_direction = Direction::FR;
-	}
+	m_direction = RL ? Direction::FL : Direction::FR;
 	m_targetDirection = m_direction;
 }
 

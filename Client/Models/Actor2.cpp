@@ -92,19 +92,7 @@ void Actor2::setDirection(Direction direction) {
 
 void Actor2::triggerAnimation(AnimationEvent type, Direction direction) {
 #ifdef ARCHKNIGHTS_LIMITED
-	bool wantToChangeFace = false;
-	bool wantToChangeLR = false;
-	bool tryToPlayBackFailed = false;
-
-	if (direction != Direction::NotCare && direction != m_direction) {
-		// 需求的前后面不同。
-		if (m_currentFBDirection != ((static_cast<char>(direction) & 0x02) != 0))
-			wantToChangeFace = true;
-		// 需求的左右面不同。
-		if (((static_cast<char>(m_direction) ^ static_cast<char>(direction)) & 0x01) != 0)
-			wantToChangeLR = true;
-	}
-	if (m_currentFBDirection != wantToChangeFace) { // 想要播放反面
+	if ((direction & Direction::BackBit) != 0) { // 想要播放反面
 		CurrentAnimationClass* modify = GetAnimation(true);
 		AnimationInfo* info = GetInfo(true);
 		bool noBackFace = false;
@@ -168,10 +156,13 @@ void Actor2::triggerAnimation(AnimationEvent type, Direction direction) {
 			modify->setAnimation(0, info->Default, false);
 		}
 		if (noBackFace) {
-			wantToChangeFace = !wantToChangeFace;
+			if (direction == Direction::BL)
+				direction = Direction::FL;
+			if (direction == Direction::BR)
+				direction = Direction::FR;
 		}
 	}
-	if (m_currentFBDirection == wantToChangeFace) { // 想要播放正面
+	if ((direction & Direction::BackBit) == 0) { // 想要播放正面
 		CurrentAnimationClass* modify = GetAnimation(false);
 		AnimationInfo* info = GetInfo(false);
 		switch (type) {
@@ -222,20 +213,18 @@ void Actor2::triggerAnimation(AnimationEvent type, Direction direction) {
 			modify->setAnimation(0, info->Default, false);
 		}
 	}
-	if (wantToChangeFace || wantToChangeLR) {
+	if (m_isRolling) {
+		if (m_targetDirection != direction) {
+			m_targetDirection = direction;
+		}
+	}
+	else if (m_direction != direction) {
+		m_targetDirection = direction;
 		m_isRolling = true;
-		char tmp = static_cast<char>(m_direction);;
-		if (wantToChangeFace) {
-			m_target = GetAnimation(!m_currentFBDirection);
-			if (wantToChangeLR)
-				tmp ^= 0x03;
-			else
-				tmp ^= 0x02;
-		}
-		else {
-			tmp ^= 0x01;
-		}
-		m_targetDirection = Direction(tmp);
+	}
+	if (m_currentFBDirection != ((direction & Direction::BackBit) != 0)) {
+		m_target = GetAnimation((direction & Direction::BackBit) != 0);
+		m_current->setAnimation(0, GetInfo((direction & Direction::BackBit) == 0)->Default, false);
 	}
 	m_lastEvent = type;
 #endif // !ARCHKNIGHTS_LIMITED
@@ -264,7 +253,7 @@ void Actor2::turnLeftRight(bool isLeft) {
 			break;
 		}
 	}
-	else if (isLeft != (m_direction == Direction::FL)) {
+	else if (isLeft != ((m_direction & Direction::LeftBit) != 0)) {
 		m_isRolling = true;
 		switch (m_direction) {
 		case Direction::FL:
@@ -284,8 +273,8 @@ void Actor2::turnLeftRight(bool isLeft) {
 }
 
 void Actor2::setStatus(AnimationStatus status) {
-	m_info[0] = m_infoStorage[0][static_cast<size_t>(status)];
-	m_info[1] = m_infoStorage[1][static_cast<size_t>(status)];
+	m_info[0] = m_infoStorage[0][status];
+	m_info[1] = m_infoStorage[1][status];
 }
 
 void Actor2::setPosition(float x, float y, float z) {
@@ -320,8 +309,8 @@ void Actor2::update(float dt) {
 		float Delta = dt * g_RotationRatio;
 		bool nowRL = (m_currentRLDirection < 0.0f);
 		bool nowFB = m_currentFBDirection;
-		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
-		bool toFB = (static_cast<char>(m_targetDirection) & 0x02);
+		bool toRL = (m_targetDirection & Direction::LeftBit) != 0;
+		bool toFB = (m_targetDirection & Direction::BackBit) != 0;
 		bool isIn = ((nowRL == toRL) && (nowFB == toFB));
 		if (isIn) { // 已经通过关键点，朝目标靠近
 			if (toRL) { // 朝左转

@@ -71,7 +71,7 @@ void Unit::Char_128_Plosis_Factory::setAnimationInfoStorage() {
 	Model::IAnimationPose* pose;
 	pose = m_pose[0].get();
 	{
-		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Normal;
+		info = m_info[0] + Game::IActor::AnimationStatus::Normal;
 		{
 			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
@@ -80,7 +80,7 @@ void Unit::Char_128_Plosis_Factory::setAnimationInfoStorage() {
 			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
 			info->StunIn = info->Die;
 		}
-		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		info = m_info[0] + Game::IActor::AnimationStatus::Skill0;
 		{
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Start");
 			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
@@ -89,7 +89,7 @@ void Unit::Char_128_Plosis_Factory::setAnimationInfoStorage() {
 	}
 	pose = m_pose[1].get();
 	{
-		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Normal;
+		info = m_info[1] + Game::IActor::AnimationStatus::Normal;
 		{
 			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
@@ -98,7 +98,7 @@ void Unit::Char_128_Plosis_Factory::setAnimationInfoStorage() {
 			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
 			info->StunIn = info->Die;
 		}
-		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		info = m_info[1] + Game::IActor::AnimationStatus::Skill0;
 		{
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Start");
 			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");

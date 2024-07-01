@@ -47,7 +47,7 @@ protected:
 	std::pmr::unsynchronized_pool_resource m_pool;
 	std::pmr::polymorphic_allocator<Enemy_1002_nsabr_Factory> m_alloc;
 
-	Model::AnimationInfo m_info[static_cast<size_t>(Game::IActor::AnimationStatus::COUNT)];
+	Model::AnimationInfo m_info[Game::IActor::AnimationStatus::COUNT];
 };
 
 }

@@ -81,7 +81,7 @@ void Tower::fixedUpdate() {
 				setStatusToIdle();
 			}
 		}
-		else {
+		{
 			int cnt = m_note.OnAttack;
 			while (cnt--) {
 				onAttackBegin();

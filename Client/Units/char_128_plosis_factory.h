@@ -38,7 +38,7 @@ protected:
 
 	std::unique_ptr<Model::IAnimationPose> m_pose[2];
 	bool test;
-	Model::AnimationInfo m_info[2][static_cast<size_t>(Game::IActor::AnimationStatus::COUNT)];
+	Model::AnimationInfo m_info[2][Game::IActor::AnimationStatus::COUNT];
 };
 
 }
