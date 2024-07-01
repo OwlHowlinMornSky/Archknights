@@ -180,11 +180,11 @@ void Actor::turnLeftRight(bool isLeft) {
 			break;
 		case Direction::BL:
 			if (!isLeft)
-				m_targetDirection = Direction::BR;
+				m_targetDirection = Direction::FR;
 			break;
 		case Direction::BR:
 			if (isLeft)
-				m_targetDirection = Direction::BL;
+				m_targetDirection = Direction::FL;
 			break;
 		}
 	}
@@ -198,10 +198,10 @@ void Actor::turnLeftRight(bool isLeft) {
 			m_targetDirection = Direction::FL;
 			break;
 		case Direction::BL:
-			m_targetDirection = Direction::BR;
+			m_targetDirection = Direction::FR;
 			break;
 		case Direction::BR:
-			m_targetDirection = Direction::BL;
+			m_targetDirection = Direction::FL;
 			break;
 		}
 	}

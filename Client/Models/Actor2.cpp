@@ -243,7 +243,45 @@ void Actor2::triggerAnimation(AnimationEvent type, Direction direction) {
 
 void Actor2::triggerAnimationEx(int excode, void* data) {}
 
-void Actor2::turnLeftRight(bool isLeft) {}
+void Actor2::turnLeftRight(bool isLeft) {
+	if (m_isRolling) {
+		switch (m_targetDirection) {
+		case Direction::FL:
+			if (!isLeft)
+				m_targetDirection = Direction::FR;
+			break;
+		case Direction::FR:
+			if (isLeft)
+				m_targetDirection = Direction::FL;
+			break;
+		case Direction::BL:
+			if (!isLeft)
+				m_targetDirection = Direction::BR;
+			break;
+		case Direction::BR:
+			if (isLeft)
+				m_targetDirection = Direction::BL;
+			break;
+		}
+	}
+	else if (isLeft != (m_direction == Direction::FL)) {
+		m_isRolling = true;
+		switch (m_direction) {
+		case Direction::FL:
+			m_targetDirection = Direction::FR;
+			break;
+		case Direction::FR:
+			m_targetDirection = Direction::FL;
+			break;
+		case Direction::BL:
+			m_targetDirection = Direction::BR;
+			break;
+		case Direction::BR:
+			m_targetDirection = Direction::BL;
+			break;
+		}
+	}
+}
 
 void Actor2::setStatus(AnimationStatus status) {
 	m_info[0] = m_infoStorage[0][static_cast<size_t>(status)];

@@ -107,6 +107,13 @@ bool Unit::Char_151_Myrtle::tryToAttack() {
 			continue;
 		if (Game::Global::board->tellMsg(it->second.location, it->first, Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
 			continue;
+		bool isLeft = Game::Global::board->getEntityAt(it->second.location)->getPosition()[0] < m_position[0];
+		bool isBack = Game::Global::board->getEntityAt(it->second.location)->getPosition()[1] > m_position[1];
+		setStatusToAttack(
+			isLeft ?
+			(isBack ? Game::IActor::Direction::BL : Game::IActor::Direction::FL) :
+			(isBack ? Game::IActor::Direction::BR : Game::IActor::Direction::FR)
+		);
 		return false;
 	}
 	m_targetAd = 0;

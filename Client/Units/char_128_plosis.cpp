@@ -90,6 +90,7 @@ bool Unit::Char_128_Plosis::tryToAttack() {
 		auto t = Game::Global::board->getEntityAt(m_targetAd);
 		if (t->getHp() >= t->getAttribute(AttributeType::MaxHp))
 			continue;
+		setStatusToAttack();
 		return false;
 	}
 	return true;

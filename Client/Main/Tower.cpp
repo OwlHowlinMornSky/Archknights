@@ -69,7 +69,6 @@ void Tower::fixedUpdate() {
 		if (m_abilities[AbilityType::Attack].isAbled()) {
 			if (!tryToAttack()) {
 				m_atked = false;
-				setStatusToAttack();
 			}
 		}
 		break;
@@ -77,7 +76,6 @@ void Tower::fixedUpdate() {
 		if (m_note.AttackOver) {
 			if (!tryToAttack()) {
 				m_atked = false;
-				setStatusToAttack();
 			}
 			else {
 				setStatusToIdle();
@@ -166,7 +164,7 @@ void Tower::setStatusToIdle(Game::IActor::Direction d) {
 	m_status = Status::Idle;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Idle, d
+			Game::IActor::AnimationEvent::Idle, m_defaultDirection
 		);
 }
 
