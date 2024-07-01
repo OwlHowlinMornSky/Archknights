@@ -38,9 +38,9 @@ Arknights is a [Free/Libre Software](https://www.gnu.org/philosophy/free-sw.en.h
 	This software uses Spine Runtimes, which is [nonfree](https://www.gnu.org/proprietary/proprietary.en.html). Although it is optional, it still diminishes the freedom and functionality of this software.
 
 2. 
-	本软件使用了原作`明日方舟`的资源文件，其是[非自由](https://www.gnu.org/proprietary/proprietary.html)的商业产品。虽然其只是可选的，但仍削弱的本软件的自由性。
+	本软件使用了原作`明日方舟`的资源文件，其是[非自由](https://www.gnu.org/proprietary/proprietary.html)的。虽然其只是可选的，但仍削弱的本软件的自由性。
 
-	This software uses the resource files of the original work `Arknights`, which is a [nonfree](https://www.gnu.org/proprietary/proprietary.en.html) commercial product. Although it is optional, it still diminishes the freedom of this software.
+	This software uses the resource files of the original work `Arknights`, which is [nonfree](https://www.gnu.org/proprietary/proprietary.en.html). Although it is optional, it still diminishes the freedom of this software.
 
 ## 注意 Notice
 
