@@ -48,6 +48,8 @@ public:
 	void render();
 
 	bool testPoint(sf::Vector2i pt, glm::vec3* outpt);
+	void testDirection(sf::Vector2i pt, glm::vec3* outDirectionNotNormalized, glm::vec3* startPt);
+	void testDirectionInCameraCoord(sf::Vector2i pt, glm::vec3* outDirectionNotNormalized, glm::vec3* startPt);
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;

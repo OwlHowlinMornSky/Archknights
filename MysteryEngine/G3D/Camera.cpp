@@ -150,6 +150,89 @@ float Camera::getSheerY() const {
 	return m_data.obliq.sheerY;
 }
 
+glm::vec3 Camera::testPointFromNdcToWorld(glm::vec4 ndc) {
+	glm::vec4 res = glm::inverse(getMatPV()) * ndc;
+	return glm::vec3(res.x / res.w, res.y / res.w, res.z / res.w);
+}
+
+bool Camera::testDirectionFromNdcToWorld(glm::vec4 ndc, glm::vec3& d, glm::vec3& p) {
+	switch (getType()) {
+	case Camera::Type::Orthographic:
+	{
+		glm::mat4 iv = glm::inverse(getMatV());
+		glm::vec4 F = iv * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
+		glm::vec4 R = iv * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		glm::vec4 U = iv * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		glm::vec3 forward = { F.x / F.w, F.y / F.w, F.z / F.w };
+		glm::vec3 right = { R.x / R.w, R.y / R.w, R.z / R.w };
+		glm::vec3 up = { U.x / U.w, U.y / U.w, U.z / U.w };
+		d = forward;
+		p = getPosition();
+		p += right * ndc.x * m_data.ortho.dimX / 2.0f;
+		p += up * ndc.y * m_data.ortho.dimX / 2.0f;
+		break;
+	}
+	case Camera::Type::Perspective:
+	{
+		glm::vec4 res = glm::inverse(getMatPV()) * ndc;
+		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
+		ret -= getPosition();
+		d = ret;
+
+		p = getPosition();
+		break;
+	}
+	case Camera::Type::Oblique:
+	{
+		glm::vec4 res = glm::inverse(getMatP()) * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
+		ret -= getPosition();
+		d = ret;
+
+		glm::mat4 iv = glm::inverse(getMatV());
+		glm::vec4 R = iv * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		glm::vec4 U = iv * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		glm::vec3 right = { R.x / R.w, R.y / R.w, R.z / R.w };
+		glm::vec3 up = { U.x / U.w, U.y / U.w, U.z / U.w };
+		p = getPosition();
+		p += right * ndc.x * m_data.ortho.dimX / 2.0f;
+		p += up * ndc.y * m_data.ortho.dimX / 2.0f;
+		break;
+	}
+	default:
+		return false;
+	}
+	return true;
+}
+
+bool Camera::testDirectionFromNdcToCamera(glm::vec4 ndc, glm::vec3& d, glm::vec3& p) {
+	switch (getType()) {
+	case Camera::Type::Orthographic:
+	{
+		d = glm::vec3(0.0f, 1.0f, 0.0f);
+		p = glm::vec3(ndc.x * m_data.ortho.dimX / 2.0f, ndc.y * m_data.ortho.dimX / 2.0f, 0.0f);
+		break;
+	}
+	case Camera::Type::Perspective:
+	{
+		glm::vec4 res = glm::inverse(getMatP()) * ndc;
+		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
+		d = glm::vec3(ret.x, -ret.z, ret.y);
+		p = glm::vec3(0.0f);
+		break;
+	}
+	case Camera::Type::Oblique:
+	{
+		d = glm::vec3(-m_data.obliq.sheerX, 1.0f, -m_data.obliq.sheerY);
+		p = glm::vec3(ndc.x * m_data.obliq.dimX / 2.0f, ndc.y * m_data.obliq.dimX / 2.0f, 0.0f);
+		break;
+	}
+	default:
+		return false;
+	}
+	return true;
+}
+
 void Camera::ensureMatPVUpdated() {
 	if (m_matP_needUpdate)
 		updateMatP();

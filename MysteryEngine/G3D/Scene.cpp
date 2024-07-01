@@ -93,12 +93,37 @@ bool Scene::testPoint(sf::Vector2i pt, glm::vec3* outpt) {
 
 	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, d * 2.0f - 1.0f, 1.0f);
 
-	glm::vec4 res = glm::inverse(m_camera.getMatPV()) * ndc;
+	outpt[0] = m_camera.testPointFromNdcToWorld(ndc);
 
-	outpt[0].x = res.x / res.w;
-	outpt[0].y = res.y / res.w;
-	outpt[0].z = res.z / res.w;
 	return true;
+}
+
+void Scene::testDirection(sf::Vector2i pt, glm::vec3* outDirectionNotNormalized, glm::vec3* startPt) {
+	sf::Vector2u sz = m_renderTexture.getSize();
+	pt.y = sz.y - pt.y;
+	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, 0.0f, 1.0f);
+	glm::vec3 d, p;
+	m_camera.testDirectionFromNdcToWorld(ndc, d, p);
+	if (outDirectionNotNormalized != nullptr)
+		outDirectionNotNormalized[0] = d;
+	if (startPt != nullptr)
+		startPt[0] = p;
+	return;
+}
+
+void Scene::testDirectionInCameraCoord(sf::Vector2i pt, glm::vec3* outDirectionNotNormalized, glm::vec3* startPt) {
+	if (outDirectionNotNormalized == nullptr)
+		return;
+	sf::Vector2u sz = m_renderTexture.getSize();
+	pt.y = sz.y - pt.y;
+	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, 0.0f, 1.0f);
+	glm::vec3 d, p;
+	m_camera.testDirectionFromNdcToCamera(ndc, d, p);
+	if (outDirectionNotNormalized != nullptr)
+		outDirectionNotNormalized[0] = d;
+	if (startPt != nullptr)
+		startPt[0] = p;
+	return;
 }
 
 void ME::Scene::draw(sf::RenderTarget& target, sf::RenderStates states) const {

@@ -97,6 +97,10 @@ public:
 	float getSheerX() const;
 	float getSheerY() const;
 
+	glm::vec3 testPointFromNdcToWorld(glm::vec4 ndc);
+	bool testDirectionFromNdcToWorld(glm::vec4 ndc, glm::vec3& d, glm::vec3& p);
+	bool testDirectionFromNdcToCamera(glm::vec4 ndc, glm::vec3& d, glm::vec3& p);
+
 protected:
 	void ensureMatPVUpdated();
 	void updateMatV();
