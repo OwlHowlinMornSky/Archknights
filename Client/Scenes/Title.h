@@ -47,7 +47,7 @@ class TitleSphereShader final :
 public:
 	virtual void setup() override;
 
-	virtual void UpdateUniform(int id, GLfloat* data) const override;
+	virtual void update(int id, GLfloat* data) const override;
 
 protected:
 	GLint m_ul_matp;
@@ -60,10 +60,10 @@ class LineModel final :
 public:
 	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
 
-	virtual void Clear() override;
+	virtual void clear() override;
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 protected:
 	unsigned int vao;

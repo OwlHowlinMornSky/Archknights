@@ -31,7 +31,7 @@ namespace ME {
 /**
  * @brief Bgm 接口: 播放特别构造的音乐文件所用。
 */
-class ME_API Bgm {
+class ME_API BGM {
 public:
 	/**
 	 * @brief 播放状态。
@@ -46,11 +46,11 @@ public:
 	/**
 	 * @brief 默认构造函数。
 	*/
-	Bgm() = default;
+	BGM() = default;
 	/**
 	 * @brief 默认析构函数。
 	*/
-	virtual ~Bgm() = default;
+	virtual ~BGM() = default;
 
 public:
 	/**
@@ -110,6 +110,6 @@ public:
  * @brief 构造一个BGM实例。
  * @return 实例指针。
  */
-std::unique_ptr<Bgm> ME_API CreateBGM();
+std::unique_ptr<BGM> ME_API CreateBGM();
 
 } // namespace ME

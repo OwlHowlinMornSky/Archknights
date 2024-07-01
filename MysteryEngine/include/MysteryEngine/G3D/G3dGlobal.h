@@ -28,16 +28,16 @@ namespace ME::G3dGlobal {
 /**
  * @brief 加载G3D环境。包括初始化GLEW和创建Context。
 */
-void ME_API setup();
+void ME_API Setup();
 
 /**
  * @brief 激活Context或取消。
 */
-bool ME_API setActive(bool active);
+bool ME_API SetActive(bool active);
 
 /**
  * @brief 卸载G3D环境。包括销毁Context。
 */
-void ME_API drop() noexcept;
+void ME_API Drop() noexcept;
 
 } // namespace ME::G3dGlobal

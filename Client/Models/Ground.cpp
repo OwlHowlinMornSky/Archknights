@@ -105,7 +105,7 @@ public:
 		Bind(nullptr);
 	}
 
-	virtual void UpdateUniform(int id, GLfloat* data) const override {
+	virtual void update(int id, GLfloat* data) const override {
 		switch (id) {
 		case 0:
 			updateUniformMat4fv(m_uniforms[0], data);
@@ -119,18 +119,18 @@ public:
 		}
 	}
 
-	virtual void UpdateUniform1(int id, GLfloat val0) const override {}
-	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const override {
+	virtual void update1f(int id, GLfloat val0) const override {}
+	virtual void update2f(int id, GLfloat val0, GLfloat val1) const override {
 		updateUniform2f(m_uniforms[id], val0, val1);
 	}
-	virtual void UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
+	virtual void update3f(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
 		updateUniform3f(m_uniforms[id], val0, val1, val2);
 	}
-	virtual void UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
+	virtual void update4f(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
 		updateUniform4f(m_uniforms[id], val0, val1, val2, val3);
 	}
 
-	virtual void UpdateUniformI1(int id, GLint val) const override {
+	virtual void update1i(int id, GLint val) const override {
 		updateUniform1i(m_uniforms[id], val);
 	}
 };
@@ -147,14 +147,14 @@ ObjModel::ObjModel() :
 
 ObjModel::~ObjModel() {}
 
-bool ObjModel::Setup() {
+bool ObjModel::setup() {
 	m_shader = std::make_unique<::GroundShader>();
 	m_shader->setup();
 	//material = new V3DMaterial();
 	return true;
 }
 
-void ObjModel::Clear() {
+void ObjModel::clear() {
 	m_shader->clear();
 
 	for (unsigned int i = 0; i < modelData.size(); i++) {
@@ -396,9 +396,9 @@ void ObjModel::CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]) {
 	}
 }
 
-void ObjModel::Update(float dt) {}
+void ObjModel::update(float dt) {}
 
-void ObjModel::Draw(ME::Camera* camera, ME::Shader* shader) {
+void ObjModel::draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(m_shader.get());
 
 	UpdateShader(camera, m_shader.get());
@@ -458,13 +458,13 @@ void ObjModel::UpdateShader(ME::Camera* camera, ME::Shader* shader) {
 	//if (textures.size() == 0)
 	//	V3DModel::GenerateDefaultTexture();
 
-	ComputeMatrix();
+	computeMatrixDefault();
 
 	//glm::mat4 viewProj = camera.getMatPV() * m_matM;// transform;
 	//shader.updateUniformMat4fvName("uMatPVM", &viewProj[0][0]);
-	shader->UpdateUniform(0, &camera->getMatPV()[0][0]);
-	shader->UpdateUniform(1, &m_matM[0][0]);
-	shader->UpdateUniform(2, &m_groundSz[0]);
+	shader->update(0, &camera->getMatPV()[0][0]);
+	shader->update(1, &m_matM[0][0]);
+	shader->update(2, &m_groundSz[0]);
 
 }
 

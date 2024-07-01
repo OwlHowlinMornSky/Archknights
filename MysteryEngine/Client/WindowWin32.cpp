@@ -260,7 +260,7 @@ WindowWin32::~WindowWin32() noexcept {
 	return;
 }
 
-bool WindowWin32::Create(int nCmdShow) noexcept {
+bool WindowWin32::createWithCode(int nCmdShow) noexcept {
 	if (!g_wndClsRegistered)
 		if (!::MyRegisterClass())
 			return false;
@@ -273,7 +273,7 @@ bool WindowWin32::Create(int nCmdShow) noexcept {
 }
 
 bool ME::WindowWin32::create(bool foreground) noexcept {
-	return Create(foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
+	return createWithCode(foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
 }
 
 void WindowWin32::close() noexcept {

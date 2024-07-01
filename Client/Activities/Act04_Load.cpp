@@ -65,7 +65,7 @@ void Act04_Load::start() noexcept {
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
 
-	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
+	ME::GlobalBGM::Play("res/music/m_sys_title.ogg");
 	return;
 }
 
@@ -85,7 +85,7 @@ bool Act04_Load::handleEvent(const sf::Event& evt) {
 		case sf::Mouse::Button::Left:
 			if (m_status == ST_NORMAL) {
 				m_status = ST_OUT;
-				ME::GlobalBGM::stop();
+				ME::GlobalBGM::Stop();
 			}
 			break;
 		default:
@@ -150,9 +150,9 @@ void Act04_Load::update(sf::Time deltaTime) {
 	return;
 }
 
-void Act04_Load::OnEnterSysloop() noexcept {}
+void Act04_Load::onEnterSysloop() noexcept {}
 
-void Act04_Load::OnExitSysloop() noexcept {}
+void Act04_Load::onExitSysloop() noexcept {}
 
 void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	sf::Vector2u texSize = m_tex.getSize();

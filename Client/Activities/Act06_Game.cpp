@@ -78,11 +78,11 @@ void Act06_Game::update(sf::Time dtime) {
 	return;
 }
 
-void Act06_Game::OnEnterSysloop() noexcept {
+void Act06_Game::onEnterSysloop() noexcept {
 	m_paused = true;
 }
 
-void Act06_Game::OnExitSysloop() noexcept {
+void Act06_Game::onExitSysloop() noexcept {
 	m_paused = false;
 }
 

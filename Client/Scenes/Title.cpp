@@ -101,7 +101,7 @@ void TitleSphereShader::setup() {
 	return;
 }
 
-void TitleSphereShader::UpdateUniform(int id, GLfloat* data) const {
+void TitleSphereShader::update(int id, GLfloat* data) const {
 	switch (id) {
 	case 0:
 		updateUniformMat4fv(m_ul_matp, data);
@@ -123,7 +123,7 @@ bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 	unsigned long long offset2 = offset1 + sizeof(vertexArray[0].vertex1);
 	unsigned long long offset3 = offset2 + sizeof(vertexArray[0].offset);
 
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 
 	if (this->vertexVBO) {
 		glCheck(glDeleteBuffers(1, &this->vertexVBO));
@@ -146,12 +146,12 @@ bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 
 	glCheck(glBindVertexArray(0));
 
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 	return true;
 }
 
-void LineModel::Clear() {
-	ME::G3dGlobal::setActive(true);
+void LineModel::clear() {
+	ME::G3dGlobal::SetActive(true);
 
 	if (vertexVBO) {
 		glCheck(glDeleteBuffers(1, &vertexVBO));
@@ -162,12 +162,12 @@ void LineModel::Clear() {
 		vao = 0;
 	}
 
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 }
 
-void LineModel::Update(float dt) {}
+void LineModel::update(float dt) {}
 
-void LineModel::Draw(ME::Camera* camera, ME::Shader* shader) {
+void LineModel::draw(ME::Camera* camera, ME::Shader* shader) {
 	if (m_rotationChanged) {
 		m_matM = glm::translate(m_position);
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -177,9 +177,9 @@ void LineModel::Draw(ME::Camera* camera, ME::Shader* shader) {
 		m_rotationChanged = false;
 	}
 
-	shader->UpdateUniform(0, &(camera->getMatP()[0][0]));
-	shader->UpdateUniform(1, &(camera->getMatV()[0][0]));
-	shader->UpdateUniform(2, &(m_matM[0][0]));
+	shader->update(0, &(camera->getMatP()[0][0]));
+	shader->update(1, &(camera->getMatV()[0][0]));
+	shader->update(2, &(m_matM[0][0]));
 
 	glCheck(glBindVertexArray(this->vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, this->drawCount));
@@ -297,17 +297,17 @@ void Title::setup(int code, void* data) {
 		va.emplace_back(v0, v1, glm::vec2(1.0f, thick));
 	}
 
-	m_rotSpeed[0] = ME::RandGen::getUni01() * 20.0f + 5.0f;
-	m_rotSpeed[1] = ME::RandGen::getUni01() * 20.0f + 5.0f;
-	m_rotSpeed[2] = ME::RandGen::getUni01() * 20.0f + 5.0f;
+	m_rotSpeed[0] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
+	m_rotSpeed[1] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
+	m_rotSpeed[2] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
 
 	m_llm.setRotation(
-		ME::RandGen::getUni01() * 360.0f,
-		ME::RandGen::getUni01() * 360.0f,
-		ME::RandGen::getUni01() * 360.0f
+		ME::RandGen::GetUni01() * 360.0f,
+		ME::RandGen::GetUni01() * 360.0f,
+		ME::RandGen::GetUni01() * 360.0f
 	);
 
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 
 	m_shader.setup();
 
@@ -316,16 +316,16 @@ void Title::setup(int code, void* data) {
 
 	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
 
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 
 	m_llm.LoadModelData(va);
 }
 
 void Title::clear() {
-	m_llm.Clear();
-	ME::G3dGlobal::setActive(true);
+	m_llm.clear();
+	ME::G3dGlobal::SetActive(true);
 	m_shader.clear();
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 }
 
 void Title::update(float dt) {
@@ -341,7 +341,7 @@ void Title::onRender() {
 
 	ME::Shader::Bind(&m_shader);
 
-	m_llm.Draw(&m_camera, &m_shader);
+	m_llm.draw(&m_camera, &m_shader);
 
 	ME::Shader::Bind(nullptr);
 }

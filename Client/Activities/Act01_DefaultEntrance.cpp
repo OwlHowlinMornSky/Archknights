@@ -102,8 +102,8 @@ void Act01_DefaultEntrance::update(sf::Time dtime) {
 	return;
 }
 
-void Act01_DefaultEntrance::OnEnterSysloop() noexcept {}
+void Act01_DefaultEntrance::onEnterSysloop() noexcept {}
 
-void Act01_DefaultEntrance::OnExitSysloop() noexcept {}
+void Act01_DefaultEntrance::onExitSysloop() noexcept {}
 
 } // namespace Activity

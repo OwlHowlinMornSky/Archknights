@@ -33,11 +33,11 @@ namespace ME {
 /**
  * @brief Bgm 在 SFML 的实现。
 */
-class BgmSFML final :
-	public Bgm {
+class BGM_SFML final :
+	public BGM {
 public:
-	BgmSFML();
-	virtual ~BgmSFML() override;
+	BGM_SFML();
+	virtual ~BGM_SFML() override;
 
 public:
 	sf::Music::Status getStatusSFML() const;

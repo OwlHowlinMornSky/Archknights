@@ -26,12 +26,12 @@
 
 namespace ME::RandGen {
 
-extern ME_API std::mt19937 gen;
+extern ME_API std::mt19937 g_gen;
 
-void ME_API reseed();
+void ME_API Reseed();
 
-unsigned int ME_API get();
+unsigned int ME_API Get();
 
-float ME_API getUni01();
+float ME_API GetUni01();
 
 } // namespace ME::RandGen

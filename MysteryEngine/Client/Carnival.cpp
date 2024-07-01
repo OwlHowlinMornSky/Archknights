@@ -39,12 +39,12 @@ namespace ME {
 // 唯一实例
 std::unique_ptr<Carnival> Carnival::s_instance(nullptr);
 
-Carnival& Carnival::instance() noexcept {
+Carnival& Carnival::Instance() noexcept {
 	assert(s_instance != nullptr);
 	return *s_instance;
 }
 
-void Carnival::drop() noexcept {
+void Carnival::Drop() noexcept {
 	return s_instance.reset();
 }
 
@@ -193,7 +193,7 @@ void Carnival::onSystemLoopSingle(bool enter) {
 #ifdef SFML_SYSTEM_WINDOWS
 
 #include "CarnivalWin32.h"
-void ME::Carnival::setup(bool mutipleWindows) noexcept {
+void ME::Carnival::Setup(bool mutipleWindows) noexcept {
 	s_instance.reset(new CarnivalWin32(mutipleWindows));
 	return;
 }

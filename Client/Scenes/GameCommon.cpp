@@ -53,25 +53,25 @@ void GameCommon::drop() {
 }
 
 void GameCommon::setup(int code, void* data) {
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 	m_ds = new ME::DefaultShader();
 	m_ds->setup();
-	m_actors.Setup();
-	ME::G3dGlobal::setActive(false);
+	m_actors.setup();
+	ME::G3dGlobal::SetActive(false);
 }
 
 void GameCommon::clear() {
-	ME::G3dGlobal::setActive(true);
-	m_ground->Clear();
+	ME::G3dGlobal::SetActive(true);
+	m_ground->clear();
 	m_ground.reset();
-	m_actors.Clear();
+	m_actors.clear();
 	m_ds->clear();
 	delete m_ds;
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 }
 
 void GameCommon::update(float dt) {
-	m_actors.Update(dt);
+	m_actors.update(dt);
 }
 
 void GameCommon::AddGround(std::shared_ptr<ME::IModel> ground) {
@@ -108,13 +108,13 @@ void GameCommon::onRender() {
 
 	//ME::Shader::Bind(m_ds);
 
-	m_ground->Draw(&m_camera, m_ds); // DRAW
+	m_ground->draw(&m_camera, m_ds); // DRAW
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDepthMask(GL_FALSE));
 	glCheck(glActiveTexture(GL_TEXTURE0));
 
-	m_actors.Draw(&m_camera, m_ds); // DRAW
+	m_actors.draw(&m_camera, m_ds); // DRAW
 
 	glCheck(glEnable(GL_CULL_FACE));
 	glCheck(glDepthMask(GL_TRUE));
@@ -126,7 +126,7 @@ void GameCommon::onSizeChanged(sf::Vector2u newsize) {
 	m_shadowTex.create(newsize.x, newsize.y);
 	m_shadowTex.setSmooth(true);
 
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 	glCheck(glViewport(0, 0, newsize.x, newsize.y));
 	glCheck(glEnable(GL_CULL_FACE));
 	glCheck(glCullFace(GL_BACK));
@@ -143,7 +143,7 @@ void GameCommon::onSizeChanged(sf::Vector2u newsize) {
 	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 	sf::Texture::bind(nullptr);
 
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 
 	switch (m_camera.getType()) {
 	case ME::Camera::Type::Perspective:

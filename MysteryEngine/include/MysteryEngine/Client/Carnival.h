@@ -49,16 +49,16 @@ public:
 	 * @brief 初始化。Carnival 只能有一个实例，在该方法中构造。
 	 * @param mutipleWindows: 是否启用多窗口。
 	*/
-	static void setup(bool mutipleWindows = true) noexcept;
+	static void Setup(bool mutipleWindows = true) noexcept;
 	/**
 	 * @brief 获取 Carnival 的唯一实例。调用前必须先 setup。
 	 * @return Carnival 实例的引用。
 	*/
-	static Carnival& instance() noexcept;
+	static Carnival& Instance() noexcept;
 	/**
 	 * @brief 清理。销毁 Carnival 实例。
 	*/
-	static void drop() noexcept;
+	static void Drop() noexcept;
 
 public:
 	/**

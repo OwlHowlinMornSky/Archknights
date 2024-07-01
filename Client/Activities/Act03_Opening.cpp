@@ -206,9 +206,9 @@ void Act03_Opening::update(sf::Time deltaTime) {
 	return r_wnd->display();
 }
 
-void Act03_Opening::OnEnterSysloop() noexcept {}
+void Act03_Opening::onEnterSysloop() noexcept {}
 
-void Act03_Opening::OnExitSysloop() noexcept {}
+void Act03_Opening::onExitSysloop() noexcept {}
 
 void Act03_Opening::updateSize() {
 	auto& view = r_wnd->getView();

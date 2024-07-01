@@ -35,12 +35,12 @@ public:
 	~Shadow();
 
 public:
-	virtual bool Setup() override;
-	virtual void Clear() override;
+	virtual bool setup() override;
+	virtual void clear() override;
 
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 	void DrawInstance(int count);
-	virtual void SetColor(float r, float g, float b, float a) override;
+	virtual void setColor(float r, float g, float b, float a) override;
 
 protected:
 	void UpdateShader(ME::Shader* shader, ME::Camera* camera);

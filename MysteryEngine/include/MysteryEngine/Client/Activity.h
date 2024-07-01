@@ -80,11 +80,11 @@ public:
 	/**
 	 * @brief 进入系统循环时的通知。
 	*/
-	virtual void OnEnterSysloop() noexcept;
+	virtual void onEnterSysloop() noexcept;
 	/**
 	 * @brief 退出系统循环时的通知。
 	*/
-	virtual void OnExitSysloop() noexcept;
+	virtual void onExitSysloop() noexcept;
 }; // class Activity
 
 } // namespace ME

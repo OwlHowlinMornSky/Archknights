@@ -121,7 +121,7 @@ bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, bool for
 	int nCmdShow = foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE;
 	if (m_mutipleWindows) {
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(nCmdShow))
+		if (!wnd->createWithCode(nCmdShow))
 			return false;
 		wnd->changeActivity(std::move(activity));
 		m_wnds.push_front(std::move(wnd));
@@ -131,7 +131,7 @@ bool CarnivalWin32::emplaceWindow(std::unique_ptr<Activity>&& activity, bool for
 		if (m_singleWnd != nullptr)
 			return false;
 		std::unique_ptr<WindowWin32> wnd = std::make_unique<WindowWin32>();
-		if (!wnd->Create(nCmdShow))
+		if (!wnd->createWithCode(nCmdShow))
 			return false;
 		wnd->changeActivity(std::move(activity));
 		m_singleWnd = std::move(wnd);

@@ -26,10 +26,10 @@
 
 namespace ME::GlobalBGM {
 
-bool ME_API setup();
-void ME_API drop();
+bool ME_API Setup();
+void ME_API Drop();
 
-void ME_API play(std::string_view file);
-void ME_API stop();
+void ME_API Play(std::string_view file);
+void ME_API Stop();
 
 } // ME::GlobalBGM

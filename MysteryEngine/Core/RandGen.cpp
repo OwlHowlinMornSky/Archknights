@@ -30,18 +30,18 @@ std::uniform_real_distribution<float> u1(0.0f, 1.0f);
 
 namespace ME::RandGen {
 
-std::mt19937 gen(rd());
+std::mt19937 g_gen(rd());
 
-void reseed() {
-	return gen.seed(rd());;
+void Reseed() {
+	return g_gen.seed(rd());;
 }
 
-unsigned int get() {
-	return gen();
+unsigned int Get() {
+	return g_gen();
 }
 
-float getUni01() {
-	return u1(gen);
+float GetUni01() {
+	return u1(g_gen);
 }
 
 } // namespace ME::RandGen

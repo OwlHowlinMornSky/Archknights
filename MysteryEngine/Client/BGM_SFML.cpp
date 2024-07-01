@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "BgmSFML.h"
+#include "BGM_SFML.h"
 
 #include <SFML/System/Err.hpp>
 
@@ -214,96 +214,96 @@ bool readMusicLoopPoint(sf::InputStream& stream, OHMSAUDIOCOMMENTSTRUCTURE& data
 
 namespace ME {
 
-BgmSFML::BgmSFML() :
+BGM_SFML::BGM_SFML() :
 	m_music(std::make_unique<sf::Music>()) {}
 
-BgmSFML::~BgmSFML() {
+BGM_SFML::~BGM_SFML() {
 	this->m_music.reset();
 	this->m_stream.reset();
 	return;
 }
 
-sf::Music::Status BgmSFML::getStatusSFML() const {
+sf::Music::Status BGM_SFML::getStatusSFML() const {
 	return this->m_music->getStatus();
 }
 
-bool BgmSFML::getLoop() const {
+bool BGM_SFML::getLoop() const {
 	return this->m_music->getLoop();
 }
 
-void BgmSFML::setLoop(bool loop) {
+void BGM_SFML::setLoop(bool loop) {
 	return this->m_music->setLoop(loop);
 }
 
-sf::Music::TimeSpan BgmSFML::getLoopPoints() const {
+sf::Music::TimeSpan BGM_SFML::getLoopPoints() const {
 	return this->m_music->getLoopPoints();
 }
 
-float BgmSFML::getPitch() const {
+float BGM_SFML::getPitch() const {
 	return this->m_music->getPitch();
 }
 
-void BgmSFML::setPitch(float pitch) {
+void BGM_SFML::setPitch(float pitch) {
 	return this->m_music->setPitch(pitch);
 }
 
-sf::Vector3f BgmSFML::getPosition() const {
+sf::Vector3f BGM_SFML::getPosition() const {
 	return this->m_music->getPosition();
 }
 
-void BgmSFML::setPosition(float x, float y, float z) {
+void BGM_SFML::setPosition(float x, float y, float z) {
 	return this->m_music->setPosition(x, y, z);
 }
 
-void BgmSFML::setPosition(const sf::Vector3f& position) {
+void BGM_SFML::setPosition(const sf::Vector3f& position) {
 	return this->m_music->setPosition(position);
 }
 
-bool BgmSFML::isRelativeToListener() const {
+bool BGM_SFML::isRelativeToListener() const {
 	return this->m_music->isRelativeToListener();
 }
 
-void BgmSFML::setRelativeToListener(bool relative) {
+void BGM_SFML::setRelativeToListener(bool relative) {
 	return this->m_music->setRelativeToListener(relative);
 }
 
-float BgmSFML::getMinDistance() const {
+float BGM_SFML::getMinDistance() const {
 	return this->m_music->getMinDistance();
 }
 
-void BgmSFML::setMinDistance(float distance) {
+void BGM_SFML::setMinDistance(float distance) {
 	return this->m_music->setMinDistance(distance);
 }
 
-float BgmSFML::getAttenuation() const {
+float BGM_SFML::getAttenuation() const {
 	return this->m_music->getAttenuation();
 }
 
-void BgmSFML::setAttenuation(float attenuation) {
+void BGM_SFML::setAttenuation(float attenuation) {
 	return this->m_music->setAttenuation(attenuation);
 }
 
-sf::Time BgmSFML::getPlayingOffset() const {
+sf::Time BGM_SFML::getPlayingOffset() const {
 	return this->m_music->getPlayingOffset();
 }
 
-void BgmSFML::setPlayingOffset(sf::Time timeOffset) {
+void BGM_SFML::setPlayingOffset(sf::Time timeOffset) {
 	return this->m_music->setPlayingOffset(timeOffset);
 }
 
-unsigned int BgmSFML::getChannelCount() const {
+unsigned int BGM_SFML::getChannelCount() const {
 	return this->m_music->getChannelCount();
 }
 
-unsigned int BgmSFML::getSampleRate() const {
+unsigned int BGM_SFML::getSampleRate() const {
 	return this->m_music->getSampleRate();
 }
 
-sf::Time BgmSFML::getDuration() const {
+sf::Time BGM_SFML::getDuration() const {
 	return this->m_music->getDuration();
 }
 
-bool BgmSFML::openFromFile(std::string_view filename) {
+bool BGM_SFML::openFromFile(std::string_view filename) {
 	// 必要的，先停止旧的 Music。
 	this->m_music->stop();
 
@@ -344,21 +344,21 @@ bool BgmSFML::openFromFile(std::string_view filename) {
 	return true;
 }
 
-void BgmSFML::play() {
+void BGM_SFML::play() {
 	return this->m_music->play();
 }
 
-void BgmSFML::pause() {
+void BGM_SFML::pause() {
 	return this->m_music->pause();
 }
 
-void BgmSFML::stop() {
+void BGM_SFML::stop() {
 	return this->m_music->stop();
 }
 
-Bgm::Status BgmSFML::getStatus() const {
+BGM::Status BGM_SFML::getStatus() const {
 	sf::Music::Status status = this->getStatusSFML();
-	Bgm::Status res = Status::Stopped;
+	BGM::Status res = Status::Stopped;
 	switch (status) {
 	case sf::Music::Stopped:
 		res = Status::Stopped;
@@ -373,23 +373,23 @@ Bgm::Status BgmSFML::getStatus() const {
 	return res;
 }
 
-float BgmSFML::getVolume() const {
+float BGM_SFML::getVolume() const {
 	return this->m_music->getVolume();
 }
 
-void BgmSFML::setVolume(float volume) {
+void BGM_SFML::setVolume(float volume) {
 	return this->m_music->setVolume(volume);
 }
 
-float BgmSFML::getTime() const {
+float BGM_SFML::getTime() const {
 	return this->getPlayingOffset().asSeconds();
 }
 
-void BgmSFML::setTime(float seconds) {
+void BGM_SFML::setTime(float seconds) {
 	return this->setPlayingOffset(sf::seconds(seconds));
 }
 
-float BgmSFML::getLength() const {
+float BGM_SFML::getLength() const {
 	return this->getDuration().asSeconds();
 }
 

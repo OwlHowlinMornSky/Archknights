@@ -40,8 +40,8 @@ public:
 	virtual bool handleEvent(const sf::Event& evt) override;
 	virtual void update(sf::Time dtime) override;
 
-	virtual void OnEnterSysloop() noexcept override;
-	virtual void OnExitSysloop() noexcept override;
+	virtual void onEnterSysloop() noexcept override;
+	virtual void onExitSysloop() noexcept override;
 
 protected:
 	void ExitGame(int code);

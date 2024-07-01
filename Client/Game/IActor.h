@@ -82,7 +82,7 @@ public:
 	virtual void ChangeStatus(AnimationStatus status) = 0;
 
 	virtual void SetPosition(float x, float y, float z) = 0;
-	virtual void SetOutline(bool enabled) {}
+	virtual void setOutline(bool enabled) {}
 
 	virtual void SetHit() {}
 	virtual void SetInOut(bool in, bool onlyShadow = false) {}

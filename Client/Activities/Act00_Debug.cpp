@@ -62,8 +62,8 @@ void Act00_Debug::update(sf::Time dtime) {
 	r->display();
 }
 
-void Act00_Debug::OnEnterSysloop() noexcept {}
+void Act00_Debug::onEnterSysloop() noexcept {}
 
-void Act00_Debug::OnExitSysloop() noexcept {}
+void Act00_Debug::onExitSysloop() noexcept {}
 
 } // namespace Activity

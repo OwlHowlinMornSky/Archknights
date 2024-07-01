@@ -50,7 +50,7 @@ protected:
 
 namespace ME::G3dGlobal {
 
-void setup() {
+void Setup() {
 	g_context = std::make_unique<sf::Context>(); // 创建专用Context
 	glewExperimental = GL_TRUE;
 	GLenum glew_err = glewInit(); // 初始化GLEW
@@ -61,11 +61,11 @@ void setup() {
 	return;
 }
 
-bool setActive(bool active) {
+bool SetActive(bool active) {
 	return g_context->setActive(active);
 }
 
-void drop() noexcept {
+void Drop() noexcept {
 	return g_context.reset();
 }
 

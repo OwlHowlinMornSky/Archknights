@@ -34,30 +34,30 @@ IModel::IModel() :
 	m_matM() {}
 
 IModel::~IModel() {
-	Clear();
+	clear();
 }
 
-bool IModel::Setup() {
+bool IModel::setup() {
 	return true;
 }
 
-void IModel::Clear() {}
+void IModel::clear() {}
 
-void IModel::Update(float dt) {}
+void IModel::update(float dt) {}
 
-void IModel::SetOutline(bool enabled) {}
+void IModel::setOutline(bool enabled) {}
 
-void IModel::SetColor(float r, float g, float b, float a) {}
+void IModel::setColor(float r, float g, float b, float a) {}
 
-void IModel::SetWaitingForQuit() {
+void IModel::setWaitingForQuit() {
 	m_waitingForQuit = true;
 }
 
-bool IModel::IsWaitingForQuit() const {
+bool IModel::isWaitingForQuit() const {
 	return m_waitingForQuit;
 }
 
-void IModel::ComputeMatrix() {
+void IModel::computeMatrixDefault() {
 	glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
 	glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));
 

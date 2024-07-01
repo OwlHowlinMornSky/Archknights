@@ -23,8 +23,8 @@
 
 namespace ME {
 
-void Activity::OnEnterSysloop() noexcept {}
+void Activity::onEnterSysloop() noexcept {}
 
-void Activity::OnExitSysloop() noexcept {}
+void Activity::onExitSysloop() noexcept {}
 
 } // namespace ME

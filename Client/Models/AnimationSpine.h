@@ -56,13 +56,13 @@ public:
 	~SpineAnimation();
 
 public:
-	virtual bool Setup() override;
-	virtual void Clear() override;
+	virtual bool setup() override;
+	virtual void clear() override;
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
-	virtual void SetOutline(bool enabled) override;
-	virtual void SetColor(float r, float g, float b, float a) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void setOutline(bool enabled) override;
+	virtual void setColor(float r, float g, float b, float a) override;
 
 	spine::TrackEntry* setAnimation(size_t trackIndex, const std::string& animationName, bool loop);
 	spine::TrackEntry* setAnimation(size_t trackIndex, spine::Animation* animation, bool loop);

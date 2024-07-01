@@ -39,7 +39,7 @@ public:
 	 * @param nCmdShow: WinMain 的形参。
 	 * @return 创建是否成功。
 	*/
-	bool Create(int nCmdShow) noexcept;
+	bool createWithCode(int nCmdShow) noexcept;
 	virtual bool create(bool foreground) noexcept override;
 	virtual void close() noexcept override;
 

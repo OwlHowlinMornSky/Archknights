@@ -33,7 +33,7 @@ Shadow::Shadow() :
 
 Shadow::~Shadow() {}
 
-bool Shadow::Setup() {
+bool Shadow::setup() {
 	for (int i = 0; i < 4; ++i) {
 		m_vertex[i].color = { 0.0f, 1.0f, 0.0f, 1.0f };
 		m_vertex[i].texCoord = { 0.0f, 0.0f };
@@ -69,7 +69,7 @@ bool Shadow::Setup() {
 	return true;
 }
 
-void Shadow::Clear() {
+void Shadow::clear() {
 	if (m_vertexVBO) {
 		glCheck(glDeleteBuffers(1, &m_vertexVBO));
 		m_vertexVBO = 0;
@@ -80,7 +80,7 @@ void Shadow::Clear() {
 	}
 }
 
-void Shadow::Draw(ME::Camera* camera, ME::Shader* shader) {
+void Shadow::draw(ME::Camera* camera, ME::Shader* shader) {
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glDrawArrays(GL_QUADS, 0, 4));
 	glCheck(glBindVertexArray(0));
@@ -92,7 +92,7 @@ void Shadow::DrawInstance(int count) {
 	glCheck(glBindVertexArray(0));
 }
 
-void Shadow::SetColor(float r, float g, float b, float a) {
+void Shadow::setColor(float r, float g, float b, float a) {
 
 }
 

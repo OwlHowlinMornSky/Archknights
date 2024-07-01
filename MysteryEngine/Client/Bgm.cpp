@@ -20,12 +20,12 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <MysteryEngine/Client/Bgm.h>
-#include "BgmSFML.h"
+#include "BGM_SFML.h"
 
 namespace ME {
 
-std::unique_ptr<Bgm> CreateBGM() {
-    return std::make_unique<BgmSFML>();
+std::unique_ptr<BGM> CreateBGM() {
+    return std::make_unique<BGM_SFML>();
 }
 
 } // namespace ME

@@ -77,8 +77,8 @@ public:
 	Actor(std::shared_ptr<ME::IModel> _f);
 	virtual ~Actor();
 
-	virtual bool Setup() override;
-	virtual void Clear() override;
+	virtual bool setup() override;
+	virtual void clear() override;
 
 public:
 	virtual void Exit() override;
@@ -92,13 +92,13 @@ public:
 	virtual void ChangeStatus(AnimationStatus status) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
-	virtual void SetOutline(bool enabled) override;
+	virtual void setOutline(bool enabled) override;
 
 	virtual void SetHit() override;
 	virtual void SetInOut(bool in, bool onlyShadow = false) override;
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 public:
 #ifdef ARCHKNIGHTS_LIMITED
@@ -135,8 +135,8 @@ public:
 	Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Actor2();
 
-	virtual bool Setup() override;
-	virtual void Clear() override;
+	virtual bool setup() override;
+	virtual void clear() override;
 
 public:
 	virtual void Exit() override;
@@ -150,13 +150,13 @@ public:
 	virtual void ChangeStatus(AnimationStatus status) override;
 
 	virtual void SetPosition(float x, float y, float z) override;
-	virtual void SetOutline(bool enabled) override;
+	virtual void setOutline(bool enabled) override;
 
 	virtual void SetHit() override;
 	virtual void SetInOut(bool in, bool onlyShadow = false) override;
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 public:
 #ifdef ARCHKNIGHTS_LIMITED

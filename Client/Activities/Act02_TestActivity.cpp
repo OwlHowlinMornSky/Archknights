@@ -118,7 +118,7 @@ bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
 			r_wnd->setFullscreen(m_modes.at(m_modeI));
 			break;
 		case sf::Keyboard::F:
-			ME::Carnival::instance().emplaceWindow(std::make_unique<Act02_TestActivity>());
+			ME::Carnival::Instance().emplaceWindow(std::make_unique<Act02_TestActivity>());
 			break;
 		case sf::Keyboard::Left:
 			if (m_modeI > 0) {
@@ -159,12 +159,12 @@ void Act02_TestActivity::update(sf::Time deltaTime) {
 	return;
 }
 
-void Act02_TestActivity::OnEnterSysloop() noexcept {
+void Act02_TestActivity::onEnterSysloop() noexcept {
 	//m_paused = true;
 	return;
 }
 
-void Act02_TestActivity::OnExitSysloop() noexcept {
+void Act02_TestActivity::onExitSysloop() noexcept {
 	m_paused = false;
 	return;
 }

@@ -36,7 +36,7 @@ namespace {
 
 struct GlobalBGMdata {
 	std::atomic_bool m_run, m_running;
-	std::unique_ptr<ME::Bgm> m_bgm;
+	std::unique_ptr<ME::BGM> m_bgm;
 	std::queue<std::string> m_cmds;
 	std::mutex m_cmdMutex;
 
@@ -75,12 +75,12 @@ void run() {
 		if (!res) {
 			switch (str[0]) {
 			case 's':
-				if (data->m_bgm->getStatus() != ME::Bgm::Status::Playing)
+				if (data->m_bgm->getStatus() != ME::BGM::Status::Playing)
 					break;
 				stopOne();
 				break;
 			case 'p':
-				if (data->m_bgm->getStatus() == ME::Bgm::Status::Playing)
+				if (data->m_bgm->getStatus() == ME::BGM::Status::Playing)
 					stopOne();
 				if (data->m_run) {
 					data->m_bgm->openFromFile(str.substr(2));
@@ -104,7 +104,7 @@ void run() {
 
 namespace ME::GlobalBGM {
 
-bool GlobalBGM::setup() {
+bool GlobalBGM::Setup() {
 	if (data)
 		return true;
 	data = new GlobalBGMdata;
@@ -116,7 +116,7 @@ bool GlobalBGM::setup() {
 	return !th.joinable();
 }
 
-void GlobalBGM::drop() {
+void GlobalBGM::Drop() {
 	data->m_run = false;
 	while (data->m_running) {
 		sf::sleep(sf::milliseconds(30));
@@ -124,12 +124,12 @@ void GlobalBGM::drop() {
 	delete data;
 }
 
-void GlobalBGM::play(std::string_view file) {
+void GlobalBGM::Play(std::string_view file) {
 	std::lock_guard lg(data->m_cmdMutex);
 	data->m_cmds.push(std::string("p:").append(file));
 }
 
-void GlobalBGM::stop() {
+void GlobalBGM::Stop() {
 	std::lock_guard lg(data->m_cmdMutex);
 	data->m_cmds.push("s;");
 }

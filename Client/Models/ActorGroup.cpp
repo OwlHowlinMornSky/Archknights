@@ -157,7 +157,7 @@ public:
 		Bind(nullptr);
 	}
 
-	virtual void UpdateUniform(int id, GLfloat* data) const override {
+	virtual void update(int id, GLfloat* data) const override {
 		switch (id) {
 		case Game::ActorShaderUniformId::Mat4_PV:
 			updateUniformMat4fv(m_uniforms[Game::ActorShaderUniformId::Mat4_PV], data);
@@ -177,18 +177,18 @@ public:
 		}
 	}
 
-	virtual void UpdateUniform1(int id, GLfloat val0) const override {}
-	virtual void UpdateUniform2(int id, GLfloat val0, GLfloat val1) const override {
+	virtual void update1f(int id, GLfloat val0) const override {}
+	virtual void update2f(int id, GLfloat val0, GLfloat val1) const override {
 		updateUniform2f(m_uniforms[id], val0, val1);
 	}
-	virtual void UpdateUniform3(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
+	virtual void update3f(int id, GLfloat val0, GLfloat val1, GLfloat val2) const override {
 		updateUniform3f(m_uniforms[id], val0, val1, val2);
 	}
-	virtual void UpdateUniform4(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
+	virtual void update4f(int id, GLfloat val0, GLfloat val1, GLfloat val2, GLfloat val3) const override {
 		updateUniform4f(m_uniforms[id], val0, val1, val2, val3);
 	}
 
-	virtual void UpdateUniformI1(int id, GLint val) const override {
+	virtual void update1i(int id, GLint val) const override {
 		updateUniform1i(m_uniforms[id], val);
 	}
 };
@@ -257,11 +257,11 @@ public:
 		Bind(nullptr);
 	}
 
-	virtual void UpdateUniform(int id, GLfloat* data) const override {
+	virtual void update(int id, GLfloat* data) const override {
 		updateUniform2f(m_uniforms[id], data[0], data[1]);
 	}
 
-	virtual void UpdateUniformV(int id, GLsizei count, GLfloat* data) const override {
+	virtual void updateV(int id, GLsizei count, GLfloat* data) const override {
 		glCheck(glUniform4fv(m_uniforms[0], count, data));
 	}
 };
@@ -276,41 +276,41 @@ namespace Model {
 ActorGroup::ActorGroup() {}
 
 ActorGroup::~ActorGroup() {
-	Clear();
+	clear();
 }
 
 void ActorGroup::AddActor(std::shared_ptr<Game::IActor> actor) {
 	m_actors.push_back(actor);
 }
 
-bool ActorGroup::Setup() {
+bool ActorGroup::setup() {
 	m_shader = std::make_unique<ActorShader>();
 	m_shader->setup();
 	m_shadowShader = std::make_unique<ShadowShader>();
 	m_shadowShader->setup();
-	m_shadow.Setup();
+	m_shadow.setup();
 	return true;
 }
 
-void ActorGroup::Clear() {
+void ActorGroup::clear() {
 	for (auto& i : m_actors)
-		i->Clear();
+		i->clear();
 	m_actors.clear();
-	m_shadow.Clear();
+	m_shadow.clear();
 	m_shadowShader.reset();
 	m_shader.reset();
 }
 
-void ActorGroup::Update(float dt) {
+void ActorGroup::update(float dt) {
 	std::list<std::shared_ptr<Game::IActor>>::iterator i, n;
 	i = m_actors.begin();
 	n = m_actors.end();
 	for (; i != n;) {
-		if ((*i)->IsWaitingForQuit()) {
+		if ((*i)->isWaitingForQuit()) {
 			i = m_actors.erase(i);
 		}
 		else {
-			(*i)->Update(dt);
+			(*i)->update(dt);
 			i++;
 		}
 	}
@@ -321,14 +321,14 @@ void ActorGroup::Update(float dt) {
 	);
 }
 
-void ActorGroup::Draw(ME::Camera* camera, ME::Shader* shader) {
+void ActorGroup::draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(m_shader.get());
 
-	m_shader->UpdateUniform(Game::ActorShaderUniformId::Mat4_PV, &(camera->getMatPV()[0][0]));
-	m_shader->UpdateUniform3(Game::ActorShaderUniformId::Vec3_CamPos, camera->getPos()[0], camera->getPos()[1], camera->getPos()[2]);
+	m_shader->update(Game::ActorShaderUniformId::Mat4_PV, &(camera->getMatPV()[0][0]));
+	m_shader->update3f(Game::ActorShaderUniformId::Vec3_CamPos, camera->getPos()[0], camera->getPos()[1], camera->getPos()[2]);
 
 	for (std::shared_ptr<Game::IActor>& i : m_actors) {
-		i->Draw(camera, m_shader.get());
+		i->draw(camera, m_shader.get());
 	}
 
 	ME::Shader::Bind(shader);
@@ -339,13 +339,13 @@ void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
 		return;
 	ME::Shader::Bind(m_shadowShader.get());
 
-	m_shadowShader->UpdateUniform(1, &(m_scale[0]));
+	m_shadowShader->update(1, &(m_scale[0]));
 
 	std::vector<glm::vec4> u(256);
 	int i = 0;
 	for (auto it = m_actors.begin(), ed = m_actors.end(); it != ed; ++it, ++i) {
 		if (i >= 256) {
-			m_shadowShader->UpdateUniformV(0, 256, &(u[0][0]));
+			m_shadowShader->updateV(0, 256, &(u[0][0]));
 			m_shadow.DrawInstance(256);
 			i = 0;
 		}
@@ -353,7 +353,7 @@ void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
 		auto& p = a.getPos();
 		u[i] = { p.x, p.y, a.m_shadowRadius, a.m_shadowAlpha };
 	}
-	m_shadowShader->UpdateUniformV(0, i, &(u[0][0]));
+	m_shadowShader->updateV(0, i, &(u[0][0]));
 	m_shadow.DrawInstance(i);
 	i = 0;
 

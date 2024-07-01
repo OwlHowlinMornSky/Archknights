@@ -63,14 +63,14 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 
 Actor::~Actor() {}
 
-bool Actor::Setup() {
+bool Actor::setup() {
 	return true;
 }
 
-void Actor::Clear() {}
+void Actor::clear() {}
 
 void Actor::Exit() {
-	SetWaitingForQuit();
+	setWaitingForQuit();
 }
 
 void Actor::InitDirection(Direction direction) {
@@ -214,8 +214,8 @@ void Actor::SetPosition(float x, float y, float z) {
 	m_holdPTR->setPosition(x, y, z);
 }
 
-void Actor::SetOutline(bool enabled) {
-	return m_holdPTR->SetOutline(enabled);
+void Actor::setOutline(bool enabled) {
+	return m_holdPTR->setOutline(enabled);
 }
 
 void Actor::SetHit() {
@@ -229,17 +229,17 @@ void Actor::SetInOut(bool in, bool onlyShadow) {
 	m_inOutOnlyShadow = onlyShadow;
 	if (!m_inOutOnlyShadow)
 		if (m_currentInout < 0.5f) {
-			m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 		}
 		else {
 			float r = 2.0f * (m_currentInout - 0.5f);
-			m_current->SetColor(r, r, r, 1.0f);
+			m_current->setColor(r, r, r, 1.0f);
 		}
 	m_shadowAlpha = m_currentInout;
 	return;
 }
 
-void Actor::Update(float dt) {
+void Actor::update(float dt) {
 	[[unlikely]] if (m_isRolling) {
 		float Delta = dt * g_RotationRatio;
 		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
@@ -264,11 +264,11 @@ void Actor::Update(float dt) {
 	[[unlikely]] if (m_hitFlashing) {
 		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
 		if (m_hitFlash >= 1.0f)
-			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+			m_current->setColor(1.0f, 0.0f, 0.0f, 1.0f);
 		else if (m_hitFlash > 0.0f)
-			m_current->SetColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
+			m_current->setColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
 		else {
-			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+			m_current->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 			m_hitFlashing = false;
 		}
 	}
@@ -291,20 +291,20 @@ void Actor::Update(float dt) {
 		}
 		if (!m_inOutOnlyShadow)
 			if (m_currentInout < 0.5f) {
-				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+				m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 			}
 			else {
 				float r = 2.0f * (m_currentInout - 0.5f);
-				m_current->SetColor(r, r, r, 1.0f);
+				m_current->setColor(r, r, r, 1.0f);
 			}
 		m_shadowAlpha = m_currentInout;
 	}
-	m_current->Update(dt);
+	m_current->update(dt);
 	return;
 }
 
-void Actor::Draw(ME::Camera* camera, ME::Shader* shader) {
-	return m_current->Draw(camera, shader);
+void Actor::draw(ME::Camera* camera, ME::Shader* shader) {
+	return m_current->draw(camera, shader);
 }
 
 void Actor::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
@@ -377,14 +377,14 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 
 Actor2::~Actor2() {}
 
-bool Actor2::Setup() {
+bool Actor2::setup() {
 	return true;
 }
 
-void Actor2::Clear() {}
+void Actor2::clear() {}
 
 void Actor2::Exit() {
-	SetWaitingForQuit();
+	setWaitingForQuit();
 }
 
 void Actor2::InitDirection(Direction direction) {
@@ -562,9 +562,9 @@ void Actor2::SetPosition(float x, float y, float z) {
 	m_holdPTR[1]->setPosition(x, y, z);
 }
 
-void Actor2::SetOutline(bool enabled) {
-	m_holdPTR[0]->SetOutline(enabled);
-	m_holdPTR[1]->SetOutline(enabled);
+void Actor2::setOutline(bool enabled) {
+	m_holdPTR[0]->setOutline(enabled);
+	m_holdPTR[1]->setOutline(enabled);
 }
 
 void Actor2::SetHit() {
@@ -578,17 +578,17 @@ void Actor2::SetInOut(bool in, bool onlyShadow) {
 	m_inOutOnlyShadow = onlyShadow;
 	if (!m_inOutOnlyShadow)
 		if (m_currentInout < 0.5f) {
-			m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+			m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 		}
 		else {
 			float r = 2.0f * (m_currentInout - 0.5f);
-			m_current->SetColor(r, r, r, 1.0f);
+			m_current->setColor(r, r, r, 1.0f);
 		}
 	m_shadowAlpha = m_currentInout;
 	return;
 }
 
-void Actor2::Update(float dt) {
+void Actor2::update(float dt) {
 	[[unlikely]] if (m_isRolling) {
 		float Delta = dt * g_RotationRatio;
 		bool nowRL = (m_currentRLDirection < 0.0f);
@@ -663,18 +663,18 @@ void Actor2::Update(float dt) {
 			}
 		}
 		if (m_target)
-			m_target->Update(dt);
+			m_target->update(dt);
 		//set m_current rotate by m_currentRLDirection.
 		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
 	}
 	[[unlikely]] if (m_hitFlashing) {
 		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
 		if (m_hitFlash >= 1.0f)
-			m_current->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+			m_current->setColor(1.0f, 0.0f, 0.0f, 1.0f);
 		else if (m_hitFlash > 0.0f)
-			m_current->SetColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
+			m_current->setColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
 		else {
-			m_current->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+			m_current->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 			m_hitFlashing = false;
 		}
 	}
@@ -697,20 +697,20 @@ void Actor2::Update(float dt) {
 		}
 		if (!m_inOutOnlyShadow)
 			if (m_currentInout < 0.5f) {
-				m_current->SetColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
+				m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
 			}
 			else {
 				float r = 2.0f * (m_currentInout - 0.5f);
-				m_current->SetColor(r, r, r, 1.0f);
+				m_current->setColor(r, r, r, 1.0f);
 			}
 		m_shadowAlpha = m_currentInout;
 	}
-	m_current->Update(dt);
+	m_current->update(dt);
 	return;
 }
 
-void Actor2::Draw(ME::Camera* camera, ME::Shader* shader) {
-	return m_current->Draw(camera, shader);
+void Actor2::draw(ME::Camera* camera, ME::Shader* shader) {
+	return m_current->draw(camera, shader);
 }
 
 void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {

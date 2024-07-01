@@ -46,20 +46,20 @@ public:
 	virtual ~IModel();
 
 public:
-	virtual bool Setup();
-	virtual void Clear();
+	virtual bool setup();
+	virtual void clear();
 
-	virtual void Update(float dt);
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) = 0;
+	virtual void update(float dt);
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) = 0;
 
-	virtual void SetOutline(bool enabled);
-	virtual void SetColor(float r, float g, float b, float a);
+	virtual void setOutline(bool enabled);
+	virtual void setColor(float r, float g, float b, float a);
 
-	void SetWaitingForQuit();
-	bool IsWaitingForQuit() const;
+	void setWaitingForQuit();
+	bool isWaitingForQuit() const;
 
 protected:
-	void ComputeMatrix();
+	void computeMatrixDefault();
 
 protected:
 	bool m_waitingForQuit;

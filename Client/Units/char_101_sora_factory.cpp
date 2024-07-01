@@ -39,7 +39,7 @@ bool Unit::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Game::Entity>& pt
 	auto unit = std::make_shared<Unit::Char_101_Sora>();
 
 	auto anim0 = m_pose[0]->CreateAnimation();
-	anim0->Setup();
+	anim0->setup();
 
 	auto actor = std::make_shared<Char_101_Sora_Actor_Vanilla>(anim0);
 

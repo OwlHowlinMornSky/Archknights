@@ -40,11 +40,11 @@ public:
 	void AddActor(std::shared_ptr<Game::IActor> actor);
 
 public:
-	virtual bool Setup();
-	virtual void Clear();
+	virtual bool setup();
+	virtual void clear();
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 	void DrawShadow(ME::Camera* camera, ME::Shader* shader);
 

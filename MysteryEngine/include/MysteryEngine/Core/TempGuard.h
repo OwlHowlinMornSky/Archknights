@@ -37,14 +37,14 @@ public:
 	 * @param t: 目标对象。
 	*/
 	explicit TempGuard(_T& t) noexcept :
-		m_target(t) {
+		r_target(t) {
 		m_old = t;
 	}
 	/**
 	 * @brief 析构函数，自动还原旧值。
 	*/
 	~TempGuard() noexcept {
-		m_target = m_old;
+		r_target = m_old;
 	}
 
 	TempGuard(const TempGuard&) = delete;
@@ -55,18 +55,18 @@ public:
 	 * @param n: 临时值。
 	*/
 	void operator=(const _T& n) noexcept {
-		m_target = n;
+		r_target = n;
 	}
 	/**
 	 * @brief 临时修改。把目标的值变为n。
 	 * @param n: 临时值。
 	*/
 	void operator=(_T&& n) noexcept {
-		m_target = n;
+		r_target = n;
 	}
 
 protected:
-	_T& m_target;
+	_T& r_target;
 	_T m_old;
 }; // template class TempGuard
 

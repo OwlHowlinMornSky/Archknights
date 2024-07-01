@@ -62,17 +62,17 @@ void Initalizator::OnJoined() {
 	camera.setRotation(30.0f, 0.0f, 0.0f);*/
 
 	////////////////////
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 
 	auto ground = Model::IObjModel::Create();
-	ground->Setup();
+	ground->setup();
 
 	ground->LoadModelData("res/main_7-3/main.obj");
 	//ground->setRotation(0.0f, 180.0f, 0.0f);
 	ground->setScale(-1.0f, 1.0f, -1.0f);
 	ground->setPosition(5.5f, 3.5f, 0.0f);
 
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 
 	Game::Global::stage->AddGround(ground);
 

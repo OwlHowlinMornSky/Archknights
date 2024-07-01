@@ -30,11 +30,11 @@ std::unique_ptr<ME::Activity> GetClientEntrance() {
 #include <MysteryEngine/G3D/G3dGlobal.h>
 
 void ClientInitGlew() {
-	ME::G3dGlobal::setActive(true);
+	ME::G3dGlobal::SetActive(true);
 	glewExperimental = GL_TRUE;
 	GLenum glew_err = glewInit(); // 初始化GLEW
 	if (glew_err != GLEW_OK) {
 		throw 1;
 	}
-	ME::G3dGlobal::setActive(false);
+	ME::G3dGlobal::SetActive(false);
 }

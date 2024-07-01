@@ -27,16 +27,16 @@
 
 namespace ME::EngineGlobal {
 
-void ME_API setup(bool multiWnd) {
-	ME::Carnival::setup(multiWnd);
-	ME::GlobalBGM::setup();
-	ME::G3dGlobal::setup();
+void ME_API Setup(bool multiWnd) {
+	ME::Carnival::Setup(multiWnd);
+	ME::GlobalBGM::Setup();
+	ME::G3dGlobal::Setup();
 }
 
-void ME_API drop() {
-	ME::G3dGlobal::drop();
-	ME::GlobalBGM::drop();
-	ME::Carnival::drop();
+void ME_API Drop() {
+	ME::G3dGlobal::Drop();
+	ME::GlobalBGM::Drop();
+	ME::Carnival::Drop();
 }
 
 } // namespace ME::EngineGlobal

@@ -59,7 +59,7 @@ void Act05_Title::start() noexcept {
 
 	updateSize();
 
-	ME::GlobalBGM::play("res/music/m_sys_title.ogg");
+	ME::GlobalBGM::Play("res/music/m_sys_title.ogg");
 	return;
 }
 
@@ -152,9 +152,9 @@ void Act05_Title::update(sf::Time dtime) {
 	return;
 }
 
-void Act05_Title::OnEnterSysloop() noexcept {}
+void Act05_Title::onEnterSysloop() noexcept {}
 
-void Act05_Title::OnExitSysloop() noexcept {}
+void Act05_Title::onExitSysloop() noexcept {}
 
 void Act05_Title::updateSize() {
 	auto& view = r_wnd->getView();

@@ -27,7 +27,7 @@
 std::unique_ptr<ME::Window> ME::Window::Create1Window(int cmd) { // this will be different on each system.
 	std::unique_ptr<ME::WindowWin32> window = std::make_unique<ME::WindowWin32>();
 	// Create window and run.
-	if (window->Create(cmd)) {
+	if (window->createWithCode(cmd)) {
 		return std::move(window);
 	}
 	window.reset();
@@ -150,9 +150,9 @@ void Window::update(sf::Time dtime) {
 
 void Window::onSystemLoop(bool enter) {
 	if (enter)
-		m_activity->OnEnterSysloop();
+		m_activity->onEnterSysloop();
 	else
-		m_activity->OnExitSysloop();
+		m_activity->onExitSysloop();
 	return;
 }
 

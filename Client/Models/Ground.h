@@ -78,8 +78,8 @@ public:
 
 	~ObjModel();
 
-	virtual bool Setup();
-	virtual void Clear();
+	virtual bool setup();
+	virtual void clear();
 	/**
 	Loads Object Model from filepath.
 	Any material and texture files should be placed relative to the .obj file.
@@ -87,8 +87,8 @@ public:
 	virtual bool LoadModelData(const char* filename) override;
 	virtual void SetSize(float x, float y) override;
 
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera* camera, ME::Shader* shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 protected:
 	void UpdateShader(ME::Camera* camera, ME::Shader* shader);

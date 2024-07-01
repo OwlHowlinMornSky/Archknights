@@ -60,9 +60,9 @@ int APIENTRY wWinMain(
 	}
 	try {
 		// Initialize.
-		ME::EngineGlobal::setup(false);
+		ME::EngineGlobal::Setup(false);
 		ClientInitGlew();
-		ME::Carnival& carnival = ME::Carnival::instance();
+		ME::Carnival& carnival = ME::Carnival::Instance();
 
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
@@ -86,7 +86,7 @@ int APIENTRY wWinMain(
 		MessageBoxA(NULL, g_str_unknown_exp, g_str_fatal_error, MB_ICONERROR);
 	}
 	// Clear.
-	ME::EngineGlobal::drop();
+	ME::EngineGlobal::Drop();
 	AppWin32::instanceExit();
 	return 0;
 }
