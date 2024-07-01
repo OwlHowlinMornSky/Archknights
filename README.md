@@ -10,7 +10,7 @@ A Fan-made game of Arknights.
 
 昨日方舟 是 [自由软件](https://www.gnu.org/philosophy/free-sw.html)。
 
-Arknights is a [Free/Libre Software](https://www.gnu.org/philosophy/free-sw.en.html).
+Archknights is a [Free/Libre Software](https://www.gnu.org/philosophy/free-sw.en.html).
 
 ## **建设中  Under Construction**
 
