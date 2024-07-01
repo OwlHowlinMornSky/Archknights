@@ -170,7 +170,7 @@ void ObjModel::clear() {
 	//delete material;
 }
 
-bool ObjModel::LoadModelData(const char* filename) {
+bool ObjModel::loadModelData(const char* filename) {
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::string err;
@@ -360,7 +360,7 @@ bool ObjModel::LoadModelData(const char* filename) {
 	return r;
 }
 
-void ObjModel::SetSize(float x, float y) {
+void ObjModel::setGroundSize(float x, float y) {
 	m_groundSz[0] = x;
 	m_groundSz[1] = y;
 }

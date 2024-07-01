@@ -37,32 +37,32 @@ public:
 	virtual ~Body();
 
 public:
-	virtual void SetPosition(float x, float y) override;
-	virtual const float* GetPosition() const override;
-	virtual void SetVelocity(float x, float y) override;
+	virtual void setPosition(float x, float y) override;
+	virtual const float* getPosition() const override;
+	virtual void setVelocity(float x, float y) override;
 
-	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) override;
-	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
+	virtual size_t addDetectorCircle(uint8_t target, float x, float y, float radius) override;
+	virtual size_t addDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
 
-	virtual IDetector* GetDetector(size_t id) override;
+	virtual IDetector* getDetector(size_t id) override;
 
-	virtual void SetMove(float maxv, float maxa) override;
-	virtual void SetMoveSpeed(float maxv) override;
-	virtual void SetMoveAcceleration(float maxa) override;
-	virtual void BeginNormal() override;
-	virtual void MoveTo(float x, float y) override;
-	virtual void BeginUnbalance(bool dontHitWall = false) override;
-	virtual void Push(float ix, float iy) override;
-	virtual void Pull(float fx, float fy) override;
-	virtual void ClearSpeed() override;
-	virtual void GetPositionVelocity(float* out_position, float* out_velocity) override;
+	virtual void setMove(float maxv, float maxa) override;
+	virtual void setMoveSpeed(float maxv) override;
+	virtual void setMoveAcceleration(float maxa) override;
+	virtual void setStatusNormal() override;
+	virtual void moveTo(float x, float y) override;
+	virtual void setStatusUnbalance(bool dontHitWall = false) override;
+	virtual void impulse(float ix, float iy) override;
+	virtual void pull(float fx, float fy) override;
+	virtual void clearSpeed() override;
+	virtual void getPositionVelocity(float* out_position, float* out_velocity) override;
 
 	virtual void OnBeginContact(IFixture* another) {}
 	virtual void OnEndContact(IFixture* another) {}
 
 protected:
-	void CreateCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius);
-	void CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float radius);
+	void createAsCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius);
+	void createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float radius);
 
 protected:
 	bool m_isUnbalance;

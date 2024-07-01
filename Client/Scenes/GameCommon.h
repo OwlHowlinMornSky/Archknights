@@ -43,10 +43,10 @@ public:
 
 	virtual void update(float dt) override;
 
-	virtual void AddGround(std::shared_ptr<ME::IModel> ground) override;
-	virtual void AddActor(std::shared_ptr<Game::IActor> actor) override;
+	virtual void addGround(std::shared_ptr<ME::IModel> ground) override;
+	virtual void addActor(std::shared_ptr<Game::IActor> actor) override;
 
-	virtual void SetGroundSize(float x, float y) override;
+	virtual void setGroundSize(float x, float y) override;
 
 protected:
 	virtual void onRender() override;

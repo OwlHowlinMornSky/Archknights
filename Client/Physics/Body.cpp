@@ -41,38 +41,38 @@ Body::~Body() {
 	}
 }
 
-void Body::SetPosition(float x, float y) {
+void Body::setPosition(float x, float y) {
 	m_body->SetTransform({ x, y }, m_body->GetAngle());
 	return;
 }
 
-const float* Body::GetPosition() const {
+const float* Body::getPosition() const {
 	return &(m_body->GetPosition().x);
 }
 
-void Body::SetVelocity(float x, float y) {
+void Body::setVelocity(float x, float y) {
 	return m_body->SetLinearVelocity({ x, y });
 }
 
-size_t Body::AddDetectorCircle(uint8_t target, float x, float y, float radius) {
+size_t Body::addDetectorCircle(uint8_t target, float x, float y, float radius) {
 	auto res = std::make_unique<Detector>();
-	res->CreateCircle(m_body, target, { x, y }, radius);
+	res->createAsCircle(m_body, target, { x, y }, radius);
 	m_detectors.push_back(std::move(res));
 	return m_detectors.size();
 }
 
-size_t Body::AddDetectorRows(uint8_t target, float x, float y, Rows* rows) {
+size_t Body::addDetectorRows(uint8_t target, float x, float y, Rows* rows) {
 	auto res = std::make_unique<Detector>();
-	res->CreateRows(m_body, target, { x, y }, rows);
+	res->createAsRows(m_body, target, { x, y }, rows);
 	m_detectors.push_back(std::move(res));
 	return m_detectors.size();
 }
 
-IDetector* Body::GetDetector(size_t id) {
+IDetector* Body::getDetector(size_t id) {
 	return m_detectors[id - 1].get();
 }
 
-void Body::SetMove(float maxv, float maxa) {
+void Body::setMove(float maxv, float maxa) {
 	m_maxV = maxv;
 	m_maxA = maxa;
 	if (!m_isUnbalance) {
@@ -80,18 +80,18 @@ void Body::SetMove(float maxv, float maxa) {
 	}
 }
 
-void Body::SetMoveSpeed(float maxv) {
+void Body::setMoveSpeed(float maxv) {
 	m_maxV = maxv;
 	if (!m_isUnbalance) {
 		m_body->SetLinearDamping(m_maxA / maxv);
 	}
 }
 
-void Body::SetMoveAcceleration(float maxa) {
+void Body::setMoveAcceleration(float maxa) {
 	m_maxA = maxa;
 }
 
-void Body::BeginNormal() {
+void Body::setStatusNormal() {
 	if (m_isUnbalance) {
 		b2Filter filter = m_fixture->GetFilterData();
 		filter.maskBits = 0x0004;
@@ -102,7 +102,7 @@ void Body::BeginNormal() {
 	m_isUnbalance = false;
 }
 
-void Body::MoveTo(float x, float y) {
+void Body::moveTo(float x, float y) {
 	b2Vec2 f = { x, y };
 	f -= m_body->GetPosition();
 	f *= m_maxA / f.Length();
@@ -110,7 +110,7 @@ void Body::MoveTo(float x, float y) {
 	return;
 }
 
-void Body::BeginUnbalance(bool dontHitWall) {
+void Body::setStatusUnbalance(bool dontHitWall) {
 	b2Filter filter = m_fixture->GetFilterData();
 	filter.maskBits = dontHitWall ? 0x0004 : 0x0006;
 	m_fixture->SetFilterData(filter);
@@ -121,19 +121,19 @@ void Body::BeginUnbalance(bool dontHitWall) {
 	m_isUnbalance = true;
 }
 
-void Body::Push(float ix, float iy) {
+void Body::impulse(float ix, float iy) {
 	m_body->ApplyLinearImpulseToCenter({ ix, iy }, true);
 }
 
-void Body::Pull(float fx, float fy) {
+void Body::pull(float fx, float fy) {
 	m_body->ApplyForceToCenter({ fx, fy }, true);
 }
 
-void Body::ClearSpeed() {
+void Body::clearSpeed() {
 	m_body->SetLinearVelocity({ 0.0f, 0.0f });
 }
 
-void Body::GetPositionVelocity(float* out_position, float* out_velocity) {
+void Body::getPositionVelocity(float* out_position, float* out_velocity) {
 	b2Vec2 v = m_body->GetLinearVelocity();
 	b2Vec2 p = m_body->GetPosition();
 	out_position[0] = p.x;
@@ -142,7 +142,7 @@ void Body::GetPositionVelocity(float* out_position, float* out_velocity) {
 	out_velocity[1] = v.y;
 }
 
-void Body::CreateCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius) {
+void Body::createAsCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius) {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position = pos;
@@ -172,7 +172,7 @@ void Body::CreateCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius) 
 	return;
 }
 
-void Body::CreateCircleEnemy(b2World* world, uint8_t type, b2Vec2 pos, float radius) {
+void Body::createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float radius) {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position = pos;

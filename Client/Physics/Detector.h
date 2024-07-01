@@ -35,17 +35,17 @@ public:
 	virtual ~Detector();
 
 public:
-	virtual void SetPosition(float x, float y) override;
+	virtual void setPosition(float x, float y) override;
 
-	virtual void OnBeginContact(IFixture* another) override;
-	virtual void OnEndContact(IFixture* another) override;
+	virtual void onBeginContact(IFixture* another) override;
+	virtual void onEndContact(IFixture* another) override;
 
-	virtual std::map<Game::EntityIdType, MapValue>::iterator ListBegin() override;
-	virtual std::map<Game::EntityIdType, MapValue>::iterator ListEnd() override;
+	virtual std::map<Game::EntityIdType, MapValue>::iterator listBegin() override;
+	virtual std::map<Game::EntityIdType, MapValue>::iterator listEnd() override;
 
 protected:
-	void CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius);
-	void CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles);
+	void createAsCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius);
+	void createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles);
 
 protected:
 	std::vector<b2Fixture*> m_fixtures;
@@ -60,12 +60,12 @@ public:
 	virtual ~DetectorIndependent();
 
 public:
-	virtual void SetPosition(float x, float y) override;
+	virtual void setPosition(float x, float y) override;
 
 protected:
-	void CreateCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius);
-	void CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows);
-	void CreateTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
+	void createAsCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius);
+	void createAsRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows);
+	void createAsTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
 
 protected:
 	b2Body* m_body;

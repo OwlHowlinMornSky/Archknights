@@ -34,9 +34,9 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 	if (!fix1 || !fix2)
 		return;
 	if (fix1->IsMaster())
-		fix1->OnBeginContact(fix2);
+		fix1->onBeginContact(fix2);
 	if (fix2->IsMaster())
-		fix2->OnBeginContact(fix1);
+		fix2->onBeginContact(fix1);
 	return;
 }
 
@@ -46,9 +46,9 @@ void MyContactListener::EndContact(b2Contact* contact) {
 	if (!fix1 || !fix2)
 		return;
 	if (fix1->IsMaster())
-		fix1->OnEndContact(fix2);
+		fix1->onEndContact(fix2);
 	if (fix2->IsMaster())
-		fix2->OnEndContact(fix1);
+		fix2->onEndContact(fix1);
 	return;
 }
 
@@ -71,45 +71,45 @@ World::~World() {
 	m_frictionBody.reset();
 }
 
-void World::Update(float dt) {
+void World::update(float dt) {
 	m_world.Step(dt, 4, 2);
 }
 
-std::unique_ptr<IWall> World::CreateWall() {
+std::unique_ptr<IWall> World::createWall() {
 	auto res = std::make_unique<Wall>();
 	res->Create(&m_world);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyTowerCircle(float x, float y, uint8_t type) {
+std::unique_ptr<IBody> World::createBodyTowerCircle(float x, float y, uint8_t type) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircle(&m_world, type, { x, y }, 0.25f);
+	res->createAsCircle(&m_world, type, { x, y }, 0.25f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverCircle(float x, float y, uint8_t type) {
+std::unique_ptr<IBody> World::createBodyMoverCircle(float x, float y, uint8_t type) {
 	auto res = std::make_unique<Body>();
-	res->CreateCircleEnemy(&m_world, type, { x, y }, 0.1f);
+	res->createAsCircleMover(&m_world, type, { x, y }, 0.1f);
 	return std::move(res);
 }
 
-std::unique_ptr<IBody> World::CreateBodyMoverRectangle(float x, float y, uint8_t type) {
+std::unique_ptr<IBody> World::createBodyMoverRectangle(float x, float y, uint8_t type) {
 	return std::unique_ptr<IBody>();
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorCircle(uint8_t target, float x, float y, float radius) {
+std::unique_ptr<IDetector> World::createDetectorCircle(uint8_t target, float x, float y, float radius) {
 	auto res = std::make_unique<DetectorIndependent>();
-	res->CreateCircle(&m_world, target, { x, y }, radius);
+	res->createAsCircle(&m_world, target, { x, y }, radius);
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorRows(uint8_t target, float x, float y, Rows* rows) {
+std::unique_ptr<IDetector> World::createDetectorRows(uint8_t target, float x, float y, Rows* rows) {
 	auto res = std::make_unique<DetectorIndependent>();
-	res->CreateRows(&m_world, target, { x, y }, rows);
+	res->createAsRows(&m_world, target, { x, y }, rows);
 	return std::move(res);
 }
 
-std::unique_ptr<IDetector> World::CreateDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) {
+std::unique_ptr<IDetector> World::createDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) {
 	return std::unique_ptr<IDetector>();
 }
 

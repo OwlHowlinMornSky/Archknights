@@ -52,8 +52,8 @@ public:
 	virtual void update(float dt);
 	virtual void draw(ME::Camera* camera, ME::Shader* shader) = 0;
 
-	virtual void setOutline(bool enabled);
 	virtual void setColor(float r, float g, float b, float a);
+	virtual void setOutlineEnabled(bool enabled);
 
 	void setWaitingForQuit();
 	bool isWaitingForQuit() const;

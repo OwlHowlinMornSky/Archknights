@@ -74,15 +74,15 @@ void GameCommon::update(float dt) {
 	m_actors.update(dt);
 }
 
-void GameCommon::AddGround(std::shared_ptr<ME::IModel> ground) {
+void GameCommon::addGround(std::shared_ptr<ME::IModel> ground) {
 	m_ground = ground;
 }
 
-void GameCommon::AddActor(std::shared_ptr<Game::IActor> actor) {
-	return m_actors.AddActor(actor);
+void GameCommon::addActor(std::shared_ptr<Game::IActor> actor) {
+	return m_actors.addActor(actor);
 }
 
-void GameCommon::SetGroundSize(float x, float y) {
+void GameCommon::setGroundSize(float x, float y) {
 	m_actors.setScale(x, y, 0.0f);
 }
 
@@ -92,7 +92,7 @@ void GameCommon::onRender() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
 	glCheck(glDisable(GL_DEPTH_TEST));
 
-	m_actors.DrawShadow(&m_camera, m_ds); // DRAW
+	m_actors.drawShadow(&m_camera, m_ds); // DRAW
 
 	m_shadowTex.display();
 

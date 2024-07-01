@@ -25,21 +25,21 @@ Unit::Char_101_Sora::Char_101_Sora() {}
 
 Unit::Char_101_Sora::~Char_101_Sora() {}
 
-void Unit::Char_101_Sora::OnJoined() {
-	Parent::OnJoined();
+void Unit::Char_101_Sora::onJoined() {
+	Parent::onJoined();
 }
 
-void Unit::Char_101_Sora::OnKicking() {
-	Parent::OnKicking();
+void Unit::Char_101_Sora::onKicking() {
+	Parent::onKicking();
 }
 
-void Unit::Char_101_Sora::FixedUpdate() {
+void Unit::Char_101_Sora::fixedUpdate() {
 	//switch (m_status) {
 	//default:
 	//}
-	return Parent::FixedUpdate();
+	return Parent::fixedUpdate();
 }
 
-Game::MsgResultType Unit::Char_101_Sora::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Unit::Char_101_Sora::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	return DefTowerProc(msg, wparam, lparam);
 }

@@ -69,11 +69,7 @@ bool Actor::setup() {
 
 void Actor::clear() {}
 
-void Actor::Exit() {
-	setWaitingForQuit();
-}
-
-void Actor::InitDirection(Direction direction) {
+void Actor::setDirection(Direction direction) {
 	if (direction == Direction::BR) direction = Direction::FR;
 	if (direction == Direction::BL) direction = Direction::FL;
 	m_direction = direction;
@@ -82,7 +78,7 @@ void Actor::InitDirection(Direction direction) {
 	m_holdPTR->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
 }
 
-void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
+void Actor::triggerAnimation(AnimationEvent type, Direction direction) {
 #ifdef ARCHKNIGHTS_LIMITED
 	bool wantToChangeLR = false;
 	bool tryToPlayBackFailed = false;
@@ -165,9 +161,9 @@ void Actor::TriggerAnimation(AnimationEvent type, Direction direction) {
 #endif // !ARCHKNIGHTS_LIMITED
 }
 
-void Actor::TriggerAnimationEx(int excode, void* data) {}
+void Actor::triggerAnimationEx(int excode, void* data) {}
 
-void Actor::TurnDirection(bool isLeft) {
+void Actor::turnLeftRight(bool isLeft) {
 	if (m_isRolling) {
 		switch (m_targetDirection) {
 		case Direction::FL:
@@ -207,23 +203,19 @@ void Actor::TurnDirection(bool isLeft) {
 	}
 }
 
-void Actor::ChangeStatus(AnimationStatus status) {}
+void Actor::setStatus(AnimationStatus status) {}
 
-void Actor::SetPosition(float x, float y, float z) {
-	this->setPosition(x, y, z);
+void Actor::setPosition(float x, float y, float z) {
+	IModel::setPosition(x, y, z);
 	m_holdPTR->setPosition(x, y, z);
 }
 
-void Actor::setOutline(bool enabled) {
-	return m_holdPTR->setOutline(enabled);
-}
-
-void Actor::SetHit() {
+void Actor::setHitEffect() {
 	m_hitFlash = 1.5f;
 	m_hitFlashing = true;
 }
 
-void Actor::SetInOut(bool in, bool onlyShadow) {
+void Actor::setInOutEffect(bool in, bool onlyShadow) {
 	m_isInOut = in ? 1 : 2;
 	m_currentInout = in ? 0.0f : 1.0f;
 	m_inOutOnlyShadow = onlyShadow;
@@ -247,7 +239,7 @@ void Actor::update(float dt) {
 			m_currentRLDirection -= Delta;
 			if (m_currentRLDirection <= -1.0f) { // 到位
 				m_isRolling = false;
-				SetDirection(toRL);
+				changeDirection(toRL);
 				m_currentRLDirection = -1.0f;
 			}
 		}
@@ -255,7 +247,7 @@ void Actor::update(float dt) {
 			m_currentRLDirection += Delta;
 			if (m_currentRLDirection >= 1.0f) { // 到位
 				m_isRolling = false;
-				SetDirection(toRL);
+				changeDirection(toRL);
 				m_currentRLDirection = 1.0f;
 			}
 		}
@@ -307,6 +299,10 @@ void Actor::draw(ME::Camera* camera, ME::Shader* shader) {
 	return m_current->draw(camera, shader);
 }
 
+void Actor::setOutlineEnabled(bool enabled) {
+	return m_holdPTR->setOutlineEnabled(enabled);
+}
+
 void Actor::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
 	switch (type) {
 	case spine::EventType_Complete:
@@ -337,436 +333,12 @@ void Actor::callback(spine::AnimationState* state, spine::EventType type, spine:
 	}
 }
 
-void Actor::SetDirection(bool RL) {
+void Actor::changeDirection(bool RL) {
 	if (RL) {
 		m_direction = Direction::FL;
 	}
 	else {
 		m_direction = Direction::FR;
-	}
-	m_targetDirection = m_direction;
-}
-
-
-Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
-	m_isRolling(false),
-	m_direction(Direction::FR),
-	m_targetDirection(Direction::FR),
-	m_currentFBDirection(false),
-	m_currentRLDirection(1.0f),
-	m_current(nullptr),
-	m_target(nullptr),
-
-	m_lastEvent(AnimationEvent::Default),
-	m_hitFlash(0.0f),
-	m_hitFlashing(false),
-
-	m_isInOut(0),
-	m_currentInout(0.0f)
-
-{
-	m_holdPTR[0] = _f;
-	m_holdPTR[1] = _b;
-	m_current = GetAnimation(m_currentFBDirection);
-	GetAnimation(false)->setListener(this);
-	GetAnimation(true)->setListener(this);
-
-	m_shadowRadius = 1.0f;
-	m_shadowAlpha = 1.0f;
-}
-
-Actor2::~Actor2() {}
-
-bool Actor2::setup() {
-	return true;
-}
-
-void Actor2::clear() {}
-
-void Actor2::Exit() {
-	setWaitingForQuit();
-}
-
-void Actor2::InitDirection(Direction direction) {
-	m_direction = direction;
-	m_targetDirection = direction;
-	m_currentFBDirection = (static_cast<char>(direction) & 0x02);
-	m_currentRLDirection = (static_cast<char>(direction) & 0x01) ? -1.0f : 1.0f;
-	m_current = GetAnimation(m_currentFBDirection);
-	m_target = nullptr;
-	m_holdPTR[0]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
-	m_holdPTR[1]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
-	return;
-}
-
-void Actor2::TriggerAnimation(AnimationEvent type, Direction direction) {
-#ifdef ARCHKNIGHTS_LIMITED
-	bool wantToChangeFace = false;
-	bool wantToChangeLR = false;
-	bool tryToPlayBackFailed = false;
-
-	if (direction != Direction::NotCare && direction != m_direction) {
-		// 需求的前后面不同。
-		if (m_currentFBDirection != ((static_cast<char>(direction) & 0x02) != 0))
-			wantToChangeFace = true;
-		// 需求的左右面不同。
-		if (((static_cast<char>(m_direction) ^ static_cast<char>(direction)) & 0x01) != 0)
-			wantToChangeLR = true;
-	}
-	if (m_currentFBDirection != wantToChangeFace) { // 想要播放反面
-		CurrentAnimationClass* modify = GetAnimation(true);
-		AnimationInfo* info = GetInfo(true);
-		bool noBackFace = false;
-		switch (type) {
-		case AnimationEvent::Begin:
-			m_note->OnStart = 0;
-			m_note->StartOver = 0;
-			if (info->Begin != nullptr)
-				modify->setAnimation(0, info->Begin, false);
-			else
-				noBackFace = true;
-			break;
-		case AnimationEvent::Idle:
-			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false);
-				modify->addAnimation(0, info->Idle, true, 0.0f);
-			}
-			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false);
-				modify->addAnimation(0, info->Idle, true, 0.0f);
-			}
-			else if (info->Idle != nullptr)
-				modify->setAnimation(0, info->Idle, true);
-			else
-				noBackFace = true;
-			break;
-		case AnimationEvent::Attack:
-			m_note->OnAttack = 0;
-			m_note->AttackOver = 0;
-			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false);
-				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
-			}
-			else if (info->AttackLoop != nullptr)
-				modify->setAnimation(0, info->AttackLoop, false);
-			else
-				noBackFace = true;
-			break;
-		case AnimationEvent::Stun:
-			if (info->StunIn != nullptr && info->StunLoop != nullptr) {
-				modify->setAnimation(0, info->StunIn, false);
-				modify->addAnimation(0, info->StunLoop, true, 0.0f);
-			}
-			else if (info->StunLoop != nullptr)
-				modify->setAnimation(0, info->StunLoop, true);
-			else if (info->StunIn != nullptr)
-				modify->setAnimation(0, info->StunIn, false);
-			else if (info->Die != nullptr)
-				modify->setAnimation(0, info->Die, false);
-			else
-				noBackFace = true;
-			break;
-		case AnimationEvent::Die:
-			m_note->DieOver = 0;
-			if (info->Die != nullptr)
-				modify->setAnimation(0, info->Die, false);
-			else
-				noBackFace = true;
-			break;
-		default:
-			modify->setAnimation(0, info->Default, false);
-		}
-		if (noBackFace) {
-			wantToChangeFace = !wantToChangeFace;
-		}
-	}
-	if (m_currentFBDirection == wantToChangeFace) { // 想要播放正面
-		CurrentAnimationClass* modify = GetAnimation(false);
-		AnimationInfo* info = GetInfo(false);
-		switch (type) {
-		case AnimationEvent::Begin:
-			m_note->OnStart = 0;
-			m_note->StartOver = 0;
-			modify->setAnimation(0, info->Begin, false);
-			break;
-		case AnimationEvent::Idle:
-			if (m_lastEvent == AnimationEvent::Attack && info->AttackOut != nullptr) {
-				modify->setAnimation(0, info->AttackOut, false);
-				modify->addAnimation(0, info->Idle, true, 0.0f);
-			}
-			else if (m_lastEvent == AnimationEvent::Stun && info->StunOut != nullptr) {
-				modify->setAnimation(0, info->StunOut, false);
-				modify->addAnimation(0, info->Idle, true, 0.0f);
-			}
-			else
-				modify->setAnimation(0, info->Idle, true);
-			break;
-		case AnimationEvent::Attack:
-			m_note->OnAttack = 0;
-			m_note->AttackOver = 0;
-			if (m_lastEvent != AnimationEvent::Attack && info->AttackIn != nullptr) {
-				modify->setAnimation(0, info->AttackIn, false);
-				modify->addAnimation(0, info->AttackLoop, false, 0.0f);
-			}
-			else
-				modify->setAnimation(0, info->AttackLoop, false);
-			break;
-		case AnimationEvent::Stun:
-			if (info->StunIn != nullptr && info->StunLoop != nullptr) {
-				modify->setAnimation(0, info->StunIn, false);
-				modify->addAnimation(0, info->StunLoop, true, 0.0f);
-			}
-			else if (info->StunLoop != nullptr)
-				modify->setAnimation(0, info->StunLoop, true);
-			else if (info->StunIn != nullptr)
-				modify->setAnimation(0, info->StunIn, false);
-			else
-				modify->setAnimation(0, info->Die, false);
-			break;
-		case AnimationEvent::Die:
-			m_note->DieOver = 0;
-			modify->setAnimation(0, info->Die, false);
-			break;
-		default:
-			modify->setAnimation(0, info->Default, false);
-		}
-	}
-	if (wantToChangeFace || wantToChangeLR) {
-		m_isRolling = true;
-		char tmp = static_cast<char>(m_direction);;
-		if (wantToChangeFace) {
-			m_target = GetAnimation(!m_currentFBDirection);
-			if (wantToChangeLR)
-				tmp ^= 0x03;
-			else
-				tmp ^= 0x02;
-		}
-		else {
-			tmp ^= 0x01;
-		}
-		m_targetDirection = Direction(tmp);
-	}
-	m_lastEvent = type;
-#endif // !ARCHKNIGHTS_LIMITED
-}
-
-void Actor2::TriggerAnimationEx(int excode, void* data) {}
-
-void Actor2::TurnDirection(bool isLeft) {}
-
-void Actor2::ChangeStatus(AnimationStatus status) {}
-
-void Actor2::SetPosition(float x, float y, float z) {
-	this->setPosition(x, y, z);
-	m_holdPTR[0]->setPosition(x, y, z);
-	m_holdPTR[1]->setPosition(x, y, z);
-}
-
-void Actor2::setOutline(bool enabled) {
-	m_holdPTR[0]->setOutline(enabled);
-	m_holdPTR[1]->setOutline(enabled);
-}
-
-void Actor2::SetHit() {
-	m_hitFlash = 1.5f;
-	m_hitFlashing = true;
-}
-
-void Actor2::SetInOut(bool in, bool onlyShadow) {
-	m_isInOut = in ? 1 : 2;
-	m_currentInout = in ? 0.0f : 1.0f;
-	m_inOutOnlyShadow = onlyShadow;
-	if (!m_inOutOnlyShadow)
-		if (m_currentInout < 0.5f) {
-			m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-		}
-		else {
-			float r = 2.0f * (m_currentInout - 0.5f);
-			m_current->setColor(r, r, r, 1.0f);
-		}
-	m_shadowAlpha = m_currentInout;
-	return;
-}
-
-void Actor2::update(float dt) {
-	[[unlikely]] if (m_isRolling) {
-		float Delta = dt * g_RotationRatio;
-		bool nowRL = (m_currentRLDirection < 0.0f);
-		bool nowFB = m_currentFBDirection;
-		bool toRL = (static_cast<char>(m_targetDirection) & 0x01);
-		bool toFB = (static_cast<char>(m_targetDirection) & 0x02);
-		bool isIn = ((nowRL == toRL) && (nowFB == toFB));
-		if (isIn) { // 已经通过关键点，朝目标靠近
-			if (toRL) { // 朝左转
-				m_currentRLDirection -= Delta;
-				if (m_currentRLDirection <= -1.0f) { // 到位
-					m_isRolling = false;
-					m_direction = m_targetDirection;
-					SetDirection(toRL, toFB);
-					m_currentRLDirection = -1.0f;
-				}
-			}
-			else { // 朝右转
-				m_currentRLDirection += Delta;
-				if (m_currentRLDirection >= 1.0f) { // 到位
-					m_isRolling = false;
-					m_direction = m_targetDirection;
-					SetDirection(toRL, toFB);
-					m_currentRLDirection = 1.0f;
-				}
-			}
-		}
-		else { // 还未通过关键点，向关键点靠近
-			if (nowRL) { // 现在在左侧
-				m_currentRLDirection += Delta; // 加RL以向右转
-				if (m_currentRLDirection >= 0.0f) { // 已经通过关键点
-					if (nowFB != toFB) { // 若要翻面
-						if (m_target) {
-							m_current = m_target; // 翻面
-							m_hitFlashing = true;
-						}
-						m_target = nullptr;
-					}
-					m_currentFBDirection = toFB; // 通过关键点后正反面已达标
-					if (nowRL == toRL) { // 要往回转
-						m_currentRLDirection = -m_currentRLDirection;
-						if (m_currentRLDirection <= -1.0f) { // 到位
-							m_isRolling = false;
-							m_direction = m_targetDirection;
-							SetDirection(toRL, toFB);
-							m_currentRLDirection = -1.0f;
-						}
-					}
-				}
-			}
-			else { // 现在在右侧
-				m_currentRLDirection -= Delta; // 减RL以向左转
-				if (m_currentRLDirection < 0.0f) { // 已经通过关键点
-					if (nowFB != toFB) { // 若要翻面
-						if (m_target) {
-							m_current = m_target; // 翻面
-							m_hitFlashing = true;
-						}
-						m_target = nullptr;
-					}
-					m_currentFBDirection = toFB; // 通过关键点后正反面已达标
-					if (nowRL == toRL) { // 要往回转
-						m_currentRLDirection = -m_currentRLDirection;
-						if (m_currentRLDirection >= 1.0f) { // 到位
-							m_isRolling = false;
-							m_direction = m_targetDirection;
-							SetDirection(toRL, toFB);
-							m_currentRLDirection = 1.0f;
-						}
-					}
-				}
-			}
-		}
-		if (m_target)
-			m_target->update(dt);
-		//set m_current rotate by m_currentRLDirection.
-		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
-	}
-	[[unlikely]] if (m_hitFlashing) {
-		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
-		if (m_hitFlash >= 1.0f)
-			m_current->setColor(1.0f, 0.0f, 0.0f, 1.0f);
-		else if (m_hitFlash > 0.0f)
-			m_current->setColor(1.0f, 1.0f - m_hitFlash, 1.0f - m_hitFlash, 1.0f);
-		else {
-			m_current->setColor(1.0f, 1.0f, 1.0f, 1.0f);
-			m_hitFlashing = false;
-		}
-	}
-	[[unlikely]] if (m_isInOut) {
-		float Delta = dt * g_InOutRatio;
-		if (m_isInOut == 1) {
-			m_currentInout += Delta;
-			if (m_currentInout >= 1.0f) {
-				m_currentInout = 1.0f;
-				m_isInOut = 0;
-			}
-		}
-		else {
-			m_currentInout -= Delta;
-			if (m_currentInout <= 0.0f) {
-				m_currentInout = 0.0f;
-				m_isInOut = 0;
-				m_waitingForQuit = true;
-			}
-		}
-		if (!m_inOutOnlyShadow)
-			if (m_currentInout < 0.5f) {
-				m_current->setColor(0.0f, 0.0f, 0.0f, 2.0f * m_currentInout);
-			}
-			else {
-				float r = 2.0f * (m_currentInout - 0.5f);
-				m_current->setColor(r, r, r, 1.0f);
-			}
-		m_shadowAlpha = m_currentInout;
-	}
-	m_current->update(dt);
-	return;
-}
-
-void Actor2::draw(ME::Camera* camera, ME::Shader* shader) {
-	return m_current->draw(camera, shader);
-}
-
-void Actor2::callback(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event) {
-	switch (type) {
-	case spine::EventType_Complete:
-		if (entry && entry->getAnimation()) {
-			spine::Animation* anim = entry->getAnimation();
-			if (anim == GetInfo(m_currentFBDirection)->Die) {
-				m_note->DieOver++;
-			}
-			else if (anim == GetInfo(m_currentFBDirection)->Begin) {
-				m_note->StartOver++;
-			}
-			else if (anim == GetInfo(m_currentFBDirection)->AttackLoop) {
-				m_note->AttackOver++;
-			}
-		}
-		break;
-	case spine::EventType_Event:
-	{
-		const spine::String& eventName = event->getData().getName();
-		if (eventName == "OnAttack") {
-			m_note->OnAttack++;
-		}
-		else if (eventName == "OnStart") {
-			m_note->OnStart++;
-		}
-		break;
-	}
-	}
-}
-
-CurrentAnimationClass* Actor2::GetAnimation(bool back) {
-	return (CurrentAnimationClass*)m_holdPTR[back].get();
-}
-
-AnimationInfo* Actor2::GetInfo(bool back) {
-	return m_info + back;
-}
-
-void Actor2::SetDirection(bool RL, bool FB) {
-	if (FB) {
-		if (RL) {
-			m_direction = Direction::BL;
-		}
-		else {
-			m_direction = Direction::BR;
-		}
-	}
-	else {
-		if (RL) {
-			m_direction = Direction::FL;
-		}
-		else {
-			m_direction = Direction::FR;
-		}
 	}
 	m_targetDirection = m_direction;
 }

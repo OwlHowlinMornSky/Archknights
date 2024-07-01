@@ -35,8 +35,8 @@ public:
 	Enemy_1002_nsabr_Factory();
 	virtual ~Enemy_1002_nsabr_Factory() override;
 
-	virtual bool Load() override;
-	virtual bool CreateEntity(std::shared_ptr<Game::Entity>& ptr) override;
+	virtual bool load() override;
+	virtual bool createEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
 	std::unique_ptr<Model::IAnimationPose> m_pose[2];

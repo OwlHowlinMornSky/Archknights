@@ -37,8 +37,8 @@ public:
 	virtual ~IFixture() = default;
 
 public:
-	virtual void OnBeginContact(IFixture* another) = 0;
-	virtual void OnEndContact(IFixture* another) = 0;
+	virtual void onBeginContact(IFixture* another) = 0;
+	virtual void onEndContact(IFixture* another) = 0;
 
 	bool IsMaster() const {
 		return m_master;

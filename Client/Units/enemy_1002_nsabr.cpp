@@ -28,33 +28,33 @@ Unit::Enemy_1002_nsabr::Enemy_1002_nsabr() {}
 
 Enemy_1002_nsabr::~Enemy_1002_nsabr() {}
 
-void Enemy_1002_nsabr::OnJoined() {
-	Parent::OnJoined();
+void Enemy_1002_nsabr::onJoined() {
+	Parent::onJoined();
 
-	SetAttributeOringalValue(AttributeType::MoveSpd, 0.6f);
+	setAttributeOringalValue(AttributeType::MoveSpd, 0.6f);
 	//m_body->SetMove(100.0f, 50.0f);
 }
 
-void Enemy_1002_nsabr::OnKicking() {
-	Parent::OnKicking();
+void Enemy_1002_nsabr::onKicking() {
+	Parent::onKicking();
 }
 
-void Enemy_1002_nsabr::FixedUpdate() {
-	return Parent::FixedUpdate();
+void Enemy_1002_nsabr::fixedUpdate() {
+	return Parent::fixedUpdate();
 }
 
-Game::MsgResultType Enemy_1002_nsabr::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
-	return Parent::ReceiveMessage(msg, wparam, lparam);
+Game::MsgResultType Enemy_1002_nsabr::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+	return Parent::receiveMessage(msg, wparam, lparam);
 }
 
-bool Enemy_1002_nsabr::TryAttack() {
+bool Enemy_1002_nsabr::tryToAttack() {
 	return true;
 }
 
-bool Enemy_1002_nsabr::StillCanAttack() {
+bool Enemy_1002_nsabr::isStillCanAttack() {
 	return false;
 }
 
-void Enemy_1002_nsabr::OnAttack() {}
+void Enemy_1002_nsabr::onAttack() {}
 
 }

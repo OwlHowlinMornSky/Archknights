@@ -68,6 +68,7 @@
     <ClInclude Include="Client\Callbacks.h" />
     <ClInclude Include="Client\CarnivalWin32.h" />
     <ClInclude Include="Client\WindowWin32.h" />
+    <ClInclude Include="Core\TempGuard.h" />
     <ClInclude Include="include\MysteryEngine\Client\Activity.h" />
     <ClInclude Include="include\MysteryEngine\Client\Carnival.h" />
     <ClInclude Include="include\MysteryEngine\Client\BGM.h" />
@@ -79,7 +80,6 @@
     <ClInclude Include="include\MysteryEngine\Core\NonCopyable.h" />
     <ClInclude Include="include\MysteryEngine\Core\RandGen.h" />
     <ClInclude Include="include\MysteryEngine\Core\Reference.h" />
-    <ClInclude Include="include\MysteryEngine\Core\TempGuard.h" />
     <ClInclude Include="include\MysteryEngine\G3D\G3dGlobal.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Camera.h" />
     <ClInclude Include="include\MysteryEngine\G3D\GlCheck.h" />

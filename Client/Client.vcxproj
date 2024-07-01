@@ -335,8 +335,10 @@
     <ClInclude Include="Main\SummonMngr.h" />
     <ClInclude Include="Main\Tower.h" />
     <ClInclude Include="Models\Actor.h" />
+    <ClInclude Include="Models\Actor2.h" />
     <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
+    <ClInclude Include="Models\AnimationInfo.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IAnimation.h" />
     <ClInclude Include="Models\IGround.h" />
@@ -397,6 +399,7 @@
     <ClCompile Include="Main\SummonMngr.cpp" />
     <ClCompile Include="Main\Tower.cpp" />
     <ClCompile Include="Models\Actor.cpp" />
+    <ClCompile Include="Models\Actor2.cpp" />
     <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />
     <ClCompile Include="Models\Ground.cpp" />
@@ -405,6 +408,7 @@
     <ClCompile Include="Physics\Body.cpp" />
     <ClCompile Include="Physics\Detector.cpp" />
     <ClCompile Include="Physics\FrictionBody.cpp" />
+    <ClCompile Include="Physics\IBody.cpp" />
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
     <ClCompile Include="Scenes\GameCommon.cpp" />

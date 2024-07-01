@@ -102,14 +102,14 @@ struct MapData {
 		data = new _T[M * N];
 	}
 
-	void ChangeSize(size_t M, size_t N) {
+	void changeSize(size_t M, size_t N) {
 		m = M;
 		n = N;
 		delete[] data;
 		data = new _T[M * N];
 	}
 
-	void Reset() {
+	void reset() {
 		if (data == nullptr)
 			return;
 		for (size_t i = 0, k = m * n; i < k; ++i) {
@@ -132,28 +132,28 @@ public:
 	virtual ~MapHost();
 
 public:
-	bool Load(std::ifstream& ifs);
+	bool load(std::ifstream& ifs);
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
-	void ImmediatelyUpdate();
+	void updateImmediately();
 
-	void Search(const size_t id);
+	void search(const size_t id);
 
 	/**
 	 * @brief 搜索各地点前往指定位置的路径。
 	 * @param x: 指定位置的横坐标。
 	 * @param y: 指定位置的纵坐标。
 	 */
-	void Search(const size_t id, short x, short y);
+	void search(const size_t id, short x, short y);
 
 	/**
 	 * @brief 从 一个<临时点> 向外 扩散。
 	 * @param x: <临时点>横坐标。
 	 * @param y: <临时点>纵坐标。
 	 */
-	void SpreadFrom(const size_t id, const Map::CoordType x, const Map::CoordType y);
+	void spreadFrom(const size_t id, const Map::CoordType x, const Map::CoordType y);
 
 	/**
 	 * @brief 向一个象限扩散。
@@ -168,7 +168,7 @@ protected:
 	 * @param maxY: 纵坐标最远位置。
 	 */
 	template<Map::CoordType dx, Map::CoordType dy, int px, int py>
-	inline void SpreadQuadrant(const size_t id, const Map::CoordType x, const Map::CoordType y, Map::CoordType maxX, const Map::CoordType maxY);
+	inline void spreadQuadrant(const size_t id, const Map::CoordType x, const Map::CoordType y, Map::CoordType maxX, const Map::CoordType maxY);
 
 	std::size_t m_statusChangeCnt;
 	std::size_t m_checkpointCnt;
@@ -177,7 +177,7 @@ protected:
 	std::vector<std::size_t> m_mapRefCnt;
 	std::vector<Map::MapData<Map::TileSearch>> m_searches; // Result of search.
 	Map::MapData<Map::Tile> m_tiles; // Map data.
-	std::queue<std::pair<short, short>> Q; // Temporary queue when searching.
+	std::queue<std::pair<short, short>> m_queue; // Temporary queue when searching.
 
 	std::unique_ptr<Physics::IWall> m_wall;
 };
@@ -207,7 +207,7 @@ static inline bool TileBetter(
 namespace Main {
 
 template<Map::CoordType dx, Map::CoordType dy, int px, int py>
-inline void MapHost::SpreadQuadrant(const size_t id, const Map::CoordType x, const Map::CoordType y, Map::CoordType maxX, const Map::CoordType maxY) {
+inline void MapHost::spreadQuadrant(const size_t id, const Map::CoordType x, const Map::CoordType y, Map::CoordType maxX, const Map::CoordType maxY) {
 	Map::MapData<Map::TileSearch>& searches = m_searches[id];
 	Map::MapData<Map::Tile>& tiles = m_tiles;
 	// i 代表 横坐标（列号），j 代表 纵坐标（行号）。
@@ -235,7 +235,7 @@ inline void MapHost::SpreadQuadrant(const size_t id, const Map::CoordType x, con
 			Map::TileSearch& s = searches(i, j);
 			if (TileBetter(s, cost, distance)) { // 若 新值 较优。
 				s.Set(x, y, cost, distance); // 覆盖。
-				Q.emplace(i, j); // 入队(SPFA)。
+				m_queue.emplace(i, j); // 入队(SPFA)。
 			}
 			// ~/注~
 

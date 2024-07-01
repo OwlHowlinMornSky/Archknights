@@ -28,15 +28,15 @@ namespace Main {
 class Initalizator final :
 	public Game::Entity {
 public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate() override;
+	virtual void fixedUpdate() override;
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
-	void LoadThread();
+	void loadThread();
 
 protected:
 	float pos[2]; // test

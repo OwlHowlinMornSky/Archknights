@@ -40,8 +40,8 @@
 
 namespace Main {
 
-void Initalizator::OnJoined() {
-	Game::Global::board->SubscribeMsg(5678, m_location);
+void Initalizator::onJoined() {
+	Game::Global::board->subscribeMsg(5678, m_location);
 
 	auto& camera = Game::Global::stage->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
@@ -67,78 +67,78 @@ void Initalizator::OnJoined() {
 	auto ground = Model::IObjModel::Create();
 	ground->setup();
 
-	ground->LoadModelData("res/main_7-3/main.obj");
+	ground->loadModelData("res/main_7-3/main.obj");
 	//ground->setRotation(0.0f, 180.0f, 0.0f);
 	ground->setScale(-1.0f, 1.0f, -1.0f);
 	ground->setPosition(5.5f, 3.5f, 0.0f);
 
 	ME::G3dGlobal::SetActive(false);
 
-	Game::Global::stage->AddGround(ground);
+	Game::Global::stage->addGround(ground);
 
-	ground->SetSize(11.0f, 7.0f);
-	Game::Global::stage->SetGroundSize(11.0f, 7.0f);
+	ground->setGroundSize(11.0f, 7.0f);
+	Game::Global::stage->setGroundSize(11.0f, 7.0f);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
-	Game::Global::board->JoinEntity(summonmngr);
+	Game::Global::board->joinEntity(summonmngr);
 
-	summonmngr->AddBegin();
-	summonmngr->AddEntity(151);
-	summonmngr->AddEntity(101);
-	summonmngr->AddEntity(128);
-	summonmngr->AddEntity(1002, true);
-	summonmngr->AddEnd();
+	summonmngr->beginAdd();
+	summonmngr->addEntity(151);
+	summonmngr->addEntity(101);
+	summonmngr->addEntity(128);
+	summonmngr->addEntity(1002, true);
+	summonmngr->endAdd();
 
 	///////////////////
 
 	pos[0] = 5.5f;
 	pos[1] = 3.5f;
-	Game::Global::board->SubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	auto maphost = std::make_shared<MapHost>();
 	std::ifstream ifs;
 	ifs.open("res/main_7-3/map.txt");
-	maphost->Load(ifs);
+	maphost->load(ifs);
 
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointCnt, 6, 0);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointCnt, 6, 0);
 	int testp[2];
 	testp[0] = 10;
 	testp[1] = 3;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 0, (intptr_t)testp);
 	testp[0] = 10;
 	testp[1] = 1;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 1, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 1, (intptr_t)testp);
 	testp[0] = 1;
 	testp[1] = 1;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 2, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 2, (intptr_t)testp);
 	testp[0] = 1;
 	testp[1] = 5;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 3, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 3, (intptr_t)testp);
 	testp[0] = 10;
 	testp[1] = 5;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 4, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 4, (intptr_t)testp);
 	testp[0] = 0;
 	testp[1] = 3;
-	maphost->ReceiveMessage(HostMsgId::MapInitCheckpointSet, 5, (intptr_t)testp);
+	maphost->receiveMessage(HostMsgId::MapInitCheckpointSet, 5, (intptr_t)testp);
 
-	maphost->ReceiveMessage(HostMsgId::MapInitOk, 0, 0);
+	maphost->receiveMessage(HostMsgId::MapInitOk, 0, 0);
 
-	Game::Global::board->SetHost(
+	Game::Global::board->setHost(
 		Game::HostJob::MapPathManager,
 		maphost
 	);
 }
 
-void Initalizator::OnKicking() {
-	Game::Global::board->UnsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+void Initalizator::onKicking() {
+	Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
-	Game::Global::board->Broadcast(1234, 0, 0);
+	Game::Global::board->broadcast(1234, 0, 0);
 }
 
-void Initalizator::FixedUpdate() {}
+void Initalizator::fixedUpdate() {}
 
-Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Initalizator::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::GuiEvent:
 	{
@@ -147,13 +147,13 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
 			case sf::Keyboard::Num1:
-				Game::Global::board->PostMsg(2, 0, (intptr_t)this->pos);
+				Game::Global::board->postMsg(2, 0, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num2:
-				Game::Global::board->PostMsg(2, 1, (intptr_t)this->pos);
+				Game::Global::board->postMsg(2, 1, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num3:
-				Game::Global::board->PostMsg(2, 2, (intptr_t)this->pos);
+				Game::Global::board->postMsg(2, 2, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num4:
 				//GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
@@ -181,15 +181,15 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
 				Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
-				Game::Global::board->PostMsg(2, 3, (intptr_t) & (pos.x));
+				Game::Global::board->postMsg(2, 3, (intptr_t) & (pos.x));
 			}
 			break;
 		}
 		break;
 	}
 	case 9876:
-		Game::Global::board->UnsubscribeMsg(5678, m_location);
-		KickSelf();
+		Game::Global::board->unsubscribeMsg(5678, m_location);
+		kickSelf();
 		break;
 	case 1234:
 		Game::Global::board->ExitGame(4321);
@@ -198,6 +198,6 @@ Game::MsgResultType Initalizator::ReceiveMessage(Game::MsgIdType msg, Game::MsgW
 	return Game::MsgResult::OK;
 }
 
-void Initalizator::LoadThread() {}
+void Initalizator::loadThread() {}
 
 }

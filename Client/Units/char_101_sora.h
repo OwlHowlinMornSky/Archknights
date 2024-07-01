@@ -33,12 +33,12 @@ public:
 	virtual ~Char_101_Sora();
 
 public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate();
+	virtual void fixedUpdate();
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 };
 
 }

@@ -32,7 +32,7 @@ public:
 	virtual ~IAnimationPose() = default;
 
 public:
-	virtual std::shared_ptr<ME::IModel> CreateAnimation() = 0;
+	virtual std::shared_ptr<ME::IModel> createAnimation() = 0;
 };
 
 class IAnimationFactory {
@@ -48,7 +48,7 @@ public:
 	 * @param type 0: 战斗正面, 1: 战斗背面, 2: 基建.
 	 * @return true 则加载成功。
 	 */
-	virtual bool CreatePose(
+	virtual bool createPose(
 		std::unique_ptr<IAnimationPose>& ptr,
 		std::string_view name,
 		unsigned char type
@@ -60,7 +60,7 @@ public:
 	 * @param name 
 	 * @return 0: 都加载失败, 1: ptr0加载成功, 2: ptr1加载成功, 3: 都加载成功.
 	 */
-	virtual char CreatePose2(
+	virtual char createPose2(
 		std::unique_ptr<IAnimationPose>& ptr0,
 		std::unique_ptr<IAnimationPose>& ptr1,
 		std::string_view name
@@ -72,7 +72,7 @@ public:
 	 * @param type 0: 战斗正面, 1: 战斗背面, 2: 基建.
 	 * @return true 则加载成功。
 	 */
-	virtual bool CreateEnemyPose(
+	virtual bool createEnemyPose(
 		std::unique_ptr<IAnimationPose>& ptr,
 		std::string_view name
 	) = 0;

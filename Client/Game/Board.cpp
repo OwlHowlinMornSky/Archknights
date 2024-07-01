@@ -37,16 +37,16 @@ Board::Board() :
 
 Board::~Board() {}
 
-int Board::setup() {
+int Board::Setup() {
 	if (Game::Global::board)
 		return 1;
 	Game::Global::board = std::make_unique<Board>();
 	return 0;
 }
 
-void Board::drop() {
+void Board::Drop() {
 	if (Game::Global::board != nullptr)
-		Game::Global::board->Clear();
+		Game::Global::board->clear();
 	Game::Global::board.reset();
 }
 
@@ -54,15 +54,15 @@ void Board::SetExitCallback(std::function<void(int)> cb) {
 	m_exitCallback = cb;
 }
 
-void Board::Clear() {
+void Board::clear() {
 	for (size_t n = m_entities.size(), i = n - 1; i != 0; --i) {
 		if (m_entities[i] == nullptr)
 			continue;
-		m_entities[i]->BasicOnKicking();
+		m_entities[i]->basicOnKicking();
 		m_entities[i].reset();
 	}
 	if (m_entities[0] != nullptr) {
-		m_entities[0]->BasicOnKicking();
+		m_entities[0]->basicOnKicking();
 		m_entities[0].reset();
 	}
 	m_entities.clear();
@@ -78,29 +78,29 @@ void Board::Clear() {
 	m_msgMap.clear();
 }
 
-bool Board::IsEmpty() {
+bool Board::isEmpty() {
 	// 空闲位置数量等于实体位置数量说明没有实体。
 	return m_entities.size() == m_emptyLocations.size();
 }
 
-void Board::JoinEntity(std::shared_ptr<Entity> entity) {
+void Board::joinEntity(std::shared_ptr<Entity> entity) {
 	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
 	if (m_emptyLocations.empty()) { // 没有空闲位置
 		m_entities.push_back(entity); // 直接放在末尾。
-		entity->BasicOnJoined(++m_entityIdCnt, m_entities.size() - 1); // 通知相应标识。
+		entity->basicOnJoined(++m_entityIdCnt, m_entities.size() - 1); // 通知相应标识。
 	}
 	else { // 有空闲位置。
 		size_t location = m_emptyLocations.top(); // 优先取用空闲位置。
 		m_emptyLocations.pop();
 		m_entities[location] = entity; // 放入空闲位置。
-		entity->BasicOnJoined(++m_entityIdCnt, location); // 通知相应标识。
+		entity->basicOnJoined(++m_entityIdCnt, location); // 通知相应标识。
 	}
 }
 
-void Board::KickEntity(size_t location) {
+void Board::kickEntity(size_t location) {
 	assert(location < m_entities.size());
 	assert(m_entities[location]); // 在场。
-	m_entities[location]->BasicOnKicking(); // 通知。
+	m_entities[location]->basicOnKicking(); // 通知。
 	m_entities[location].reset(); // 置空！这是保证“在场”“离场”概念的基础。
 	if (location)
 		m_emptyLocations.push(location); // 记录空位。(0不复用，只作为最初initalizator占用位置，之后永远为空)。
@@ -110,35 +110,35 @@ void Board::ExitGame(int code) {
 	m_exitCallback(code);
 }
 
-std::shared_ptr<Entity> Board::EntityAt(size_t location) {
+std::shared_ptr<Entity> Board::getEntityAt(size_t location) {
 	assert(location < m_entities.size());
 	return m_entities[location];
 }
 
-void Board::Update(long long dt) {
+void Board::update(long long dt) {
 	if (dt < 33333) {
 		m_time += dt;
 		if (m_time < 33333)
 			return;
 		m_time -= 33333;
 	}
-	m_world->Update(1.0f / 30.0f);
+	m_world->update(1.0f / 30.0f);
 	for (std::shared_ptr<Entity> entity : m_entities) {
 		if (entity == nullptr)
 			continue;
-		entity->FixedUpdate();
+		entity->fixedUpdate();
 	}
 	while (!m_readyForExit.empty()) {
-		KickEntity(m_readyForExit.top());
+		kickEntity(m_readyForExit.top());
 		m_readyForExit.pop();
 	}
 }
 
-void Board::RegistryForExit(EntityLocationType location) {
+void Board::registryForExit(EntityLocationType location) {
 	m_readyForExit.push(location);
 }
 
-MsgResultType Board::SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType Board::sendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
 	//assert(m_entities[location]); // 在场。
 	if (m_entities[location] == nullptr) {
@@ -147,7 +147,7 @@ MsgResultType Board::SendMsg(EntityLocationType location, MsgIdType msg, MsgWpar
 	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
-MsgResultType Board::TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType Board::tellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	assert(location < m_entities.size());
 	//assert(m_entities[location]); // 在场。
 	if (m_entities[location] == nullptr) {
@@ -159,7 +159,7 @@ MsgResultType Board::TellMsg(EntityLocationType location, EntityIdType id, MsgId
 	return m_entities[location]->EntityProc(msg, wparam, lparam);
 }
 
-void Board::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void Board::postMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	// failedLoc相关的是自动退订逻辑，算是一种保险。
 	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
@@ -187,19 +187,19 @@ void Board::PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	}
 }
 
-void Board::Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+void Board::broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	for (auto& entity : m_entities) {
 		if (entity == nullptr) // 跳过离场位置。
 			continue;
-		entity->ReceiveMessage(msg, wparam, lparam);
+		entity->receiveMessage(msg, wparam, lparam);
 	}
 }
 
-void Board::SubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void Board::subscribeMsg(MsgIdType msg, EntityLocationType location) {
 	m_msgMap[msg].insert(location);
 }
 
-void Board::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void Board::unsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
@@ -210,13 +210,13 @@ void Board::UnsubscribeMsg(MsgIdType msg, EntityLocationType location) {
 	}
 }
 
-std::shared_ptr<Host> Board::GetHost(int job) {
+std::shared_ptr<Host> Board::getHost(int job) {
 	if (job < 0 || job >= HostJob::COUNT)
 		return std::shared_ptr<Host>();
 	return m_hosts[job];
 }
 
-void Board::SetHost(int job, std::shared_ptr<Host> host) {
+void Board::setHost(int job, std::shared_ptr<Host> host) {
 	if (job < 0 || job >= HostJob::COUNT)
 		return;
 	m_hosts[job] = host;

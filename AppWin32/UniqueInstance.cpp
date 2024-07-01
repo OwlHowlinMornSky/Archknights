@@ -36,7 +36,7 @@ bool ___OHMS_EnsureUniqueInstance_instanceExist = false; // 是否存在实例�
 
 namespace AppWin32 {
 
-bool AppWin32::uniqueInstance() noexcept {
+bool AppWin32::UniqueInstance() noexcept {
 	std::lock_guard<std::mutex> guard(___OHMS_EnsureUniqueInstance_Mutex);
 	if (___OHMS_EnsureUniqueInstance_instanceExist) {
 		return false;
@@ -45,7 +45,7 @@ bool AppWin32::uniqueInstance() noexcept {
     return true;
 }
 
-void AppWin32::instanceExit() noexcept {
+void AppWin32::InstanceExit() noexcept {
 	std::lock_guard<std::mutex> guard(___OHMS_EnsureUniqueInstance_Mutex);
 	___OHMS_EnsureUniqueInstance_instanceExist = false;
 	return;

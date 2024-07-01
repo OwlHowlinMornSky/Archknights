@@ -35,58 +35,58 @@ Tower::Tower() :
 
 Tower::~Tower() {}
 
-void Tower::OnJoined() {
+void Tower::onJoined() {
 	if (m_actor) {
 		m_actor->m_note = &m_note;
 	}
 	// 触发动画
-	ToStart(m_defaultDirection);
+	setStatusToStart(m_defaultDirection);
 	// 创建主体
-	m_body = Game::Global::board->m_world->CreateBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
+	m_body = Game::Global::board->m_world->createBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
 	m_active = false;
 	m_died = false;
 }
 
-void Tower::OnKicking() {
+void Tower::onKicking() {
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
-		m_actor->SetInOut(false);
+		m_actor->setInOutEffect(false);
 	m_actor.reset();
 }
 
-void Tower::FixedUpdate() {
+void Tower::fixedUpdate() {
 	switch (m_status) {
 	case Status::Begin:
 		if (m_note.StartOver) {
 			m_active = true;
-			ToIdle();
+			setStatusToIdle();
 		}
 		break;
 	case Status::Idle:
-		if (abilities[AbilityType::Attack].IsAbled()) {
-			if (!TryAttack()) {
+		if (m_abilities[AbilityType::Attack].isAbled()) {
+			if (!tryToAttack()) {
 				m_atked = false;
-				ToAttack();
+				setStatusToAttack();
 			}
 		}
 		break;
 	case Status::Attaking:
 		if (m_note.AttackOver) {
-			if (!TryAttack()) {
+			if (!tryToAttack()) {
 				m_atked = false;
-				ToAttack();
+				setStatusToAttack();
 			}
 			else {
-				ToIdle();
+				setStatusToIdle();
 			}
 		}
 		else {
 			int cnt = m_note.OnAttack;
 			while (cnt--) {
-				BasicOnAttack();
+				onAttackBegin();
 				m_atked = true;
 			}
 			m_note.OnAttack = 0;
@@ -94,13 +94,13 @@ void Tower::FixedUpdate() {
 		break;
 	case Status::Dying:
 		if (m_note.DieOver) {
-			KickSelf();
+			kickSelf();
 		}
 		break;
 	case Status::Returning:
 		if (m_note.DieOver) {
-			m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
-			ToIdle();
+			m_actor->setStatus(Game::IActor::AnimationStatus::Normal);
+			setStatusToIdle();
 		}
 		break;
 	default:
@@ -108,23 +108,23 @@ void Tower::FixedUpdate() {
 	}
 }
 
-Game::MsgResultType Tower::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Tower::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	return DefTowerProc(msg, wparam, lparam);
 }
 
-void Tower::OnPositionChanged() {
+void Tower::onPositionChanged() {
 	if (m_actor)
-		m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
+		m_actor->setPosition(m_position[0], m_position[1], 0.0f);
 	if (m_body)
-		m_body->SetPosition(m_position[0], m_position[1]);
+		m_body->setPosition(m_position[0], m_position[1]);
 	if (m_detector)
-		m_detector->SetPosition(m_position[0], m_position[1]);
+		m_detector->setPosition(m_position[0], m_position[1]);
 }
 
 Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::OnHpDropToZero:
-		ToDying(m_defaultDirection);
+		setStatusToDying(m_defaultDirection);
 		m_died = true;
 		m_body.reset();
 		m_detector.reset();
@@ -133,7 +133,7 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 		if (m_died)
 			break;
 		if (m_actor)
-			m_actor->SetHit();
+			m_actor->setHitEffect();
 		return DefEntityProc(msg, wparam, lparam);
 	case Main::MsgId::OnSelecting:
 		if (!m_active || m_died)
@@ -145,82 +145,82 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 	return Game::MsgResult::OK;
 }
 
-void Tower::ToStart(Game::IActor::Direction d) {
+void Tower::setStatusToStart(Game::IActor::Direction d) {
 	if (m_actor)
-		m_actor->ChangeStatus(
+		m_actor->setStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
-	m_actor->SetInOut(true, true);
-	ToBegin(d);
+	m_actor->setInOutEffect(true, true);
+	setStatusToBegin(d);
 }
 
-void Tower::ToBegin(Game::IActor::Direction d) {
+void Tower::setStatusToBegin(Game::IActor::Direction d) {
 	m_status = Status::Begin;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Begin, d
 		);
 }
 
-void Tower::ToIdle(Game::IActor::Direction d) {
+void Tower::setStatusToIdle(Game::IActor::Direction d) {
 	m_status = Status::Idle;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Idle, d
 		);
 }
 
-void Tower::ToAttack(Game::IActor::Direction d) {
+void Tower::setStatusToAttack(Game::IActor::Direction d) {
 	m_status = Status::Attaking;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Attack, d
 		);
 }
 
-void Tower::ToStun(Game::IActor::Direction d) {
+void Tower::setStatusToStun(Game::IActor::Direction d) {
 	m_status = Status::Stun;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Stun, d
 		);
 }
 
-void Tower::ToDying(Game::IActor::Direction d) {
+void Tower::setStatusToDying(Game::IActor::Direction d) {
 	m_status = Status::Dying;
 	if (m_actor) {
-		m_actor->ChangeStatus(
+		m_actor->setStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Die, d
 		);
 	}
 }
 
-void Tower::ToReturn(Game::IActor::Direction d) {
+void Tower::setStatusToReturn(Game::IActor::Direction d) {
 	m_status = Status::Returning;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Die, d
 		);
 }
 
-bool Tower::TryAttack() {
+bool Tower::tryToAttack() {
 	return true;
 }
 
-bool Tower::StillCanAttack() {
+bool Tower::isStillCanAttack() {
 	return false;
 }
 
-void Tower::BasicOnAttack() {
-	StillCanAttack();
-	ReceiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
-	OnAttack();
-	ReceiveMessage(Game::MsgId::OnAttackEnd, 0, 0);
+void Tower::onAttackBegin() {
+	isStillCanAttack();
+	receiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
+	onAttack();
+	receiveMessage(Game::MsgId::OnAttackEnd, 0, 0);
 }
 
-void Tower::OnAttack() {}
+void Tower::onAttack() {}
 
 }

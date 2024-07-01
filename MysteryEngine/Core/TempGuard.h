@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <MysteryEngine/Core/MEAPI.h>
-
 namespace ME {
 
 /**
@@ -30,7 +28,7 @@ namespace ME {
  * @tparam _T: 任何可以无异常复制的类型。
 */
 template<class _T>
-class ME_API TempGuard final {
+class TempGuard final {
 public:
 	/**
 	 * @brief 构造函数，自动复制保留旧值。

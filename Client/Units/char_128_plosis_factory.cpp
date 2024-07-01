@@ -25,13 +25,13 @@
 #include "char_128_plosis_actor.h"
 #include "../Game/Stage.h"
 
-bool Unit::Char_128_Plosis_Factory::Load() {
+bool Unit::Char_128_Plosis_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
 #ifdef ARCHKNIGHTS_LIMITED
 	test = true;
 
-	char res = fac->CreatePose2(m_pose[0], m_pose[1], test ? "char_128_plosis_epoque#3" : "char_128_plosis");
+	char res = fac->createPose2(m_pose[0], m_pose[1], test ? "char_128_plosis_epoque#3" : "char_128_plosis");
 	if (res != 3)
 		return false;
 #else
@@ -43,17 +43,17 @@ bool Unit::Char_128_Plosis_Factory::Load() {
 	return true;
 }
 
-bool Unit::Char_128_Plosis_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+bool Unit::Char_128_Plosis_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto unit = std::make_shared<Unit::Char_128_Plosis>();
 
-	auto anim0 = m_pose[0]->CreateAnimation();
+	auto anim0 = m_pose[0]->createAnimation();
 	anim0->setup();
-	auto anim1 = m_pose[1]->CreateAnimation();
+	auto anim1 = m_pose[1]->createAnimation();
 	anim1->setup();
 
 #ifdef ARCHKNIGHTS_LIMITED
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::Global::stage->AddActor(actor);
+	Game::Global::stage->addActor(actor);
 	unit->m_actor = actor;
 #else
 	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);

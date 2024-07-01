@@ -31,7 +31,7 @@ Unit::Char_128_Plosis_Actor_Vanilla::Char_128_Plosis_Actor_Vanilla(
 	_b->setScale(0.65f);
 }
 
-void Unit::Char_128_Plosis_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_128_Plosis_Actor_Vanilla::setStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = GetInfo(false);
 	Model::AnimationInfo* back = GetInfo(true);
 	auto animf = GetAnimation(false);

@@ -38,10 +38,10 @@ public:
 	virtual ~Stage() = default;
 
 public:
-	virtual void AddGround(std::shared_ptr<ME::IModel> ground) = 0;
-	virtual void AddActor(std::shared_ptr<IActor> actor) = 0;
+	virtual void addGround(std::shared_ptr<ME::IModel> ground) = 0;
+	virtual void addActor(std::shared_ptr<IActor> actor) = 0;
 
-	virtual void SetGroundSize(float x, float y) = 0;
+	virtual void setGroundSize(float x, float y) = 0;
 };
 
 } // namespace Game

@@ -33,7 +33,7 @@ public:
 	virtual ~Char_101_Sora_Actor_Vanilla() = default;
 
 public:
-	virtual void ChangeStatus(AnimationStatus status) override;
+	virtual void setStatus(AnimationStatus status) override;
 };
 #else
 using Char_101_Sora_Actor_Vanilla = Actor;

@@ -26,6 +26,48 @@
     <Filter Include="Main">
       <UniqueIdentifier>{61eb2675-6809-4e52-9283-5b3612dccfc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Activities\Headers">
+      <UniqueIdentifier>{fc15eca6-73f6-4b15-a07b-c57f733c05bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Activities\Sources">
+      <UniqueIdentifier>{07444969-2192-4983-8326-1b5d30750b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Headers">
+      <UniqueIdentifier>{17aeaca9-e0cf-4399-bc63-218fbb0eabce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Sources">
+      <UniqueIdentifier>{eab3198f-a2ec-438e-8c68-ef6725ba3596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Headers">
+      <UniqueIdentifier>{a66430ea-b889-407a-8ecd-de88e8f25011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Sources">
+      <UniqueIdentifier>{dfd2da2d-aa47-4e19-bdad-7cab1318bc5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Headers">
+      <UniqueIdentifier>{b32f81fd-685a-4835-b0dc-124ae24c99d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Sources">
+      <UniqueIdentifier>{724e0903-812a-427b-a2c7-6aa3a8294347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Headers">
+      <UniqueIdentifier>{18f59942-dccc-4789-b604-24bae0b0cac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Sources">
+      <UniqueIdentifier>{0c8565a7-c467-418d-b518-a35ef3434a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Headers">
+      <UniqueIdentifier>{9869cbee-9489-4c12-a356-0b077230a63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Sources">
+      <UniqueIdentifier>{ac901f4f-12a5-47df-9eeb-2faf8658c8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units\Sources">
+      <UniqueIdentifier>{a9fc5d8f-042e-40aa-9460-97af59e6fdb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units\Headers">
+      <UniqueIdentifier>{1bce8187-9980-4ffe-b779-29aabac3ddea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.h">
@@ -34,203 +76,209 @@
     <ClInclude Include="resource.h">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="Activities\Act00_Debug.h">
+      <Filter>Activities\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Activities\Act01_DefaultEntrance.h">
-      <Filter>Activities</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Activities\Act02_TestActivity.h">
-      <Filter>Activities</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Activities\Act03_Opening.h">
-      <Filter>Activities</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Activities\Act04_Load.h">
-      <Filter>Activities</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Activities\Act05_Title.h">
-      <Filter>Activities</Filter>
-    </ClInclude>
-    <ClInclude Include="Activities\Act00_Debug.h">
-      <Filter>Activities</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Activities\Act06_Game.h">
-      <Filter>Activities</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\GameCommon.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\ITitle.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\Title.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\TypeDef.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Entity.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Global.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Board.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Stage.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\MsgResult.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Host.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\ActorGroup.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\AnimationFrames.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Ground.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\AnimationSpine.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\tiny_obj_loader.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\IAnimation.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\IGround.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Actor.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\IWorld.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\IDetector.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\IBody.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\IWall.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\World.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Detector.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\IFixture.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Body.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Attribute.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Modifier.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\BasicMsgId.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\AtkDmgHeal.h">
-      <Filter>Game</Filter>
+      <Filter>Activities\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game\Ability.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Hook.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Wall.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\IActor.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Shadow.h">
-      <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\FrictionBody.h">
-      <Filter>Physics</Filter>
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game\ActorVertex.h">
-      <Filter>Game</Filter>
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\AtkDmgHeal.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Attribute.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BasicMsgId.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Board.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Entity.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Global.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Hook.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Host.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\IActor.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Modifier.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MsgResult.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Stage.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TypeDef.h">
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\Creator.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\EntityFactory.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\HostMsgId.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\Initalizator.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\ISummonMngr.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\MapHost.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\Mover.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\MsgId.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\SummonMngr.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\Tower.h">
-      <Filter>Main</Filter>
+      <Filter>Main\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Actor.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Actor2.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ActorGroup.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\AnimationFrames.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\AnimationInfo.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\AnimationSpine.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Ground.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\IAnimation.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\IGround.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Shadow.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\tiny_obj_loader.h">
+      <Filter>Models\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Body.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Detector.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\FrictionBody.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IBody.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IDetector.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IFixture.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IWall.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\IWorld.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Wall.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\World.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\GameCommon.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\ITitle.h">
+      <Filter>Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Title.h">
+      <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_101_sora.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_101_sora_actor.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_101_sora_factory.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_128_plosis.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_128_plosis_actor.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_128_plosis_factory.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_151_myrtle.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_151_myrtle_actor.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_151_myrtle_factory.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\enemy_1002_nsabr.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\enemy_1002_nsabr_actor.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\enemy_1002_nsabr_factory.h">
-      <Filter>Units</Filter>
+      <Filter>Units\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -239,149 +287,155 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act02_TestActivity.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act03_Opening.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act04_Load.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act05_Title.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act00_Debug.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Activities\Act06_Game.cpp">
-      <Filter>Activities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\GameCommon.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\ITitle.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\Title.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="API.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Entity.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Activities\Act00_Debug.cpp">
+      <Filter>Activities\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Global.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Activities\Act01_DefaultEntrance.cpp">
+      <Filter>Activities\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act02_TestActivity.cpp">
+      <Filter>Activities\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act03_Opening.cpp">
+      <Filter>Activities\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act04_Load.cpp">
+      <Filter>Activities\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act05_Title.cpp">
+      <Filter>Activities\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Activities\Act06_Game.cpp">
+      <Filter>Activities\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Game\Board.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Stage.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Game\Entity.cpp">
+      <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Host.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\ActorGroup.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\AnimationFrames.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Ground.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\AnimationSpine.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Actor.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Detector.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\World.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Body.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Modifier.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Game\Global.cpp">
+      <Filter>Game\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Game\Hook.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\Wall.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="Game\Host.cpp">
+      <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Shadow.cpp">
-      <Filter>Models</Filter>
+    <ClCompile Include="Game\Modifier.cpp">
+      <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\FrictionBody.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="Game\Stage.cpp">
+      <Filter>Game\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\Creator.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\EntityFactory.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\Initalizator.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\MapHost.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\Mover.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\SummonMngr.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\Tower.cpp">
-      <Filter>Main</Filter>
+      <Filter>Main\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Actor.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Actor2.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ActorGroup.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\AnimationFrames.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\AnimationSpine.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Ground.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Shadow.cpp">
+      <Filter>Models\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Body.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Detector.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\FrictionBody.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\IBody.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Wall.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\World.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\GameCommon.cpp">
+      <Filter>Scenes\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\ITitle.cpp">
+      <Filter>Scenes\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Title.cpp">
+      <Filter>Scenes\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_101_sora.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_101_sora_actor.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_101_sora_factory.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_128_plosis.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_128_plosis_actor.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_128_plosis_factory.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_151_myrtle.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_151_myrtle_actor.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_151_myrtle_factory.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\enemy_1002_nsabr.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\enemy_1002_nsabr_actor.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp">
-      <Filter>Units</Filter>
+      <Filter>Units\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

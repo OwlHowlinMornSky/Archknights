@@ -31,25 +31,25 @@ Unit::Enemy_1002_nsabr_Factory::Enemy_1002_nsabr_Factory() :
 
 Unit::Enemy_1002_nsabr_Factory::~Enemy_1002_nsabr_Factory() {}
 
-bool Unit::Enemy_1002_nsabr_Factory::Load() {
+bool Unit::Enemy_1002_nsabr_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
-	bool res = fac->CreateEnemyPose(m_pose[0], "enemy_1002_nsabr");
+	bool res = fac->createEnemyPose(m_pose[0], "enemy_1002_nsabr");
 	if (!res)
 		return false;
 
 	return true;
 }
 
-bool Unit::Enemy_1002_nsabr_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+bool Unit::Enemy_1002_nsabr_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto unit = std::allocate_shared<Unit::Enemy_1002_nsabr>(m_alloc);
 
-	auto anim0 = m_pose[0]->CreateAnimation();
+	auto anim0 = m_pose[0]->createAnimation();
 	anim0->setup();
 
 	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
 
-	Game::Global::stage->AddActor(actor);
+	Game::Global::stage->addActor(actor);
 
 	unit->m_actor = actor;
 

@@ -45,9 +45,9 @@ void IModel::clear() {}
 
 void IModel::update(float dt) {}
 
-void IModel::setOutline(bool enabled) {}
-
 void IModel::setColor(float r, float g, float b, float a) {}
+
+void IModel::setOutlineEnabled(bool enabled) {}
 
 void IModel::setWaitingForQuit() {
 	m_waitingForQuit = true;

@@ -34,7 +34,7 @@ Physics::Wall::~Wall() {
 }
 
 
-void Physics::Wall::SetSize(int m, int n) {
+void Physics::Wall::setGroundSize(int m, int n) {
 	if (m_bound) {
 		m_body->DestroyFixture(m_bound);
 	}
@@ -57,7 +57,7 @@ void Physics::Wall::SetSize(int m, int n) {
 	m_bound = m_body->CreateFixture(&fixDef);
 }
 
-void Physics::Wall::AddWallBlock(int posx, int posy) {
+void Physics::Wall::addWallTile(int posx, int posy) {
 	b2PolygonShape shape;
 	shape.SetAsBox(0.5f, 0.5f, { posx + 0.5f, posy + 0.5f }, 0.0f);
 

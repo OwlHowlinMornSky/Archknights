@@ -25,6 +25,7 @@
 #include "../Game/Stage.h"
 #include "../Main/Creator.h"
 #include "../Activities/Act01_DefaultEntrance.h"
+#include <MysteryEngine/G3D/G3dGlobal.h>
 
 namespace Activity {
 
@@ -35,17 +36,17 @@ Act06_Game::~Act06_Game() noexcept {}
 
 bool Act06_Game::prepare(ME::Window& wnd) noexcept {
 	r(wnd);
-	int res = Main::Creator::setup();
+	int res = Main::Creator::Setup();
 	return res == 0;
 }
 
 void Act06_Game::start() noexcept {
 	Game::Global::board->SetExitCallback(std::bind(&Act06_Game::ExitGame, this, std::placeholders::_1));
-	UpdateSize(r->getRealtimeSize());
+	updateSize(r->getRealtimeSize());
 }
 
 void Act06_Game::stop() noexcept {
-	Main::Creator::drop();
+	Main::Creator::Drop();
 	r();
 	return;
 }
@@ -56,11 +57,11 @@ bool Act06_Game::handleEvent(const sf::Event& evt) {
 		r->setWaitingForStop();
 		return true;
 	case sf::Event::Resized:
-		UpdateSize({ evt.size.width, evt.size.height });
+		updateSize({ evt.size.width, evt.size.height });
 		break;
 	}
 	sf::Event e = evt;
-	Game::Global::board->PostMsg(1, 0, (intptr_t)&e);
+	Game::Global::board->postMsg(1, 0, (intptr_t)&e);
 	return false;
 }
 
@@ -70,7 +71,8 @@ void Act06_Game::update(sf::Time dtime) {
 #endif // _DEBUG
 	if (m_paused)
 		dtime = sf::Time::Zero;
-	Game::Global::board->Update(dtime.asMicroseconds());
+	ME::G3dGlobal::SetActive(true);
+	Game::Global::board->update(dtime.asMicroseconds());
 	Game::Global::stage->update(dtime.asSeconds());
 	Game::Global::stage->render();
 	r->draw(*Game::Global::stage);
@@ -95,7 +97,7 @@ void Act06_Game::ExitGame(int code) {
 	return;
 }
 
-void Act06_Game::UpdateSize(sf::Vector2u size) {
+void Act06_Game::updateSize(sf::Vector2u size) {
 	Game::Global::stage->resize(size);
 }
 

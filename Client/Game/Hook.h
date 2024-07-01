@@ -46,7 +46,7 @@ class Hook {
 public:
 	Hook();
 
-	int CallHook(Entity& entity, EntityMsg& msg);
+	int callHook(Entity& entity, EntityMsg& msg);
 
 protected:
 	virtual int HookProc(Entity& entity, EntityMsg& msg) = 0;

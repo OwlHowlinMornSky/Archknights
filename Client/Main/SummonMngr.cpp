@@ -35,12 +35,12 @@ SummonMngr::SummonMngr() {}
 
 SummonMngr::~SummonMngr() {}
 
-void SummonMngr::AddBegin() {
+void SummonMngr::beginAdd() {
 	Model::IAnimationFactory::Instance();
 	return;
 }
 
-bool SummonMngr::AddEntity(size_t id, bool isEnemy) {
+bool SummonMngr::addEntity(size_t id, bool isEnemy) {
 	SummonData data;
 	data.id = id;
 
@@ -54,7 +54,7 @@ bool SummonMngr::AddEntity(size_t id, bool isEnemy) {
 			return false;
 		}
 	}
-	if (!data.factory->Load()) {
+	if (!data.factory->load()) {
 		return false;
 	}
 
@@ -62,35 +62,35 @@ bool SummonMngr::AddEntity(size_t id, bool isEnemy) {
 	return true;
 }
 
-void SummonMngr::AddEnd() {
+void SummonMngr::endAdd() {
 	Model::IAnimationFactory::Drop();
 	return;
 }
 
-void SummonMngr::OnJoined() {
-	Game::Global::board->SubscribeMsg(Game::MsgId::Summon, m_location);
+void SummonMngr::onJoined() {
+	Game::Global::board->subscribeMsg(Game::MsgId::Summon, m_location);
 }
 
-void SummonMngr::OnKicking() {
-	Game::Global::board->UnsubscribeMsg(Game::MsgId::Summon, m_location);
+void SummonMngr::onKicking() {
+	Game::Global::board->unsubscribeMsg(Game::MsgId::Summon, m_location);
 }
 
-void SummonMngr::FixedUpdate() {}
+void SummonMngr::fixedUpdate() {}
 
-Game::MsgResultType SummonMngr::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType SummonMngr::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::Summon:
 		if (wparam < m_data.size()) {
 			SummonData& data = m_data[wparam];
 
 			std::shared_ptr<Entity> entity;
-			data.factory->CreateEntity(entity);
+			data.factory->createEntity(entity);
 
 			float* pos = (float*)lparam;
 
 			entity->setPosition(pos[0], pos[1]); // test
 
-			Game::Global::board->JoinEntity(entity);
+			Game::Global::board->joinEntity(entity);
 		}
 		break;
 	default:

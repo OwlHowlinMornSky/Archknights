@@ -29,9 +29,9 @@ namespace Model {
 class IObjModel :
 	public ME::IModel {
 public:
-	virtual bool LoadModelData(const char* filename) = 0;
+	virtual bool loadModelData(const char* filename) = 0;
 
-	virtual void SetSize(float x, float y) = 0;
+	virtual void setGroundSize(float x, float y) = 0;
 
 public:
 	static std::shared_ptr<IObjModel> Create();

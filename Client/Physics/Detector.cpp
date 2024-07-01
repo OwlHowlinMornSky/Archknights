@@ -32,18 +32,18 @@ Physics::Detector::~Detector() {
 	m_fixtures.clear();
 }
 
-void Detector::SetPosition(float x, float y) {
+void Detector::setPosition(float x, float y) {
 	return;
 }
 
-void Detector::OnBeginContact(IFixture* another) {
+void Detector::onBeginContact(IFixture* another) {
 	auto& i = m_list[another->m_id];
 	i.count++;
 	i.location = another->m_loc;
 	return;
 }
 
-void Detector::OnEndContact(IFixture* another) {
+void Detector::onEndContact(IFixture* another) {
 	auto it = m_list.find(another->m_id);
 	if (it == m_list.end())
 		return;
@@ -55,15 +55,15 @@ void Detector::OnEndContact(IFixture* another) {
 	return;
 }
 
-std::map<Game::EntityIdType, MapValue>::iterator Detector::ListBegin() {
+std::map<Game::EntityIdType, MapValue>::iterator Detector::listBegin() {
 	return m_list.begin();
 }
 
-std::map<Game::EntityIdType, MapValue>::iterator Detector::ListEnd() {
+std::map<Game::EntityIdType, MapValue>::iterator Detector::listEnd() {
 	return m_list.end();
 }
 
-void Detector::CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius) {
+void Detector::createAsCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius) {
 	if (!m_fixtures.empty())
 		return;
 
@@ -86,7 +86,7 @@ void Detector::CreateCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radi
 	return;
 }
 
-void Detector::CreateRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles) {
+void Detector::createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles) {
 	if (!m_fixtures.empty())
 		return;
 
@@ -140,13 +140,13 @@ DetectorIndependent::~DetectorIndependent() {
 	return;
 }
 
-void DetectorIndependent::SetPosition(float x, float y) {
+void DetectorIndependent::setPosition(float x, float y) {
 	auto angle = m_body->GetAngle();
 	m_body->SetTransform({ x, y }, angle);
 	return;
 }
 
-void DetectorIndependent::CreateCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius) {
+void DetectorIndependent::createAsCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius) {
 	if (m_body)
 		return;
 
@@ -155,10 +155,10 @@ void DetectorIndependent::CreateCircle(b2World* world, uint8_t target, b2Vec2 po
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
 	m_body = world->CreateBody(&bodyDef);
-	return Detector::CreateCircle(m_body, target, pos, radius);
+	return Detector::createAsCircle(m_body, target, pos, radius);
 }
 
-void DetectorIndependent::CreateRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows) {
+void DetectorIndependent::createAsRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows) {
 	if (m_body)
 		return;
 
@@ -167,10 +167,10 @@ void DetectorIndependent::CreateRows(b2World* world, uint8_t target, b2Vec2 pos,
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
 	m_body = world->CreateBody(&bodyDef);
-	return Detector::CreateRows(m_body, target, pos, rows);
+	return Detector::createAsRows(m_body, target, pos, rows);
 }
 
-void DetectorIndependent::CreateTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles) {
+void DetectorIndependent::createAsTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles) {
 	if (m_body)
 		return;
 

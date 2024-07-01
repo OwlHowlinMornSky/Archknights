@@ -23,7 +23,7 @@
 
 namespace Main::Creator {
 
-int setup();
-void drop();
+int Setup();
+void Drop();
 
 }

@@ -22,10 +22,10 @@
 #include "ITitle.h"
 #include "Title.h"
 
-namespace Scene::Factory {
+namespace Scene {
 
-std::unique_ptr<ITitle> GetTitle() {
-    return std::make_unique<Title>();
+std::unique_ptr<ITitle> ITitle::Create() {
+	return std::make_unique<Title>();
 }
 
-} // namespace Scene
+}

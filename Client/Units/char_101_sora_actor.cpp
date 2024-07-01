@@ -29,7 +29,7 @@ Unit::Char_101_Sora_Actor_Vanilla::Char_101_Sora_Actor_Vanilla(
 	_f->setScale(0.725f);
 }
 
-void Unit::Char_101_Sora_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_101_Sora_Actor_Vanilla::setStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = &m_info;
 	auto animf = m_current;
 

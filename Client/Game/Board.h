@@ -42,11 +42,11 @@ public:
 	Board();
 	virtual ~Board();
 
-	static int setup();
-	static void drop();
+	static int Setup();
+	static void Drop();
 
 	void SetExitCallback(std::function<void(int)> cb);
-	void Clear();
+	void clear();
 
 // 基础功能
 public:
@@ -54,18 +54,18 @@ public:
 	 * @brief 是否没有实体。
 	 * @return true则没有实体。
 	*/
-	bool IsEmpty();
+	bool isEmpty();
 
 	/**
 	 * @brief 将指定实体入场。这会让实体收到OnJoined。
 	 * @param entity 指定实体。
 	*/
-	void JoinEntity(std::shared_ptr<Entity> entity);
+	void joinEntity(std::shared_ptr<Entity> entity);
 	/**
 	 * @brief 让指定实体退场。这会让实体收到OnKicking。
 	 * @param location 指定实体的位置。
 	*/
-	void KickEntity(size_t location);
+	void kickEntity(size_t location);
 
 	void ExitGame(int code);
 
@@ -74,7 +74,7 @@ public:
 	 * @param location 指定实体的位置。
 	 * @return 相应位置的实体。（可能为nullptr）
 	*/
-	std::shared_ptr<Entity> EntityAt(size_t location);
+	std::shared_ptr<Entity> getEntityAt(size_t location);
 
 protected:
 	EntityIdType m_entityIdCnt; // 实体id计数，用于让每个实体都有独一无二的标识和判断方法。
@@ -90,9 +90,9 @@ public:
 	 * @brief 更新游戏板。
 	 * @param dt 时间增量。
 	*/
-	void Update(long long dt);
+	void update(long long dt);
 
-	void RegistryForExit(EntityLocationType location);
+	void registryForExit(EntityLocationType location);
 
 protected:
 	std::stack<EntityLocationType> m_readyForExit;
@@ -107,7 +107,7 @@ public:
 	 * @param lparam 消息l参数。
 	 * @return 消息回执。
 	*/
-	MsgResultType SendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	MsgResultType sendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 向指定实体发送消息。
 	 * @param location 指定的位置。
@@ -117,41 +117,41 @@ public:
 	 * @param lparam 消息l参数。
 	 * @return 消息回执。
 	*/
-	MsgResultType TellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	MsgResultType tellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 分发消息。即 向所有订阅指定消息的实体发送消息。
 	 * @param msg 消息id。即 指定消息。
 	 * @param wparam 消息w参数。
 	 * @param lparam 消息l参数。
 	*/
-	void PostMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	void postMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 广播消息。即向在场所有实体发送消息。
 	 * @param msg 消息id。
 	 * @param wparam 消息w参数。
 	 * @param lparam 消息l参数。
 	*/
-	void Broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	void broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 订阅消息。
 	 * @param msg 订阅的消息id。
 	 * @param location 本实体的位置。
 	*/
-	void SubscribeMsg(MsgIdType msg, EntityLocationType location);
+	void subscribeMsg(MsgIdType msg, EntityLocationType location);
 	/**
 	 * @brief 退订消息。
 	 * @param msg 退订的消息id。
 	 * @param location 本实体的位置。
 	*/
-	void UnsubscribeMsg(MsgIdType msg, EntityLocationType location);
+	void unsubscribeMsg(MsgIdType msg, EntityLocationType location);
 
 protected:
 	std::map<MsgIdType, std::set<EntityLocationType>> m_msgMap; // 消息订阅表。
 	unsigned long long m_time;
 
 public:
-	std::shared_ptr<Host> GetHost(int job);
-	void SetHost(int job, std::shared_ptr<Host> host);
+	std::shared_ptr<Host> getHost(int job);
+	void setHost(int job, std::shared_ptr<Host> host);
 
 protected:
 	std::vector<std::shared_ptr<Host>> m_hosts;

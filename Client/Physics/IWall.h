@@ -29,8 +29,8 @@ protected:
 public:
 	virtual ~IWall() = default;
 
-	virtual void SetSize(int m, int n) = 0;
-	virtual void AddWallBlock(int posx, int posy) = 0;
+	virtual void setGroundSize(int m, int n) = 0;
+	virtual void addWallTile(int posx, int posy) = 0;
 };
 
 }

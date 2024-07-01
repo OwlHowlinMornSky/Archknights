@@ -84,8 +84,8 @@ public:
 	Loads Object Model from filepath.
 	Any material and texture files should be placed relative to the .obj file.
 	*/
-	virtual bool LoadModelData(const char* filename) override;
-	virtual void SetSize(float x, float y) override;
+	virtual bool loadModelData(const char* filename) override;
+	virtual void setGroundSize(float x, float y) override;
 
 	virtual void update(float dt) override;
 	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;

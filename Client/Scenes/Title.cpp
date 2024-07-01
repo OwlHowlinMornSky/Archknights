@@ -256,13 +256,13 @@ Title::Title() :
 
 Title::~Title() {}
 
-void Title::SetScale(float r) {
+void Title::setScale(float r) {
 	sf::Vector2u size = m_renderTexture.getSize();
 	m_camera.setAspectRatio(1.0f * size.x / size.y);
 	return;
 }
 
-void Title::SetOffset(float r) {
+void Title::setOffset(float r) {
 	m_llm.setPosition(0.0f, 0.0f, 0.0f - r);
 }
 

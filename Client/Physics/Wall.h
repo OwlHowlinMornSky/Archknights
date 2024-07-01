@@ -34,8 +34,8 @@ public:
 	Wall();
 	virtual ~Wall();
 
-	virtual void SetSize(int m, int n) override;
-	virtual void AddWallBlock(int posx, int posy) override;
+	virtual void setGroundSize(int m, int n) override;
+	virtual void addWallTile(int posx, int posy) override;
 
 	void Create(b2World* world);
 

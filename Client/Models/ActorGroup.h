@@ -37,7 +37,7 @@ public:
 	virtual ~ActorGroup();
 
 public:
-	void AddActor(std::shared_ptr<Game::IActor> actor);
+	void addActor(std::shared_ptr<Game::IActor> actor);
 
 public:
 	virtual bool setup();
@@ -46,7 +46,7 @@ public:
 	virtual void update(float dt) override;
 	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
-	void DrawShadow(ME::Camera* camera, ME::Shader* shader);
+	void drawShadow(ME::Camera* camera, ME::Shader* shader);
 
 protected:
 	std::list<std::shared_ptr<Game::IActor>> m_actors;

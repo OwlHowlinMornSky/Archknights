@@ -279,7 +279,7 @@ ActorGroup::~ActorGroup() {
 	clear();
 }
 
-void ActorGroup::AddActor(std::shared_ptr<Game::IActor> actor) {
+void ActorGroup::addActor(std::shared_ptr<Game::IActor> actor) {
 	m_actors.push_back(actor);
 }
 
@@ -334,7 +334,7 @@ void ActorGroup::draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(shader);
 }
 
-void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
+void ActorGroup::drawShadow(ME::Camera* camera, ME::Shader* shader) {
 	if (m_actors.empty())
 		return;
 	ME::Shader::Bind(m_shadowShader.get());
@@ -346,7 +346,7 @@ void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
 	for (auto it = m_actors.begin(), ed = m_actors.end(); it != ed; ++it, ++i) {
 		if (i >= 256) {
 			m_shadowShader->updateV(0, 256, &(u[0][0]));
-			m_shadow.DrawInstance(256);
+			m_shadow.drawInstance(256);
 			i = 0;
 		}
 		Game::IActor& a = **it;
@@ -354,7 +354,7 @@ void ActorGroup::DrawShadow(ME::Camera* camera, ME::Shader* shader) {
 		u[i] = { p.x, p.y, a.m_shadowRadius, a.m_shadowAlpha };
 	}
 	m_shadowShader->updateV(0, i, &(u[0][0]));
-	m_shadow.DrawInstance(i);
+	m_shadow.drawInstance(i);
 	i = 0;
 
 	ME::Shader::Bind(shader);

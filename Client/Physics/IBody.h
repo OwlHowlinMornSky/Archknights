@@ -34,25 +34,29 @@ public:
 	virtual ~IBody() = default;
 
 public:
-	virtual void SetPosition(float x, float y) = 0;
-	virtual const float* GetPosition() const = 0;
-	virtual void SetVelocity(float x, float y) = 0;
+	virtual void setPosition(float x, float y) = 0;
+	virtual const float* getPosition() const = 0;
+	virtual void setVelocity(float x, float y) = 0;
 
-	virtual size_t AddDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
-	virtual size_t AddDetectorRows(uint8_t target, float x, float y, Rows* rows) = 0;
+	virtual size_t addDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
+	virtual size_t addDetectorRows(uint8_t target, float x, float y, Rows* rows) = 0;
 
-	virtual IDetector* GetDetector(size_t id) = 0;
+	virtual IDetector* getDetector(size_t id) = 0;
 
-	virtual void SetMove(float maxv, float maxa) = 0;
-	virtual void SetMoveSpeed(float maxv) = 0;
-	virtual void SetMoveAcceleration(float maxa) = 0;
-	virtual void BeginNormal() = 0;
-	virtual void MoveTo(float x, float y) = 0;
-	virtual void BeginUnbalance(bool dontHitWall = false) = 0;
-	virtual void Push(float ix, float iy) = 0;
-	virtual void Pull(float fx, float fy) = 0;
-	virtual void ClearSpeed() = 0;
-	virtual void GetPositionVelocity(float* out_position, float* out_velocity) = 0;
+	virtual void setMove(float maxv, float maxa) = 0;
+	virtual void setMoveSpeed(float maxv) = 0;
+	virtual void setMoveAcceleration(float maxa) = 0;
+	virtual void setStatusNormal() = 0;
+	virtual void moveTo(float x, float y) = 0;
+	virtual void setStatusUnbalance(bool dontHitWall = false) = 0;
+	virtual void impulse(float ix, float iy) = 0;
+	virtual void pull(float fx, float fy) = 0;
+	virtual void clearSpeed() = 0;
+	virtual void getPositionVelocity(float* out_position, float* out_velocity) = 0;
+
+public:
+	virtual void onBeginContact(IFixture* another) override;
+	virtual void onEndContact(IFixture* another) override;
 };
 
 }

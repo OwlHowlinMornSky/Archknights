@@ -40,17 +40,17 @@ public:
 	virtual ~SummonMngr();
 
 public:
-	virtual void AddBegin() override;
-	virtual bool AddEntity(size_t id, bool isEnemy = false) override;
-	virtual void AddEnd() override;
+	virtual void beginAdd() override;
+	virtual bool addEntity(size_t id, bool isEnemy = false) override;
+	virtual void endAdd() override;
 
 public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate();
+	virtual void fixedUpdate();
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
 	std::vector<SummonData> m_data;

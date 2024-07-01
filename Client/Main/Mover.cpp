@@ -37,60 +37,60 @@ Mover::Mover() :
 
 Mover::~Mover() {}
 
-void Mover::OnJoined() {
+void Mover::onJoined() {
 	if (m_actor) {
 		m_actor->m_note = &m_note;
 	}
 	m_checkpointTarget = 0;
 	// 创建主体
-	m_body = Game::Global::board->m_world->CreateBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
+	m_body = Game::Global::board->m_world->createBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
 	m_body->SetId(m_id);
 	m_body->SetLocation(m_location);
 	// 触发动画
-	ToStart();
+	setStatusToStart();
 	m_active = true;
 	m_died = false;
 }
 
-void Mover::OnKicking() {
+void Mover::onKicking() {
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
-		m_actor->SetInOut(false);
+		m_actor->setInOutEffect(false);
 	m_actor.reset();
 }
 
-void Mover::FixedUpdate() {
+void Mover::fixedUpdate() {
 	switch (m_status) {
 	case Status::Begin:
 		if (m_note.StartOver) {
 			m_active = true;
-			ToIdle();
+			setStatusToIdle();
 		}
 		break;
 	case Status::Idle:
-		if (abilities[AbilityType::Attack].IsAbled()) {
-			if (!TryAttack()) {
+		if (m_abilities[AbilityType::Attack].isAbled()) {
+			if (!tryToAttack()) {
 				m_atked = false;
-				ToAttack();
+				setStatusToAttack();
 				break;
 			}
 		}
 		break;
 	case Status::Attaking:
 		if (m_note.AttackOver) {
-			if (!TryAttack()) {
+			if (!tryToAttack()) {
 				m_atked = false;
-				ToAttack();
+				setStatusToAttack();
 			}
 			else {
-				ToIdle();
+				setStatusToIdle();
 			}
 		}
 		else {
 			int cnt = m_note.OnAttack;
 			while (cnt--) {
-				BasicOnAttack();
+				onAttackBegin();
 				m_atked = true;
 			}
 			m_note.OnAttack = 0;
@@ -98,16 +98,16 @@ void Mover::FixedUpdate() {
 		break;
 	case Status::Dying:
 		float velocity[2];
-		m_body->GetPositionVelocity(m_position, velocity);
-		OnPositionChanged();
+		m_body->getPositionVelocity(m_position, velocity);
+		onPositionChanged();
 		if (m_note.DieOver) {
-			KickSelf();
+			kickSelf();
 		}
 		break;
 	case Status::Returning:
 		if (m_note.DieOver) {
-			m_actor->ChangeStatus(Game::IActor::AnimationStatus::Normal);
-			ToIdle();
+			m_actor->setStatus(Game::IActor::AnimationStatus::Normal);
+			setStatusToIdle();
 		}
 		break;
 	case Status::Moving:
@@ -146,64 +146,64 @@ void Mover::FixedUpdate() {
 		float dx = m_moveTargetPos[0] - m_position[0];
 		float dy = m_moveTargetPos[1] - m_position[1];
 		if (m_tempMoveTarget && std::abs(dx) < 0.4f && std::abs(dy) < 0.4f) { // 到达临时目标
-			if (TryMove()) {
+			if (tryToMove()) {
 				dx = m_moveTargetPos[0] - m_position[0];
 				dy = m_moveTargetPos[1] - m_position[1];
 				float l = std::sqrtf(dx * dx + dy * dy);
-				float spd = attributes[AttributeType::MoveSpd].effective;
+				float spd = m_attributes[AttributeType::MoveSpd].effective;
 				if (l <= spd) {
 					m_position[0] = m_moveTargetPos[0];
 					m_position[1] = m_moveTargetPos[1];
-					OnPositionChanged();
+					onPositionChanged();
 				}
 				else {
 					m_position[0] += dx * spd / l;
 					m_position[1] += dy * spd / l;
-					OnPositionChanged();
-					m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+					onPositionChanged();
+					m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 				}
 			}
 			else { // 不再继续
-				m_body->ClearSpeed();
-				ToIdle();
+				m_body->clearSpeed();
+				setStatusToIdle();
 			}
 		}
 		else if (dx * dx + dy * dy < 0.0225f) { // 到达非临时目标
-			if (TryTakeNextMoveCmd() && TryMove()) {
+			if (tryToTakeNextMoveCmd() && tryToMove()) {
 				dx = m_moveTargetPos[0] - m_position[0];
 				dy = m_moveTargetPos[1] - m_position[1];
 				float l = std::sqrtf(dx * dx + dy * dy);
-				float spd = attributes[AttributeType::MoveSpd].effective;
+				float spd = m_attributes[AttributeType::MoveSpd].effective;
 				if (l <= spd) {
 					m_position[0] = m_moveTargetPos[0];
 					m_position[1] = m_moveTargetPos[1];
-					OnPositionChanged();
+					onPositionChanged();
 				}
 				else {
 					m_position[0] += dx * spd / l;
 					m_position[1] += dy * spd / l;
-					OnPositionChanged();
-					m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+					onPositionChanged();
+					m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 				}
 			}
 			else {
-				m_body->ClearSpeed();
-				ToIdle();
+				m_body->clearSpeed();
+				setStatusToIdle();
 			}
 		}
 		else {
 			float l = std::sqrtf(dx * dx + dy * dy);
-			float spd = attributes[AttributeType::MoveSpd].effective;
+			float spd = m_attributes[AttributeType::MoveSpd].effective;
 			if (l <= spd) {
 				m_position[0] = m_moveTargetPos[0];
 				m_position[1] = m_moveTargetPos[1];
-				OnPositionChanged();
+				onPositionChanged();
 			}
 			else {
 				m_position[0] += dx * spd / l;
 				m_position[1] += dy * spd / l;
-				OnPositionChanged();
-				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+				onPositionChanged();
+				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 			}
 		}
 		break;
@@ -211,16 +211,16 @@ void Mover::FixedUpdate() {
 	case Status::Unbalance:
 	{
 		float velocity[2];
-		m_body->GetPositionVelocity(m_position, velocity);
-		OnPositionChanged();
+		m_body->getPositionVelocity(m_position, velocity);
+		onPositionChanged();
 		if (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.01f) {
-			if (TryMove()) {
-				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
+			if (tryToMove()) {
+				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 			}
 			else { // 不再继续
-				m_body->ClearSpeed();
-				ToIdle();
+				m_body->clearSpeed();
+				setStatusToIdle();
 			}
 		}
 		break;
@@ -230,31 +230,31 @@ void Mover::FixedUpdate() {
 	}
 }
 
-Game::MsgResultType Mover::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Mover::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	return DefMoverProc(msg, wparam, lparam);
 }
 
-void Mover::OnPositionChanged() {
+void Mover::onPositionChanged() {
 	if (m_actor)
-		m_actor->SetPosition(m_position[0], m_position[1], 0.0f);
+		m_actor->setPosition(m_position[0], m_position[1], 0.0f);
 	if (m_body)
-		m_body->SetPosition(m_position[0], m_position[1]);
+		m_body->setPosition(m_position[0], m_position[1]);
 	if (m_detector)
-		m_detector->SetPosition(m_position[0], m_position[1]);
+		m_detector->setPosition(m_position[0], m_position[1]);
 }
 
 Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::OnHpDropToZero:
 		if (m_status == Status::Moving || m_status == Status::Unbalance) {
-			m_body->BeginUnbalance();
+			m_body->setStatusUnbalance();
 			float dx = m_moveTargetPos[0] - m_position[0];
 			float dy = m_moveTargetPos[1] - m_position[1];
 			float l = std::sqrtf(dx * dx + dy * dy);
-			float spd = attributes[AttributeType::MoveSpd].effective * 30.0f;
-			m_body->SetVelocity(dx * spd / l, dy * spd / l);
+			float spd = m_attributes[AttributeType::MoveSpd].effective * 30.0f;
+			m_body->setVelocity(dx * spd / l, dy * spd / l);
 		}
-		ToDying();
+		setStatusToDying();
 		m_died = true;
 		m_detector.reset();
 		break;
@@ -262,7 +262,7 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		if (m_died)
 			break;
 		if (m_actor)
-			m_actor->SetHit();
+			m_actor->setHitEffect();
 		return DefEntityProc(msg, wparam, lparam);
 	case Main::MsgId::OnSelecting:
 		if (!m_active || m_died) {
@@ -275,125 +275,125 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 	return Game::MsgResult::OK;
 }
 
-void Mover::ToStart(Game::IActor::Direction d) {
+void Mover::setStatusToStart(Game::IActor::Direction d) {
 	if (m_actor) {
-		m_actor->ChangeStatus(
+		m_actor->setStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
-		m_actor->SetInOut(true);
+		m_actor->setInOutEffect(true);
 	}
-	if (TryMove()) {
-		m_actor->InitDirection(
+	if (tryToMove()) {
+		m_actor->setDirection(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
 		//m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-		ToMoving(Game::IActor::Direction::NotCare);
+		setStatusToMoving(Game::IActor::Direction::NotCare);
 	}
 	else {
-		ToIdle(d);
+		setStatusToIdle(d);
 	}
 }
 
-void Mover::ToBegin(Game::IActor::Direction d) {
+void Mover::setStatusToBegin(Game::IActor::Direction d) {
 	m_status = Status::Begin;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Begin, d
 		);
 }
 
-void Mover::ToIdle(Game::IActor::Direction d) {
-	if (TryMove()) {
+void Mover::setStatusToIdle(Game::IActor::Direction d) {
+	if (tryToMove()) {
 		//m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-		ToMoving(
+		setStatusToMoving(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
 		return;
 	}
 	m_status = Status::Idle;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Idle, d
 		);
 }
 
-void Mover::ToAttack(Game::IActor::Direction d) {
+void Mover::setStatusToAttack(Game::IActor::Direction d) {
 	m_status = Status::Attaking;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Attack, d
 		);
 }
 
-void Mover::ToStun(Game::IActor::Direction d) {
+void Mover::setStatusToStun(Game::IActor::Direction d) {
 	m_status = Status::Stun;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Stun, d
 		);
 }
 
-void Mover::ToDying(Game::IActor::Direction d) {
+void Mover::setStatusToDying(Game::IActor::Direction d) {
 	m_status = Status::Dying;
 	if (m_actor) {
-		m_actor->ChangeStatus(
+		m_actor->setStatus(
 			Game::IActor::AnimationStatus::Normal
 		);
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Die, d
 		);
 	}
 }
 
-void Mover::ToReturn(Game::IActor::Direction d) {
+void Mover::setStatusToReturn(Game::IActor::Direction d) {
 	m_status = Status::Returning;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Die, d
 		);
 }
 
-void Mover::ToMoving(Game::IActor::Direction d) {
+void Mover::setStatusToMoving(Game::IActor::Direction d) {
 	m_status = Status::Moving;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Move, d
 		);
 }
 
-void Mover::ToUnbalance(Game::IActor::Direction d) {
+void Mover::setStatusToUnbalance(Game::IActor::Direction d) {
 	m_status = Status::Unbalance;
 	if (m_actor)
-		m_actor->TriggerAnimation(
+		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Default, d
 		);
 }
 
-bool Mover::TryAttack() {
+bool Mover::tryToAttack() {
 	return true;
 }
 
-bool Mover::StillCanAttack() {
+bool Mover::isStillCanAttack() {
 	return false;
 }
 
-void Mover::BasicOnAttack() {
-	StillCanAttack();
-	ReceiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
-	OnAttack();
-	ReceiveMessage(Game::MsgId::OnAttackEnd, 0, 0);
+void Mover::onAttackBegin() {
+	isStillCanAttack();
+	receiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
+	onAttack();
+	receiveMessage(Game::MsgId::OnAttackEnd, 0, 0);
 }
 
-void Mover::OnAttack() {}
+void Mover::onAttack() {}
 
-bool Mover::TryMove() {
+bool Mover::tryToMove() {
 	if (m_position[0] < 0.0f || m_position[1] < 0.0f)
 		return false;
 	int target[2] = { (int)m_position[0], (int)m_position[1] };
 	Game::MsgResultType res =
 		Game::Global::board->
-		GetHost(Game::HostJob::MapPathManager)->
-		ReceiveMessage(Main::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
+		getHost(Game::HostJob::MapPathManager)->
+		receiveMessage(Main::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
 	switch (res) {
 	case Game::MsgResult::Leader_TempRes:
 		m_tempMoveTarget = true;
@@ -406,7 +406,7 @@ bool Mover::TryMove() {
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
 		if (mx * mx + my * my < 0.0225f) {
-			return TryTakeNextMoveCmd();
+			return tryToTakeNextMoveCmd();
 		}
 		break;
 	}
@@ -422,7 +422,7 @@ bool Mover::TryMove() {
 	return true;
 }
 
-bool Mover::TryTakeNextMoveCmd() {
+bool Mover::tryToTakeNextMoveCmd() {
 	if (m_checkpointTarget > 4)
 		return false;
 	m_checkpointTarget++;

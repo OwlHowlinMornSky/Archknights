@@ -46,7 +46,7 @@ public:
 protected:
 	void ExitGame(int code);
 
-	void UpdateSize(sf::Vector2u size);
+	void updateSize(sf::Vector2u size);
 
 protected:
 	ME::WndRef r;

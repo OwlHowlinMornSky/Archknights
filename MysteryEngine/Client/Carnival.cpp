@@ -23,7 +23,7 @@
 
 #include <cassert>
 
-#include <MysteryEngine/Core/TempGuard.h>
+#include "../Core/TempGuard.h"
 #include "Callbacks.h"
 
 namespace {

@@ -86,7 +86,7 @@ void Shadow::draw(ME::Camera* camera, ME::Shader* shader) {
 	glCheck(glBindVertexArray(0));
 }
 
-void Shadow::DrawInstance(int count) {
+void Shadow::drawInstance(int count) {
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glDrawArraysInstanced(GL_QUADS, 0, 4, count));
 	glCheck(glBindVertexArray(0));
@@ -96,6 +96,6 @@ void Shadow::setColor(float r, float g, float b, float a) {
 
 }
 
-void Shadow::UpdateShader(ME::Shader* shader, ME::Camera* camera) {}
+void Shadow::updateShader(ME::Shader* shader, ME::Camera* camera) {}
 
 }

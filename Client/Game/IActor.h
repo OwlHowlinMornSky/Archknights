@@ -71,21 +71,19 @@ public:
 	IActor() = default;
 	virtual ~IActor() = default;
 
-	virtual void Exit() = 0;
+	virtual void setDirection(Direction direction) = 0;
 
-	virtual void InitDirection(Direction direction) = 0;
+	virtual void triggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
+	virtual void triggerAnimationEx(int excode, void* data) = 0;
 
-	virtual void TriggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
-	virtual void TriggerAnimationEx(int excode, void* data) = 0;
-	virtual void TurnDirection(bool isLeft) = 0;
+	virtual void turnLeftRight(bool isLeft) = 0;
 
-	virtual void ChangeStatus(AnimationStatus status) = 0;
+	virtual void setStatus(AnimationStatus status) = 0;
 
-	virtual void SetPosition(float x, float y, float z) = 0;
-	virtual void setOutline(bool enabled) {}
+	virtual void setPosition(float x, float y, float z) = 0;
 
-	virtual void SetHit() {}
-	virtual void SetInOut(bool in, bool onlyShadow = false) {}
+	virtual void setHitEffect() = 0;
+	virtual void setInOutEffect(bool in, bool onlyShadow = false) = 0;
 
 public:
 	AnimEventNote* m_note;

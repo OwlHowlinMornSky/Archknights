@@ -50,7 +50,7 @@ bool Act05_Title::prepare(ME::Window& wnd) noexcept {
 }
 
 void Act05_Title::start() noexcept {
-	m_scene = Scene::Factory::GetTitle();
+	m_scene = Scene::ITitle::Create();
 	m_scene->resize(r_wnd->getSize());
 	m_scene->setup();
 
@@ -123,8 +123,8 @@ void Act05_Title::update(sf::Time dtime) {
 			m_st = ST_NORMAL;
 		}
 		else {
-			m_scene->SetScale(1.0f);
-			m_scene->SetOffset(-0.5f);
+			m_scene->setScale(1.0f);
+			m_scene->setOffset(-0.5f);
 
 			r_wnd->setActive(false);
 			m_scene->update(dtime.asSeconds());
@@ -145,8 +145,8 @@ void Act05_Title::update(sf::Time dtime) {
 	default:
 		m_st = ST_IN;
 		m_screen.setFillColor(sf::Color::Black);
-		m_scene->SetScale(0.75f);
-		m_scene->SetOffset(0.5f);
+		m_scene->setScale(0.75f);
+		m_scene->setOffset(0.5f);
 		m_timer = sf::Time::Zero;
 	}
 	return;

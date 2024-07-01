@@ -84,7 +84,7 @@ public:
 	 * @param _id
 	 * @param _f
 	 */
-	void SetSource(EntityLocationType _ad, EntityIdType _id, Modifier::SourceType::EntityFunction _f);
+	void setSource(EntityLocationType _ad, EntityIdType _id, Modifier::SourceType::EntityFunction _f);
 
 	/**
 	 * @brief 修改修饰目标。如果修饰器正生效，该函数*会*使之失效。
@@ -92,7 +92,7 @@ public:
 	 * @param targetId
 	 * @param attrib
 	 */
-	void SetTarget(EntityLocationType targetAd, EntityIdType targetId, Entity::AttributeType attrib);
+	void setTarget(EntityLocationType targetAd, EntityIdType targetId, Entity::AttributeType attrib);
 
 	/**
 	 * @brief 修改修饰值。如果修饰器正生效，该函数*不会*使之失效。
@@ -101,10 +101,10 @@ public:
 	 * @param add
 	 * @param times
 	 */
-	void SetValue(Attribute::ValueType grow, Attribute::ValueType percent, Attribute::ValueType add, Attribute::ValueType times);
+	void setValue(Attribute::ValueType grow, Attribute::ValueType percent, Attribute::ValueType add, Attribute::ValueType times);
 	
-	bool SetEnabled(bool enabled);
-	bool GetEnabled() const;
+	bool setEnabled(bool enabled);
+	bool getEnabled() const;
 
 protected:
 	bool m_enabled;

@@ -33,17 +33,17 @@ public:
 	virtual ~Char_128_Plosis();
 
 public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate();
+	virtual void fixedUpdate();
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
-	virtual bool TryAttack() override;
-	virtual bool StillCanAttack() override;
-	virtual void OnAttack() override;
+	virtual bool tryToAttack() override;
+	virtual bool isStillCanAttack() override;
+	virtual void onAttack() override;
 
 public:
 	Game::ModifySwitch m_m;

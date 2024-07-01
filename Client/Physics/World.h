@@ -65,17 +65,17 @@ public:
 	virtual ~World();
 
 public:
-	virtual void Update(float dt) override;
+	virtual void update(float dt) override;
 
-	virtual std::unique_ptr<IWall> CreateWall() override;
+	virtual std::unique_ptr<IWall> createWall() override;
 
-	virtual std::unique_ptr<IBody> CreateBodyTowerCircle(float x, float y, uint8_t type = FilterType::ArmyStand) override;
-	virtual std::unique_ptr<IBody> CreateBodyMoverCircle(float x, float y, uint8_t type = FilterType::EnemyStand) override;
-	virtual std::unique_ptr<IBody> CreateBodyMoverRectangle(float x, float y, uint8_t type = FilterType::EnemyStand) override;
+	virtual std::unique_ptr<IBody> createBodyTowerCircle(float x, float y, uint8_t type = FilterType::ArmyStand) override;
+	virtual std::unique_ptr<IBody> createBodyMoverCircle(float x, float y, uint8_t type = FilterType::EnemyStand) override;
+	virtual std::unique_ptr<IBody> createBodyMoverRectangle(float x, float y, uint8_t type = FilterType::EnemyStand) override;
 
-	virtual std::unique_ptr<IDetector> CreateDetectorCircle(uint8_t target, float x, float y, float radius) override;
-	virtual std::unique_ptr<IDetector> CreateDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
-	virtual std::unique_ptr<IDetector> CreateDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) override;
+	virtual std::unique_ptr<IDetector> createDetectorCircle(uint8_t target, float x, float y, float radius) override;
+	virtual std::unique_ptr<IDetector> createDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
+	virtual std::unique_ptr<IDetector> createDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) override;
 
 protected:
 	b2World m_world;

@@ -50,10 +50,10 @@ public:
 	virtual ~IDetector() = default;
 
 public:
-	virtual void SetPosition(float x, float y) = 0;
+	virtual void setPosition(float x, float y) = 0;
 
-	virtual std::map<Game::EntityIdType, MapValue>::iterator ListBegin() = 0;
-	virtual std::map<Game::EntityIdType, MapValue>::iterator ListEnd() = 0;
+	virtual std::map<Game::EntityIdType, MapValue>::iterator listBegin() = 0;
+	virtual std::map<Game::EntityIdType, MapValue>::iterator listEnd() = 0;
 };
 
 }

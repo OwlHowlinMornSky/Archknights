@@ -45,9 +45,9 @@ b2Body* Physics::FrictionBody::GetFrictionBodyInstance() {
 	return g_instance;
 }
 
-void Physics::FrictionBody::SetSize(int m, int n) {}
+void Physics::FrictionBody::setGroundSize(int m, int n) {}
 
-void Physics::FrictionBody::AddWallBlock(int posx, int posy) {}
+void Physics::FrictionBody::addWallTile(int posx, int posy) {}
 
 void Physics::FrictionBody::Create(b2World* world) {
 	b2BodyDef bodyDef;

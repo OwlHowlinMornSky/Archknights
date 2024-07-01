@@ -21,22 +21,52 @@
 */
 #pragma once
 
-#include "../Models/Actor2.h"
+#ifdef ARCHKNIGHTS_LIMITED
+#include "AnimationSpine.h"
+#else
+#include "AnimationFrames.h"
+#endif // ARCHKNIGHTS_LIMITED
 
-namespace Unit {
+namespace Model {
 
 #ifdef ARCHKNIGHTS_LIMITED
-class Char_128_Plosis_Actor_Vanilla final :
-	public Model::Actor2 {
-public:
-	Char_128_Plosis_Actor_Vanilla(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
-	virtual ~Char_128_Plosis_Actor_Vanilla() = default;
-
-public:
-	virtual void setStatus(AnimationStatus status) override;
-};
+using CurrentAnimationClass = SpineAnimation;
 #else
-using Char_128_Plosis_Actor_Vanilla = Actor2;
+using CurrentAnimationClass = AnimationFrames;
 #endif // ARCHKNIGHTS_LIMITED
+
+struct AnimationInfo {
+#ifdef ARCHKNIGHTS_LIMITED
+	using InfoType = spine::Animation*;
+#endif // ARCHKNIGHTS_LIMITED
+	InfoType Default;
+	InfoType Begin;
+	InfoType Idle;
+	InfoType AttackIn;
+	InfoType AttackLoop;
+	InfoType AttackOut;
+	InfoType StunIn;
+	InfoType StunLoop;
+	InfoType StunOut;
+	InfoType Die;
+	InfoType MoveIn;
+	InfoType MoveLoop;
+	InfoType MoveOut;
+
+	AnimationInfo() :
+		Default(nullptr),
+		Begin(nullptr),
+		Idle(nullptr),
+		AttackIn(nullptr),
+		AttackLoop(nullptr),
+		AttackOut(nullptr),
+		StunIn(nullptr),
+		StunLoop(nullptr),
+		StunOut(nullptr),
+		Die(nullptr),
+		MoveIn(nullptr),
+		MoveLoop(nullptr),
+		MoveOut(nullptr) {}
+};
 
 }

@@ -29,15 +29,15 @@
 
 namespace Main::Creator {
 
-int setup() {
+int Setup() {
 	Scene::GameCommon::init();
-	Game::Board::setup();
-	Game::Global::board->JoinEntity(std::make_shared<Main::Initalizator>());
+	Game::Board::Setup();
+	Game::Global::board->joinEntity(std::make_shared<Main::Initalizator>());
 	return 0;
 }
 
-void drop() {
-	Game::Board::drop();
+void Drop() {
+	Game::Board::Drop();
 	Scene::GameCommon::drop();
 }
 }

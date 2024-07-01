@@ -29,11 +29,11 @@ namespace Scene {
 class ITitle :
 	public ME::Scene {
 public:
-	virtual void SetScale(float r) = 0;
-	virtual void SetOffset(float r) = 0;
+	static std::unique_ptr<ITitle> Create();
+
+public:
+	virtual void setScale(float r) = 0;
+	virtual void setOffset(float r) = 0;
 };
 
-namespace Factory {
-std::unique_ptr<ITitle> GetTitle();
-}
 } // namespace Scene

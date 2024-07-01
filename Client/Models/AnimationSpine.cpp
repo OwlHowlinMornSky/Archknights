@@ -142,13 +142,10 @@ SpineAnimation::~SpineAnimation() {
 
 bool SpineAnimation::setup() {
 	ME::G3dGlobal::SetActive(true);
-
 	glCheck(glGenVertexArrays(1, &m_vao));
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glGenBuffers(1, &m_vertexVBO));
 	glCheck(glBindVertexArray(0));
-
-	ME::G3dGlobal::SetActive(false);
 	return true;
 }
 
@@ -288,7 +285,7 @@ void SpineAnimation::draw(ME::Camera* camera, ME::Shader* shader) {
 	return;
 }
 
-void SpineAnimation::setOutline(bool enabled) {
+void SpineAnimation::setOutlineEnabled(bool enabled) {
 	m_outline = enabled;
 }
 
@@ -414,7 +411,7 @@ SpinePose::~SpinePose() {
 	return;
 }
 
-std::shared_ptr<ME::IModel> SpinePose::CreateAnimation() {
+std::shared_ptr<ME::IModel> SpinePose::createAnimation() {
 	return std::make_shared<SpineAnimation>(m_pose);
 }
 // end class SpinePose
@@ -435,7 +432,7 @@ SpineFactory::~SpineFactory() {
 	return;
 }
 
-bool SpineFactory::CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) {
+bool SpineFactory::createPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) {
 	Model::IAnimationPose* res = nullptr;
 	std::string path("res/chararts/");
 	switch (type) {
@@ -451,7 +448,7 @@ bool SpineFactory::CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_
 	return res != nullptr;
 }
 
-char SpineFactory::CreatePose2(
+char SpineFactory::createPose2(
 	std::unique_ptr<IAnimationPose>& ptr0,
 	std::unique_ptr<IAnimationPose>& ptr1,
 	std::string_view name
@@ -474,7 +471,7 @@ char SpineFactory::CreatePose2(
 	return res;
 }
 
-bool SpineFactory::CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) {
+bool SpineFactory::createEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) {
 	Model::IAnimationPose* res = nullptr;
 	std::string path("res/battle/enemy/");
 	path += name;

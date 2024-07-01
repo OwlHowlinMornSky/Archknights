@@ -29,9 +29,9 @@ namespace Main {
 class ISummonMngr :
 	public Game::Entity {
 public:
-	virtual void AddBegin() = 0;
-	virtual bool AddEntity(size_t id, bool isEnemy = false) = 0;
-	virtual void AddEnd() = 0;
+	virtual void beginAdd() = 0;
+	virtual bool addEntity(size_t id, bool isEnemy = false) = 0;
+	virtual void endAdd() = 0;
 
 public:
 	static std::shared_ptr<ISummonMngr> Create();

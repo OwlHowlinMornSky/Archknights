@@ -33,7 +33,7 @@ public:
 	virtual ~Enemy_1002_nsabr_Actor_Vanilla() = default;
 
 public:
-	virtual void ChangeStatus(AnimationStatus status) override;
+	virtual void setStatus(AnimationStatus status) override;
 };
 #else
 using Char_151_Mytle_Actor_Vanilla = Actor2;

@@ -54,7 +54,7 @@ int APIENTRY wWinMain(
 	UNREFERENCED_PARAMETER(lpCmdLine);
 	std::locale::global(std::locale("en-us.utf8"));
 
-	if (!AppWin32::uniqueInstance()) {
+	if (!AppWin32::UniqueInstance()) {
 		MessageBoxA(NULL, g_str_unique_inst, g_str_information, MB_ICONINFORMATION);
 		return 0;
 	}
@@ -87,6 +87,6 @@ int APIENTRY wWinMain(
 	}
 	// Clear.
 	ME::EngineGlobal::Drop();
-	AppWin32::instanceExit();
+	AppWin32::InstanceExit();
 	return 0;
 }

@@ -28,14 +28,14 @@
 
 namespace Model {
 
-class Actor :
+class Actor2 :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
 	public Game::IActor {
 public:
-	Actor(std::shared_ptr<ME::IModel> _f);
-	virtual ~Actor();
+	Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
+	virtual ~Actor2();
 
 	virtual bool setup() override;
 	virtual void clear() override;
@@ -67,7 +67,10 @@ public:
 #endif // ARCHKNIGHTS_LIMITED
 
 protected:
-	void changeDirection(bool RL);
+	CurrentAnimationClass* GetAnimation(bool back);
+	AnimationInfo* GetInfo(bool back);
+
+	void changeDirection(bool RL, bool FB);
 
 protected:
 	bool m_isRolling; // 是否正在翻转
@@ -76,14 +79,16 @@ protected:
 	bool m_inOutOnlyShadow;
 	Direction m_direction; // 上次达成的方位
 	Direction m_targetDirection; // 翻转的目标方位（若正在翻转）
-	float m_hitFlash;
+	bool m_currentFBDirection; // 当前实际方位（false: 正面, true: 反面）
 	float m_currentRLDirection; // 当前实际方位（-1.0: 左, 1.0: 右）
+	float m_hitFlash;
 	float m_currentInout;
 	CurrentAnimationClass* m_current; // 当前渲染的动画
-	std::shared_ptr<ME::IModel> m_holdPTR;
+	CurrentAnimationClass* m_target; // 翻面的目标动画（若翻转还未通过关键点）
+	std::shared_ptr<ME::IModel> m_holdPTR[2]; // 0: Front, 1: Back
 
 	AnimationEvent m_lastEvent;
-	AnimationInfo m_info;
+	AnimationInfo m_info[2];
 };
 
 }

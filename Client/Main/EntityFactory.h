@@ -32,8 +32,8 @@ public:
 	virtual ~EntityFactory() = default;
 
 public:
-	virtual bool Load() = 0;
-	virtual bool CreateEntity(std::shared_ptr<Game::Entity>& ptr) = 0;
+	virtual bool load() = 0;
+	virtual bool createEntity(std::shared_ptr<Game::Entity>& ptr) = 0;
 
 public:
 	static bool Create(std::unique_ptr<EntityFactory>& ptr, size_t entityId);

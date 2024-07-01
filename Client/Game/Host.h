@@ -44,7 +44,7 @@ public:
 	virtual ~Host() = default;
 
 public:
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) = 0;
+	virtual MsgResultType receiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) = 0;
 };
 
 } // namespace Game

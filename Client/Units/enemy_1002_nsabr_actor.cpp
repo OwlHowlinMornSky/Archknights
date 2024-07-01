@@ -30,7 +30,7 @@ Unit::Enemy_1002_nsabr_Actor_Vanilla::Enemy_1002_nsabr_Actor_Vanilla(
 	m_shadowRadius = 0.4f;
 }
 
-void Unit::Enemy_1002_nsabr_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Enemy_1002_nsabr_Actor_Vanilla::setStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = &m_info;
 	auto animf = m_current;
 

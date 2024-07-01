@@ -46,34 +46,34 @@ public:
 	virtual ~Tower();
 
 public:
-	virtual void OnJoined();
-	virtual void OnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate();
+	virtual void fixedUpdate();
 
-	virtual Game::MsgResultType ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
+	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
 protected:
-	virtual void OnPositionChanged();
+	virtual void onPositionChanged();
 
 	Game::MsgResultType DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
-	void ToStart(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToBegin(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToIdle(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToAttack(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToStun(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void ToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToStart(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToBegin(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToIdle(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToAttack(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToStun(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
 
 	/**
 	 * @brief 尝试攻击。
 	 * @return 可开始攻击则为 false。
 	 */
-	virtual bool TryAttack();
-	virtual bool StillCanAttack();
-	void BasicOnAttack();
-	virtual void OnAttack();
+	virtual bool tryToAttack();
+	virtual bool isStillCanAttack();
+	void onAttackBegin();
+	virtual void onAttack();
 
 public:
 	bool m_active, m_died, m_atked;

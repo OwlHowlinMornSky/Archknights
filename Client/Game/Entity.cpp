@@ -43,35 +43,35 @@ Entity::Entity() :
 
 {}
 
-void Entity::BasicOnJoined(EntityIdType id, EntityLocationType location) {
+void Entity::basicOnJoined(EntityIdType id, EntityLocationType location) {
 	m_id = id;
 	m_location = location;
 
-	attributes[AttributeType::MaxHp].original = 256.0f;
-	attributes[AttributeType::MaxHp].effective = 256.0f;
+	m_attributes[AttributeType::MaxHp].original = 256.0f;
+	m_attributes[AttributeType::MaxHp].effective = 256.0f;
 
 	// for test
 	std::cout << "Join: " << this << ", ID: " << id << ", Location: " << location << std::endl;
-	return OnJoined();
+	return onJoined();
 }
 
-void Entity::BasicOnKicking() {
-	OnKicking();
+void Entity::basicOnKicking() {
+	onKicking();
 	std::cout << "Kick: " << this << ", ID: " << m_id << ", Location: " << m_location << std::endl;
 	m_location = 0;
 	m_id = 0;
 	return;
 }
 
-void Entity::OnJoined() {}
+void Entity::onJoined() {}
 
-void Entity::OnKicking() {}
+void Entity::onKicking() {}
 
 MsgResultType Entity::EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	EntityMsg Msg{ msg, wparam, lparam };
 	auto i = m_hooks.begin(), n = m_hooks.end();
 	while (i != n) {
-		switch ((*i)->CallHook(*this, Msg)) {
+		switch ((*i)->callHook(*this, Msg)) {
 		case 1:
 		{
 			std::list<std::shared_ptr<Hook>>::iterator j = i;
@@ -87,28 +87,28 @@ MsgResultType Entity::EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamT
 			break;
 		}
 	}
-	return ReceiveMessage(msg, wparam, lparam);
+	return receiveMessage(msg, wparam, lparam);
 }
 
-MsgResultType Entity::ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
+MsgResultType Entity::receiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	return DefEntityProc(msg, wparam, lparam);
 }
 
-std::list<Modifier>::iterator Entity::Modify(AttributeType attribute, Modifier& data) {
+std::list<Modifier>::iterator Entity::setModifier(AttributeType attribute, Modifier& data) {
 	m_modifiers[attribute].push_back(data);
 	std::list<Modifier>::iterator res = m_modifiers[attribute].end();
 	res--;
-	OnModifierChanged(attribute);
+	onModifierChanged(attribute);
 	return res;
 }
 
-void Entity::ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator) {
+void Entity::eraseModifier(AttributeType attribute, std::list<Modifier>::iterator iterator) {
 	m_modifiers[attribute].erase(iterator);
-	OnModifierChanged(attribute);
+	onModifierChanged(attribute);
 	return;
 }
 
-void Entity::OnModifierChanged(AttributeType attribute) {
+void Entity::onModifierChanged(AttributeType attribute) {
 	Attribute::ValueType grow = 0, percent = 1, add = 0, times = 1;
 	if (attribute == AttributeType::MoveSpd)
 		times *= 1.0f / 30.0f;
@@ -123,33 +123,33 @@ void Entity::OnModifierChanged(AttributeType attribute) {
 	}
 	if (percent < 0)
 		percent = 0;
-	Attribute::ValueType res = attributes[attribute].original;
+	Attribute::ValueType res = m_attributes[attribute].original;
 	res = ((res + grow) * percent + add) * times;
-	if (res > attributes[attribute].max)
-		res = attributes[attribute].max;
-	else if (res < attributes[attribute].min)
-		res = attributes[attribute].min;
-	attributes[attribute].effective = res;
+	if (res > m_attributes[attribute].max)
+		res = m_attributes[attribute].max;
+	else if (res < m_attributes[attribute].min)
+		res = m_attributes[attribute].min;
+	m_attributes[attribute].effective = res;
 	return;
 }
 
-void Entity::ChangeAbility(AbilityType type, Ability::ValueType val) {
-	abilities[type].effective += val;
+void Entity::changeAbility(AbilityType type, Ability::ValueType val) {
+	m_abilities[type].effective += val;
 }
 
-Ability::ValueType Entity::GetAbility(AbilityType type) const {
-	return abilities[type].effective;
+Ability::ValueType Entity::getAbility(AbilityType type) const {
+	return m_abilities[type].effective;
 }
 
-Attribute::ValueType Entity::GetHp() const {
+Attribute::ValueType Entity::getHp() const {
 	return m_hp;
 }
 
-Attribute::ValueType Entity::GetAttribute(AttributeType type) const {
-	return attributes[type].effective;
+Attribute::ValueType Entity::getAttribute(AttributeType type) const {
+	return m_attributes[type].effective;
 }
 
-void Entity::FixedUpdate() {}
+void Entity::fixedUpdate() {}
 
 EntityIdType Entity::getID() const {
 	return m_id;
@@ -166,7 +166,7 @@ const float* Entity::getPosition() const {
 void Entity::setPosition(float x, float y) {
 	m_position[0] = x;
 	m_position[1] = y;
-	OnPositionChanged();
+	onPositionChanged();
 }
 
 const float* Entity::getScale() const {
@@ -176,7 +176,7 @@ const float* Entity::getScale() const {
 void Entity::setScale(float x, float y) {
 	m_scale[0] = x;
 	m_scale[1] = y;
-	OnScaleChanged();
+	onScaleChanged();
 }
 
 float Entity::getRotation() const {
@@ -185,23 +185,23 @@ float Entity::getRotation() const {
 
 void Entity::setRotation(float rot) {
 	m_rotation = rot;
-	OnRotationChanged();
+	onRotationChanged();
 }
 
-void Entity::OnPositionChanged() {}
+void Entity::onPositionChanged() {}
 
-void Entity::OnRotationChanged() {}
+void Entity::onRotationChanged() {}
 
-void Entity::OnScaleChanged() {}
+void Entity::onScaleChanged() {}
 
-void Entity::KickSelf() const {
-	Global::board->RegistryForExit(m_location);
+void Entity::kickSelf() const {
+	Global::board->registryForExit(m_location);
 }
 
 MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::OnGetAttack:
-		ReceiveMessage(Game::MsgId::OnGetDamage, 0, (intptr_t)(&(((AttackData*)lparam)->damage)));
+		receiveMessage(Game::MsgId::OnGetDamage, 0, (intptr_t)(&(((AttackData*)lparam)->damage)));
 		break;
 	case Game::MsgId::OnGetHeal:
 	{
@@ -211,7 +211,7 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 		if (data->healValue < 0.0f)
 			data->healValue = 0.0f;
 		m_hp += data->healValue;
-		ReceiveMessage(Game::MsgId::OnHpChanging, 0, 0);
+		receiveMessage(Game::MsgId::OnHpChanging, 0, 0);
 		break;
 	}
 	case Game::MsgId::OnGetDamage:
@@ -222,10 +222,10 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 		Attribute::ValueType dmg = 0.0f;
 		switch (data->type) {
 		case DamageData::Normal:
-			dmg = data->dmgValue - attributes[AttributeType::Def].effective;
+			dmg = data->dmgValue - m_attributes[AttributeType::Def].effective;
 			break;
 		case DamageData::Magical:
-			dmg = data->dmgValue * (1.0f - attributes[AttributeType::MagDef].effective);
+			dmg = data->dmgValue * (1.0f - m_attributes[AttributeType::MagDef].effective);
 			break;
 		case DamageData::Direct:
 		default:
@@ -241,22 +241,22 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 		if (dmg < 0.0f)
 			dmg = 0.0f;
 		m_hp -= dmg;
-		ReceiveMessage(Game::MsgId::OnHpChanging, 0, 0);
+		receiveMessage(Game::MsgId::OnHpChanging, 0, 0);
 		break;
 	}
 	case Game::MsgId::OnHpChanging:
 		if (m_hp <= 0.0f)
 			m_hp = 0.0f;
-		else if (m_hp > attributes[AttributeType::MaxHp].effective)
-			m_hp = attributes[AttributeType::MaxHp].effective;
-		ReceiveMessage(Game::MsgId::OnHpChanged, 0, 0);
+		else if (m_hp > m_attributes[AttributeType::MaxHp].effective)
+			m_hp = m_attributes[AttributeType::MaxHp].effective;
+		receiveMessage(Game::MsgId::OnHpChanged, 0, 0);
 		break;
 	case Game::MsgId::OnHpChanged:
 		if (m_hp <= 0.0f)
-			ReceiveMessage(Game::MsgId::OnHpDropToZero, 0, 0);
+			receiveMessage(Game::MsgId::OnHpDropToZero, 0, 0);
 		break;
 	case Game::MsgId::OnHpDropToZero:
-		KickSelf();
+		kickSelf();
 		break;
 	default:
 		return MsgResult::Unsubscribe;
@@ -264,9 +264,9 @@ MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLpar
 	return MsgResult::OK;
 }
 
-void Entity::SetAttributeOringalValue(AttributeType type, Attribute::ValueType val) {
-	attributes[type].original = val;
-	return OnModifierChanged(type);
+void Entity::setAttributeOringalValue(AttributeType type, Attribute::ValueType val) {
+	m_attributes[type].original = val;
+	return onModifierChanged(type);
 }
 
 } // namespace Game

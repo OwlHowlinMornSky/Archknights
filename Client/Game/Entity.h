@@ -67,25 +67,25 @@ public:
 	virtual ~Entity() = default;
 
 public:
-	void BasicOnJoined(EntityIdType id, EntityLocationType location);
-	void BasicOnKicking();
-	virtual void OnJoined();
-	virtual void OnKicking();
+	void basicOnJoined(EntityIdType id, EntityLocationType location);
+	void basicOnKicking();
+	virtual void onJoined();
+	virtual void onKicking();
 
-	virtual void FixedUpdate();
+	virtual void fixedUpdate();
 
 	MsgResultType EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
-	virtual MsgResultType ReceiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
+	virtual MsgResultType receiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
-	std::list<Modifier>::iterator Modify(AttributeType attribute, Modifier& data);
-	void ModifyRemove(AttributeType attribute, std::list<Modifier>::iterator iterator);
-	virtual void OnModifierChanged(AttributeType attribute);
+	std::list<Modifier>::iterator setModifier(AttributeType attribute, Modifier& data);
+	void eraseModifier(AttributeType attribute, std::list<Modifier>::iterator iterator);
+	virtual void onModifierChanged(AttributeType attribute);
 
-	void ChangeAbility(AbilityType type, Ability::ValueType val);
-	Ability::ValueType GetAbility(AbilityType type) const;
+	void changeAbility(AbilityType type, Ability::ValueType val);
+	Ability::ValueType getAbility(AbilityType type) const;
 
-	Attribute::ValueType GetHp() const;
-	Attribute::ValueType GetAttribute(AttributeType type) const;
+	Attribute::ValueType getHp() const;
+	Attribute::ValueType getAttribute(AttributeType type) const;
 
 public:
 	EntityIdType getID() const;
@@ -101,15 +101,15 @@ public:
 	void setRotation(float rot);
 
 protected:
-	virtual void OnPositionChanged();
-	virtual void OnRotationChanged();
-	virtual void OnScaleChanged();
+	virtual void onPositionChanged();
+	virtual void onRotationChanged();
+	virtual void onScaleChanged();
 
-	void KickSelf() const;
+	void kickSelf() const;
 
 	MsgResultType DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
-	void SetAttributeOringalValue(AttributeType type, Attribute::ValueType val);
+	void setAttributeOringalValue(AttributeType type, Attribute::ValueType val);
 
 protected:
 	Attribute::ValueType m_hp;
@@ -119,8 +119,8 @@ protected:
 	EntityIdType m_id;
 	EntityLocationType m_location;
 
-	Attribute attributes[AttributeType::COUNT];
-	Ability abilities[AbilityType::ABCNT];
+	Attribute m_attributes[AttributeType::COUNT];
+	Ability m_abilities[AbilityType::ABCNT];
 	std::list<Modifier> m_modifiers[AttributeType::COUNT];
 	std::list<std::shared_ptr<Hook>> m_hooks;
 };

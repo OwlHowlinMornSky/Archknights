@@ -34,14 +34,14 @@ MapHost::MapHost() :
 
 MapHost::~MapHost() {}
 
-bool MapHost::Load(std::ifstream& ifs) {
+bool MapHost::load(std::ifstream& ifs) {
 	int m, n;
 	ifs >> m >> n;
-	m_tiles.ChangeSize(m, n);
+	m_tiles.changeSize(m, n);
 
-	m_wall = Game::Global::board->m_world->CreateWall();
+	m_wall = Game::Global::board->m_world->createWall();
 
-	m_wall->SetSize(m, n);
+	m_wall->setGroundSize(m, n);
 
 	for (int j = 0; j < n; ++j) {
 		for (int i = 0; i < m; ++i) {
@@ -49,7 +49,7 @@ bool MapHost::Load(std::ifstream& ifs) {
 			ifs >> s;
 			if (s & 0x01) { // 高台
 				m_tiles(i, j).obstacleLv = 1;
-				m_wall->AddWallBlock(i, j);
+				m_wall->addWallTile(i, j);
 			}
 		}
 	}
@@ -57,11 +57,11 @@ bool MapHost::Load(std::ifstream& ifs) {
 	return false;
 }
 
-Game::MsgResultType MapHost::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case HostMsgId::MapInitOk:
 		for (size_t i = 0, n = m_checkpointCnt; i < n; ++i) {
-			Search(i);
+			search(i);
 			m_checkppointLastChange[i] = m_statusChangeCnt;
 		}
 		break;
@@ -79,7 +79,7 @@ Game::MsgResultType MapHost::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	case HostMsgId::MapLeadQuery:
 	{
 		if (m_checkppointLastChange[wparam] < m_statusChangeCnt) {
-			Search(wparam);
+			search(wparam);
 			m_checkppointLastChange[wparam] = m_statusChangeCnt;
 		}
 		int oldx = ((int*)lparam)[0];
@@ -102,7 +102,7 @@ Game::MsgResultType MapHost::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	}
 	case HostMsgId::MapStatusChanged:
 		m_statusChangeCnt++;
-		ImmediatelyUpdate();
+		updateImmediately();
 		break;
 	case HostMsgId::MapIncRef:
 		m_mapRefCnt[wparam]++;
@@ -114,42 +114,42 @@ Game::MsgResultType MapHost::ReceiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	return Game::MsgResult::OK;
 }
 
-void MapHost::ImmediatelyUpdate() {
+void MapHost::updateImmediately() {
 	for (size_t i = 0, n = m_checkpointCnt; i < n; ++i) {
 		if (m_mapRefCnt[i]) {
-			Search(i);
+			search(i);
 			m_checkppointLastChange[i] = m_statusChangeCnt;
 		}
 	}
 }
 
-void MapHost::Search(const size_t id) {
-	return Search(id, m_checkpoints[id].first, m_checkpoints[id].second);
+void MapHost::search(const size_t id) {
+	return search(id, m_checkpoints[id].first, m_checkpoints[id].second);
 }
 
-void MapHost::Search(const size_t id, short x, short y) {
+void MapHost::search(const size_t id, short x, short y) {
 	Map::MapData<Map::TileSearch>& searches = m_searches[id];
 
 	// 初始化数值;
 	if (searches.m != m_tiles.m || searches.n != m_tiles.n)
-		searches.ChangeSize(m_tiles.m, m_tiles.n);
+		searches.changeSize(m_tiles.m, m_tiles.n);
 	else
-		searches.Reset();
+		searches.reset();
 
 	// 写入终点;
 	searches(x, y).Set(x, y, 0, 0);
-	Q.emplace(x, y);
+	m_queue.emplace(x, y);
 
 	// SPFA;
-	while (!Q.empty()) {
-		std::pair<short, short> pt = Q.front();
-		Q.pop();
-		SpreadFrom(id, pt.first, pt.second);
+	while (!m_queue.empty()) {
+		std::pair<short, short> pt = m_queue.front();
+		m_queue.pop();
+		spreadFrom(id, pt.first, pt.second);
 	}
 	return;
 }
 
-void MapHost::SpreadFrom(const size_t id, const Map::CoordType x, const Map::CoordType y) {
+void MapHost::spreadFrom(const size_t id, const Map::CoordType x, const Map::CoordType y) {
 	// DEFINITIONS
 	// <本点>: 由 形式参数 (x, y) 指定 的 点。
 	// <触及点>: 向外扩散时 由 (i, j) 指定 的 点。
@@ -181,7 +181,7 @@ void MapHost::SpreadFrom(const size_t id, const Map::CoordType x, const Map::Coo
 			Map::TileSearch& s = searches(i, j); // <触及点>的记录。
 			if (TileBetter(s, c, d)) { // 若新的<通行代价>、<通行距离>更优。
 				s.Set(x, y, c, d); // 覆盖<触及点>。
-				Q.emplace(i, j); // 加入队列(SPFA)。
+				m_queue.emplace(i, j); // 加入队列(SPFA)。
 			}
 			k = i++; // 继续移动一格。
 			// 直到 不[可达]。
@@ -201,7 +201,7 @@ void MapHost::SpreadFrom(const size_t id, const Map::CoordType x, const Map::Coo
 			Map::TileSearch& s = searches(i, j);
 			if (TileBetter(s, c, d)) {
 				s.Set(x, y, c, d);
-				Q.emplace(i, j);
+				m_queue.emplace(i, j);
 			}
 			k = i--;
 		} while (i >= 0 && tiles(i, j).obstacleLv == 0 && !tiles(i, j).isWall[Map::Tile::right] && tiles(k, j).blockedLv == 0);
@@ -220,7 +220,7 @@ void MapHost::SpreadFrom(const size_t id, const Map::CoordType x, const Map::Coo
 			Map::TileSearch& s = searches(i, j);
 			if (TileBetter(s, c, d)) {
 				s.Set(x, y, c, d);
-				Q.emplace(i, j);
+				m_queue.emplace(i, j);
 			}
 			k = j++;
 		} while (j < tiles.n && tiles(i, j).obstacleLv == 0 && !tiles(i, j).isWall[Map::Tile::down] && tiles(i, k).blockedLv == 0);
@@ -239,17 +239,17 @@ void MapHost::SpreadFrom(const size_t id, const Map::CoordType x, const Map::Coo
 			Map::TileSearch& s = searches(i, j);
 			if (TileBetter(s, c, d)) {
 				s.Set(x, y, c, d);
-				Q.emplace(i, j);
+				m_queue.emplace(i, j);
 			}
 			k = j--;
 		} while (j >= 0 && tiles(i, j).obstacleLv == 0 && !tiles(i, j).isWall[Map::Tile::up] && tiles(i, k).blockedLv == 0);
 		maxd[Map::Tile::Direct::down] = j;
 	}
 	// 分别向四个象限扩散。
-	SpreadQuadrant<+1, +1, Map::Tile::left, Map::Tile::down>(id, x, y, maxd[Map::Tile::right], maxd[Map::Tile::up]); // 第一象限（右上）。
-	SpreadQuadrant<-1, +1, Map::Tile::right, Map::Tile::down>(id, x, y, maxd[Map::Tile::left], maxd[Map::Tile::up]); // 第二象限（左上）。
-	SpreadQuadrant<-1, -1, Map::Tile::right, Map::Tile::up>(id, x, y, maxd[Map::Tile::left], maxd[Map::Tile::down]); // 第三象限（左下）。
-	SpreadQuadrant<+1, -1, Map::Tile::left, Map::Tile::up>(id, x, y, maxd[Map::Tile::right], maxd[Map::Tile::down]); // 第四象限（右下）。
+	spreadQuadrant<+1, +1, Map::Tile::left, Map::Tile::down>(id, x, y, maxd[Map::Tile::right], maxd[Map::Tile::up]); // 第一象限（右上）。
+	spreadQuadrant<-1, +1, Map::Tile::right, Map::Tile::down>(id, x, y, maxd[Map::Tile::left], maxd[Map::Tile::up]); // 第二象限（左上）。
+	spreadQuadrant<-1, -1, Map::Tile::right, Map::Tile::up>(id, x, y, maxd[Map::Tile::left], maxd[Map::Tile::down]); // 第三象限（左下）。
+	spreadQuadrant<+1, -1, Map::Tile::left, Map::Tile::up>(id, x, y, maxd[Map::Tile::right], maxd[Map::Tile::down]); // 第四象限（右下）。
 	return;
 }
 

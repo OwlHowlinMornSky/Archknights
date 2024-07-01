@@ -82,8 +82,8 @@ public:
 	~Title();
 
 public:
-	virtual void SetScale(float r) override;
-	virtual void SetOffset(float r) override;
+	virtual void setScale(float r) override;
+	virtual void setOffset(float r) override;
 
 public:
 	virtual void setup(int code = 0, void* data = nullptr) override;

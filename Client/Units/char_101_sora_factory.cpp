@@ -25,25 +25,25 @@
 #include "char_101_sora_actor.h"
 #include "../Game/Stage.h"
 
-bool Unit::Char_101_Sora_Factory::Load() {
+bool Unit::Char_101_Sora_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
-	bool res = fac->CreatePose(m_pose[0], "char_101_sora", 0);
+	bool res = fac->createPose(m_pose[0], "char_101_sora", 0);
 	if (!res)
 		return false;
 
 	return true;
 }
 
-bool Unit::Char_101_Sora_Factory::CreateEntity(std::shared_ptr<Game::Entity>& ptr) {
+bool Unit::Char_101_Sora_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto unit = std::make_shared<Unit::Char_101_Sora>();
 
-	auto anim0 = m_pose[0]->CreateAnimation();
+	auto anim0 = m_pose[0]->createAnimation();
 	anim0->setup();
 
 	auto actor = std::make_shared<Char_101_Sora_Actor_Vanilla>(anim0);
 
-	Game::Global::stage->AddActor(actor);
+	Game::Global::stage->addActor(actor);
 
 	unit->m_actor = actor;
 

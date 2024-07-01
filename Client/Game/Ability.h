@@ -37,16 +37,16 @@ struct Ability {
 		original(_org),
 		effective(0) {}
 
-	void SetOriginal(ValueType val) {
+	void setOriginal(ValueType val) {
 		effective += val - original;
 		original = val;
 	}
 
-	bool IsAbled() const {
+	bool isAbled() const {
 		return effective > 0;
 	}
 	
-	ValueType GetValue() const {
+	ValueType getValue() const {
 		return effective;
 	}
 };

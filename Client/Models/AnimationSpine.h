@@ -61,7 +61,7 @@ public:
 
 	virtual void update(float dt) override;
 	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
-	virtual void setOutline(bool enabled) override;
+	virtual void setOutlineEnabled(bool enabled) override;
 	virtual void setColor(float r, float g, float b, float a) override;
 
 	spine::TrackEntry* setAnimation(size_t trackIndex, const std::string& animationName, bool loop);
@@ -109,7 +109,7 @@ public:
 	~SpinePose();
 
 public:
-	virtual std::shared_ptr<ME::IModel> CreateAnimation() override;
+	virtual std::shared_ptr<ME::IModel> createAnimation() override;
 
 protected:
 	Model::SpinePoseData m_pose;
@@ -123,13 +123,13 @@ public:
 	~SpineFactory();
 
 public:
-	virtual bool CreatePose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) override;
-	virtual char CreatePose2(
+	virtual bool createPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name, unsigned char type) override;
+	virtual char createPose2(
 		std::unique_ptr<IAnimationPose>& ptr0,
 		std::unique_ptr<IAnimationPose>& ptr1,
 		std::string_view name
 	) override;
-	virtual bool CreateEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) override;
+	virtual bool createEnemyPose(std::unique_ptr<IAnimationPose>& ptr, std::string_view name) override;
 
 private:
 	Model::SpinePose* createPoseBinary(std::string_view binaryPath, std::string_view atlasPath);

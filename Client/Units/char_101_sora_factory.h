@@ -29,8 +29,8 @@ namespace Unit {
 class Char_101_Sora_Factory final :
 	public Main::EntityFactory {
 public:
-	virtual bool Load() override;
-	virtual bool CreateEntity(std::shared_ptr<Game::Entity>& ptr) override;
+	virtual bool load() override;
+	virtual bool createEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
 	bool m_double;

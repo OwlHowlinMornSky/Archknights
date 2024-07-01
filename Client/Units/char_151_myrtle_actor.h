@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../Models/Actor.h"
+#include "../Models/Actor2.h"
 
 namespace Unit {
 
@@ -33,7 +33,7 @@ public:
 	virtual ~Char_151_Mytle_Actor_Vanilla() = default;
 
 public:
-	virtual void ChangeStatus(AnimationStatus status) override;
+	virtual void setStatus(AnimationStatus status) override;
 };
 #else
 using Char_151_Mytle_Actor_Vanilla = Actor2;

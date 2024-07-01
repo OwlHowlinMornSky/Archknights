@@ -31,7 +31,7 @@ Unit::Char_151_Mytle_Actor_Vanilla::Char_151_Mytle_Actor_Vanilla(
 	_b->setScale(0.575f);
 }
 
-void Unit::Char_151_Mytle_Actor_Vanilla::ChangeStatus(AnimationStatus status) {
+void Unit::Char_151_Mytle_Actor_Vanilla::setStatus(AnimationStatus status) {
 	Model::AnimationInfo* face = GetInfo(false);
 	Model::AnimationInfo* back = GetInfo(true);
 	auto animf = GetAnimation(false);
