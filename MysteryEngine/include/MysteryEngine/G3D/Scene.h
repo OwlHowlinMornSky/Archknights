@@ -59,6 +59,6 @@ protected:
 	ME::Camera m_camera;
 	sf::Sprite m_sprite;
 	sf::RenderTexture m_renderTexture;
-};
+}; // class Scene
 
-}
+} // namespace ME

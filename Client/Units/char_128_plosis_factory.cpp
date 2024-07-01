@@ -22,8 +22,8 @@
 #include "char_128_plosis_factory.h"
 
 #include "char_128_plosis.h"
-#include "char_128_plosis_actor.h"
 #include "../Game/Stage.h"
+#include "../Models/Actor2.h"
 
 bool Unit::Char_128_Plosis_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
@@ -40,6 +40,8 @@ bool Unit::Char_128_Plosis_Factory::load() {
 		return false;
 #endif // ARCHKNIGHTS_LIMITED
 
+	setAnimationInfoStorage();
+
 	return true;
 }
 
@@ -51,19 +53,58 @@ bool Unit::Char_128_Plosis_Factory::createEntity(std::shared_ptr<Game::Entity>& 
 	auto anim1 = m_pose[1]->createAnimation();
 	anim1->setup();
 
-#ifdef ARCHKNIGHTS_LIMITED
-	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
+	anim0->setScale(0.65f);
+	anim1->setScale(0.65f);
+
+	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
+	actor->setInfoStorage(m_info[0], m_info[1]);
 	Game::Global::stage->addActor(actor);
 	unit->m_actor = actor;
-#else
-	auto actor = std::make_shared<Char_128_Plosis_Actor_Vanilla>(anim0, anim1);
-	Game::GameGlobal::show->AddActor(actor);
-	unit->m_actor = actor;
-#endif // ARCHKNIGHTS_LIMITED
 
 	ptr = unit;
 
 	return true;
+}
+
+void Unit::Char_128_Plosis_Factory::setAnimationInfoStorage() {
+	Model::AnimationInfo* info;
+	Model::IAnimationPose* pose;
+	pose = m_pose[0].get();
+	{
+		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Normal;
+		{
+			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+			info->AttackLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Attack");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+			info->StunIn = info->Die;
+		}
+		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		{
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_End");
+		}
+	}
+	pose = m_pose[1].get();
+	{
+		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Normal;
+		{
+			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+			info->AttackLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Attack");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+			info->StunIn = info->Die;
+		}
+		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		{
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_End");
+		}
+	}
 }
 
 namespace EntityFactoryLink {

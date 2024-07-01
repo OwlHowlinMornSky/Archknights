@@ -63,6 +63,10 @@ Actor::Actor(std::shared_ptr<ME::IModel> _f) :
 
 Actor::~Actor() {}
 
+void Actor::setInfoStorage(AnimationInfo* infoStorage) {
+	m_infoStorage = infoStorage;
+}
+
 bool Actor::setup() {
 	return true;
 }
@@ -203,7 +207,9 @@ void Actor::turnLeftRight(bool isLeft) {
 	}
 }
 
-void Actor::setStatus(AnimationStatus status) {}
+void Actor::setStatus(AnimationStatus status) {
+	m_info = m_infoStorage[static_cast<size_t>(status)];
+}
 
 void Actor::setPosition(float x, float y, float z) {
 	IModel::setPosition(x, y, z);

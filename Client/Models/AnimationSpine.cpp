@@ -414,6 +414,9 @@ SpinePose::~SpinePose() {
 std::shared_ptr<ME::IModel> SpinePose::createAnimation() {
 	return std::make_shared<SpineAnimation>(m_pose);
 }
+void* SpinePose::getAnimation(const std::string& animationName) {
+	return m_pose.skeletonData->findAnimation(animationName.c_str());
+}
 // end class SpinePose
 
 // class SpineFactory

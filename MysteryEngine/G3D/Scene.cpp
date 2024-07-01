@@ -113,4 +113,4 @@ void Scene::onSizeChanged(sf::Vector2u newsize) {
 	return;
 }
 
-}
+} // namespace ME

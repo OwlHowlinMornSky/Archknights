@@ -25,8 +25,8 @@
 
 namespace ME {
 
-const glm::vec3& ITransformT::getPos() const {
+const glm::vec3& ITransformT::getPosition() const {
 	return m_position;
 }
 
-}
+} // namespace ME

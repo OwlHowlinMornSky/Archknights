@@ -23,6 +23,5 @@
 
 #include <MysteryEngine/G3D/Vertex.h>
 
-// 有cpp才会编译
 namespace ME {
-}
+} // namespace ME

@@ -22,15 +22,17 @@
 #include "char_101_sora_factory.h"
 
 #include "char_101_sora.h"
-#include "char_101_sora_actor.h"
 #include "../Game/Stage.h"
+#include "../Models/Actor.h"
 
 bool Unit::Char_101_Sora_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
-	bool res = fac->createPose(m_pose[0], "char_101_sora", 0);
+	bool res = fac->createPose(m_pose, "char_101_sora", 0);
 	if (!res)
 		return false;
+
+	setAnimationInfoStorage();
 
 	return true;
 }
@@ -38,10 +40,13 @@ bool Unit::Char_101_Sora_Factory::load() {
 bool Unit::Char_101_Sora_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto unit = std::make_shared<Unit::Char_101_Sora>();
 
-	auto anim0 = m_pose[0]->createAnimation();
+	auto anim0 = m_pose->createAnimation();
 	anim0->setup();
 
-	auto actor = std::make_shared<Char_101_Sora_Actor_Vanilla>(anim0);
+	anim0->setScale(0.725f);
+
+	auto actor = std::make_shared<Model::Actor>(anim0);
+	actor->setInfoStorage(m_info);
 
 	Game::Global::stage->addActor(actor);
 
@@ -50,6 +55,20 @@ bool Unit::Char_101_Sora_Factory::createEntity(std::shared_ptr<Game::Entity>& pt
 	ptr = unit;
 
 	return true;
+}
+
+void Unit::Char_101_Sora_Factory::setAnimationInfoStorage() {
+	Model::AnimationInfo* info;
+	Model::IAnimationPose* pose;
+
+	info = m_info + (size_t)Game::IActor::AnimationStatus::Normal;
+	pose = m_pose.get();
+
+	info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+	info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
+	info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+	info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+	info->StunIn = info->Die;
 }
 
 

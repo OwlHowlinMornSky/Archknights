@@ -23,6 +23,7 @@
 
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
+#include "../Models/AnimationInfo.h"
 
 #include <memory>
 #include <memory_resource>
@@ -39,9 +40,14 @@ public:
 	virtual bool createEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
-	std::unique_ptr<Model::IAnimationPose> m_pose[2];
+	void setAnimationInfoStorage();
+
+	std::unique_ptr<Model::IAnimationPose> m_pose;
+
 	std::pmr::unsynchronized_pool_resource m_pool;
 	std::pmr::polymorphic_allocator<Enemy_1002_nsabr_Factory> m_alloc;
+
+	Model::AnimationInfo m_info[static_cast<size_t>(Game::IActor::AnimationStatus::COUNT)];
 };
 
 }

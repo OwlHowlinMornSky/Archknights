@@ -316,7 +316,7 @@ void ActorGroup::update(float dt) {
 	}
 	m_actors.sort(
 		[](std::shared_ptr<Game::IActor>& l, std::shared_ptr<Game::IActor>& r) {
-			return l->getPos().y > r->getPos().y;
+			return l->getPosition().y > r->getPosition().y;
 		}
 	);
 }
@@ -325,7 +325,7 @@ void ActorGroup::draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(m_shader.get());
 
 	m_shader->update(Game::ActorShaderUniformId::Mat4_PV, &(camera->getMatPV()[0][0]));
-	m_shader->update3f(Game::ActorShaderUniformId::Vec3_CamPos, camera->getPos()[0], camera->getPos()[1], camera->getPos()[2]);
+	m_shader->update3f(Game::ActorShaderUniformId::Vec3_CamPos, camera->getPosition()[0], camera->getPosition()[1], camera->getPosition()[2]);
 
 	for (std::shared_ptr<Game::IActor>& i : m_actors) {
 		i->draw(camera, m_shader.get());
@@ -350,7 +350,7 @@ void ActorGroup::drawShadow(ME::Camera* camera, ME::Shader* shader) {
 			i = 0;
 		}
 		Game::IActor& a = **it;
-		auto& p = a.getPos();
+		auto& p = a.getPosition();
 		u[i] = { p.x, p.y, a.m_shadowRadius, a.m_shadowAlpha };
 	}
 	m_shadowShader->updateV(0, i, &(u[0][0]));

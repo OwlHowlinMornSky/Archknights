@@ -56,7 +56,9 @@ public:
 		Skill4,
 		Skill5,
 		Skill6,
-		Skill7
+		Skill7,
+
+		COUNT
 	};
 
 	enum class Direction : char {

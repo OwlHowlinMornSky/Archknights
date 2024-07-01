@@ -360,16 +360,12 @@
     <ClInclude Include="Scenes\ITitle.h" />
     <ClInclude Include="Scenes\Title.h" />
     <ClInclude Include="Units\char_101_sora.h" />
-    <ClInclude Include="Units\char_101_sora_actor.h" />
     <ClInclude Include="Units\char_101_sora_factory.h" />
     <ClInclude Include="Units\char_128_plosis.h" />
-    <ClInclude Include="Units\char_128_plosis_actor.h" />
     <ClInclude Include="Units\char_128_plosis_factory.h" />
     <ClInclude Include="Units\char_151_myrtle.h" />
-    <ClInclude Include="Units\char_151_myrtle_actor.h" />
     <ClInclude Include="Units\char_151_myrtle_factory.h" />
     <ClInclude Include="Units\enemy_1002_nsabr.h" />
-    <ClInclude Include="Units\enemy_1002_nsabr_actor.h" />
     <ClInclude Include="Units\enemy_1002_nsabr_factory.h" />
   </ItemGroup>
   <ItemGroup>
@@ -415,16 +411,12 @@
     <ClCompile Include="Scenes\ITitle.cpp" />
     <ClCompile Include="Scenes\Title.cpp" />
     <ClCompile Include="Units\char_101_sora.cpp" />
-    <ClCompile Include="Units\char_101_sora_actor.cpp" />
     <ClCompile Include="Units\char_101_sora_factory.cpp" />
     <ClCompile Include="Units\char_128_plosis.cpp" />
-    <ClCompile Include="Units\char_128_plosis_actor.cpp" />
     <ClCompile Include="Units\char_128_plosis_factory.cpp" />
     <ClCompile Include="Units\char_151_myrtle.cpp" />
-    <ClCompile Include="Units\char_151_myrtle_actor.cpp" />
     <ClCompile Include="Units\char_151_myrtle_factory.cpp" />
     <ClCompile Include="Units\enemy_1002_nsabr.cpp" />
-    <ClCompile Include="Units\enemy_1002_nsabr_actor.cpp" />
     <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -111,6 +111,8 @@ public:
 public:
 	virtual std::shared_ptr<ME::IModel> createAnimation() override;
 
+	virtual void* getAnimation(const std::string& animationName) override;
+
 protected:
 	Model::SpinePoseData m_pose;
 };

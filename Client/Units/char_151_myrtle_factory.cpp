@@ -22,8 +22,8 @@
 #include "char_151_myrtle_factory.h"
 
 #include "char_151_myrtle.h"
-#include "char_151_myrtle_actor.h"
 #include "../Game/Stage.h"
+#include "../Models/Actor2.h"
 
 namespace Unit {
 
@@ -33,6 +33,8 @@ bool Char_151_Mytle_Factory::load() {
 	char res = fac->createPose2(m_pose[0], m_pose[1], "char_151_myrtle");
 	if (res != 3)
 		return false;
+
+	setAnimationInfoStorage();
 
 	return true;
 }
@@ -46,7 +48,11 @@ bool Char_151_Mytle_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto anim1 = m_pose[1]->createAnimation();
 	anim1->setup();
 
-	auto actor = std::make_shared<Char_151_Mytle_Actor_Vanilla>(anim0, anim1);
+	anim0->setScale(0.575f);
+	anim1->setScale(0.575f);
+
+	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
+	actor->setInfoStorage(m_info[0], m_info[1]);
 
 	Game::Global::stage->addActor(actor);
 
@@ -55,6 +61,51 @@ bool Char_151_Mytle_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	ptr = unit;
 
 	return true;
+}
+
+void Char_151_Mytle_Factory::setAnimationInfoStorage() {
+	Model::AnimationInfo* info;
+	Model::IAnimationPose* pose;
+	pose = m_pose[0].get();
+	{
+		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Normal;
+		{
+			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+			info->AttackLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Attack");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+			info->StunIn = info->Die;
+		}
+		m_info[0][(size_t)Game::IActor::AnimationStatus::Skill0] =
+			m_info[0][(size_t)Game::IActor::AnimationStatus::Normal];
+		info = m_info[0] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		{
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Begin");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_End");
+		}
+	}
+	pose = m_pose[1].get();
+	{
+		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Normal;
+		{
+			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+			info->AttackLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Attack");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+			info->StunIn = info->Die;
+		}
+		m_info[1][(size_t)Game::IActor::AnimationStatus::Skill0] =
+			m_info[1][(size_t)Game::IActor::AnimationStatus::Normal];
+		info = m_info[1] + (size_t)Game::IActor::AnimationStatus::Skill0;
+		{
+			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Begin");
+			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
+			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_End");
+		}
+	}
 }
 
 }

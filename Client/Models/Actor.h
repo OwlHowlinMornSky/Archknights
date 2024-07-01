@@ -37,6 +37,8 @@ public:
 	Actor(std::shared_ptr<ME::IModel> _f);
 	virtual ~Actor();
 
+	void setInfoStorage(AnimationInfo* infoStorage);
+
 	virtual bool setup() override;
 	virtual void clear() override;
 
@@ -84,6 +86,7 @@ protected:
 
 	AnimationEvent m_lastEvent;
 	AnimationInfo m_info;
+	AnimationInfo* m_infoStorage;
 };
 
 }

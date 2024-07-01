@@ -23,6 +23,5 @@
 
 #include <MysteryEngine/G3D/ITransformS.h>
 
-// 有cpp才会编译
 namespace ME {
-}
+} // namespace ME

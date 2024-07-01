@@ -67,6 +67,11 @@ Actor2::Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b) :
 
 Actor2::~Actor2() {}
 
+void Actor2::setInfoStorage(AnimationInfo* infoStorage0, AnimationInfo* infoStorage1) {
+	m_infoStorage[0] = infoStorage0;
+	m_infoStorage[1] = infoStorage1;
+}
+
 bool Actor2::setup() {
 	return true;
 }
@@ -240,7 +245,10 @@ void Actor2::triggerAnimationEx(int excode, void* data) {}
 
 void Actor2::turnLeftRight(bool isLeft) {}
 
-void Actor2::setStatus(AnimationStatus status) {}
+void Actor2::setStatus(AnimationStatus status) {
+	m_info[0] = m_infoStorage[0][static_cast<size_t>(status)];
+	m_info[1] = m_infoStorage[1][static_cast<size_t>(status)];
+}
 
 void Actor2::setPosition(float x, float y, float z) {
 	IModel::setPosition(x, y, z);

@@ -247,16 +247,10 @@
     <ClInclude Include="Units\char_101_sora.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Units\char_101_sora_actor.h">
-      <Filter>Units\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Units\char_101_sora_factory.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_128_plosis.h">
-      <Filter>Units\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Units\char_128_plosis_actor.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_128_plosis_factory.h">
@@ -265,16 +259,10 @@
     <ClInclude Include="Units\char_151_myrtle.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Units\char_151_myrtle_actor.h">
-      <Filter>Units\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Units\char_151_myrtle_factory.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\enemy_1002_nsabr.h">
-      <Filter>Units\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Units\enemy_1002_nsabr_actor.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\enemy_1002_nsabr_factory.h">
@@ -404,16 +392,10 @@
     <ClCompile Include="Units\char_101_sora.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Units\char_101_sora_actor.cpp">
-      <Filter>Units\Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Units\char_101_sora_factory.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_128_plosis.cpp">
-      <Filter>Units\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Units\char_128_plosis_actor.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_128_plosis_factory.cpp">
@@ -422,16 +404,10 @@
     <ClCompile Include="Units\char_151_myrtle.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Units\char_151_myrtle_actor.cpp">
-      <Filter>Units\Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Units\char_151_myrtle_factory.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\enemy_1002_nsabr.cpp">
-      <Filter>Units\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Units\enemy_1002_nsabr_actor.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp">

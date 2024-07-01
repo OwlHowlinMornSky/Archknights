@@ -21,9 +21,9 @@
 */
 #include "enemy_1002_nsabr_factory.h"
 
-#include "enemy_1002_nsabr_actor.h"
 #include "enemy_1002_nsabr.h"
 #include "../Game/Stage.h"
+#include "../Models/Actor.h"
 
 Unit::Enemy_1002_nsabr_Factory::Enemy_1002_nsabr_Factory() :
 	m_pool(),
@@ -34,9 +34,11 @@ Unit::Enemy_1002_nsabr_Factory::~Enemy_1002_nsabr_Factory() {}
 bool Unit::Enemy_1002_nsabr_Factory::load() {
 	auto fac = Model::IAnimationFactory::Instance();
 
-	bool res = fac->createEnemyPose(m_pose[0], "enemy_1002_nsabr");
+	bool res = fac->createEnemyPose(m_pose, "enemy_1002_nsabr");
 	if (!res)
 		return false;
+
+	setAnimationInfoStorage();
 
 	return true;
 }
@@ -44,10 +46,14 @@ bool Unit::Enemy_1002_nsabr_Factory::load() {
 bool Unit::Enemy_1002_nsabr_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto unit = std::allocate_shared<Unit::Enemy_1002_nsabr>(m_alloc);
 
-	auto anim0 = m_pose[0]->createAnimation();
+	auto anim0 = m_pose->createAnimation();
 	anim0->setup();
 
-	auto actor = std::make_shared<Enemy_1002_nsabr_Actor_Vanilla>(anim0);
+	anim0->setScale(0.65f);
+
+	auto actor = std::make_shared<Model::Actor>(anim0);
+	actor->setInfoStorage(m_info);
+	actor->m_shadowRadius = 0.4f;
 
 	Game::Global::stage->addActor(actor);
 
@@ -56,6 +62,21 @@ bool Unit::Enemy_1002_nsabr_Factory::createEntity(std::shared_ptr<Game::Entity>&
 	ptr = unit;
 
 	return true;
+}
+
+void Unit::Enemy_1002_nsabr_Factory::setAnimationInfoStorage() {
+	Model::AnimationInfo* info;
+	Model::IAnimationPose* pose;
+
+	info = m_info + (size_t)Game::IActor::AnimationStatus::Normal;
+	pose = m_pose.get();
+
+	info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
+	info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Idle");
+	info->AttackLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Attack");
+	info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
+	info->StunIn = info->Default;
+	info->MoveLoop = (Model::AnimationInfo::InfoType)pose->getAnimation("Run_Loop_02");
 }
 
 namespace EntityFactoryLink {

@@ -33,6 +33,8 @@ public:
 
 public:
 	virtual std::shared_ptr<ME::IModel> createAnimation() = 0;
+
+	virtual void* getAnimation(const std::string& animationName) = 0;
 };
 
 class IAnimationFactory {

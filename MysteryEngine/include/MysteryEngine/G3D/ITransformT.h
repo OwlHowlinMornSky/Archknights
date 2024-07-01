@@ -112,7 +112,7 @@ public:
 		m_positionChanged = true;
 	}
 
-	const glm::vec3& getPos() const;
+	const glm::vec3& getPosition() const;
 
 protected:
 	mutable bool m_positionChanged; // 标记位置是否修改过（使用后请置0）

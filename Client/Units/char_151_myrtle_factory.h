@@ -23,6 +23,7 @@
 
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
+#include "../Models/AnimationInfo.h"
 
 namespace Unit {
 
@@ -33,8 +34,10 @@ public:
 	virtual bool createEntity(std::shared_ptr<Game::Entity>& ptr) override;
 
 protected:
-	bool m_double;
+	void setAnimationInfoStorage();
+
 	std::unique_ptr<Model::IAnimationPose> m_pose[2];
+	Model::AnimationInfo m_info[2][static_cast<size_t>(Game::IActor::AnimationStatus::COUNT)];
 };
 
 }
