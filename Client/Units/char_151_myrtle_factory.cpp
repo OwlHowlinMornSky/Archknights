@@ -48,8 +48,10 @@ bool Char_151_Mytle_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto anim1 = m_pose[1]->createAnimation();
 	anim1->setup();
 
-	anim0->setScale(0.575f);
-	anim1->setScale(0.575f);
+	//anim0->setScale(0.575f);
+	//anim1->setScale(0.575f);
+	anim0->setParameter(233, 0.575f);
+	anim1->setParameter(233, 0.575f);
 
 	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
 	actor->setInfoStorage(m_info[0], m_info[1]);

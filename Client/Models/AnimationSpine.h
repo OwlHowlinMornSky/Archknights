@@ -64,6 +64,8 @@ public:
 	virtual void setOutlineEnabled(bool enabled) override;
 	virtual void setColor(float r, float g, float b, float a) override;
 
+	virtual void setParameter(int code, float val) override;
+
 	spine::TrackEntry* setAnimation(size_t trackIndex, const std::string& animationName, bool loop);
 	spine::TrackEntry* setAnimation(size_t trackIndex, spine::Animation* animation, bool loop);
 

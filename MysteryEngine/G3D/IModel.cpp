@@ -57,6 +57,8 @@ bool IModel::isWaitingForQuit() const {
 	return m_waitingForQuit;
 }
 
+void IModel::setParameter(int code, float val) {}
+
 void IModel::computeMatrixDefault() {
 	glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
 	glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));

@@ -82,7 +82,8 @@ void Actor::setDirection(Direction direction) {
 	m_direction = direction;
 	m_targetDirection = direction;
 	m_currentRLDirection = (direction == Direction::FL) ? -1.0f : 1.0f;
-	m_holdPTR->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	//m_holdPTR->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	m_holdPTR->setScale(m_currentRLDirection, 1.0f, 1.0f);
 }
 
 void Actor::triggerAnimation(AnimationEvent type, Direction direction) {
@@ -260,7 +261,8 @@ void Actor::update(float dt) {
 				m_currentRLDirection = 1.0f;
 			}
 		}
-		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		//m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		m_current->setScale(m_currentRLDirection, 1.0f, 1.0f);
 	}
 	[[unlikely]] if (m_hitFlashing) {
 		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;

@@ -28,6 +28,7 @@
 #endif
 
 #include <GL/glew.h>
+#include <glm/gtx/transform.hpp>
 
 #include "AnimationSpine.h"
 #include <spine/TextureLoader.h>
@@ -293,6 +294,13 @@ void SpineAnimation::setColor(float r, float g, float b, float a) {
 	m_color = { r, g, b, a };
 }
 
+void SpineAnimation::setParameter(int code, float val) {
+	if (code == 233) {
+		m_skeleton->setScaleX(val);
+		m_skeleton->setScaleY(val);
+	}
+}
+
 spine::TrackEntry* SpineAnimation::setAnimation(size_t trackIndex, const std::string& animationName, bool loop) {
 	return m_animationState->setAnimation(trackIndex, animationName.c_str(), loop);
 }
@@ -345,7 +353,14 @@ void SpineAnimation::setListener(spine::AnimationStateListenerObject* listener) 
 
 void SpineAnimation::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
-		computeMatrixDefault();
+
+		glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
+		glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));
+
+		glm::mat4 matrix_rotX = glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		m_matM = matrix_pos * matrix_rotX * matrix_scale;
+
 		m_positionChanged = false;
 		m_rotationChanged = false;
 		m_scaleChanged = false;

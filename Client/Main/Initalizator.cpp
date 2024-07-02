@@ -180,7 +180,12 @@ Game::MsgResultType Initalizator::receiveMessage(Game::MsgIdType msg, Game::MsgW
 		case sf::Event::MouseButtonPressed:
 			if (e->mouseButton.button == sf::Mouse::Left) {
 				glm::vec3 pos;
-				Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				//Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
+				//Game::Global::board->postMsg(2, 3, (intptr_t) & (pos.x));
+				glm::vec3 d;
+				Game::Global::stage->testDirection({ e->mouseButton.x, e->mouseButton.y }, &d, &pos);
+				d *= pos.z / d.z;
+				pos -= d;
 				Game::Global::board->postMsg(2, 3, (intptr_t) & (pos.x));
 			}
 			break;

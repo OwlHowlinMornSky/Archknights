@@ -178,7 +178,6 @@ bool Camera::testDirectionFromNdcToWorld(glm::vec4 ndc, glm::vec3& d, glm::vec3&
 		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
 		ret -= getPosition();
 		d = ret;
-
 		p = getPosition();
 		break;
 	}

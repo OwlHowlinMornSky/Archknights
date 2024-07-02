@@ -85,8 +85,10 @@ void Actor2::setDirection(Direction direction) {
 	m_currentRLDirection = (static_cast<char>(direction) & 0x01) ? -1.0f : 1.0f;
 	m_current = GetAnimation(m_currentFBDirection);
 	m_target = nullptr;
-	m_holdPTR[0]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
-	m_holdPTR[1]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	//m_holdPTR[0]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	//m_holdPTR[1]->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+	m_holdPTR[0]->setScale(m_currentRLDirection, 1.0f, 1.0f);
+	m_holdPTR[1]->setScale(m_currentRLDirection, 1.0f, 1.0f);
 	return;
 }
 
@@ -381,7 +383,8 @@ void Actor2::update(float dt) {
 		if (m_target)
 			m_target->update(dt);
 		//set m_current rotate by m_currentRLDirection.
-		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		//m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		m_current->setScale(m_currentRLDirection, 1.0f, 1.0f);
 	}
 	[[unlikely]] if (m_hitFlashing) {
 		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;

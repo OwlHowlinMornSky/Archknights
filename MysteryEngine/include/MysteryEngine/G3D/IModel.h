@@ -58,6 +58,8 @@ public:
 	void setWaitingForQuit();
 	bool isWaitingForQuit() const;
 
+	virtual void setParameter(int code, float val);
+
 protected:
 	void computeMatrixDefault();
 
