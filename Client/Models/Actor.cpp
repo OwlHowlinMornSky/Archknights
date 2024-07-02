@@ -31,8 +31,9 @@ namespace {
 
 static constexpr float g_RotationRatio = 9.0f;
 static constexpr float g_InOutRatio = 7.0f;
-static constexpr float g_HitFadeRatio = 4.5f;
+static constexpr float g_HitFadeRatio = 7.0f;
 static constexpr float g_HitFadeSpeed = 0.5f;
+static constexpr float g_HitStartVal = 2.5f;
 
 }
 
@@ -221,7 +222,7 @@ void Actor::setPosition(float x, float y, float z) {
 }
 
 void Actor::setHitEffect() {
-	m_hitFlash = 1.5f;
+	m_hitFlash = g_HitStartVal;
 	m_hitFlashing = true;
 }
 
