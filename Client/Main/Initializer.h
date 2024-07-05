@@ -25,7 +25,7 @@
 
 namespace Main {
 
-class Initalizator final :
+class Initializer final :
 	public Game::Entity {
 public:
 	virtual void onJoined();

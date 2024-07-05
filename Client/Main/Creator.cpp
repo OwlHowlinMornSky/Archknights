@@ -25,14 +25,14 @@
 #include "../Game/Board.h"
 #include "../Game/Global.h"
 
-#include "Initalizator.h"
+#include "Initializer.h"
 
 namespace Main::Creator {
 
 int Setup() {
 	Scene::GameCommon::init();
 	Game::Board::Setup();
-	Game::Global::board->joinEntity(std::make_shared<Main::Initalizator>());
+	Game::Global::board->joinEntity(std::make_shared<Main::Initializer>());
 	return 0;
 }
 

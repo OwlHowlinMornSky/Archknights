@@ -19,7 +19,7 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include "Initalizator.h"
+#include "Initializer.h"
 
 #include "../Game/Global.h"
 #include "../Game/Board.h"
@@ -40,7 +40,7 @@
 
 namespace Main {
 
-void Initalizator::onJoined() {
+void Initializer::onJoined() {
 	Game::Global::board->subscribeMsg(5678, m_location);
 
 	auto& camera = Game::Global::stage->getCamera();
@@ -130,15 +130,15 @@ void Initalizator::onJoined() {
 	);
 }
 
-void Initalizator::onKicking() {
+void Initializer::onKicking() {
 	Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Game::Global::board->broadcast(1234, 0, 0);
 }
 
-void Initalizator::fixedUpdate() {}
+void Initializer::fixedUpdate() {}
 
-Game::MsgResultType Initalizator::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
+Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
 	case Game::MsgId::GuiEvent:
 	{
@@ -203,6 +203,6 @@ Game::MsgResultType Initalizator::receiveMessage(Game::MsgIdType msg, Game::MsgW
 	return Game::MsgResult::OK;
 }
 
-void Initalizator::loadThread() {}
+void Initializer::loadThread() {}
 
 }

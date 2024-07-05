@@ -327,7 +327,7 @@
     <ClInclude Include="Main\Creator.h" />
     <ClInclude Include="Main\EntityFactory.h" />
     <ClInclude Include="Main\HostMsgId.h" />
-    <ClInclude Include="Main\Initalizator.h" />
+    <ClInclude Include="Main\Initializer.h" />
     <ClInclude Include="Main\ISummonMngr.h" />
     <ClInclude Include="Main\MapHost.h" />
     <ClInclude Include="Main\Mover.h" />
@@ -389,7 +389,7 @@
     <ClCompile Include="Game\Modifier.cpp" />
     <ClCompile Include="Main\Creator.cpp" />
     <ClCompile Include="Main\EntityFactory.cpp" />
-    <ClCompile Include="Main\Initalizator.cpp" />
+    <ClCompile Include="Main\Initializer.cpp" />
     <ClCompile Include="Main\MapHost.cpp" />
     <ClCompile Include="Main\Mover.cpp" />
     <ClCompile Include="Main\SummonMngr.cpp" />

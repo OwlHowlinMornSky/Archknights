@@ -151,7 +151,7 @@
     <ClInclude Include="Main\HostMsgId.h">
       <Filter>Main\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Initalizator.h">
+    <ClInclude Include="Main\Initializer.h">
       <Filter>Main\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Main\ISummonMngr.h">
@@ -326,7 +326,7 @@
     <ClCompile Include="Main\EntityFactory.cpp">
       <Filter>Main\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Initalizator.cpp">
+    <ClCompile Include="Main\Initializer.cpp">
       <Filter>Main\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Main\MapHost.cpp">
