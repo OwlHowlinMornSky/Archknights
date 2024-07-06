@@ -85,6 +85,26 @@ struct TileSearch {
 	}
 };
 
+struct Occupation {
+	bool isOccupied;
+	enum Type {
+		CommonGround,
+		CommonWall,
+		DeployableGround,
+		DeployableWall,
+		Deployable,
+		Hole,
+	} type;
+	Game::EntityLocationType location;
+	Game::EntityIdType id;
+
+	Occupation() :
+		isOccupied(false),
+		location(0),
+		type(Type::CommonGround),
+		id(0) {}
+};
+
 template<typename _T>
 struct MapData {
 	size_t m;
@@ -180,6 +200,8 @@ protected:
 	std::queue<std::pair<short, short>> m_queue; // Temporary queue when searching.
 
 	std::unique_ptr<Physics::IWall> m_wall;
+
+	Map::MapData<Map::Occupation> m_occupation;
 };
 
 }

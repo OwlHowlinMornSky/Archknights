@@ -53,6 +53,7 @@ public:
 	virtual void setStatus(AnimationStatus status) override;
 
 	virtual void setPosition(float x, float y, float z) override;
+	virtual void setXY(float x, float y) override;
 
 	virtual void setHitEffect() override;
 	virtual void setInOutEffect(bool in, bool onlyShadow = false) override;

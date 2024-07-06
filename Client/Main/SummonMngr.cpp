@@ -69,9 +69,11 @@ void SummonMngr::endAdd() {
 
 void SummonMngr::onJoined() {
 	Game::Global::board->subscribeMsg(Game::MsgId::Summon, m_location);
+	Game::Global::board->subscribeMsg(Game::MsgId::Deploy, m_location);
 }
 
 void SummonMngr::onKicking() {
+	Game::Global::board->unsubscribeMsg(Game::MsgId::Deploy, m_location);
 	Game::Global::board->unsubscribeMsg(Game::MsgId::Summon, m_location);
 }
 
@@ -89,6 +91,18 @@ Game::MsgResultType SummonMngr::receiveMessage(Game::MsgIdType msg, Game::MsgWpa
 			float* pos = (float*)lparam;
 
 			entity->setPosition(pos[0], pos[1]); // test
+
+			Game::Global::board->joinEntity(entity);
+		}
+		break;
+	case Game::MsgId::Deploy:
+		if (wparam < m_data.size()) {
+			SummonData& data = m_data[wparam];
+
+			std::shared_ptr<Entity> entity;
+			data.factory->createEntity(entity);
+
+			entity->receiveMessage(Main::MsgId::SetOccupiedPlace, 0, lparam);
 
 			Game::Global::board->joinEntity(entity);
 		}

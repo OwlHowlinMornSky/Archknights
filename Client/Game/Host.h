@@ -31,7 +31,7 @@ enum Type {
 	PlayerInputHandler,
 	PlayerCardBar,
 	MoverPathManager,
-	MapPathManager,
+	MapManager,
 	COUNT
 };
 }

@@ -25,6 +25,7 @@
 #include "../Game/IActor.h"
 #include "../Game/Global.h"
 #include "../Game/Board.h"
+#include "OccupiedPlace.h"
 #include <memory>
 
 namespace Main {
@@ -83,6 +84,7 @@ public:
 	std::unique_ptr<Physics::IBody> m_body;
 	std::unique_ptr<Physics::IDetector> m_detector;
 	Game::AnimEventNote m_note;
+	Main::OccupiedPlace m_occupiedPlace;
 };
 
 }

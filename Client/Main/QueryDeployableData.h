@@ -21,17 +21,15 @@
 */
 #pragma once
 
-#include "../Game/BasicMsgId.h"
+namespace Main {
 
-namespace Main::MsgId {
-enum Extern : Game::MsgIdType {
-	START = Game::MsgId::Basic::EXTERN_START,
-
-	OnSelecting,
-
-	SetOccupiedPlace, // wParam: null; lParam: A pointer to struct OccupiedPlace.
-	Retreat,
-	UserRetreat,
-
+struct QueryDeployableData {
+	enum Type {
+		CommonTowerOnGround = 0,
+		CommonTowerOnWall,
+		CommonTowerOnGroundOrWall,
+		CommonTowerFlying,
+	} type;
 };
+
 }

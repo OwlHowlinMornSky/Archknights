@@ -40,6 +40,7 @@ protected:
 
 protected:
 	float pos[2]; // test
+	int flag;
 };
 
 }

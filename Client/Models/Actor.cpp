@@ -221,6 +221,11 @@ void Actor::setPosition(float x, float y, float z) {
 	m_holdPTR->setPosition(x, y, z);
 }
 
+void Actor::setXY(float x, float y) {
+	IModel::setPosXY(x, y);
+	m_holdPTR->setPosition(m_position);
+}
+
 void Actor::setHitEffect() {
 	m_hitFlash = g_HitStartVal;
 	m_hitFlashing = true;

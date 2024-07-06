@@ -36,7 +36,13 @@ enum Id : Game::MsgIdType {
 	MapIncRef,            // wParam: ID.
 	MapDecRef,            // wParam: ID.
 
-	EXTERN_START
+	HitTest,           // 测试指定直线是否击中. wParam: 未使用; lParam: 指向 HitTestData 结构的指针.
+	QueryDeployable,   // 询问某个位置是否可以部署指定类型单位. wParam: 子对象id; lParam: 指向 QueryDeployableData 结构的指针.
+	TryToOccupy,       // 尝试占用位置, 若位置已被占用则失败. wParam: 子对象id; lParam: 指向 TryToOccupyData 结构的指针.
+	SetOccupationAt,   // 修改位置的占用者. wParam: 子对象id; lParam: 指向 SetOccupationData 结构的指针.
+	ClearOccupation,   // 清除占用，不会撤退占用单位. wParam: 子对象id; lParam: 未使用.
+	RetreatOccupation, // 清除占用，若有占用单位则撤退之. wParam: 子对象id; lParam: 未使用.
+
 };
 
 }

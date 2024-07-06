@@ -86,6 +86,7 @@ public:
 	virtual void setStatus(AnimationStatus status) = 0;
 
 	virtual void setPosition(float x, float y, float z) = 0;
+	virtual void setXY(float x, float y) = 0;
 
 	virtual void setHitEffect() = 0;
 	virtual void setInOutEffect(bool in, bool onlyShadow = false) = 0;

@@ -38,6 +38,9 @@
 #include <SFML/Window/Event.hpp>
 #include "MsgId.h"
 
+#include "HitTestData.h"
+#include "QueryDeployableData.h"
+
 namespace Main {
 
 void Initializer::onJoined() {
@@ -125,9 +128,11 @@ void Initializer::onJoined() {
 	maphost->receiveMessage(HostMsgId::MapInitOk, 0, 0);
 
 	Game::Global::board->setHost(
-		Game::HostJob::MapPathManager,
+		Game::HostJob::MapManager,
 		maphost
 	);
+
+	flag = 0;
 }
 
 void Initializer::onKicking() {
@@ -147,16 +152,20 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 		case sf::Event::KeyPressed:
 			switch (e->key.code) {
 			case sf::Keyboard::Num1:
-				Game::Global::board->postMsg(2, 0, (intptr_t)this->pos);
+				flag = 0;
+				//Game::Global::board->postMsg(Game::MsgId::Summon, 0, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num2:
-				Game::Global::board->postMsg(2, 1, (intptr_t)this->pos);
+				flag = 1;
+				//Game::Global::board->postMsg(Game::MsgId::Summon, 1, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num3:
-				Game::Global::board->postMsg(2, 2, (intptr_t)this->pos);
+				flag = 2;
+				//Game::Global::board->postMsg(Game::MsgId::Summon, 2, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Num4:
-				//GameGlobal::board->PostMsg(2, 3, (intptr_t)this->pos);
+				flag = 3;
+				//GameGlobal::board->PostMsg(Game::MsgId::Summon, 3, (intptr_t)this->pos);
 				break;
 			case sf::Keyboard::Left:
 				pos[0] -= 1.0f;
@@ -170,8 +179,17 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 			case sf::Keyboard::Up:
 				pos[1] += 1.0f;
 				break;
+			case sf::Keyboard::W:
+				Game::Global::stage->getCamera().translate(0.0f, 0.1f, 0.0f);
+				break;
 			case sf::Keyboard::S:
 				Game::Global::stage->getCamera().translate(0.0f, -0.1f, 0.0f);
+				break;
+			case sf::Keyboard::D:
+				Game::Global::stage->getCamera().translate(0.1f, 0.0f, 0.0f);
+				break;
+			case sf::Keyboard::A:
+				Game::Global::stage->getCamera().translate(-0.1f, 0.0f, 0.0f);
 				break;
 			}
 			break;
@@ -179,14 +197,59 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 			break;
 		case sf::Event::MouseButtonPressed:
 			if (e->mouseButton.button == sf::Mouse::Left) {
-				glm::vec3 pos;
+				//glm::vec3 pos;
 				//Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
-				//Game::Global::board->postMsg(2, 3, (intptr_t) & (pos.x));
+				//Game::Global::board->postMsg(Game::MsgId::Summon, 3, (intptr_t) & (pos.x));
+				//glm::vec3 d;
+				//Game::Global::stage->testDirection({ e->mouseButton.x, e->mouseButton.y }, &d, &pos);
+
+				auto map = Game::Global::board->getHost(Game::HostJob::MapManager);
+				glm::vec3 pos;
 				glm::vec3 d;
+				Game::MsgResultType res;
+
 				Game::Global::stage->testDirection({ e->mouseButton.x, e->mouseButton.y }, &d, &pos);
-				d *= pos.z / d.z;
-				pos -= d;
-				Game::Global::board->postMsg(2, 3, (intptr_t) & (pos.x));
+
+				if (flag == 3) {
+					d *= pos.z / d.z;
+					pos -= d;
+					Game::Global::board->postMsg(Game::MsgId::Summon, 3, (intptr_t) & (pos.x));
+					break;
+				}
+
+				HitTestData hitTestData;
+				hitTestData.direction[0] = d[0];
+				hitTestData.direction[1] = d[1];
+				hitTestData.direction[2] = d[2];
+				hitTestData.startPoint[0] = pos[0];
+				hitTestData.startPoint[1] = pos[1];
+				hitTestData.startPoint[2] = pos[2];
+				map->receiveMessage(HostMsgId::HitTest, 0, (Game::MsgLparamType)&hitTestData);
+
+				if (hitTestData.place.status == OccupiedPlace::HitGround) {
+					QueryDeployableData queryData;
+
+					switch (flag) {
+					case 0:
+						queryData.type = QueryDeployableData::CommonTowerOnGround;
+						break;
+					case 1:
+						queryData.type = QueryDeployableData::CommonTowerOnWall;
+						break;
+					case 2:
+						queryData.type = QueryDeployableData::CommonTowerOnWall;
+						break;
+					}
+
+					res = map->receiveMessage(
+						HostMsgId::QueryDeployable,
+						hitTestData.place.subId,
+						(Game::MsgLparamType)&queryData
+					);
+					if (res == Game::MsgResult::OK) {
+						Game::Global::board->postMsg(Game::MsgId::Deploy, flag, (Game::MsgLparamType)&hitTestData.place);
+					}
+				}
 			}
 			break;
 		}

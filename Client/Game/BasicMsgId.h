@@ -28,6 +28,7 @@ enum Basic : MsgIdType {
 	Null = 0,
 	GuiEvent,  // GUI消息。 wparam：未使用； lparam：指向 sf::Event 的指针。
 	Summon,    // 召唤实体。 wparam：实体编号； lparam：float 指针，指向 float[2]。
+	Deploy,    // 部署防御塔。 wparam：实体编号；lparam：指向 OccupiedPlace结构 的指针。
 
 	//ENTITY_CHANGES = 0x00010000,
 	OnHpChanging,   // 生命值改变（尚未限制）。 wparam：未使用； lparam：未使用。

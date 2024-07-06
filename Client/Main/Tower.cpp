@@ -23,6 +23,10 @@
 
 #include "MsgId.h"
 #include "../Game/MsgResult.h"
+#include "HostMsgId.h"
+
+#include "TryToOccupyData.h"
+#include "SetOccupationData.h"
 
 namespace Main {
 
@@ -36,9 +40,37 @@ Tower::Tower() :
 Tower::~Tower() {}
 
 void Tower::onJoined() {
+	TryToOccupyData data{};
+	if (m_occupiedPlace.status == OccupiedPlace::HitNull ||
+		m_occupiedPlace.subId == -1 ||
+		Game::Global::board->
+		getHost(Game::HostJob::MapManager)->
+		receiveMessage(
+			HostMsgId::TryToOccupy,
+			m_occupiedPlace.subId,
+			(Game::MsgLparamType)&data
+		) != Game::MsgResult::OK) {
+		m_actor->setColor(0.0f, 0.0f, 0.0f, 0.0f);
+		kickSelf();
+		return;
+	}
+	SetOccupationData occData;
+	occData.location = m_location;
+	occData.id = m_id;
+	Game::Global::board->
+		getHost(Game::HostJob::MapManager)->
+		receiveMessage(
+			HostMsgId::SetOccupationAt,
+			m_occupiedPlace.subId,
+			(Game::MsgLparamType)&occData
+		);
 	if (m_actor) {
 		m_actor->m_note = &m_note;
 	}
+	m_position[0] = data.position[0];
+	m_position[1] = data.position[1];
+	m_actor->setPosZ(data.position[2]);
+	onPositionChanged();
 	// 触发动画
 	setStatusToStart(m_defaultDirection);
 	// 创建主体
@@ -53,7 +85,10 @@ void Tower::onKicking() {
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
-		m_actor->setInOutEffect(false);
+		if (m_active)
+			m_actor->setInOutEffect(false);
+		else
+			m_actor->setWaitingForQuit();
 	m_actor.reset();
 }
 
@@ -112,7 +147,7 @@ Game::MsgResultType Tower::receiveMessage(Game::MsgIdType msg, Game::MsgWparamTy
 
 void Tower::onPositionChanged() {
 	if (m_actor)
-		m_actor->setPosition(m_position[0], m_position[1], 0.0f);
+		m_actor->setXY(m_position[0], m_position[1]);
 	if (m_body)
 		m_body->setPosition(m_position[0], m_position[1]);
 	if (m_detector)
@@ -126,6 +161,13 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 		m_died = true;
 		m_body.reset();
 		m_detector.reset();
+		Game::Global::board->
+			getHost(Game::HostJob::MapManager)->
+			receiveMessage(
+				HostMsgId::ClearOccupation,
+				m_occupiedPlace.subId,
+				0
+			);
 		break;
 	case Game::MsgId::OnGetAttack:
 		if (m_died)
@@ -136,6 +178,38 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 	case Main::MsgId::OnSelecting:
 		if (!m_active || m_died)
 			return Game::MsgResult::MethodNotAllowed;
+		break;
+	case Main::MsgId::SetOccupiedPlace:
+	{
+		OccupiedPlace* place = (OccupiedPlace*)lparam;
+		m_occupiedPlace = *place;
+		break;
+	}
+	case Main::MsgId::Retreat:
+		kickSelf();
+		// Not Implemented.
+		break;
+	case Main::MsgId::UserRetreat:
+		switch (m_occupiedPlace.status) {
+		case Main::OccupiedPlace::HitNull:
+			break;
+		case Main::OccupiedPlace::HitGround:
+			Game::Global::board->
+				getHost(Game::HostJob::MapManager)->
+				receiveMessage(
+					HostMsgId::ClearOccupation,
+					m_occupiedPlace.subId,
+					0
+				);
+			receiveMessage(Main::MsgId::Retreat, 0, 0);
+			break;
+		case Main::OccupiedPlace::HitExtra:
+			// Not Implemented.
+			receiveMessage(Main::MsgId::Retreat, 0, 0);
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		return DefEntityProc(msg, wparam, lparam);

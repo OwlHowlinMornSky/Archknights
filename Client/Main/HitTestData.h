@@ -21,17 +21,27 @@
 */
 #pragma once
 
-#include "../Game/BasicMsgId.h"
+#include "../Game/TypeDef.h"
+#include <limits>
+#include "OccupiedPlace.h"
 
-namespace Main::MsgId {
-enum Extern : Game::MsgIdType {
-	START = Game::MsgId::Basic::EXTERN_START,
+namespace Main {
 
-	OnSelecting,
+struct HitTestData {
+	OccupiedPlace place;
+	float direction[3];
+	float startPoint[3];
+	float resultZ;
+	Game::EntityLocationType location;
+	Game::EntityIdType id;
 
-	SetOccupiedPlace, // wParam: null; lParam: A pointer to struct OccupiedPlace.
-	Retreat,
-	UserRetreat,
-
+	HitTestData() :
+		place(),
+		direction{},
+		startPoint{},
+		resultZ(-std::numeric_limits<float>::infinity()),
+		location(0),
+		id(0) {}
 };
+
 }

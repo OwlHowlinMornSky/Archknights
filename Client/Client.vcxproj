@@ -326,12 +326,17 @@
     <ClInclude Include="Game\TypeDef.h" />
     <ClInclude Include="Main\Creator.h" />
     <ClInclude Include="Main\EntityFactory.h" />
+    <ClInclude Include="Main\HitTestData.h" />
     <ClInclude Include="Main\HostMsgId.h" />
     <ClInclude Include="Main\Initializer.h" />
     <ClInclude Include="Main\ISummonMngr.h" />
     <ClInclude Include="Main\MapHost.h" />
     <ClInclude Include="Main\Mover.h" />
     <ClInclude Include="Main\MsgId.h" />
+    <ClInclude Include="Main\OccupiedPlace.h" />
+    <ClInclude Include="Main\QueryDeployableData.h" />
+    <ClInclude Include="Main\SetOccupationData.h" />
+    <ClInclude Include="Main\TryToOccupyData.h" />
     <ClInclude Include="Main\SummonMngr.h" />
     <ClInclude Include="Main\Tower.h" />
     <ClInclude Include="Models\Actor.h" />

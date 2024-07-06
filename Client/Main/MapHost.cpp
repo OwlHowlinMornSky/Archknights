@@ -25,6 +25,11 @@
 #include "HostMsgId.h"
 #include "../Game/Global.h"
 #include "../Game/Board.h"
+#include "HitTestData.h"
+#include "QueryDeployableData.h"
+#include "TryToOccupyData.h"
+#include "SetOccupationData.h"
+#include "MsgId.h"
 
 namespace Main {
 
@@ -38,6 +43,7 @@ bool MapHost::load(std::ifstream& ifs) {
 	int m, n;
 	ifs >> m >> n;
 	m_tiles.changeSize(m, n);
+	m_occupation.changeSize(m, n);
 
 	m_wall = Game::Global::board->m_world->createWall();
 
@@ -51,6 +57,7 @@ bool MapHost::load(std::ifstream& ifs) {
 				m_tiles(i, j).obstacleLv = 1;
 				m_wall->addWallTile(i, j);
 			}
+			m_occupation(i, j).type = (Map::Occupation::Type)s;
 		}
 	}
 
@@ -110,6 +117,158 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	case HostMsgId::MapDecRef:
 		m_mapRefCnt[wparam]--;
 		break;
+
+	case HostMsgId::HitTest:
+	{
+		HitTestData* data = (HitTestData*)lparam;
+		// 高台平面
+		if (data->resultZ <= 0.2f) { // 高台高度不定，之后要改成变量
+			float dx = data->direction[0], dy = data->direction[1], dz = data->direction[2];
+			float px = data->startPoint[0], py = data->startPoint[1], pz = data->startPoint[2];
+			float r = (pz - 0.2f) / dz; // 高台高度不定，之后要改成变量
+			px -= dx * r;
+			py -= dy * r;
+			//pz -= dz * r;
+			if (!(px < 0.0f || py < 0.0f || px > m_occupation.m || py > m_occupation.n)) {
+				int x = (int)px;
+				int y = (int)py;
+				if (
+					m_occupation(x, y).type == Map::Occupation::Type::CommonWall ||
+					m_occupation(x, y).type == Map::Occupation::Type::DeployableWall
+					) {
+					data->place.status = OccupiedPlace::Status::HitGround;
+					data->place.subId = ((x << 16) | y);
+					data->resultZ = 0.2f; // 高台高度不定，之后要改成变量
+					break;
+				}
+			}
+		}
+		// 水平面
+		if (data->resultZ <= 0.0f) {
+			float dx = data->direction[0], dy = data->direction[1], dz = data->direction[2];
+			float px = data->startPoint[0], py = data->startPoint[1], pz = data->startPoint[2];
+			float r = pz / dz;
+			px -= dx * r;
+			py -= dy * r;
+			//pz -= dz * r;
+			if (!(px < 0.0f || py < 0.0f || px > m_occupation.m || py > m_occupation.n)) {
+				int x = (int)px;
+				int y = (int)py;
+				data->place.status = OccupiedPlace::Status::HitGround;
+				data->place.subId = ((x << 16) | y);
+				data->resultZ = 0.0f;
+				break;
+			}
+		}
+		break;
+	}
+	case HostMsgId::QueryDeployable:
+	{
+		QueryDeployableData* data = (QueryDeployableData*)lparam;
+
+		int x = ((wparam >> 16) & 0xFFFF);
+		int y = (wparam & 0xFFFF);
+
+		if (m_occupation(x, y).isOccupied)
+			return Game::MsgResult::MethodNotAllowed;
+
+		switch (m_occupation(x, y).type) {
+		case Map::Occupation::Type::CommonGround:
+		case Map::Occupation::Type::CommonWall:
+			if (data->type == data->CommonTowerFlying)
+				break;
+			return Game::MsgResult::MethodNotAllowed;
+		case Map::Occupation::Type::DeployableGround:
+			if (data->type == data->CommonTowerOnGround || data->type == data->CommonTowerOnGroundOrWall)
+				break;
+			return Game::MsgResult::MethodNotAllowed;
+		case Map::Occupation::Type::DeployableWall:
+			if (data->type == data->CommonTowerOnWall || data->type == data->CommonTowerOnGroundOrWall)
+				break;
+			return Game::MsgResult::MethodNotAllowed;
+		case Map::Occupation::Type::Deployable:
+			break;
+		case Map::Occupation::Type::Hole:
+			if (data->type == data->CommonTowerFlying)
+				break;
+			return Game::MsgResult::MethodNotAllowed;
+		default:
+			return Game::MsgResult::MethodNotAllowed;
+		}
+		break;
+	}
+	case HostMsgId::TryToOccupy:
+	{
+		TryToOccupyData* data = (TryToOccupyData*)lparam;
+
+		if (wparam == -1)
+			return Game::MsgResult::MethodNotAllowed;
+
+		int x = ((wparam >> 16) & 0xFFFF);
+		int y = (wparam & 0xFFFF);
+
+		if (m_occupation(x, y).isOccupied)
+			return Game::MsgResult::MethodNotAllowed;
+		m_occupation(x, y).isOccupied = true;
+
+		data->position[0] = x + 0.5f;
+		data->position[1] = y + 0.5f;
+
+		if (
+			m_occupation(x, y).type == Map::Occupation::DeployableWall ||
+			m_occupation(x, y).type == Map::Occupation::CommonWall
+			) {
+			data->position[2] = 0.2f; // 高台高度不定，之后要改成变量
+		}
+		else {
+			data->position[2] = 0.0f;
+		}
+
+		break;
+	}
+	case HostMsgId::SetOccupationAt:
+	{
+		SetOccupationData* data = (SetOccupationData*)lparam;
+
+		int x = ((wparam >> 16) & 0xFFFF);
+		int y = (wparam & 0xFFFF);
+
+		if (!m_occupation(x, y).isOccupied)
+			return Game::MsgResult::MethodNotAllowed;
+
+		m_occupation(x, y).location = data->location;
+		m_occupation(x, y).id = data->id;
+
+		break;
+	}
+	case HostMsgId::ClearOccupation:
+	{
+		int x = ((wparam >> 16) & 0xFFFF);
+		int y = (wparam & 0xFFFF);
+		if (!m_occupation(x, y).isOccupied) {
+			m_occupation(x, y).isOccupied = false;
+			m_occupation(x, y).location = 0;
+			m_occupation(x, y).id = 0;
+		}
+		break;
+	}
+	case HostMsgId::RetreatOccupation:
+	{
+		int x = ((wparam >> 16) & 0xFFFF);
+		int y = (wparam & 0xFFFF);
+		if (!m_occupation(x, y).isOccupied) {
+			Game::Global::board->tellMsg(
+				m_occupation(x, y).location,
+				m_occupation(x, y).id,
+				Main::MsgId::Retreat,
+				0, 0
+			);
+			m_occupation(x, y).isOccupied = false;
+			m_occupation(x, y).location = 0;
+			m_occupation(x, y).id = 0;
+		}
+		break;
+	}
 	}
 	return Game::MsgResult::OK;
 }

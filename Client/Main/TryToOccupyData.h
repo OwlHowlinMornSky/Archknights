@@ -21,17 +21,12 @@
 */
 #pragma once
 
-#include "../Game/BasicMsgId.h"
+#include "../Game/TypeDef.h"
 
-namespace Main::MsgId {
-enum Extern : Game::MsgIdType {
-	START = Game::MsgId::Basic::EXTERN_START,
+namespace Main {
 
-	OnSelecting,
-
-	SetOccupiedPlace, // wParam: null; lParam: A pointer to struct OccupiedPlace.
-	Retreat,
-	UserRetreat,
-
+struct TryToOccupyData {
+	float position[3];
 };
+
 }

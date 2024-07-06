@@ -392,7 +392,7 @@ bool Mover::tryToMove() {
 	int target[2] = { (int)m_position[0], (int)m_position[1] };
 	Game::MsgResultType res =
 		Game::Global::board->
-		getHost(Game::HostJob::MapPathManager)->
+		getHost(Game::HostJob::MapManager)->
 		receiveMessage(Main::HostMsgId::MapLeadQuery, m_checkpointTarget, (intptr_t)target);
 	switch (res) {
 	case Game::MsgResult::Leader_TempRes:
