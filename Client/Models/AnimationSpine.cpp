@@ -50,7 +50,7 @@
 
 namespace {
 
-constexpr float spine_to3d_scale_i = 256.0f;
+constexpr float spine_to3d_scale_i = 512.0f;
 //constexpr float spine_global_scale = 0.7125f;
 constexpr float outline_thickness  = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;

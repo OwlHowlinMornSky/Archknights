@@ -65,7 +65,7 @@ const std::string vertex_projection =
 " vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"
 " vUv = aTexCoord;"
 
-" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"
+" vec2 VertexPosInModel = aPosition / 512.0 + uVecOffset;"
 " vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
 " vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 
@@ -102,7 +102,7 @@ const std::string vertex_projection =
 " vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"
 " vUv = aTexCoord;"
 
-" vec2 VertexPosInModel = aPosition / 256.0 + uVecOffset;"
+" vec2 VertexPosInModel = aPosition / 512.0 + uVecOffset;"
 " vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
 " vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 

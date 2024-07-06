@@ -53,10 +53,8 @@ bool Unit::Char_128_Plosis_Factory::createEntity(std::shared_ptr<Game::Entity>& 
 	auto anim1 = m_pose[1]->createAnimation();
 	anim1->setup();
 
-	//anim0->setScale(0.65f);
-	//anim1->setScale(0.65f);
-	anim0->setParameter(233, 0.65f);
-	anim1->setParameter(233, 0.65f);
+	anim0->setParameter(233, 0.9f);
+	anim1->setParameter(233, 0.9f);
 
 	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
 	actor->setInfoStorage(m_info[0], m_info[1]);

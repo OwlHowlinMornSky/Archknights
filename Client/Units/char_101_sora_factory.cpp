@@ -43,8 +43,7 @@ bool Unit::Char_101_Sora_Factory::createEntity(std::shared_ptr<Game::Entity>& pt
 	auto anim0 = m_pose->createAnimation();
 	anim0->setup();
 
-	//anim0->setScale(0.725f);
-	anim0->setParameter(233, 0.725f);
+	anim0->setParameter(233, 1.0f);
 
 	auto actor = std::make_shared<Model::Actor>(anim0);
 	actor->setInfoStorage(m_info);

@@ -49,8 +49,7 @@ bool Unit::Enemy_1002_nsabr_Factory::createEntity(std::shared_ptr<Game::Entity>&
 	auto anim0 = m_pose->createAnimation();
 	anim0->setup();
 
-	//anim0->setScale(0.65f);
-	anim0->setParameter(233, 0.65f);
+	anim0->setParameter(233, 1.0f);
 
 	auto actor = std::make_shared<Model::Actor>(anim0);
 	actor->setInfoStorage(m_info);
