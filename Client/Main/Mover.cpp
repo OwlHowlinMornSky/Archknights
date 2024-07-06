@@ -112,37 +112,37 @@ void Mover::fixedUpdate() {
 		break;
 	case Status::Moving:
 	{
-		/*float velocity[2];
-		m_body->GetPositionVelocity(m_position, velocity);
-		OnPositionChanged(); // 内部有多余的设置body位置，考虑更改。
-		float mx = m_position[0] - m_moveTargetPos[0];
-		float my = m_position[1] - m_moveTargetPos[1];
-		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
-			|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
-			) {
-			if (TryMove()) {
-				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
-			}
-			else { // 不再继续
-				m_body->ClearSpeed();
-				ToIdle();
-			}
-		}
-		else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
-			if (TryTakeNextMoveCmd() && TryMove()) {
-				m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
-			}
-			else {
-				m_body->ClearSpeed();
-				ToIdle();
-			}
-		}
-		else {
-			m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-			m_actor->TurnDirection(m_moveTargetPos[0] < m_position[0]);
-		}*/
+		//float velocity[2];
+		//m_body->getPositionVelocity(m_position, velocity);
+		//onPositionChanged(); // 内部有多余的设置body位置，考虑更改。
+		//float mx = m_position[0] - m_moveTargetPos[0];
+		//float my = m_position[1] - m_moveTargetPos[1];
+		//if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
+		//	|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
+		//	) {
+		//	if (tryToMove()) {
+		//		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+		//		m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
+		//	}
+		//	else { // 不再继续
+		//		m_body->clearSpeed();
+		//		setStatusToIdle();
+		//	}
+		//}
+		//else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
+		//	if (tryToTakeNextMoveCmd() && tryToMove()) {
+		//		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+		//		m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
+		//	}
+		//	else {
+		//		m_body->clearSpeed();
+		//		setStatusToIdle();
+		//	}
+		//}
+		//else {
+		//	m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+		//	m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
+		//}
 		float dx = m_moveTargetPos[0] - m_position[0];
 		float dy = m_moveTargetPos[1] - m_position[1];
 		if (m_tempMoveTarget && std::abs(dx) < 0.4f && std::abs(dy) < 0.4f) { // 到达临时目标

@@ -32,7 +32,7 @@ void Enemy_1002_nsabr::onJoined() {
 	Parent::onJoined();
 
 	setAttributeOringalValue(AttributeType::MoveSpd, 0.6f);
-	//m_body->SetMove(100.0f, 50.0f);
+	//m_body->setMove(100.0f, 50.0f);
 }
 
 void Enemy_1002_nsabr::onKicking() {

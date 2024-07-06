@@ -48,7 +48,7 @@ void Unit::Char_151_Myrtle::onJoined() {
 
 	setAttributeOringalValue(AttributeType::Atk, 420.0f);
 
-	Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_location);
+	//Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	printf_s("HP: %f\n", m_hp);
 	printf_s("MaxHP: %f\n", m_attributes[AttributeType::MaxHp].effective);
@@ -57,7 +57,7 @@ void Unit::Char_151_Myrtle::onJoined() {
 }
 
 void Unit::Char_151_Myrtle::onKicking() {
-	Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	//Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	Parent::onKicking();
 }
