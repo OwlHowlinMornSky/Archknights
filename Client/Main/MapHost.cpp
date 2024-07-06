@@ -245,7 +245,7 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	{
 		int x = ((wparam >> 16) & 0xFFFF);
 		int y = (wparam & 0xFFFF);
-		if (!m_occupation(x, y).isOccupied) {
+		if (m_occupation(x, y).isOccupied) {
 			m_occupation(x, y).isOccupied = false;
 			m_occupation(x, y).location = 0;
 			m_occupation(x, y).id = 0;
@@ -256,7 +256,7 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 	{
 		int x = ((wparam >> 16) & 0xFFFF);
 		int y = (wparam & 0xFFFF);
-		if (!m_occupation(x, y).isOccupied) {
+		if (m_occupation(x, y).isOccupied) {
 			Game::Global::board->tellMsg(
 				m_occupation(x, y).location,
 				m_occupation(x, y).id,

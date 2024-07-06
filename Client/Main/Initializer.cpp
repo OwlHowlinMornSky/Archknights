@@ -165,7 +165,11 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 				break;
 			case sf::Keyboard::Num4:
 				flag = 3;
-				//GameGlobal::board->PostMsg(Game::MsgId::Summon, 3, (intptr_t)this->pos);
+				//Game::Global::board->postMsg(Game::MsgId::Summon, 3, (intptr_t)this->pos);
+				break;
+			case sf::Keyboard::Num0:
+				flag = -1;
+				//Game::Global::board->tellMsg(2, 3, Main::MsgId::UserRetreat, 0, 0);
 				break;
 			case sf::Keyboard::Left:
 				pos[0] -= 1.0f;
@@ -225,6 +229,17 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 				hitTestData.startPoint[1] = pos[1];
 				hitTestData.startPoint[2] = pos[2];
 				map->receiveMessage(HostMsgId::HitTest, 0, (Game::MsgLparamType)&hitTestData);
+
+				if (flag == -1) {
+					Game::Global::board->
+						getHost(Game::HostJob::MapManager)->
+						receiveMessage(
+							Main::HostMsgId::RetreatOccupation,
+							hitTestData.place.subId,
+							0
+						);
+					break;
+				}
 
 				if (hitTestData.place.status == OccupiedPlace::HitGround) {
 					QueryDeployableData queryData;

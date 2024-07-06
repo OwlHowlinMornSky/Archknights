@@ -186,6 +186,7 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 		break;
 	}
 	case Main::MsgId::Retreat:
+		m_active = false;
 		kickSelf();
 		// Not Implemented.
 		break;
