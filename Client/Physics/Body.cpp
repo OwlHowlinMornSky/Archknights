@@ -94,7 +94,7 @@ void Body::setMoveAcceleration(float maxa) {
 void Body::setStatusNormal() {
 	if (m_isUnbalance) {
 		b2Filter filter = m_fixture->GetFilterData();
-		filter.maskBits = 0x0004;
+		filter.maskBits = 0x0006;
 		m_fixture->SetFilterData(filter);
 		m_frictionJoint->SetMaxForce(0.0f);
 		m_body->SetLinearDamping(m_maxA / m_maxV);
@@ -187,7 +187,7 @@ void Body::createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float r
 	b2FixtureDef fixDef;
 	fixDef.shape = &shape;
 	fixDef.filter.groupIndex = -2;
-	fixDef.filter.maskBits = 0x0004;
+	fixDef.filter.maskBits = 0x0006;
 	fixDef.filter.categoryBits = (0x0019 | (type << 8));
 	fixDef.friction = 0.0f;
 	fixDef.userData.pointer = (uintptr_t)this;

@@ -112,79 +112,33 @@ void Mover::fixedUpdate() {
 		break;
 	case Status::Moving:
 	{
-		//float velocity[2];
-		//m_body->getPositionVelocity(m_position, velocity);
-		//onPositionChanged(); // 内部有多余的设置body位置，考虑更改。
-		//float mx = m_position[0] - m_moveTargetPos[0];
-		//float my = m_position[1] - m_moveTargetPos[1];
-		//if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
-		//	|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
-		//	) {
-		//	if (tryToMove()) {
-		//		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-		//		m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-		//	}
-		//	else { // 不再继续
-		//		m_body->clearSpeed();
-		//		setStatusToIdle();
-		//	}
-		//}
-		//else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
-		//	if (tryToTakeNextMoveCmd() && tryToMove()) {
-		//		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-		//		m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-		//	}
-		//	else {
-		//		m_body->clearSpeed();
-		//		setStatusToIdle();
-		//	}
-		//}
-		//else {
-		//	m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-		//	m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-		//}
-		float dx = m_moveTargetPos[0] - m_position[0];
-		float dy = m_moveTargetPos[1] - m_position[1];
-		if (m_tempMoveTarget && std::abs(dx) < 0.4f && std::abs(dy) < 0.4f) { // 到达临时目标
+		float velocity[2];
+		m_body->getPositionVelocity(m_position, velocity);
+
+		// 不使用 onPositionChanged() 是因为其内部有多余的设置body位置。
+		if (m_actor)
+			m_actor->setPosition(m_position[0], m_position[1], 0.0f);
+		if (m_detector)
+			m_detector->setPosition(m_position[0], m_position[1]);
+
+		float mx = m_position[0] - m_moveTargetPos[0];
+		float my = m_position[1] - m_moveTargetPos[1];
+		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
+			|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
+			) {
 			if (tryToMove()) {
-				dx = m_moveTargetPos[0] - m_position[0];
-				dy = m_moveTargetPos[1] - m_position[1];
-				float l = std::sqrtf(dx * dx + dy * dy);
-				float spd = m_attributes[AttributeType::MoveSpd].effective;
-				if (l <= spd) {
-					m_position[0] = m_moveTargetPos[0];
-					m_position[1] = m_moveTargetPos[1];
-					onPositionChanged();
-				}
-				else {
-					m_position[0] += dx * spd / l;
-					m_position[1] += dy * spd / l;
-					onPositionChanged();
-					m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-				}
+				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 			}
 			else { // 不再继续
 				m_body->clearSpeed();
 				setStatusToIdle();
 			}
 		}
-		else if (dx * dx + dy * dy < 0.0225f) { // 到达非临时目标
+		else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
 			if (tryToTakeNextMoveCmd() && tryToMove()) {
-				dx = m_moveTargetPos[0] - m_position[0];
-				dy = m_moveTargetPos[1] - m_position[1];
-				float l = std::sqrtf(dx * dx + dy * dy);
-				float spd = m_attributes[AttributeType::MoveSpd].effective;
-				if (l <= spd) {
-					m_position[0] = m_moveTargetPos[0];
-					m_position[1] = m_moveTargetPos[1];
-					onPositionChanged();
-				}
-				else {
-					m_position[0] += dx * spd / l;
-					m_position[1] += dy * spd / l;
-					onPositionChanged();
-					m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-				}
+				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 			}
 			else {
 				m_body->clearSpeed();
@@ -192,19 +146,8 @@ void Mover::fixedUpdate() {
 			}
 		}
 		else {
-			float l = std::sqrtf(dx * dx + dy * dy);
-			float spd = m_attributes[AttributeType::MoveSpd].effective;
-			if (l <= spd) {
-				m_position[0] = m_moveTargetPos[0];
-				m_position[1] = m_moveTargetPos[1];
-				onPositionChanged();
-			}
-			else {
-				m_position[0] += dx * spd / l;
-				m_position[1] += dy * spd / l;
-				onPositionChanged();
-				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-			}
+			m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+			m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 		}
 		break;
 	}
@@ -286,7 +229,7 @@ void Mover::setStatusToStart(Game::IActor::Direction d) {
 		m_actor->setDirection(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
-		//m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		setStatusToMoving(Game::IActor::Direction::NotCare);
 	}
 	else {
@@ -304,7 +247,7 @@ void Mover::setStatusToBegin(Game::IActor::Direction d) {
 
 void Mover::setStatusToIdle(Game::IActor::Direction d) {
 	if (tryToMove()) {
-		//m_body->MoveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		setStatusToMoving(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
