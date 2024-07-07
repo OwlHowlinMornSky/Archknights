@@ -128,6 +128,29 @@ void Detector::createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tile
 	m_master = true;
 }
 
+void Detector::createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius) {
+	if (!m_fixtures.empty())
+		return;
+
+	b2CircleShape shape;
+	shape.m_radius = radius;
+
+	b2FixtureDef fixDef;
+	fixDef.shape = &shape;
+	fixDef.isSensor = true;
+	fixDef.filter.groupIndex = -1;
+	fixDef.filter.maskBits = 0x0008;
+	fixDef.filter.categoryBits = 0x0004;
+	fixDef.userData.pointer = (uintptr_t)this;
+	//fixDef.friction = 0.0f;
+
+	b2Fixture* fixture = body->CreateFixture(&fixDef);
+
+	m_fixtures.push_back(fixture);
+	m_master = true;
+	return;
+}
+
 DetectorIndependent::DetectorIndependent() :
 	m_body(nullptr) {}
 
@@ -203,6 +226,18 @@ void DetectorIndependent::createAsTiles(b2World* world, uint8_t target, b2Vec2 p
 	}
 	m_master = true;
 	return;
+}
+
+void DetectorIndependent::createAsBlockerCircle(b2World* world, b2Vec2 pos, float radius) {
+	if (m_body)
+		return;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position = pos;
+	bodyDef.fixedRotation = true;
+	m_body = world->CreateBody(&bodyDef);
+	return Detector::createAsBlockerCircle(m_body, pos, radius);
 }
 
 }

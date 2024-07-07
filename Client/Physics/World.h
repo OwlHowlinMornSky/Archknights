@@ -65,7 +65,7 @@ public:
 	virtual ~World();
 
 public:
-	virtual void update(float dt) override;
+	virtual void update() override;
 
 	virtual std::unique_ptr<IWall> createWall() override;
 
@@ -76,6 +76,8 @@ public:
 	virtual std::unique_ptr<IDetector> createDetectorCircle(uint8_t target, float x, float y, float radius) override;
 	virtual std::unique_ptr<IDetector> createDetectorRows(uint8_t target, float x, float y, Rows* rows) override;
 	virtual std::unique_ptr<IDetector> createDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) override;
+
+	virtual std::unique_ptr<IDetector> createBlockerCircle(float x, float y, float radius) override;
 
 protected:
 	b2World m_world;

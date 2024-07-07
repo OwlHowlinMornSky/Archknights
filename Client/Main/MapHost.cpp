@@ -85,6 +85,8 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 		break;
 	case HostMsgId::MapLeadQuery:
 	{
+		if (wparam >= m_checkpointCnt)
+			return Game::MsgResult::MethodNotAllowed;
 		if (m_checkppointLastChange[wparam] < m_statusChangeCnt) {
 			search(wparam);
 			m_checkppointLastChange[wparam] = m_statusChangeCnt;

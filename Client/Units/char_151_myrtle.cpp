@@ -27,7 +27,9 @@
 #include "../Game/Board.h"
 #include "../Game/AtkDmgHeal.h"
 
-Unit::Char_151_Myrtle::Char_151_Myrtle() {}
+Unit::Char_151_Myrtle::Char_151_Myrtle() {
+	m_blockTotal = 2;
+}
 
 Unit::Char_151_Myrtle::~Char_151_Myrtle() {}
 
@@ -44,11 +46,13 @@ void Unit::Char_151_Myrtle::onJoined() {
 	m_detector->SetLocation(m_location);
 	m_hp = 1.0f;
 
+	m_blocker = Game::Global::board->m_world->createBlockerCircle(m_position[0], m_position[1], 0.6f);
+	m_blocker->SetId(m_id);
+	m_blocker->SetLocation(m_location);
+
 	m_abilities[AbilityType::Attack].setOriginal(1);
 
 	setAttributeOringalValue(AttributeType::Atk, 420.0f);
-
-	//Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_location);
 
 	printf_s("HP: %f\n", m_hp);
 	printf_s("MaxHP: %f\n", m_attributes[AttributeType::MaxHp].effective);
@@ -57,43 +61,43 @@ void Unit::Char_151_Myrtle::onJoined() {
 }
 
 void Unit::Char_151_Myrtle::onKicking() {
-	//Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	m_blocker.reset();
+
+	for (auto& i : m_blockedMovers) {
+		Game::Global::board->tellMsg(i.second, i.first, Main::MsgId::BlockCleared, 0, 0);
+	}
 
 	Parent::onKicking();
 }
 
 void Unit::Char_151_Myrtle::fixedUpdate() {
-	//switch (m_status) {
-	//default:
+	if (m_blockTotal > m_blockedMovers.size()) {
+		for (
+			auto it = m_blocker->listBegin(), n = m_blocker->listEnd();
+			m_blockTotal > m_blockedMovers.size() && it != n;
+			++it
+			) {
+			if (m_blockedMovers.contains(it->first))
+				continue;
+			if (Game::Global::board->tellMsg(it->second.location, it->first, Main::MsgId::OnBlocking, 0, 0) != Game::MsgResult::OK)
+				continue;
+			Game::EntityIdType id = it->first;
+			Game::EntityLocationType ad = it->second.location;
+			m_blockedMovers.emplace(id, ad);
+			Game::Global::board->tellMsg(ad, id, Main::MsgId::Blocked, m_id, m_location);
+		}
+	}
 	return Parent::fixedUpdate();
-	//}
 }
-
-#include <SFML/Window/Event.hpp>
 
 Game::MsgResultType Unit::Char_151_Myrtle::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
-	case Game::MsgId::GuiEvent:
-	{
-		sf::Event& evt = *(sf::Event*)lparam;
-		switch (evt.type) {
-		case sf::Event::KeyReleased:
-			switch (evt.key.code) {
-			case sf::Keyboard::A:
-				m_actor->setStatus(Game::IActor::AnimationStatus::Skill0);
-				setStatusToBegin();
-				break;
-			case sf::Keyboard::Q:
-				setStatusToReturn();
-				break;
-			}
-			break;
-		}
-		break;
-	}
 	case Game::MsgId::OnHpChanged:
 		printf_s("HP: %f\n", m_hp);
 		return DefTowerProc(msg, wparam, lparam);
+		break;
+	case Main::MsgId::CancelBlock:
+		m_blockedMovers.erase(wparam);
 		break;
 	default:
 		return DefTowerProc(msg, wparam, lparam);
@@ -102,6 +106,16 @@ Game::MsgResultType Unit::Char_151_Myrtle::receiveMessage(Game::MsgIdType msg, G
 }
 
 bool Unit::Char_151_Myrtle::tryToAttack() {
+	if (!m_blockedMovers.empty()) {
+		bool isLeft = Game::Global::board->getEntityAt(m_blockedMovers.begin()->second)->getPosition()[0] < m_position[0];
+		bool isBack = Game::Global::board->getEntityAt(m_blockedMovers.begin()->second)->getPosition()[1] > m_position[1];
+		setStatusToAttack(
+			isLeft ?
+			(isBack ? Game::IActor::Direction::BL : Game::IActor::Direction::FL) :
+			(isBack ? Game::IActor::Direction::BR : Game::IActor::Direction::FR)
+		);
+		return true;
+	}
 	for (auto it = m_detector->listBegin(), n = m_detector->listEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;
@@ -114,16 +128,21 @@ bool Unit::Char_151_Myrtle::tryToAttack() {
 			(isBack ? Game::IActor::Direction::BL : Game::IActor::Direction::FL) :
 			(isBack ? Game::IActor::Direction::BR : Game::IActor::Direction::FR)
 		);
-		return false;
+		return true;
 	}
 	m_targetAd = 0;
 	m_targetId = 0;
-	return true;
+	return false;
 }
 
 bool Unit::Char_151_Myrtle::isStillCanAttack() {
 	//if (Game::GameGlobal::board->TellMsg(m_targetAd, m_targetId, Game::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK)
 	//	return true;
+	if (!m_blockedMovers.empty()) {
+		m_targetAd = m_blockedMovers.begin()->second;
+		m_targetId = m_blockedMovers.begin()->first;
+		return true;
+	}
 	for (auto it = m_detector->listBegin(), n = m_detector->listEnd(); it != n; ++it) {
 		if (it->first == m_id)
 			continue;

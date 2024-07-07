@@ -31,8 +31,9 @@ Enemy_1002_nsabr::~Enemy_1002_nsabr() {}
 void Enemy_1002_nsabr::onJoined() {
 	Parent::onJoined();
 
-	//setAttributeOringalValue(AttributeType::MoveSpd, 0.6f);
-	m_body->setMove(25.0f, 25.0f * 4.9f);
+	setAttributeOringalValue(AttributeType::MoveSpd, 0.6f * 1.0f);
+	float spd = m_attributes[AttributeType::MoveSpd].effective;
+	m_body->setMove(spd, spd * 9.8f);
 }
 
 void Enemy_1002_nsabr::onKicking() {

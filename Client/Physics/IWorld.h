@@ -49,7 +49,7 @@ public:
 	virtual ~IWorld() = default;
 
 public:
-	virtual void update(float dt) = 0;
+	virtual void update() = 0;
 
 	virtual std::unique_ptr<IWall> createWall() = 0;
 
@@ -60,6 +60,8 @@ public:
 	virtual std::unique_ptr<IDetector> createDetectorCircle(uint8_t target, float x, float y, float radius) = 0;
 	virtual std::unique_ptr<IDetector> createDetectorRows(uint8_t target, float x, float y, Rows* rows) = 0;
 	virtual std::unique_ptr<IDetector> createDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) = 0;
+
+	virtual std::unique_ptr<IDetector> createBlockerCircle(float x, float y, float radius) = 0;
 
 public:
 	static std::unique_ptr<IWorld> CreateWorld();

@@ -122,7 +122,7 @@ void Board::update(long long dt) {
 			return;
 		m_time -= 33333;
 	}
-	m_world->update(1.0f / 30.0f);
+	m_world->update();
 	for (std::shared_ptr<Entity> entity : m_entities) {
 		if (entity == nullptr)
 			continue;

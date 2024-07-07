@@ -28,10 +28,18 @@ enum Extern : Game::MsgIdType {
 	START = Game::MsgId::Basic::EXTERN_START,
 
 	OnSelecting,
+	OnBlocking,
 
 	SetOccupiedPlace, // wParam: null; lParam: A pointer to struct OccupiedPlace.
 	Retreat,
 	UserRetreat,
+
+	BlockerAttached,
+	BlockerLeaved,
+
+	Blocked,      // To Mover. wParam: id, lParam ad.
+	BlockCleared, // To Mover. NULL.
+	CancelBlock,  // To Tower. wParam: id.
 
 };
 }

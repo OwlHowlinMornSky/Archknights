@@ -91,9 +91,9 @@ bool Unit::Char_128_Plosis::tryToAttack() {
 		if (t->getHp() >= t->getAttribute(AttributeType::MaxHp))
 			continue;
 		setStatusToAttack();
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
 
 bool Unit::Char_128_Plosis::isStillCanAttack() {

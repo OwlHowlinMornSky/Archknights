@@ -102,14 +102,14 @@ void Tower::fixedUpdate() {
 		break;
 	case Status::Idle:
 		if (m_abilities[AbilityType::Attack].isAbled()) {
-			if (!tryToAttack()) {
+			if (tryToAttack()) {
 				m_atked = false;
 			}
 		}
 		break;
 	case Status::Attaking:
 		if (m_note.AttackOver) {
-			if (!tryToAttack()) {
+			if (tryToAttack()) {
 				m_atked = false;
 			}
 			else {
@@ -280,7 +280,7 @@ void Tower::setStatusToReturn(Game::IActor::Direction d) {
 }
 
 bool Tower::tryToAttack() {
-	return true;
+	return false;
 }
 
 bool Tower::isStillCanAttack() {

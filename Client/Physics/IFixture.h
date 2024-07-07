@@ -44,8 +44,14 @@ public:
 		return m_master;
 	}
 
+	Game::EntityIdType getId() const {
+		return m_id;
+	}
 	void SetId(Game::EntityIdType id) {
 		m_id = id;
+	}
+	Game::EntityLocationType getLocation() const {
+		return m_loc;
 	}
 	void SetLocation(Game::EntityLocationType loc) {
 		m_loc = loc;

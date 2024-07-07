@@ -57,6 +57,7 @@ public:
 
 protected:
 	virtual void onPositionChanged();
+	void onPositionVaried();
 
 	Game::MsgResultType DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
@@ -85,6 +86,7 @@ protected:
 public:
 	bool m_active, m_died, m_atked;
 	bool m_tempMoveTarget;
+	bool m_isBlocked;
 	float m_moveTargetPos[2];
 	Status m_status;
 	std::shared_ptr<Game::IActor> m_actor;
@@ -92,6 +94,10 @@ public:
 	std::unique_ptr<Physics::IDetector> m_detector;
 	Game::AnimEventNote m_note;
 	int m_checkpointTarget;
+
+
+	Game::EntityLocationType m_blockerAd;
+	Game::EntityIdType m_blockerId;
 };
 
 }

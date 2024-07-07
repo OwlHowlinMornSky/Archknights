@@ -57,9 +57,6 @@ public:
 	virtual void clearSpeed() override;
 	virtual void getPositionVelocity(float* out_position, float* out_velocity) override;
 
-	virtual void OnBeginContact(IFixture* another) {}
-	virtual void OnEndContact(IFixture* another) {}
-
 protected:
 	void createAsCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius);
 	void createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float radius);

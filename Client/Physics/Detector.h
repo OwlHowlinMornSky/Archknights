@@ -47,6 +47,8 @@ protected:
 	void createAsCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius);
 	void createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles);
 
+	void createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius);
+
 protected:
 	std::vector<b2Fixture*> m_fixtures;
 	std::map<Game::EntityIdType, MapValue> m_list;
@@ -66,6 +68,8 @@ protected:
 	void createAsCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius);
 	void createAsRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows);
 	void createAsTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
+
+	void createAsBlockerCircle(b2World* world, b2Vec2 pos, float radius);
 
 protected:
 	b2Body* m_body;

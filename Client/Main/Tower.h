@@ -69,7 +69,7 @@ protected:
 
 	/**
 	 * @brief 尝试攻击。
-	 * @return 可开始攻击则为 false。
+	 * @return 可开始攻击则为 true。
 	 */
 	virtual bool tryToAttack();
 	virtual bool isStillCanAttack();

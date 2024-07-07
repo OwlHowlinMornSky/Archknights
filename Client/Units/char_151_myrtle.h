@@ -48,6 +48,10 @@ protected:
 public:
 	Game::EntityLocationType m_targetAd;
 	Game::EntityIdType m_targetId;
+	std::unique_ptr<Physics::IDetector> m_blocker;
+
+	int m_blockTotal;
+	std::map<Game::EntityIdType, Game::EntityLocationType> m_blockedMovers;
 };
 
 }

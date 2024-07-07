@@ -60,7 +60,6 @@ World::World() :
 	m_world(b2Vec2_zero) {
 	m_world.SetAutoClearForces(true);
 	m_world.SetAllowSleeping(true);
-	//m_world.SetContactFilter();
 	m_world.SetContactListener(&m_contactListener);
 
 	m_frictionBody = std::make_unique<FrictionBody>();
@@ -71,8 +70,8 @@ World::~World() {
 	m_frictionBody.reset();
 }
 
-void World::update(float dt) {
-	m_world.Step(dt, 4, 2);
+void World::update() {
+	m_world.Step(1.0f / 30.0f, 4, 2);
 }
 
 std::unique_ptr<IWall> World::createWall() {
@@ -111,6 +110,12 @@ std::unique_ptr<IDetector> World::createDetectorRows(uint8_t target, float x, fl
 
 std::unique_ptr<IDetector> World::createDetectorTiles(uint8_t target, float x, float y, size_t length, int* tiles) {
 	return std::unique_ptr<IDetector>();
+}
+
+std::unique_ptr<IDetector> World::createBlockerCircle(float x, float y, float radius) {
+	auto res = std::make_unique<DetectorIndependent>();
+	res->createAsBlockerCircle(&m_world, { x, y }, radius);
+	return std::move(res);
 }
 
 }
