@@ -147,6 +147,8 @@ Attribute::ValueType Entity::getAttribute(AttributeType type) const {
 	return m_attributes[type].effective;
 }
 
+void Entity::physicsUpdate() {}
+
 void Entity::fixedUpdate() {}
 
 EntityIdType Entity::getID() const {

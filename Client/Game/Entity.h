@@ -72,6 +72,7 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
+	virtual void physicsUpdate();
 	virtual void fixedUpdate();
 
 	MsgResultType EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);

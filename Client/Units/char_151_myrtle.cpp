@@ -46,7 +46,7 @@ void Unit::Char_151_Myrtle::onJoined() {
 	m_detector->SetLocation(m_location);
 	m_hp = 1.0f;
 
-	m_blocker = Game::Global::board->m_world->createBlockerCircle(m_position[0], m_position[1], 0.6f);
+	m_blocker = Game::Global::board->m_world->createBlockerCircle(m_position[0], m_position[1], 0.60710678118654752440084436210485f);
 	m_blocker->SetId(m_id);
 	m_blocker->SetLocation(m_location);
 

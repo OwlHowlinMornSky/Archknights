@@ -66,6 +66,12 @@ void Mover::onKicking() {
 	m_actor.reset();
 }
 
+void Mover::physicsUpdate() {
+	if (m_status == Status::Moving) {
+		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+	}
+}
+
 void Mover::fixedUpdate() {
 	static int test = 0;
 	switch (m_status) {
@@ -128,38 +134,25 @@ void Mover::fixedUpdate() {
 		float velocity[2];
 		m_body->getPositionVelocity(m_position, velocity);
 		onPositionVaried();
-		if (m_isBlocked) {
-			setStatusToIdle();
-			break;
-		}
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
 		if ((m_tempMoveTarget && std::abs(mx) < 0.5f && std::abs(my) < 0.5f) // 到达临时目标
 			|| (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.0001f) // 卡住了
 			) {
-			if (tryToMove()) {
-				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-			}
-			else { // 不再继续
+			if (!tryToMove()) { // 不再继续
 				m_body->clearSpeed();
 				setStatusToIdle();
+				break;
 			}
 		}
 		else if (mx * mx + my * my < 0.0225f) { // 到达非临时目标
-			if (tryToTakeNextMoveCmd() && tryToMove()) {
-				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-			}
-			else {
+			if (!tryToTakeNextMoveCmd() || !tryToMove()) {
 				m_body->clearSpeed();
 				setStatusToIdle();
+				break;
 			}
 		}
-		else {
-			m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-			m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
-		}
+		m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 		break;
 	}
 	case Status::Unbalance:
@@ -238,6 +231,7 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		m_blockerAd = lparam;
 		m_isBlocked = true;
 		m_body->clearSpeed();
+		setStatusToIdle();
 		break;
 	case Main::MsgId::BlockCleared:
 		m_blockerId = 0;
@@ -262,7 +256,6 @@ void Mover::setStatusToStart(Game::IActor::Direction d) {
 		m_actor->setDirection(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
-		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		setStatusToMoving(Game::IActor::Direction::NotCare);
 	}
 	else {
@@ -280,7 +273,6 @@ void Mover::setStatusToBegin(Game::IActor::Direction d) {
 
 void Mover::setStatusToIdle(Game::IActor::Direction d) {
 	if (!m_isBlocked && tryToMove()) {
-		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 		setStatusToMoving(
 			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
 		);
@@ -366,7 +358,7 @@ void Mover::onAttack() {}
 bool Mover::tryToMove() {
 	if (m_position[0] < 0.0f || m_position[1] < 0.0f)
 		return false;
-	RetryQuery:
+RetryQuery:
 	int target[2] = { (int)m_position[0], (int)m_position[1] };
 	Game::MsgResultType res =
 		Game::Global::board->
@@ -384,8 +376,10 @@ bool Mover::tryToMove() {
 		float mx = m_position[0] - m_moveTargetPos[0];
 		float my = m_position[1] - m_moveTargetPos[1];
 		if (mx * mx + my * my < 0.0225f) {
-			tryToTakeNextMoveCmd();
-			goto RetryQuery;
+			if (tryToTakeNextMoveCmd())
+				goto RetryQuery;
+			else
+				return false;
 		}
 		break;
 	}
