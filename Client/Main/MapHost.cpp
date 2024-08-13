@@ -238,8 +238,7 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 		if (!m_occupation(x, y).isOccupied)
 			return Game::MsgResult::MethodNotAllowed;
 
-		m_occupation(x, y).location = data->location;
-		m_occupation(x, y).id = data->id;
+		m_occupation(x, y).entity = data->entity;
 
 		break;
 	}
@@ -249,8 +248,7 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 		int y = (wparam & 0xFFFF);
 		if (m_occupation(x, y).isOccupied) {
 			m_occupation(x, y).isOccupied = false;
-			m_occupation(x, y).location = 0;
-			m_occupation(x, y).id = 0;
+			m_occupation(x, y).entity.reset();
 		}
 		break;
 	}
@@ -259,15 +257,12 @@ Game::MsgResultType MapHost::receiveMessage(Game::MsgIdType msg, Game::MsgWparam
 		int x = ((wparam >> 16) & 0xFFFF);
 		int y = (wparam & 0xFFFF);
 		if (m_occupation(x, y).isOccupied) {
-			Game::Global::board->tellMsg(
-				m_occupation(x, y).location,
-				m_occupation(x, y).id,
+			m_occupation(x, y).entity.lock()->receiveMessage(
 				Main::MsgId::Retreat,
 				0, 0
 			);
 			m_occupation(x, y).isOccupied = false;
-			m_occupation(x, y).location = 0;
-			m_occupation(x, y).id = 0;
+			m_occupation(x, y).entity.reset();
 		}
 		break;
 	}

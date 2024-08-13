@@ -55,8 +55,7 @@ void Tower::onJoined() {
 		return;
 	}
 	SetOccupationData occData;
-	occData.location = m_location;
-	occData.id = m_id;
+	occData.entity = m_myself;
 	Game::Global::board->
 		getHost(Game::HostJob::MapManager)->
 		receiveMessage(
@@ -75,8 +74,8 @@ void Tower::onJoined() {
 	setStatusToStart(m_defaultDirection);
 	// 创建主体
 	m_body = Game::Global::board->m_world->createBodyTowerCircle(m_position[0], m_position[1], Physics::ArmyStand);
-	m_body->SetId(m_id);
-	m_body->SetLocation(m_location);
+	m_body->setHolder(m_myself);
+	m_body->setId(m_id);
 	m_active = false;
 	m_died = false;
 }
@@ -92,7 +91,7 @@ void Tower::onKicking() {
 	m_actor.reset();
 }
 
-void Tower::fixedUpdate() {
+bool Tower::fixedUpdate() {
 	switch (m_status) {
 	case Status::Begin:
 		if (m_note.StartOver) {
@@ -139,6 +138,7 @@ void Tower::fixedUpdate() {
 	default:
 		break;
 	}
+	return m_isNotWaitingForExit;
 }
 
 Game::MsgResultType Tower::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {

@@ -35,8 +35,7 @@ Mover::Mover() :
 	m_atked(false),
 	m_isBlocked(false),
 	m_status(Status::Default),
-	m_blockerAd(0),
-	m_blockerId(0),
+	m_blocker(),
 	m_checkpointTarget(0),
 	m_moveTargetPos{},
 	m_tempMoveTarget(false) {}
@@ -50,8 +49,8 @@ void Mover::onJoined() {
 	m_checkpointTarget = 0;
 	// 创建主体
 	m_body = Game::Global::board->m_world->createBodyMoverCircle(m_position[0], m_position[1], Physics::EnemyStand);
-	m_body->SetId(m_id);
-	m_body->SetLocation(m_location);
+	m_body->setHolder(m_myself);
+	m_body->setId(m_id);
 	// 触发动画
 	setStatusToStart();
 	m_active = true;
@@ -72,7 +71,7 @@ void Mover::physicsUpdate() {
 	}
 }
 
-void Mover::fixedUpdate() {
+bool Mover::fixedUpdate() {
 	static int test = 0;
 	switch (m_status) {
 	case Status::Begin:
@@ -175,6 +174,7 @@ void Mover::fixedUpdate() {
 	default:
 		break;
 	}
+	return m_isNotWaitingForExit;
 }
 
 Game::MsgResultType Mover::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
@@ -202,9 +202,8 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		}
 		if (m_isBlocked) {
 			m_isBlocked = false;
-			Game::Global::board->tellMsg(m_blockerAd, m_blockerId, Main::MsgId::CancelBlock, m_id, 0);
-			m_blockerId = 0;
-			m_blockerAd = 0;
+			m_blocker.lock()->EntityProc(Main::MsgId::CancelBlock, m_id, (Game::MsgLparamType)&m_myself);
+			m_blocker.reset();
 		}
 		setStatusToDying();
 		m_died = true;
@@ -227,15 +226,13 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		}
 		break;
 	case Main::MsgId::Blocked:
-		m_blockerId = wparam;
-		m_blockerAd = lparam;
+		m_blocker = *(std::weak_ptr<Game::Entity>*)lparam;
 		m_isBlocked = true;
 		m_body->clearSpeed();
 		setStatusToIdle();
 		break;
 	case Main::MsgId::BlockCleared:
-		m_blockerId = 0;
-		m_blockerAd = 0;
+		m_blocker.reset();
 		m_isBlocked = false;
 		setStatusToIdle();
 		break;

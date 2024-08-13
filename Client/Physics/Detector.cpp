@@ -39,7 +39,7 @@ void Detector::setPosition(float x, float y) {
 void Detector::onBeginContact(IFixture* another) {
 	auto& i = m_list[another->m_id];
 	i.count++;
-	i.location = another->m_loc;
+	i.entity = another->m_holder;
 	return;
 }
 

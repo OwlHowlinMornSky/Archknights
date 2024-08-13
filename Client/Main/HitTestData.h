@@ -32,16 +32,14 @@ struct HitTestData {
 	float direction[3];
 	float startPoint[3];
 	float resultZ;
-	Game::EntityLocationType location;
-	Game::EntityIdType id;
+	std::weak_ptr<Game::Entity> entity;
 
 	HitTestData() :
 		place(),
 		direction{},
 		startPoint{},
 		resultZ(-std::numeric_limits<float>::infinity()),
-		location(0),
-		id(0) {}
+		entity() {}
 };
 
 }

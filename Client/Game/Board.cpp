@@ -55,21 +55,11 @@ void Board::SetExitCallback(std::function<void(int)> cb) {
 }
 
 void Board::clear() {
-	for (size_t n = m_entities.size(), i = n - 1; i != 0; --i) {
-		if (m_entities[i] == nullptr)
-			continue;
-		m_entities[i]->basicOnKicking();
-		m_entities[i].reset();
-	}
-	if (m_entities[0] != nullptr) {
-		m_entities[0]->basicOnKicking();
-		m_entities[0].reset();
-	}
+	for (auto i = m_entities.rbegin(), n = m_entities.rend(); i != n; ++i)
+		(**i).basicOnKicking();
+	for (auto i = m_entities.rbegin(), n = m_entities.rend(); i != n; ++i)
+		(*i).reset();
 	m_entities.clear();
-	while (!m_readyForExit.empty())
-		m_readyForExit.pop();
-	while (!m_emptyLocations.empty())
-		m_emptyLocations.pop();
 	m_entityIdCnt = 0;
 
 	m_hosts.clear();
@@ -80,39 +70,16 @@ void Board::clear() {
 
 bool Board::isEmpty() {
 	// 空闲位置数量等于实体位置数量说明没有实体。
-	return m_entities.size() == m_emptyLocations.size();
+	return m_entities.empty();
 }
 
 void Board::joinEntity(std::shared_ptr<Entity> entity) {
-	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
-	if (m_emptyLocations.empty()) { // 没有空闲位置
-		m_entities.push_back(entity); // 直接放在末尾。
-		entity->basicOnJoined(++m_entityIdCnt, m_entities.size() - 1); // 通知相应标识。
-	}
-	else { // 有空闲位置。
-		size_t location = m_emptyLocations.top(); // 优先取用空闲位置。
-		m_emptyLocations.pop();
-		m_entities[location] = entity; // 放入空闲位置。
-		entity->basicOnJoined(++m_entityIdCnt, location); // 通知相应标识。
-	}
-}
-
-void Board::kickEntity(size_t location) {
-	assert(location < m_entities.size());
-	assert(m_entities[location]); // 在场。
-	m_entities[location]->basicOnKicking(); // 通知。
-	m_entities[location].reset(); // 置空！这是保证“在场”“离场”概念的基础。
-	if (location)
-		m_emptyLocations.push(location); // 记录空位。(0不复用，只作为最初initalizator占用位置，之后永远为空)。
+	m_entities.push_back(entity); // 直接放在末尾。
+	entity->basicOnJoined(++m_entityIdCnt, (std::weak_ptr<Entity>)entity); // 通知相应标识。
 }
 
 void Board::ExitGame(int code) {
 	m_exitCallback(code);
-}
-
-std::shared_ptr<Entity> Board::getEntityAt(size_t location) {
-	assert(location < m_entities.size());
-	return m_entities[location];
 }
 
 void Board::update(long long dt) {
@@ -122,46 +89,29 @@ void Board::update(long long dt) {
 			return;
 		m_time -= 33333;
 	}
-	for (std::shared_ptr<Entity> entity : m_entities) {
-		if (entity == nullptr)
-			continue;
+	for (std::shared_ptr<Entity>& entity : m_entities) {
 		entity->physicsUpdate();
 	}
 	m_world->update();
-	for (std::shared_ptr<Entity> entity : m_entities) {
-		if (entity == nullptr)
-			continue;
-		entity->fixedUpdate();
-	}
-	while (!m_readyForExit.empty()) {
-		kickEntity(m_readyForExit.top());
-		m_readyForExit.pop();
-	}
-}
 
-void Board::registryForExit(EntityLocationType location) {
-	m_readyForExit.push(location);
-}
+	std::vector<std::shared_ptr<Entity>>::iterator i = m_entities.begin();
+	std::vector<std::shared_ptr<Entity>>::iterator j = i;
+	std::vector<std::shared_ptr<Entity>>::iterator n = m_entities.end();
+	while (i < n) {
+		bool isNormal = (**i).fixedUpdate();
+		[[likely]] if (isNormal) {
+			(*j).swap(*i);
+			++j;
+			++i;
+		}
+		else {
+			(**i).basicOnKicking();
+			++i;
+		}
+	}
+	m_entities.erase(j, n);
 
-MsgResultType Board::sendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	assert(location < m_entities.size());
-	//assert(m_entities[location]); // 在场。
-	if (m_entities[location] == nullptr) {
-		return MsgResult::EmptyPlace;
-	}
-	return m_entities[location]->EntityProc(msg, wparam, lparam);
-}
-
-MsgResultType Board::tellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	assert(location < m_entities.size());
-	//assert(m_entities[location]); // 在场。
-	if (m_entities[location] == nullptr) {
-		return MsgResult::EmptyPlace;
-	}
-	if (m_entities[location]->m_id != id) {
-		return MsgResult::IncorrectId;
-	}
-	return m_entities[location]->EntityProc(msg, wparam, lparam);
+	return;
 }
 
 void Board::postMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
@@ -171,45 +121,58 @@ void Board::postMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
 	if (mapIt == m_msgMap.end())
 		return;
 	auto& reg = mapIt->second;
-	std::set<EntityLocationType> failedLoc;
-	for (EntityLocationType loc : reg) {
-		if (m_entities[loc] == nullptr) { // 跳过离场位置。
-			failedLoc.insert(loc);
-			continue;
+
+	std::vector<std::weak_ptr<Entity>>::iterator i = reg.begin();
+	std::vector<std::weak_ptr<Entity>>::iterator j = i;
+	std::vector<std::weak_ptr<Entity>>::iterator n = reg.end();
+	while (i < n) {
+		std::shared_ptr<Entity> entity = (*i).lock();
+		bool ok = true;
+		if (entity == nullptr) { // 跳过离场单位。
+			ok = false;
 		}
-		MsgResultType res = m_entities[loc]->EntityProc(msg, wparam, lparam);
-		if (res == MsgResult::Unsubscribe) { // 相当于消息失败。
-			failedLoc.insert(loc);
+		else {
+			MsgResultType res = entity->EntityProc(msg, wparam, lparam);
+			if (res == MsgResult::Unsubscribe) { // 相当于消息失败。
+				ok = false;
+			}
+		}
+		[[likely]] if (ok) {
+			(*j).swap(*i);
+			++j;
+			++i;
+		}
+		else {
+			++i;
 		}
 	}
-	if (failedLoc.size()) {
-		for (auto loc : failedLoc) {
-			reg.erase(loc);
-		}
-		if (reg.size() == 0) {
-			m_msgMap.erase(mapIt);
-		}
-	}
+	reg.erase(j, n);
 }
 
 void Board::broadcast(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	for (auto& entity : m_entities) {
-		if (entity == nullptr) // 跳过离场位置。
-			continue;
+	for (std::shared_ptr<Entity>& entity : m_entities) {
 		entity->receiveMessage(msg, wparam, lparam);
 	}
 }
 
-void Board::subscribeMsg(MsgIdType msg, EntityLocationType location) {
-	m_msgMap[msg].insert(location);
+void Board::subscribeMsg(MsgIdType msg, std::weak_ptr<Entity> ref) {
+	m_msgMap[msg].push_back(ref);
 }
 
-void Board::unsubscribeMsg(MsgIdType msg, EntityLocationType location) {
+void Board::unsubscribeMsg(MsgIdType msg, std::weak_ptr<Entity> ref) {
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
 	auto& reg = mapIt->second;
-	reg.erase(location);
+	auto t = ref.lock().get();
+
+	for (auto it = reg.begin(), n = reg.end(); it != n; ++it) {
+		if (it->lock().get() == t) {
+			reg.erase(it);
+			break;
+		}
+	}
+
 	if (reg.size() == 0) { // 在没有订阅者时清除该消息的set。也许意义不大，还徒增内存碎片。
 		m_msgMap.erase(mapIt);
 	}

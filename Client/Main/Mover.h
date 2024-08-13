@@ -52,7 +52,7 @@ public:
 	virtual void onKicking();
 
 	virtual void physicsUpdate();
-	virtual void fixedUpdate();
+	virtual bool fixedUpdate();
 
 	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
@@ -96,9 +96,7 @@ public:
 	Game::AnimEventNote m_note;
 	int m_checkpointTarget;
 
-
-	Game::EntityLocationType m_blockerAd;
-	Game::EntityIdType m_blockerId;
+	std::weak_ptr<Game::Entity> m_blocker;
 };
 
 }

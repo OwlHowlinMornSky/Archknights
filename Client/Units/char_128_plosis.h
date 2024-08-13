@@ -36,7 +36,7 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
-	virtual void fixedUpdate();
+	virtual bool fixedUpdate();
 
 	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
@@ -49,8 +49,7 @@ public:
 	Game::ModifySwitch m_m;
 	Game::ModifySwitch m_addDef;
 	Game::ModifySwitch m_addMsgDef;
-	Game::EntityLocationType m_targetAd;
-	Game::EntityIdType m_targetId;
+	std::weak_ptr<Game::Entity> m_target;
 };
 
 }

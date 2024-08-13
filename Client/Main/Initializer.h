@@ -31,7 +31,7 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
-	virtual void fixedUpdate() override;
+	virtual bool fixedUpdate() override;
 
 	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 

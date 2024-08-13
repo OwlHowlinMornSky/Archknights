@@ -44,7 +44,7 @@
 namespace Main {
 
 void Initializer::onJoined() {
-	Game::Global::board->subscribeMsg(5678, m_location);
+	Game::Global::board->subscribeMsg(5678, m_myself);
 
 	auto& camera = Game::Global::stage->getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
@@ -97,7 +97,7 @@ void Initializer::onJoined() {
 
 	pos[0] = 5.5f;
 	pos[1] = 3.5f;
-	Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_location);
+	Game::Global::board->subscribeMsg(Game::MsgId::GuiEvent, m_myself);
 
 	auto maphost = std::make_shared<MapHost>();
 	std::ifstream ifs;
@@ -136,12 +136,14 @@ void Initializer::onJoined() {
 }
 
 void Initializer::onKicking() {
-	Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_location);
+	Game::Global::board->unsubscribeMsg(Game::MsgId::GuiEvent, m_myself);
 
 	Game::Global::board->broadcast(1234, 0, 0);
 }
 
-void Initializer::fixedUpdate() {}
+bool Initializer::fixedUpdate() {
+	return true;
+}
 
 Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {
@@ -271,7 +273,7 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 		break;
 	}
 	case 9876:
-		Game::Global::board->unsubscribeMsg(5678, m_location);
+		Game::Global::board->unsubscribeMsg(5678, m_myself);
 		kickSelf();
 		break;
 	case 1234:

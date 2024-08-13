@@ -29,30 +29,26 @@
 Game::ModifySwitch::ModifySwitch() :
 	m_enabled(false),
 	m_attribute(Game::Entity::AttributeType::COUNT),
-	m_targetAd(0),
-	m_targetId(0) {}
+	m_target() {}
 
 Game::ModifySwitch::~ModifySwitch() {
 	setEnabled(false);
 }
 
-void Game::ModifySwitch::setSource(EntityLocationType _ad, EntityIdType _id, Modifier::SourceType::EntityFunction _f) {
-	m_modifier.source.ad = _ad;
-	m_modifier.source.id = _id;
+void Game::ModifySwitch::setSource(std::weak_ptr<Entity> _e, Modifier::SourceType::EntityFunction _f) {
+	m_modifier.source.entity = _e;
 	m_modifier.source.func = _f;
 	if (m_enabled) {
 		(*m_handle) = m_modifier;
-		auto target = Global::board->getEntityAt(m_targetAd);
+		auto target = m_target.lock();
 		assert(target != nullptr);
-		assert(target->getID() == m_targetId);
 		target->onModifierChanged(m_attribute);
 	}
 }
 
-void Game::ModifySwitch::setTarget(EntityLocationType targetAd, EntityIdType targetId, Entity::AttributeType attrib) {
+void Game::ModifySwitch::setTarget(std::weak_ptr<Entity> target, Entity::AttributeType attrib) {
 	setEnabled(false);
-	m_targetAd = targetAd;
-	m_targetId = targetId;
+	m_target = target;
 	m_attribute = attrib;
 }
 
@@ -63,9 +59,8 @@ void Game::ModifySwitch::setValue(Attribute::ValueType grow, Attribute::ValueTyp
 	m_modifier.value[Modifier::ModifyType::Times] = times;
 	if (m_enabled) {
 		(*m_handle) = m_modifier;
-		auto target = Global::board->getEntityAt(m_targetAd);
+		auto target = m_target.lock();
 		assert(target != nullptr);
-		assert(target->getID() == m_targetId);
 		target->onModifierChanged(m_attribute);
 	}
 }
@@ -75,20 +70,18 @@ bool Game::ModifySwitch::setEnabled(bool enabled) {
 		return true;
 	}
 	if (enabled) {
-		if (m_targetId == 0 || m_targetAd == 0 || m_attribute >= Entity::AttributeType::COUNT) {
+		if (m_target.expired() || m_attribute >= Entity::AttributeType::COUNT) {
 			m_enabled = false;
 			return false;
 		}
-		auto target = Global::board->getEntityAt(m_targetAd);
+		auto target = m_target.lock();
 		assert(target != nullptr);
-		assert(target->getID() == m_targetId);
 		m_handle = target->setModifier(m_attribute, m_modifier);
 		m_enabled = true;
 	}
 	else {
-		auto target = Global::board->getEntityAt(m_targetAd);
+		auto target = m_target.lock();
 		assert(target != nullptr);
-		assert(target->getID() == m_targetId);
 		target->eraseModifier(m_attribute, m_handle);
 		m_enabled = false;
 	}

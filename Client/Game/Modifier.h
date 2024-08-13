@@ -55,17 +55,14 @@ struct Modifier {
 			Talent2,
 			Talent3
 		} func;
-		EntityLocationType ad;
-		EntityIdType id;
+		std::weak_ptr<Entity> entity;
 
 		SourceType() :
-			id(0),
-			ad(0),
+			entity(),
 			func() {}
 
-		SourceType(EntityLocationType _ad, EntityIdType _id, EntityFunction _f) :
-			id(_id),
-			ad(_ad),
+		SourceType(std::weak_ptr<Entity> _e, EntityFunction _f) :
+			entity(_e),
 			func(_f) {}
 	} source;
 
@@ -84,7 +81,7 @@ public:
 	 * @param _id
 	 * @param _f
 	 */
-	void setSource(EntityLocationType _ad, EntityIdType _id, Modifier::SourceType::EntityFunction _f);
+	void setSource(std::weak_ptr<Entity> _e, Modifier::SourceType::EntityFunction _f);
 
 	/**
 	 * @brief 修改修饰目标。如果修饰器正生效，该函数*会*使之失效。
@@ -92,7 +89,7 @@ public:
 	 * @param targetId
 	 * @param attrib
 	 */
-	void setTarget(EntityLocationType targetAd, EntityIdType targetId, Entity::AttributeType attrib);
+	void setTarget(std::weak_ptr<Entity> target, Entity::AttributeType attrib);
 
 	/**
 	 * @brief 修改修饰值。如果修饰器正生效，该函数*不会*使之失效。
@@ -109,8 +106,7 @@ public:
 protected:
 	bool m_enabled;
 	Entity::AttributeType m_attribute;
-	EntityLocationType m_targetAd;
-	EntityIdType m_targetId;
+	std::weak_ptr<Entity> m_target;
 	std::list<Modifier>::iterator m_handle;
 	Modifier m_modifier;
 };

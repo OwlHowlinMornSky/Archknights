@@ -39,20 +39,20 @@ void Unit::Char_128_Plosis::onJoined() {
 	rows.widths = wd;
 
 	m_detector = Game::Global::board->m_world->createDetectorRows(Physics::ArmyStand, m_position[0], m_position[1], &rows);
-	m_detector->SetId(m_id);
-	m_detector->SetLocation(m_location);
+	m_detector->setHolder(m_myself);
+	m_detector->setId(m_id);
 
 	setAttributeOringalValue(AttributeType::MaxHp, 1402.0f);
 
-	m_m.setTarget(m_location, m_id, AttributeType::MaxHp);
+	m_m.setTarget(m_myself, AttributeType::MaxHp);
 	m_m.setValue(123.0f, 1.0f, 321.0f, 0.5f);
 	m_m.setEnabled(true);
 
-	m_addDef.setTarget(m_location, m_id, AttributeType::Def);
+	m_addDef.setTarget(m_myself, AttributeType::Def);
 	m_addDef.setValue(320.0f, 0.0f, 0.0f, 0.0f);
 	m_addDef.setEnabled(true);
 
-	m_addMsgDef.setTarget(m_location, m_id, AttributeType::MagDef);
+	m_addMsgDef.setTarget(m_myself, AttributeType::MagDef);
 	m_addMsgDef.setValue(1.0f, 0.0f, 0.0f, 0.0f);
 	m_addMsgDef.setEnabled(true);
 
@@ -74,7 +74,7 @@ void Unit::Char_128_Plosis::onKicking() {
 	Parent::onKicking();
 }
 
-void Unit::Char_128_Plosis::fixedUpdate() {
+bool Unit::Char_128_Plosis::fixedUpdate() {
 	//switch (m_status) {
 	//default:
 	return Parent::fixedUpdate();
@@ -83,12 +83,13 @@ void Unit::Char_128_Plosis::fixedUpdate() {
 
 bool Unit::Char_128_Plosis::tryToAttack() {
 	for (auto it = m_detector->listBegin(), n = m_detector->listEnd(); it != n; ++it) {
-		m_targetAd = it->second.location;
-		m_targetId = it->first;
-		if (Game::Global::board->tellMsg(m_targetAd, m_targetId, Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		m_target = it->second.entity;
+		auto target = m_target.lock();
+		if (target == nullptr)
 			continue;
-		auto t = Game::Global::board->getEntityAt(m_targetAd);
-		if (t->getHp() >= t->getAttribute(AttributeType::MaxHp))
+		if (target->EntityProc(Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		if (target->getHp() >= target->getAttribute(AttributeType::MaxHp))
 			continue;
 		setStatusToAttack();
 		return true;
@@ -97,18 +98,19 @@ bool Unit::Char_128_Plosis::tryToAttack() {
 }
 
 bool Unit::Char_128_Plosis::isStillCanAttack() {
-	if (Game::Global::board->tellMsg(m_targetAd, m_targetId, Main::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK) {
-		auto t = Game::Global::board->getEntityAt(m_targetAd);
-		if (t->getHp() < t->getAttribute(AttributeType::MaxHp))
+	auto target = m_target.lock();
+	if (target && target->EntityProc(Main::MsgId::OnSelecting, 0, 0) == Game::MsgResult::OK) {
+		if (target->getHp() < target->getAttribute(AttributeType::MaxHp))
 			return true;
 	}
 	for (auto it = m_detector->listBegin(), n = m_detector->listEnd(); it != n; ++it) {
-		m_targetAd = it->second.location;
-		m_targetId = it->first;
-		if (Game::Global::board->tellMsg(m_targetAd, m_targetId, Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+		m_target = it->second.entity;
+		target = m_target.lock();
+		if (target == nullptr)
 			continue;
-		auto t = Game::Global::board->getEntityAt(m_targetAd);
-		if (t->getHp() >= t->getAttribute(AttributeType::MaxHp))
+		if (target->EntityProc(Main::MsgId::OnSelecting, 0, 0) != Game::MsgResult::OK)
+			continue;
+		if (target->getHp() >= target->getAttribute(AttributeType::MaxHp))
 			continue;
 		return true;
 	}
@@ -117,7 +119,9 @@ bool Unit::Char_128_Plosis::isStillCanAttack() {
 void Unit::Char_128_Plosis::onAttack() {
 	Game::HealData data;
 	data.healValue = 120.0f;
-	Game::Global::board->tellMsg(m_targetAd, m_targetId, Game::MsgId::OnGetHeal, 0, (intptr_t)&data);
+	auto target = m_target.lock();
+	if (target)
+		target->EntityProc(Game::MsgId::OnGetHeal, 0, (intptr_t)&data);
 }
 
 Game::MsgResultType Unit::Char_128_Plosis::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {

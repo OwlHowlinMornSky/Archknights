@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../Game/TypeDef.h"
+#include "../Game/Entity.h"
 
 namespace Physics {
 
@@ -32,7 +33,7 @@ protected:
 	IFixture() :
 		m_master(false),
 		m_id(0),
-		m_loc(0) {}
+		m_holder() {}
 public:
 	virtual ~IFixture() = default;
 
@@ -47,20 +48,20 @@ public:
 	Game::EntityIdType getId() const {
 		return m_id;
 	}
-	void SetId(Game::EntityIdType id) {
+	void setId(Game::EntityIdType id) {
 		m_id = id;
 	}
-	Game::EntityLocationType getLocation() const {
-		return m_loc;
+	std::weak_ptr<Game::Entity> getHolder() const {
+		return m_holder;
 	}
-	void SetLocation(Game::EntityLocationType loc) {
-		m_loc = loc;
+	void setHolder(std::weak_ptr<Game::Entity> holder) {
+		m_holder = holder;
 	}
 
 protected:
 	bool m_master;
 	Game::EntityIdType m_id;
-	Game::EntityLocationType m_loc;
+	std::weak_ptr<Game::Entity> m_holder;
 };
 
 }

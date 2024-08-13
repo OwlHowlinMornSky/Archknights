@@ -95,14 +95,12 @@ struct Occupation {
 		Deployable,
 		Hole,
 	} type;
-	Game::EntityLocationType location;
-	Game::EntityIdType id;
+	std::weak_ptr<Game::Entity> entity;
 
 	Occupation() :
 		isOccupied(false),
-		location(0),
-		type(Type::CommonGround),
-		id(0) {}
+		entity(),
+		type(Type::CommonGround) {}
 };
 
 template<typename _T>

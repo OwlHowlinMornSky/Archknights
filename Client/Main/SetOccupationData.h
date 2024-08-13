@@ -26,8 +26,7 @@
 namespace Main {
 
 struct SetOccupationData {
-	Game::EntityLocationType location;
-	Game::EntityIdType id;
+	std::weak_ptr<Game::Entity> entity;
 };
 
 }

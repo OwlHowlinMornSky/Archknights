@@ -37,9 +37,9 @@ enum Extern : Game::MsgIdType {
 	BlockerAttached,
 	BlockerLeaved,
 
-	Blocked,      // To Mover. wParam: id, lParam ad.
+	Blocked,      // To Mover. wParam: ID, lParam: a pointer to a weakptr of Entity.
 	BlockCleared, // To Mover. NULL.
-	CancelBlock,  // To Tower. wParam: id.
+	CancelBlock,  // To Tower. wParam: ID, lParam: a pointer to a weakptr of Entity.
 
 };
 }

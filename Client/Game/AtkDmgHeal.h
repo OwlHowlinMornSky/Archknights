@@ -47,14 +47,12 @@ struct AttackData {
 		Remote    // 远程攻击;
 	} distType; // 攻击类型。
 	DamageData damage;
-	EntityLocationType sourceAd;
-	EntityIdType sourceId;
+	std::weak_ptr<Entity> source;
 
 	AttackData() :
 		distType(DistanceType::Near),
 		damage(),
-		sourceAd(0),
-		sourceId(0) {}
+		source() {}
 };
 
 struct HealData {

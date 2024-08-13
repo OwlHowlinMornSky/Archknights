@@ -67,13 +67,16 @@ public:
 	virtual ~Entity() = default;
 
 public:
-	void basicOnJoined(EntityIdType id, EntityLocationType location);
+	void basicOnJoined(EntityIdType id, std::weak_ptr<Entity> yourself);
 	void basicOnKicking();
 	virtual void onJoined();
 	virtual void onKicking();
 
 	virtual void physicsUpdate();
-	virtual void fixedUpdate();
+	/**
+	 * @return true for continue, or false if it is waiting for exit.
+	 */
+	virtual bool fixedUpdate();
 
 	MsgResultType EntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	virtual MsgResultType receiveMessage(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
@@ -90,8 +93,6 @@ public:
 
 public:
 	EntityIdType getID() const;
-	EntityLocationType getLocation() const;
-
 	const float* getPosition() const;
 	void setPosition(float x, float y);
 
@@ -106,7 +107,7 @@ protected:
 	virtual void onRotationChanged();
 	virtual void onScaleChanged();
 
-	void kickSelf() const;
+	void kickSelf();
 
 	MsgResultType DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 
@@ -118,7 +119,8 @@ protected:
 	float m_position[2];
 	float m_scale[2];
 	EntityIdType m_id;
-	EntityLocationType m_location;
+	std::weak_ptr<Entity> m_myself;
+	bool m_isNotWaitingForExit;
 
 	Attribute m_attributes[AttributeType::COUNT];
 	Ability m_abilities[AbilityType::ABCNT];

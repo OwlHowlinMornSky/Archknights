@@ -33,7 +33,7 @@ void Unit::Char_101_Sora::onKicking() {
 	Parent::onKicking();
 }
 
-void Unit::Char_101_Sora::fixedUpdate() {
+bool Unit::Char_101_Sora::fixedUpdate() {
 	//switch (m_status) {
 	//default:
 	//}

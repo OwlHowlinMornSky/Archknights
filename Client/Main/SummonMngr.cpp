@@ -68,16 +68,18 @@ void SummonMngr::endAdd() {
 }
 
 void SummonMngr::onJoined() {
-	Game::Global::board->subscribeMsg(Game::MsgId::Summon, m_location);
-	Game::Global::board->subscribeMsg(Game::MsgId::Deploy, m_location);
+	Game::Global::board->subscribeMsg(Game::MsgId::Summon, m_myself);
+	Game::Global::board->subscribeMsg(Game::MsgId::Deploy, m_myself);
 }
 
 void SummonMngr::onKicking() {
-	Game::Global::board->unsubscribeMsg(Game::MsgId::Deploy, m_location);
-	Game::Global::board->unsubscribeMsg(Game::MsgId::Summon, m_location);
+	Game::Global::board->unsubscribeMsg(Game::MsgId::Deploy, m_myself);
+	Game::Global::board->unsubscribeMsg(Game::MsgId::Summon, m_myself);
 }
 
-void SummonMngr::fixedUpdate() {}
+bool SummonMngr::fixedUpdate() {
+	return true;
+}
 
 Game::MsgResultType SummonMngr::receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam) {
 	switch (msg) {

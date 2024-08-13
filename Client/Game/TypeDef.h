@@ -26,8 +26,6 @@
 namespace Game {
 
 typedef size_t EntityIdType;
-typedef size_t EntityLocationType;
-
 typedef uint32_t MsgIdType;
 typedef size_t   MsgWparamType;
 typedef intptr_t MsgLparamType;

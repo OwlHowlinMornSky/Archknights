@@ -36,7 +36,7 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
-	virtual void fixedUpdate();
+	virtual bool fixedUpdate();
 
 	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
@@ -46,12 +46,11 @@ protected:
 	virtual void onAttack() override;
 
 public:
-	Game::EntityLocationType m_targetAd;
-	Game::EntityIdType m_targetId;
+	std::weak_ptr<Game::Entity> m_target;
 	std::unique_ptr<Physics::IDetector> m_blocker;
 
 	int m_blockTotal;
-	std::map<Game::EntityIdType, Game::EntityLocationType> m_blockedMovers;
+	std::map<Game::EntityIdType, std::weak_ptr<Game::Entity>> m_blockedMovers;
 };
 
 }

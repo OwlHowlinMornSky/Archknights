@@ -61,25 +61,12 @@ public:
 	 * @param entity 指定实体。
 	*/
 	void joinEntity(std::shared_ptr<Entity> entity);
-	/**
-	 * @brief 让指定实体退场。这会让实体收到OnKicking。
-	 * @param location 指定实体的位置。
-	*/
-	void kickEntity(size_t location);
 
 	void ExitGame(int code);
 
-	/**
-	 * @brief 获取指定实体。
-	 * @param location 指定实体的位置。
-	 * @return 相应位置的实体。（可能为nullptr）
-	*/
-	std::shared_ptr<Entity> getEntityAt(size_t location);
-
 protected:
 	EntityIdType m_entityIdCnt; // 实体id计数，用于让每个实体都有独一无二的标识和判断方法。
-	std::vector<std::shared_ptr<Entity>> m_entities; // 在场实体所处空间。在场即指针不为空，应当保证退场同时置为nullptr。
-	std::stack<size_t> m_emptyLocations; // 空闲位置，是实体所在deque的偏移。由实体退场产生。
+	std::vector<std::shared_ptr<Entity>> m_entities; // 在场实体所处空间。指针必定不为空，应当保证退场同时将后续值前移。
 	std::function<void(int)> m_exitCallback;
 
 public:
@@ -92,32 +79,8 @@ public:
 	*/
 	void update(long long dt);
 
-	void registryForExit(EntityLocationType location);
-
-protected:
-	std::stack<EntityLocationType> m_readyForExit;
-
 // 事件控制器
 public:
-	/**
-	 * @brief 向指定位置发送消息。
-	 * @param location 指定位置。
-	 * @param msg 消息id。
-	 * @param wparam 消息w参数。
-	 * @param lparam 消息l参数。
-	 * @return 消息回执。
-	*/
-	MsgResultType sendMsg(EntityLocationType location, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
-	/**
-	 * @brief 向指定实体发送消息。
-	 * @param location 指定的位置。
-	 * @param id 指定的实体。
-	 * @param msg 消息id。
-	 * @param wparam 消息w参数。
-	 * @param lparam 消息l参数。
-	 * @return 消息回执。
-	*/
-	MsgResultType tellMsg(EntityLocationType location, EntityIdType id, MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam);
 	/**
 	 * @brief 分发消息。即 向所有订阅指定消息的实体发送消息。
 	 * @param msg 消息id。即 指定消息。
@@ -137,16 +100,16 @@ public:
 	 * @param msg 订阅的消息id。
 	 * @param location 本实体的位置。
 	*/
-	void subscribeMsg(MsgIdType msg, EntityLocationType location);
+	void subscribeMsg(MsgIdType msg, std::weak_ptr<Entity> ref);
 	/**
 	 * @brief 退订消息。
 	 * @param msg 退订的消息id。
 	 * @param location 本实体的位置。
 	*/
-	void unsubscribeMsg(MsgIdType msg, EntityLocationType location);
+	void unsubscribeMsg(MsgIdType msg, std::weak_ptr<Entity> ref);
 
 protected:
-	std::map<MsgIdType, std::set<EntityLocationType>> m_msgMap; // 消息订阅表。
+	std::map<MsgIdType, std::vector<std::weak_ptr<Entity>>> m_msgMap; // 消息订阅表。
 	unsigned long long m_time;
 
 public:

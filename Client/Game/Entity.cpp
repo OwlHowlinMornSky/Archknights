@@ -36,29 +36,30 @@ Entity::Entity() :
 	m_rotation(0.0f),
 	m_scale{ 1.0f, 1.0f },
 
-	m_id(0),
-	m_location(0),
+	m_isNotWaitingForExit(true),
+
+	m_myself(),
 
 	m_hp(256.0f)
 
 {}
 
-void Entity::basicOnJoined(EntityIdType id, EntityLocationType location) {
+void Entity::basicOnJoined(EntityIdType id, std::weak_ptr<Entity> yourself) {
 	m_id = id;
-	m_location = location;
+	m_myself = yourself;
 
 	m_attributes[AttributeType::MaxHp].original = 256.0f;
 	m_attributes[AttributeType::MaxHp].effective = 256.0f;
 
 	// for test
-	std::cout << "Join: " << this << ", ID: " << id << ", Location: " << location << std::endl;
+	std::cout << "Joined. Id: " << id << "Addr: 0x" << this << "." << std::endl;
 	return onJoined();
 }
 
 void Entity::basicOnKicking() {
 	onKicking();
-	std::cout << "Kick: " << this << ", ID: " << m_id << ", Location: " << m_location << std::endl;
-	m_location = 0;
+	std::cout << "Kicked. Id: " << m_id << "Addr: 0x" << this << "." << std::endl;
+	m_myself.reset();
 	m_id = 0;
 	return;
 }
@@ -149,14 +150,12 @@ Attribute::ValueType Entity::getAttribute(AttributeType type) const {
 
 void Entity::physicsUpdate() {}
 
-void Entity::fixedUpdate() {}
+bool Entity::fixedUpdate() {
+	return m_isNotWaitingForExit;
+}
 
 EntityIdType Entity::getID() const {
 	return m_id;
-}
-
-EntityLocationType Entity::getLocation() const {
-	return m_location;
 }
 
 const float* Entity::getPosition() const {
@@ -194,8 +193,8 @@ void Entity::onRotationChanged() {}
 
 void Entity::onScaleChanged() {}
 
-void Entity::kickSelf() const {
-	Global::board->registryForExit(m_location);
+void Entity::kickSelf() {
+	m_isNotWaitingForExit = false;
 }
 
 MsgResultType Entity::DefEntityProc(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {

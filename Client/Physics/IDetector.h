@@ -33,11 +33,10 @@ struct Rows {
 };
 
 struct MapValue {
-	Game::EntityLocationType location;
+	std::weak_ptr<Game::Entity> entity;
 	size_t count;
 
 	MapValue() :
-		location(0),
 		count(0) {}
 };
 
