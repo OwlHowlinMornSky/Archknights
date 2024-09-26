@@ -148,8 +148,6 @@ Attribute::ValueType Entity::getAttribute(AttributeType type) const {
 	return m_attributes[type].effective;
 }
 
-void Entity::physicsUpdate() {}
-
 bool Entity::fixedUpdate() {
 	return m_isNotWaitingForExit;
 }

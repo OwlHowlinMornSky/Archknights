@@ -89,9 +89,6 @@ void Board::update(long long dt) {
 			return;
 		m_time -= 33333;
 	}
-	for (std::shared_ptr<Entity>& entity : m_entities) {
-		entity->physicsUpdate();
-	}
 	m_world->update();
 
 	std::vector<std::shared_ptr<Entity>>::iterator i = m_entities.begin();

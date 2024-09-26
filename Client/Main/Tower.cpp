@@ -288,7 +288,10 @@ bool Tower::isStillCanAttack() {
 }
 
 void Tower::onAttackBegin() {
-	isStillCanAttack();
+	if (!isStillCanAttack()) {
+		setStatusToIdle();
+		return;
+	}
 	receiveMessage(Game::MsgId::OnAttackBegin, 0, 0);
 	onAttack();
 	receiveMessage(Game::MsgId::OnAttackEnd, 0, 0);

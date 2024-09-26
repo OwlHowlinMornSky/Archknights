@@ -51,7 +51,6 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
-	virtual void physicsUpdate();
 	virtual bool fixedUpdate();
 
 	virtual Game::MsgResultType receiveMessage(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);

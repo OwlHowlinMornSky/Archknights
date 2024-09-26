@@ -22,6 +22,7 @@
 #include "Body.h"
 
 #include "FrictionBody.h"
+#include <cfloat>
 
 namespace Physics {
 
@@ -92,7 +93,7 @@ void Body::setMoveTo(bool move, float x, float y) {
 		mousejoint.bodyA = FrictionBody::GetFrictionBodyInstance();
 		mousejoint.bodyB = m_body;
 		mousejoint.maxForce = m_maxA;
-		mousejoint.stiffness = mousejoint.maxForce * mousejoint.maxForce;
+		mousejoint.stiffness = FLT_MAX;
 		m_moveJoint = (b2MouseJoint*)m_body->GetWorld()->CreateJoint(&mousejoint);
 		m_moveJoint->SetTarget(pos);
 	}

@@ -72,7 +72,6 @@ public:
 	virtual void onJoined();
 	virtual void onKicking();
 
-	virtual void physicsUpdate();
 	/**
 	 * @return true for continue, or false if it is waiting for exit.
 	 */
