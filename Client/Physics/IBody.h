@@ -44,6 +44,7 @@ public:
 	virtual IDetector* getDetector(size_t id) = 0;
 
 	virtual void setMove(float maxv, float maxa) = 0;
+	virtual void setMoveTo(bool mouse, float x = 0.0f, float y = 0.0f) = 0;
 	virtual void setMoveSpeed(float maxv) = 0;
 	virtual void setMoveAcceleration(float maxa) = 0;
 	virtual void setStatusNormal() = 0;

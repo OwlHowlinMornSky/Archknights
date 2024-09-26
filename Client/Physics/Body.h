@@ -47,6 +47,7 @@ public:
 	virtual IDetector* getDetector(size_t id) override;
 
 	virtual void setMove(float maxv, float maxa) override;
+	virtual void setMoveTo(bool move, float x = 0.0f, float y = 0.0f) override;
 	virtual void setMoveSpeed(float maxv) override;
 	virtual void setMoveAcceleration(float maxa) override;
 	virtual void setStatusNormal() override;
@@ -68,6 +69,7 @@ protected:
 	b2Body* m_body;
 	b2Fixture* m_fixture;
 	b2FrictionJoint* m_frictionJoint;
+	b2MouseJoint* m_moveJoint;
 	std::vector<std::unique_ptr<Detector>> m_detectors;
 };
 

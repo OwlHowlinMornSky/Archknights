@@ -66,9 +66,9 @@ void Mover::onKicking() {
 }
 
 void Mover::physicsUpdate() {
-	if (m_status == Status::Moving) {
+	/*if (m_status == Status::Moving) {
 		m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
-	}
+	}*/
 }
 
 bool Mover::fixedUpdate() {
@@ -161,7 +161,8 @@ bool Mover::fixedUpdate() {
 		onPositionVaried();
 		if (velocity[0] * velocity[0] + velocity[1] * velocity[1] < 0.01f) {
 			if (tryToMove()) {
-				m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
+				m_body->setMoveTo(true, m_moveTargetPos[0], m_moveTargetPos[1]);
+				//m_body->moveTo(m_moveTargetPos[0], m_moveTargetPos[1]);
 				m_actor->turnLeftRight(m_moveTargetPos[0] < m_position[0]);
 			}
 			else { // 不再继续
@@ -275,6 +276,7 @@ void Mover::setStatusToIdle(Game::IActor::Direction d) {
 		);
 		return;
 	}
+	m_body->setMoveTo(false);
 	m_body->clearSpeed();
 	m_status = Status::Idle;
 	if (m_actor)
@@ -321,6 +323,8 @@ void Mover::setStatusToReturn(Game::IActor::Direction d) {
 
 void Mover::setStatusToMoving(Game::IActor::Direction d) {
 	m_status = Status::Moving;
+	m_body->setStatusNormal();
+	m_body->setMoveTo(true, m_moveTargetPos[0], m_moveTargetPos[1]);
 	if (m_actor)
 		m_actor->triggerAnimation(
 			Game::IActor::AnimationEvent::Move, d
@@ -389,6 +393,8 @@ RetryQuery:
 	}
 	m_moveTargetPos[0] = target[0] + 0.5f;
 	m_moveTargetPos[1] = target[1] + 0.5f;
+	m_body->setMoveTo(true, m_moveTargetPos[0], m_moveTargetPos[1]);
+	printf_s("??? %f %f\n", m_moveTargetPos[0], m_moveTargetPos[1]);
 	return true;
 }
 

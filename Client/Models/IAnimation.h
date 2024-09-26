@@ -23,6 +23,7 @@
 
 #include <MysteryEngine/G3D/IModel.h>
 #include <memory>
+#include <string>
 
 namespace Model {
 

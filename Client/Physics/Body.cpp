@@ -80,6 +80,24 @@ void Body::setMove(float maxv, float maxa) {
 	}
 }
 
+void Body::setMoveTo(bool move, float x, float y) {
+	if (m_moveJoint) {
+		m_body->GetWorld()->DestroyJoint(m_moveJoint);
+		m_moveJoint = nullptr;
+	}
+	if (move) {
+		b2Vec2 pos = { x, y };
+		pos -= m_body->GetPosition();
+		b2MouseJointDef mousejoint;
+		mousejoint.bodyA = FrictionBody::GetFrictionBodyInstance();
+		mousejoint.bodyB = m_body;
+		mousejoint.maxForce = m_maxA;
+		mousejoint.stiffness = mousejoint.maxForce * mousejoint.maxForce;
+		m_moveJoint = (b2MouseJoint*)m_body->GetWorld()->CreateJoint(&mousejoint);
+		m_moveJoint->SetTarget(pos);
+	}
+}
+
 void Body::setMoveSpeed(float maxv) {
 	m_maxV = maxv;
 	if (!m_isUnbalance) {
@@ -203,7 +221,7 @@ void Body::createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float r
 	joint.maxForce = 0.0f;
 	joint.bodyA = m_body;
 	joint.bodyB = FrictionBody::GetFrictionBodyInstance();
-	m_frictionJoint = (b2FrictionJoint*)m_body->GetWorld()->CreateJoint(&joint);
+	m_frictionJoint = (b2FrictionJoint*)world->CreateJoint(&joint);
 
 	m_master = false;
 	return;

@@ -69,11 +69,11 @@ void Board::clear() {
 }
 
 bool Board::isEmpty() {
-	// 空闲位置数量等于实体位置数量说明没有实体。
 	return m_entities.empty();
 }
 
 void Board::joinEntity(std::shared_ptr<Entity> entity) {
+	assert(m_entityIdCnt < UINT32_MAX); // 拒绝id溢出。（虽然正常情况下不会产生这么多实体）
 	m_entities.push_back(entity); // 直接放在末尾。
 	entity->basicOnJoined(++m_entityIdCnt, (std::weak_ptr<Entity>)entity); // 通知相应标识。
 }
@@ -115,8 +115,6 @@ void Board::update(long long dt) {
 }
 
 void Board::postMsg(MsgIdType msg, MsgWparamType wparam, MsgLparamType lparam) {
-	// failedLoc相关的是自动退订逻辑，算是一种保险。
-	// 如果注册过的实体保证退场时注销，就不需要这个。
 	auto mapIt = m_msgMap.find(msg);
 	if (mapIt == m_msgMap.end())
 		return;
