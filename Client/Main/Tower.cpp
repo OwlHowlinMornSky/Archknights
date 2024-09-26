@@ -81,6 +81,8 @@ void Tower::onJoined() {
 }
 
 void Tower::onKicking() {
+	m_active = false;
+	m_died = true;
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)

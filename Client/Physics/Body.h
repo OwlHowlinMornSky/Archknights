@@ -68,7 +68,7 @@ protected:
 	b2Body* m_body;
 	b2Fixture* m_fixture;
 	b2FrictionJoint* m_frictionJoint;
-	b2MouseJoint* m_moveJoint;
+	b2MotorJoint* m_motorJoint;
 	std::vector<std::unique_ptr<Detector>> m_detectors;
 };
 

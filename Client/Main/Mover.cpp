@@ -58,6 +58,8 @@ void Mover::onJoined() {
 }
 
 void Mover::onKicking() {
+	m_active = false;
+	m_died = true;
 	m_detector.reset();
 	m_body.reset();
 	if (m_actor)
@@ -191,6 +193,7 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 	case Game::MsgId::OnHpDropToZero:
 		if (m_status == Status::Moving || m_status == Status::Unbalance) {
 			m_body->setStatusUnbalance();
+			m_body->setMoveTo(false);
 		}
 		if (m_isBlocked) {
 			m_isBlocked = false;
@@ -226,7 +229,8 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 	case Main::MsgId::BlockCleared:
 		m_blocker.reset();
 		m_isBlocked = false;
-		setStatusToIdle();
+		if (m_active && !m_died)
+			setStatusToIdle();
 		break;
 	default:
 		return DefEntityProc(msg, wparam, lparam);
