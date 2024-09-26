@@ -22,13 +22,13 @@
 #include "Body.h"
 
 #include "FrictionBody.h"
-#include <cfloat>
 
 namespace Physics {
 
 Body::Body() :
 	m_isUnbalance(false),
 	m_frictionJoint(nullptr),
+	m_motorJoint(nullptr),
 	m_maxA(0.0f),
 	m_maxV(1.0f),
 	m_body(nullptr),
