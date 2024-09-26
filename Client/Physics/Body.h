@@ -51,7 +51,6 @@ public:
 	virtual void setMoveSpeed(float maxv) override;
 	virtual void setMoveAcceleration(float maxa) override;
 	virtual void setStatusNormal() override;
-	virtual void moveTo(float x, float y) override;
 	virtual void setStatusUnbalance(bool dontHitWall = false) override;
 	virtual void impulse(float ix, float iy) override;
 	virtual void pull(float fx, float fy) override;

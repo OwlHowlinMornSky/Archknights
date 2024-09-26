@@ -52,13 +52,13 @@ void Entity::basicOnJoined(EntityIdType id, std::weak_ptr<Entity> yourself) {
 	m_attributes[AttributeType::MaxHp].effective = 256.0f;
 
 	// for test
-	std::cout << "Joined. Id: " << id << "Addr: 0x" << this << "." << std::endl;
+	std::cout << "Joined. Id: " << id << ". Addr: 0x" << this << "." << std::endl;
 	return onJoined();
 }
 
 void Entity::basicOnKicking() {
 	onKicking();
-	std::cout << "Kicked. Id: " << m_id << "Addr: 0x" << this << "." << std::endl;
+	std::cout << "Kicked. Id: " << m_id << ". Addr: 0x" << this << "." << std::endl;
 	m_myself.reset();
 	m_id = 0;
 	return;

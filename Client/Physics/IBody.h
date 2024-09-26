@@ -48,7 +48,6 @@ public:
 	virtual void setMoveSpeed(float maxv) = 0;
 	virtual void setMoveAcceleration(float maxa) = 0;
 	virtual void setStatusNormal() = 0;
-	virtual void moveTo(float x, float y) = 0;
 	virtual void setStatusUnbalance(bool dontHitWall = false) = 0;
 	virtual void impulse(float ix, float iy) = 0;
 	virtual void pull(float fx, float fy) = 0;

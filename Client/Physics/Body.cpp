@@ -121,14 +121,6 @@ void Body::setStatusNormal() {
 	m_isUnbalance = false;
 }
 
-void Body::moveTo(float x, float y) {
-	b2Vec2 f = { x, y };
-	f -= m_body->GetPosition();
-	f *= m_maxA / f.Length();
-	m_body->ApplyForceToCenter(f, true);
-	return;
-}
-
 void Body::setStatusUnbalance(bool dontHitWall) {
 	b2Filter filter = m_fixture->GetFilterData();
 	filter.maskBits = dontHitWall ? 0x0004 : 0x0006;
