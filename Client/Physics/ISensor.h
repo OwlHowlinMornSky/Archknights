@@ -21,49 +21,19 @@
 */
 #pragma once
 
-#include "../Game/TypeDef.h"
-#include "../Game/Entity.h"
+#include "IDetector.h"
 
 namespace Physics {
 
-class IFixture {
-	friend class Detector;
-	friend class DetectorIndependent;
-	friend class Sensor;
-	friend class SensorIndependent;
+class ISensor :
+	public IFixture {
 protected:
-	IFixture() :
-		m_master(false),
-		m_id(0),
-		m_holder() {}
+	ISensor() = default;
 public:
-	virtual ~IFixture() = default;
+	virtual ~ISensor() = default;
 
 public:
-	virtual void onBeginContact(IFixture* another) = 0;
-	virtual void onEndContact(IFixture* another) = 0;
-
-	bool IsMaster() const {
-		return m_master;
-	}
-
-	Game::EntityIdType getId() const {
-		return m_id;
-	}
-	void setId(Game::EntityIdType id) {
-		m_id = id;
-	}
-	std::weak_ptr<Game::Entity> getHolder() const {
-		return m_holder;
-	}
-	void setHolder(std::weak_ptr<Game::Entity> holder) {
-		m_holder = holder;
-	}
-
-protected:
-	bool m_master;
-	Game::EntityIdType m_id;
-	std::weak_ptr<Game::Entity> m_holder;
+	virtual void setPosition(float x, float y) = 0;
 };
 
 }

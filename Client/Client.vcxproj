@@ -356,8 +356,10 @@
     <ClInclude Include="Physics\IBody.h" />
     <ClInclude Include="Physics\IDetector.h" />
     <ClInclude Include="Physics\IFixture.h" />
+    <ClInclude Include="Physics\ISensor.h" />
     <ClInclude Include="Physics\IWall.h" />
     <ClInclude Include="Physics\IWorld.h" />
+    <ClInclude Include="Physics\Sensor.h" />
     <ClInclude Include="Physics\Wall.h" />
     <ClInclude Include="Physics\World.h" />
     <ClInclude Include="resource.h" />
@@ -410,6 +412,7 @@
     <ClCompile Include="Physics\Detector.cpp" />
     <ClCompile Include="Physics\FrictionBody.cpp" />
     <ClCompile Include="Physics\IBody.cpp" />
+    <ClCompile Include="Physics\Sensor.cpp" />
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
     <ClCompile Include="Scenes\GameCommon.cpp" />

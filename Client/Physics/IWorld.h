@@ -22,6 +22,7 @@
 #pragma once
 
 #include "IDetector.h"
+#include "ISensor.h"
 #include "IBody.h"
 #include "IWall.h"
 

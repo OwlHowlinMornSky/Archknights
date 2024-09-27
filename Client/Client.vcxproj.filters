@@ -283,6 +283,12 @@
     <ClInclude Include="Main\OccupiedPlace.h">
       <Filter>Main\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\ISensor.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Sensor.h">
+      <Filter>Physics\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -428,5 +434,6 @@
     <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\Sensor.cpp" />
   </ItemGroup>
 </Project>

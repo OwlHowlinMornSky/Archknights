@@ -41,5 +41,8 @@ enum Extern : Game::MsgIdType {
 	BlockCleared, // To Mover. NULL.
 	CancelBlock,  // To Tower. wParam: ID, lParam: a pointer to a weakptr of Entity.
 
+	SensorEnter,  // wParam: ID of target, lParam: a pointer to a weakptr of target.
+	SensorExit,   // wParam: ID of target, lParam: a pointer to a weakptr of target.
+
 };
 }
