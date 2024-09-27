@@ -50,6 +50,7 @@ public:
 
 public:
 	virtual void setPosition(float x, float y) = 0;
+	virtual void setSendSensorMsg(bool enabled) = 0;
 
 	virtual std::map<Game::EntityIdType, MapValue>::iterator listBegin() = 0;
 	virtual std::map<Game::EntityIdType, MapValue>::iterator listEnd() = 0;

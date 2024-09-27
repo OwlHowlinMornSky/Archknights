@@ -20,12 +20,14 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "Detector.h"
+#include "../Main/MsgId.h"
 
 namespace Physics {
 
-Physics::Detector::Detector() {}
+Detector::Detector() :
+	m_sendSensorMsg(false) {}
 
-Physics::Detector::~Detector() {
+Detector::~Detector() {
 	for (b2Fixture* fix : m_fixtures) {
 		fix->GetBody()->DestroyFixture(fix);
 	}
@@ -36,10 +38,20 @@ void Detector::setPosition(float x, float y) {
 	return;
 }
 
+void Detector::setSendSensorMsg(bool enabled) {
+	m_sendSensorMsg = enabled;
+}
+
 void Detector::onBeginContact(IFixture* another) {
 	auto& i = m_list[another->m_id];
-	i.count++;
 	i.entity = another->m_holder;
+	if (i.count == 0 && m_sendSensorMsg) {
+		auto holder = m_holder.lock();
+		if (holder) {
+			holder->receiveMessage(Main::MsgId::SensorEnter, another->m_id, (Game::MsgLparamType)&i.entity);
+		}
+	}
+	i.count++;
 	return;
 }
 
@@ -48,6 +60,12 @@ void Detector::onEndContact(IFixture* another) {
 	if (it == m_list.end())
 		return;
 	if (it->second.count <= 1) {
+		if (m_sendSensorMsg) {
+			auto holder = m_holder.lock();
+			if (holder) {
+				holder->receiveMessage(Main::MsgId::SensorExit, another->m_id, (Game::MsgLparamType)&it->second.entity);
+			}
+		}
 		m_list.erase(it);
 		return;
 	}

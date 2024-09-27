@@ -36,6 +36,7 @@ public:
 
 public:
 	virtual void setPosition(float x, float y) override;
+	virtual void setSendSensorMsg(bool enabled) override;
 
 	virtual void onBeginContact(IFixture* another) override;
 	virtual void onEndContact(IFixture* another) override;
@@ -50,6 +51,7 @@ protected:
 	void createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius);
 
 protected:
+	bool m_sendSensorMsg;
 	std::vector<b2Fixture*> m_fixtures;
 	std::map<Game::EntityIdType, MapValue> m_list;
 };

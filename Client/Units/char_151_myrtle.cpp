@@ -28,7 +28,7 @@
 #include "../Game/AtkDmgHeal.h"
 
 Unit::Char_151_Myrtle::Char_151_Myrtle() {
-	m_blockTotal = 0;
+	m_blockTotal = 3;
 }
 
 Unit::Char_151_Myrtle::~Char_151_Myrtle() {}
@@ -49,6 +49,7 @@ void Unit::Char_151_Myrtle::onJoined() {
 	m_blocker = Game::Global::board->m_world->createBlockerCircle(m_position[0], m_position[1], 0.60710678118654752440084436210485f);
 	m_blocker->setHolder(m_myself);
 	m_blocker->setId(m_id);
+	m_blocker->setSendSensorMsg(true);
 
 	m_abilities[AbilityType::Attack].setOriginal(1);
 
@@ -104,6 +105,25 @@ Game::MsgResultType Unit::Char_151_Myrtle::receiveMessage(Game::MsgIdType msg, G
 	case Main::MsgId::CancelBlock:
 		m_blockedMovers.erase((Game::EntityIdType)wparam);
 		break;
+
+	case Main::MsgId::SensorEnter:
+	{
+		Game::EntityIdType id = wparam;
+		std::weak_ptr<Entity> ref = *(std::weak_ptr<Entity>*)lparam;
+		if (m_blockedMovers.size() >= m_blockTotal)
+			break;
+		auto target = ref.lock();
+		if (target == nullptr)
+			break;
+		if (target->EntityProc(Main::MsgId::OnBlocking, 0, 0) != Game::MsgResult::OK)
+			break;
+		m_blockedMovers.emplace(id, ref);
+		target->EntityProc(Main::MsgId::Blocked, m_id, (Game::MsgLparamType)&m_myself);
+		break;
+	}
+	case Main::MsgId::SensorExit:
+		break;
+
 	default:
 		return DefTowerProc(msg, wparam, lparam);
 	}
