@@ -24,6 +24,8 @@
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/glCheck.h>
 
+#include <string>
+
 namespace {
 
 const std::string fragment_spine =
