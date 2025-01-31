@@ -65,7 +65,6 @@ namespace ME {
 
 Shader::Shader() :
 	m_program(0) {
-	memset(m_shader, 0, sizeof(m_shader));
 	return;
 }
 
@@ -78,7 +77,7 @@ void Shader::Bind(Shader* shader) {
 	if (shader) {
 		if (!shader->m_program) {
 #ifdef _DEBUG
-			std::cerr<< "Error Using Empty Shader!" << std::endl;
+			std::cerr << "Error Using Empty Shader!" << std::endl;
 #endif // _DEBUG
 		}
 		glCheck(glUseProgram(shader->m_program));
@@ -90,42 +89,38 @@ void Shader::Bind(Shader* shader) {
 
 void Shader::clear() {
 	if (m_program) {
-		for (unsigned int i = 0; i < static_cast<unsigned int>(ShaderType::COUNT); i++) {
-			if (m_shader[i]) {
-				glCheck(glDetachShader(m_program, m_shader[i]));
-				glCheck(glDeleteShader(m_shader[i]));
-				m_shader[i] = 0;
-			}
-		}
 		glCheck(glDeleteProgram(m_program));
 		m_program = 0;
 	}
 	return;
 }
 
-void Shader::loadFromMemory(std::string_view shader, ShaderType type) {
-	if (shader.empty())
-		return;
+GLuint Shader::loadFromMemory(std::string_view shader_code, ShaderType type) {
+	if (shader_code.empty())
+		return 0;
 	size_t f = static_cast<size_t>(type);
+
+	GLuint shader = 0;
 
 	switch (type) {
 	case ShaderType::Vertex:
-		m_shader[f] = buildShader(shader, GL_VERTEX_SHADER);
+		shader = buildShader(shader_code, GL_VERTEX_SHADER);
 		break;
 	case ShaderType::Fragment:
-		m_shader[f] = buildShader(shader, GL_FRAGMENT_SHADER);
+		shader = buildShader(shader_code, GL_FRAGMENT_SHADER);
 		break;
 	default:
 #ifdef _DEBUG
 		std::cerr << "Invalid Shader Type." << std::endl;
 #endif
-		return;
+		return 0;
 	}
 	if (!m_program) {
 		glCheck(m_program = glCreateProgram());
 	}
-	glCheck(glAttachShader(m_program, m_shader[f]));
-	return;
+	glCheck(glAttachShader(m_program, shader));
+	glCheck(glDeleteShader(shader));
+	return shader;
 }
 
 void Shader::linkShader() {

@@ -135,12 +135,14 @@ public:
 public:
 	virtual void setup() override {
 		clear();
-		loadFromMemory(vertex_projection, ME::ShaderType::Vertex);
-		loadFromMemory(fragment_spine, ME::ShaderType::Fragment);
+		auto vid = loadFromMemory(vertex_projection, ME::ShaderType::Vertex);
+		auto fid = loadFromMemory(fragment_spine, ME::ShaderType::Fragment);
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "aPosition"));
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "aTexCoord"));
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "aColor"));
 		linkShader();
+		glCheck(glDetachShader(m_program, vid));
+		glCheck(glDetachShader(m_program, fid));
 		Bind(this);
 
 		m_uniforms[Game::ActorShaderUniformId::Mat4_PV] = getUniformLocation("uMatPV");
@@ -243,12 +245,14 @@ public:
 public:
 	virtual void setup() override {
 		clear();
-		loadFromMemory(vertex_shadow, ME::ShaderType::Vertex);
-		loadFromMemory(fragment_shadow, ME::ShaderType::Fragment);
+		auto vid = loadFromMemory(vertex_shadow, ME::ShaderType::Vertex);
+		auto fid = loadFromMemory(fragment_shadow, ME::ShaderType::Fragment);
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Position), "aPosition"));
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), "aTexCoord"));
 		glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(Game::ActorVertexAttribute::Color), "aColor"));
 		linkShader();
+		glCheck(glDetachShader(m_program, vid));
+		glCheck(glDetachShader(m_program, fid));
 		Bind(this);
 
 		m_uniforms[0] = getUniformLocation("uVecOffset");

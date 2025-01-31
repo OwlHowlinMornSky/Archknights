@@ -85,13 +85,15 @@ const char g_fs[] =
 
 void TitleSphereShader::setup() {
 	clear();
-	loadFromMemory(g_vs2, ME::ShaderType::Vertex);
-	loadFromMemory(g_fs, ME::ShaderType::Fragment);
+	auto vid = loadFromMemory(g_vs2, ME::ShaderType::Vertex);
+	auto fid = loadFromMemory(g_fs, ME::ShaderType::Fragment);
 	glCheck(glBindAttribLocation(m_program, 0, "a_vertex0"));
 	glCheck(glBindAttribLocation(m_program, 1, "a_vertex1"));
 	glCheck(glBindAttribLocation(m_program, 2, "a_offset"));
 	glCheck(glBindAttribLocation(m_program, 3, "a_texCoord"));
 	linkShader();
+	glCheck(glDetachShader(m_program, vid));
+	glCheck(glDetachShader(m_program, fid));
 	Bind(this);
 	m_ul_matp = getUniformLocation("u_matP");
 	m_ul_matv = getUniformLocation("u_matV");

@@ -56,7 +56,7 @@ public:
 	static void Bind(Shader* shader);
 
 	void clear();
-	void loadFromMemory(std::string_view shader, ShaderType type);
+	[[nodiscard]] GLuint loadFromMemory(std::string_view shader_code, ShaderType type);
 	void linkShader();
 	GLint getUniformLocation(const char* name) const;
 	void updateUniform1i(GLint pos, GLint val) const;
@@ -84,7 +84,6 @@ public:
 
 protected:
 	GLuint m_program; // 着色器程序。
-	GLuint m_shader[static_cast<size_t>(ShaderType::COUNT)];
 }; // class Shader
 
 } // namespace ME

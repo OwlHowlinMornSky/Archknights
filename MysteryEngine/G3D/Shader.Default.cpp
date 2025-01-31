@@ -58,12 +58,14 @@ DefaultShader::DefaultShader() :
 
 void DefaultShader::setup() {
 	clear();
-	loadFromMemory(g_defaultVertexShader, ShaderType::Vertex);
-	loadFromMemory(g_defaultFragShader, ShaderType::Fragment);
+	auto vid = loadFromMemory(g_defaultVertexShader, ShaderType::Vertex);
+	auto fid = loadFromMemory(g_defaultFragShader, ShaderType::Fragment);
 	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Position), "aVertexPos"));
 	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::TexCoord), "aVertexTexCoord"));
 	glCheck(glBindAttribLocation(m_program, static_cast<GLuint>(VertexAttribute::Color), "aVertexColor"));
 	linkShader();
+	glCheck(glDetachShader(m_program, vid));
+	glCheck(glDetachShader(m_program, fid));
 	Bind(this);
 	m_uniform = getUniformLocation("uMatPVM");
 	updateUniform1iName("uTex", 0);
