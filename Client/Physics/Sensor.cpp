@@ -27,8 +27,8 @@ namespace Physics {
 Sensor::Sensor() {}
 
 Sensor::~Sensor() {
-	for (b2Fixture* fix : m_fixtures) {
-		fix->GetBody()->DestroyFixture(fix);
+	for (b2ShapeId fix : m_fixtures) {
+		b2DestroyShape(fix);
 	}
 	m_fixtures.clear();
 }
@@ -66,41 +66,39 @@ void Sensor::onEndContact(IFixture* another) {
 	return;
 }
 
-void Sensor::createAsCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius) {
+void Sensor::createAsCircle(b2BodyId body, uint8_t target, b2Vec2 pos, float radius) {
 	if (!m_fixtures.empty())
 		return;
 
-	b2CircleShape shape;
-	shape.m_radius = radius;
+	b2Circle shape = {};
+	shape.radius = radius;
+	shape.center = b2Vec2_zero;
 
-	b2FixtureDef fixDef;
-	fixDef.shape = &shape;
+	b2ShapeDef fixDef = b2DefaultShapeDef();
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
 	fixDef.filter.maskBits = (target << 8); //0b0000000000001000;
 	fixDef.filter.categoryBits = 0x0004; //0b0000000000000100;
-	fixDef.userData.pointer = (uintptr_t)this;
+	fixDef.userData = (void*)this;
 	//fixDef.friction = 0.0f;
 
-	b2Fixture* fixture = body->CreateFixture(&fixDef);
+	b2ShapeId fixture = b2CreateCircleShape(body, &fixDef, &shape);
 
 	m_fixtures.push_back(fixture);
 	m_master = true;
 	return;
 }
 
-void Sensor::createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles) {
+void Sensor::createAsRows(b2BodyId body, uint8_t target, b2Vec2 pos, Rows* tiles) {
 	if (!m_fixtures.empty())
 		return;
 
-	b2PolygonShape shape;
-	b2FixtureDef fixDef;
-	fixDef.shape = &shape;
+	b2ShapeDef fixDef = b2DefaultShapeDef();
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
 	fixDef.filter.maskBits = (target << 8);// 0b0000000000001000;
 	fixDef.filter.categoryBits = 0x0004;// 0b0000000000000100;
-	fixDef.userData.pointer = (uintptr_t)this;
+	fixDef.userData = (void*)this;
 	//fixDef.friction = 0.0f;
 
 	size_t i = 0, n = tiles->length;
@@ -121,8 +119,8 @@ void Sensor::createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles)
 		float hd = d / 2.0f;
 		float hw = static_cast<float>(w) - 0.5f;
 
-		shape.SetAsBox(hd, hw, { offset + hd - 0.5f, 0.0f }, 0.0f);
-		b2Fixture* fixture = body->CreateFixture(&fixDef);
+		b2Polygon shape = b2MakeOffsetBox(hd, hw, { offset + hd - 0.5f, 0.0f }, 0.0f);
+		b2ShapeId fixture = b2CreatePolygonShape(body, &fixDef, &shape);
 		m_fixtures.push_back(fixture);
 
 		offset += d;
@@ -131,23 +129,22 @@ void Sensor::createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles)
 	m_master = true;
 }
 
-void Sensor::createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius) {
+void Sensor::createAsBlockerCircle(b2BodyId body, b2Vec2 pos, float radius) {
 	if (!m_fixtures.empty())
 		return;
 
-	b2CircleShape shape;
-	shape.m_radius = radius;
+	b2Circle shape = {};
+	shape.radius = radius;
 
-	b2FixtureDef fixDef;
-	fixDef.shape = &shape;
+	b2ShapeDef fixDef = b2DefaultShapeDef();
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
 	fixDef.filter.maskBits = 0x0008;
 	fixDef.filter.categoryBits = 0x0004;
-	fixDef.userData.pointer = (uintptr_t)this;
+	fixDef.userData = (void*)this;
 	//fixDef.friction = 0.0f;
 
-	b2Fixture* fixture = body->CreateFixture(&fixDef);
+	b2ShapeId fixture = b2CreateCircleShape(body, &fixDef, &shape);
 
 	m_fixtures.push_back(fixture);
 	m_master = true;
@@ -155,65 +152,63 @@ void Sensor::createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius) {
 }
 
 SensorIndependent::SensorIndependent() :
-	m_body(nullptr) {}
+	m_body(b2_nullBodyId) {}
 
 SensorIndependent::~SensorIndependent() {
-	if (m_body) {
-		m_body->GetWorld()->DestroyBody(m_body);
-		m_body = nullptr;
+	if (B2_IS_NON_NULL(m_body)) {
+		b2DestroyBody(m_body);
+		m_body = b2_nullBodyId;
 		m_fixtures.clear();
 	}
 	return;
 }
 
 void SensorIndependent::setPosition(float x, float y) {
-	auto angle = m_body->GetAngle();
-	m_body->SetTransform({ x, y }, angle);
+	auto angle = b2Body_GetRotation(m_body);
+	b2Body_SetTransform(m_body, { x, y }, angle);
 	return;
 }
 
-void SensorIndependent::createAsCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius) {
-	if (m_body)
+void SensorIndependent::createAsCircle(b2WorldId world, uint8_t target, b2Vec2 pos, float radius) {
+	if (B2_IS_NON_NULL(m_body))
 		return;
 
-	b2BodyDef bodyDef;
+	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_kinematicBody;
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
-	m_body = world->CreateBody(&bodyDef);
+	m_body = b2CreateBody(world, &bodyDef);
 	return Sensor::createAsCircle(m_body, target, pos, radius);
 }
 
-void SensorIndependent::createAsRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows) {
-	if (m_body)
+void SensorIndependent::createAsRows(b2WorldId world, uint8_t target, b2Vec2 pos, Rows* rows) {
+	if (B2_IS_NON_NULL(m_body))
 		return;
 
-	b2BodyDef bodyDef;
+	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_kinematicBody;
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
-	m_body = world->CreateBody(&bodyDef);
+	m_body = b2CreateBody(world, &bodyDef);
 	return Sensor::createAsRows(m_body, target, pos, rows);
 }
 
-void SensorIndependent::createAsTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles) {
-	if (m_body)
+void SensorIndependent::createAsTiles(b2WorldId world, uint8_t target, b2Vec2 pos, size_t length, int* tiles) {
+	if (B2_IS_NON_NULL(m_body))
 		return;
 
-	b2BodyDef bodyDef;
+	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_kinematicBody;
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
-	m_body = world->CreateBody(&bodyDef);
+	m_body = b2CreateBody(world, &bodyDef);
 
-	b2PolygonShape shape;
-	b2FixtureDef fixDef;
-	fixDef.shape = &shape;
+	b2ShapeDef fixDef = b2DefaultShapeDef();
 	fixDef.isSensor = true;
 	fixDef.filter.groupIndex = -1;
 	fixDef.filter.maskBits = (target << 8); // 0b0000000000001000;
 	fixDef.filter.categoryBits = 0x0004;// 0b0000000000000100;
-	fixDef.userData.pointer = (uintptr_t)this;
+	fixDef.userData = (void*)this;
 	//fixDef.friction = 0.0f;
 
 	size_t i = 0, n = length;
@@ -221,8 +216,8 @@ void SensorIndependent::createAsTiles(b2World* world, uint8_t target, b2Vec2 pos
 		float x = static_cast<float>(tiles[i << 1]);
 		float y = static_cast<float>(tiles[(i << 1) | 1]);
 
-		shape.SetAsBox(0.5f, 0.5f, { -x, -y }, 0.0f);
-		b2Fixture* fixture = m_body->CreateFixture(&fixDef);
+		b2Polygon shape = b2MakeOffsetBox(0.5f, 0.5f, { -x, -y }, 0.0f);
+		b2ShapeId fixture = b2CreatePolygonShape(m_body, &fixDef, &shape);
 		m_fixtures.push_back(fixture);
 
 		i++;
@@ -231,15 +226,15 @@ void SensorIndependent::createAsTiles(b2World* world, uint8_t target, b2Vec2 pos
 	return;
 }
 
-void SensorIndependent::createAsBlockerCircle(b2World* world, b2Vec2 pos, float radius) {
-	if (m_body)
+void SensorIndependent::createAsBlockerCircle(b2WorldId world, b2Vec2 pos, float radius) {
+	if (B2_IS_NON_NULL(m_body))
 		return;
 
-	b2BodyDef bodyDef;
+	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_kinematicBody;
 	bodyDef.position = pos;
 	bodyDef.fixedRotation = true;
-	m_body = world->CreateBody(&bodyDef);
+	m_body = b2CreateBody(world, &bodyDef);
 	return Sensor::createAsBlockerCircle(m_body, pos, radius);
 }
 

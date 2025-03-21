@@ -22,7 +22,7 @@
 #pragma once
 
 #include "IWall.h"
-#include <box2d/box2d.h>
+#include <box2d/id.h>
 
 #include <vector>
 
@@ -37,12 +37,12 @@ public:
 	virtual void setGroundSize(int m, int n) override;
 	virtual void addWallTile(int posx, int posy) override;
 
-	void Create(b2World* world);
+	void Create(b2WorldId world);
 
 protected:
-	b2Body* m_body;
-	b2Fixture* m_bound;
-	std::vector<b2Fixture*> m_fixtures;
+	b2BodyId m_body;
+	b2ChainId m_bound;
+	std::vector<b2ShapeId> m_fixtures;
 };
 
 }

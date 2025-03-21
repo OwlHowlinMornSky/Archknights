@@ -66,6 +66,7 @@ bool Act06_Game::handleEvent(const sf::Event& evt) {
 }
 
 void Act06_Game::update(sf::Time dtime) {
+	//dtime *= 0.05f;
 #ifdef _DEBUG
 	r->clear(sf::Color(0x333333FF));
 #endif // _DEBUG

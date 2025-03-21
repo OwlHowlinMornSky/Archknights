@@ -48,7 +48,7 @@ protected:
 protected:
 	unsigned int m_vao;
 	unsigned int m_vertexVBO;
-	Game::ActorVertex m_vertex[4];
+	Game::ActorVertex m_vertex[65];
 };
 
 }

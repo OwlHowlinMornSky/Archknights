@@ -45,14 +45,14 @@ public:
 	virtual std::map<Game::EntityIdType, MapValue>::iterator listEnd() override;
 
 protected:
-	void createAsCircle(b2Body* body, uint8_t target, b2Vec2 pos, float radius);
-	void createAsRows(b2Body* body, uint8_t target, b2Vec2 pos, Rows* tiles);
+	void createAsCircle(b2BodyId body, uint8_t target, b2Vec2 pos, float radius);
+	void createAsRows(b2BodyId body, uint8_t target, b2Vec2 pos, Rows* tiles);
 
-	void createAsBlockerCircle(b2Body* body, b2Vec2 pos, float radius);
+	void createAsBlockerCircle(b2BodyId body, b2Vec2 pos, float radius);
 
 protected:
 	bool m_sendSensorMsg;
-	std::vector<b2Fixture*> m_fixtures;
+	std::vector<b2ShapeId> m_fixtures;
 	std::map<Game::EntityIdType, MapValue> m_list;
 };
 
@@ -67,14 +67,14 @@ public:
 	virtual void setPosition(float x, float y) override;
 
 protected:
-	void createAsCircle(b2World* world, uint8_t target, b2Vec2 pos, float radius);
-	void createAsRows(b2World* world, uint8_t target, b2Vec2 pos, Rows* rows);
-	void createAsTiles(b2World* world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
+	void createAsCircle(b2WorldId world, uint8_t target, b2Vec2 pos, float radius);
+	void createAsRows(b2WorldId world, uint8_t target, b2Vec2 pos, Rows* rows);
+	void createAsTiles(b2WorldId world, uint8_t target, b2Vec2 pos, size_t length, int* tiles);
 
-	void createAsBlockerCircle(b2World* world, b2Vec2 pos, float radius);
+	void createAsBlockerCircle(b2WorldId world, b2Vec2 pos, float radius);
 
 protected:
-	b2Body* m_body;
+	b2BodyId m_body;
 };
 
 }

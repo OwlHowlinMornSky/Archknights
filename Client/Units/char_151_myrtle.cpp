@@ -28,7 +28,7 @@
 #include "../Game/AtkDmgHeal.h"
 
 Unit::Char_151_Myrtle::Char_151_Myrtle() {
-	m_blockTotal = 3;
+	m_blockTotal = 99;
 }
 
 Unit::Char_151_Myrtle::~Char_151_Myrtle() {}

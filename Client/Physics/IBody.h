@@ -35,7 +35,7 @@ public:
 
 public:
 	virtual void setPosition(float x, float y) = 0;
-	virtual const float* getPosition() const = 0;
+	virtual const float* getPosition() = 0;
 	virtual void setVelocity(float x, float y) = 0;
 
 	virtual size_t addDetectorCircle(uint8_t target, float x, float y, float radius) = 0;

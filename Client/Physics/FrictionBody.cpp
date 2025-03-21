@@ -20,28 +20,29 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include "FrictionBody.h"
+#include <box2d/box2d.h>
 
 namespace {
 
-b2Body* g_instance = nullptr;
+b2BodyId g_instance = b2_nullBodyId;
 
 }
 
 Physics::FrictionBody::FrictionBody() :
-	m_body(nullptr),
-	m_bound(nullptr)
+	m_body(b2_nullBodyId),
+	m_bound(b2_nullShapeId)
 {}
 
 Physics::FrictionBody::~FrictionBody() {
-	if (m_body) {
-		m_body->GetWorld()->DestroyBody(m_body);
-		m_body = nullptr;
-		m_bound = nullptr;
+	if (B2_IS_NON_NULL(m_body)) {
+		b2DestroyBody(m_body);
+		m_body = b2_nullBodyId;
+		m_bound = b2_nullShapeId;
 	}
-	g_instance = nullptr;
+	g_instance = b2_nullBodyId;
 }
 
-b2Body* Physics::FrictionBody::GetFrictionBodyInstance() {
+b2BodyId Physics::FrictionBody::GetFrictionBodyInstance() {
 	return g_instance;
 }
 
@@ -49,12 +50,12 @@ void Physics::FrictionBody::setGroundSize(int m, int n) {}
 
 void Physics::FrictionBody::addWallTile(int posx, int posy) {}
 
-void Physics::FrictionBody::Create(b2World* world) {
-	b2BodyDef bodyDef;
+void Physics::FrictionBody::Create(b2WorldId world) {
+	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_staticBody;
 	bodyDef.fixedRotation = true;
-	bodyDef.allowSleep = false;
-	m_body = world->CreateBody(&bodyDef);
+	bodyDef.enableSleep = false;
+	m_body = b2CreateBody(world, &bodyDef);
 
 	g_instance = m_body;
 }

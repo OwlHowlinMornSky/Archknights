@@ -23,7 +23,7 @@
 
 #include "IBody.h"
 #include "Detector.h"
-#include <box2d/box2d.h>
+#include <box2d/id.h>
 #include <vector>
 #include <memory>
 
@@ -38,7 +38,7 @@ public:
 
 public:
 	virtual void setPosition(float x, float y) override;
-	virtual const float* getPosition() const override;
+	virtual const float* getPosition() override;
 	virtual void setVelocity(float x, float y) override;
 
 	virtual size_t addDetectorCircle(uint8_t target, float x, float y, float radius) override;
@@ -58,17 +58,19 @@ public:
 	virtual void getPositionVelocity(float* out_position, float* out_velocity) override;
 
 protected:
-	void createAsCircle(b2World* world, uint8_t type, b2Vec2 pos, float radius);
-	void createAsCircleMover(b2World* world, uint8_t type, b2Vec2 pos, float radius);
+	void createAsCircle(b2WorldId world, uint8_t type, b2Vec2 pos, float radius);
+	void createAsCircleMover(b2WorldId world, uint8_t type, b2Vec2 pos, float radius);
+	void onMoved(float _new_pos_x, float _new_pos_y);
 
 protected:
 	bool m_isUnbalance;
 	float m_maxV;
 	float m_maxA;
-	b2Body* m_body;
-	b2Fixture* m_fixture;
-	b2FrictionJoint* m_frictionJoint;
-	b2MotorJoint* m_motorJoint;
+	float m_position[2];
+	b2BodyId m_body;
+	b2ShapeId m_fixture;
+	b2JointId m_frictionJoint;
+	b2JointId m_motorJoint;
 	std::vector<std::unique_ptr<Detector>> m_detectors;
 };
 

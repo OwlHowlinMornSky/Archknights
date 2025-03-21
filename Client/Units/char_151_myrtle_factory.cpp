@@ -53,6 +53,7 @@ bool Char_151_Mytle_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 
 	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
 	actor->setInfoStorage(m_info[0], m_info[1]);
+	actor->m_shadowRadius = 0.60710678118654752440084436210485f / 0.25f;
 
 	Game::Global::stage->addActor(actor);
 

@@ -219,6 +219,7 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 		if (!m_active || m_died || m_isBlocked) {
 			return Game::MsgResult::MethodNotAllowed;
 		}
+		printf_s("Blocked!\n");
 		break;
 	case Main::MsgId::Blocked:
 		m_blocker = *(std::weak_ptr<Game::Entity>*)lparam;
