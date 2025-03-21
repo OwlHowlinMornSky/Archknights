@@ -190,7 +190,7 @@ void WinCheckError(LPCWSTR lpszFunction) noexcept {
 	lpDisplayBuf = (LPVOID)LocalAlloc(
 		LMEM_ZEROINIT,
 		(static_cast<SIZE_T>(lstrlenW((LPCWSTR)lpMsgBuf)) +
-		 lstrlenW((LPCWSTR)lpszFunction) + 50) * sizeof(WCHAR)
+			lstrlenW((LPCWSTR)lpszFunction) + 50) * sizeof(WCHAR)
 	);
 	if (lpDisplayBuf) {
 		StringCchPrintfW(
@@ -256,7 +256,7 @@ WindowWin32::WindowWin32() :
 	m_hwnd(0) {}
 
 WindowWin32::~WindowWin32() noexcept {
-	close();
+	destroy();
 	return;
 }
 
@@ -276,8 +276,8 @@ bool ME::WindowWin32::create(bool foreground) noexcept {
 	return createWithCode(foreground ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
 }
 
-void WindowWin32::close() noexcept {
-	Window::close();
+void WindowWin32::destroy() noexcept {
+	Window::destroy();
 	if (m_hwnd) {
 		DestroyWindow(m_hwnd);
 		m_hwnd = 0;
@@ -402,8 +402,8 @@ bool WindowWin32::setFullscreen(sf::VideoMode mode) noexcept {
 
 	DEVMODE devMode{ 0 };
 	devMode.dmSize = sizeof(devMode);
-	devMode.dmPelsWidth = mode.width;
-	devMode.dmPelsHeight = mode.height;
+	devMode.dmPelsWidth = mode.size.x;
+	devMode.dmPelsHeight = mode.size.y;
 	devMode.dmBitsPerPel = mode.bitsPerPixel;
 	devMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
 
@@ -418,8 +418,8 @@ bool WindowWin32::setFullscreen(sf::VideoMode mode) noexcept {
 	SetWindowPos(
 		m_hwnd, HWND_TOP,
 		0, 0,
-		static_cast<int>(mode.width),
-		static_cast<int>(mode.height + 1), // 加 1 是为了防止闪烁。
+		static_cast<int>(mode.size.x),
+		static_cast<int>(mode.size.y + 1), // 加 1 是为了防止闪烁。
 		SWP_FRAMECHANGED
 	);
 	ShowWindow(m_hwnd, SW_SHOW);
@@ -440,11 +440,7 @@ void WindowWin32::checkSizeInSystemLoop() noexcept {
 		if (m_sizingAsSized) {
 			setSize(size);
 			if (m_activity != nullptr) {
-				sf::Event evt{};
-				evt.type = sf::Event::Resized;
-				evt.size.width = size.x;
-				evt.size.height = size.y;
-				m_activity->handleEvent(evt);
+				m_activity->handleEvent(sf::Event::Resized({ size.x, size.y }));
 			}
 		}
 		else {

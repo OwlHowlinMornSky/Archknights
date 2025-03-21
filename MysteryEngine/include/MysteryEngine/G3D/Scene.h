@@ -33,7 +33,7 @@ namespace ME {
 class ME_API Scene :
 	public sf::Drawable {
 public:
-	Scene() = default;
+	Scene();
 	virtual ~Scene() = default;
 
 public:

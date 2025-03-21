@@ -32,7 +32,8 @@
 namespace Activity {
 
 Act04_Load::Act04_Load() :
-	m_status(0) {}
+	m_status(0),
+	m_sp(m_tex) {}
 
 Act04_Load::~Act04_Load() noexcept {}
 
@@ -40,27 +41,23 @@ bool Act04_Load::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
 #ifdef ARCHKNIGHTS_LIMITED
-	m_tex.loadFromFile("res/textures/bkgnd.png");
+	if (m_tex.loadFromFile("res/textures/bkgnd.png")) {
 #else
-	m_tex.loadFromFile("assets/textures/bkgnd.png");
+	if (m_tex.loadFromFile("assets/textures/bkgnd.png")) {
 #endif // ARCHKNIGHTS_LIMITED
-	m_tex.setSmooth(true);
-	m_tex.generateMipmap();
+		m_tex.setSmooth(true);
+		(void)m_tex.generateMipmap();
+	}
 	return true;
 }
 
 void Act04_Load::start() noexcept {
 	m_sp.setTexture(m_tex, true);
-	m_sp.setOrigin(m_tex.getSize().x / 2.0f, m_tex.getSize().y / 2.0f);
+	m_sp.setOrigin((sf::Vector2f)m_tex.getSize() / 2.0f);
 
 	auto& view = r_wnd->getView();
 	sf::Vector2f size = view.getSize();
-	updateSize(
-		sf::Vector2u(
-			static_cast<unsigned int>(size.x),
-			static_cast<unsigned int>(size.y)
-		)
-	);
+	updateSize((sf::Vector2u)size);
 
 	m_blackBar[0].setFillColor(sf::Color::Black);
 	m_blackBar[1].setFillColor(sf::Color::Black);
@@ -75,13 +72,9 @@ void Act04_Load::stop() noexcept {
 	return;
 }
 
-bool Act04_Load::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r_wnd->setWaitingForStop();
-		break;
-	case sf::Event::MouseButtonPressed:
-		switch (evt.mouseButton.button) {
+bool Act04_Load::handleEvent(const sf::Event & evt) {
+	if (auto mouse = evt.getIf<sf::Event::MouseButtonPressed>()) {
+		switch (mouse->button) {
 		case sf::Mouse::Button::Left:
 			if (m_status == ST_NORMAL) {
 				m_status = ST_OUT;
@@ -91,12 +84,12 @@ bool Act04_Load::handleEvent(const sf::Event& evt) {
 		default:
 			break;
 		}
-		break;
-	case sf::Event::Resized:
-		updateSize({ evt.size.width, evt.size.height });
-		break;
-	default:
-		break;
+	}
+	else if (auto resz = evt.getIf<sf::Event::Resized>()) {
+		updateSize(resz->size);
+	}
+	else if (evt.is<sf::Event::Closed>()) {
+		r_wnd->setWaitingForStop();
 	}
 	return 0;
 }
@@ -105,14 +98,14 @@ void Act04_Load::update(sf::Time deltaTime) {
 	switch (m_status) {
 	case ST_IN:
 	{
-		sf::Int32 dt = deltaTime.asMilliseconds() * 2;
-		sf::Uint8 a = m_sp.getColor().r;
+		int32_t dt = deltaTime.asMilliseconds() * 2;
+		uint8_t a = m_sp.getColor().r;
 		if (dt + a >= 255) {
 			m_status = ST_NORMAL;
 			m_sp.setColor(sf::Color::White);
 		}
 		else {
-			sf::Uint8 c = static_cast<sf::Uint8>(a + dt);
+			uint8_t c = static_cast<uint8_t>(a + dt);
 			m_sp.setColor(sf::Color(c, c, c));
 		}
 		break;
@@ -121,14 +114,14 @@ void Act04_Load::update(sf::Time deltaTime) {
 		break;
 	case ST_OUT:
 	{
-		sf::Int32 dt = deltaTime.asMilliseconds() * 3;
-		sf::Uint8 a = m_sp.getColor().r;
+		int32_t dt = deltaTime.asMilliseconds() * 3;
+		uint8_t a = m_sp.getColor().r;
 		if (-dt + a <= 0) {
 			m_status = ST_OVER;
 			m_sp.setColor(sf::Color::Black);
 		}
 		else {
-			sf::Uint8 c = static_cast<sf::Uint8>(-dt + a);
+			uint8_t c = static_cast<uint8_t>(-dt + a);
 			m_sp.setColor(sf::Color(c, c, c));
 		}
 		break;
@@ -169,13 +162,13 @@ void Act04_Load::updateSize(sf::Vector2u newWindowSize) {
 	else {
 		rate = (wy * 0.8f) / ty;
 	}
-	m_sp.setScale(rate, rate);
-	m_sp.setPosition(wx / 2.0f, wy / 2.0f);
+	m_sp.setScale({ rate, rate });
+	m_sp.setPosition({ wx / 2.0f, wy / 2.0f });
 
-	m_blackBar[0].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
-	m_blackBar[0].setOrigin(wx * 0.05f, wy * (-0.9f));
-	m_blackBar[1].setSize(sf::Vector2f(wx * 1.1f, wy * 0.15f));
-	m_blackBar[1].setOrigin(wx * 0.05f, wy * 0.05f);
+	m_blackBar[0].setSize({ wx * 1.1f, wy * 0.15f });
+	m_blackBar[0].setOrigin({ wx * 0.05f, wy * (-0.9f) });
+	m_blackBar[1].setSize({ wx * 1.1f, wy * 0.15f });
+	m_blackBar[1].setOrigin({ wx * 0.05f, wy * 0.05f });
 	return;
 }
 

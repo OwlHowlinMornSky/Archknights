@@ -66,7 +66,10 @@ public:
 	/**
 	 * @brief 销毁窗口。
 	*/
-	virtual void close() noexcept;
+	virtual void destroy() noexcept;
+
+private:
+	virtual void close() override final;
 
 public:
 	/**
@@ -167,7 +170,6 @@ public:
 	virtual bool setFullscreen(sf::VideoMode mode) noexcept = 0;
 
 public:
-	using sf::RenderWindow::setIcon;
 	void setIcon(const sf::Image& icon);
 
 public:

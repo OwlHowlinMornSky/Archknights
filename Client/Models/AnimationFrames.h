@@ -38,8 +38,8 @@ public:
 	int Load(std::string_view file);
 
 public:
-	virtual void Update(float dt) override;
-	virtual void Draw(ME::Camera& camera, ME::Shader& shader) override;
+	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
 protected:
 	float m_test;

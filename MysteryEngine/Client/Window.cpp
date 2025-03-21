@@ -20,6 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <MysteryEngine/Client/Window.h>
+#include <SFML/Graphics/Image.hpp>
 
 #ifdef SFML_SYSTEM_WINDOWS
 
@@ -46,7 +47,7 @@ Window::Window() :
 	m_windowStatus(ME::WindowStatus::Windowed) {}
 
 Window::~Window() noexcept {
-	close();
+	destroy();
 	return;
 }
 
@@ -56,13 +57,17 @@ bool Window::create(bool foreground) noexcept {
 	return true;
 }
 
-void Window::close() noexcept {
+void Window::destroy() noexcept {
 	if (m_activity != nullptr) {
 		m_activity->stop();
 		m_activity.reset();
 	}
-	RenderWindow::close();
+	close();
 	return;
+}
+
+void Window::close() {
+	return RenderWindow::close();
 }
 
 bool Window::changeActivity(std::unique_ptr<Activity>&& activity) noexcept {
@@ -88,9 +93,9 @@ void Window::setSize(sf::Vector2u size) noexcept {
 		setView(
 			sf::View(
 				sf::FloatRect(
-					0.0f, 0.0f,
-					static_cast<float>(size.x),
-					static_cast<float>(size.y)
+					{ 0.0f, 0.0f },
+					{ static_cast<float>(size.x),
+					static_cast<float>(size.y) }
 				)
 			)
 		);
@@ -103,7 +108,7 @@ WindowStatus Window::getWindowStatus() const noexcept {
 }
 
 void Window::setIcon(const sf::Image& icon) {
-	return RenderWindow::setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+	return RenderWindow::setIcon(icon);
 }
 
 bool Window::available() const {
@@ -122,21 +127,20 @@ void Window::handleEvent() {
 			m_activity->start();
 		}
 	}
-	sf::Event evt;
-	while (pollEvent(evt)) {
-		if (evt.type == sf::Event::Resized) {
+	while (const std::optional<sf::Event> evt = pollEvent()) {
+		if (const auto* resz = evt->getIf<sf::Event::Resized>()) {
 			setView(
 				sf::View(
 					sf::FloatRect(
-						0.0f, 0.0f,
-						static_cast<float>(evt.size.width),
-						static_cast<float>(evt.size.height)
+						{ 0.0f, 0.0f },
+						{ static_cast<float>(resz->size.x),
+						static_cast<float>(resz->size.y) }
 					)
 				)
 			);
 		}
-		if (m_activity->handleEvent(evt)) {
-			while (pollEvent(evt))
+		if (m_activity->handleEvent(*evt)) {
+			while (pollEvent())
 				;
 			break;
 		}

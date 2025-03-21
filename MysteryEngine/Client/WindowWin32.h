@@ -41,7 +41,7 @@ public:
 	*/
 	bool createWithCode(int nCmdShow) noexcept;
 	virtual bool create(bool foreground) noexcept override;
-	virtual void close() noexcept override;
+	virtual void destroy() noexcept override;
 
 public:
 	virtual void setCloseEnabled(bool enabled) noexcept override;

@@ -22,6 +22,7 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Time.hpp>
 
 #include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/Core/Reference.h>

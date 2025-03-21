@@ -30,7 +30,8 @@ namespace Activity {
 
 Act02_TestActivity::Act02_TestActivity() :
 	m_paused(false),
-	m_modeI(0) {
+	m_modeI(0),
+	m_sp(m_tex) {
 	return;
 }
 
@@ -41,8 +42,8 @@ Act02_TestActivity::~Act02_TestActivity() noexcept {
 bool Act02_TestActivity::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 	// 加载调试信息
-	m_tex.loadFromFile("assets/TestActivity.png");
-	m_sp.setTexture(m_tex, true);
+	if (m_tex.loadFromFile("assets/TestActivity.png"))
+		m_sp.setTexture(m_tex, true);
 	return true;
 }
 
@@ -67,66 +68,62 @@ void Act02_TestActivity::stop() noexcept {
 }
 
 bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r_wnd->setWaitingForStop();
-		return 1;
-	case sf::Event::KeyPressed:
-		switch (evt.key.code) {
-		case sf::Keyboard::Escape:
-		case sf::Keyboard::Q:
+	if (auto key = evt.getIf<sf::Event::KeyPressed>()) {
+		switch (key->code) {
+		case sf::Keyboard::Key::Escape:
+		case sf::Keyboard::Key::Q:
 			r_wnd->changeActivity(std::make_unique<Act01_DefaultEntrance>());
 			return 1;
-		case sf::Keyboard::Num1:
+		case sf::Keyboard::Key::Num1:
 			r_wnd->setMinimizeEnabled(!r_wnd->isMinimizeEnabled());
 			std::cout
 				<< "Test: Minimize Enabled: "
 				<< std::boolalpha << r_wnd->isMinimizeEnabled()
 				<< std::endl;
 			break;
-		case sf::Keyboard::Num2:
+		case sf::Keyboard::Key::Num2:
 			r_wnd->setResizeEnabled(!r_wnd->isResizeEnabled());
 			std::cout
 				<< "Test: Resize Enabled: "
 				<< std::boolalpha << r_wnd->isResizeEnabled()
 				<< std::endl;
 			break;
-		case sf::Keyboard::Num3:
+		case sf::Keyboard::Key::Num3:
 			r_wnd->setCloseEnabled(!r_wnd->isCloseEnabled());
 			std::cout
 				<< "Test: Close Enabled: "
 				<< std::boolalpha << r_wnd->isCloseEnabled()
 				<< std::endl;
 			break;
-		case sf::Keyboard::Grave:
+		case sf::Keyboard::Key::Grave:
 			r_wnd->setSizingAsResized(!r_wnd->isSizingAsResized());
 			std::cout
 				<< "Test: SizingAsResized: "
 				<< std::boolalpha << r_wnd->isSizingAsResized()
 				<< std::endl;
 			break;
-		case sf::Keyboard::F1:
+		case sf::Keyboard::Key::F1:
 			r_wnd->setWindowed();
 			break;
-		case sf::Keyboard::F2:
+		case sf::Keyboard::Key::F2:
 			r_wnd->setBorderless();
 			break;
-		case sf::Keyboard::F3:
+		case sf::Keyboard::Key::F3:
 			r_wnd->setFullscreen(sf::VideoMode::getDesktopMode());
 			break;
-		case sf::Keyboard::F4:
+		case sf::Keyboard::Key::F4:
 			r_wnd->setFullscreen(m_modes.at(m_modeI));
 			break;
-		case sf::Keyboard::F:
+		case sf::Keyboard::Key::F:
 			ME::Carnival::Instance().emplaceWindow(std::make_unique<Act02_TestActivity>());
 			break;
-		case sf::Keyboard::Left:
+		case sf::Keyboard::Key::Left:
 			if (m_modeI > 0) {
 				m_modeI--;
 				noticeSelectedMode();
 			}
 			break;
-		case sf::Keyboard::Right:
+		case sf::Keyboard::Key::Right:
 			if (m_modeI < m_modes.size() - 1) {
 				m_modeI++;
 				noticeSelectedMode();
@@ -135,12 +132,13 @@ bool Act02_TestActivity::handleEvent(const sf::Event& evt) {
 		default:
 			break;
 		}
-		break;
-	case sf::Event::Resized:
+	}
+	else if (evt.is<sf::Event::Resized>()) {
 		updateSize();
-		break;
-	default:
-		break;
+	}
+	else if (evt.is<sf::Event::Closed>()) {
+		r_wnd->setWaitingForStop();
+		return true;
 	}
 	return 0;
 }
@@ -150,7 +148,7 @@ void Act02_TestActivity::update(sf::Time deltaTime) {
 	if (dt > 0.1f)
 		dt = 0.1f;
 	if (!m_paused)
-		m_shape.rotate(dt * 180.0f);
+		m_shape.rotate(sf::degrees(dt * 180.0f));
 
 	r_wnd->clear(sf::Color::Green);
 	r_wnd->draw(m_shape);
@@ -172,7 +170,7 @@ void Act02_TestActivity::onExitSysloop() noexcept {
 void Act02_TestActivity::updateSize() noexcept {
 	auto& view = r_wnd->getView();
 	sf::Vector2f size = view.getSize();
-	m_shape.setPosition(size.x / 2.0f, size.y / 2.0f);
+	m_shape.setPosition(size / 2.0f);
 	return;
 }
 
@@ -180,8 +178,8 @@ void Act02_TestActivity::noticeSelectedMode() noexcept {
 	if (!m_modes.empty()) {
 		std::cout
 			<< "Test: Selected Mode: "
-			<< "W: " << m_modes[m_modeI].width
-			<< ", H: " << m_modes[m_modeI].height
+			<< "W: " << m_modes[m_modeI].size.x
+			<< ", H: " << m_modes[m_modeI].size.y
 			<< ", bPP: " << m_modes[m_modeI].bitsPerPixel
 			<< std::endl;
 	}

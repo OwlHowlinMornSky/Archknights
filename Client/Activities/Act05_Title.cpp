@@ -33,7 +33,8 @@ namespace Activity {
 
 Act05_Title::Act05_Title() :
 	m_st(0),
-	m_scene(nullptr) {
+	m_scene(nullptr),
+	m_titleSp(m_titleTex) {
 	return;
 }
 
@@ -44,8 +45,8 @@ Act05_Title::~Act05_Title() noexcept {
 bool Act05_Title::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 
-	m_titleTex.loadFromFile("assets/textures/title.png");
-	m_titleTex.setSmooth(true);
+	if (m_titleTex.loadFromFile("assets/textures/title.png"))
+		m_titleTex.setSmooth(true);
 	return true;
 }
 
@@ -55,7 +56,7 @@ void Act05_Title::start() noexcept {
 	m_scene->setup();
 
 	m_titleSp.setTexture(m_titleTex, true);
-	m_titleSp.setOrigin(m_titleTex.getSize().x / 2.0f, m_titleTex.getSize().y / 2.0f);
+	m_titleSp.setOrigin((sf::Vector2f)m_titleTex.getSize() / 2.0f);
 
 	updateSize();
 
@@ -70,19 +71,18 @@ void Act05_Title::stop() noexcept {
 }
 
 bool Act05_Title::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r_wnd->setWaitingForStop();
-		return 1;
-	case sf::Event::MouseButtonPressed:
+	if (auto mouse = evt.getIf<sf::Event::MouseButtonPressed>()) {
 		if (m_st == ST_NORMAL) {
 			m_st = ST_LINK;
 			m_timer = sf::Time::Zero;
 		}
-		break;
-	case sf::Event::Resized:
+	}
+	else if (auto size = evt.getIf<sf::Event::Resized>()) {
 		updateSize();
-		break;
+	}
+	else if (evt.is<sf::Event::Closed>()) {
+		r_wnd->setWaitingForStop();
+		return 1;
 	}
 	return 0;
 }
@@ -166,8 +166,9 @@ void Act05_Title::updateSize() {
 	float rate;
 
 	rate = size.y / m_titleTex.getSize().y * 0.4f;
-	m_titleSp.setScale(rate, rate);
-	m_titleSp.setPosition(size.x * 0.5f, size.y * 0.35f);
+
+	m_titleSp.setScale({ rate, rate });
+	m_titleSp.setPosition(size.componentWiseMul({ 0.5f, 0.35f }));
 
 }
 

@@ -52,13 +52,13 @@ void Act06_Game::stop() noexcept {
 }
 
 bool Act06_Game::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
+	if (auto resz = evt.getIf<sf::Event::Resized>()) {
+		updateSize(resz->size);
+		return false;
+	}
+	else if (evt.is<sf::Event::Closed>()) {
 		r->setWaitingForStop();
 		return true;
-	case sf::Event::Resized:
-		updateSize({ evt.size.width, evt.size.height });
-		break;
 	}
 	sf::Event e = evt;
 	Game::Global::board->postMsg(1, 0, (intptr_t)&e);

@@ -23,6 +23,7 @@
 
 #include <MysteryEngine/Core/Global.h>
 #include <MysteryEngine/Client/Carnival.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 #include "../Client/API.h"
 
 #include "UniqueInstance.h"
@@ -33,6 +34,7 @@
 #include <SFML/GpuPreference.hpp>
 SFML_DEFINE_DISCRETE_GPU_PREFERENCE
 #endif // ARCHKNIGHTS_LIMITED
+#include <SFML/Graphics/Image.hpp>
 
 namespace {
 
@@ -67,6 +69,7 @@ int APIENTRY wWinMain(
 		sf::Image icon;
 		icon.loadFromFile("assets/icon.png");
 
+		ME::G3dGlobal::SetActive(true);
 		std::unique_ptr<ME::Window> window = ME::Window::Create1Window(nCmdShow);
 		// Create window and run.
 		if (window) {

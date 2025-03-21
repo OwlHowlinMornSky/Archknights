@@ -27,18 +27,6 @@
 
 namespace {
 
-/**
- * @brief 循环点数据。
-*/
-struct OHMSAUDIOCOMMENTSTRUCTURE {
-	long long offset; // 循环起点。
-	long long length; // 循环长度。
-
-	OHMSAUDIOCOMMENTSTRUCTURE() :
-		offset(0),
-		length(0) {}
-};
-
 #ifdef FILE_STRICT
 /**
  * @brief 读取 OGG 文件里 key 为 “OHMSSPC” 的注释。
@@ -49,81 +37,89 @@ struct OHMSAUDIOCOMMENTSTRUCTURE {
 */
 bool getMusicOggCommentData(
 	sf::InputStream& stream,
-	unsigned char* buffer,
-	unsigned int& bufferLength
+	uint8_t* buffer,
+	uint64_t& bufferLength
 ) {
-	long long pos = 0;
-	unsigned char tmp[16];
-	unsigned int tmplength = 0;
+	uint64_t pos = 0;
+	uint8_t tmp[16] = {};
+	uint64_t tmplength = 0;
+	uint64_t totalSize;
 
-	if (stream.seek(0) != 0) {
+	if (auto res = stream.getSize(); !res) {
+		return false;
+	}
+	else {
+		totalSize = *res;
+	}
+
+	if (auto res = stream.seek(0); !res || *res != 0) {
 		sf::err() << "getMusicCommentData: seek failed" << std::endl;
 		return false;
 	}
 
-	// Ogg 文件 首4字节 为 “OggS”。
-	if (stream.read(tmp, 4) == -1) return false;
+	if (auto res = stream.read(tmp, 4); !res || *res != 4) return false;
 	if (tmp[0] != 'O' || tmp[1] != 'g' || tmp[2] != 'g' || tmp[3] != 'S') {
 		sf::err() << "getMusicCommentData: wrong file type" << std::endl;
 		return false;
 	}
 
-	if (stream.seek(0) != 0) return false;
+	if (auto res = stream.seek(0); !res || *res != 0) return false;
 	bool fin = false;
 	while (!fin) {
-		pos = stream.tell();
-		if (pos == -1) return false;
-		if (pos >= stream.getSize()) break;
+		if (auto res = stream.tell(); !res) return false;
+		else pos = *res;
+		if (pos >= totalSize) break;
 
-		if (stream.seek(pos + 26) == -1) return false;
+		if (auto res = stream.seek(pos + 26); !res) return false;
 
-		unsigned char n;
-		if (stream.read(&n, 1) == -1) return false;
+		uint8_t n = 0;
+		if (auto res = stream.read(&n, 1); !res) return false;
 
-		unsigned char segLength[256];
-		if (stream.read(segLength, n) == -1) return false;
+		unsigned char segLength[256] = {};
+		if (auto res = stream.read(segLength, n); !res) return false;
 
 		// read segs
 		for (int i = 0; !fin && i < n; ++i) {
-			long long segStartPos = stream.tell();
-			if (segStartPos == -1) return false;
+			uint64_t segStartPos;
+			if (auto res = stream.tell(); !res) return false;
+			else segStartPos = *res;
 
-			if (stream.read(tmp, 1) == -1) return false;
+			if (auto res = stream.read(tmp, 1); !res) return false;
 
 			// seg type is not COMMENT
 			if (tmp[0] != 3) {
-				if (stream.seek(segStartPos + segLength[i]) == -1) return false;
+				if (auto res = stream.seek(segStartPos + segLength[i]); !res) return false;
 				continue;
 			}
 
 			// seg type is COMMENT
-			if (stream.seek(segStartPos + 7) == -1) return false;
+			if (auto res = stream.seek(segStartPos + 7); !res) return false;
 
-			if (stream.read(tmp, 4) == -1) return false;
-			tmplength = static_cast<unsigned long long>(tmp[3]);
+			if (auto res = stream.read(tmp, 4); !res) return false;
+			tmplength = static_cast<uint64_t>(tmp[3]);
 			tmplength = (((((tmplength << 8) + tmp[2]) << 8) + tmp[1]) << 8) + tmp[0];
 
-			if (stream.seek(segStartPos + 11 + tmplength + 4) == -1) return false;
+			if (auto res = stream.seek(segStartPos + 11 + tmplength + 4); !res) return false;
 
 			while (!fin) {
-				pos = stream.tell();
-				if (pos == -1) return false;
+				if (auto res = stream.tell(); !res) return false;
+				else pos = *res;
 				if (pos >= segStartPos + segLength[i]) break;
 
-				if (stream.read(tmp, 4) == -1) return false;
-				tmplength = static_cast<unsigned long long>(tmp[3]);
+				if (auto res = stream.read(tmp, 4); !res) return false;
+				tmplength = static_cast<uint64_t>(tmp[3]);
 				tmplength = (((((tmplength << 8) + tmp[2]) << 8) + tmp[1]) << 8) + tmp[0];
 
 				if (tmplength < 13) {
-					if (stream.seek(pos + 4 + tmplength) == -1) return false;
+					if (auto res = stream.seek(pos + 4 + tmplength); !res) return false;
 					continue;
 				}
 
-				if (stream.read(tmp, 8) == -1) return false;
+				if (auto res = stream.read(tmp, 8); !res) return false;
 				// not 'OHMSSPC='
 				if (!(tmp[0] == 'O' && tmp[1] == 'H' && tmp[2] == 'M' && tmp[3] == 'S' &&
-					  tmp[4] == 'S' && tmp[5] == 'P' && tmp[6] == 'C' && tmp[7] == '=')) {
-					if (stream.seek(pos + 4 + tmplength) == -1) return false;
+					tmp[4] == 'S' && tmp[5] == 'P' && tmp[6] == 'C' && tmp[7] == '=')) {
+					if (auto res = stream.seek(pos + 4 + tmplength); !res) return false;
 					continue;
 				}
 				// is 'OHMSSPC='
@@ -131,11 +127,11 @@ bool getMusicOggCommentData(
 
 				if (tmplength >= bufferLength) return false;
 				bufferLength = tmplength;
-				if (stream.read(buffer, tmplength) == -1) return false;
+				if (auto res = stream.read(buffer, tmplength); !res) return false;
 				buffer[tmplength] = '\0';
 				fin = true;
 			}
-			if (stream.seek(segStartPos + segLength[i]) == -1) return false;
+			if (auto res = stream.seek(segStartPos + segLength[i]); !res) return false;
 		}
 	}
 	return fin;
@@ -164,7 +160,7 @@ bool getMusicOggCommentData(
 		return false;
 	}
 	if (!(tmp[4] == 'O' && tmp[5] == 'H' && tmp[6] == 'M' && tmp[7] == 'S' &&
-		  tmp[8] == 'S' && tmp[9] == 'P' && tmp[10] == 'C' && tmp[11] == '=')) {
+		tmp[8] == 'S' && tmp[9] == 'P' && tmp[10] == 'C' && tmp[11] == '=')) {
 		sf::err() << "getMusicCommentData: wrong file type." << std::endl;
 		return false;
 	}
@@ -181,33 +177,32 @@ bool getMusicOggCommentData(
  * @param data: [Out] 读到的循环点数据。
  * @return 读取是否成功。
 */
-bool readMusicLoopPoint(sf::InputStream& stream, OHMSAUDIOCOMMENTSTRUCTURE& data) {
-	unsigned char tmp[48];
-	unsigned int length = 48;
+std::optional<sf::Music::TimeSpan> readMusicLoopPoint(sf::InputStream& stream) {
+	uint8_t tmp[48];
+	uint64_t length = 48;
 	if (!getMusicOggCommentData(stream, tmp, length)) {
-		return false;
+		return {};
 	}
 	if (tmp[0] != '>') {
-		return false;
+		return {};
 	}
-	long long val = 0;
+	int64_t val = 0;
 	size_t i = 1;
 	for (; i < length; ++i) {
 		if (tmp[i] == ':') break;
-		if (tmp[i] < '0' || tmp[i] > '9') return false;
+		if (tmp[i] < '0' || tmp[i] > '9') return {};
 		val = val * 10 + tmp[i] - '0';
 	}
-	data.offset = val;
-	if (i >= length - 1 || tmp[i] != ':') return false;
+	auto offset = val;
+	if (i >= length - 1 || tmp[i] != ':') return {};
 	val = 0;
 	for (++i; i < length; ++i) {
 		if (tmp[i] == '<') break;
-		if (tmp[i] < '0' || tmp[i] > '9') return false;
+		if (tmp[i] < '0' || tmp[i] > '9') return {};
 		val = val * 10 + tmp[i] - '0';
 	}
-	data.length = val;
-	if (i >= length || tmp[i] != '<') return false;
-	return true;
+	if (i >= length || tmp[i] != '<') return {};
+	return sf::Music::TimeSpan{ sf::microseconds(offset), sf::microseconds(val) };
 }
 
 } // namespace
@@ -228,11 +223,11 @@ sf::Music::Status BGM_SFML::getStatusSFML() const {
 }
 
 bool BGM_SFML::getLoop() const {
-	return this->m_music->getLoop();
+	return this->m_music->isLooping();
 }
 
 void BGM_SFML::setLoop(bool loop) {
-	return this->m_music->setLoop(loop);
+	return this->m_music->setLooping(loop);
 }
 
 sf::Music::TimeSpan BGM_SFML::getLoopPoints() const {
@@ -252,7 +247,7 @@ sf::Vector3f BGM_SFML::getPosition() const {
 }
 
 void BGM_SFML::setPosition(float x, float y, float z) {
-	return this->m_music->setPosition(x, y, z);
+	return this->m_music->setPosition({ x, y, z });
 }
 
 void BGM_SFML::setPosition(const sf::Vector3f& position) {
@@ -314,12 +309,10 @@ bool BGM_SFML::openFromFile(std::string_view filename) {
 		return false;
 	}
 
-	bool failed = false;
-	OHMSAUDIOCOMMENTSTRUCTURE data;
+	std::optional<sf::Music::TimeSpan> timeSpan;
 	// 读取循环点信息。
-	if (!readMusicLoopPoint(*stream, data)) {
+	if (timeSpan = readMusicLoopPoint(*stream)) {
 		sf::err() << "ohms::audio::BGM: read comment failed" << std::endl;
-		failed = true;
 	}
 
 	// 从文件流打开 Music。
@@ -329,16 +322,11 @@ bool BGM_SFML::openFromFile(std::string_view filename) {
 	}
 
 	// 读到的话就设置循环点。
-	if (!failed) {
-		this->m_music->setLoopPoints(
-			sf::Music::TimeSpan(
-				sf::microseconds(data.offset),
-				sf::microseconds(data.length)
-			)
-		);
+	if (timeSpan) {
+		this->m_music->setLoopPoints(*timeSpan);
 	}
 	// 默认开启循环。
-	this->m_music->setLoop(true);
+	this->m_music->setLooping(true);
 
 	this->m_stream = std::move(stream);
 	return true;
@@ -360,13 +348,13 @@ BGM::Status BGM_SFML::getStatus() const {
 	sf::Music::Status status = this->getStatusSFML();
 	BGM::Status res = Status::Stopped;
 	switch (status) {
-	case sf::Music::Stopped:
+	case sf::Music::Status::Stopped:
 		res = Status::Stopped;
 		break;
-	case sf::Music::Paused:
+	case sf::Music::Status::Paused:
 		res = Status::Paused;
 		break;
-	case sf::Music::Playing:
+	case sf::Music::Status::Playing:
 		res = Status::Playing;
 		break;
 	}

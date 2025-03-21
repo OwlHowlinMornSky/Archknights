@@ -150,59 +150,56 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 	case Game::MsgId::GuiEvent:
 	{
 		auto e = (sf::Event*)lparam;
-		switch (e->type) {
-		case sf::Event::KeyPressed:
-			switch (e->key.code) {
-			case sf::Keyboard::Num1:
+		if (auto key = e->getIf<sf::Event::KeyPressed>()) {
+			switch (key->code) {
+			case sf::Keyboard::Key::Num1:
 				flag = 0;
 				//Game::Global::board->postMsg(Game::MsgId::Summon, 0, (intptr_t)this->pos);
 				break;
-			case sf::Keyboard::Num2:
+			case sf::Keyboard::Key::Num2:
 				flag = 1;
 				//Game::Global::board->postMsg(Game::MsgId::Summon, 1, (intptr_t)this->pos);
 				break;
-			case sf::Keyboard::Num3:
+			case sf::Keyboard::Key::Num3:
 				flag = 2;
 				//Game::Global::board->postMsg(Game::MsgId::Summon, 2, (intptr_t)this->pos);
 				break;
-			case sf::Keyboard::Num4:
+			case sf::Keyboard::Key::Num4:
 				flag = 3;
 				//Game::Global::board->postMsg(Game::MsgId::Summon, 3, (intptr_t)this->pos);
 				break;
-			case sf::Keyboard::Num0:
+			case sf::Keyboard::Key::Num0:
 				flag = -1;
 				//Game::Global::board->tellMsg(2, 3, Main::MsgId::UserRetreat, 0, 0);
 				break;
-			case sf::Keyboard::Left:
+			case sf::Keyboard::Key::Left:
 				pos[0] -= 1.0f;
 				break;
-			case sf::Keyboard::Right:
+			case sf::Keyboard::Key::Right:
 				pos[0] += 1.0f;
 				break;
-			case sf::Keyboard::Down:
+			case sf::Keyboard::Key::Down:
 				pos[1] -= 1.0f;
 				break;
-			case sf::Keyboard::Up:
+			case sf::Keyboard::Key::Up:
 				pos[1] += 1.0f;
 				break;
-			case sf::Keyboard::W:
+			case sf::Keyboard::Key::W:
 				Game::Global::stage->getCamera().translate(0.0f, 0.1f, 0.0f);
 				break;
-			case sf::Keyboard::S:
+			case sf::Keyboard::Key::S:
 				Game::Global::stage->getCamera().translate(0.0f, -0.1f, 0.0f);
 				break;
-			case sf::Keyboard::D:
+			case sf::Keyboard::Key::D:
 				Game::Global::stage->getCamera().translate(0.1f, 0.0f, 0.0f);
 				break;
-			case sf::Keyboard::A:
+			case sf::Keyboard::Key::A:
 				Game::Global::stage->getCamera().translate(-0.1f, 0.0f, 0.0f);
 				break;
 			}
-			break;
-		case sf::Event::MouseMoved:
-			break;
-		case sf::Event::MouseButtonPressed:
-			if (e->mouseButton.button == sf::Mouse::Left) {
+		}
+		else if (auto mouse = e->getIf<sf::Event::MouseButtonPressed>()) {
+			if (mouse->button == sf::Mouse::Button::Left) {
 				//glm::vec3 pos;
 				//Game::Global::stage->testPoint({ e->mouseButton.x, e->mouseButton.y }, &pos);
 				//Game::Global::board->postMsg(Game::MsgId::Summon, 3, (intptr_t) & (pos.x));
@@ -214,7 +211,7 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 				glm::vec3 d;
 				Game::MsgResultType res;
 
-				Game::Global::stage->testDirection({ e->mouseButton.x, e->mouseButton.y }, &d, &pos);
+				Game::Global::stage->testDirection(mouse->position, &d, &pos);
 
 				if (flag == 3) {
 					d *= pos.z / d.z;
@@ -268,7 +265,6 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 					}
 				}
 			}
-			break;
 		}
 		break;
 	}

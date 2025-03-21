@@ -26,10 +26,15 @@
 
 namespace ME {
 
+Scene::Scene() :
+	m_renderTexture(),
+	m_sprite(m_renderTexture.getTexture()) {}
+
 void Scene::resize(sf::Vector2u size) {
-	m_renderTexture.create(size.x, size.y, sf::ContextSettings(24u));
+	bool suc = m_renderTexture.resize(size, sf::ContextSettings(24u));
 	m_sprite.setTexture(m_renderTexture.getTexture(), true);
-	onSizeChanged(size);
+	if (suc)
+		onSizeChanged(size);
 	return;
 }
 
@@ -55,10 +60,11 @@ void Scene::update(float dt) {
 
 void Scene::render() {
 	ME::G3dGlobal::SetActive(true);
-	m_renderTexture.setActive(true);
-	onRender();
-	m_renderTexture.display();
-	m_renderTexture.setActive(false);
+	if (m_renderTexture.setActive(true)) {
+		onRender();
+		m_renderTexture.display();
+		(void)m_renderTexture.setActive(false);
+	}
 	ME::G3dGlobal::SetActive(false);
 	return;
 }
@@ -80,15 +86,16 @@ bool Scene::testPoint(sf::Vector2i pt, glm::vec3* outpt) {
 
 	float d = 0.0f;
 	ME::G3dGlobal::SetActive(true);
-	m_renderTexture.setActive(true);
-	glCheck(glReadPixels(pt.x, pt.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &d));
-	GLenum errorCode = glGetError();
-	if (errorCode != GL_NO_ERROR) {
-		m_renderTexture.setActive(false);
-		ME::G3dGlobal::SetActive(false);
-		return false;
+	if (m_renderTexture.setActive(true)) {
+		glCheck(glReadPixels(pt.x, pt.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &d));
+		GLenum errorCode = glGetError();
+		if (errorCode != GL_NO_ERROR) {
+			(void)m_renderTexture.setActive(false);
+			ME::G3dGlobal::SetActive(false);
+			return false;
+		}
+		(void)m_renderTexture.setActive(false);
 	}
-	m_renderTexture.setActive(false);
 	ME::G3dGlobal::SetActive(false);
 
 	glm::vec4 ndc(pt.x * 2.0f / sz.x - 1.0f, pt.y * 2.0f / sz.y - 1.0f, d * 2.0f - 1.0f, 1.0f);

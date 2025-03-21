@@ -28,7 +28,8 @@
 
 namespace Activity {
 
-Act01_DefaultEntrance::Act01_DefaultEntrance() {
+Act01_DefaultEntrance::Act01_DefaultEntrance() :
+	m_sp(m_tex) {
 	return;
 }
 
@@ -39,10 +40,10 @@ Act01_DefaultEntrance::~Act01_DefaultEntrance() noexcept {
 bool Act01_DefaultEntrance::prepare(ME::Window& wnd) noexcept {
 	r_wnd = wnd;
 #ifdef _DEBUG // 加载调试用的资源
-	m_tex.loadFromFile("assets/DefaultEntry.png");
-	m_sp.setTexture(m_tex, true);
+	if (m_tex.loadFromFile("assets/DefaultEntry.png"))
+		m_sp.setTexture(m_tex, true);
 #endif // _DEBUG
-    return true;
+	return true;
 }
 
 void Act01_DefaultEntrance::start() noexcept {
@@ -60,31 +61,28 @@ void Act01_DefaultEntrance::stop() noexcept {
 
 bool Act01_DefaultEntrance::handleEvent(const sf::Event& evt) {
 #ifdef _DEBUG
-	switch (evt.type) {
-	case sf::Event::Closed: // 关闭窗口
-		r_wnd->setWaitingForStop();
-		return 1;
-	case sf::Event::KeyPressed:
-		switch (evt.key.code) {
-		case sf::Keyboard::Escape: // 关闭窗口
-		case sf::Keyboard::Q:
+	if (auto key = evt.getIf<sf::Event::KeyPressed>()) {
+		switch (key->code) {
+		case sf::Keyboard::Key::Escape: // 关闭窗口
+		case sf::Keyboard::Key::Q:
 			r_wnd->setWaitingForStop();
 			return 1;
-		case sf::Keyboard::F: // 正常运行（进入Opening）
+		case sf::Keyboard::Key::F: // 正常运行（进入Opening）
 			r_wnd->changeActivity(std::make_unique<Act03_Opening>());
 			return 1;
-		case sf::Keyboard::E: // 进入调试Activity
+		case sf::Keyboard::Key::E: // 进入调试Activity
 			r_wnd->changeActivity(std::make_unique<Act02_TestActivity>());
 			return 1;
-		case sf::Keyboard::T: // 进入GameDebug
+		case sf::Keyboard::Key::T: // 进入GameDebug
 			r_wnd->changeActivity(std::make_unique<Act00_Debug>());
 			return 1;
 		default:
 			break;
 		}
-		break;
-	default:
-		break;
+	}
+	else if (evt.is<sf::Event::Closed>()) {
+		r_wnd->setWaitingForStop();
+		return 1;
 	}
 #endif // _DEBUG
 	return 0;

@@ -36,7 +36,8 @@
 namespace Activity {
 
 Act03_Opening::Act03_Opening() :
-	m_status(0) {}
+	m_status(0),
+	circle{ sf::Sprite(m_tex[0]), sf::Sprite(m_tex[1]), sf::Sprite(m_tex[2]) } {}
 
 Act03_Opening::~Act03_Opening() noexcept {}
 
@@ -59,9 +60,9 @@ void Act03_Opening::start() noexcept {
 
 	for (int i = 0; i < 3; ++i) {
 		m_tex[i].setSmooth(true);
-		m_tex[i].generateMipmap();
+		(void)m_tex[i].generateMipmap();
 		circle[i].setTexture(m_tex[i]);
-		circle[i].setOrigin(m_tex[i].getSize().x / 2.0f, m_tex[i].getSize().y / 2.0f);
+		circle[i].setOrigin((sf::Vector2f)m_tex[i].getSize() / 2.0f);
 	}
 
 	updateSize();
@@ -76,25 +77,22 @@ void Act03_Opening::stop() noexcept {
 }
 
 bool Act03_Opening::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r_wnd->setWaitingForStop();
-		return 1;
-		break;
 #ifdef _DEBUG
-	case sf::Event::KeyPressed:
+	if (auto key = evt.getIf<sf::Event::KeyPressed>()) {
 		m_status = ST_OVER;
 		//r_wnd->changeActivity(std::make_unique<Act04_Load>());
 		r_wnd->changeActivity(std::make_unique<Act05_Title>());
 		return 1;
-		break;
-#endif // _DEBUG
-	case sf::Event::Resized:
-		updateSize();
-		break;
-	default:
-		break;
 	}
+	else
+#endif // _DEBUG 
+		if (evt.is<sf::Event::Resized>()) {
+			updateSize();
+		}
+		else if (evt.is<sf::Event::Closed>()) {
+			r_wnd->setWaitingForStop();
+			return 1;
+		}
 	return 0;
 }
 
@@ -218,11 +216,11 @@ void Act03_Opening::updateSize() {
 	}
 	float rate;
 	rate = size.y / m_tex[0].getSize().y;
-	circle[0].setScale(rate, rate);
+	circle[0].setScale({ rate, rate });
 	rate = size.y / m_tex[1].getSize().y * 0.4f;
-	circle[1].setScale(rate, rate);
+	circle[1].setScale({ rate, rate });
 	rate = std::max(size.y / m_tex[2].getSize().y, size.x / m_tex[2].getSize().x);
-	circle[2].setScale(rate, rate);
+	circle[2].setScale({ rate, rate });
 	return;
 }
 

@@ -123,7 +123,7 @@ void GameCommon::onRender() {
 }
 
 void GameCommon::onSizeChanged(sf::Vector2u newsize) {
-	m_shadowTex.create(newsize.x, newsize.y);
+	m_shadowTex.resize(newsize);
 	m_shadowTex.setSmooth(true);
 
 	ME::G3dGlobal::SetActive(true);

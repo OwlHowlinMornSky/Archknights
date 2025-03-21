@@ -57,7 +57,7 @@ void Setup() {
 	if (glew_err != GLEW_OK) {
 		throw ::exception_glew_failed(glew_err);
 	}
-	g_context->setActive(false);
+	(void)g_context->setActive(false);
 	return;
 }
 

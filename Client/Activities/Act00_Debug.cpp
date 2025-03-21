@@ -42,17 +42,16 @@ void Act00_Debug::stop() noexcept {
 }
 
 bool Act00_Debug::handleEvent(const sf::Event& evt) {
-	switch (evt.type) {
-	case sf::Event::Closed:
-		r->setWaitingForStop();
-		return true;
-	case sf::Event::KeyPressed:
-		switch (evt.key.code) {
-		case sf::Keyboard::Num1:
+	if (auto key = evt.getIf<sf::Event::KeyPressed>()) {
+		switch (key->code) {
+		case sf::Keyboard::Key::Num1:
 			r->changeActivity(std::make_unique<Act06_Game>());
 			return true;
 		}
-		break;
+	}
+	else if (evt.is<sf::Event::Closed>()) {
+		r->setWaitingForStop();
+		return true;
 	}
 	return false;
 }
