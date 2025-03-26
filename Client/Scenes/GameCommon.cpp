@@ -24,7 +24,7 @@
 
 #include <GL/glew.h>
 #include <MysteryEngine/G3D/GlCheck.h>
-#include <MysteryEngine/G3D/Shader.Default.h>
+#include <MysteryEngine/G3D/DefaultShader.h>
 
 #include "GameCommon.h"
 #include "../Game/Global.h"

@@ -63,7 +63,7 @@
     <ClCompile Include="G3D\Shader.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
-    <ClCompile Include="G3D\Shader.Default.cpp">
+    <ClCompile Include="G3D\DefaultShader.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
     <ClCompile Include="Client\BGM.cpp">
@@ -164,7 +164,7 @@
     <ClInclude Include="include\MysteryEngine\G3D\ITransformT.h">
       <Filter>Header files\G3D</Filter>
     </ClInclude>
-    <ClInclude Include="include\MysteryEngine\G3D\Shader.Default.h">
+    <ClInclude Include="include\MysteryEngine\G3D\DefaultShader.h">
       <Filter>Header files\G3D</Filter>
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\G3D\Shader.h">

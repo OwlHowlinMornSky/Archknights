@@ -20,7 +20,7 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <GL/glew.h>
-#include <MysteryEngine/G3D/Shader.Default.h>
+#include <MysteryEngine/G3D/DefaultShader.h>
 #include <MysteryEngine/G3D/Vertex.h>
 #include <MysteryEngine/G3D/glCheck.h>
 
