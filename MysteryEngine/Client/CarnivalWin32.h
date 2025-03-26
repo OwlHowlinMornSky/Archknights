@@ -32,10 +32,8 @@ namespace ME {
 */
 class CarnivalWin32 final :
     public Carnival {
-	friend class Carnival; // 这是为了唯一实例的 setup 能够构造这个类。
-protected:
-	CarnivalWin32(bool mutipleWindows);
 public:
+	CarnivalWin32(bool mutipleWindows);
 	virtual ~CarnivalWin32() override = default;
 
 public:

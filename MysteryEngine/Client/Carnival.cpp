@@ -194,7 +194,8 @@ void Carnival::onSystemLoopSingle(bool enter) {
 
 #include "CarnivalWin32.h"
 void ME::Carnival::Setup(bool mutipleWindows) noexcept {
-	s_instance.reset(new CarnivalWin32(mutipleWindows));
+	assert(s_instance == nullptr);
+	s_instance = std::make_unique<CarnivalWin32>(mutipleWindows);
 	return;
 }
 
