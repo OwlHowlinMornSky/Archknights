@@ -22,151 +22,32 @@
 #include <MysteryEngine/Client/GlobalBGM.h>
 #include <MysteryEngine/Client/Bgm.h>
 
-#ifdef USE_ASYNC_MUSIC
-
-#include <memory>
-#include <string>
-#include <queue>
-#include <mutex>
-#include <thread>
-#include <SFML/System/Sleep.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
-
 namespace {
 
-struct GlobalBGMdata {
-	std::atomic_bool m_run, m_running;
-	std::unique_ptr<ME::BGM> m_bgm;
-	std::queue<std::string> m_cmds;
-	std::mutex m_cmdMutex;
-
-	GlobalBGMdata() :
-		m_run(false),
-		m_running(false) {}
-};
-
-GlobalBGMdata* data = nullptr;
-
-void stopOne() {
-	static sf::Time t = sf::milliseconds(200);
-	sf::Clock clk;
-	clk.restart();
-	while (clk.getElapsedTime() < t && data->m_run) {
-		data->m_bgm->setVolume(100.0f * (1.0f - clk.getElapsedTime() / t));
-		sf::sleep(sf::milliseconds(10));
-	}
-	data->m_bgm->stop();
-}
-
-void run() {
-	data->m_running = true;
-	data->m_bgm = ME::CreateBGM();
-	while (data->m_run) {
-		bool res;
-		std::string str;
-		{
-			std::lock_guard lg(data->m_cmdMutex);
-			res = data->m_cmds.empty();
-			if (!res) {
-				str = data->m_cmds.front();
-				data->m_cmds.pop();
-			}
-		}
-		if (!res) {
-			switch (str[0]) {
-			case 's':
-				if (data->m_bgm->getStatus() != ME::BGM::Status::Playing)
-					break;
-				stopOne();
-				break;
-			case 'p':
-				if (data->m_bgm->getStatus() == ME::BGM::Status::Playing)
-					stopOne();
-				if (data->m_run) {
-					data->m_bgm->openFromFile(str.substr(2));
-					data->m_bgm->setVolume(100.0f);
-					data->m_bgm->play();
-				}
-				break;
-			}
-		}
-		else {
-			sf::sleep(sf::milliseconds(80));
-		}
-	}
-	data->m_bgm->stop();
-	data->m_bgm.reset();
-	data->m_running = false;
-	return;
-}
+std::unique_ptr<ME::BGM> m_bgm;
 
 } // namespace
 
 namespace ME::GlobalBGM {
 
 bool GlobalBGM::Setup() {
-	if (data)
-		return true;
-	data = new GlobalBGMdata;
-	data->m_run = true;
-	while (!data->m_cmds.empty())
-		data->m_cmds.pop();
-	std::thread th(&::run);
-	th.detach();
-	return !th.joinable();
-}
-
-void GlobalBGM::Drop() {
-	data->m_run = false;
-	while (data->m_running) {
-		sf::sleep(sf::milliseconds(30));
-	}
-	delete data;
-}
-
-void GlobalBGM::Play(std::string_view file) {
-	std::lock_guard lg(data->m_cmdMutex);
-	data->m_cmds.push(std::string("p:").append(file));
-}
-
-void GlobalBGM::Stop() {
-	std::lock_guard lg(data->m_cmdMutex);
-	data->m_cmds.push("s;");
-}
-
-} // namespace ME::GlobalBGM
-
-#else
-
-namespace {
-
-std::unique_ptr<ME::Bgm> m_bgm;
-
-} // namespace
-
-namespace ME::GlobalBGM {
-
-bool GlobalBGM::setup() {
 	if (::m_bgm)
 		return true;
 	::m_bgm = ME::CreateBGM();
 	return !::m_bgm;
 }
 
-void GlobalBGM::drop() {
+void GlobalBGM::Drop() {
 	::m_bgm.reset();
 }
 
-void GlobalBGM::play(std::string_view file) {
+void GlobalBGM::Play(std::filesystem::path file) {
 	::m_bgm->openFromFile(file);
 	::m_bgm->play();
 }
 
-void GlobalBGM::stop() {
+void GlobalBGM::Stop() {
 	::m_bgm->stop();
 }
 
 } // namespace ME::GlobalBGM
-
-#endif

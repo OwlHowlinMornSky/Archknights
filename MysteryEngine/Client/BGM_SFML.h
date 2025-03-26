@@ -71,7 +71,7 @@ public:
 	sf::Time getDuration() const;
 
 public:
-	virtual [[nodiscard]] bool openFromFile(std::string_view filename) override;
+	virtual [[nodiscard]] bool openFromFile(std::filesystem::path filename) override;
 
 	virtual void play() override;
 	virtual void pause() override;

@@ -22,7 +22,7 @@
 #pragma once
 
 #include <memory>
-#include <string_view>
+#include <filesystem>
 
 #include <MysteryEngine/Core/MEAPI.h>
 
@@ -58,7 +58,7 @@ public:
 	 * @param filename: 文件名（相对路径或绝对路径）。
 	 * @return 打开是否成功。
 	*/
-	virtual [[nodiscard]] bool openFromFile(std::string_view filename) = 0;
+	virtual [[nodiscard]] bool openFromFile(std::filesystem::path filename) = 0;
 
 	/**
 	 * @brief 播放。已停止的会从头开始，暂停的会继续。

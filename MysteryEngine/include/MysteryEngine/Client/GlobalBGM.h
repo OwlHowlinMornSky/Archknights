@@ -22,14 +22,14 @@
 #pragma once
 
 #include <MysteryEngine/Core/MEAPI.h>
-#include <string_view>
+#include <filesystem>
 
 namespace ME::GlobalBGM {
 
 bool ME_API Setup();
 void ME_API Drop();
 
-void ME_API Play(std::string_view file);
+void ME_API Play(std::filesystem::path file);
 void ME_API Stop();
 
 } // ME::GlobalBGM

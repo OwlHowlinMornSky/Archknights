@@ -298,13 +298,13 @@ sf::Time BGM_SFML::getDuration() const {
 	return this->m_music->getDuration();
 }
 
-bool BGM_SFML::openFromFile(std::string_view filename) {
+bool BGM_SFML::openFromFile(std::filesystem::path filename) {
 	// 必要的，先停止旧的 Music。
 	this->m_music->stop();
 
 	std::unique_ptr<sf::FileInputStream> stream = std::make_unique<sf::FileInputStream>();
 	// 尝试打开文件流。
-	if (!stream->open(filename.data())) {
+	if (!stream->open(filename)) {
 		sf::err() << "ohms::audio::BGM: open file stream failed" << std::endl;
 		return false;
 	}
