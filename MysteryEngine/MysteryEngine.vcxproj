@@ -58,9 +58,11 @@
     <ClCompile Include="G3D\ITransformR.cpp" />
     <ClCompile Include="G3D\ITransformS.cpp" />
     <ClCompile Include="G3D\ITransformT.cpp" />
+    <ClCompile Include="G3D\LineFrameModel.cpp" />
     <ClCompile Include="G3D\Scene.cpp" />
     <ClCompile Include="G3D\Shader.cpp" />
     <ClCompile Include="G3D\DefaultShader.cpp" />
+    <ClCompile Include="G3D\TitleScene.cpp" />
     <ClCompile Include="G3D\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +90,11 @@
     <ClInclude Include="include\MysteryEngine\G3D\ITransformR.h" />
     <ClInclude Include="include\MysteryEngine\G3D\ITransformS.h" />
     <ClInclude Include="include\MysteryEngine\G3D\ITransformT.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\LineFrameModel.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Scene.h" />
     <ClInclude Include="include\MysteryEngine\G3D\DefaultShader.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Shader.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\TitleScene.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Vertex.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

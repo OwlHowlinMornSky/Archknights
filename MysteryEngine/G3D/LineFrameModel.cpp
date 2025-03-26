@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,14 +21,16 @@
 */
 #include <GL/glew.h>
 
-#include "Title.h"
+#include <MysteryEngine/G3D/LineFrameModel.h>
 
+#include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/Vertex.h>
+#include <MysteryEngine/G3D/Scene.h>
 #include <glm/gtx/transform.hpp>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/Core/RandGen.h>
 
 #include <array>
-#include <vector>
 
 namespace {
 
@@ -83,7 +85,22 @@ const char g_fs[] =
 "  gl_FragColor = cl * 0.8 * min(1.0, v_alpha);"
 "}";
 
-void TitleSphereShader::setup() {
+} // namespace
+
+namespace ME {
+
+LineFrameVertex::LineFrameVertex(glm::vec3 v0, glm::vec3 v1, glm::vec2 off) :
+	vertex0(v0),
+	vertex1(v1),
+	offset(off),
+	texCoord() {}
+
+LineFrameShader::LineFrameShader() :
+	m_ul_matp(0),
+	m_ul_matv(0),
+	m_ul_matm(0) {}
+
+void LineFrameShader::setup() {
 	clear();
 	auto vid = loadFromMemory(g_vs2, ME::ShaderType::Vertex);
 	auto fid = loadFromMemory(g_fs, ME::ShaderType::Fragment);
@@ -103,7 +120,7 @@ void TitleSphereShader::setup() {
 	return;
 }
 
-void TitleSphereShader::update(int id, GLfloat* data) const {
+void LineFrameShader::update(int id, GLfloat* data) const {
 	switch (id) {
 	case 0:
 		updateUniformMat4fv(m_ul_matp, data);
@@ -117,7 +134,12 @@ void TitleSphereShader::update(int id, GLfloat* data) const {
 	}
 }
 
-bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
+LineFrameModel::LineFrameModel() :
+	vao(0),
+	vertexVBO(0),
+	drawCount(0) {}
+
+bool LineFrameModel::LoadModelData(const std::vector<LineFrameVertex>& vertexArray) {
 	this->drawCount = (unsigned int)vertexArray.size();
 
 	unsigned int stride = (unsigned int)sizeof(vertexArray[0]);
@@ -152,7 +174,7 @@ bool LineModel::LoadModelData(const std::vector<::Vertex>& vertexArray) {
 	return true;
 }
 
-void LineModel::clear() {
+void LineFrameModel::clear() {
 	ME::G3dGlobal::SetActive(true);
 
 	if (vertexVBO) {
@@ -167,9 +189,9 @@ void LineModel::clear() {
 	ME::G3dGlobal::SetActive(false);
 }
 
-void LineModel::update(float dt) {}
+void LineFrameModel::update(float dt) {}
 
-void LineModel::draw(ME::Camera* camera, ME::Shader* shader) {
+void LineFrameModel::draw(ME::Camera* camera, ME::Shader* shader) {
 	if (m_rotationChanged) {
 		m_matM = glm::translate(m_position);
 		m_matM *= glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -188,168 +210,4 @@ void LineModel::draw(ME::Camera* camera, ME::Shader* shader) {
 	glCheck(glBindVertexArray(0));
 }
 
-constexpr unsigned long Vertices[] = {
-	0x3f59c440, 0, 0x3f069650,
-	0x3f069650, 0x3f59c440, 0,
-	0, 0x3f069650, 0x3f59c440,
-	0, 0xbf069650, 0x3f59c440,
-	0x3f069650, 0xbf59c440, 0,
-	0x3f59c440, 0, 0xbf069650,
-	0xbf59c440, 0, 0xbf069650,
-	0, 0x3f069650, 0xbf59c440,
-	0xbf069650, 0x3f59c440, 0,
-	0xbf59c440, 0, 0x3f069650,
-	0xbf069650, 0xbf59c440, 0,
-	0, 0xbf069650, 0xbf59c440,
-	0x3f4f1bbd, 0x3f000000, 0x3e9e3779,
-	0x3f000000, 0x3e9e3779, 0x3f4f1bbd,
-	0x3f000000, 0xbe9e3779, 0x3f4f1bbd,
-	0x3f4f1bbd, 0xbf000000, 0x3e9e3779,
-	0x3f800000, 0, 0,
-	0x3e9e3779, 0x3f4f1bbd, 0x3f000000,
-	0, 0, 0x3f800000,
-	0x3e9e3779, 0xbf4f1bbd, 0x3f000000,
-	0x3f4f1bbd, 0xbf000000, 0xbe9e3779,
-	0x3f4f1bbd, 0x3f000000, 0xbe9e3779,
-	0x3e9e3779, 0x3f4f1bbd, 0xbf000000,
-	0xbe9e3779, 0x3f4f1bbd, 0x3f000000,
-	0xbf000000, 0xbe9e3779, 0x3f4f1bbd,
-	0, 0xbf800000, 0,
-	0x3f000000, 0xbe9e3779, 0xbf4f1bbd,
-	0, 0x3f800000, 0,
-	0xbf000000, 0x3e9e3779, 0x3f4f1bbd,
-	0xbe9e3779, 0xbf4f1bbd, 0x3f000000,
-	0x3e9e3779, 0xbf4f1bbd, 0xbf000000,
-	0x3f000000, 0x3e9e3779, 0xbf4f1bbd,
-	0xbf000000, 0x3e9e3779, 0xbf4f1bbd,
-	0xbf4f1bbd, 0x3f000000, 0xbe9e3779,
-	0xbf800000, 0, 0,
-	0xbf4f1bbd, 0xbf000000, 0xbe9e3779,
-	0xbf000000, 0xbe9e3779, 0xbf4f1bbd,
-	0xbe9e3779, 0x3f4f1bbd, 0xbf000000,
-	0xbf4f1bbd, 0x3f000000, 0x3e9e3779,
-	0xbf4f1bbd, 0xbf000000, 0x3e9e3779,
-	0xbe9e3779, 0xbf4f1bbd, 0xbf000000,
-	0, 0, 0xbf800000
-};
-
-constexpr int Indices[] = {
-	0, 12, 12, 1, 0, 13, 13, 2, 0, 14, 14, 3, 0, 15, 15, 4, 0, 16, 16, 5, 1, 17, 17,
-	2, 2, 18, 18, 3, 3, 19, 19, 4, 4, 20, 20, 5, 5, 21, 21, 1, 1, 22, 22, 7, 2, 23, 23,
-	8, 3, 24, 24, 9, 4, 25, 25, 10, 5, 26, 26, 11, 8, 27, 27, 1, 9, 28, 28, 2, 10, 29,
-	29, 3, 11, 30, 30, 4, 7, 31, 31, 5, 6, 32, 32, 7, 6, 33, 33, 8, 6, 34, 34, 9, 6,
-	35, 35, 10, 6, 36, 36, 11, 7, 37, 37, 8, 8, 38, 38, 9, 9, 39, 39, 10, 10, 40, 40,
-	11, 11, 41, 41, 7, 13, 12, 12, 17, 17, 13, 14, 13, 13, 18, 18, 14, 15, 14, 14, 19,
-	19, 15, 16, 15, 15, 20, 20, 16, 12, 16, 16, 21, 21, 12, 32, 33, 33, 37, 37, 32, 33,
-	34, 34, 38, 38, 33, 34, 35, 35, 39, 39, 34, 35, 36, 36, 40, 40, 35, 36, 32, 32, 41,
-	41, 36, 27, 22, 22, 37, 37, 27, 28, 23, 23, 38, 38, 28, 29, 24, 24, 39, 39, 29, 30,
-	25, 25, 40, 40, 30, 31, 26, 26, 41, 41, 31, 27, 23, 23, 17, 17, 27, 28, 24, 24, 18,
-	18, 28, 29, 25, 25, 19, 19, 29, 30, 26, 26, 20, 20, 30, 31, 22, 22, 21, 21, 31,
-};
-
-} // namespace
-
-namespace Scene {
-
-Title::Title() :
-	m_rotSpeed() {
-	m_camera.setType(ME::Camera::Type::Perspective);
 }
-
-Title::~Title() {}
-
-void Title::setScale(float r) {
-	sf::Vector2u size = m_renderTexture.getSize();
-	m_camera.setAspectRatio(1.0f * size.x / size.y);
-	return;
-}
-
-void Title::setOffset(float r) {
-	m_llm.setPosition(0.0f, 0.0f, 0.0f - r);
-}
-
-void Title::setup(int code, void* data) {
-	m_camera.setPosition(0.0f, 0.0f, 12.0f);
-	m_camera.setFOV(9.0f);
-
-	float thick = 0.0075f;
-
-	union I2F { // 用于把bin转化为float
-		unsigned long i = 0;
-		float f;
-	} a[3];
-
-	std::array<glm::vec3, 42> vertices;
-	for (int i = 0; i < 42; ++i) {
-		a[0].i = Vertices[i * 3];
-		a[1].i = Vertices[i * 3 + 1];
-		a[2].i = Vertices[i * 3 + 2];
-		vertices[i] = { a[0].f, a[1].f, a[2].f };
-	}
-
-	std::vector<::Vertex> va;
-	va.reserve(480);
-	for (int i = 0; i < 120; ++i) {
-		glm::vec3& v0 = vertices[Indices[(i << 1)]];
-		glm::vec3& v1 = vertices[Indices[(i << 1) | 1]];
-
-		va.emplace_back(v0, v1, glm::vec2(0.0f, thick));
-		va.emplace_back(v0, v1, glm::vec2(0.0f, -thick));
-		va.emplace_back(v0, v1, glm::vec2(1.0f, -thick));
-		va.emplace_back(v0, v1, glm::vec2(1.0f, thick));
-	}
-
-	m_rotSpeed[0] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
-	m_rotSpeed[1] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
-	m_rotSpeed[2] = ME::RandGen::GetUni01() * 20.0f + 5.0f;
-
-	m_llm.setRotation(
-		ME::RandGen::GetUni01() * 360.0f,
-		ME::RandGen::GetUni01() * 360.0f,
-		ME::RandGen::GetUni01() * 360.0f
-	);
-
-	ME::G3dGlobal::SetActive(true);
-
-	m_shader.setup();
-
-	glCheck(glEnable(GL_BLEND));
-	glCheck(glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA));
-
-	glCheck(glClearColor(0.2f, 0.2f, 0.2f, 1.0f)); // 设置clear颜色
-
-	ME::G3dGlobal::SetActive(false);
-
-	m_llm.LoadModelData(va);
-}
-
-void Title::clear() {
-	m_llm.clear();
-	ME::G3dGlobal::SetActive(true);
-	m_shader.clear();
-	ME::G3dGlobal::SetActive(false);
-}
-
-void Title::update(float dt) {
-	m_llm.rotate(m_rotSpeed[0] * dt, m_rotSpeed[1] * dt, m_rotSpeed[2] * dt);
-	m_llm.normalizeRotation();
-
-	//m_llm.Update(0.0f);
-}
-
-void Title::onRender() {
-	glCheck(glClear(GL_COLOR_BUFFER_BIT));
-	glCheck(glViewport(0, 0, m_renderTexture.getSize().x, m_renderTexture.getSize().y));
-
-	ME::Shader::Bind(&m_shader);
-
-	m_llm.draw(&m_camera, &m_shader);
-
-	ME::Shader::Bind(nullptr);
-}
-
-void Title::onSizeChanged(sf::Vector2u newsize) {
-	m_camera.setAspectRatio(1.0f * newsize.x / newsize.y);
-}
-
-} // namespace Scene

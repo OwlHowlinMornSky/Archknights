@@ -51,7 +51,7 @@ bool Act05_Title::prepare(ME::Window& wnd) noexcept {
 }
 
 void Act05_Title::start() noexcept {
-	m_scene = Scene::ITitle::Create();
+	m_scene = std::make_unique<ME::TitleScene>();
 	m_scene->resize(r_wnd->getSize());
 	m_scene->setup();
 

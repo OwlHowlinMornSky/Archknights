@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,32 +21,28 @@
 */
 #pragma once
 
-#include <MysteryEngine/G3D/GlCheck.h>
-#include <MysteryEngine/G3D/Vertex.h>
 #include <MysteryEngine/G3D/IModel.h>
+#include <vector>
 
-#include "ITitle.h"
+namespace ME {
 
-namespace {
-
-struct Vertex {
+struct ME_API LineFrameVertex {
 	glm::vec3 vertex0;
 	glm::vec3 vertex1;
 	glm::vec2 offset;
 	glm::vec2 texCoord;
 
-	Vertex(glm::vec3 v0, glm::vec3 v1, glm::vec2 off) :
-		vertex0(v0),
-		vertex1(v1),
-		offset(off),
-		texCoord() {}
+	LineFrameVertex(glm::vec3 v0, glm::vec3 v1, glm::vec2 off);
 };
 
-class TitleSphereShader final :
+class ME_API LineFrameShader final :
 	public ME::Shader {
 public:
-	virtual void setup() override;
+	LineFrameShader();
+	virtual ~LineFrameShader() = default;
 
+public:
+	virtual void setup() override;
 	virtual void update(int id, GLfloat* data) const override;
 
 protected:
@@ -55,10 +51,14 @@ protected:
 	GLint m_ul_matm;
 };
 
-class LineModel final :
+class ME_API LineFrameModel final :
 	public ME::IModel {
 public:
-	bool LoadModelData(const std::vector<::Vertex>& vertexArray);
+	LineFrameModel();
+	virtual ~LineFrameModel() = default;
+
+public:
+	bool LoadModelData(const std::vector<LineFrameVertex>& vertexArray);
 
 	virtual void clear() override;
 
@@ -71,33 +71,4 @@ protected:
 	unsigned int drawCount;
 };
 
-} // namespace
-
-namespace Scene {
-
-class Title final :
-	public ITitle {
-public:
-	Title();
-	~Title();
-
-public:
-	virtual void setScale(float r) override;
-	virtual void setOffset(float r) override;
-
-public:
-	virtual void setup(int code = 0, void* data = nullptr) override;
-	virtual void clear() override;
-	virtual void update(float dt) override;
-
-protected:
-	virtual void onRender();
-	virtual void onSizeChanged(sf::Vector2u newsize);
-
-protected:
-	::TitleSphereShader m_shader;
-	::LineModel m_llm;
-	float m_rotSpeed[3];
-};
-
-} // namespace title
+}

@@ -111,6 +111,12 @@
     <ClCompile Include="G3D\Scene.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
+    <ClCompile Include="G3D\LineFrameModel.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\TitleScene.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MysteryEngine\Client\Activity.h">
@@ -199,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="Core\TempGuard.h">
       <Filter>Source files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\LineFrameModel.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\TitleScene.h">
+      <Filter>Header files\G3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

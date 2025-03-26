@@ -22,9 +22,9 @@
 #pragma once
 
 #include <MysteryEngine/Client/Window.h>
+#include <MysteryEngine/G3D/TitleScene.h>
 
 #include <SFML/Graphics.hpp>
-#include "../Scenes/ITitle.h"
 
 namespace Activity {
 
@@ -51,7 +51,7 @@ protected:
 
 protected:
 	ME::WndRef r_wnd;
-	std::unique_ptr<Scene::ITitle> m_scene;
+	std::unique_ptr<ME::TitleScene> m_scene;
 
 	sf::Texture m_titleTex;
 	sf::Sprite m_titleSp;

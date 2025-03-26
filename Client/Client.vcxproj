@@ -364,8 +364,6 @@
     <ClInclude Include="Physics\World.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes\GameCommon.h" />
-    <ClInclude Include="Scenes\ITitle.h" />
-    <ClInclude Include="Scenes\Title.h" />
     <ClInclude Include="Units\char_101_sora.h" />
     <ClInclude Include="Units\char_101_sora_factory.h" />
     <ClInclude Include="Units\char_128_plosis.h" />
@@ -416,8 +414,6 @@
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
     <ClCompile Include="Scenes\GameCommon.cpp" />
-    <ClCompile Include="Scenes\ITitle.cpp" />
-    <ClCompile Include="Scenes\Title.cpp" />
     <ClCompile Include="Units\char_101_sora.cpp" />
     <ClCompile Include="Units\char_101_sora_factory.cpp" />
     <ClCompile Include="Units\char_128_plosis.cpp" />

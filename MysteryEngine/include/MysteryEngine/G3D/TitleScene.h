@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,19 +21,32 @@
 */
 #pragma once
 
-#include <memory>
 #include <MysteryEngine/G3D/Scene.h>
 
-namespace Scene {
+namespace ME {
 
-class ITitle :
-	public ME::Scene {
+class ME_API TitleScene :
+	public Scene {
 public:
-	static std::unique_ptr<ITitle> Create();
+	TitleScene();
+	virtual ~TitleScene();
 
 public:
-	virtual void setScale(float r) = 0;
-	virtual void setOffset(float r) = 0;
+	void setScale(float r);
+	void setOffset(float r);
+
+public:
+	virtual void setup(int code = 0, void* data = nullptr) override;
+	virtual void clear() override;
+	virtual void update(float dt) override;
+
+protected:
+	virtual void onRender();
+	virtual void onSizeChanged(sf::Vector2u newsize);
+
+private:
+	struct MEMBERS;
+	MEMBERS* m;
 };
 
-} // namespace Scene
+}

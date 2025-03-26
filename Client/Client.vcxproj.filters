@@ -238,12 +238,6 @@
     <ClInclude Include="Scenes\GameCommon.h">
       <Filter>Scenes\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\ITitle.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\Title.h">
-      <Filter>Scenes\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Units\char_101_sora.h">
       <Filter>Units\Headers</Filter>
     </ClInclude>
@@ -402,12 +396,6 @@
       <Filter>Physics\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\GameCommon.cpp">
-      <Filter>Scenes\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\ITitle.cpp">
-      <Filter>Scenes\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\Title.cpp">
       <Filter>Scenes\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_101_sora.cpp">
