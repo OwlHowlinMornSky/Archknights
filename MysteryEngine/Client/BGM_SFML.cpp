@@ -311,7 +311,7 @@ bool BGM_SFML::openFromFile(std::string_view filename) {
 
 	std::optional<sf::Music::TimeSpan> timeSpan;
 	// 读取循环点信息。
-	if (timeSpan = readMusicLoopPoint(*stream)) {
+	if (timeSpan = readMusicLoopPoint(*stream); !timeSpan) {
 		sf::err() << "ohms::audio::BGM: read comment failed" << std::endl;
 	}
 

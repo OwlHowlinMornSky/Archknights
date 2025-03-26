@@ -51,6 +51,10 @@ bool Act03_Opening::prepare(ME::Window& wnd) noexcept {
 #else
 	m_tex[2].loadFromFile("assets/textures/bkgnd.png");
 #endif // ARCHKNIGHTS_LIMITED
+
+	circle[0].setTexture(m_tex[0], true);
+	circle[1].setTexture(m_tex[1], true);
+	circle[2].setTexture(m_tex[2], true);
 	return true;
 }
 

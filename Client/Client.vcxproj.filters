@@ -434,6 +434,8 @@
     <ClCompile Include="Units\enemy_1002_nsabr_factory.cpp">
       <Filter>Units\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\Sensor.cpp" />
+    <ClCompile Include="Physics\Sensor.cpp">
+      <Filter>Physics\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
