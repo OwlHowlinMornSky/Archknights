@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,27 +21,44 @@
 */
 #pragma once
 
-#include <memory>
-#include <list>
-
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/Core/MEAPI.h>
 #include <MysteryEngine/G3D/Scene.h>
-#include "IActor.h"
+#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/G3D/ActorGroup.h>
 
-namespace Game {
+namespace ME {
 
-class Stage :
-	public ME::Scene {
+class ME_API GameStage final :
+	public Scene {
+public:
+	GameStage();
+	virtual ~GameStage() override;
+
+public:
+	static int init();
+	static GameStage& instance();
+	static void drop();
+
+	void addGround(std::shared_ptr<ME::IModel> ground);
+	void addActor(std::shared_ptr<GameActor> actor);
+	void setGroundSize(float x, float y);
+
+public:
+	virtual void setup(int code = 0, void* data = nullptr) override;
+	virtual void clear() override;
+
+	virtual void update(float dt) override;
+
+
 protected:
-	Stage();
-public:
-	virtual ~Stage() = default;
+	virtual void onRender() override;
+	virtual void onSizeChanged(sf::Vector2u newsize) override;
 
-public:
-	virtual void addGround(std::shared_ptr<ME::IModel> ground) = 0;
-	virtual void addActor(std::shared_ptr<IActor> actor) = 0;
-
-	virtual void setGroundSize(float x, float y) = 0;
+protected:
+	ME::Shader* m_ds;
+	sf::RenderTexture m_shadowTex;
+	std::shared_ptr<ME::IModel> m_ground;
+	ActorGroup m_actors;
 };
 
-} // namespace Game
+}

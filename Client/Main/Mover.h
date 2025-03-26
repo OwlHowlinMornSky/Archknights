@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../Game/Entity.h"
-#include "../Game/IActor.h"
+#include <MysteryEngine/Game/IActor.h>
 #include "../Game/Global.h"
 #include "../Game/Board.h"
 #include <memory>
@@ -61,15 +61,15 @@ protected:
 
 	Game::MsgResultType DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
-	void setStatusToStart(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToBegin(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToIdle(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToAttack(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToStun(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToMoving(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToUnbalance(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToStart(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToBegin(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToIdle(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToAttack(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToStun(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToDying(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToReturn(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToMoving(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToUnbalance(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
 
 	/**
 	 * @brief 尝试攻击。
@@ -89,10 +89,10 @@ public:
 	bool m_isBlocked;
 	float m_moveTargetPos[2];
 	Status m_status;
-	std::shared_ptr<Game::IActor> m_actor;
+	std::shared_ptr<ME::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;
 	std::unique_ptr<Physics::IDetector> m_detector;
-	Game::AnimEventNote m_note;
+	ME::AnimEventNote m_note;
 	int m_checkpointTarget;
 
 	std::weak_ptr<Game::Entity> m_blocker;

@@ -50,8 +50,11 @@
     <ClCompile Include="Core\RandGen.cpp" />
     <ClCompile Include="Core\Reference.cpp" />
     <ClCompile Include="Core\TempGuard.cpp" />
+    <ClCompile Include="G3D\ActorGroup.cpp" />
     <ClCompile Include="G3D\G3dGlobal.cpp" />
     <ClCompile Include="G3D\Camera.cpp" />
+    <ClCompile Include="G3D\GameActor.cpp" />
+    <ClCompile Include="G3D\GameStage.cpp" />
     <ClCompile Include="G3D\GlCheck.cpp" />
     <ClCompile Include="G3D\IModel.cpp" />
     <ClCompile Include="G3D\ITransformO.cpp" />
@@ -62,6 +65,7 @@
     <ClCompile Include="G3D\Scene.cpp" />
     <ClCompile Include="G3D\Shader.cpp" />
     <ClCompile Include="G3D\DefaultShader.cpp" />
+    <ClCompile Include="G3D\Shadow.cpp" />
     <ClCompile Include="G3D\TitleScene.cpp" />
     <ClCompile Include="G3D\Vertex.cpp" />
   </ItemGroup>
@@ -82,8 +86,12 @@
     <ClInclude Include="include\MysteryEngine\Core\NonCopyable.h" />
     <ClInclude Include="include\MysteryEngine\Core\RandGen.h" />
     <ClInclude Include="include\MysteryEngine\Core\Reference.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\ActorGroup.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\ActorVertex.h" />
     <ClInclude Include="include\MysteryEngine\G3D\G3dGlobal.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Camera.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\GameActor.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\GameStage.h" />
     <ClInclude Include="include\MysteryEngine\G3D\GlCheck.h" />
     <ClInclude Include="include\MysteryEngine\G3D\IModel.h" />
     <ClInclude Include="include\MysteryEngine\G3D\ITransformO.h" />
@@ -94,8 +102,10 @@
     <ClInclude Include="include\MysteryEngine\G3D\Scene.h" />
     <ClInclude Include="include\MysteryEngine\G3D\DefaultShader.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Shader.h" />
+    <ClInclude Include="include\MysteryEngine\G3D\Shadow.h" />
     <ClInclude Include="include\MysteryEngine\G3D\TitleScene.h" />
     <ClInclude Include="include\MysteryEngine\G3D\Vertex.h" />
+    <ClInclude Include="include\MysteryEngine\Game\IActor.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

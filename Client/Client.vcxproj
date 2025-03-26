@@ -310,7 +310,6 @@
     <ClInclude Include="Activities\Act06_Game.h" />
     <ClInclude Include="API.h" />
     <ClInclude Include="Game\Ability.h" />
-    <ClInclude Include="Game\ActorVertex.h" />
     <ClInclude Include="Game\AtkDmgHeal.h" />
     <ClInclude Include="Game\Attribute.h" />
     <ClInclude Include="Game\BasicMsgId.h" />
@@ -319,8 +318,6 @@
     <ClInclude Include="Game\Board.h" />
     <ClInclude Include="Game\Host.h" />
     <ClInclude Include="Game\Hook.h" />
-    <ClInclude Include="Game\IActor.h" />
-    <ClInclude Include="Game\Stage.h" />
     <ClInclude Include="Game\Modifier.h" />
     <ClInclude Include="Game\MsgResult.h" />
     <ClInclude Include="Game\TypeDef.h" />
@@ -341,14 +338,12 @@
     <ClInclude Include="Main\Tower.h" />
     <ClInclude Include="Models\Actor.h" />
     <ClInclude Include="Models\Actor2.h" />
-    <ClInclude Include="Models\ActorGroup.h" />
     <ClInclude Include="Models\AnimationFrames.h" />
     <ClInclude Include="Models\AnimationInfo.h" />
     <ClInclude Include="Models\Ground.h" />
     <ClInclude Include="Models\IAnimation.h" />
     <ClInclude Include="Models\IGround.h" />
     <ClInclude Include="Models\AnimationSpine.h" />
-    <ClInclude Include="Models\Shadow.h" />
     <ClInclude Include="Models\tiny_obj_loader.h" />
     <ClInclude Include="Physics\Body.h" />
     <ClInclude Include="Physics\Detector.h" />
@@ -363,7 +358,6 @@
     <ClInclude Include="Physics\Wall.h" />
     <ClInclude Include="Physics\World.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scenes\GameCommon.h" />
     <ClInclude Include="Units\char_101_sora.h" />
     <ClInclude Include="Units\char_101_sora_factory.h" />
     <ClInclude Include="Units\char_128_plosis.h" />
@@ -390,7 +384,6 @@
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\Host.cpp" />
     <ClCompile Include="Game\Hook.cpp" />
-    <ClCompile Include="Game\Stage.cpp" />
     <ClCompile Include="Game\Modifier.cpp" />
     <ClCompile Include="Main\Creator.cpp" />
     <ClCompile Include="Main\EntityFactory.cpp" />
@@ -401,11 +394,9 @@
     <ClCompile Include="Main\Tower.cpp" />
     <ClCompile Include="Models\Actor.cpp" />
     <ClCompile Include="Models\Actor2.cpp" />
-    <ClCompile Include="Models\ActorGroup.cpp" />
     <ClCompile Include="Models\AnimationFrames.cpp" />
     <ClCompile Include="Models\Ground.cpp" />
     <ClCompile Include="Models\AnimationSpine.cpp" />
-    <ClCompile Include="Models\Shadow.cpp" />
     <ClCompile Include="Physics\Body.cpp" />
     <ClCompile Include="Physics\Detector.cpp" />
     <ClCompile Include="Physics\FrictionBody.cpp" />
@@ -413,7 +404,6 @@
     <ClCompile Include="Physics\Sensor.cpp" />
     <ClCompile Include="Physics\Wall.cpp" />
     <ClCompile Include="Physics\World.cpp" />
-    <ClCompile Include="Scenes\GameCommon.cpp" />
     <ClCompile Include="Units\char_101_sora.cpp" />
     <ClCompile Include="Units\char_101_sora_factory.cpp" />
     <ClCompile Include="Units\char_128_plosis.cpp" />

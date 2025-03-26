@@ -8,9 +8,6 @@
     <Filter Include="Activities">
       <UniqueIdentifier>{4321d445-58c3-4ebd-8af0-74fd722c7881}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{d6d42f27-261f-4df2-bcc9-8669490fe413}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{787e72d9-9430-4ee7-870c-62d9206b208c}</UniqueIdentifier>
     </Filter>
@@ -56,12 +53,6 @@
     <Filter Include="Physics\Sources">
       <UniqueIdentifier>{0c8565a7-c467-418d-b518-a35ef3434a8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes\Headers">
-      <UniqueIdentifier>{9869cbee-9489-4c12-a356-0b077230a63f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scenes\Sources">
-      <UniqueIdentifier>{ac901f4f-12a5-47df-9eeb-2faf8658c8fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Units\Sources">
       <UniqueIdentifier>{a9fc5d8f-042e-40aa-9460-97af59e6fdb8}</UniqueIdentifier>
     </Filter>
@@ -100,9 +91,6 @@
     <ClInclude Include="Game\Ability.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Game\ActorVertex.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Game\AtkDmgHeal.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
@@ -127,16 +115,10 @@
     <ClInclude Include="Game\Host.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Game\IActor.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Modifier.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game\MsgResult.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Stage.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game\TypeDef.h">
@@ -178,9 +160,6 @@
     <ClInclude Include="Models\Actor2.h">
       <Filter>Models\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Models\ActorGroup.h">
-      <Filter>Models\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Models\AnimationFrames.h">
       <Filter>Models\Headers</Filter>
     </ClInclude>
@@ -197,9 +176,6 @@
       <Filter>Models\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Models\IGround.h">
-      <Filter>Models\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Shadow.h">
       <Filter>Models\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Models\tiny_obj_loader.h">
@@ -234,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="Physics\World.h">
       <Filter>Physics\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\GameCommon.h">
-      <Filter>Scenes\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Units\char_101_sora.h">
       <Filter>Units\Headers</Filter>
@@ -332,9 +305,6 @@
     <ClCompile Include="Game\Modifier.cpp">
       <Filter>Game\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Stage.cpp">
-      <Filter>Game\Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Main\Creator.cpp">
       <Filter>Main\Sources</Filter>
     </ClCompile>
@@ -362,9 +332,6 @@
     <ClCompile Include="Models\Actor2.cpp">
       <Filter>Models\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Models\ActorGroup.cpp">
-      <Filter>Models\Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Models\AnimationFrames.cpp">
       <Filter>Models\Sources</Filter>
     </ClCompile>
@@ -372,9 +339,6 @@
       <Filter>Models\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Models\Ground.cpp">
-      <Filter>Models\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Shadow.cpp">
       <Filter>Models\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Physics\Body.cpp">
@@ -394,9 +358,6 @@
     </ClCompile>
     <ClCompile Include="Physics\World.cpp">
       <Filter>Physics\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\GameCommon.cpp">
-      <Filter>Scenes\Sources</Filter>
     </ClCompile>
     <ClCompile Include="Units\char_101_sora.cpp">
       <Filter>Units\Sources</Filter>

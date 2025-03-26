@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,9 +21,9 @@
 */
 #pragma once
 
-#include "IActor.h"
+#include <MysteryEngine/Core/MEAPI.h>
 
-namespace Game {
+namespace ME {
 
 namespace ActorShaderUniformId {
 enum : int {
@@ -47,7 +47,7 @@ enum : unsigned int {
 };
 } // namespace ActorVertexAttribute
 
-struct ActorVertex {
+struct ME_API ActorVertex {
 	ActorVertex() :
 		position({ 0 }),
 		color({ 0 }),

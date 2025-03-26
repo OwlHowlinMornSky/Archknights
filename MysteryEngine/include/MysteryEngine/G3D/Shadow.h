@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,38 +21,35 @@
 */
 #pragma once
 
-#include <memory>
-#include <list>
-#include "../Game/IActor.h"
-#include "../Game/ActorVertex.h"
+#include <MysteryEngine/Core/MEAPI.h>
+#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/G3D/Vertex.h>
+#include <MysteryEngine/G3D/ActorVertex.h>
 
-#include "Shadow.h"
+namespace ME {
 
-namespace Model {
-
-class ActorGroup final:
+class ME_API Shadow final :
 	public ME::IModel {
+	typedef ME::IModel Parent;
 public:
-	ActorGroup();
-	virtual ~ActorGroup();
+	Shadow();
+	~Shadow();
 
 public:
-	void addActor(std::shared_ptr<Game::IActor> actor);
+	virtual bool setup() override;
+	virtual void clear() override;
 
-public:
-	virtual bool setup();
-	virtual void clear();
-
-	virtual void update(float dt) override;
 	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
-
-	void drawShadow(ME::Camera* camera, ME::Shader* shader);
+	void drawInstance(int count);
+	virtual void setColor(float r, float g, float b, float a) override;
 
 protected:
-	std::list<std::shared_ptr<Game::IActor>> m_actors;
-	std::unique_ptr<ME::Shader> m_shader;
-	std::unique_ptr<ME::Shader> m_shadowShader;
-	Model::Shadow m_shadow;
+	void updateShader(ME::Shader* shader, ME::Camera* camera);
+
+protected:
+	unsigned int m_vao;
+	unsigned int m_vertexVBO;
+	ActorVertex m_vertex[65];
 };
 
 }

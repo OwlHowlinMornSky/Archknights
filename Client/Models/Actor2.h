@@ -21,8 +21,7 @@
 */
 #pragma once
 
-#include "../Game/IActor.h"
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/G3D/GameActor.h>
 
 #include "AnimationInfo.h"
 
@@ -32,7 +31,7 @@ class Actor2 :
 #ifdef ARCHKNIGHTS_LIMITED
 	public spine::AnimationStateListenerObject,
 #endif // ARCHKNIGHTS_LIMITED
-	public Game::IActor {
+	public ME::GameActor {
 public:
 	Actor2(std::shared_ptr<ME::IModel> _f, std::shared_ptr<ME::IModel> _b);
 	virtual ~Actor2();

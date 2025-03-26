@@ -22,7 +22,7 @@
 #include "char_151_myrtle_factory.h"
 
 #include "char_151_myrtle.h"
-#include "../Game/Stage.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include "../Models/Actor2.h"
 
 namespace Unit {
@@ -54,7 +54,7 @@ bool Char_151_Mytle_Factory::createEntity(std::shared_ptr<Game::Entity>& ptr) {
 	auto actor = std::make_shared<Model::Actor2>(anim0, anim1);
 	actor->setInfoStorage(m_info[0], m_info[1]);
 
-	Game::Global::stage->addActor(actor);
+	ME::GameStage::instance().addActor(actor);
 
 	unit->m_actor = actor;
 
@@ -68,7 +68,7 @@ void Char_151_Mytle_Factory::setAnimationInfoStorage() {
 	Model::IAnimationPose* pose;
 	pose = m_pose[0].get();
 	{
-		info = m_info[0] + Game::IActor::AnimationStatus::Normal;
+		info = m_info[0] + ME::IActor::AnimationStatus::Normal;
 		{
 			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
@@ -77,9 +77,9 @@ void Char_151_Mytle_Factory::setAnimationInfoStorage() {
 			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
 			info->StunIn = info->Die;
 		}
-		m_info[0][Game::IActor::AnimationStatus::Skill0] =
-			m_info[0][Game::IActor::AnimationStatus::Normal];
-		info = m_info[0] + Game::IActor::AnimationStatus::Skill0;
+		m_info[0][ME::IActor::AnimationStatus::Skill0] =
+			m_info[0][ME::IActor::AnimationStatus::Normal];
+		info = m_info[0] + ME::IActor::AnimationStatus::Skill0;
 		{
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Begin");
 			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");
@@ -88,7 +88,7 @@ void Char_151_Mytle_Factory::setAnimationInfoStorage() {
 	}
 	pose = m_pose[1].get();
 	{
-		info = m_info[1] + Game::IActor::AnimationStatus::Normal;
+		info = m_info[1] + ME::IActor::AnimationStatus::Normal;
 		{
 			info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Start");
@@ -97,9 +97,9 @@ void Char_151_Mytle_Factory::setAnimationInfoStorage() {
 			info->Die = (Model::AnimationInfo::InfoType)pose->getAnimation("Die");
 			info->StunIn = info->Die;
 		}
-		m_info[1][Game::IActor::AnimationStatus::Skill0] =
-			m_info[1][Game::IActor::AnimationStatus::Normal];
-		info = m_info[1] + Game::IActor::AnimationStatus::Skill0;
+		m_info[1][ME::IActor::AnimationStatus::Skill0] =
+			m_info[1][ME::IActor::AnimationStatus::Normal];
+		info = m_info[1] + ME::IActor::AnimationStatus::Skill0;
 		{
 			info->Begin = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Begin");
 			info->Idle = (Model::AnimationInfo::InfoType)pose->getAnimation("Skill_Loop");

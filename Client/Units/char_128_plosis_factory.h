@@ -24,6 +24,7 @@
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
 #include "../Models/AnimationInfo.h"
+#include <MysteryEngine/Game/IActor.h>
 
 namespace Unit {
 
@@ -38,7 +39,7 @@ protected:
 
 	std::unique_ptr<Model::IAnimationPose> m_pose[2];
 	bool test;
-	Model::AnimationInfo m_info[2][Game::IActor::AnimationStatus::COUNT];
+	Model::AnimationInfo m_info[2][ME::IActor::AnimationStatus::COUNT];
 };
 
 }

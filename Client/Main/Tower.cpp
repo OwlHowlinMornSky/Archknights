@@ -34,7 +34,7 @@ Tower::Tower() :
 	m_active(false),
 	m_died(false),
 	m_atked(false),
-	m_defaultDirection(Game::IActor::Direction::FR),
+	m_defaultDirection(ME::IActor::Direction::FR),
 	m_status(Status::Default) {}
 
 Tower::~Tower() {}
@@ -50,7 +50,7 @@ void Tower::onJoined() {
 			m_occupiedPlace.subId,
 			(Game::MsgLparamType)&data
 		) != Game::MsgResult::OK) {
-		m_actor->setColor(0.0f, 0.0f, 0.0f, 0.0f);
+		m_actor->setColor(0.0f, 0.0f);
 		kickSelf();
 		return;
 	}
@@ -89,7 +89,7 @@ void Tower::onKicking() {
 		if (m_active)
 			m_actor->setInOutEffect(false);
 		else
-			m_actor->setWaitingForQuit();
+			m_actor->setQuit();
 	m_actor.reset();
 }
 
@@ -133,7 +133,7 @@ bool Tower::fixedUpdate() {
 		break;
 	case Status::Returning:
 		if (m_note.DieOver) {
-			m_actor->setStatus(Game::IActor::AnimationStatus::Normal);
+			m_actor->setStatus(ME::IActor::AnimationStatus::Normal);
 			setStatusToIdle();
 		}
 		break;
@@ -220,64 +220,64 @@ Game::MsgResultType Tower::DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType
 	return Game::MsgResult::OK;
 }
 
-void Tower::setStatusToStart(Game::IActor::Direction d) {
+void Tower::setStatusToStart(ME::IActor::Direction d) {
 	if (m_actor)
 		m_actor->setStatus(
-			Game::IActor::AnimationStatus::Normal
+			ME::IActor::AnimationStatus::Normal
 		);
 	m_actor->setInOutEffect(true, true);
 	setStatusToBegin(d);
 }
 
-void Tower::setStatusToBegin(Game::IActor::Direction d) {
+void Tower::setStatusToBegin(ME::IActor::Direction d) {
 	m_status = Status::Begin;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Begin, d
+			ME::IActor::AnimationEvent::Begin, d
 		);
 }
 
-void Tower::setStatusToIdle(Game::IActor::Direction d) {
+void Tower::setStatusToIdle(ME::IActor::Direction d) {
 	m_status = Status::Idle;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Idle, m_defaultDirection
+			ME::IActor::AnimationEvent::Idle, m_defaultDirection
 		);
 }
 
-void Tower::setStatusToAttack(Game::IActor::Direction d) {
+void Tower::setStatusToAttack(ME::IActor::Direction d) {
 	m_status = Status::Attaking;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Attack, d
+			ME::IActor::AnimationEvent::Attack, d
 		);
 }
 
-void Tower::setStatusToStun(Game::IActor::Direction d) {
+void Tower::setStatusToStun(ME::IActor::Direction d) {
 	m_status = Status::Stun;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Stun, d
+			ME::IActor::AnimationEvent::Stun, d
 		);
 }
 
-void Tower::setStatusToDying(Game::IActor::Direction d) {
+void Tower::setStatusToDying(ME::IActor::Direction d) {
 	m_status = Status::Dying;
 	if (m_actor) {
 		m_actor->setStatus(
-			Game::IActor::AnimationStatus::Normal
+			ME::IActor::AnimationStatus::Normal
 		);
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Die, d
+			ME::IActor::AnimationEvent::Die, d
 		);
 	}
 }
 
-void Tower::setStatusToReturn(Game::IActor::Direction d) {
+void Tower::setStatusToReturn(ME::IActor::Direction d) {
 	m_status = Status::Returning;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Die, d
+			ME::IActor::AnimationEvent::Die, d
 		);
 }
 

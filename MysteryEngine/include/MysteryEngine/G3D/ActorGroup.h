@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,42 +21,38 @@
 */
 #pragma once
 
-#include "../Game/Stage.h"
+#include <memory>
+#include <list>
+#include <MysteryEngine/Core/MEAPI.h>
+#include <MysteryEngine/G3D/GameActor.h>
+#include "ActorVertex.h"
+#include "Shadow.h"
 
-#include "../Models/ActorGroup.h"
+namespace ME {
 
-namespace Scene {
-
-class GameCommon final :
-	public Game::Stage {
+class ME_API ActorGroup final:
+	public IModel {
 public:
-	GameCommon();
-	virtual ~GameCommon() override;
+	ActorGroup();
+	virtual ~ActorGroup();
 
 public:
-	static int init();
-	static void drop();
+	void addActor(std::shared_ptr<GameActor> actor);
 
 public:
-	virtual void setup(int code = 0, void* data = nullptr) override;
-	virtual void clear() override;
+	virtual bool setup();
+	virtual void clear();
 
 	virtual void update(float dt) override;
+	virtual void draw(ME::Camera* camera, ME::Shader* shader) override;
 
-	virtual void addGround(std::shared_ptr<ME::IModel> ground) override;
-	virtual void addActor(std::shared_ptr<Game::IActor> actor) override;
-
-	virtual void setGroundSize(float x, float y) override;
+	void drawShadow(ME::Camera* camera, ME::Shader* shader);
 
 protected:
-	virtual void onRender() override;
-	virtual void onSizeChanged(sf::Vector2u newsize) override;
-
-protected:
-	ME::Shader* m_ds;
-	sf::RenderTexture m_shadowTex;
-	std::shared_ptr<ME::IModel> m_ground;
-	Model::ActorGroup m_actors;
+	std::list<std::shared_ptr<GameActor>> m_actors;
+	std::unique_ptr<ME::Shader> m_shader;
+	std::unique_ptr<ME::Shader> m_shadowShader;
+	Shadow m_shadow;
 };
 
-} // namespace Scene
+}

@@ -24,7 +24,7 @@
 #include "../Game/Global.h"
 #include "../Game/Board.h"
 
-#include "../Game/Stage.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include <MysteryEngine/G3D/Camera.h>
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include "../Models/IGround.h"
@@ -46,7 +46,7 @@ namespace Main {
 void Initializer::onJoined() {
 	Game::Global::board->subscribeMsg(5678, m_myself);
 
-	auto& camera = Game::Global::stage->getCamera();
+	auto& camera = ME::GameStage::instance().getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
 	camera.setFOV(36.0f);
@@ -77,10 +77,10 @@ void Initializer::onJoined() {
 
 	ME::G3dGlobal::SetActive(false);
 
-	Game::Global::stage->addGround(ground);
+	ME::GameStage::instance().addGround(ground);
 
 	ground->setGroundSize(11.0f, 7.0f);
-	Game::Global::stage->setGroundSize(11.0f, 7.0f);
+	ME::GameStage::instance().setGroundSize(11.0f, 7.0f);
 	////////////////////
 
 	auto summonmngr = ISummonMngr::Create();
@@ -185,16 +185,16 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 				pos[1] += 1.0f;
 				break;
 			case sf::Keyboard::Key::W:
-				Game::Global::stage->getCamera().translate(0.0f, 0.1f, 0.0f);
+				ME::GameStage::instance().getCamera().translate(0.0f, 0.1f, 0.0f);
 				break;
 			case sf::Keyboard::Key::S:
-				Game::Global::stage->getCamera().translate(0.0f, -0.1f, 0.0f);
+				ME::GameStage::instance().getCamera().translate(0.0f, -0.1f, 0.0f);
 				break;
 			case sf::Keyboard::Key::D:
-				Game::Global::stage->getCamera().translate(0.1f, 0.0f, 0.0f);
+				ME::GameStage::instance().getCamera().translate(0.1f, 0.0f, 0.0f);
 				break;
 			case sf::Keyboard::Key::A:
-				Game::Global::stage->getCamera().translate(-0.1f, 0.0f, 0.0f);
+				ME::GameStage::instance().getCamera().translate(-0.1f, 0.0f, 0.0f);
 				break;
 			}
 		}
@@ -211,7 +211,7 @@ Game::MsgResultType Initializer::receiveMessage(Game::MsgIdType msg, Game::MsgWp
 				glm::vec3 d;
 				Game::MsgResultType res;
 
-				Game::Global::stage->testDirection(mouse->position, &d, &pos);
+				ME::GameStage::instance().testDirection(mouse->position, &d, &pos);
 
 				if (flag == 3) {
 					d *= pos.z / d.z;

@@ -22,7 +22,7 @@
 #include "Act06_Game.h"
 #include "../Game/Global.h"
 #include "../Game/Board.h"
-#include "../Game/Stage.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include "../Main/Creator.h"
 #include "../Activities/Act01_DefaultEntrance.h"
 #include <MysteryEngine/G3D/G3dGlobal.h>
@@ -73,9 +73,9 @@ void Act06_Game::update(sf::Time dtime) {
 		dtime = sf::Time::Zero;
 	ME::G3dGlobal::SetActive(true);
 	Game::Global::board->update(dtime.asMicroseconds());
-	Game::Global::stage->update(dtime.asSeconds());
-	Game::Global::stage->render();
-	r->draw(*Game::Global::stage);
+	ME::GameStage::instance().update(dtime.asSeconds());
+	ME::GameStage::instance().render();
+	r->draw(ME::GameStage::instance());
 	r->display();
 	return;
 }
@@ -98,7 +98,7 @@ void Act06_Game::ExitGame(int code) {
 }
 
 void Act06_Game::updateSize(sf::Vector2u size) {
-	Game::Global::stage->resize(size);
+	ME::GameStage::instance().resize(size);
 }
 
 } // namespace Activity

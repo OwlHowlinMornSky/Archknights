@@ -365,7 +365,7 @@ void SpineAnimation::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 		m_rotationChanged = false;
 		m_scaleChanged = false;
 	}
-	shader->update(Game::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
+	shader->update(ME::ActorShaderUniformId::Mat4_M, &m_matM[0][0]);
 	return;
 }
 
@@ -380,31 +380,31 @@ void SpineAnimation::DrawVertices(ME::Shader* shader, sf::Texture* texture) {
 	glCheck(glBindBuffer(GL_ARRAY_BUFFER, m_vertexVBO));
 
 	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, vertexArray.data(), GL_STREAM_DRAW));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Color)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::Position)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::TexCoord)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::Color)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
 
 	sf::Texture::bind(texture);
 
 	if (m_outline) {
 		float sx = 1.0f / m_scale.x;
 		float sy = 1.0f / m_scale.y;
-		shader->update4f(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
-		shader->update1i(Game::ActorShaderUniformId::Int1_CvrClr, 1);
+		shader->update4f(ME::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 0.0f, 1.0f);
+		shader->update1i(ME::ActorShaderUniformId::Int1_CvrClr, 1);
 		for (unsigned char i = 0; i < 8; ++i) {
 			shader->update2f(
-				Game::ActorShaderUniformId::Vec2_Offset,
+				ME::ActorShaderUniformId::Vec2_Offset,
 				::CircleOffsetX[i] * sx,
 				::CircleOffsetY[i] * sy
 			);
 			glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));
 		}
-		shader->update1i(Game::ActorShaderUniformId::Int1_CvrClr, 0);
-		shader->update2f(Game::ActorShaderUniformId::Vec2_Offset, 0.0f, 0.0f);
-		shader->update4f(Game::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 1.0f, 1.0f);
+		shader->update1i(ME::ActorShaderUniformId::Int1_CvrClr, 0);
+		shader->update2f(ME::ActorShaderUniformId::Vec2_Offset, 0.0f, 0.0f);
+		shader->update4f(ME::ActorShaderUniformId::Vec4_CvrClr, 1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	glCheck(glDrawArrays(GL_TRIANGLES, 0, drawCount));

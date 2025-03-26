@@ -136,8 +136,8 @@ bool Unit::Char_151_Myrtle::tryToAttack() {
 		bool isBack = m_blockedMovers.begin()->second.lock()->getPosition()[1] > m_position[1];
 		setStatusToAttack(
 			isLeft ?
-			(isBack ? Game::IActor::Direction::BL : Game::IActor::Direction::FL) :
-			(isBack ? Game::IActor::Direction::BR : Game::IActor::Direction::FR)
+			(isBack ? ME::IActor::Direction::BL : ME::IActor::Direction::FL) :
+			(isBack ? ME::IActor::Direction::BR : ME::IActor::Direction::FR)
 		);
 		return true;
 	}
@@ -154,8 +154,8 @@ bool Unit::Char_151_Myrtle::tryToAttack() {
 		bool isBack = target->getPosition()[1] > m_position[1];
 		setStatusToAttack(
 			isLeft ?
-			(isBack ? Game::IActor::Direction::BL : Game::IActor::Direction::FL) :
-			(isBack ? Game::IActor::Direction::BR : Game::IActor::Direction::FR)
+			(isBack ? ME::IActor::Direction::BL : ME::IActor::Direction::FL) :
+			(isBack ? ME::IActor::Direction::BR : ME::IActor::Direction::FR)
 		);
 		return true;
 	}

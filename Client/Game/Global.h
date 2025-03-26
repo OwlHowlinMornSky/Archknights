@@ -26,12 +26,10 @@
 namespace Game {
 
 class Board;
-class Stage;
 
 namespace Global {
 
 extern std::unique_ptr<Board> board;
-extern std::unique_ptr<Stage> stage;
 
 }
 } // namespace Game

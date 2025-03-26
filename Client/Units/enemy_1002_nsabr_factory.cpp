@@ -22,7 +22,7 @@
 #include "enemy_1002_nsabr_factory.h"
 
 #include "enemy_1002_nsabr.h"
-#include "../Game/Stage.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include "../Models/Actor.h"
 
 Unit::Enemy_1002_nsabr_Factory::Enemy_1002_nsabr_Factory() :
@@ -55,7 +55,7 @@ bool Unit::Enemy_1002_nsabr_Factory::createEntity(std::shared_ptr<Game::Entity>&
 	actor->setInfoStorage(m_info);
 	actor->m_shadowRadius = 0.4f;
 
-	Game::Global::stage->addActor(actor);
+	ME::GameStage::instance().addActor(actor);
 
 	unit->m_actor = actor;
 
@@ -68,7 +68,7 @@ void Unit::Enemy_1002_nsabr_Factory::setAnimationInfoStorage() {
 	Model::AnimationInfo* info;
 	Model::IAnimationPose* pose;
 
-	info = m_info + Game::IActor::AnimationStatus::Normal;
+	info = m_info + ME::IActor::AnimationStatus::Normal;
 	pose = m_pose.get();
 
 	info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");

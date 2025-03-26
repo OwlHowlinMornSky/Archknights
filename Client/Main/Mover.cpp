@@ -119,7 +119,7 @@ bool Mover::fixedUpdate() {
 		break;
 	case Status::Returning:
 		if (m_note.DieOver) {
-			m_actor->setStatus(Game::IActor::AnimationStatus::Normal);
+			m_actor->setStatus(ME::IActor::AnimationStatus::Normal);
 			setStatusToIdle();
 		}
 		break;
@@ -238,36 +238,36 @@ Game::MsgResultType Mover::DefMoverProc(Game::MsgIdType msg, Game::MsgWparamType
 	return Game::MsgResult::OK;
 }
 
-void Mover::setStatusToStart(Game::IActor::Direction d) {
+void Mover::setStatusToStart(ME::IActor::Direction d) {
 	if (m_actor) {
 		m_actor->setStatus(
-			Game::IActor::AnimationStatus::Normal
+			ME::IActor::AnimationStatus::Normal
 		);
 		m_actor->setInOutEffect(true);
 	}
 	if (tryToMove()) {
 		m_actor->setDirection(
-			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
+			m_moveTargetPos[0] < m_position[0] ? ME::IActor::Direction::FL : ME::IActor::Direction::FR
 		);
-		setStatusToMoving(Game::IActor::Direction::NotCare);
+		setStatusToMoving(ME::IActor::Direction::NotCare);
 	}
 	else {
 		setStatusToIdle(d);
 	}
 }
 
-void Mover::setStatusToBegin(Game::IActor::Direction d) {
+void Mover::setStatusToBegin(ME::IActor::Direction d) {
 	m_status = Status::Begin;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Begin, d
+			ME::IActor::AnimationEvent::Begin, d
 		);
 }
 
-void Mover::setStatusToIdle(Game::IActor::Direction d) {
+void Mover::setStatusToIdle(ME::IActor::Direction d) {
 	if (!m_isBlocked && tryToMove()) {
 		setStatusToMoving(
-			m_moveTargetPos[0] < m_position[0] ? Game::IActor::Direction::FL : Game::IActor::Direction::FR
+			m_moveTargetPos[0] < m_position[0] ? ME::IActor::Direction::FL : ME::IActor::Direction::FR
 		);
 		return;
 	}
@@ -276,60 +276,60 @@ void Mover::setStatusToIdle(Game::IActor::Direction d) {
 	m_status = Status::Idle;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Idle, d
+			ME::IActor::AnimationEvent::Idle, d
 		);
 }
 
-void Mover::setStatusToAttack(Game::IActor::Direction d) {
+void Mover::setStatusToAttack(ME::IActor::Direction d) {
 	m_status = Status::Attaking;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Attack, d
+			ME::IActor::AnimationEvent::Attack, d
 		);
 }
 
-void Mover::setStatusToStun(Game::IActor::Direction d) {
+void Mover::setStatusToStun(ME::IActor::Direction d) {
 	m_status = Status::Stun;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Stun, d
+			ME::IActor::AnimationEvent::Stun, d
 		);
 }
 
-void Mover::setStatusToDying(Game::IActor::Direction d) {
+void Mover::setStatusToDying(ME::IActor::Direction d) {
 	m_status = Status::Dying;
 	if (m_actor) {
 		m_actor->setStatus(
-			Game::IActor::AnimationStatus::Normal
+			ME::IActor::AnimationStatus::Normal
 		);
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Die, d
+			ME::IActor::AnimationEvent::Die, d
 		);
 	}
 }
 
-void Mover::setStatusToReturn(Game::IActor::Direction d) {
+void Mover::setStatusToReturn(ME::IActor::Direction d) {
 	m_status = Status::Returning;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Die, d
+			ME::IActor::AnimationEvent::Die, d
 		);
 }
 
-void Mover::setStatusToMoving(Game::IActor::Direction d) {
+void Mover::setStatusToMoving(ME::IActor::Direction d) {
 	m_status = Status::Moving;
 	m_body->setStatusNormal();
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Move, d
+			ME::IActor::AnimationEvent::Move, d
 		);
 }
 
-void Mover::setStatusToUnbalance(Game::IActor::Direction d) {
+void Mover::setStatusToUnbalance(ME::IActor::Direction d) {
 	m_status = Status::Unbalance;
 	if (m_actor)
 		m_actor->triggerAnimation(
-			Game::IActor::AnimationEvent::Default, d
+			ME::IActor::AnimationEvent::Default, d
 		);
 }
 

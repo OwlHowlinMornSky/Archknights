@@ -28,6 +28,12 @@
     <Filter Include="资源文件">
       <UniqueIdentifier>{3807e32b-1219-4817-8758-6fb3f556f35f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\Game">
+      <UniqueIdentifier>{95721475-f746-4a9f-86c8-02c8ff6defd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Game">
+      <UniqueIdentifier>{28d93b44-ea8a-4276-b048-28ea97240b3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client\Activity.cpp">
@@ -115,6 +121,18 @@
       <Filter>Source files\G3D</Filter>
     </ClCompile>
     <ClCompile Include="G3D\TitleScene.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\GameStage.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\ActorGroup.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\Shadow.cpp">
+      <Filter>Source files\G3D</Filter>
+    </ClCompile>
+    <ClCompile Include="G3D\GameActor.cpp">
       <Filter>Source files\G3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -210,6 +228,24 @@
       <Filter>Header files\G3D</Filter>
     </ClInclude>
     <ClInclude Include="include\MysteryEngine\G3D\TitleScene.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\GameStage.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\Game\IActor.h">
+      <Filter>Header files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\GameActor.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ActorGroup.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\ActorVertex.h">
+      <Filter>Header files\G3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MysteryEngine\G3D\Shadow.h">
       <Filter>Header files\G3D</Filter>
     </ClInclude>
   </ItemGroup>

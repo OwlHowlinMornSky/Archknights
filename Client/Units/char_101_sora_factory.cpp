@@ -22,7 +22,7 @@
 #include "char_101_sora_factory.h"
 
 #include "char_101_sora.h"
-#include "../Game/Stage.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include "../Models/Actor.h"
 
 bool Unit::Char_101_Sora_Factory::load() {
@@ -48,7 +48,7 @@ bool Unit::Char_101_Sora_Factory::createEntity(std::shared_ptr<Game::Entity>& pt
 	auto actor = std::make_shared<Model::Actor>(anim0);
 	actor->setInfoStorage(m_info);
 
-	Game::Global::stage->addActor(actor);
+	ME::GameStage::instance().addActor(actor);
 
 	unit->m_actor = actor;
 
@@ -61,7 +61,7 @@ void Unit::Char_101_Sora_Factory::setAnimationInfoStorage() {
 	Model::AnimationInfo* info;
 	Model::IAnimationPose* pose;
 
-	info = m_info + Game::IActor::AnimationStatus::Normal;
+	info = m_info + ME::IActor::AnimationStatus::Normal;
 	pose = m_pose.get();
 
 	info->Default = (Model::AnimationInfo::InfoType)pose->getAnimation("Default");

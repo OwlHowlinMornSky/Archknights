@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../Game/Entity.h"
-#include "../Game/IActor.h"
+#include <MysteryEngine/Game/IActor.h>
 #include "../Game/Global.h"
 #include "../Game/Board.h"
 #include "OccupiedPlace.h"
@@ -59,13 +59,13 @@ protected:
 
 	Game::MsgResultType DefTowerProc(Game::MsgIdType msg, Game::MsgWparamType wparam, Game::MsgLparamType lparam);
 
-	void setStatusToStart(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToBegin(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToIdle(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToAttack(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToStun(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToDying(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
-	void setStatusToReturn(Game::IActor::Direction d = Game::IActor::Direction::NotCare);
+	void setStatusToStart(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToBegin(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToIdle(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToAttack(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToStun(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToDying(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
+	void setStatusToReturn(ME::IActor::Direction d = ME::IActor::Direction::NotCare);
 
 	/**
 	 * @brief 尝试攻击。
@@ -78,12 +78,12 @@ protected:
 
 public:
 	bool m_active, m_died, m_atked;
-	Game::IActor::Direction m_defaultDirection;
+	ME::IActor::Direction m_defaultDirection;
 	Status m_status;
-	std::shared_ptr<Game::IActor> m_actor;
+	std::shared_ptr<ME::IActor> m_actor;
 	std::unique_ptr<Physics::IBody> m_body;
 	std::unique_ptr<Physics::IDetector> m_detector;
-	Game::AnimEventNote m_note;
+	ME::AnimEventNote m_note;
 	Main::OccupiedPlace m_occupiedPlace;
 };
 

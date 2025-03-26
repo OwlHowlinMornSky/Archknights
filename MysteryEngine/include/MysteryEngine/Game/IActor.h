@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -21,11 +21,11 @@
 */
 #pragma once
 
-#include <MysteryEngine/G3D/IModel.h>
+#include <MysteryEngine/Core/MEAPI.h>
 
-namespace Game {
+namespace ME {
 
-struct AnimEventNote {
+struct ME_API AnimEventNote {
 	int OnStart = 0;
 	int OnAttack = 0;
 	int DieOver = 0;
@@ -33,8 +33,7 @@ struct AnimEventNote {
 	int AttackOver = 0;
 };
 
-class IActor :
-	public ME::IModel {
+class ME_API IActor {
 public:
 	enum class AnimationEvent : char {
 		Default = 0,
@@ -76,7 +75,10 @@ public:
 	IActor() = default;
 	virtual ~IActor() = default;
 
+	virtual void setQuit() = 0;
+
 	virtual void setDirection(Direction direction) = 0;
+	virtual void setColor(float rgb, float alpha) = 0;
 
 	virtual void triggerAnimation(AnimationEvent type, Direction direction = Direction::NotCare) = 0;
 	virtual void triggerAnimationEx(int excode, void* data) = 0;
@@ -87,6 +89,7 @@ public:
 
 	virtual void setPosition(float x, float y, float z) = 0;
 	virtual void setXY(float x, float y) = 0;
+	virtual void setPosZ(float z) = 0;
 
 	virtual void setHitEffect() = 0;
 	virtual void setInOutEffect(bool in, bool onlyShadow = false) = 0;

@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -20,12 +20,12 @@
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
 #include <GL/glew.h>
-#include "Shadow.h"
+#include <MysteryEngine/G3D/Shadow.h>
 
 #include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/G3D/GlCheck.h>
 
-namespace Model {
+namespace ME {
 
 Shadow::Shadow() :
 	m_vertexVBO(0),
@@ -34,21 +34,25 @@ Shadow::Shadow() :
 Shadow::~Shadow() {}
 
 bool Shadow::setup() {
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 64; ++i) {
 		m_vertex[i].color = { 0.0f, 1.0f, 0.0f, 1.0f };
 		m_vertex[i].texCoord = { 0.0f, 0.0f };
+
+		m_vertex[i].position = { 0.25f * cosf(3.14159265f * 2.0f / 32 * (i / 2)), 0.25f * sinf(3.14159265f * 2.0f / 32 * (i / 2)) };
 	}
-	m_vertex[0].position = { -0.25f, -0.25f };
-	m_vertex[1].position = { 0.25f, -0.25f };
-	m_vertex[2].position = { 0.25f, 0.25f };
-	m_vertex[3].position = { -0.25f, 0.25f };
+	m_vertex[64] = m_vertex[0];
+	m_vertex[0].position = { 0, 0 };
+	//m_vertex[0].position = { -0.25f, -0.25f };
+	//m_vertex[1].position = { 0.25f, -0.25f };
+	//m_vertex[2].position = { 0.25f, 0.25f };
+	//m_vertex[3].position = { -0.25f, 0.25f };
 
 	glCheck(glGenVertexArrays(1, &m_vao));
 	glCheck(glBindVertexArray(m_vao));
 	glCheck(glGenBuffers(1, &m_vertexVBO));
 	glCheck(glBindVertexArray(0));
 
-	constexpr GLsizei drawCount = (GLsizei)4;
+	constexpr GLsizei drawCount = (GLsizei)65;
 	constexpr GLsizei stride = sizeof(m_vertex[0]);
 	constexpr size_t texCoordOffset = sizeof(m_vertex[0].position);
 	constexpr size_t colorOffset = texCoordOffset + sizeof(m_vertex[0].texCoord);
@@ -58,12 +62,12 @@ bool Shadow::setup() {
 	glCheck(glBindBuffer(GL_ARRAY_BUFFER, m_vertexVBO));
 
 	glCheck(glBufferData(GL_ARRAY_BUFFER, drawCount * stride, &(m_vertex[0]), GL_STATIC_DRAW));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Position)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
-	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(Game::ActorVertexAttribute::Color)));
-	glCheck(glVertexAttribPointer(static_cast<GLuint>(Game::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::Position)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::Position), 2, GL_FLOAT, GL_FALSE, stride, 0));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::TexCoord)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::TexCoord), 2, GL_FLOAT, GL_FALSE, stride, (void*)texCoordOffset));
+	glCheck(glEnableVertexAttribArray(static_cast<GLuint>(ME::ActorVertexAttribute::Color)));
+	glCheck(glVertexAttribPointer(static_cast<GLuint>(ME::ActorVertexAttribute::Color), 4, GL_FLOAT, GL_FALSE, stride, (void*)colorOffset));
 
 	glCheck(glBindVertexArray(0));
 	return true;
@@ -82,13 +86,13 @@ void Shadow::clear() {
 
 void Shadow::draw(ME::Camera* camera, ME::Shader* shader) {
 	glCheck(glBindVertexArray(m_vao));
-	glCheck(glDrawArrays(GL_QUADS, 0, 4));
+	glCheck(glDrawArrays(GL_TRIANGLE_FAN, 0, 65));
 	glCheck(glBindVertexArray(0));
 }
 
 void Shadow::drawInstance(int count) {
 	glCheck(glBindVertexArray(m_vao));
-	glCheck(glDrawArraysInstanced(GL_QUADS, 0, 4, count));
+	glCheck(glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 65, count));
 	glCheck(glBindVertexArray(0));
 }
 

@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -19,40 +19,62 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-//#include <GL/glew.h>
-//#include <MysteryEngine/G3D/GlCheck.h>
-
 #include <GL/glew.h>
 #include <MysteryEngine/G3D/GlCheck.h>
+#include <MysteryEngine/G3D/G3dGlobal.h>
 #include <MysteryEngine/G3D/DefaultShader.h>
 
-#include "GameCommon.h"
-#include "../Game/Global.h"
-#include <MysteryEngine/G3D/G3dGlobal.h>
-#include <assert.h>
+#include <MysteryEngine/G3D/GameStage.h>
 
+namespace {
 
-namespace Scene {
+std::unique_ptr<ME::GameStage> g_stage;
 
-GameCommon::GameCommon() :
-	m_ds(nullptr) {}
+}
 
-GameCommon::~GameCommon() {}
+namespace ME {
 
-int GameCommon::init() {
-	if (Game::Global::stage)
+GameStage::GameStage() :
+	m_ds(nullptr) {
+	m_camera.setFOV(45.0f);
+	m_camera.setAspectRatio(16.0f / 9.0f);
+	m_camera.setZNear(0.25f);
+	m_camera.setZFar(128.0f);
+}
+
+GameStage::~GameStage() {}
+
+int GameStage::init() {
+	if (g_stage)
 		return 1;
-	Game::Global::stage = std::make_unique<GameCommon>();
-	Game::Global::stage->setup();
+	g_stage = std::make_unique<GameStage>();
+	g_stage->setup();
 	return 0;
 }
 
-void GameCommon::drop() {
-	Game::Global::stage->clear();
-	Game::Global::stage.reset();
+GameStage& GameStage::instance() {
+	assert(g_stage != nullptr);
+	return *g_stage;
 }
 
-void GameCommon::setup(int code, void* data) {
+void GameStage::drop() {
+	g_stage->clear();
+	g_stage.reset();
+}
+
+void GameStage::addGround(std::shared_ptr<ME::IModel> ground) {
+	m_ground = ground;
+}
+
+void GameStage::addActor(std::shared_ptr<GameActor> actor) {
+	return m_actors.addActor(actor);
+}
+
+void GameStage::setGroundSize(float x, float y) {
+	m_actors.setScale(x, y, 0.0f);
+}
+
+void GameStage::setup(int code, void* data) {
 	ME::G3dGlobal::SetActive(true);
 	m_ds = new ME::DefaultShader();
 	m_ds->setup();
@@ -60,7 +82,7 @@ void GameCommon::setup(int code, void* data) {
 	ME::G3dGlobal::SetActive(false);
 }
 
-void GameCommon::clear() {
+void GameStage::clear() {
 	ME::G3dGlobal::SetActive(true);
 	m_ground->clear();
 	m_ground.reset();
@@ -70,23 +92,11 @@ void GameCommon::clear() {
 	ME::G3dGlobal::SetActive(false);
 }
 
-void GameCommon::update(float dt) {
+void GameStage::update(float dt) {
 	m_actors.update(dt);
 }
 
-void GameCommon::addGround(std::shared_ptr<ME::IModel> ground) {
-	m_ground = ground;
-}
-
-void GameCommon::addActor(std::shared_ptr<Game::IActor> actor) {
-	return m_actors.addActor(actor);
-}
-
-void GameCommon::setGroundSize(float x, float y) {
-	m_actors.setScale(x, y, 0.0f);
-}
-
-void GameCommon::onRender() {
+void GameStage::onRender() {
 	m_shadowTex.setActive(true);
 
 	glCheck(glClear(GL_COLOR_BUFFER_BIT));
@@ -122,7 +132,7 @@ void GameCommon::onRender() {
 	ME::Shader::Bind(nullptr);
 }
 
-void GameCommon::onSizeChanged(sf::Vector2u newsize) {
+void GameStage::onSizeChanged(sf::Vector2u newsize) {
 	m_shadowTex.resize(newsize);
 	m_shadowTex.setSmooth(true);
 
@@ -154,4 +164,4 @@ void GameCommon::onSizeChanged(sf::Vector2u newsize) {
 	}
 }
 
-} // namespace Scene
+}

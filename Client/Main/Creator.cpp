@@ -21,7 +21,7 @@
 */
 #include "Creator.h"
 
-#include "../Scenes/GameCommon.h"
+#include <MysteryEngine/G3D/GameStage.h>
 #include "../Game/Board.h"
 #include "../Game/Global.h"
 
@@ -30,7 +30,7 @@
 namespace Main::Creator {
 
 int Setup() {
-	Scene::GameCommon::init();
+	ME::GameStage::init();
 	Game::Board::Setup();
 	Game::Global::board->joinEntity(std::make_shared<Main::Initializer>());
 	return 0;
@@ -38,6 +38,6 @@ int Setup() {
 
 void Drop() {
 	Game::Board::Drop();
-	Scene::GameCommon::drop();
+	ME::GameStage::drop();
 }
 }

@@ -1,5 +1,5 @@
 ﻿/*
-*    Archknights
+*    Mystery Engine
 *
 *    Copyright (C) 2023-2024  Tyler Parret True
 *
@@ -19,19 +19,21 @@
 * @Authors
 *    Tyler Parret True <mysteryworldgod@outlook.com><https://github.com/OwlHowlinMornSky>
 */
-#include <GL/glew.h>
-#include <MysteryEngine/G3D/GlCheck.h>
-#include <MysteryEngine/G3D/G3dGlobal.h>
+#pragma once
 
-#include "Stage.h"
+#include <MysteryEngine/Core/MEAPI.h>
+#include <MysteryEngine/Game/IActor.h>
+#include <MysteryEngine/G3D/IModel.h>
 
-namespace Game {
+namespace ME {
 
-Stage::Stage() {
-	m_camera.setFOV(45.0f);
-	m_camera.setAspectRatio(16.0f / 9.0f);
-	m_camera.setZNear(0.25f);
-	m_camera.setZFar(128.0f);
+class ME_API GameActor :
+	public IActor,
+	public IModel {
+public:
+	virtual void setColor(float rgb, float alpha) override final;
+	virtual void setPosZ(float z) override final;
+	virtual void setQuit() override final;
+};
+
 }
-
-} // namespace Game

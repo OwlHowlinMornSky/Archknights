@@ -24,6 +24,7 @@
 #include "../Main/EntityFactory.h"
 #include "../Models/IAnimation.h"
 #include "../Models/AnimationInfo.h"
+#include <MysteryEngine/Game/IActor.h>
 
 #include <memory>
 #include <memory_resource>
@@ -47,7 +48,7 @@ protected:
 	std::pmr::unsynchronized_pool_resource m_pool;
 	std::pmr::polymorphic_allocator<Enemy_1002_nsabr_Factory> m_alloc;
 
-	Model::AnimationInfo m_info[Game::IActor::AnimationStatus::COUNT];
+	Model::AnimationInfo m_info[ME::IActor::AnimationStatus::COUNT];
 };
 
 }

@@ -37,7 +37,7 @@
 #include <MysteryEngine/G3D/Vertex.h>
 
 #include "IAnimation.h"
-#include "../Game/ActorVertex.h"
+#include <MysteryEngine/G3D/ActorVertex.h>
 
 namespace Model {
 
@@ -98,7 +98,7 @@ protected:
 	spine::AnimationState* m_animationState;
 	spine::Vector<spine::Bone*>* m_bonesRef;
 	const Model::SpinePoseData m_pose;
-	std::vector<Game::ActorVertex> vertexArray;
+	std::vector<ME::ActorVertex> vertexArray;
 	mutable spine::Vector<float> worldVertices;
 	mutable spine::SkeletonClipping m_clipper;
 };
