@@ -48,10 +48,11 @@ void Initializer::onJoined() {
 
 	auto& camera = ME::GameStage::instance().getCamera();
 	camera.setType(ME::Camera::Type::Perspective);
+	/*camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
-	camera.setFOV(36.0f);
-	camera.setPosition(0.0f + 5.5f, -5.5f + 3.5f, 8.66025f);
-	camera.setRotation(30.0f, 0.0f, 0.0f);
+	camera.setFOV(45.0f);
+	camera.setPosition(0.0f + 5.5f, -5.5f * 0.8f + 3.5f, 8.66025f * 0.8f);
+	camera.setRotation(30.0f, 0.0f, 0.0f);*/
 	/*camera.setType(ME::Camera::Type::Oblique);
 	camera.setZNear(-15.0f);
 	camera.setZFar(15.0f);
@@ -63,6 +64,11 @@ void Initializer::onJoined() {
 	camera.setDim(16.0f, 9.0f);
 	camera.setPosition(5.5f, -5.5f + 3.5f, 8.66025f);
 	camera.setRotation(30.0f, 0.0f, 0.0f);*/
+	camera.setType(ME::Camera::Type::TEST);
+	camera.setAspectRatio(16.0f / 9.0f);
+	camera.setFOV(52.0f);
+	camera.setPosition(0.0f + 5.5f, -5.5f * 0.55f + 3.5f, 8.66025f * 0.65f);
+	camera.setRotation(30.0f, 0.0f, 0.0f);
 
 	////////////////////
 	ME::G3dGlobal::SetActive(true);

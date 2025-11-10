@@ -87,6 +87,10 @@ void Camera::setType(Camera::Type type) {
 		m_data.obliq.sheerX = 0.70710678118654752440f;
 		m_data.obliq.sheerY = 0.70710678118654752440f;
 		break;
+	case Type::TEST:
+		m_data.persp.fov = 45.0f;
+		m_data.persp.aspectRatio = 1.0f;
+		break;
 	default:
 		return;
 	}
@@ -156,79 +160,40 @@ glm::vec3 Camera::testPointFromNdcToWorld(glm::vec4 ndc) {
 }
 
 bool Camera::testDirectionFromNdcToWorld(glm::vec4 ndc, glm::vec3& d, glm::vec3& p) {
-	switch (getType()) {
-	case Camera::Type::Orthographic:
-	{
-		glm::mat4 iv = glm::inverse(getMatV());
-		glm::vec4 F = iv * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
-		glm::vec4 R = iv * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-		glm::vec4 U = iv * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-		glm::vec3 forward = { F.x / F.w, F.y / F.w, F.z / F.w };
-		glm::vec3 right = { R.x / R.w, R.y / R.w, R.z / R.w };
-		glm::vec3 up = { U.x / U.w, U.y / U.w, U.z / U.w };
-		d = forward;
-		p = getPosition();
-		p += right * ndc.x * m_data.ortho.dimX / 2.0f;
-		p += up * ndc.y * m_data.ortho.dimX / 2.0f;
-		break;
-	}
-	case Camera::Type::Perspective:
-	{
-		glm::vec4 res = glm::inverse(getMatPV()) * ndc;
-		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
-		ret -= getPosition();
-		d = ret;
-		p = getPosition();
-		break;
-	}
-	case Camera::Type::Oblique:
-	{
-		glm::vec4 res = glm::inverse(getMatP()) * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
-		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
-		ret -= getPosition();
-		d = ret;
+	glm::mat4 iPV = glm::inverse(getMatPV());
+	ndc.w = 1.0f;
+	ndc.z = 1.0f;
+	glm::vec4 resfar = iPV * ndc;
+	ndc.w = 1.0f;
+	ndc.z = -1.0f;
+	glm::vec4 resnear = iPV * ndc;
 
-		glm::mat4 iv = glm::inverse(getMatV());
-		glm::vec4 R = iv * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-		glm::vec4 U = iv * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-		glm::vec3 right = { R.x / R.w, R.y / R.w, R.z / R.w };
-		glm::vec3 up = { U.x / U.w, U.y / U.w, U.z / U.w };
-		p = getPosition();
-		p += right * ndc.x * m_data.ortho.dimX / 2.0f;
-		p += up * ndc.y * m_data.ortho.dimX / 2.0f;
-		break;
-	}
-	default:
-		return false;
-	}
+	glm::vec3 posfar{ resfar.x / resfar.w, resfar.y / resfar.w, resfar.z / resfar.w };
+	glm::vec3 posnear{ resnear.x / resnear.w, resnear.y / resnear.w, resnear.z / resnear.w };
+
+	posfar -= posnear;
+	d = posfar;
+	p = posnear;
+
 	return true;
 }
 
 bool Camera::testDirectionFromNdcToCamera(glm::vec4 ndc, glm::vec3& d, glm::vec3& p) {
-	switch (getType()) {
-	case Camera::Type::Orthographic:
-	{
-		d = glm::vec3(0.0f, 1.0f, 0.0f);
-		p = glm::vec3(ndc.x * m_data.ortho.dimX / 2.0f, ndc.y * m_data.ortho.dimX / 2.0f, 0.0f);
-		break;
-	}
-	case Camera::Type::Perspective:
-	{
-		glm::vec4 res = glm::inverse(getMatP()) * ndc;
-		glm::vec3 ret{ res.x / res.w, res.y / res.w, res.z / res.w };
-		d = glm::vec3(ret.x, -ret.z, ret.y);
-		p = glm::vec3(0.0f);
-		break;
-	}
-	case Camera::Type::Oblique:
-	{
-		d = glm::vec3(-m_data.obliq.sheerX, 1.0f, -m_data.obliq.sheerY);
-		p = glm::vec3(ndc.x * m_data.obliq.dimX / 2.0f, ndc.y * m_data.obliq.dimX / 2.0f, 0.0f);
-		break;
-	}
-	default:
-		return false;
-	}
+	glm::mat4 iP = glm::inverse(getMatP());
+	ndc.w = 1.0f;
+	ndc.z = 1.0f;
+	glm::vec4 resfar = iP * ndc;
+	ndc.w = 1.0f;
+	ndc.z = -1.0f;
+	glm::vec4 resnear = iP * ndc;
+
+	glm::vec3 posfar{ resfar.x / resfar.w, resfar.y / resfar.w, resfar.z / resfar.w };
+	glm::vec3 posnear{ resnear.x / resnear.w, resnear.y / resnear.w, resnear.z / resnear.w };
+
+	posfar -= posnear;
+	d = posfar;
+	p = posnear;
+
 	return true;
 }
 
@@ -256,6 +221,13 @@ void Camera::updateMatV() {
 	m_matV *= glm::rotate(glm::radians(-m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 	// 计算位移
 	m_matV *= glm::translate(-m_position);
+	if (m_type == Type::TEST) {
+		glm::mat4 mats = glm::identity<glm::mat4>();
+		//mats[1][1] = 1.125f;
+		mats[2][2] = 0.25f * 2.0f;
+		mats[2][1] = 0.43301270189221932338186158537647f * 2.0f;
+		m_matV *= mats;
+	}
 	// 标记
 	m_positionChanged = false;
 	m_rotationChanged = false;
@@ -295,6 +267,16 @@ void Camera::updateMatP() {
 		m_matP[2][0] = -m_data.obliq.sheerX;
 		m_matP[2][1] = -m_data.obliq.sheerY;
 		m_matP = glm::ortho(-x, x, -y, y, m_data.zNear, m_data.zFar) * m_matP;
+		break;
+	}
+	case Type::TEST:
+	{
+		m_matP = glm::perspective(
+			glm::radians(m_data.persp.fov),
+			m_data.persp.aspectRatio,
+			m_data.zNear,
+			m_data.zFar
+		);
 		break;
 	}
 	}

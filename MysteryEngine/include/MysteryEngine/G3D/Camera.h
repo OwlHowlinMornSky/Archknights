@@ -40,6 +40,7 @@ public:
 		Orthographic = 0,
 		Perspective,
 		Oblique,
+		TEST,
 
 		COUNT
 	};
