@@ -52,7 +52,7 @@ namespace {
 
 constexpr float spine_to3d_scale_i = 512.0f;
 //constexpr float spine_global_scale = 0.7125f;
-constexpr float outline_thickness  = 0.02f;
+constexpr float outline_thickness = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
 const float CircleOffsetX[8] = {
 	1.0f * outline_thickness,
@@ -353,8 +353,15 @@ void SpineAnimation::setListener(spine::AnimationStateListenerObject* listener) 
 
 void SpineAnimation::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
+		if (camera && camera->getType() == ME::Camera::Type::TEST) {
+			m_rotation.x = 90.0f;
+		}
+		else {
+			m_rotation.x = 30.0f;
+		}
 
 		glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
+
 		glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));
 
 		glm::mat4 matrix_rotX = glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));

@@ -24,6 +24,8 @@
 #include <MysteryEngine/G3D/Shader.h>
 #include <MysteryEngine/G3D/glCheck.h>
 
+#include <string>
+
 namespace {
 
 const std::string fragment_spine =
@@ -90,7 +92,7 @@ const std::string vertex_projection =
 
 "uniform mat4 uMatPV;"
 "uniform mat4 uMatM;"
-"uniform vec3 uVecCamPos;"
+"uniform vec3 uVecCamPos111;"
 "uniform vec2 uVecOffset;"
 "uniform bool uEnableCvrClr;"
 "uniform vec4 uVecCvrClr;"
@@ -106,7 +108,10 @@ const std::string vertex_projection =
 " vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
 " vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 
-" gl_Position = uMatPV * VertexPosInGlobal;"
+" vec4 TrueProjection = uMatPV * VertexPosInGlobal;"
+" gl_Position = TrueProjection;"
+" vec4 uVecCamPos0 = inverse(uMatPV) * vec4(TrueProjection.xy, -TrueProjection.w, TrueProjection.w);"
+" vec3 uVecCamPos = uVecCamPos0.xyz / uVecCamPos0.w;"
 
 " vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"
 " vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"
@@ -316,8 +321,8 @@ void ActorGroup::update(float dt) {
 	}
 	m_actors.sort(
 		[](std::shared_ptr<Game::IActor>& l, std::shared_ptr<Game::IActor>& r) {
-			return l->getPosition().y > r->getPosition().y;
-		}
+		return l->getPosition().y > r->getPosition().y;
+	}
 	);
 }
 
