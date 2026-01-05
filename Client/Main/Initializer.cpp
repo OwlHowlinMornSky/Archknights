@@ -47,7 +47,6 @@ void Initializer::onJoined() {
 	Game::Global::board->subscribeMsg(5678, m_myself);
 
 	auto& camera = ME::GameStage::instance().getCamera();
-	camera.setType(ME::Camera::Type::Perspective);
 	/*camera.setType(ME::Camera::Type::Perspective);
 	camera.setAspectRatio(16.0f / 9.0f);
 	camera.setFOV(45.0f);

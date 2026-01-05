@@ -353,7 +353,7 @@ void SpineAnimation::setListener(spine::AnimationStateListenerObject* listener) 
 
 void SpineAnimation::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
-		if (camera && camera->getType() == ME::Camera::Type::TEST) {
+		if (camera && (camera->getType() == ME::Camera::Type::TEST || camera->getType() == ME::Camera::Type::Oblique)) {
 			m_rotation.x = 90.0f;
 		}
 		else {

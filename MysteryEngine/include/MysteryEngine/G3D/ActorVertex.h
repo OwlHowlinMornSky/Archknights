@@ -29,7 +29,7 @@ namespace ActorShaderUniformId {
 enum : int {
 	Mat4_PV = 0,
 	Mat4_M,
-	Vec3_CamPos,
+	Mat4_InvPV,
 	Vec2_Offset,
 	Int1_CvrClr,
 	Vec4_CvrClr,

@@ -46,7 +46,6 @@ const std::string fragment_spine =
 /// 将深度变换到竖直面及水平面用于欺骗深度测试的顶点着色器。
 /// </summary>
 const std::string vertex_projection =
-#ifndef _DEBUG
 "#version 330\n"
 
 "attribute vec2 aPosition; "
@@ -55,44 +54,7 @@ const std::string vertex_projection =
 
 "uniform mat4 uMatPV;"
 "uniform mat4 uMatM;"
-"uniform vec3 uVecCamPos;"
-"uniform vec2 uVecOffset;"
-"uniform bool uEnableCvrClr;"
-"uniform vec4 uVecCvrClr;"
-
-"varying vec4 vTint;"
-"varying vec2 vUv;"
-
-"void main() {"
-" vTint = uEnableCvrClr ? aColor.w * uVecCvrClr : aColor * uVecCvrClr;"
-" vUv = aTexCoord;"
-
-" vec2 VertexPosInModel = aPosition / 512.0 + uVecOffset;"
-" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
-" vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
-
-" gl_Position = uMatPV * VertexPosInGlobal;"
-
-" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"
-" vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"
-
-" vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"
-
-" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"
-" vec4 FakeProjection = uMatPV * FakePosInGlobal;"
-
-" gl_Position.z = gl_Position.w * FakeProjection.z / FakeProjection.w;"
-"}";
-#else
-"#version 330\n"
-
-"attribute vec2 aPosition; "
-"attribute vec4 aColor; "
-"attribute vec2 aTexCoord;"
-
-"uniform mat4 uMatPV;"
-"uniform mat4 uMatM;"
-"uniform vec3 uVecCamPos111;"
+"uniform mat4 uMatInversePV;"
 "uniform vec2 uVecOffset;"
 "uniform bool uEnableCvrClr;"
 "uniform vec4 uVecCvrClr;"
@@ -110,20 +72,24 @@ const std::string vertex_projection =
 
 " vec4 TrueProjection = uMatPV * VertexPosInGlobal;"
 " gl_Position = TrueProjection;"
-" vec4 uVecCamPos0 = inverse(uMatPV) * vec4(TrueProjection.xy, -TrueProjection.w, TrueProjection.w);"
-" vec3 uVecCamPos = uVecCamPos0.xyz / uVecCamPos0.w;"
+" vec4 NearPos4 = uMatInversePV * vec4(TrueProjection.xy, -TrueProjection.w, TrueProjection.w);"
+" vec3 NearPos = NearPos4.xyz / NearPos4.w;"
 
-" vec3 CamPosInOrg = uVecCamPos - OrgPosInGlobal.xyz;"
+" vec3 CamPosInOrg = NearPos - OrgPosInGlobal.xyz;"
 " vec3 VertexPosInOrg = VertexPosInGlobal.xyz - OrgPosInGlobal.xyz;"
 
 " vec3 VecPositionToCamera = CamPosInOrg - VertexPosInOrg;"
 
-" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"
-" vec4 FakeProjection = uMatPV * FakePosInGlobal;"
+" vec4 FakePosInGlobalV = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * VertexPosInOrg.y / VecPositionToCamera.y, 1.0);"
+" vec4 FakeProjectionV = uMatPV * FakePosInGlobalV;"
+" vec4 FakePosInGlobalH = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * VertexPosInOrg.z / VecPositionToCamera.z, 1.0);"
+" vec4 FakeProjectionH = uMatPV * FakePosInGlobalH;"
+" vec4 FakeProjection = mix(FakeProjectionH, FakeProjectionV, step(FakeProjectionV.z / FakeProjectionV.w, FakeProjectionH.z / FakeProjectionH.w));"
 
-" gl_Position.z = mix(gl_Position.w * FakeProjection.z / FakeProjection.w, gl_Position.z, step(0.0, min(OrgPosInGlobal.z, (uVecCamPos.y - OrgPosInGlobal.y + 0.1))));"
+" gl_Position.z = gl_Position.w * FakeProjection.z / FakeProjection.w;"
 "}";
-#endif
+//" vec4 FakePosInGlobal = vec4(VertexPosInGlobal.xyz - VecPositionToCamera * mix(VertexPosInOrg.z / VecPositionToCamera.z, VertexPosInOrg.y / VecPositionToCamera.y, step(0.0, aPosition.y)), 1.0);"
+//" gl_Position.z = mix(gl_Position.w * FakeProjection.z / FakeProjection.w, gl_Position.z, step(0.0, min(OrgPosInGlobal.z, (NearPos.y - OrgPosInGlobal.y + 0.1))));"
 
 class ActorShader final :
 	public ME::Shader {
@@ -150,7 +116,7 @@ public:
 
 		m_uniforms[ME::ActorShaderUniformId::Mat4_PV] = getUniformLocation("uMatPV");
 		m_uniforms[ME::ActorShaderUniformId::Mat4_M] = getUniformLocation("uMatM");
-		m_uniforms[ME::ActorShaderUniformId::Vec3_CamPos] = getUniformLocation("uVecCamPos");
+		m_uniforms[ME::ActorShaderUniformId::Mat4_InvPV] = getUniformLocation("uMatInversePV");
 		m_uniforms[ME::ActorShaderUniformId::Vec2_Offset] = getUniformLocation("uVecOffset");
 		m_uniforms[ME::ActorShaderUniformId::Int1_CvrClr] = getUniformLocation("uEnableCvrClr");
 		m_uniforms[ME::ActorShaderUniformId::Vec4_CvrClr] = getUniformLocation("uVecCvrClr");
@@ -172,8 +138,8 @@ public:
 		case ME::ActorShaderUniformId::Mat4_M:
 			updateUniformMat4fv(m_uniforms[ME::ActorShaderUniformId::Mat4_M], data);
 			break;
-		case ME::ActorShaderUniformId::Vec3_CamPos:
-			updateUniform3f(m_uniforms[ME::ActorShaderUniformId::Vec3_CamPos], data[0], data[1], data[2]);
+		case ME::ActorShaderUniformId::Mat4_InvPV:
+			updateUniformMat4fv(m_uniforms[ME::ActorShaderUniformId::Mat4_InvPV], data);
 			break;
 		case ME::ActorShaderUniformId::Vec2_Offset:
 			updateUniform2f(m_uniforms[ME::ActorShaderUniformId::Vec2_Offset], data[0], data[1]);
@@ -331,8 +297,10 @@ void ActorGroup::update(float dt) {
 void ActorGroup::draw(ME::Camera* camera, ME::Shader* shader) {
 	ME::Shader::Bind(m_shader.get());
 
-	m_shader->update(ME::ActorShaderUniformId::Mat4_PV, &(camera->getMatPV()[0][0]));
-	m_shader->update3f(ME::ActorShaderUniformId::Vec3_CamPos, camera->getPosition()[0], camera->getPosition()[1], camera->getPosition()[2]);
+	glm::mat4 tmpmat = camera->getMatPV();
+	m_shader->update(ME::ActorShaderUniformId::Mat4_PV, &(tmpmat[0][0]));
+	tmpmat = glm::inverse(tmpmat);
+	m_shader->update(ME::ActorShaderUniformId::Mat4_InvPV, &(tmpmat[0][0]));
 
 	for (auto& i : m_actors) {
 		i->draw(camera, m_shader.get());

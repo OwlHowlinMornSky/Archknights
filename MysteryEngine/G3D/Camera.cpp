@@ -223,9 +223,8 @@ void Camera::updateMatV() {
 	m_matV *= glm::translate(-m_position);
 	if (m_type == Type::TEST) {
 		glm::mat4 mats = glm::identity<glm::mat4>();
-		//mats[1][1] = 1.125f;
-		mats[2][2] = 0.25f * 2.0f;
-		mats[2][1] = 0.43301270189221932338186158537647f * 2.0f;
+		mats[2][2] = 0.5f;
+		mats[2][1] = 0.86602540378443864676372317075294f;
 		m_matV *= mats;
 	}
 	// 标记
