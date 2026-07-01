@@ -157,7 +157,12 @@ void GameStage::onSizeChanged(sf::Vector2u newsize) {
 
 	switch (m_camera.getType()) {
 	case ME::Camera::Type::Perspective:
+	case ME::Camera::Type::TEST:
 		m_camera.setAspectRatio(1.0f * newsize.x / newsize.y);
+		break;
+	case ME::Camera::Type::Oblique:
+	case ME::Camera::Type::Orthographic:
+		m_camera.setDim(9.0f * newsize.x / newsize.y, 9.0f);
 		break;
 	default:
 		break;
