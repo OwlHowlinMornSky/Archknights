@@ -245,7 +245,7 @@ public:
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <MysteryEngine/G3D/Shader.Default.h>
+#include <MysteryEngine/G3D/DefaultShader.h>
 
 namespace ME {
 
