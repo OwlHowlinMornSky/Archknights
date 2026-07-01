@@ -84,6 +84,11 @@ public:
 
 	void setListener(spine::AnimationStateListenerObject* listener);
 
+	void setVisibleByFaceAtLastDraw(bool val);
+	bool isVisibleByFaceAtLastDraw() const;
+	void setCullByFace(bool enabled);
+	bool isCullByFace() const;
+
 protected:
 	void UpdateShader(ME::Shader* shader, ME::Camera* camera);
 
@@ -91,6 +96,8 @@ protected:
 
 protected:
 	bool m_outline;
+	bool m_cullByFace;
+	bool m_visibleByFaceAtLastDraw;
 	unsigned int m_vao;
 	unsigned int m_vertexVBO;
 	glm::vec4 m_color;

@@ -387,11 +387,13 @@ void Actor2::update(float dt) {
 				}
 			}
 		}
-		if (m_target)
+		if (m_target) {
 			m_target->update(dt);
+			m_target->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		}
 		//set m_current rotate by m_currentRLDirection.
-		//m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
-		m_current->setScale(m_currentRLDirection, 1.0f, 1.0f);
+		m_current->setRotation(30.0f, (1.0f - m_currentRLDirection) * 90.0f, 0.0f);
+		//m_current->setScale(m_currentRLDirection, 1.0f, 1.0f);
 	}
 	[[unlikely]] if (m_hitFlashing) {
 		m_hitFlash -= (g_HitFadeRatio * m_hitFlash + g_HitFadeSpeed) * dt;
@@ -436,6 +438,8 @@ void Actor2::update(float dt) {
 }
 
 void Actor2::draw(ME::Camera* camera, ME::Shader* shader) {
+	if (m_isRolling && m_target != nullptr)
+		m_target->draw(camera, shader);
 	return m_current->draw(camera, shader);
 }
 
