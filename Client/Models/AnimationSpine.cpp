@@ -130,7 +130,7 @@ SpineAnimation::SpineAnimation(const Model::SpinePoseData _pose) :
 
 	m_bonesRef = &m_skeleton->getBones();
 
-	setRotation(30.0f, 0.0f, 0.0f);
+	setRotation(90.0f, 0.0f, 0.0f);
 	return;
 }
 

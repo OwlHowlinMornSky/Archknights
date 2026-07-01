@@ -67,7 +67,7 @@ const std::string vertex_projection =
 " vUv = aTexCoord;"
 
 " vec2 VertexPosInModel = aPosition / 512.0 + uVecOffset;"
-" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.xy, 0.0, 1.0);"
+" vec4 VertexPosInGlobal = uMatM * vec4(VertexPosInModel.x, VertexPosInModel.y, 0.0, 1.0);"
 " vec4 OrgPosInGlobal = uMatM * vec4(0.0, 0.0, 0.0, 1.0);"
 
 " vec4 TrueProjection = uMatPV * VertexPosInGlobal;"
@@ -245,6 +245,7 @@ public:
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <MysteryEngine/G3D/Shader.Default.h>
 
 namespace ME {
 
