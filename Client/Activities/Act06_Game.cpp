@@ -69,6 +69,7 @@ void Act06_Game::update(sf::Time dtime) {
 #ifdef _DEBUG
 	r->clear(sf::Color(0x333333FF));
 #endif // _DEBUG
+	dtime *= 0.1f;
 	if (m_paused)
 		dtime = sf::Time::Zero;
 	ME::G3dGlobal::SetActive(true);

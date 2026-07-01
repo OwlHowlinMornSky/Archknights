@@ -52,7 +52,7 @@ namespace {
 
 constexpr float spine_to3d_scale_i = 512.0f;
 //constexpr float spine_global_scale = 0.7125f;
-constexpr float outline_thickness  = 0.02f;
+constexpr float outline_thickness = 0.02f;
 constexpr float halfsqrt2 = 0.70710678118654752440084436210485f;
 const float CircleOffsetX[8] = {
 	1.0f * outline_thickness,
@@ -113,6 +113,8 @@ namespace Model {
 SpineAnimation::SpineAnimation(const Model::SpinePoseData _pose) :
 	m_pose(_pose),
 	m_outline(false),
+	m_cullByFace(true),
+	m_visibleByFaceAtLastDraw(false),
 
 	m_color(1.0f),
 
@@ -178,6 +180,15 @@ void SpineAnimation::draw(ME::Camera* camera, ME::Shader* shader) {
 		return;
 
 	UpdateShader(shader, camera);
+
+	glm::mat4 pvm = camera->getMatPV() * m_matM;
+	glm::vec4 pt_o = pvm * glm::vec4(0.0, 0.0, 0.0, 1.0);
+	glm::vec4 pt_p = pvm * glm::vec4(0.0, 0.0, 1.0, 1.0);
+
+	bool visible = pt_p.z < pt_o.z;
+	m_visibleByFaceAtLastDraw = visible;
+	if (m_cullByFace && !visible)
+		return;
 
 	spine::BlendMode previousBlend;
 	sf::Texture* previousTexture = nullptr;
@@ -351,15 +362,32 @@ void SpineAnimation::setListener(spine::AnimationStateListenerObject* listener) 
 	return m_animationState->setListener(listener);
 }
 
+void SpineAnimation::setVisibleByFaceAtLastDraw(bool val) {
+	m_visibleByFaceAtLastDraw = val;
+}
+
+bool SpineAnimation::isVisibleByFaceAtLastDraw() const {
+	return m_visibleByFaceAtLastDraw;
+}
+
+void SpineAnimation::setCullByFace(bool enabled) {
+	m_cullByFace = enabled;
+}
+
+bool SpineAnimation::isCullByFace() const {
+	return m_cullByFace;
+}
+
 void SpineAnimation::UpdateShader(ME::Shader* shader, ME::Camera* camera) {
 	if (m_positionChanged || m_rotationChanged || m_scaleChanged) {
 
 		glm::mat4 matrix_pos = glm::translate(glm::vec3(m_position.x, m_position.y, m_position.z));
 		glm::mat4 matrix_scale = glm::scale(glm::vec3(m_scale.x, m_scale.y, m_scale.z));
 
+		glm::mat4 matrix_rotY = glm::rotate(glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 matrix_rotX = glm::rotate(glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 
-		m_matM = matrix_pos * matrix_rotX * matrix_scale;
+		m_matM = matrix_pos * matrix_rotX * matrix_rotY * matrix_scale;
 
 		m_positionChanged = false;
 		m_rotationChanged = false;
